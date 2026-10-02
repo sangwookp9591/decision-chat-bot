@@ -1,0 +1,23 @@
+{
+  "credits_used": 19,
+  "credits_budget": 30,
+  "image_jobs": [
+    "500e9771-d22a-49e6-b81c-e52ff2974c8d",
+    "90e135f9-1354-48bf-82a7-d485c0835d88"
+  ],
+  "video_jobs": {
+    "wave": "888a7c8f-57dc-4cb4-a243-7dbc9945b902",
+    "idle": "6ecb4abd-095f-4a10-931b-c39292238ac7"
+  },
+  "loop_seconds": 10,
+  "webm_size": [
+    512,
+    512
+  ],
+  "webp_size": [
+    384,
+    384
+  ],
+  "fps": 20,
+  "alpha_verified": true
+}
