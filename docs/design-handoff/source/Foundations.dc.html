@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>디자인 기초</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F6F4F1}
+*{box-sizing:border-box}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+</style>
+</helmet>
+<div style="width: 1440px; min-height: 1640px; padding: 64px 72px; display: flex; flex-direction: column; gap: 48px; background: #F6F4F1; color: #1B1712; font-family: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="mono" style="font-size: 12px; font-weight: 600; color: #B33F0E; letter-spacing: 0.08em">JEV TRIAGE · FOUNDATIONS</span>
+<h1 style="margin: 0; font-size: 44px; font-weight: 700; letter-spacing: -0.02em">디자인 기초</h1>
+<span style="font-size: 15px; color: #4A433B">밝은 바탕 위 오렌지 한 점, 틸로 받치고 상태는 색과 모양을 함께 씁니다.</span>
+</div>
+<span class="mono" style="font-size: 12px; color: #6B6259">대비는 WCAG 2.x 기준 실측값</span>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">컬러</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid #E6E1DA">
+<div style="height: 120px; background: #F15921; padding: 16px; display: flex; align-items: flex-end; color: #1B1712; font-size: 20px; font-weight: 700">Aa 확인</div>
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700">Primary</span><span class="mono" style="font-size: 12px">#F15921</span><span style="font-size: 12px; color: #4A433B">진한 글자 5.26:1 · 흰 글자 3.39:1 금지</span><span style="font-size: 12px; color: #4A433B">주요 버튼, 현재 메뉴, 진행 중, 포커스</span></div>
+</div>
+<div style="display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid #E6E1DA">
+<div style="height: 120px; background: #0E7C86; padding: 16px; display: flex; align-items: flex-end; color: #FFFFFF; font-size: 20px; font-weight: 700">Aa 선택</div>
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700">Secondary · Teal</span><span class="mono" style="font-size: 12px">#0E7C86</span><span style="font-size: 12px; color: #4A433B">흰 글자 4.95:1</span><span style="font-size: 12px; color: #4A433B">선택 칩, 보조 버튼, AI 배지, 내 말풍선</span></div>
+</div>
+<div style="display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid #E6E1DA">
+<div style="height: 120px; background: #FFFFFF; border-bottom: 1px solid #E6E1DA; padding: 16px; display: flex; align-items: flex-end; color: #B33F0E; font-size: 20px; font-weight: 700">Aa 링크</div>
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700">Primary Ink</span><span class="mono" style="font-size: 12px">#B33F0E · tint #FDF3EE</span><span style="font-size: 12px; color: #4A433B">흰 바탕 5.78:1</span><span style="font-size: 12px; color: #4A433B">링크, 강조 글자, 근거 위치</span></div>
+</div>
+<div style="display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid #E6E1DA">
+<div style="height: 120px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))"><div style="background: #1B1712"></div><div style="background: #4A433B"></div><div style="background: #6B6259"></div></div>
+<div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700">Ink</span><span class="mono" style="font-size: 12px">#1B1712 · #4A433B · #6B6259</span><span style="font-size: 12px; color: #4A433B">본문 17.8 · 보조 9.7 · 캡션 5.97:1</span><span style="font-size: 12px; color: #4A433B">바탕 #F6F4F1 · 선 #E6E1DA</span></div>
+</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">실행 상태 · 색 + 모양 + 이름</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 12px; border-radius: 10px; background: #FFFFFF; border: 1px solid #CFC7BD; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #1F5E3B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>성공</span><span class="mono" style="font-size: 11px; color: #4A433B">#1F7A4D · 실선</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #FDF0EE; border: 1.5px solid #B42318; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #B42318"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>실패</span><span class="mono" style="font-size: 11px; color: #4A433B">#B42318 · 굵은 선</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #FFF7F2; border: 2px solid #F15921; box-shadow: 0 0 0 4px #FDE1D3; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #B33F0E"><span style="width: 8px; height: 8px; border-radius: 50%; background: #F15921"></span>진행 중</span><span class="mono" style="font-size: 11px; color: #4A433B">#F15921 · 후광</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #F4F0FD; border: 1.5px solid #6941C6; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #4A2A9A"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>검토 대기</span><span class="mono" style="font-size: 11px; color: #4A433B">#6941C6 · 사람 = 보라</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #FBFAF8; border: 1px dashed #B5ACA1; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #4A433B"><span style="width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #8C8378"></span>대기</span><span class="mono" style="font-size: 11px; color: #4A433B">점선 · 빈 원</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #FBFAF8; border: 1px dashed #B5ACA1; display: flex; flex-direction: column; gap: 6px"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #4A433B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4l10 8-10 8zM19 5v14"></path></svg><span style="text-decoration: line-through">건너뜀</span></span><span class="mono" style="font-size: 11px; color: #4A433B">점선 · 취소선</span></div>
+</div>
+<span style="font-size: 13px; color: #4A433B">검토 대기(정상 흐름)와 시스템 실패는 서로 다른 색·아이콘을 씁니다.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">실행 주체 배지</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 10px; background: #0E7C86; color: #FFFFFF; border-radius: 4px">JEV 판단</span>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 10px; border: 1px solid #0E7C86; border-radius: 4px">LLM 생성</span>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 10px; background: #F1ECE6; border: 1px solid #D3CCC2">RULE 규칙</span>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 10px; border: 1px solid #D3CCC2; border-radius: 4px; color: #4A433B">CODE 코드</span>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 10px; border: 1px dashed #8C8378; border-radius: 4px; color: #4A433B">EXT 외부</span>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 6px 12px; background: #F4F0FD; border: 1px solid #CDBEF3; border-radius: 999px; color: #4A2A9A">사람</span>
+</div>
+<h2 style="margin: 12px 0 0; font-size: 20px; font-weight: 700">판단 척도</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: grid; grid-template-columns: 96px repeat(4, minmax(0, 1fr)); gap: 4px; align-items: center"><span style="font-size: 13px; font-weight: 600">개발 가능성</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #F1ECE6; color: #4A433B">가능</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #0E7C86; color: #FFFFFF; font-weight: 700">조건부</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #F1ECE6; color: #4A433B">현재 불가</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #F1ECE6; color: #4A433B">정보 부족</span></div>
+<div style="display: grid; grid-template-columns: 96px repeat(3, minmax(0, 1fr)); gap: 4px; align-items: center"><span style="font-size: 13px; font-weight: 600">긴급도</span><span style="display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 12px; padding: 8px 0; border-radius: 4px; background: #B42318; color: #FFFFFF; font-weight: 700">긴급</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #F1ECE6; color: #4A433B">일반</span><span style="font-size: 12px; text-align: center; padding: 8px 0; border-radius: 4px; background: #F1ECE6; color: #4A433B">판단 보류</span></div>
+</div>
+<span style="font-size: 13px; color: #4A433B">정보 부족·판단 보류는 이분법에 넣지 않고 별도 칸으로 둡니다.</span>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">타이포그래피</h2>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; gap: 12px"><span class="mono" style="font-size: 11px; color: #6B6259">20 / 700</span><span style="font-size: 20px; font-weight: 700">화면 제목</span></div>
+<div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; gap: 12px"><span class="mono" style="font-size: 11px; color: #6B6259">15 / 700</span><span style="font-size: 15px; font-weight: 700">카드 제목</span></div>
+<div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; gap: 12px"><span class="mono" style="font-size: 11px; color: #6B6259">14 / 400</span><span style="font-size: 14px">본문과 대화 내용 · IBM Plex Sans KR</span></div>
+<div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; gap: 12px"><span class="mono" style="font-size: 11px; color: #6B6259">12 / 400</span><span style="font-size: 12px; color: #4A433B">캡션과 보조 설명</span></div>
+<div style="display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: baseline; gap: 12px"><span class="mono" style="font-size: 11px; color: #6B6259">12 / Mono</span><span class="mono" style="font-size: 12px">REQ-2026-0142 · run_7f3a2c · 0.67</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">버튼 · 터치 영역 44px 이상</h2>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; padding: 20px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 0; background: #F15921; color: #1B1712; font-family: inherit; font-size: 14px; font-weight: 700">주요 동작</button>
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 0; background: #0E7C86; color: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600">보조 동작</button>
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; color: #1B1712; font-family: inherit; font-size: 14px">일반</button>
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 1.5px solid #B42318; background: #FFFFFF; color: #B42318; font-family: inherit; font-size: 14px; font-weight: 600">반려</button>
+</div>
+<span style="font-size: 13px; color: #4A433B">한 화면에 주요 동작(오렌지)은 하나만 둡니다.</span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">일동이 사용 규칙</h2>
+<span style="font-size: 13px; color: #4A433B">챗봇 대화에서만 씁니다</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/hello.webp" alt="인사하는 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">hello</span><span style="font-size: 12px; color: #4A433B; text-align: center">헤더 아바타 · 첫 인사</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/thinking.webp" alt="생각하는 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">thinking</span><span style="font-size: 12px; color: #4A433B; text-align: center">분석 진행 중</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/like.webp" alt="엄지를 든 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">like</span><span style="font-size: 12px; color: #4A433B; text-align: center">결과 준비 · 자동 처리</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/surprised.webp" alt="놀란 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">surprised</span><span style="font-size: 12px; color: #4A433B; text-align: center">추가 질문 · 확인 필요</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/love.webp" alt="하트를 든 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">love</span><span style="font-size: 12px; color: #4A433B; text-align: center">승인 · 업무 배정 안내</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA"><img src="../assets/icons/cheer.webp" alt="응원하는 일동이" style="width: 96px; height: 96px"><span style="font-size: 14px; font-weight: 700">cheer</span><span style="font-size: 12px; color: #4A433B; text-align: center">업무 완료 알림</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<span style="font-size: 14px; font-weight: 700">애니메이션</span>
+<span style="font-size: 13px; line-height: 1.6; color: #3A332C">idle: 떠 있는 채팅 버튼 · 136px<br>wave: 채팅창 첫 화면 · 140px<br>둘 다 10초 반복 WebM(VP9 알파)</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<span style="font-size: 14px; font-weight: 700">대체 규칙</span>
+<span style="font-size: 13px; line-height: 1.6; color: #3A332C">Safari: 애니메이션 WebP<br>움직임 줄이기 설정: mascot.png 정지 이미지<br>영상은 장식이므로 aria-hidden, 버튼에 이름 부여</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; border-radius: 14px; background: #FDF0EE; border: 1px solid #F3B8B1">
+<span style="font-size: 14px; font-weight: 700; color: #8F1D14">쓰지 않는 곳</span>
+<span style="font-size: 13px; line-height: 1.6; color: #3A332C">시스템 실패, 긴급 요청 결과<br>검토 화면의 판단 근거·결정 영역<br>모니터링 수치, 정책 변경 화면</span>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

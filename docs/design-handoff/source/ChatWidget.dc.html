@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>일동이 챗봇 위젯</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.launcher{position:fixed;right:28px;bottom:24px;z-index:20}
+.panel{position:fixed;right:28px;bottom:24px;z-index:30;width:400px;height:min(680px,calc(100vh - 48px))}
+.mascot-btn{transition:transform .18s ease}
+.mascot-btn:hover{transform:translateY(-3px) scale(1.03)}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.pop{animation:pop .22s ease-out}
+@media (prefers-reduced-motion:reduce){.mascot-btn,.pop{transition:none;animation:none}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+@media (max-width:520px){.panel{right:0;bottom:0;width:100%;height:100vh;border-radius:0}.launcher{right:16px;bottom:16px}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink on" href="Tasks.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink" href="Observatory.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink" href="Policy.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">이○○</span>
+<span style="font-size: 12px; color: #6B6259">요청자 · 영업기획팀</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">어느 화면에서나 일동이를 눌러 요청할 수 있습니다</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">내 요청</h1>
+</div>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+<main style="padding: 24px 32px 160px; display: flex; flex-direction: column; gap: 12px; max-width: 900px">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA; text-decoration: none; color: #1B1712">
+<span class="mono" style="font-size: 11px; color: #6B6259">REQ-2026-0142</span><span style="font-size: 14px; font-weight: 600; flex-grow: 1">병원별 수요 예측과 목표 미달 알림</span><span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #EFE9FB; color: #4A2A9A">사람 검토 대기</span>
+</a>
+<a href="Tasks.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA; text-decoration: none; color: #1B1712">
+<span class="mono" style="font-size: 11px; color: #6B6259">REQ-2026-0137</span><span style="font-size: 14px; font-weight: 600; flex-grow: 1">SAP 매출 CSV 월별 집계 화면</span><span style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #FDEBE2; color: #8A2F09">업무 진행</span>
+</a>
+</main>
+</div>
+</div>
+
+<sc-if value="{{closed}}" hint-placeholder-val="{{ true }}">
+<div class="launcher" style="display: flex; align-items: flex-end; gap: 4px">
+<sc-if value="{{showBubble}}" hint-placeholder-val="{{ true }}">
+<div class="pop" style="margin-bottom: 70px; padding: 12px 14px; border-radius: 14px 14px 4px 14px; background: #FFFFFF; border: 1px solid #E6E1DA; box-shadow: 0 8px 24px rgba(27, 23, 18, 0.12); font-size: 13px; line-height: 1.5; max-width: 200px">
+<strong style="display: block; font-size: 14px">무엇을 도와드릴까요?</strong>
+<span style="color: #4A433B">업무 요청을 말씀해 주시면 정리해 드려요.</span>
+</div>
+</sc-if>
+<button type="button" class="mascot-btn" onClick="{{openChat}}" aria-label="일동이와 채팅 열기" aria-expanded="false" style="position: relative; width: 136px; height: 136px; border: 0; padding: 0; background: transparent; cursor: pointer; border-radius: 50%">
+<span style="position: absolute; left: 18px; right: 18px; bottom: 6px; height: 14px; border-radius: 50%; background: rgba(27, 23, 18, 0.14)"></span>
+<sc-if value="{{useWebm}}" hint-placeholder-val="{{ true }}">
+<video src="../assets/mascot/idle.webm" poster="../assets/mascot/mascot.png" autoplay="" loop="" muted="" playsinline="" aria-hidden="true" style="position: relative; width: 136px; height: 136px; display: block; pointer-events: none"></video>
+</sc-if>
+<sc-if value="{{useWebp}}" hint-placeholder-val="{{ false }}">
+<img src="../assets/mascot/idle.webp" alt="" style="position: relative; width: 136px; height: 136px; display: block">
+</sc-if>
+<sc-if value="{{useStill}}" hint-placeholder-val="{{ false }}">
+<img src="../assets/mascot/mascot.png" alt="" style="position: relative; width: 136px; height: 136px; display: block">
+</sc-if>
+<span class="mono" style="position: absolute; right: 12px; top: 14px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: #F15921; color: #1B1712; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">1</span>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{open}}" hint-placeholder-val="{{ false }}">
+<section class="panel pop" role="dialog" aria-label="일동이 채팅" style="display: flex; flex-direction: column; background: #FFFFFF; border-radius: 18px; border: 1px solid #E6E1DA; box-shadow: 0 24px 60px rgba(27, 23, 18, 0.22); overflow: hidden">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 14px; background: #0E7C86; color: #FFFFFF">
+<span style="width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><img src="../assets/icons/hello.webp" alt="" style="width: 50px; height: 50px; margin-top: 8px"></span>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0">
+<span style="font-size: 15px; font-weight: 700">일동이</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #FFFFFF"><span style="width: 7px; height: 7px; border-radius: 50%; background: #3DBF7A"></span>업무 요청 도우미 · 실시간 연결됨</span>
+</div>
+<a href="Main.dc.html" aria-label="전체 화면으로 열기" style="width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg></a>
+<button type="button" onClick="{{closeChat}}" aria-label="채팅 닫기" style="width: 40px; height: 40px; border-radius: 8px; border: 0; background: transparent; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+</div>
+
+<div style="flex-grow: 1; overflow-y: auto; padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; background: #FBFAF8">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0 6px">
+<sc-if value="{{useWebm}}" hint-placeholder-val="{{ true }}">
+<video src="../assets/mascot/wave.webm" poster="../assets/mascot/mascot.png" autoplay="" loop="" muted="" playsinline="" aria-hidden="true" style="width: 140px; height: 140px; display: block"></video>
+</sc-if>
+<sc-if value="{{useWebp}}" hint-placeholder-val="{{ false }}">
+<img src="../assets/mascot/wave.webp" alt="" style="width: 140px; height: 140px; display: block">
+</sc-if>
+<sc-if value="{{useStill}}" hint-placeholder-val="{{ false }}">
+<img src="../assets/mascot/mascot.png" alt="" style="width: 140px; height: 140px; display: block">
+</sc-if>
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">안녕하세요, 일동이예요</span>
+<span style="font-size: 13px; color: #4A433B; text-align: center; line-height: 1.6">업무 요청을 적거나 문서를 올려 주세요.<br>AI·일반 개발·사람이 맡을 일을 나눠 드려요.</span>
+</div>
+
+<sc-if value="{{isWelcome}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; color: #6B6259">이렇게 요청해 보세요</span>
+<sc-for list="{{examples}}" as="ex" hint-placeholder-count="3">
+<button type="button" onClick="{{ex.pick}}" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 12px; border-radius: 12px; border: 1px solid #E6E1DA; background: #FFFFFF; text-align: left; font-size: 13px; line-height: 1.45; cursor: pointer">
+<span style="flex-grow: 1">{{ex.text}}</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B33F0E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{hasSent}}" hint-placeholder-val="{{ false }}">
+<div style="align-self: flex-end; max-width: 86%; background: #0E7C86; color: #FFFFFF; padding: 10px 13px; border-radius: 14px 14px 4px 14px; font-size: 13px; line-height: 1.6">{{sentText}}</div>
+</sc-if>
+
+<sc-if value="{{isThinking}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<img src="../assets/icons/thinking.webp" alt="" style="width: 44px; height: 44px; flex-shrink: 0">
+<div role="status" style="flex-grow: 1; padding: 12px 14px; border-radius: 4px 14px 14px 14px; background: #FFFFFF; border: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 600">요청을 살펴보고 있어요</span>
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="4">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: {{st.color}}; font-weight: {{st.weight}}"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{st.dot}}; border: 1.5px solid {{st.ring}}"></span>{{st.label}}</span>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isResult}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<sc-if value="{{res.isLike}}" hint-placeholder-val="{{ false }}"><img src="../assets/icons/like.webp" alt="" style="width: 44px; height: 44px; flex-shrink: 0"></sc-if>
+<sc-if value="{{res.isSurprised}}" hint-placeholder-val="{{ true }}"><img src="../assets/icons/surprised.webp" alt="" style="width: 44px; height: 44px; flex-shrink: 0"></sc-if>
+<sc-if value="{{res.noMascot}}" hint-placeholder-val="{{ false }}"><span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; background: #B42318; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5M12 17h.01"></path></svg></span></sc-if>
+<div style="flex-grow: 1; min-width: 0; padding: 12px 14px; border-radius: 4px 14px 14px 14px; background: #FFFFFF; border: {{res.border}}; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; font-weight: 700; color: {{res.titleColor}}">{{res.title}}</span>
+<span style="font-size: 13px; line-height: 1.6; color: #3A332C">{{res.body}}</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{res.tags}}" as="tg" hint-placeholder-count="4">
+<span style="display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 8px; background: #F6F4F1"><span style="font-size: 11px; color: #6B6259">{{tg.k}}</span><span style="font-size: 13px; font-weight: 700; color: {{tg.c}}">{{tg.v}}</span></span>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<a href="Main.dc.html" style="display: flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 8px; background: #0E7C86; color: #FFFFFF; text-decoration: none; font-size: 13px; font-weight: 600">결과 자세히 보기</a>
+<button type="button" onClick="{{reset}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; cursor: pointer">새 요청</button>
+</div>
+<span class="mono" style="font-size: 10px; color: #6B6259">{{res.meta}}</span>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="border-top: 1px solid #E6E1DA; padding: 12px; display: flex; flex-direction: column; gap: 8px; background: #FFFFFF">
+<label for="widget-msg" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">일동이에게 요청 입력</label>
+<div style="display: flex; align-items: flex-end; gap: 6px; padding: 6px; border: 1px solid #D3CCC2; border-radius: 12px">
+<button type="button" aria-label="파일 첨부" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; color: #4A433B"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></button>
+<textarea id="widget-msg" rows="1" placeholder="업무 요청을 입력하세요" style="flex-grow: 1; min-height: 40px; max-height: 120px; resize: none; border: 0; padding: 10px 4px; font-size: 14px; line-height: 1.4; background: transparent"></textarea>
+<button type="button" onClick="{{sendDefault}}" aria-label="보내기" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg></button>
+</div>
+<span style="font-size: 11px; color: #6B6259; text-align: center">PDF · DOCX · MD 최대 5개 · 판단은 검토 전 초안이에요</span>
+</div>
+</section>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  state = { open: false, phase: 'welcome', pick: 1, sent: '', step: 0, media: 'webm', bubble: true };
+  timer = null;
+
+  componentDidMount() {
+    let media = 'webm';
+    try {
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ua = navigator.userAgent || '';
+      const safari = /Safari/.test(ua) && !/Chrome|Chromium|Edg|CriOS|FxiOS|Android/.test(ua);
+      media = reduce ? 'png' : (safari ? 'webp' : 'webm');
+    } catch (e) { media = 'png'; }
+    this.setState({ media });
+  }
+
+  componentWillUnmount() { this.clear(); }
+  clear() { if (this.timer) { clearInterval(this.timer); this.timer = null; } }
+
+  ask(i) {
+    const texts = [
+      'SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.',
+      '병원별 판매량으로 다음 달 수요를 예측하고, 목표 미달 병원에는 알림을 보내고 싶어요.',
+      '출하 지시가 오전부터 멈췄어요. 오늘 마감 물량이 걸려 있어요.'
+    ];
+    this.clear();
+    this.setState({ phase: 'thinking', pick: i, sent: texts[i], step: 0 });
+    this.timer = setInterval(() => {
+      const n = this.state.step + 1;
+      if (n >= 4) { this.clear(); this.setState({ phase: 'result', step: 4 }); }
+      else { this.setState({ step: n }); }
+    }, 650);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const exTexts = [
+      'SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요',
+      '병원별 판매량으로 다음 달 수요를 예측하고 싶어요',
+      '출하 지시가 멈췄어요. 오늘 마감이에요'
+    ];
+    const examples = exTexts.map((t, i) => ({ text: t, pick: () => this.ask(i) }));
+    const stepLabels = ['내용 정리', 'Jev 판단', '업무 나누기', '결과 저장'];
+    const steps = stepLabels.map((l, i) => {
+      const done = i < s.step, now = i === s.step;
+      return {
+        label: done ? l + ' 완료' : (now ? l + ' 중…' : l),
+        color: done ? '#1F5E3B' : (now ? '#8A2F09' : '#6B6259'),
+        weight: now ? '600' : '400',
+        dot: done ? '#1F7A4D' : (now ? '#F15921' : 'transparent'),
+        ring: done ? '#1F7A4D' : (now ? '#F15921' : '#8C8378')
+      };
+    });
+    const G = '#1B1712', U = '#B42318', P = '#4A2A9A';
+    const RES = [
+      { mascot: true, icon: '../assets/icons/like.webp', border: '1px solid #E6E1DA', titleColor: G,
+        title: '일반 개발로 충분해요', body: '월별 집계는 규칙과 일반 개발로 처리할 수 있어요. 집계 기준만 현업에서 정해 주시면 IT팀이 바로 시작할 수 있어요.',
+        tags: [{ k: 'AI 필요성', v: '불필요', c: G }, { k: '개발 가능성', v: '가능', c: G }, { k: '긴급도', v: '일반', c: G }, { k: '담당', v: 'IT팀 주관', c: G }],
+        meta: 'run_a81d04 · 정책 v14 · 자동 배정 가능' },
+      { mascot: true, icon: '../assets/icons/surprised.webp', border: '1.5px solid #CDBEF3', titleColor: P,
+        title: '확인이 조금 필요해요', body: '예측은 AI, 연결과 알림은 일반 개발이 맡는 혼합 업무예요. 판매 데이터 보유 기간을 알려 주시면 검토자가 확정해요.',
+        tags: [{ k: 'AI 필요성', v: '혼합', c: G }, { k: '개발 가능성', v: '조건부', c: P }, { k: '긴급도', v: '일반', c: G }, { k: '다음 단계', v: '사람 검토', c: P }],
+        meta: 'run_7f3a2c · 정책 v14 · confidence 0.67 < 0.75' },
+      { mascot: false, icon: '', border: '1.5px solid #B42318', titleColor: U,
+        title: '긴급 요청으로 전달했어요', body: '업무 중단과 당일 마감 영향이 확인돼 담당 검토자에게 바로 넘겼어요. 진행 상황은 이 창과 알림으로 알려 드릴게요.',
+        tags: [{ k: '긴급도', v: '긴급', c: U }, { k: '근거', v: '업무 중단 · 당일 마감', c: G }, { k: '담당', v: 'IT팀 · 물류', c: G }, { k: '다음 단계', v: '사람 검토', c: P }],
+        meta: 'run_c3907b · 정책 v14 · 영향 큰 업무' }
+    ];
+    const r = RES[s.pick] || RES[1];
+    const media = s.media;
+    return {
+      open: s.open, closed: !s.open, showBubble: s.bubble,
+      useWebm: media === 'webm', useWebp: media === 'webp', useStill: media === 'png',
+      isWelcome: s.phase === 'welcome', isThinking: s.phase === 'thinking', isResult: s.phase === 'result',
+      hasSent: s.phase !== 'welcome', sentText: s.sent,
+      examples, steps,
+      res: { isLike: s.pick === 0, isSurprised: s.pick === 1, noMascot: !r.mascot, border: r.border, titleColor: r.titleColor, title: r.title, body: r.body, tags: r.tags, meta: r.meta },
+      openChat: () => this.setState({ open: true, bubble: false }),
+      closeChat: () => { this.clear(); this.setState({ open: false }); },
+      reset: () => { this.clear(); this.setState({ phase: 'welcome', sent: '', step: 0 }); },
+      sendDefault: () => this.ask(1)
+    };
+  }
+}
+</script>
+</body>
+</html>

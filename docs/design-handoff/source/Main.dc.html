@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>요청 접수와 판단 결과</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px;align-items:start}
+@media (max-width:1180px){.split{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink on" href="Main.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink" href="Tasks.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink" href="Observatory.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink" href="Policy.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">이○○</span>
+<span style="font-size: 12px; color: #6B6259">요청자 · 영업기획팀</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">업무 요청 · REQ-2026-0142</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">요청 접수와 판단 결과</h1>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid #E6E1DA; border-radius: 8px; background: #FBFAF8; min-width: 240px; color: #6B6259">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">요청 검색</span>
+<input type="search" placeholder="요청 ID, 제목 검색" style="border: 0; background: transparent; flex-grow: 1; font-size: 13px; color: #1B1712; min-width: 0">
+</label>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #1F5E3B; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 50%; background: #1F7A4D"></span>실시간 연결됨</span>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+
+<main style="padding: 24px 32px 56px; display: flex; flex-direction: column; gap: 20px">
+<div class="split">
+
+<section aria-label="대화" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #E6E1DA">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #FDF3EE; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><img src="../assets/icons/hello.webp" alt="" style="width: 46px; height: 46px; margin-top: 8px"></span>
+<div style="display: flex; flex-direction: column"><h2 style="margin: 0; font-size: 15px; font-weight: 700">일동이</h2><span style="font-size: 11px; color: #4A433B">업무 요청 도우미</span></div>
+</div>
+<span class="mono" style="font-size: 12px; color: #6B6259">REQ-2026-0142</span>
+</div>
+
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 18px">
+
+<div style="align-self: flex-end; max-width: 90%; display: flex; flex-direction: column; gap: 8px; align-items: flex-end">
+<div style="background: #0E7C86; color: #FFFFFF; padding: 12px 14px; border-radius: 12px 12px 2px 12px; font-size: 14px; line-height: 1.6">병원별 판매량으로 다음 달 수요를 예측하고, 목표 미달 병원에는 알림을 보내고 싶습니다. 관련 자료 첨부합니다.</div>
+<div style="display: flex; flex-direction: column; gap: 6px; width: 100%">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #E6E1DA; border-radius: 10px; background: #FBFAF8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A433B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 13px; font-weight: 600">판매실적_2026Q3.pdf</span><span class="mono" style="font-size: 11px; color: #6B6259">PDF · 12쪽 · 2.4 MiB</span></div>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #1F5E3B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>추출 완료</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #E6E1DA; border-radius: 10px; background: #FBFAF8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A433B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 13px; font-weight: 600">알림대상_기준.docx</span><span class="mono" style="font-size: 11px; color: #6B6259">DOCX · 184 KiB</span></div>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #1F5E3B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>추출 완료</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #E6E1DA; border-radius: 10px; background: #FBFAF8">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A433B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 13px; font-weight: 600">요구사항_메모.md</span><span class="mono" style="font-size: 11px; color: #6B6259">MD · 6 KiB</span></div>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #1F5E3B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>추출 완료</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #B42318; border-radius: 10px; background: #FDF0EE">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+<div style="display: flex; flex-direction: column; flex-grow: 1; min-width: 0"><span style="font-size: 13px; font-weight: 600">거래처목록_스캔.pdf</span><span style="font-size: 12px; color: #8F1D14">스캔 이미지라 텍스트를 읽을 수 없습니다. 텍스트 PDF나 DOCX로 다시 첨부해 주세요.</span></div>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: #B42318; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>읽기 실패</span>
+</div>
+</div>
+<span class="mono" style="font-size: 11px; color: #6B6259">10:02 · 첨부 4개 · 합계 3.1 MiB</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 14px 16px; border: 1px solid #E6E1DA; border-radius: 12px; background: #FBFAF8">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 12px"><span style="font-weight: 600">업로드</span><span class="mono" style="color: #4A433B">4 / 4 완료</span></div>
+<div style="height: 6px; border-radius: 3px; background: #E6E1DA"><div style="width: 100%; height: 6px; border-radius: 3px; background: #4A433B"></div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 12px"><span style="font-weight: 600">분석</span><span class="mono" style="color: #4A433B">실행 #2 · 완료 31.6초</span></div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: #E3F1E8; color: #1F5E3B">내용 추출 3/4</span>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: #E3F1E8; color: #1F5E3B">요청 정리</span>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: #E3F1E8; color: #1F5E3B">규칙 · Jev 판단</span>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: #E3F1E8; color: #1F5E3B">업무 분해</span>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; padding: 4px 8px; border-radius: 6px; background: #EFE9FB; color: #4A2A9A">사람 검토 대기</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border: 1px solid #F3C9B5; border-radius: 12px; background: #FFFFFF">
+<span style="font-size: 13px; line-height: 1.6">첨부 4개 중 <strong>거래처목록_스캔.pdf</strong>를 읽지 못했습니다. 이 파일 없이 분석하면 거래처 정보는 결과에 반영되지 않습니다.</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" aria-pressed="true" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1.5px solid #0E7C86; background: #0E7C86; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">나머지 3개로 분석</button>
+<button type="button" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 500; cursor: pointer">파일 다시 첨부</button>
+</div>
+<span class="mono" style="font-size: 11px; color: #6B6259">선택됨 · 10:02 · 결과에 “제외된 파일 1개”로 표시</span>
+</div>
+
+<div style="align-self: flex-start; max-width: 92%; display: flex; gap: 8px; align-items: flex-start">
+<img src="../assets/icons/surprised.webp" alt="" style="width: 44px; height: 44px; flex-shrink: 0">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 11px; font-weight: 600; color: #B33F0E; letter-spacing: 0.02em">추가 질문</span>
+<div style="background: #F6F4F1; padding: 12px 14px; border-radius: 2px 12px 12px 12px; font-size: 14px; line-height: 1.6">알림 기준을 알려 주세요. 월 목표 대비 몇 % 미만일 때, 누구에게 알림을 보내야 하나요?</div>
+</div>
+</div>
+
+<div style="align-self: flex-end; max-width: 90%; background: #0E7C86; color: #FFFFFF; padding: 12px 14px; border-radius: 12px 12px 2px 12px; font-size: 14px; line-height: 1.6">월 목표 대비 80% 미만이면 해당 병원 영업 담당자에게 보내 주세요.</div>
+
+<div style="align-self: flex-start; max-width: 92%; display: flex; gap: 8px; align-items: flex-start">
+<img src="../assets/icons/like.webp" alt="" style="width: 44px; height: 44px; flex-shrink: 0">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="background: #F6F4F1; padding: 12px 14px; border-radius: 2px 12px 12px 12px; font-size: 14px; line-height: 1.6">보완한 내용으로 다시 판단했어요. 이전 결과(실행 #1)는 그대로 보존돼요. 개발 가능성 확인이 필요해서 검토자에게 전달했어요.</div>
+<a href="Observatory.dc.html" style="font-size: 13px; font-weight: 600">실행 #1과 #2 비교</a>
+</div>
+</div>
+</div>
+
+<div style="border-top: 1px solid #E6E1DA; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px">
+<label for="req-msg" style="font-size: 13px; font-weight: 600">요청 내용 추가</label>
+<textarea id="req-msg" rows="3" placeholder="업무 요청이나 추가 정보를 입력하세요" style="resize: vertical; border: 1px solid #D3CCC2; border-radius: 10px; padding: 12px; font-size: 14px; line-height: 1.5; background: #FFFFFF"></textarea>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<button type="button" style="display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 500; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg>파일 첨부</button>
+<span style="font-size: 12px; color: #6B6259; flex-grow: 1">PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB</span>
+<button type="button" style="display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 18px; border-radius: 8px; border: 0; background: #F15921; color: #1B1712; font-size: 14px; font-weight: 700; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg>보내기</button>
+</div>
+</div>
+</section>
+
+<section aria-label="판단 결과" style="display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700; flex-grow: 1">판단 결과</h2>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: #EFE9FB; color: #4A2A9A"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>사람 검토 대기</span>
+</div>
+<p style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; text-wrap: pretty">수요 예측은 AI가, 데이터 연결과 알림은 일반 개발이, 알림 기준은 영업기획팀이 맡는 혼합 업무입니다. 판매 데이터 보유 기간이 확인되면 개발할 수 있습니다.</p>
+<div class="mono" style="display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 11px; color: #6B6259">
+<span>run_7f3a2c · 실행 #2</span><span>정책 v14</span><span>Jev [모델 버전]</span><span>스키마 v3</span><span>10:03:12 저장</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px">
+<article style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 13px; font-weight: 600; color: #4A433B">AI 필요성</h3><span class="mono" style="font-size: 11px; color: #6B6259">Jev · Choice</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px">
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">필요</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">불필요</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #0E7C86; color: #FFFFFF; font-weight: 700">혼합</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">정보 부족</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.6; color: #3A332C">수요 예측에는 모델이 필요하고, 집계와 알림은 규칙과 일반 개발로 충분합니다.</p>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: auto">
+<div style="display: flex; justify-content: space-between; font-size: 11px"><span class="mono" style="color: #4A433B">confidence 0.81</span><a href="Review.dc.html" style="font-weight: 600">근거 2건</a></div>
+<div style="position: relative; height: 6px; border-radius: 3px; background: #EDE8E2"><div style="width: 81%; height: 6px; border-radius: 3px; background: #0E7C86"></div><div style="position: absolute; left: 75%; top: -3px; width: 2px; height: 12px; background: #B33F0E"></div></div>
+</div>
+</article>
+
+<article style="background: #FFFFFF; border: 1.5px solid #6941C6; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 13px; font-weight: 600; color: #4A433B">개발 가능성</h3><span class="mono" style="font-size: 11px; color: #6B6259">Jev · Choice</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px">
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">가능</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #0E7C86; color: #FFFFFF; font-weight: 700">조건부</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">현재 불가</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">정보 부족</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.6; color: #3A332C">전제: 병원별 판매 데이터 24개월 이상. 첨부 자료로는 보유 기간을 확인할 수 없습니다.</p>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: auto">
+<div style="display: flex; justify-content: space-between; font-size: 11px"><span class="mono" style="color: #4A2A9A; font-weight: 600">confidence 0.67 · 임계값 미만</span><a href="Review.dc.html" style="font-weight: 600">근거 1건</a></div>
+<div style="position: relative; height: 6px; border-radius: 3px; background: #EDE8E2"><div style="width: 67%; height: 6px; border-radius: 3px; background: #6941C6"></div><div style="position: absolute; left: 75%; top: -3px; width: 2px; height: 12px; background: #B33F0E"></div></div>
+</div>
+</article>
+
+<article style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 13px; font-weight: 600; color: #4A433B">긴급도</h3><span class="mono" style="font-size: 11px; color: #6B6259">Jev · Choice</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px">
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">긴급</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #0E7C86; color: #FFFFFF; font-weight: 700">일반</span>
+<span style="font-size: 11px; text-align: center; padding: 6px 0; border-radius: 4px; background: #F1ECE6; color: #6B6259">판단 보류</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.6; color: #3A332C">업무 중단이나 마감 기한이 언급되지 않았습니다. 다음 달 수요 예측이 목적입니다.</p>
+<div style="display: flex; flex-direction: column; gap: 6px; margin-top: auto">
+<div style="display: flex; justify-content: space-between; font-size: 11px"><span class="mono" style="color: #4A433B">confidence 0.88</span><a href="Review.dc.html" style="font-weight: 600">근거 1건</a></div>
+<div style="position: relative; height: 6px; border-radius: 3px; background: #EDE8E2"><div style="width: 88%; height: 6px; border-radius: 3px; background: #0E7C86"></div><div style="position: absolute; left: 75%; top: -3px; width: 2px; height: 12px; background: #B33F0E"></div></div>
+</div>
+</article>
+
+<article style="background: #F4F0FD; border: 1px solid #CDBEF3; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 13px; font-weight: 600; color: #4A2A9A">검토 필요</h3><span class="mono" style="font-size: 11px; color: #4A2A9A">정책 v14</span></div>
+<span style="font-size: 20px; font-weight: 700; color: #3B1F86">검토자에게 전달</span>
+<ul style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.5; color: #3A2A66">
+<li>개발 가능성 confidence 0.67이 검토 임계값 0.75보다 낮습니다.</li>
+<li>필요한 정보: 병원별 판매 데이터 보유 기간</li>
+</ul>
+<span style="font-size: 11px; color: #4A2A9A; margin-top: auto">confidence는 정답 보장이 아닌 Jev의 신뢰 신호입니다.</span>
+</article>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">담당 조직</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 10px; background: #FDF3EE; border: 1px solid #F7C3A9">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 14px; font-weight: 700">AI팀</span><span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: #F15921; color: #1B1712">주관</span></div>
+<span style="font-size: 13px; line-height: 1.5; color: #3A332C">예측 필요성, 데이터 적합성, 모델 성능 검토</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 10px; background: #FBFAF8; border: 1px solid #E6E1DA">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 14px; font-weight: 700">IT팀</span><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid #8C8378; color: #3A332C">협업</span></div>
+<span style="font-size: 13px; line-height: 1.5; color: #3A332C">데이터 연결, 알림 발송, 접근 권한 구현</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 10px; background: #FBFAF8; border: 1px solid #E6E1DA">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 14px; font-weight: 700">현업 · 영업기획</span><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid #8C8378; color: #3A332C">협업</span></div>
+<span style="font-size: 13px; line-height: 1.5; color: #3A332C">예측 활용 기준과 알림 대상 확정</span>
+</div>
+</div>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700; flex-grow: 1">업무 분담 <span style="font-weight: 500; color: #6B6259">· 승인 후 배정</span></h2>
+<div style="display: flex; gap: 10px; font-size: 12px; color: #4A433B; flex-wrap: wrap">
+<span style="display: flex; align-items: center; gap: 4px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: #0E7C86; color: #FFFFFF">AI</span>AI 2</span>
+<span style="display: flex; align-items: center; gap: 4px"><span style="font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; border: 1px solid #8C8378">일반</span>일반 기술 2</span>
+<span style="display: flex; align-items: center; gap: 4px"><span style="font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 999px; border: 1px solid #CDBEF3; background: #F4F0FD; color: #4A2A9A">사람</span>사람 1</span>
+</div>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 13px">
+<thead>
+<tr style="text-align: left; color: #6B6259; font-size: 12px">
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">업무</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">처리</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">담당</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">선행</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">산출물</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="color: #6B6259; margin-right: 8px">T1</span>예측 필요성·데이터 적합성 검토</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #0E7C86; color: #FFFFFF">AI</span></td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6">AI팀 <span style="font-size: 11px; color: #B33F0E; font-weight: 700">주관</span></td>
+<td class="mono" style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #6B6259">—</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #3A332C">적합성 검토서</td>
+</tr>
+<tr>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="color: #6B6259; margin-right: 8px">T2</span>판매 데이터 연결·월별 집계</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; border: 1px solid #8C8378">일반 기술</span></td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6">IT팀 <span style="font-size: 11px; color: #4A433B">협업</span></td>
+<td class="mono" style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #6B6259">—</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #3A332C">집계 테이블</td>
+</tr>
+<tr>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="color: #6B6259; margin-right: 8px">T3</span>예측 활용 기준·알림 대상 확정</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid #CDBEF3; background: #F4F0FD; color: #4A2A9A">사람</span></td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6">영업기획 <span style="font-size: 11px; color: #4A433B">협업</span></td>
+<td class="mono" style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #6B6259">—</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #3A332C">알림 기준서</td>
+</tr>
+<tr>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="color: #6B6259; margin-right: 8px">T4</span>수요 예측 모델 개발·성능 평가</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6"><span class="mono" style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #0E7C86; color: #FFFFFF">AI</span></td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6">AI팀 <span style="font-size: 11px; color: #B33F0E; font-weight: 700">주관</span></td>
+<td class="mono" style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6">T1, T2</td>
+<td style="padding: 12px 10px; border-bottom: 1px solid #F1ECE6; color: #3A332C">모델·평가 보고</td>
+</tr>
+<tr>
+<td style="padding: 12px 10px"><span class="mono" style="color: #6B6259; margin-right: 8px">T5</span>목표 미달 알림·접근 권한 구현</td>
+<td style="padding: 12px 10px"><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; border: 1px solid #8C8378">일반 기술</span></td>
+<td style="padding: 12px 10px">IT팀 <span style="font-size: 11px; color: #4A433B">협업</span></td>
+<td class="mono" style="padding: 12px 10px">T3, T4</td>
+<td style="padding: 12px 10px; color: #3A332C">알림 기능</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 12px">
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">원문 근거</h2>
+<a href="Review.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 10px; background: #FBFAF8; border: 1px solid #E6E1DA; text-decoration: none; color: #1B1712">
+<span class="mono" style="font-size: 11px; color: #B33F0E; font-weight: 600">판매실적_2026Q3.pdf · p.3 ¶2</span>
+<span style="font-size: 13px; line-height: 1.6">“병원별 월 판매량은 2025년 7월부터 집계되어 …”</span>
+</a>
+<a href="Review.dc.html" style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 10px; background: #FBFAF8; border: 1px solid #E6E1DA; text-decoration: none; color: #1B1712">
+<span class="mono" style="font-size: 11px; color: #B33F0E; font-weight: 600">요구사항_메모.md · 12–18행</span>
+<span style="font-size: 13px; line-height: 1.6">“목표 미달 병원은 담당자가 직접 확인할 수 있어야 함 …”</span>
+</a>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">추가로 필요한 정보</h2>
+<ul style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.6">
+<li>병원별 판매 데이터의 보유 기간과 저장 위치</li>
+<li>알림 채널: 메일, 메신저, 사내 시스템 중 무엇인지</li>
+</ul>
+<div style="display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border-radius: 8px; background: #FDF0EE; color: #8F1D14; font-size: 12px; line-height: 1.5">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>
+<span>분석에서 제외된 파일 1개: 거래처목록_스캔.pdf</span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap">
+<a href="Observatory.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; color: #1B1712; text-decoration: none; font-size: 14px; font-weight: 500">실행 흐름 보기</a>
+<a href="Review.dc.html" style="display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 8px; background: #0E7C86; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600">검토 화면에서 보기</a>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

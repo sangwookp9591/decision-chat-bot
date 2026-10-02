@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>실행 관찰</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.ob{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:1240px){.ob{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink" href="Tasks.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink on" href="Observatory.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink" href="Policy.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">최○○</span>
+<span style="font-size: 12px; color: #6B6259">운영자 · 플랫폼팀</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">Flow · Topology · Trace 재생</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">실행 관찰</h1>
+</div>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #1F5E3B; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 50%; background: #1F7A4D"></span>실시간 연결됨</span>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+
+<main style="padding: 24px 32px 56px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4A433B; font-weight: 600">요청<select style="min-height: 40px; min-width: 280px; border: 1px solid #D3CCC2; border-radius: 8px; padding: 0 10px; background: #FFFFFF; font-size: 13px; font-weight: 400"><option>REQ-2026-0142 · 병원별 수요 예측과 알림</option><option>REQ-2026-0140 · 품목 마스터 정합성 점검</option><option>REQ-2026-0139 · 출하 지시 중단 원인 확인</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4A433B; font-weight: 600">실행<select style="min-height: 40px; min-width: 220px; border: 1px solid #D3CCC2; border-radius: 8px; padding: 0 10px; background: #FFFFFF; font-size: 13px; font-weight: 400"><option>#2 run_7f3a2c · 검토 대기</option><option>#1 run_51c0e9 · 추가 질문으로 보류</option></select></label>
+<div role="group" aria-label="보기 방식" style="display: flex; border: 1px solid #D3CCC2; border-radius: 8px; overflow: hidden">
+<button type="button" aria-pressed="true" style="min-height: 40px; padding: 0 14px; border: 0; background: #0E7C86; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">과거 재생</button>
+<button type="button" aria-pressed="false" style="min-height: 40px; padding: 0 14px; border: 0; background: #FFFFFF; font-size: 13px; cursor: pointer">실시간</button>
+</div>
+<span style="font-size: 12px; color: #4A433B; margin-left: auto; max-width: 320px; line-height: 1.5">재생은 저장된 기록 조회입니다. 모델을 다시 부르거나 업무를 다시 배정하지 않습니다.</span>
+</div>
+
+<div class="ob">
+<section aria-label="실행 그래프" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; display: flex; flex-direction: column; min-width: 0">
+<div role="tablist" aria-label="그래프 종류" style="display: flex; gap: 4px; padding: 0 16px; border-bottom: 1px solid #E6E1DA; overflow-x: auto">
+<button type="button" role="tab" aria-selected="{{isFlow}}" onClick="{{showFlow}}" style="min-height: 48px; padding: 0 14px; border: 0; border-bottom: 2px solid {{tabFlowBd}}; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap">실행 Flow</button>
+<button type="button" role="tab" aria-selected="{{isBiz}}" onClick="{{showBiz}}" style="min-height: 48px; padding: 0 14px; border: 0; border-bottom: 2px solid {{tabBizBd}}; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap">업무 Topology</button>
+<button type="button" role="tab" aria-selected="{{isSvc}}" onClick="{{showSvc}}" style="min-height: 48px; padding: 0 14px; border: 0; border-bottom: 2px solid {{tabSvcBd}}; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap">서비스 Topology</button>
+</div>
+
+<sc-if value="{{isFlow}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 16px; border-bottom: 1px solid #E6E1DA; background: #FBFAF8">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{restart}}" aria-label="처음부터" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></button>
+<button type="button" onClick="{{toggle}}" aria-label="{{playLabel}}" style="height: 44px; padding: 0 18px 0 14px; border-radius: 8px; border: 0; background: #F15921; color: #1B1712; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; cursor: pointer">
+<sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4h3v16H7zM14 4h3v16h-3z"></path></svg></sc-if>
+<sc-if value="{{paused}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4 20 12 6 20z"></path></svg></sc-if>
+{{playLabel}}</button>
+<div role="group" aria-label="재생 속도" style="display: flex; border: 1px solid #D3CCC2; border-radius: 8px; overflow: hidden">
+<sc-for list="{{speeds}}" as="sp" hint-placeholder-count="4">
+<button type="button" onClick="{{sp.pick}}" aria-pressed="{{sp.on}}" class="mono" style="min-width: 44px; height: 42px; border: 0; background: {{sp.bg}}; color: {{sp.fg}}; font-size: 12px; font-weight: 600; cursor: pointer">{{sp.label}}</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{showAll}}" style="height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 500; cursor: pointer">전체 결과 보기</button>
+<div style="display: flex; flex-direction: column; margin-left: auto; text-align: right">
+<span class="mono" style="font-size: 15px; font-weight: 600">{{clock}}</span>
+<span style="font-size: 12px; color: #4A433B">{{stepLabel}}</span>
+</div>
+</div>
+<div style="display: flex; gap: 3px; align-items: stretch" role="group" aria-label="구간 이동">
+<sc-for list="{{segs}}" as="sg" hint-placeholder-count="10">
+<button type="button" onClick="{{sg.pick}}" aria-label="{{sg.aria}}" style="flex-grow: {{sg.grow}}; flex-basis: 0; min-width: 18px; height: 28px; border: 0; border-radius: 4px; background: {{sg.bg}}; cursor: pointer; padding: 0; color: {{sg.fg}}; font-size: 11px; font-weight: 600; overflow: hidden; white-space: nowrap">{{sg.text}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 18px; overflow-x: auto">
+<sc-for list="{{rows}}" as="row" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 11px; font-weight: 600; color: #6B6259; letter-spacing: 0.04em">{{row.title}}</span>
+<div style="display: flex; align-items: center; gap: 0; min-width: 760px">
+<sc-for list="{{row.cols}}" as="col" hint-placeholder-count="5">
+<sc-if value="{{col.arrow}}" hint-placeholder-val="{{ true }}">
+<svg width="24" height="16" viewBox="0 0 24 16" fill="none" stroke="#8C8378" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M2 8h18M15 3l5 5-5 5"></path></svg>
+</sc-if>
+<div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; flex-basis: 0; min-width: 132px">
+<sc-if value="{{col.parallel}}" hint-placeholder-val="{{ false }}"><span class="mono" style="font-size: 10px; color: #4A433B; font-weight: 600">병렬 ×{{col.count}}</span></sc-if>
+<sc-for list="{{col.nodes}}" as="n" hint-placeholder-count="1">
+<button type="button" onClick="{{n.pick}}" aria-pressed="{{n.sel}}" style="display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 10px; border-radius: 10px; border: {{n.border}}; background: {{n.bg}}; box-shadow: {{n.shadow}}; cursor: pointer; width: 100%">
+<span style="display: flex; justify-content: space-between; align-items: center; gap: 6px; width: 100%">
+<span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; background: {{n.kBg}}; color: {{n.kFg}}; border: {{n.kBd}}; border-radius: {{n.kRad}}; white-space: nowrap">{{n.kind}}</span>
+<span class="mono" style="font-size: 10px; color: #4A433B">{{n.dur}}</span>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.35">{{n.label}}</span>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: {{n.sColor}}">
+<sc-if value="{{n.isOk}}" hint-placeholder-val="{{ true }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+<sc-if value="{{n.isFail}}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></sc-if>
+<sc-if value="{{n.isReview}}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
+<sc-if value="{{n.isActive}}" hint-placeholder-val="{{ false }}"><span style="width: 8px; height: 8px; border-radius: 50%; background: #F15921"></span></sc-if>
+<sc-if value="{{n.isPending}}" hint-placeholder-val="{{ false }}"><span style="width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #8C8378"></span></sc-if>
+{{n.sLabel}}</span>
+<sc-if value="{{n.hasNote}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; line-height: 1.4; color: #3A332C">{{n.note}}</span></sc-if>
+</button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+
+<div style="display: flex; gap: 14px 18px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid #F1ECE6; font-size: 11px; color: #3A332C">
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; background: #0E7C86; color: #FFFFFF; border-radius: 4px">JEV</span>AI 판단</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; border: 1px solid #0E7C86; border-radius: 4px">LLM</span>생성 모델</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; background: #F1ECE6; border: 1px solid #D3CCC2">RULE</span>규칙</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; border: 1px solid #D3CCC2; border-radius: 4px; color: #4A433B">CODE</span>일반 코드</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 6px; border: 1px dashed #8C8378; border-radius: 4px; color: #4A433B">EXT</span>외부 서비스</span>
+<span style="display: flex; align-items: center; gap: 6px"><span class="mono" style="font-size: 10px; font-weight: 600; padding: 2px 8px; background: #F4F0FD; border: 1px solid #CDBEF3; border-radius: 999px; color: #4A2A9A">사람</span>사람</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBiz}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 16px">
+<span class="mono" style="font-size: 11px; color: #4A433B">Neo4j · (:Request)-[:HAS_TASK]→(:Task)-[:ASSIGNED_TO]→(:Team) · (:Task)-[:PRECEDES]→(:Task)</span>
+<div style="display: grid; grid-template-columns: minmax(150px, 1fr) minmax(0, 2fr) minmax(150px, 1fr); gap: 20px; align-items: center; overflow-x: auto">
+<div style="padding: 14px; border-radius: 10px; background: #0E7C86; color: #FFFFFF; display: flex; flex-direction: column; gap: 4px">
+<span class="mono" style="font-size: 11px; color: #FFFFFF">REQUEST</span>
+<span style="font-size: 14px; font-weight: 600">REQ-2026-0142</span>
+<span style="font-size: 12px; color: #FFFFFF">수요 예측과 알림 · 승인 전</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; border-radius: 8px; border: 1px solid #D3CCC2; font-size: 13px"><span><span class="mono" style="color: #6B6259; margin-right: 6px">T1</span>데이터 적합성 검토</span><span class="mono" style="font-size: 11px; color: #4A433B">→ AI팀 주관</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; border-radius: 8px; border: 1px solid #D3CCC2; font-size: 13px"><span><span class="mono" style="color: #6B6259; margin-right: 6px">T2</span>데이터 연결·집계</span><span class="mono" style="font-size: 11px; color: #4A433B">→ IT팀 협업</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; border-radius: 8px; border: 1px solid #D3CCC2; font-size: 13px"><span><span class="mono" style="color: #6B6259; margin-right: 6px">T3</span>알림 기준 확정</span><span class="mono" style="font-size: 11px; color: #4A433B">→ 현업 협업</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #F15921; background: #FDF3EE; font-size: 13px"><span><span class="mono" style="color: #6B6259; margin-right: 6px">T4</span>예측 모델 개발 <span class="mono" style="font-size: 11px; color: #8A2F09">← T1, T2</span></span><span class="mono" style="font-size: 11px; color: #4A433B">→ AI팀 주관</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #F15921; background: #FDF3EE; font-size: 13px"><span><span class="mono" style="color: #6B6259; margin-right: 6px">T5</span>미달 알림 구현 <span class="mono" style="font-size: 11px; color: #8A2F09">← T3, T4</span></span><span class="mono" style="font-size: 11px; color: #4A433B">→ IT팀 협업</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">AI팀</span><span class="mono" style="font-size: 11px; color: #4A433B">주관 2</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">IT팀</span><span class="mono" style="font-size: 11px; color: #4A433B">협업 2</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">현업 · 영업기획</span><span class="mono" style="font-size: 11px; color: #4A433B">협업 1</span></div>
+</div>
+</div>
+<span style="font-size: 12px; color: #4A433B">주황 테두리는 선행 업무가 있는 업무입니다. 이 그래프는 업무 책임 관계이며, 시스템 호출 관계는 서비스 Topology에서 봅니다.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{isSvc}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 12px; color: #4A433B">run_7f3a2c 동안 FastAPI가 호출한 서비스와 결과입니다.</span>
+<div style="display: flex; justify-content: center"><div style="padding: 14px 22px; border-radius: 10px; background: #0E7C86; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; gap: 2px"><span class="mono" style="font-size: 11px; color: #FFFFFF">CORE</span><span style="font-size: 15px; font-weight: 700">FastAPI</span></div></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 10px">
+<div style="padding: 12px; border-radius: 10px; border: 1.5px solid #F15921; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">Jev API</span><span class="mono" style="font-size: 11px; color: #3A332C">호출 4 · 재시도 1</span><span style="font-size: 11px; color: #8A2F09; font-weight: 600">시간초과 1회 후 복구</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">생성 모델 API</span><span class="mono" style="font-size: 11px; color: #3A332C">호출 2</span><span style="font-size: 11px; color: #1F5E3B; font-weight: 600">정상</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1.5px solid #B42318; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">문서 파서</span><span class="mono" style="font-size: 11px; color: #3A332C">파일 4 · 실패 1</span><span style="font-size: 11px; color: #B42318; font-weight: 600">스캔 PDF 미지원</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px dashed #8C8378; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">Neo4j</span><span class="mono" style="font-size: 11px; color: #3A332C">노드 9 · 관계 14 쓰기</span><span style="font-size: 11px; color: #1F5E3B; font-weight: 600">정상</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">SSE 채널</span><span class="mono" style="font-size: 11px; color: #3A332C">이벤트 14 발신</span><span style="font-size: 11px; color: #1F5E3B; font-weight: 600">연결 1 · 재연결 0</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #D3CCC2; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 700">Dynamic Config</span><span class="mono" style="font-size: 11px; color: #3A332C">정책 v14 고정</span><span style="font-size: 11px; color: #3A332C; font-weight: 600">실행 시작 시 선택</span></div>
+</div>
+</div>
+</sc-if>
+</section>
+
+<aside aria-label="Trace 상세" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="mono" style="font-size: 11px; color: #6B6259">TRACE · {{detail.id}}</span>
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">{{detail.title}}</h2>
+<span style="font-size: 12px; color: #4A433B">{{detail.kind}}</span>
+</div>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 0">
+<sc-for list="{{detail.rows}}" as="r" hint-placeholder-count="8">
+<div style="display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-bottom: 1px solid #F1ECE6">
+<dt style="font-size: 12px; color: #6B6259">{{r.k}}</dt>
+<dd style="margin: 0; font-size: 13px; line-height: 1.5; color: {{r.c}}">{{r.v}}</dd>
+</div>
+</sc-for>
+</dl>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px">
+<button type="button" style="min-height: 44px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">새 실행으로 다시 처리</button>
+<span style="font-size: 11px; color: #4A433B; line-height: 1.5">재생과 별개 동작입니다. 새 실행 ID가 만들어지고, 승인·배정은 중복되지 않습니다.</span>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  state = { step: 9, playing: false, speed: 1, sel: 'N9', view: 'flow' };
+  timer = null;
+
+  componentWillUnmount() { this.clear(); }
+
+  clear() {
+    if (this.timer) { clearInterval(this.timer); this.timer = null; }
+  }
+
+  run(speed) {
+    this.clear();
+    this.timer = setInterval(() => {
+      const n = this.state.step + 1;
+      if (n >= 9) { this.clear(); this.setState({ step: 9, playing: false }); }
+      else { this.setState({ step: n }); }
+    }, Math.round(1200 / speed));
+  }
+
+  toggle = () => {
+    if (this.state.playing) { this.clear(); this.setState({ playing: false }); return; }
+    const start = this.state.step >= 9 ? 0 : this.state.step;
+    this.setState({ step: start, playing: true });
+    this.run(this.state.speed);
+  };
+
+  restart = () => { this.clear(); this.setState({ step: 0, playing: false }); };
+  showAll = () => { this.clear(); this.setState({ step: 9, playing: false }); };
+
+  renderVals() {
+    const s = this.state;
+    const KIND = {
+      code: { k: 'CODE', bg: '#FFFFFF', fg: '#4A433B', bd: '1px solid #D3CCC2', r: '4px' },
+      jev: { k: 'JEV', bg: '#0E7C86', fg: '#FFFFFF', bd: '1px solid #0E7C86', r: '4px' },
+      llm: { k: 'LLM', bg: '#FFFFFF', fg: '#1B1712', bd: '1px solid #0E7C86', r: '4px' },
+      rule: { k: 'RULE', bg: '#F1ECE6', fg: '#3A332C', bd: '1px solid #D3CCC2', r: '0px' },
+      ext: { k: 'EXT', bg: '#FFFFFF', fg: '#4A433B', bd: '1px dashed #8C8378', r: '4px' },
+      human: { k: '사람', bg: '#F4F0FD', fg: '#4A2A9A', bd: '1px solid #CDBEF3', r: '999px' }
+    };
+    const ST = {
+      ok: { bd: '1px solid #CFC7BD', bg: '#FFFFFF', c: '#1F5E3B', l: '성공' },
+      fail: { bd: '1.5px solid #B42318', bg: '#FDF0EE', c: '#B42318', l: '실패' },
+      review: { bd: '1.5px solid #6941C6', bg: '#F4F0FD', c: '#4A2A9A', l: '검토 대기' },
+      active: { bd: '2px solid #F15921', bg: '#FFF7F2', c: '#B33F0E', l: '진행 중' },
+      pending: { bd: '1px dashed #B5ACA1', bg: '#FBFAF8', c: '#4A433B', l: '대기' }
+    };
+    const N = {
+      N1: { o: 0, kind: 'code', label: '접수', st: 'ok', dur: '0.25s' },
+      N2: { o: 1, kind: 'code', label: 'PDF 추출', st: 'ok', dur: '3.10s' },
+      N3: { o: 1, kind: 'code', label: 'DOCX 추출', st: 'ok', dur: '0.80s' },
+      N4: { o: 1, kind: 'code', label: 'MD 추출', st: 'ok', dur: '0.10s' },
+      N5: { o: 1, kind: 'code', label: '스캔 PDF 추출', st: 'fail', dur: '0.52s', note: '텍스트 레이어 없음' },
+      N6: { o: 2, kind: 'llm', label: '요청 정리', st: 'ok', dur: '4.20s' },
+      N7: { o: 3, kind: 'rule', label: '정책 규칙 검사', st: 'ok', dur: '0.15s' },
+      N8: { o: 4, kind: 'jev', label: 'AI 필요성', st: 'ok', dur: '6.80s', note: '혼합 · 0.81' },
+      N9: { o: 4, kind: 'jev', label: '개발 가능성', st: 'ok', dur: '18.16s', note: '조건부 · 0.67 · 재시도 1' },
+      N10: { o: 4, kind: 'jev', label: '긴급도', st: 'ok', dur: '5.90s', note: '일반 · 0.88' },
+      N11: { o: 4, kind: 'jev', label: '담당 조직', st: 'ok', dur: '7.40s', note: 'AI팀 주관 · 0.72' },
+      N12: { o: 5, kind: 'llm', label: '업무 분해', st: 'ok', dur: '5.30s', note: '업무 5 · 선행 4' },
+      N13: { o: 6, kind: 'ext', label: '판단 저장 · Neo4j', st: 'ok', dur: '0.32s' },
+      N14: { o: 7, kind: 'rule', label: '검토 전환', st: 'ok', dur: '0.08s', note: '0.67 < 0.75' },
+      N15: { o: 8, kind: 'human', label: '사람 검토', st: 'review', dur: '2:14:06', note: '김○○ · 대기 중' },
+      N16: { o: 99, kind: 'code', label: '업무 배정', st: 'pending', dur: '—', note: '승인 전 배정 불가' }
+    };
+    const mk = (id) => {
+      const d = N[id];
+      let st = d.st;
+      if (d.o !== 99) {
+        if (s.step < 9 && d.o === s.step) st = 'active';
+        else if (s.step < 9 && d.o > s.step) st = 'pending';
+      }
+      const k = KIND[d.kind];
+      const v = ST[st];
+      const sel = s.sel === id;
+      let shadow = 'none';
+      if (st === 'active') shadow = '0 0 0 4px #FDE1D3';
+      if (sel) shadow = '0 0 0 2px #FFFFFF, 0 0 0 4px #0E7C86';
+      return {
+        id, label: d.label, dur: d.dur, kind: k.k, kBg: k.bg, kFg: k.fg, kBd: k.bd, kRad: k.r,
+        border: v.bd, bg: v.bg, sColor: v.c, sLabel: v.l, shadow, sel,
+        isOk: st === 'ok', isFail: st === 'fail', isReview: st === 'review', isActive: st === 'active', isPending: st === 'pending',
+        hasNote: !!d.note && st !== 'pending' && st !== 'active' || (d.o === 99 && !!d.note), note: d.note || '',
+        pick: () => this.setState({ sel: id })
+      };
+    };
+    const col = (ids, i) => ({ arrow: i > 0, parallel: ids.length > 1, count: ids.length, nodes: ids.map(mk) });
+    const rows = [
+      { title: '1 · 접수와 판단', cols: [['N1'], ['N2', 'N3', 'N4', 'N5'], ['N6'], ['N7'], ['N8', 'N9', 'N10', 'N11']].map(col) },
+      { title: '2 · 분해, 저장, 검토와 배정', cols: [['N12'], ['N13'], ['N14'], ['N15'], ['N16']].map(col) }
+    ];
+
+    const times = ['10:02:41.120', '10:02:41.380', '10:02:44.610', '10:02:48.900', '10:02:49.050', '10:03:07.400', '10:03:12.700', '10:03:13.020', '10:03:13.100', '12:17:04'];
+    const labels = ['접수', '내용 추출 · 병렬 4', '요청 정리', '정책 규칙 검사', 'Jev 판단 · 병렬 4', '업무 분해', '판단 저장', '검토 전환', '사람 검토 대기 2:14:06 · 압축 재생', '전체 결과 · 현재 검토 대기 중'];
+    const segs = labels.slice(0, 9).map((l, i) => {
+      let bg = '#E6E1DA', fg = '#4A433B';
+      if (i < s.step) { bg = '#0E7C86'; fg = '#FFFFFF'; }
+      if (i === s.step) { bg = '#F15921'; fg = '#1B1712'; }
+      if (i === 8 && s.step <= 8) { bg = i === s.step ? '#F15921' : 'repeating-linear-gradient(45deg, #CDBEF3 0 4px, #F4F0FD 4px 8px)'; fg = '#3B1F86'; }
+      if (i === 8 && s.step === 9) { bg = '#6941C6'; fg = '#FFFFFF'; }
+      if (i === 1 && s.step > 1) { bg = 'linear-gradient(90deg, #0E7C86 0 75%, #B42318 75% 100%)'; }
+      return { grow: i === 8 ? 5 : (i === 4 ? 2 : 1), bg, fg, text: i === 8 ? '사람 대기 2:14:06 (압축)' : '', aria: (i + 1) + '단계로 이동: ' + l, pick: () => { this.clear(); this.setState({ step: i, playing: false }); } };
+    });
+    const speeds = [0.5, 1, 2, 4].map((v) => ({
+      label: v + '×', on: s.speed === v, bg: s.speed === v ? '#0E7C86' : '#FFFFFF', fg: s.speed === v ? '#FFFFFF' : '#1B1712',
+      pick: () => { this.setState({ speed: v }); if (this.state.playing) this.run(v); }
+    }));
+
+    const D = '#1B1712', R = '#B42318', P = '#4A2A9A';
+    const DETAIL = {
+      N1: { title: '접수', kind: '일반 코드 · FastAPI', rows: [['실행', 'run_7f3a2c · step_01'], ['시작', '10:02:41.120'], ['종료', '10:02:41.372 · 0.25초'], ['입력', '텍스트 61자 · 첨부 4개 3.1 MiB'], ['출력', '요청 ID 발급 · 상태 저장'], ['버전', 'API v1.4 · 정책 v14']] },
+      N2: { title: 'PDF 추출', kind: '일반 코드 · 문서 파서', rows: [['실행', 'run_7f3a2c · step_02a'], ['시작', '10:02:41.380'], ['종료', '10:02:44.480 · 3.10초'], ['입력', '판매실적_2026Q3.pdf · 12쪽'], ['출력', '텍스트 18,204자'], ['버전', '파서 v2.1']] },
+      N3: { title: 'DOCX 추출', kind: '일반 코드 · 문서 파서', rows: [['실행', 'run_7f3a2c · step_02b'], ['소요', '0.80초'], ['입력', '알림대상_기준.docx'], ['출력', '텍스트 2,113자']] },
+      N4: { title: 'MD 추출', kind: '일반 코드 · 문서 파서', rows: [['실행', 'run_7f3a2c · step_02c'], ['소요', '0.10초'], ['입력', '요구사항_메모.md'], ['출력', '텍스트 1,020자']] },
+      N5: { title: '스캔 PDF 추출', kind: '일반 코드 · 문서 파서', rows: [['실행', 'run_7f3a2c · step_02d'], ['소요', '0.52초'], ['입력', '거래처목록_스캔.pdf'], ['오류', '텍스트 레이어 없음 · OCR 미지원 범위', R], ['재시도', '없음 · 재시도해도 결과 동일'], ['사용자 선택', '나머지 3개로 분석 · 10:02']] },
+      N6: { title: '요청 정리', kind: '생성 모델', rows: [['실행', 'run_7f3a2c · step_03'], ['소요', '4.20초'], ['입력', '추출 텍스트 21,337자 + 대화 2턴'], ['출력', '정리된 요청 1,842자'], ['버전', '모델 [생성 모델 버전] · 프롬프트 v5']] },
+      N7: { title: '정책 규칙 검사', kind: '규칙 · Dynamic Config', rows: [['실행', 'run_7f3a2c · step_04'], ['소요', '0.15초'], ['결과', '영향 큰 업무 키워드 없음 · 입력 한도 통과'], ['버전', '정책 v14']] },
+      N8: { title: 'AI 필요성 판단', kind: 'Jev · Choice', rows: [['실행', 'run_7f3a2c · step_05a'], ['소요', '6.80초'], ['값', '혼합'], ['confidence', '0.81'], ['근거', '요구사항_메모.md 12–18행'], ['버전', '질문 ai_need v3 · Jev [모델 버전]']] },
+      N9: { title: '개발 가능성 판단', kind: 'Jev · Choice', rows: [['실행', 'run_7f3a2c · step_05b'], ['시작', '10:02:49.050'], ['종료', '10:03:07.210 · 18.16초'], ['값', '조건부 가능'], ['confidence', '0.67 · 임계값 0.75 미만', P], ['검토 전환', '신뢰 신호 낮음 → 사람 검토', P], ['근거', '판매실적_2026Q3.pdf p.3 ¶2'], ['오류·재시도', '1차 시간초과 12.0초 → 재시도 1회 성공', R], ['버전', '정책 v14 · 스키마 v3 · Jev [모델 버전]']] },
+      N10: { title: '긴급도 판단', kind: 'Jev · Choice', rows: [['실행', 'run_7f3a2c · step_05c'], ['소요', '5.90초'], ['값', '일반'], ['confidence', '0.88'], ['근거', '마감·업무 중단 언급 없음']] },
+      N11: { title: '담당 조직 판단', kind: 'Jev · Choice', rows: [['실행', 'run_7f3a2c · step_05d'], ['소요', '7.40초'], ['값', '주관 AI팀 · 협업 IT팀, 영업기획'], ['confidence', '0.72']] },
+      N12: { title: '업무 분해', kind: '생성 모델', rows: [['실행', 'run_7f3a2c · step_06'], ['소요', '5.30초'], ['출력', '업무 5건 · 선행 관계 4건'], ['방식', 'AI 2 · 일반 기술 2 · 사람 1']] },
+      N13: { title: '판단 저장', kind: '외부 서비스 · Neo4j', rows: [['실행', 'run_7f3a2c · step_07'], ['소요', '0.32초'], ['출력', '노드 9 · 관계 14'], ['멱등 키', 'req_0142:run_7f3a2c']] },
+      N14: { title: '검토 전환', kind: '규칙 · Dynamic Config', rows: [['실행', 'run_7f3a2c · step_08'], ['규칙', 'review.threshold = 0.75'], ['결과', '개발 가능성 0.67 < 0.75 → 검토', P], ['버전', '정책 v14']] },
+      N15: { title: '사람 검토', kind: '사람', rows: [['실행', 'run_7f3a2c · step_09'], ['검토자', '김○○ · 디지털혁신실'], ['대기 시작', '10:03:13'], ['대기 시간', '2시간 14분 6초 · 진행 중', P], ['결정', '아직 없음'], ['이력', '12:17 열람']] },
+      N16: { title: '업무 배정', kind: '일반 코드', rows: [['상태', '미실행'], ['사유', '검토 필요 요청은 승인 전 배정 불가', D], ['다음', '승인 시 업무 5건 생성 · 1회만']] }
+    };
+    const dd = DETAIL[s.sel] || DETAIL.N9;
+    const detail = { id: s.sel, title: dd.title, kind: dd.kind, rows: dd.rows.map((r) => ({ k: r[0], v: r[1], c: r[2] || '#1B1712' })) };
+
+    const tb = (on) => (on ? '#F15921' : 'transparent');
+    return {
+      rows, segs, speeds, detail,
+      playing: s.playing, paused: !s.playing,
+      playLabel: s.playing ? '일시정지' : '재생',
+      clock: times[s.step], stepLabel: labels[s.step],
+      toggle: this.toggle, restart: this.restart, showAll: this.showAll,
+      isFlow: s.view === 'flow', isBiz: s.view === 'biz', isSvc: s.view === 'svc',
+      tabFlowBd: tb(s.view === 'flow'), tabBizBd: tb(s.view === 'biz'), tabSvcBd: tb(s.view === 'svc'),
+      showFlow: () => this.setState({ view: 'flow' }),
+      showBiz: () => this.setState({ view: 'biz' }),
+      showSvc: () => this.setState({ view: 'svc' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>정책 관리</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.pg{display:grid;grid-template-columns:240px minmax(0,1fr) 320px;gap:20px;align-items:start}
+@media (max-width:1280px){.pg{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink" href="Tasks.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink" href="Observatory.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink on" href="Policy.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">최○○</span>
+<span style="font-size: 12px; color: #6B6259">운영자 · 정책 편집 권한</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">Dynamic Config</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">정책</h1>
+</div>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+
+<main style="padding: 24px 32px 56px">
+<div class="pg">
+<nav aria-label="정책 종류" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px">
+<a href="Policy.dc.html" aria-current="page" style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 10px; background: #FDF3EE; border: 1.5px solid #F15921; text-decoration: none; color: #1B1712"><span style="font-size: 14px; font-weight: 700">검토 전환 기준</span><span class="mono" style="font-size: 11px; color: #4A433B">review · v14 적용 중</span></a>
+<a href="Policy.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 10px; text-decoration: none; color: #1B1712"><span style="font-size: 14px; font-weight: 600">담당 조직 라우팅</span><span class="mono" style="font-size: 11px; color: #4A433B">routing · v9</span></a>
+<a href="Policy.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 10px; text-decoration: none; color: #1B1712"><span style="font-size: 14px; font-weight: 600">입력 한도</span><span class="mono" style="font-size: 11px; color: #4A433B">limits · v3</span></a>
+<a href="Policy.dc.html" style="display: flex; flex-direction: column; gap: 2px; padding: 12px; border-radius: 10px; text-decoration: none; color: #1B1712"><span style="font-size: 14px; font-weight: 600">기능 플래그</span><span class="mono" style="font-size: 11px; color: #4A433B">features · v6</span></a>
+</nav>
+
+<section aria-label="정책 편집" style="display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700; flex-grow: 1">검토 전환 기준</h2>
+<span class="mono" style="font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: #F1ECE6">v14 → v15 초안</span>
+</div>
+<label style="display: flex; flex-direction: column; gap: 8px">
+<span style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600">confidence 검토 임계값<span class="mono" style="font-weight: 600">0.75 → <span style="color: #8A2F09">0.70</span></span></span>
+<input type="range" min="0.5" max="0.95" step="0.01" value="0.70" style="accent-color: #F15921; width: 100%">
+<span style="font-size: 12px; color: #4A433B">AI 필요성 · 개발 가능성 · 긴급도 · 담당 조직 중 하나라도 이 값보다 낮으면 사람 검토로 보냅니다.</span>
+</label>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">항상 검토로 보내는 업무</legend>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">임상</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">안전성 · 약물감시</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">규제 · 인허가</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">긴급도 “긴급”</label>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">변경 사유 (필수)
+<textarea rows="2" style="resize: vertical; border: 1px solid #D3CCC2; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 400; line-height: 1.5">검토 대기 p95가 4시간을 넘어 임계값을 낮춥니다. 2주 후 오분류율과 함께 재평가합니다.</textarea>
+</label>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 700">변경 내용</h3>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #1F5E3B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>스키마 검증 통과</span>
+</div>
+<div class="mono" style="border-radius: 10px; overflow: hidden; border: 1px solid #E6E1DA; font-size: 12px; line-height: 1.9">
+<div style="padding: 0 14px; background: #FBFAF8; color: #4A433B">review:</div>
+<div style="padding: 0 14px; background: #FDF0EE; color: #8F1D14">-  threshold: 0.75</div>
+<div style="padding: 0 14px; background: #EDF7F1; color: #1F5E3B">+  threshold: 0.70</div>
+<div style="padding: 0 14px; background: #FBFAF8; color: #4A433B">   always_review: [clinical, safety, regulatory, urgent]</div>
+<div style="padding: 0 14px; background: #FBFAF8; color: #4A433B">   assign_before_approval: false</div>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: #F6F4F1; font-size: 13px; line-height: 1.6">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A433B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg>
+<span>진행 중인 실행 3건은 v14로 끝까지 처리합니다. 게시 후 시작하는 실행부터 v15를 씁니다. 과거 판단은 바뀌지 않습니다.</span>
+</div>
+<div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap">
+<button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 14px; cursor: pointer">초안 버리기</button>
+<button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 0; background: #F15921; color: #1B1712; font-size: 14px; font-weight: 700; cursor: pointer">v15 게시</button>
+</div>
+</div>
+</section>
+
+<aside aria-label="버전 이력" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">버전 이력</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<li style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 10px; border: 1.5px solid #0E7C86">
+<span style="display: flex; justify-content: space-between; align-items: center"><span class="mono" style="font-weight: 600">v14</span><span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: #0E7C86; color: #FFFFFF">적용 중</span></span>
+<span style="font-size: 12px; color: #4A433B">09-30 14:12 · 최○○</span>
+<span style="font-size: 13px">긴급 요청 항상 검토 추가</span>
+<span class="mono" style="font-size: 11px; color: #6B6259">실행 412건</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA">
+<span style="display: flex; justify-content: space-between; align-items: center"><span class="mono" style="font-weight: 600">v13</span><button type="button" style="min-height: 32px; padding: 0 10px; border-radius: 6px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 12px; cursor: pointer">이 버전으로 되돌리기</button></span>
+<span style="font-size: 12px; color: #4A433B">09-22 10:05 · 최○○</span>
+<span style="font-size: 13px">임계값 0.80 → 0.75</span>
+<span class="mono" style="font-size: 11px; color: #6B6259">실행 1,038건</span>
+</li>
+<li style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA">
+<span style="display: flex; justify-content: space-between; align-items: center"><span class="mono" style="font-weight: 600">v12</span><button type="button" style="min-height: 32px; padding: 0 10px; border-radius: 6px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 12px; cursor: pointer">이 버전으로 되돌리기</button></span>
+<span style="font-size: 12px; color: #4A433B">09-15 16:40 · 윤○○</span>
+<span style="font-size: 13px">규제·인허가 항상 검토 추가</span>
+<span class="mono" style="font-size: 11px; color: #6B6259">실행 877건</span>
+</li>
+</ol>
+<span style="font-size: 12px; color: #4A433B; line-height: 1.5">되돌리기도 새 버전으로 기록됩니다. 모든 변경은 감사 이력에 남습니다.</span>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
