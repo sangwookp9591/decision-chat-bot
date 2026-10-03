@@ -1,4 +1,4 @@
-.PHONY: up down api worker collector watchdog web test lint typecheck build backup restore
+.PHONY: up down api worker collector watchdog retention web test lint typecheck build backup restore
 up:
 	docker compose up -d neo4j
 down:
@@ -11,6 +11,8 @@ collector:
 	cd backend && .venv/bin/python -m jevtriage.journal.collector
 watchdog:
 	cd backend && .venv/bin/python -m jevtriage.journal.watchdog
+retention:
+	cd backend && .venv/bin/python -m jevtriage.ops.retention $(RETENTION_ARGS)
 web:
 	cd frontend && npm run dev
 test:
