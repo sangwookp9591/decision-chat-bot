@@ -53,6 +53,15 @@ def _parse_stored_file(path: Path, filename: str, content_type: str | None):
         staged.unlink(missing_ok=True)
 
 
+def _store_upload_capturing_too_large(stream, tenant_id, data_dir):
+    try:
+        return store_upload(stream, tenant_id, data_dir)
+    except ValueError as exc:
+        if str(exc) != "too_large":
+            raise
+        return exc
+
+
 async def reanalyze(principal, request_id: str, expected_revision: int,
                     reason: str | None, key: str) -> dict:
     """Start a new run against the current confirmed input revision."""
@@ -121,14 +130,14 @@ async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
             upload.file.seek(0)
         if declared > 25 * 1024 * 1024:
             raise ValueError("too_many_bytes")
+        stored_uploads = await asyncio.gather(*(
+            asyncio.to_thread(_store_upload_capturing_too_large, upload.file, tenant_id, data_dir)
+            for upload in files
+        ))
         total_bytes = 0
         total_chars = len(text)
-        for upload in files:
-            try:
-                path, sha, size = store_upload(upload.file, tenant_id, data_dir)
-            except ValueError as exc:
-                if str(exc) != "too_large":
-                    raise
+        for upload, stored in zip(files, stored_uploads):
+            if isinstance(stored, ValueError):
                 upload.file.seek(0, 2)
                 rejected_size = upload.file.tell()
                 upload.file.seek(0)
@@ -146,6 +155,7 @@ async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
                     }
                 )
                 continue
+            path, sha, size = stored
             total_bytes += size
             parsed = await asyncio.to_thread(
                 _parse_stored_file, path, upload.filename or "upload", upload.content_type)
@@ -350,8 +360,11 @@ async def _revise_impl(principal, request_id: str, expected_revision: int, text:
     chars = len(text)
     if len(files) > 5:
         raise ValueError("too_many_attachments")
-    for upload in files:
-        path, sha, size = store_upload(upload.file, principal.tenant_id, get_settings().data_dir)
+    stored_uploads = await asyncio.gather(*(
+        asyncio.to_thread(store_upload, upload.file, principal.tenant_id, get_settings().data_dir)
+        for upload in files
+    ))
+    for upload, (path, sha, size) in zip(files, stored_uploads):
         total += size
         parsed = await asyncio.to_thread(
             _parse_stored_file, path, upload.filename or "upload", upload.content_type)

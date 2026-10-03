@@ -58,6 +58,15 @@ def store_upload(
         raise
 
 
+def hash_file(path: str | Path) -> str:
+    """Return the SHA-256 hex digest of a file, streaming in 1 MiB chunks."""
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def cleanup_temporary_files(data_dir: str | Path, *, older_than_seconds: int = 0) -> int:
     """Remove abandoned .upload-*.tmp files below DATA_DIR/files."""
     base = Path(data_dir) / "files"

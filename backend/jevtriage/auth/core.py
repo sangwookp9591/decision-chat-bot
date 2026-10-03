@@ -1,5 +1,6 @@
 """Tenant scoped authentication, authorization, and persisted sessions."""
 
+import asyncio
 import hashlib
 import secrets
 from dataclasses import dataclass
@@ -74,12 +75,12 @@ async def authenticate(email: str, password: str) -> dict[str, Any] | None:
     if not row:
         # Keep the failure path computationally similar without revealing account existence.
         try:
-            _hasher.verify(_DUMMY_PASSWORD_HASH, password)
+            await asyncio.to_thread(_hasher.verify, _DUMMY_PASSWORD_HASH, password)
         except (VerifyMismatchError, InvalidHashError):
             return None
         return None
     try:
-        if not _hasher.verify(row["password_hash"], password):
+        if not await asyncio.to_thread(_hasher.verify, row["password_hash"], password):
             return None
     except (VerifyMismatchError, VerificationError, InvalidHashError):
         return None
@@ -129,6 +130,7 @@ async def get_principal(request: Request, token: str | None = Depends(_cookie)) 
     if not resolved:
         raise HTTPException(status_code=401, detail="Authentication required")
     principal, csrf = resolved
+    request.state.principal = principal
     request.state.csrf_token = csrf
     request.state.session_token = token
     return principal
@@ -155,6 +157,11 @@ def can_review(principal: Principal, meta: dict[str, Any]) -> bool:
     return can_view_request(principal, meta) and bool({"reviewer", "team_member"}.intersection(principal.roles))
 
 
+def can_read_learning_request(principal: Principal, meta: dict[str, Any]) -> bool:
+    return can_view_request(principal, meta) and bool(
+        {"rule_admin", "operator"}.intersection(principal.roles) or can_review(principal, meta))
+
+
 def scope_filter_cypher(principal: Principal) -> str:
     """Return a Cypher predicate for variables `r` and `principal_org_ids`."""
     if "operator" in principal.roles:
@@ -165,7 +172,13 @@ def scope_filter_cypher(principal: Principal) -> str:
 async def enforce_csrf(request: Request) -> None:
     if request.method in {"GET", "HEAD", "OPTIONS"}:
         return
-    resolved = await session_principal(request.cookies.get("jev_session"))
+    cached_principal = getattr(request.state, "principal", None)
+    cached_csrf = getattr(request.state, "csrf_token", None)
+    resolved = ((cached_principal, cached_csrf) if cached_principal and cached_csrf
+                else await session_principal(request.cookies.get("jev_session")))
+    if resolved:
+        request.state.principal, request.state.csrf_token = resolved
+        request.state.session_token = request.cookies.get("jev_session")
     supplied = request.headers.get("X-CSRF-Token")
     cookie_token = request.cookies.get("jev_csrf")
     if (not resolved or not supplied or not cookie_token

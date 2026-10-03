@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from jevtriage.auth.core import (
     Principal,
+    _token_hash,
     authenticate,
     create_session,
     enforce_csrf,
@@ -49,7 +50,8 @@ async def login(body: LoginBody, request: Request, response: Response):
         max_age=43200,
         path="/",
     )
-    resolved = await session_principal(token)
+    csrf_token = getattr(request.state, "csrf_token", None)
+    resolved = (None, csrf_token) if csrf_token else await session_principal(token)
     response.set_cookie(
         "jev_csrf",
         resolved[1],
@@ -71,7 +73,7 @@ async def logout(request: Request, response: Response):
             await (
                 await session.run(
                     "MATCH (s:Session {token_hash:$hash}) DETACH DELETE s",
-                    hash=__import__("hashlib").sha256(token.encode()).hexdigest(),
+                    hash=_token_hash(token),
                 )
             ).consume()
     response.delete_cookie("jev_session", path="/")
@@ -81,7 +83,7 @@ async def logout(request: Request, response: Response):
 
 @router.get("/me")
 async def me(request: Request, principal: Principal = Depends(get_principal)):  # noqa: B008
-    resolved = await session_principal(request.cookies.get("jev_session"))
+    csrf_token = getattr(request.state, "csrf_token", None)
     driver = await get_driver()
     async with driver.session() as session:
         record = await (
@@ -99,5 +101,5 @@ async def me(request: Request, principal: Principal = Depends(get_principal)):  
         "org_ids": principal.org_ids,
         "roles": sorted(principal.roles),
         "can_read_source": principal.can_read_source,
-        "csrf_token": resolved[1] if resolved else None,
+        "csrf_token": csrf_token,
     }

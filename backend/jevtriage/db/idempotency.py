@@ -1,13 +1,20 @@
 """Atomic idempotency reservation and result storage in the caller's transaction."""
 
+import hashlib
 import json
 
 from jevtriage.db.tx import write_tx
 from jevtriage.domain.ids import new_id
+from jevtriage.domain.serialize import dumps
 
 
 class IdempotencyConflict(ValueError):
     status_code = 409
+
+
+def payload_hash(payload) -> str:
+    """Hash canonical JSON. Verify against each legacy caller's hash before migrating it."""
+    return hashlib.sha256(dumps(payload).encode()).hexdigest()
 
 
 async def get_or_create_in_tx(tx, tenant_id: str, scope: str, key: str, payload_hash: str, create_result):
@@ -30,10 +37,17 @@ async def get_or_create_in_tx(tx, tenant_id: str, scope: str, key: str, payload_
         "MATCH (i:Idempotency {tenant_id: $tenant_id, scope: $scope, key: $key}) "
         "SET i.result_json = $result_json",
         tenant_id=tenant_id, scope=scope, key=key,
-        result_json=json.dumps(value, ensure_ascii=False, separators=(",", ":")),
+        result_json=dumps(value),
     )).consume()
     return value
 
 
 async def get_or_create(tenant_id: str, scope: str, key: str, payload_hash: str, create_result):
     return await write_tx(tenant_id, lambda tx: get_or_create_in_tx(tx, tenant_id, scope, key, payload_hash, create_result))
+
+
+async def idempotent_write(tenant_id: str, scope: str, key: str, payload, create_fn):
+    """Run a payload-hashed idempotent write; conflicts propagate unchanged."""
+    digest = payload_hash(payload)
+    return await write_tx(tenant_id, lambda tx: get_or_create_in_tx(
+        tx, tenant_id, scope, key, digest, create_fn))

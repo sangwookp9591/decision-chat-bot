@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import multiprocessing
 import os
 import signal
@@ -8,6 +7,8 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
+
+from jevtriage.ingest.files import hash_file
 
 Status = Literal["ok", "rejected"]
 Reason = Literal[
@@ -64,11 +65,7 @@ class _Rejected(Exception):
 
 
 def _hash(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return hash_file(path)
 
 
 def _kind(path: Path) -> str:

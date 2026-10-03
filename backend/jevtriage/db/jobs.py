@@ -1,9 +1,7 @@
 """Lease primitives. Call verify_owner_in_tx inside every result-writing transaction."""
 
-from neo4j import AsyncTransaction
-
 from jevtriage.db.locks import lock_node_in_tx
-from jevtriage.db.tx import write_tx
+from jevtriage.db.tx import db_now_in_tx, write_tx
 from jevtriage.domain.ids import new_id
 
 
@@ -32,7 +30,7 @@ async def claim_or_takeover(tenant_id: str, job_id: str, owner_id: str, lease_se
 
     async def op(tx):
         job = await lock_node_in_tx(tx, tenant_id, "Job", job_id)
-        now = await _now(tx)
+        now = await db_now_in_tx(tx)
         if job["status"] not in ("pending", "running"):
             raise OwnershipLost("job is terminal")
         if job["status"] == "running" and job["lease_expires_at"] > now:
@@ -51,14 +49,9 @@ async def claim_or_takeover(tenant_id: str, job_id: str, owner_id: str, lease_se
     return await write_tx(tenant_id, op)
 
 
-async def _now(tx: AsyncTransaction):
-    result = await tx.run("RETURN datetime() AS now")
-    return (await result.single(strict=True))["now"]
-
-
-async def verify_owner_in_tx(tx: AsyncTransaction, tenant_id: str, job_id: str, owner_id: str, generation: int) -> None:
+async def verify_owner_in_tx(tx, tenant_id: str, job_id: str, owner_id: str, generation: int) -> None:
     job = await lock_node_in_tx(tx, tenant_id, "Job", job_id)
-    now = await _now(tx)
+    now = await db_now_in_tx(tx)
     if (job["status"] != "running" or job["owner_id"] != owner_id
             or job["lease_generation"] != generation or job["lease_expires_at"] <= now):
         raise OwnershipLost("job lease ownership lost")
