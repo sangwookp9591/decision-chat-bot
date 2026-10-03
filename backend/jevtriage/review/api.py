@@ -11,6 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from jevtriage.auth.core import Principal, can_review, get_principal
 from jevtriage.auth.policy import redact_source
 from jevtriage.db.tx import read_tx
+from jevtriage.judgment.store import draft_created_by, draft_source
 from jevtriage.review.service import ReviewError, decide, required_reviewer_org
 from jevtriage.review.store import decode, get_review, list_reviews
 
@@ -65,6 +66,8 @@ def _draft(row: dict) -> dict:
         task["predecessors"] = decode(task.get("predecessors"), [])
         tasks.append(task)
     d["tasks"] = tasks
+    d["source"] = draft_source(d["draft_version"])
+    d["created_by"] = draft_created_by(d, tasks)
     return d
 
 
@@ -137,9 +140,15 @@ async def review_detail(review_id: str,
         for correction in decision["corrections"]:
             if correction["field"] in final_classifications:
                 final_classifications[correction["field"]] = correction["corrected_value"]
+    drafts = [_draft(row) for row in data["drafts"]]
+    # AI 원안(최초 버전)과 검토 기준 초안(검토 상태의 현재 버전)을 구분해 돌려준다.
+    original_draft = drafts[0] if drafts else None
+    current_draft = next((d for d in drafts if d["draft_version"] == v["draft_version"]),
+                         drafts[-1] if drafts else None)
     return redact_source(principal, {"review":v, "request":request, "judgment":judgment,
             "outputs":[_output(row, principal.can_read_source) for row in data["outputs"]],
-            "drafts":[_draft(row) for row in data["drafts"]], "history":history,
+            "drafts":drafts, "original_draft":original_draft, "current_draft":current_draft,
+            "history":history,
             "review_version":v["review_version"],
             "final_classifications":final_classifications,
             "final_draft_version":v["draft_version"]})

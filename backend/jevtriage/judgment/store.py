@@ -170,6 +170,16 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
     return judgment_id
 
 
+def draft_source(draft_version: int) -> str:
+    """v1은 AI 원안, 이후 버전은 검토자가 만든 수정 초안이다."""
+    return "ai" if draft_version <= 1 else "reviewer"
+
+
+def draft_created_by(draft: dict, tasks: list[dict]) -> str:
+    return draft.get("author") or next(
+        (t["author"] for t in tasks if t.get("author")), None) or "ai"
+
+
 async def get_judgment(tenant_id: str, request_id: str, run_id: str) -> dict | None:
     async def op(tx):
         row = await (await tx.run(
@@ -190,8 +200,9 @@ async def get_judgment(tenant_id: str, request_id: str, run_id: str) -> dict | N
             tenant_id=tenant_id, run_id=run_id, judgment_id=j["id"],
         )).data()
         drafts = await (await tx.run(
-            "MATCH (t:DraftTask {tenant_id:$tenant_id,run_id:$run_id})-[:IN_DRAFT]->"
-            "(d:Draft {tenant_id:$tenant_id,run_id:$run_id}) RETURN t ORDER BY t.id",
+            "MATCH (d:Draft {tenant_id:$tenant_id,run_id:$run_id}) "
+            "OPTIONAL MATCH (t:DraftTask {tenant_id:$tenant_id})-[:IN_DRAFT]->(d) "
+            "WITH d,t ORDER BY t.id RETURN d,collect(t) AS tasks ORDER BY d.draft_version",
             tenant_id=tenant_id, run_id=run_id,
         )).data()
         review = await (await tx.run(

@@ -60,8 +60,8 @@ async def sample(tenant: str):
             "CREATE (j:Judgment {id:$id,tenant_id:$tenant,request_id:$request,"
             "revision_id:$revision,run_id:$run,ai_need:'정보 부족',"
             "feasibility:'정보 부족',urgency:'판단 보류',lead_org:'미정',"
-            "risk_confirmed:false,risks:'{}',summary:'{}',versions:$versions,"
-            "mode:'mock',created_at:datetime()}) CREATE (r)-[:PRODUCED]->(j)",
+            "risks:'{}',summary:'{}',versions:$versions,"
+            "mode:'mock',author:'test-fixture',risk_confirmed:false,created_at:datetime()}) CREATE (r)-[:PRODUCED]->(j)",
             tenant=tenant, run=run_id, request=request_id, revision=revision_id,
             id=judgment_id, versions=json.dumps({"config_version":0}),
         )).consume()
@@ -422,3 +422,39 @@ async def test_reanalysis_keeps_assigned_tasks_unchanged(tenant):
         await decide(principal, review_id, command, "old-approval")
     assert error.value.status_code == 409
     assert error.value.latest["run_id"] == meta["active_run_id"]
+
+
+@pytest.mark.parametrize("changes,reviewer_changed", [
+    ({"classifications": {"feasibility": "가능"}}, False),
+    ({"draft_tasks": [{"draft_task_id": "draft-1", "lead_org": "현업"}]}, True),
+])
+async def test_judgment_api_shows_only_current_draft_version(tenant, changes, reviewer_changed):
+    principal, review_id, command = await sample(tenant)
+    app = create_app()
+    app.dependency_overrides[get_principal] = lambda: principal
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        command.update(action="approve_with_changes", reason="수정 승인", changes=changes)
+        await decide(principal, review_id, command, str(uuid4()))
+        app.dependency_overrides[get_principal] = lambda: Principal(
+            tenant, "requester", (), frozenset({"requester"}), True)
+        response = await client.get(f"/api/requests/{command['request_id']}/judgment")
+        assert response.status_code == 200, response.text
+        body = response.json()
+        app.dependency_overrides[get_principal] = lambda: principal
+        review = (await client.get(f"/api/reviews/{review_id}")).json()
+    # 같은 업무가 한 번만, 승인된 버전(v2)으로 나온다.
+    assert [(t["draft_task_id"], t["draft_version"]) for t in body["draft_tasks"]] == [("draft-1", 2)]
+    assert body["current_draft_version"] == 2
+    versions = body["draft_versions"]
+    assert [v["draft_version"] for v in versions] == [1, 2]
+    assert [v["source"] for v in versions] == ["ai", "reviewer"]
+    assert versions[1]["created_by"] == "reviewer"
+    assert all(len(v["tasks"]) == 1 and v["created_at"] for v in versions)
+    assert versions[0]["tasks"][0]["lead_org"] == "IT팀"
+    assert versions[1]["tasks"][0]["lead_org"] == ("현업" if reviewer_changed else "IT팀")
+    # Review 상세도 원안(v1)과 수정 초안을 구분한다.
+    assert review["original_draft"]["draft_version"] == 1
+    assert review["original_draft"]["source"] == "ai"
+    assert review["current_draft"]["draft_version"] == 2
+    assert review["current_draft"]["source"] == "reviewer"
+    assert [d["source"] for d in review["drafts"]] == ["ai", "reviewer"]

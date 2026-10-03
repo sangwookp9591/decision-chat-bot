@@ -11,3 +11,5 @@ worker 판단 저장 후 자동 배정 대상은 같은 `assign_in_tx`를 호출
 FIX-R: 이미 Assignment가 있는 요청의 재분석 결과 저장 경로는 `auto_assign_after_judgment_in_tx`를 호출하지 않으며 Review를 만들지 않는다. 배정 전 재분석의 이전 pending Review는 판단 저장 트랜잭션에서 superseded로 닫는다. 과거 Review 결정은 `decide`의 대상 상태·최신 실행 검사로 409가 된다. Request 잠금과 활성 run·worker 소유권 검증은 기존 `ctx.commit`이 적용한다.
 
 검증: `make up` 후 `backend/.venv/bin/pytest backend/tests/integration/test_review_assignment.py backend/tests/integration/test_policy_versions.py -q`에서 실제 Neo4j 통합 시험 18건 통과했다. 검토 결정 4종, 원안·Correction 관계, 과거 버전 409, 동시 승인 20개, 멱등 충돌, 권한·tenant·CSRF, 자동 배정 안전 재검증, 재분석 후 업무 불변을 포함한다. 마지막 전체 `make test`는 88건 통과·1건 실패·1건 건너뜀이다. 실패는 T08 worker 인계 시험의 예상 이벤트 목록이 실제 `run.step` 이벤트를 포함하지 않는 문제이며, 요청 검토 시험은 모두 통과했다.
+
+UX-5: 검토 상세(`GET /api/reviews/{id}`)의 각 `drafts[]` 항목에 `source`(`ai`|`reviewer`)·`created_by`가 추가되고, 최상위에 `original_draft`(최초 AI 원안)와 `current_draft`(검토의 현재 `draft_version`)가 추가된다. 권한 판정은 바꾸지 않았다. 화면은 현재 초안의 업무만 편집 대상으로 보이고 “AI 원안” 값은 `original_draft`에서 가져오며 처리된 검토는 “원안과 비교”로 버전별 차이를 확인한다.

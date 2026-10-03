@@ -22,3 +22,7 @@
 ## 실행·검증
 
 `make up` 후 `cd backend && .venv/bin/pytest tests/integration/test_judgment_service.py tests/unit/test_eligibility_t09.py`를 실행한다. 비민감 live 저장 결과의 ID와 mode는 `artifacts/validation/t09/live-smoke.json`에 기록했다. 그 증거는 한 건의 실제 호출·저장만 보이며 분류 품질이나 자동 배정 안전성 전체의 승인 증거는 아니다.
+
+## 초안 버전 표시 (UX-5 / P6-01)
+
+`GET /api/requests/{id}/judgment`의 `draft_tasks`는 **현재 초안 버전**의 업무만 담는다(같은 `draft_task_id`가 버전마다 반복되지 않는다). 현재 버전은 요청의 최신 Review가 `approved`이면 승인된 `draft_version`, 그 외에는 최신 `draft_version`이다. 추가 필드: `current_draft_version`, `draft_versions: [{draft_version, source('ai'|'reviewer'), created_by, created_at, tasks}]`. `source`는 v1이면 `ai`, 이후 버전은 검토자 수정 승인으로 만들어진 `reviewer`다. 원본 Draft·DraftTask는 수정하지 않고 보존한다. `draft_tasks`를 읽는 곳은 프런트 Main·Review뿐이며(WebMCP 도구·eval 러너는 이 API 필드를 사용하지 않는다) 필드 이름은 유지했다. Main은 현재 버전만 업무 분담에 표시하고 “원안과 비교” 펼침에 버전별 목록과 원안 대비 변경 항목을 보여 준다. 시험: `test_review_assignment.py::test_judgment_api_shows_only_current_draft_version`.

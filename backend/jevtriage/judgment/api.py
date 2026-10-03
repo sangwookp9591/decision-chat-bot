@@ -9,7 +9,7 @@ from jevtriage.auth.core import Principal, get_principal
 from jevtriage.auth.policy import can, redact_source
 from jevtriage.domain.serialize import json_value
 from jevtriage.ingest.store import get_request_meta
-from jevtriage.judgment.store import get_judgment, list_runs
+from jevtriage.judgment.store import draft_created_by, draft_source, get_judgment, list_runs
 
 router = APIRouter(prefix="/api")
 
@@ -63,14 +63,25 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
                 evidence["source_text"] = citation["source_text"]
             item["evidence"].append(evidence)
         outputs.append(item)
-    tasks = []
+    draft_versions = []
     for row in data["drafts"]:
-        task = dict(row["t"])
-        tasks.append({key: task.get(key) for key in ("id", "draft_task_id", "draft_version",
-                      "title", "method", "lead_org", "deliverable", "status", "reason", "author")}
-                     | {"collab_orgs": json.loads(task.get("collab_orgs") or "[]"),
-                        "predecessors": json.loads(task.get("predecessors") or "[]")})
+        draft = dict(row["d"])
+        nodes = [dict(t) for t in row["tasks"] if t is not None]
+        draft_versions.append({
+            "draft_version": draft["draft_version"], "source": draft_source(draft["draft_version"]),
+            "created_by": draft_created_by(draft, nodes), "created_at": _date(draft.get("created_at")),
+            "tasks": [{key: task.get(key) for key in ("id", "draft_task_id", "draft_version",
+                       "title", "method", "lead_org", "deliverable", "status", "reason", "author")}
+                      | {"collab_orgs": json.loads(task.get("collab_orgs") or "[]"),
+                         "predecessors": json.loads(task.get("predecessors") or "[]")}
+                      for task in nodes]})
     review = data["review"]
+    # 현재 초안 = 승인된 요청은 승인된 버전, 그 외에는 최신 버전. draft_tasks는 현재 버전만 담는다.
+    latest_version = max((v["draft_version"] for v in draft_versions), default=None)
+    current_version = (review["draft_version"] if review and review["status"] == "approved"
+                       and any(v["draft_version"] == review["draft_version"] for v in draft_versions)
+                       else latest_version)
+    tasks = next((v["tasks"] for v in draft_versions if v["draft_version"] == current_version), [])
     return redact_source(principal, {"id": j["id"], "request_id": request_id, "revision_id": j["revision_id"],
             "run_id": chosen_run, "classifications": {key: j.get(key) for key in
                 ("ai_need", "feasibility", "urgency", "lead_org")},
@@ -79,6 +90,7 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
             "versions": json.loads(j["versions"]), "mode": j["mode"],
             "rule_effects": json.loads(j.get("rule_effects") or "[]"),
             "created_at": _date(j["created_at"]), "outputs": outputs, "draft_tasks": tasks,
+            "current_draft_version": current_version, "draft_versions": draft_versions,
             "review_reasons": json.loads(review["reasons"]) if review else [],
             "review": {"id": review["id"], "status": review["status"],
                        "required_reviewer_org": review["required_reviewer_org"]} if review else None})
