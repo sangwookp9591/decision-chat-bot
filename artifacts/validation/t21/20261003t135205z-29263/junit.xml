@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="40" time="556.343" timestamp="2026-10-03T22:52:14.974352+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s1_general_technical_csv_monthly_aggregation" time="4.421" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_core_classifications_have_locatable_evidence" time="6.322" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_thin_one_line_input_reports_missing_evidence_not_fake_evidence" time="3.129" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_mixed_forecast_and_alert_tasks_linked_after_approval" time="3.386" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_predecessor_relations_become_stored_precedes_edges" time="6.425" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s3_urgent_request_reason_review_and_priority" time="6.261" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s4_missing_data_permission_approval_no_unapproved_execution" time="3.246" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_documents_pdf_docx_md_with_one_damaged_file" time="11.328" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_citation_coverage_across_attempts" time="29.530" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reviewer_correction_preserves_original_and_final" time="3.391" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reject_and_request_info_are_separate" time="6.520" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s7_reanalysis_separates_runs_and_never_duplicates_tasks" time="244.537"><failure message="TimeoutError: req_bd9baffab188480f9ab0ad5c49c42e71: expected 2 finished runs">users = {'operator': &lt;tests.acceptance.harness.Client object at 0x10cd2cc30&gt;, 'operator_source': &lt;tests.acceptance.harness.Cli...rness.Client object at 0x10cd48650&gt;, 'outsider_reviewer': &lt;tests.acceptance.harness.Client object at 0x10cd48d50&gt;, ...}
+
+    def test_s7_reanalysis_separates_runs_and_never_duplicates_tasks(users):
+        rq, rv = users["requester"], users["reviewer"]
+        rid, d = judge(rq, "월별 재고 현황을 조회하는 화면과 부족 재고 알림이 필요합니다.")
+        j1 = judgment(rq, rid)
+        row = pending_review(rv, rid)
+        res = decide(rv, row, "approve")
+        assert res.status_code == 200
+        before = counts(TENANT, rid)
+        task_ids = sorted(t["id"] for t in tasks_of(rv, rid))
+        assert before["assignments"] == 1 and len(task_ids) == before["tasks"] &gt;= 1
+        # publish a new policy version between the runs: the old run keeps its version, the new run uses v+1
+        pe = users["policy_editor"]
+        active = pe.get("/api/policy/active").json()
+        cfg = dict(active["config"], feature_flags={**active["config"].get("feature_flags", {}), "acc21": True})
+        pub = pe.post("/api/policy/publish", json={"config": cfg, "reason": "인수 시험: 재분석 정책 버전 구분",
+                                                   "expected_active_version": active["version"]})
+        assert pub.status_code == 200, pub.text
+        new_policy = pub.json()["version"]
+        # add information (new revision) -&gt; new run
+        rev = d["request"]["revision_number"]
+        res = rq.revise(rid, rev, "추가 정보: 재고 데이터는 ERP 일별 스냅샷이고 담당자는 물류팀입니다.")
+        assert res.status_code == 202, res.text
+&gt;       d2 = _wait_runs(rq, rid, 2)
+             ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_a_scenarios.py:448: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rq = &lt;tests.acceptance.harness.Client object at 0x10cba4ec0&gt;
+rid = 'req_bd9baffab188480f9ab0ad5c49c42e71', n = 2, timeout = 240.0
+
+    def _wait_runs(rq, rid, n, timeout=240.0):
+        end = time.time() + timeout
+        while time.time() &lt; end:
+            runs = rq.get(f"/api/requests/{rid}/runs").json()["runs"]
+            d = rq.detail(rid)
+            if (len(runs) == n and all(r["status"] in ("judgment_saved", "failed") for r in runs)
+                    and d["request"]["status"] not in ("judgment_pending", "received")):
+                return d
+            time.sleep(3)
+&gt;       raise TimeoutError(f"{rid}: expected {n} finished runs")
+E       TimeoutError: req_bd9baffab188480f9ab0ad5c49c42e71: expected 2 finished runs
+
+tests/acceptance/acc_a_scenarios.py:423: TimeoutError</failure></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_flow_and_playback_have_no_side_effects" time="7.720" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_failed_run_from_live_jev_rejection[0]" time="3.285" /><testcase classname="tests.acceptance.acc_b_safety" name="test_other_tenant_direct_id_calls_are_404" time="7.444" /><testcase classname="tests.acceptance.acc_b_safety" name="test_same_tenant_other_organisation_is_404" time="0.131" /><testcase classname="tests.acceptance.acc_b_safety" name="test_approval_without_review_permission_is_blocked" time="0.058" /><testcase classname="tests.acceptance.acc_b_safety" name="test_policy_publish_and_rollback_require_policy_editor" time="0.133" /><testcase classname="tests.acceptance.acc_b_safety" name="test_source_text_requires_source_permission" time="0.069" /><testcase classname="tests.acceptance.acc_b_safety" name="test_injection_sentence_in_document_has_no_policy_or_permission_effect" time="9.427" /><testcase classname="tests.acceptance.acc_b_safety" name="test_oversize_count_and_text_limits_rejected_before_any_run" time="0.357" /><testcase classname="tests.acceptance.acc_b_safety" name="test_large_file_parsing_does_not_block_other_requests" time="21.345" /><testcase classname="tests.acceptance.acc_b_safety" name="test_encrypted_damaged_script_and_huge_page_files_are_handled_safely" time="2.052" /><testcase classname="tests.acceptance.acc_b_safety" name="test_repeated_and_concurrent_approvals_create_exactly_one_assignment" time="9.557" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_stays_zero_for_unsafe_requests_under_permissive_policy" time="13.932" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_positive_control_if_live_model_is_confident" time="6.185" /><testcase classname="tests.acceptance.acc_b_safety" name="test_required_review_release_is_rejected_for_publish_and_rollback" time="0.168" /><testcase classname="tests.acceptance.acc_b_safety" name="test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses" time="2.774" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_readme_start_health_ready_meta_intake_and_lookup" time="3.189" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_request_review_task_and_trace_survive_api_and_worker_restart" time="15.426" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_worker_restart_while_judging_completes_exactly_once" time="5.223" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_sse_cut_and_resume_converges_to_persisted_state" time="6.808" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_other_users_events_are_not_delivered" time="8.151" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_summary_matches_a_known_request_set" time="11.616" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_failures_lead_to_trace_and_raise_alerts" time="12.402" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g05_auto_assignment_live_end_to_end" time="16.661" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_policy_version_pinning_and_rollback" time="19.390" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_stored_relationships_match_topology_and_tasks_api" time="6.564" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_short_request_missing_evidence_is_safe_and_not_fabricated" time="12.553" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_evidence_citation_variability_three_repeats" time="24.997" /></testsuite></testsuites>
