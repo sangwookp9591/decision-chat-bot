@@ -11,6 +11,7 @@ from jevtriage.db.idempotency import get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.ids import new_id
+from jevtriage.domain.runs import start_run_in_tx
 
 
 async def _create_input(
@@ -146,40 +147,17 @@ async def _create_input(
         )
     ).consume()
     if supported and not excluded:
-        await _create_run_job(tx, tenant_id, request_id, revision_id)
+        current = await (await tx.run(
+            "MATCH (r:Request {id:$request_id,tenant_id:$tenant_id}) "
+            "RETURN r.active_run_id AS active_run_id",
+            request_id=request_id, tenant_id=tenant_id,
+        )).single(strict=True)
+        await start_run_in_tx(tx, tenant_id, request_id, revision_id, "normal",
+                              expected_active_run_id=current["active_run_id"])
     elif supported and excluded:
         # An otherwise supported revision waits for the requester to resolve rejected files.
         pass
     return {"request_id": request_id, "revision": revision_number, "status": status}
-
-
-async def _create_run_job(tx, tenant_id: str, request_id: str, revision_id: str) -> tuple[str, str]:
-    run_id, job_id = new_id("run"), new_id("job")
-    await (
-        await tx.run(
-            "CREATE (run:Run {id:$run_id,tenant_id:$tenant_id,request_id:$request_id,"
-            "input_revision_id:$revision_id,kind:'normal',status:'pending',created_at:datetime()}) "
-            "CREATE (job:Job {id:$job_id,tenant_id:$tenant_id,run_id:$run_id,"
-            "input_revision_id:$revision_id,status:'pending',lease_generation:0,created_by:'system',"
-            "created_at:datetime()})",
-            run_id=run_id,
-            job_id=job_id,
-            tenant_id=tenant_id,
-            request_id=request_id,
-            revision_id=revision_id,
-        )
-    ).consume()
-    await (
-        await tx.run(
-            "MATCH (r:Request {id:$request_id,tenant_id:$tenant_id}) "
-            "SET r.active_run_id=$run_id, "
-            "r.status=CASE WHEN r.assignment_id IS NULL THEN 'judgment_pending' ELSE r.status END",
-            request_id=request_id,
-            tenant_id=tenant_id,
-            run_id=run_id,
-        )
-    ).consume()
-    return run_id, job_id
 
 
 async def create_request(

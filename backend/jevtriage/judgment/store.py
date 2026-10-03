@@ -61,13 +61,15 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
         "CREATE (j:Judgment {id:$judgment_id,tenant_id:$tenant_id,request_id:$request_id,"
         "revision_id:$revision_id,run_id:$run_id,ai_need:$ai_need,feasibility:$feasibility,"
         "urgency:$urgency,lead_org:$lead_org,risk_confirmed:$risk_confirmed,risks:$risks,"
-        "summary:$summary,author:$author,versions:$versions,mode:$mode,created_at:datetime()}) "
+        "summary:$summary,author:$author,versions:$versions,eligibility_json:$eligibility,"
+        "mode:$mode,created_at:datetime()}) "
         "CREATE (r)-[:PRODUCED]->(j)",
         tenant_id=tenant_id, request_id=request_id, revision_id=revision_id, run_id=run_id,
         judgment_id=judgment_id, **classes, risk_confirmed=risk_confirmed,
         risks=_json(risk_values), summary=_json(result["summary"]),
         author=result["summary"].get("author", "code:extractive@1"),
-        versions=_json(versions), mode=result["usage"]["mode"],
+        versions=_json(versions), eligibility=_json({"allowed": eligible, "reasons": reasons}),
+        mode=result["usage"]["mode"],
     )).consume()
     valid_citations = result.get("evidence", {})
     for question_id, answer in answers.items():

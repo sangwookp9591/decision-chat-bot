@@ -12,6 +12,8 @@ Choice/Score 신뢰도는 Noul 확률과 별도 키/경로로 다룬다. 자동 
 
 ## 구현 메모 및 한계
 
+외부 Jev state는 `ExternalClient` 경계에서 `mask_for_external(text, policy)`를 거친다. 최초 분류의 `units[].text`와 `chat_text`, 근거 판정의 `source_unit`, 업무 분해의 동일 state, 적용 운영 문장 `operating_guidance`가 대상이다. 요청마다 생성한 `MaskingSession`이 같은 문자열에 같은 토큰을 배정하고 호출 종료 후 폐기한다. 단위 ID는 마스킹하지 않으므로 Jev 근거 연결 결과는 저장된 원문 EvidenceSpan과 같은 위치를 가리킨다. 정책 `masking.enabled`의 기본값은 true이고 범주별 선택이 가능하다. 운영 제한과 패턴 한계는 [데이터 처리 문서](../operations/DATA_HANDLING.md)에 기록한다.
+
 SDK는 공식 `typesafe-sdk==0.7.2`를 사용하며 API 키를 생성자에 명시하고 `jev-1.13.0`을 기본 고정한다. mock은 `JEV_MODE=mock`에서만 활성화되어 결과에 mode를 표시한다. 401/422는 비재시도 분류이며 429/529/일시 실패는 두 번까지 제한한다. timeout/deadline과 Retry-After 헤더 기반 재시도는 SDK `RetryPolicy`에 429/529·연결/timeout 재시도, Retry-After, 최대 재시도 2회를 명시한다. 호출 deadline은 120초다. 운영 부하별 p95 조정은 후속 평가가 필요하다.
 
 ## qset-v2 / catalog-v2 (Q1, 튜닝 표본 기준)

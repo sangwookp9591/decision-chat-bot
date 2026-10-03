@@ -48,6 +48,34 @@ class LearningConfig(BaseModel):
     effect_window_days: int = Field(default=7, ge=1, le=90)
 
 
+class MaskingConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    enabled: bool = True
+    categories: list[str] = Field(default_factory=lambda: [
+        "registration", "business", "card", "email", "phone", "account", "ip",
+        "url_query", "api_key",
+    ])
+
+    @model_validator(mode="after")
+    def valid_categories(self):
+        from jevtriage.judgment.masking import CATEGORIES
+        if len(set(self.categories)) != len(self.categories) or set(self.categories) - set(CATEGORIES):
+            raise ValueError("unknown or duplicate masking category")
+        return self
+
+
+class RetentionSettings(BaseModel):
+    """Development defaults only; operators must confirm production periods."""
+    model_config = ConfigDict(extra="forbid")
+    event_days: int = Field(default=90, ge=1, le=3650)
+    idempotency_days: int = Field(default=30, ge=1, le=3650)
+    session_grace_days: int = Field(default=7, ge=0, le=3650)
+    login_attempt_window_seconds: int = Field(default=900, ge=1, le=2592000)
+    journal_days: int = Field(default=90, ge=1, le=3650)
+    metrics_days: int = Field(default=90, ge=1, le=3650)
+    batch_size: int = Field(default=500, ge=1, le=10000)
+
+
 class PolicyConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
     schema_version: str = POLICY_SCHEMA_VERSION
@@ -63,6 +91,8 @@ class PolicyConfig(BaseModel):
     feature_flags: dict[str, bool] = Field(default_factory=dict)
     rules: list[RuleReference] = Field(default_factory=list)
     learning: LearningConfig = Field(default_factory=LearningConfig)
+    masking: MaskingConfig = Field(default_factory=MaskingConfig)
+    retention: RetentionSettings = Field(default_factory=RetentionSettings)
 
     @model_validator(mode="after")
     def validate_ranges(self):

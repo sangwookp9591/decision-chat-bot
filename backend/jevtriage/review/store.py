@@ -41,7 +41,7 @@ async def get_review(tenant_id: str, review_id: str) -> dict | None:
         )).data()
         history = await (await tx.run(
             "MATCH (v:Review {tenant_id:$tenant,id:$id})-[:HAS_DECISION]->(h:ReviewDecision) "
-            "OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction) "
+            "OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction {tenant_id:$tenant}) "
             "RETURN h,collect(c) AS corrections ORDER BY h.created_at",
             tenant=tenant_id, id=review_id,
         )).data()

@@ -33,7 +33,7 @@ def org_key(tenant: str, value: str) -> str:
 
 def required_reviewer_org(tenant: str, value: str, org_ids) -> str:
     if value == "검토자":
-        return next(iter(org_ids), "")
+        return f"{tenant}-ai"
     return org_key(tenant, value or "")
 
 
@@ -98,8 +98,7 @@ async def validate_tasks_in_tx(tx, tenant: str, tasks: list[dict]) -> dict[str, 
 
 
 async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_id: str,
-                       draft_version: int, *, pathway: str, review_id: str | None = None,
-                       policy: dict | None = None) -> dict:
+                       draft_version: int, *, pathway: str, review_id: str | None = None) -> dict:
     """Call with Request already locked; approval also holds the Review lock."""
     await assert_active_run_in_tx(tx, tenant, request_id, run_id, revision_id)
     request = await (await tx.run(
@@ -122,14 +121,14 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
             tenant=tenant, request=request_id, run=run_id,
         )).single(strict=True)
         j = dict(judgment["j"])
-        if any(value in {None, "미정", "판단 보류", "정보 부족"} for value in
-               (j.get("ai_need"), j.get("feasibility"), j.get("urgency"), j.get("lead_org"))):
-            raise ReviewError("미정 분류의 자동 배정은 금지됩니다", 409)
-        if j.get("feasibility") != "가능" or j.get("urgency") == "긴급" or not j.get("risk_confirmed"):
-            raise ReviewError("필수 검토 대상입니다", 409)
+        saved_eligibility = json.loads(j.get("eligibility_json") or "{}")
+        if saved_eligibility.get("allowed") is False:
+            raise ReviewError("판단 시점 자동 배정 조건 미충족", 409)
         versions = json.loads(j.get("versions") or "{}")
-        config_version = versions.get("config_version")
-        if config_version:
+        config_version = next((value for value in (
+            versions.get("config_version"), versions.get("config"), versions.get("policy"),
+        ) if value is not None), None)
+        if config_version not in (None, 0):
             config_row = await (await tx.run(
                 "MATCH (c:ConfigVersion {tenant_id:$tenant,version:$version}) RETURN c.config_json AS config",
                 tenant=tenant, version=config_version,
@@ -139,12 +138,7 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
             policy = json.loads(config_row["config"])
         else:
             policy = DEFAULT_CONFIG
-        if not policy.get("auto_assign"):
-            raise ReviewError("실행 고정 정책이 자동 배정을 허용하지 않습니다", 409)
         risk = json.loads(j.get("risks") or "{}")
-        if any(risk.get(k, 1) > policy.get("risk_clear_max", .2) for k in
-               ("clinical_safety", "pharmacovigilance", "regulatory")):
-            raise ReviewError("위험 필수 검토 대상입니다", 409)
         outputs = await (await tx.run(
             "MATCH (o:ModelOutput {tenant_id:$tenant,run_id:$run}) RETURN o.question_id AS id,"
             "o.confidence AS confidence,o.noul AS noul",
@@ -159,7 +153,7 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
         )).single(strict=True)
         input_row = await (await tx.run(
             "MATCH (i:InputRevision {tenant_id:$tenant,id:$revision}) "
-            "OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) "
+            "OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment {tenant_id:$tenant}) "
             "RETURN collect(a.status) AS statuses", tenant=tenant, revision=revision_id,
         )).single(strict=True)
         tasks = await draft_tasks_in_tx(tx, tenant, run_id, draft_version)
@@ -206,9 +200,16 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
         confirmation_task = (not draft["predecessors"] and
                              (draft.get("method") == "사람" or
                               any(term in draft["title"] for term in ("확인", "검토", "확정"))))
-        blocked = bool(draft.get("reason") or draft["predecessors"] or
-                       draft.get("status") == "undetermined" or
-                       (unresolved_feasibility and not confirmation_task))
+        block_reasons = []
+        if draft.get("reason"):
+            block_reasons.append("draft_reason")
+        if draft["predecessors"]:
+            block_reasons.append("predecessor_incomplete")
+        if draft.get("status") == "undetermined":
+            block_reasons.append("undetermined_draft")
+        if unresolved_feasibility and not confirmation_task:
+            block_reasons.append("feasibility_unresolved")
+        blocked = bool(block_reasons or draft["predecessors"])
         await (await tx.run(
             "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
             "MATCH (a:Assignment {tenant_id:$tenant,id:$assignment}) "
@@ -216,13 +217,14 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
             "assignment_id:$assignment,draft_task_id:$draft_task_id,run_id:$run,"
             "draft_version:$version,title:$title,method:$method,lead_org:$lead_org,"
             "collab_orgs:$collab_orgs,deliverable:$deliverable,predecessors:$predecessors,"
-            "reason:$reason,status:$status,created_at:datetime()}) "
+            "reason:$reason,block_reasons:$block_reasons,status:$status,created_at:datetime()}) "
             "CREATE (q)-[:HAS_TASK]->(t) CREATE (a)-[:HAS_TASK]->(t)",
             tenant=tenant, request=request_id, assignment=assignment_id, id=task_id,
             draft_task_id=draft["draft_task_id"], run=run_id, version=draft_version,
             title=draft["title"], method=draft["method"], lead_org=draft["lead_org"],
             collab_orgs=_json(draft["collab_orgs"]), deliverable=draft["deliverable"],
             predecessors=_json(draft["predecessors"]), reason=draft.get("reason"),
+            block_reasons=block_reasons,
             status="막힘" if blocked else "대기",
         )).consume()
         for role, name in [("lead", draft["lead_org"]),
@@ -259,11 +261,11 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
             raise ReviewError("검토를 찾을 수 없습니다", 404) from exc
         if review.get("request_id") != request_id:
             raise ReviewError("검토를 찾을 수 없습니다", 404)
-        meta = dict(request)
+        if review.get("status") == "superseded":
+            raise ReviewError("검토 대상이 변경되었습니다", 409)
         reviewer_org = required_reviewer_org(
             tenant, review.get("required_reviewer_org") or "", principal.org_ids)
-        meta["org_ids"] = list(set(meta.get("org_ids") or []) | {reviewer_org})
-        if not can_review(principal, meta) or reviewer_org not in principal.org_ids:
+        if not can_review(principal, {**dict(request), "required_reviewer_org": reviewer_org}):
             raise ReviewError("검토 권한이 없습니다", 403)
         async def create(tx):
             latest_row = await (await tx.run(
@@ -478,8 +480,7 @@ async def auto_assign_after_judgment_in_tx(tx, ctx, *, eligible: bool) -> dict |
         return None
     try:
         assigned = await assign_in_tx(tx, ctx.tenant_id, ctx.request_id, ctx.run_id,
-                                      ctx.revision_id, 1, pathway="auto",
-                                      policy=ctx.policy_snapshot)
+                                      ctx.revision_id, 1, pathway="auto")
     except ReviewError as exc:
         # An invalid draft or a tightened gate becomes a human review without
         # discarding the already completed first judgment.
@@ -492,7 +493,7 @@ async def auto_assign_after_judgment_in_tx(tx, ctx, *, eligible: bool) -> dict |
             "created_at:datetime()}) SET q.status='검토 대기'",
             tenant=ctx.tenant_id, request=ctx.request_id, run=ctx.run_id,
             revision=ctx.revision_id, review_id=new_id("review"),
-            reasons=_json([str(exc)]), org="검토자",
+            reasons=_json([str(exc)]), org=f"{ctx.tenant_id}-ai",
         )).consume()
         await append_event_in_tx(tx, ctx.tenant_id, "auto_assignment_deferred",
                                  {"reason":str(exc)}, request_id=ctx.request_id,

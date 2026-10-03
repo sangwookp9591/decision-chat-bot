@@ -4,6 +4,12 @@
 
 [PRD](../../PRD.md)와 [TASK](../../TASK.md)의 구현 계약이다. SLO 수치와 완료 게이트는 [측정 기준](../spec/05_SLO.md) 및 [완료 조건](../spec/06_ACCEPTANCE.md)을 따른다. 아래 검증 항목은 앞으로 실행할 인수 시험이며 통과 결과가 아니다.
 
+## 쓰기 불변 조건 구현 (2026-10-04)
+
+일반 실행과 재분석 실행은 `start_run_in_tx`에서 Request 잠금, 기대 활성 포인터와 최신 revision 확인, Run·Job 생성, `config_version` 고정, 활성 포인터 변경을 한 트랜잭션으로 처리한다. 재분석 열람 권한도 Request 잠금 후 재검사한다. 이전 `config`·`policy` 버전 키는 읽을 때 호환한다.
+
+업무 배정은 미해결 가능성 전제와 미정 초안을 Task의 `block_reasons`에 저장한다. `진행` 전이는 이 값이나 미완료 선행 업무가 있으면 409로 거절한다. 자동 배정 eligibility는 판단 시점에 Judgment에 저장하고 배정 시점에는 같은 평가 함수로 재검사한다.
+
 ## 1. 자동 배정과 필수 검토
 
 자동 배정은 다음 조건을 **모두** 만족하는 경우에만 허용한다. confidence 하나 또는 `requires_review=false` 값만으로 배정하지 않는다.

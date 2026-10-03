@@ -15,6 +15,7 @@ from jevtriage.db.idempotency import get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.tx import write_tx
 from jevtriage.domain.ids import new_id
+from jevtriage.domain.runs import start_run_in_tx
 from jevtriage.ingest.files import store_upload
 from jevtriage.ingest.parsers import parse_file
 from jevtriage.ingest.store import (
@@ -72,7 +73,11 @@ async def reanalyze(principal, request_id: str, expected_revision: int,
     ).encode()).hexdigest()
 
     async def op(tx):
+        from jevtriage.auth.core import can_view_request
+
         request = await lock_node_in_tx(tx, tenant_id, "Request", request_id)
+        if not can_view_request(principal, dict(request)):
+            raise ValueError("request_not_visible")
         if request.get("revision_number") != expected_revision:
             raise ValueError("stale_revision")
         if request.get("latest_revision_id") is None or request.get("status") == "needs_file_decision":
@@ -80,26 +85,21 @@ async def reanalyze(principal, request_id: str, expected_revision: int,
 
         async def create(tx):
             revision_id = request["latest_revision_id"]
-            run_id, job_id = new_id("run"), new_id("job")
-            await (await tx.run(
+            valid = await (await tx.run(
                 "MATCH (i:InputRevision {tenant_id:$tenant,id:$revision,request_id:$request}) "
                 "OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) "
                 "WITH i, collect(a.status) AS attachment_statuses "
                 "WHERE all(status IN attachment_statuses WHERE status IN ['ok','excluded','rejected']) "
-                "CREATE (run:Run {id:$run,tenant_id:$tenant,request_id:$request,"
-                "input_revision_id:$revision,kind:'reanalysis',status:'pending',reason:$reason,created_at:datetime()}) "
-                "CREATE (job:Job {id:$job,tenant_id:$tenant,run_id:$run,kind:'judgment',"
-                "input_revision_id:$revision,status:'pending',lease_generation:0,created_by:$actor,created_at:datetime()}) "
-                "RETURN run.id AS run_id",
+                "RETURN i.id AS id",
                 tenant=tenant_id, revision=revision_id, request=request_id,
-                run=run_id, job=job_id, reason=reason, actor=principal.user_id,
-            )).single(strict=True)
-            await (await tx.run(
-                "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
-                "SET q.active_run_id=$run,q.status=CASE WHEN q.assignment_id IS NULL "
-                "THEN 'judgment_pending' ELSE q.status END",
-                tenant=tenant_id, request=request_id, run=run_id,
-            )).consume()
+            )).single()
+            if valid is None:
+                raise ValueError("revision_unconfirmed")
+            run_id, job_id = await start_run_in_tx(
+                tx, tenant_id, request_id, revision_id, "reanalysis",
+                expected_active_run_id=request.get("active_run_id"),
+                actor=principal.user_id, reason=reason, request_locked=True,
+            )
             return {"request_id": request_id, "run_id": run_id, "job_id": job_id,
                     "revision_id": revision_id,
                     "status": "judgment_pending" if request.get("assignment_id") is None

@@ -17,7 +17,17 @@ T04 구현 기준, 2026-10-03. Neo4j가 업무 상태의 기준 저장소이고 
 
 ## 제약, 색인, 잠금
 
-`python -m jevtriage.db.schema`는 일반 라벨의 `id` 유일 제약, `RuleCandidate`와 `RuleVersion`의 `(tenant_id, id)` 복합 유일 제약, `Assignment(tenant_id, request_id)`, `Task(assignment_id, draft_task_id)`, `Idempotency(tenant_id, scope, key)`, `EventCounter(tenant_id)` 유일 제약 및 요청·실행·Job·Event·검토·업무 조회 색인을 `IF NOT EXISTS`로 만든다. 이전 전역 `rulecandidate_id_unique`·`ruleversion_id_unique` 제약은 `DROP IF EXISTS`로 제거하고 tenant 복합 제약을 설치한다. 두 번 실행해도 같은 스키마가 유지된다. `RuleVersion.id`는 공개 식별자 `rule_id@version`이며 tenant 사이에 같은 값을 쓸 수 있다. AI가 결정적으로 만든 `RuleCandidate.id`도 tenant 사이에 같을 수 있다. 나머지 다중 tenant ID는 UUID 기반 또는 tenant를 포함한 전역 고유값이다. [Neo4j 5 공식 제약 문서](https://neo4j.com/docs/cypher-manual/5/constraints/create-constraints/)에서 복합 속성 유일 제약을 확인했고, Neo4j 5.26 Community에서 제약 생성과 같은 ID·다른 tenant 노드 2개 저장을 실행해 확인했다.
+`python -m jevtriage.db.schema`는 일반 라벨의 `id` 유일 제약, tenant 범위 ID를 쓰는 라벨의 `(tenant_id, id)` 복합 유일 제약, `Assignment(tenant_id, request_id)`, `Task(assignment_id, draft_task_id)`, `Idempotency(tenant_id, scope, key)`, `EventCounter(tenant_id)` 유일 제약 및 조회 색인을 `IF NOT EXISTS`로 만든다. 이전 전역 ID 제약은 `DROP IF EXISTS`로 제거한 뒤 tenant 복합 제약을 설치한다. 두 번 실행해도 같은 스키마가 유지된다. `RuleVersion.id`는 공개 식별자 `rule_id@version`이며 tenant 사이에 같은 값을 쓸 수 있다. AI가 결정적으로 만든 `RuleCandidate.id`도 tenant 사이에 같을 수 있다. [Neo4j 5 공식 제약 문서](https://neo4j.com/docs/cypher-manual/5/constraints/create-constraints/)에서 복합 속성 유일 제약을 확인했고, Neo4j 5.26 Community에서 제약 생성과 같은 ID·다른 tenant 노드 2개 저장을 실행해 확인했다.
+
+2026-10-04 추가: `Session.token_hash`, 현재 전역 email 로그인 계약에 맞춘 `User.email`, `ConfigVersion(tenant_id,version)`, `Event(tenant_id,seq)`, `Judgment(tenant_id,run_id)`는 유일 제약이다. `Org`, `Judgment`, `Draft`, `DraftTask`, `RuleSeries`, `LoginAttempt`의 ID는 tenant 범위로 제약한다. `Judgment`처럼 테스트나 외부 입력에서 결정적 ID를 쓰는 노드도 tenant 사이에 같은 ID를 저장할 수 있다. 기존 `Event(tenant_id,seq)`와 `Judgment(tenant_id,run_id)` 비유일 색인은 제약의 내장 range 색인과 충돌하므로 먼저 제거한다. 추가 range 색인은 `Judgment`의 request 조회, `ModelOutput`의 run 조회, `Draft`·`DraftTask`·`EvidenceSpan`·`RunStep`의 관련 ID 조회, `Event`의 request 조회, `Job`의 status/lease 조회, `Review`·`Task`의 request 조회를 지원한다. Neo4j 5.26 Community에서 두 번 마이그레이션하고 10개 대표 `EXPLAIN` 계획의 index seek를 확인한다.
+
+Worker는 tenant 허용 목록이 있으면 그 목록으로 후보를 제한한다. 허용 목록이 비어 있으면 모든 tenant의 Job을 처리하되 `Job.status` range 색인에서 후보를 찾는다. 대기 Job 또는 lease가 만료된 실행 Job 한 개를 생성 시각 순으로 선택하고 같은 쓰기 트랜잭션에서 잠금·조건 재검사·generation 증가·lease 부여를 수행한다. 빈 폴링 간격은 기본 0.5초에서 지수적으로 증가하며 `--max-poll-seconds` 기본 8초를 넘지 않는다. 그래프 조회는 간선 양 끝의 tenant를 검사하고, ID로 관계 속성을 찾을 때 이미 알고 있는 노드 라벨을 사용한다. `elementId` 기반 직접 조회는 tenant 필터를 추가로 유지한다.
+
+`TenantTx`는 아직 도입하지 않았다. 도입하려면 모든 callback의 `tx.run` 호출과 하위 helper를 감싸 `$tenant_id`를 자동 주입하고, `worker-discovery`처럼 운영상 tenant를 가로지르는 경로를 명시적으로 분리해야 한다. 테스트 모드의 정적 문자열 검사만으로는 별칭·관계 확장·`elementId` 조회를 올바르게 판정하기 어려워 별도 설계 및 회귀 시험이 필요하다.
+
+R8 질의 점검: `graph/query.py`의 관계 속성 조회 시작점과 `learning/shadow.py`의 보호 상태 스냅샷은 라벨별 조회로 바꿨다. `graph/query.py`의 `elementId` 기반 조회·경로 확장은 tenant를 양 끝에서 확인하며, `elementId` 직접 조회라서 라벨 색인 대신 ID 조회를 사용한다. `review/store.py`의 `Correction` 선택 조회와 `review/service.py`의 첨부 조회는 대상 노드에도 tenant 조건을 추가했다. `auth/core.py`의 로그인 email 조회는 인증 전에 tenant를 알 수 없는 경로이며, `ingest/api.py`에는 라벨 없는 `MATCH`가 없다. `MEMBER_OF`는 별도 `Membership` 노드가 아닌 관계라서 노드 유일 제약을 만들지 않았다.
+
+활성 판단 Run의 생성과 Config 버전 고정은 `start_run_in_tx`/`pin_config_for_run_in_tx`가 담당한다. Task의 `block_reasons`는 미해결 전제가 있는 본업무의 시작 차단 근거이며 상태 전이에서 확인한다.
 
 잠금 순서는 `Request → Run → Review → Assignment → Job`이며 같은 라벨에서는 ID 순서다. `lock_nodes_in_tx`가 잘못된 순서를 거절한다. 실제 쓰기 잠금은 해당 노드의 `_lock` 속성을 `randomUUID()`로 바꾸어 얻고 트랜잭션이 끝날 때까지 유지한다. EventCounter는 tenant별로 잠그고 seq 증가와 Event 생성이 같은 트랜잭션이므로 롤백 시 결번이 없다. Job은 소유권 검증과 결과 쓰기를 같은 트랜잭션에서 수행한다.
 

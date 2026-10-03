@@ -3,77 +3,48 @@ from __future__ import annotations
 
 import asyncio
 import json
+from datetime import UTC, datetime
+from uuid import uuid4
 
 from jevtriage.config import get_settings
 from jevtriage.db.events import append_event_in_tx
 from jevtriage.judgment.catalog import CATALOG_VERSION
 from jevtriage.judgment.eligibility import evaluate_auto_assign
 from jevtriage.judgment.jev_client import MODEL_VERSION, JevClient
+from jevtriage.judgment.masking import MaskingSession, mask_for_external
 from jevtriage.judgment.pipeline import SCHEMA_VERSION, run_judgment
 from jevtriage.judgment.questions import QSET_VERSION
 from jevtriage.judgment.store import load_input, save_judgment_in_tx
 from jevtriage.learning.apply import apply_rules
-from jevtriage.policy.service import get_active_snapshot, get_version
+from jevtriage.policy.pinning import pin_config_for_run_in_tx
+from jevtriage.policy.service import DEFAULT_CONFIG, get_version
 
 
 async def _fixed_policy(ctx) -> tuple[int, dict]:
-    version = ctx.versions.get("config") or ctx.versions.get("policy")
-    if version is not None:
-        if any(ctx.versions.get(key) is None for key in ("model", "qset", "catalog", "schema")):
-            async def fill(tx):
-                row = await (await tx.run(
-                    "MATCH (r:Run {tenant_id:$tenant_id,id:$run_id}) RETURN r.versions_json AS versions",
-                    tenant_id=ctx.tenant_id, run_id=ctx.run_id,
-                )).single(strict=True)
-                fixed = json.loads(row["versions"] or "{}")
-                for key, value in (("model", MODEL_VERSION), ("qset", QSET_VERSION),
-                                   ("catalog", CATALOG_VERSION), ("schema", SCHEMA_VERSION)):
-                    if fixed.get(key) is None:
-                        fixed[key] = value
-                await (await tx.run(
-                    "MATCH (r:Run {tenant_id:$tenant_id,id:$run_id}) SET r.versions_json=$versions",
-                    tenant_id=ctx.tenant_id, run_id=ctx.run_id, versions=json.dumps(fixed),
-                )).consume()
-                return fixed
-            ctx.versions = await ctx.commit(fill, affects_request=True)
-        if version == 0:
-            from jevtriage.policy.service import DEFAULT_CONFIG
-            return 0, DEFAULT_CONFIG.copy()
-        historical = await get_version(ctx.tenant_id, int(version))
-        if historical is None:
-            raise LookupError("fixed policy version is unavailable")
-        return int(version), historical["config"]
-    version, snapshot = await get_active_snapshot(ctx.tenant_id)
-
-    async def fix(tx):
+    async def pin(tx):
+        version = await pin_config_for_run_in_tx(tx, ctx.tenant_id, ctx.run_id)
         row = await (await tx.run(
-            "MATCH (r:Run {tenant_id:$tenant_id,id:$run_id}) RETURN r.versions_json AS versions",
-            tenant_id=ctx.tenant_id, run_id=ctx.run_id,
+            "MATCH (r:Run {tenant_id:$tenant,id:$run}) RETURN r.versions_json AS versions",
+            tenant=ctx.tenant_id, run=ctx.run_id,
         )).single(strict=True)
-        current = json.loads(row["versions"] or "{}")
-        if current.get("config") is not None:
-            return current
-        current.update({"policy": version, "config": version})
+        versions = json.loads(row["versions"] or "{}")
         for key, value in (("model", MODEL_VERSION), ("qset", QSET_VERSION),
                            ("catalog", CATALOG_VERSION), ("schema", SCHEMA_VERSION)):
-            if current.get(key) is None:
-                current[key] = value
+            if versions.get(key) is None:
+                versions[key] = value
         await (await tx.run(
-            "MATCH (r:Run {tenant_id:$tenant_id,id:$run_id}) "
-            "SET r.versions_json=$versions,r.policy_version=$version,r.config_version=$version",
-            tenant_id=ctx.tenant_id, run_id=ctx.run_id,
-            versions=json.dumps(current), version=version,
+            "MATCH (r:Run {tenant_id:$tenant,id:$run}) SET r.versions_json=$versions",
+            tenant=ctx.tenant_id, run=ctx.run_id, versions=json.dumps(versions),
         )).consume()
-        return current
+        return version, versions
 
-    fixed = await ctx.commit(fix, affects_request=True)
-    ctx.versions = fixed
-    if fixed["config"] != version:
-        historical = await get_version(ctx.tenant_id, int(fixed["config"]))
-        if historical is None:
-            raise LookupError("fixed policy version is unavailable")
-        return fixed["config"], historical["config"]
-    return version, snapshot
+    version, ctx.versions = await ctx.commit(pin, affects_request=True)
+    if version == 0:
+        return 0, DEFAULT_CONFIG.copy()
+    historical = await get_version(ctx.tenant_id, version)
+    if historical is None:
+        raise LookupError("fixed policy version is unavailable")
+    return version, historical["config"]
 
 
 async def execute_judgment(ctx, client=None) -> str:
@@ -100,23 +71,55 @@ async def execute_judgment(ctx, client=None) -> str:
                 if r.get("effect") == "context" and r.get("context_text")
                 and all(clause["requester_org"] in org_ids
                         for clause in r["scope"]["all"])]
-    if guidance:
-        class GuidedClient:
-            def __init__(self, inner):
-                self.inner = inner
+    mask_session = MaskingSession()
+    mask_policy = {**policy, "_masking_session": mask_session}
 
-            def ask(self, state, question_map):
-                return self.inner.ask({**state, "operating_guidance": guidance}, question_map)
+    class ExternalClient:
+        def __init__(self, inner):
+            self.inner = inner
 
-            def __getattr__(self, name):
-                return getattr(self.inner, name)
-        client = GuidedClient(client)
+        def ask(self, state, question_map):
+            external = {**state}
+            if guidance:
+                external["operating_guidance"] = guidance
+            for key in ("chat_text", "source_unit"):
+                if key in external:
+                    external[key] = mask_for_external(external[key], mask_policy)
+            if "units" in external:
+                external["units"] = [
+                    {**unit, "text": mask_for_external(unit["text"], mask_policy)}
+                    for unit in external["units"]
+                ]
+            if "operating_guidance" in external:
+                external["operating_guidance"] = [
+                    mask_for_external(item, mask_policy) for item in external["operating_guidance"]
+                ]
+            return self.inner.ask(external, question_map)
+
+        def __getattr__(self, name):
+            return getattr(self.inner, name)
+
+    client = ExternalClient(client)
+    mask_summary = {}
     try:
-        async with ctx.step("Jev 판단", kind="ai") as jev_step_id:
+        async with ctx.step("Jev 판단", kind="ai", output_summary=mask_summary) as jev_step_id:
             # Chat text is already represented by persisted EvidenceSpan units. Passing it
             # separately would create ephemeral chat:n citations with no resolvable span.
-            result = await asyncio.to_thread(run_judgment, units, "", policy, client,
-                                             chat_context_text=chat_text)
+            try:
+                result = await asyncio.to_thread(run_judgment, units, "", policy, client,
+                                                 chat_context_text=chat_text)
+            finally:
+                mask_summary.update({"mask_input_chars": mask_session.input_chars,
+                                     "mask_output_chars": mask_session.output_chars,
+                                     "mask_count": mask_session.count,
+                                     "mask_calls": mask_session.calls})
+                ctx.journal.append({
+                    "event_id": f"event_{uuid4().hex}", "attempt_id": ctx.attempt_id,
+                    "request_id": ctx.request_id, "run_id": ctx.run_id,
+                    "kind": "external_masking", "ts": datetime.now(UTC).isoformat(),
+                    "status_code": "recorded", "tenant_id": ctx.tenant_id,
+                    "validity": json.dumps(mask_summary, separators=(",", ":")),
+                })
         ctx.record_usage(**result["usage"])
         async with ctx.step("근거 연결", kind="ai"):
             # Jev calls occur inside run_judgment; check their returned links here.

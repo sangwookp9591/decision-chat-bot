@@ -5,6 +5,7 @@ from jevtriage.auth.core import Principal
 from jevtriage.db.audit import append_audit_in_tx
 from jevtriage.db.events import append_event_in_tx
 from jevtriage.db.tx import write_tx
+from jevtriage.tasks.store import lock_task_in_tx
 
 
 class TaskError(Exception):
@@ -17,10 +18,8 @@ async def transition(principal: Principal, task_id: str, target: str, expected: 
     if (expected,target) not in allowed: raise TaskError('허용되지 않은 업무 상태 전이입니다')
     tenant=principal.tenant_id
     async def op(tx):
-        result=await tx.run("MATCH (t:Task {tenant_id:$tenant,id:$id}) SET t._lock=randomUUID() RETURN t",tenant=tenant,id=task_id)
-        record=await result.single()
-        if record is None: raise TaskError('업무를 찾을 수 없습니다',404)
-        task=record['t']
+        task=await lock_task_in_tx(tx,tenant,task_id)
+        if task is None: raise TaskError('업무를 찾을 수 없습니다',404)
         if task.get('status') != expected: raise TaskError('업무 상태가 변경되었습니다. 최신 상태를 다시 불러오세요.',409)
         orgs=await (await tx.run(
             "MATCH (t:Task {tenant_id:$tenant,id:$id})-[:ASSIGNED_TO]->(o:Org) "
@@ -31,9 +30,13 @@ async def transition(principal: Principal, task_id: str, target: str, expected: 
                 "MATCH (t:Task {tenant_id:$tenant,id:$id}) "
                 "OPTIONAL MATCH (p:Task {tenant_id:$tenant})-[:PRECEDES]->(t) "
                 "RETURN collect(p.status) AS statuses",tenant=tenant,id=task_id)).single(strict=True)
-            if task.get('reason') or any(s not in (None,'완료','completed') for s in row['statuses']):
+            predecessors_pending = any(s not in (None,'완료','completed') for s in row['statuses'])
+            reasons = list(task.get('block_reasons') or [])
+            if not predecessors_pending:
+                reasons = [reason for reason in reasons if reason != 'predecessor_incomplete']
+            if task.get('reason') or reasons or predecessors_pending:
                 raise TaskError('선행 업무 완료와 본업무 전제 해결 후 진행할 수 있습니다',409)
-        await (await tx.run("MATCH (t:Task {tenant_id:$tenant,id:$id}) SET t.status=$target,t.updated_at=datetime()",tenant=tenant,id=task_id,target=target)).consume()
+        await (await tx.run("MATCH (t:Task {tenant_id:$tenant,id:$id}) SET t.status=$target,t.updated_at=datetime(),t.block_reasons=$reasons",tenant=tenant,id=task_id,target=target,reasons=reasons if target=='진행' else list(task.get('block_reasons') or []))).consume()
         await append_audit_in_tx(tx,tenant,principal.user_id,'task.transition','Task',task_id,{'status':expected},{'status':target},f'{expected} → {target}')
         await append_event_in_tx(tx,tenant,'task.transitioned',{'task_id':task_id,'from':expected,'to':target},request_id=task.get('request_id'))
         return {'id':task_id,'status':target}

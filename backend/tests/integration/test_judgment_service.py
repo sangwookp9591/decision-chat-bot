@@ -293,3 +293,51 @@ async def test_chat_text_is_persisted_and_cited_at_judgment_location(tenant):
     saved = await get_judgment(tenant, request_id, run_id)
     cited = [citation for output in saved["outputs"] for citation in output["citations"]]
     assert cited and all(citation["source"] == "chat" for citation in cited)
+
+
+async def test_external_state_masked_but_saved_citation_uses_original_span(tenant):
+    from jevtriage.judgment.jev_client import ModelOutput
+
+    sensitive = "name@example.com"
+    source = f"담당자 {sensitive}에게 월별 집계 결과를 보냅니다."
+    created = await create_request(tenant, "tester", source, [],
+                                   str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
+    request_id = created["request_id"]
+    run_id = (await get_request_meta(tenant, request_id))["active_run_id"]
+
+    async def job(tx):
+        return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id",
+                                    tenant=tenant, run=run_id)).single(strict=True))["id"]
+
+    class InspectClient(JevClient):
+        def __init__(self):
+            super().__init__("", mode="mock")
+            self.states = []
+
+        def ask(self, state, question_map):
+            self.states.append(state)
+            if "is_evidence" in question_map:
+                return ModelOutput(self.model, {"is_evidence": {"type": "noul", "noul": .9}},
+                                   {"input_tokens": 0, "output_tokens": 0}, "mock", 0, 1)
+            return super().ask(state, question_map)
+
+    inspector = InspectClient()
+
+    async def handler(ctx):
+        await execute_judgment(ctx, inspector)
+
+    await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
+    assert inspector.states
+    assert all(sensitive not in json.dumps(state) for state in inspector.states)
+    assert {unit["unit_id"] for state in inspector.states for unit in state.get("units", [])}
+    saved = await get_judgment(tenant, request_id, run_id)
+    assert saved is not None
+    async def spans(tx):
+        return await (await tx.run(
+            "MATCH (e:EvidenceSpan {tenant_id:$tenant,request_id:$request,source:'chat'}) "
+            "RETURN e.source_text AS text,e.id AS unit_id",
+            tenant=tenant, request=request_id)).data()
+    rows = await read_tx(tenant, spans)
+    assert any("name@example." in row["text"] for row in rows)
+    cited = {citation["id"] for output in saved["outputs"] for citation in output["citations"] if citation}
+    assert cited.intersection(row["unit_id"] for row in rows)

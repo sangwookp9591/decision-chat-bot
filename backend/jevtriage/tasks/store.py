@@ -6,6 +6,16 @@ import json
 from jevtriage.db.tx import read_tx
 
 
+async def lock_task_in_tx(tx, tenant_id: str, task_id: str):
+    """Serialize a Task transition within its tenant."""
+    row = await (await tx.run(
+        "MATCH (t:Task {tenant_id:$tenant,id:$id}) "
+        "SET t._lock=randomUUID() RETURN t",
+        tenant=tenant_id, id=task_id,
+    )).single()
+    return row["t"] if row else None
+
+
 async def list_tasks(tenant_id: str, filters: dict) -> list[dict]:
     async def op(tx):
         rows = await (await tx.run(
