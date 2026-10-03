@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from jevtriage.auth.core import Principal, can_review, can_view_request, get_principal
+from jevtriage.auth.core import Principal, can_read_learning_request, get_principal
+from jevtriage.db.tx import read_tx
 from jevtriage.graph import query
 from jevtriage.graph.model import KINDS, MAX_DEPTH
 from jevtriage.ingest.store import get_request_meta
@@ -28,11 +29,21 @@ class Scope:
             return True  # tenant-wide rule lifecycle nodes; role already checked
         if request_id not in self.cache:
             meta = await get_request_meta(self.principal.tenant_id, request_id)
-            roles = self.principal.roles
-            self.cache[request_id] = bool(
-                meta and can_view_request(self.principal, meta)
-                and ({"rule_admin", "operator"} & roles or can_review(self.principal, meta)))
+            self.cache[request_id] = bool(meta and can_read_learning_request(self.principal, meta))
         return self.cache[request_id]
+
+    async def preload(self, request_ids) -> None:
+        ids = list({request_id for request_id in request_ids if request_id is not None and request_id not in self.cache})
+        if not ids:
+            return
+        async def op(tx):
+            return await (await tx.run(
+                "UNWIND $ids AS id OPTIONAL MATCH (r:Request {tenant_id:$tenant,id:id}) "
+                "RETURN id,properties(r) AS meta",
+                tenant=self.principal.tenant_id, ids=ids,
+            )).data()
+        for row in await read_tx(self.principal.tenant_id, op):
+            self.cache[row["id"]] = bool(row["meta"] and can_read_learning_request(self.principal, row["meta"]))
 
 
 @router.get("/judgment")
@@ -45,7 +56,7 @@ async def judgment_graph(request_id: str | None = None, run_id: str | None = Non
     scope = Scope(principal)
     if request_id and not await scope.visible(request_id):
         raise HTTPException(404, "Request not found")
-    result = await query.collect(principal.tenant_id, scope.visible, request_id=request_id,
+    result = await query.collect(principal.tenant_id, scope.visible, preload=scope.preload, request_id=request_id,
                                  run_id=run_id, rule_id=rule_id, config_version=config_version,
                                  status=status, depth=depth)
     result["criteria"] = {"request_id": request_id, "run_id": run_id, "rule_id": rule_id,
@@ -55,6 +66,7 @@ async def judgment_graph(request_id: str | None = None, run_id: str | None = Non
 
 async def _visible_paths(principal: Principal, scope: Scope, raw, nodes_by_key):
     keep = []
+    await scope.preload(record["request_id"] for record in nodes_by_key.values())
     for item in raw:
         keys = [tuple(key) for key in item[1]]
         shown = True
@@ -141,4 +153,3 @@ async def judgment_node(node_id: str, kind: str | None = None,
     if label == "EvidenceSpan" and request_id and principal.can_read_source:
         record["source_link"] = f"/api/requests/{request_id}/evidence/{node_id}"
     return record
-

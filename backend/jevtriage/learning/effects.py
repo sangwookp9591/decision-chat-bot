@@ -4,14 +4,17 @@ from __future__ import annotations
 from datetime import timedelta
 
 from jevtriage.db.tx import read_tx
+from jevtriage.domain.serialize import to_native
 from jevtriage.policy.service import get_active_snapshot
 
 
 def _native(value):
-    return value.to_native() if hasattr(value, "to_native") else value
+    return to_native(value)
 
 
 def _percentile(values, fraction):
+    # Monitoring uses nearest-rank; retain interpolation here because changing
+    # this output would change the established learning effects API values.
     if not values:
         return None
     ordered = sorted(values)

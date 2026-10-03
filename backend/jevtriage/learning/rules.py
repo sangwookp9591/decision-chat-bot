@@ -12,9 +12,16 @@ from jevtriage.db.idempotency import IdempotencyConflict, get_or_create_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.ids import new_id
 from jevtriage.learning.apply import RuleInvariantError, validate_rule
-from jevtriage.policy.service import DEFAULT_CONFIG, PolicyError, validate_config
+from jevtriage.policy.service import (
+    DEFAULT_CONFIG,
+    PolicyError,
+    publish_config_in_tx,
+    validate_config,
+)
 
 RULE_ID = re.compile(r"^R-[A-Z_]+-[0-9]{2,}$")
+RULE_REFERENCE_FIELDS = ("rule_id", "version", "effect", "target", "scope", "action", "context_text", "candidate_id", "decision_id")
+INSUFFICIENT_APPROVAL_LABEL = "자료 부족 상태로 승인됨"
 
 
 def _json(value: Any) -> str:
@@ -27,12 +34,21 @@ def _reason(reason: str) -> str:
     return reason.strip()
 
 
-async def _mutate(tenant: str, actor: str, operation: str, key: str, payload: dict, fn):
+def validate_rule_or_raise(body: dict) -> dict:
+    try:
+        return validate_rule(body)
+    except RuleInvariantError as exc:
+        raise PolicyError("RULE_INVARIANT", str(exc)) from exc
+    except ValueError as exc:
+        raise PolicyError("RULE_INVALID", str(exc)) from exc
+
+
+async def _mutate(tenant: str, operation: str, key: str, payload: dict, fn):
     if not key:
         raise PolicyError("IDEMPOTENCY_KEY_REQUIRED", "Idempotency-Key가 필요합니다.", 400)
     digest = hashlib.sha256(_json(payload).encode()).hexdigest()
     try:
-        return await write_tx(tenant, lambda tx: get_or_create_in_tx(tx, tenant, operation, key, digest, lambda inner: fn(inner)))
+        return await write_tx(tenant, lambda tx: get_or_create_in_tx(tx, tenant, operation, key, digest, fn))
     except IdempotencyConflict as exc:
         raise PolicyError("IDEMPOTENCY_CONFLICT", str(exc), 409) from exc
 
@@ -65,18 +81,13 @@ async def decide_candidate(tenant: str, actor: str, candidate_id: str, action: s
         confirmed = scope if scope is not None else json.loads(row["proposed_body"] or '{}').get("scope", {"all": []})
         if action != "reject":
             proposed = json.loads(row["proposed_body"] or '{}')
-            try:
-                validate_rule({**proposed, "scope": confirmed})
-            except RuleInvariantError as exc:
-                raise PolicyError("RULE_INVARIANT", str(exc)) from exc
-            except ValueError as exc:
-                raise PolicyError("RULE_INVALID", str(exc)) from exc
+            validate_rule_or_raise({**proposed, "scope": confirmed})
         decision_id = new_id("rule_decision")
         await (await tx.run("MATCH (c:RuleCandidate {tenant_id:$tenant,id:$candidate}) CREATE (d:RuleDecision {id:$id,tenant_id:$tenant,action:$action,decided_by:$actor,reason:$reason,confirmed_scope:$scope,insufficient_approved:$insufficient,acknowledge_insufficient:$ack,decided_at:datetime()})-[:DECIDES]->(c) SET c.status=$status", tenant=tenant, candidate=candidate_id, id=decision_id, action=action, actor=actor, reason=reason, scope=_json(confirmed), insufficient=insufficient and action != "reject", ack=acknowledge_insufficient, status="rejected" if action == "reject" else "approved")).consume()
         await append_audit_in_tx(tx, tenant, actor, "rule.decision", "RuleCandidate", candidate_id, {"status": row["status"]}, {"action": action, "decision_id": decision_id}, reason)
         await append_event_in_tx(tx, tenant, "rule.decision", {"candidate_id": candidate_id, "decision_id": decision_id, "action": action})
-        return {"decision_id": decision_id, "candidate_id": candidate_id, "action": action, "confirmed_scope": confirmed, "insufficient_approved": insufficient and action != "reject", "insufficient_approval_label": "자료 부족 상태로 승인됨" if insufficient and action != "reject" else None}
-    return await _mutate(tenant, actor, "rule.decision", key, {"candidate": candidate_id, "action": action, "scope": scope, "reason": reason, "acknowledge_insufficient": acknowledge_insufficient}, op)
+        return {"decision_id": decision_id, "candidate_id": candidate_id, "action": action, "confirmed_scope": confirmed, "insufficient_approved": insufficient and action != "reject", "insufficient_approval_label": INSUFFICIENT_APPROVAL_LABEL if insufficient and action != "reject" else None}
+    return await _mutate(tenant, "rule.decision", key, {"candidate": candidate_id, "action": action, "scope": scope, "reason": reason, "acknowledge_insufficient": acknowledge_insufficient}, op)
 
 
 async def create_version(tenant: str, actor: str, rule_id: str, decision_id: str, body: dict, reason: str, key: str, acknowledge_insufficient: bool = False):
@@ -97,21 +108,15 @@ async def create_version(tenant: str, actor: str, rule_id: str, decision_id: str
         if body and any(body.get(k) != proposed.get(k) for k in ("effect", "target", "action") if k in body):
             raise PolicyError("CANDIDATE_MISMATCH", "승인된 후보의 규칙 본문과 다릅니다.")
         complete = {**proposed, "schema": "rule-v1", "rule_id": rule_id, "version": version, "candidate_id": decision["candidate"], "decision_id": decision_id, "scope": json.loads(decision["scope"])}
-        try:
-            validate_rule(complete)
-        except RuleInvariantError as exc:
-            raise PolicyError("RULE_INVARIANT", str(exc)) from exc
-        except ValueError as exc:
-            raise PolicyError("RULE_INVALID", str(exc)) from exc
-        config_rule = {k: complete.get(k) for k in ("rule_id", "version", "effect", "target", "scope", "action", "context_text", "candidate_id", "decision_id")}
+        config_rule = {k: complete.get(k) for k in RULE_REFERENCE_FIELDS}
         _, errors = validate_config({**DEFAULT_CONFIG, "rules": [config_rule]})
         if errors:
             raise PolicyError(errors[0]["code"], errors[0]["reason"])
         await (await tx.run("MATCH (s:RuleSeries {tenant_id:$tenant,rule_id:$rule_id}) SET s.next_version=$next WITH s MATCH (d:RuleDecision {tenant_id:$tenant,id:$decision}) CREATE (r:RuleVersion {id:$id,tenant_id:$tenant,rule_id:$rule_id,version:$version,body:$body,status:'validating',created_at:datetime()})-[:DERIVED_FROM]->(d)", tenant=tenant, rule_id=rule_id, next=version+1, decision=decision_id, id=f"{rule_id}@{version}", version=version, body=_json(complete))).consume()
         await append_audit_in_tx(tx, tenant, actor, "rule.version_created", "RuleVersion", f"{rule_id}@{version}", None, {"status": "validating"}, reason)
         await append_event_in_tx(tx, tenant, "rule.version_created", {"rule_id": rule_id, "version": version})
-        return {"rule_id": rule_id, "version": version, "status": "validating", "body": complete, "insufficient_approved": bool(decision["insufficient"]), "insufficient_approval_label": "자료 부족 상태로 승인됨" if decision["insufficient"] else None}
-    return await _mutate(tenant, actor, "rule.version_created", key, {"rule_id": rule_id, "decision_id": decision_id, "body": body, "reason": reason, "acknowledge_insufficient": acknowledge_insufficient}, op)
+        return {"rule_id": rule_id, "version": version, "status": "validating", "body": complete, "insufficient_approved": bool(decision["insufficient"]), "insufficient_approval_label": INSUFFICIENT_APPROVAL_LABEL if decision["insufficient"] else None}
+    return await _mutate(tenant, "rule.version_created", key, {"rule_id": rule_id, "decision_id": decision_id, "body": body, "reason": reason, "acknowledge_insufficient": acknowledge_insufficient}, op)
 
 
 async def mark_validated(tenant: str, actor: str, rule_id: str, version: int, validation_id: str, reason: str, key: str):
@@ -129,31 +134,9 @@ async def mark_validated(tenant: str, actor: str, rule_id: str, version: int, va
         await append_audit_in_tx(tx, tenant, actor, "rule.validated", "RuleVersion", f"{rule_id}@{version}", {"status": "validating"}, {"status": "validated", "validation_id": validation_id}, reason)
         await append_event_in_tx(tx, tenant, "rule.validated", {"rule_id": rule_id, "version": version, "validation_id": validation_id})
         return {"rule_id": rule_id, "version": version, "status": "validated"}
-    return await _mutate(tenant, actor, "rule.validated", key, {"rule_id": rule_id, "version": version, "validation_id": validation_id, "reason": reason}, op)
+    return await _mutate(tenant, "rule.validated", key, {"rule_id": rule_id, "version": version, "validation_id": validation_id, "reason": reason}, op)
 
 
-async def _publish_config_in_tx(tx, tenant: str, actor: str, rule_id: str, reference: dict | None, expected: int, reason: str, event_kind: str):
-    lock = await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1,p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active,p.next_version AS next", tenant=tenant)).single(strict=True)
-    if lock["active"] != expected:
-        raise PolicyError("ACTIVE_VERSION_CONFLICT", "활성 Config 버전이 다릅니다.", 409)
-    prior_row = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant,version:$version}) RETURN c.config_json AS config", tenant=tenant, version=expected)).single() if expected else None
-    if expected and not prior_row:
-        raise PolicyError("ACTIVE_VERSION_MISSING", "활성 Config를 찾을 수 없습니다.", 409)
-    prior = json.loads(prior_row["config"]) if prior_row else DEFAULT_CONFIG
-    rules = [r for r in prior.get("rules", []) if r["rule_id"] != rule_id]
-    if reference is not None:
-        rules.append(reference)
-    updated, errors = validate_config({**prior, "rules": rules})
-    if errors:
-        raise PolicyError(errors[0]["code"], errors[0]["reason"])
-    version = lock["next"]
-    diff = {"rules": {"before": prior.get("rules", []), "after": rules}}
-    await (await tx.run("MATCH (p:Policy {tenant_id:$tenant}) SET p.next_version=$next,p.active_version=$version WITH p OPTIONAL MATCH (old:ConfigVersion {tenant_id:$tenant,status:'active'}) SET old.status='superseded' CREATE (c:ConfigVersion {id:$id,tenant_id:$tenant,version:$version,status:'active',created_by:$actor,reason:$reason,config_json:$config,diff_json:$diff,created_at:datetime()}) RETURN c", tenant=tenant, next=version+1, version=version, id=f"cfg_{tenant}_{version}", actor=actor, reason=reason, config=_json(updated), diff=_json(diff))).single(strict=True)
-    if reference is not None:
-        await (await tx.run("MATCH (r:RuleVersion {tenant_id:$tenant,id:$rule}) MATCH (c:ConfigVersion {tenant_id:$tenant,version:$version}) CREATE (r)-[:PUBLISHED_IN]->(c) SET r.status='published'", tenant=tenant, rule=f"{reference['rule_id']}@{reference['version']}", version=version)).consume()
-    await append_audit_in_tx(tx, tenant, actor, event_kind, "ConfigVersion", str(version), {"version": expected, "rules": prior.get("rules", [])}, {"version": version, "rules": rules}, reason)
-    await append_event_in_tx(tx, tenant, event_kind, {"rule_id": rule_id, "config_version": version, "previous_version": expected})
-    return {"config_version": version, "rules": rules}
 
 
 async def change_publication(tenant: str, actor: str, rule_id: str, operation: str, version: int | None, expected: int, reason: str, key: str):
@@ -167,24 +150,19 @@ async def change_publication(tenant: str, actor: str, rule_id: str, operation: s
             if operation == "publish" and row["status"] != "validated" or operation == "revert" and row["status"] not in {"published", "stopped", "reverted"}:
                 raise PolicyError("INVALID_TRANSITION", "게시 가능한 검증 상태가 아닙니다.", 409)
             body = json.loads(row["body"])
-            try:
-                validate_rule(body)
-            except RuleInvariantError as exc:
-                raise PolicyError("RULE_INVARIANT", str(exc)) from exc
-            except ValueError as exc:
-                raise PolicyError("RULE_INVALID", str(exc)) from exc
-            reference = {k: body.get(k) for k in ("rule_id", "version", "effect", "target", "scope", "action", "context_text", "candidate_id", "decision_id")}
+            validate_rule_or_raise(body)
+            reference = {k: body.get(k) for k in RULE_REFERENCE_FIELDS}
         else:
             active = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant,status:'active'}) RETURN c.config_json AS config LIMIT 1", tenant=tenant)).single()
             if not active or not any(r["rule_id"] == rule_id for r in json.loads(active["config"]).get("rules", [])):
                 raise PolicyError("RULE_NOT_ACTIVE", "활성 규칙이 아닙니다.", 409)
-        result = await _publish_config_in_tx(tx, tenant, actor, rule_id, reference, expected, reason, f"rule.{operation}")
+        result = await publish_config_in_tx(tx, tenant, actor, None, reason, expected, event_kind=f"rule.{operation}", extra_props={"rule_id": rule_id, "reference": reference})
         if operation == "stop":
             await (await tx.run("MATCH (r:RuleVersion {tenant_id:$tenant,rule_id:$rule_id,status:'published'}) SET r.status='stopped'", tenant=tenant, rule_id=rule_id)).consume()
         if operation == "revert":
             await (await tx.run("MATCH (r:RuleVersion {tenant_id:$tenant,rule_id:$rule_id,status:'published'}) WHERE r.version <> $version SET r.status='reverted'", tenant=tenant, rule_id=rule_id, version=version)).consume()
         return result
-    return await _mutate(tenant, actor, f"rule.{operation}", key, {"rule_id": rule_id, "version": version, "expected": expected, "reason": reason}, op)
+    return await _mutate(tenant, f"rule.{operation}", key, {"rule_id": rule_id, "version": version, "expected": expected, "reason": reason}, op)
 
 
 async def list_rules(tenant: str):
@@ -196,6 +174,6 @@ async def list_rules(tenant: str):
 async def rule_detail(tenant: str, rule_id: str):
     async def op(tx):
         rows = await (await tx.run("MATCH (r:RuleVersion {tenant_id:$tenant,rule_id:$rule_id}) OPTIONAL MATCH (r)-[:DERIVED_FROM]->(d:RuleDecision {tenant_id:$tenant}) OPTIONAL MATCH (r)-[:PUBLISHED_IN]->(c:ConfigVersion {tenant_id:$tenant}) OPTIONAL MATCH (s:RunStep {tenant_id:$tenant})-[a:APPLIED]->(r) RETURN r.version AS version,r.status AS status,r.body AS body,d.insufficient_approved AS insufficient_approved,collect(DISTINCT c.version) AS config_versions,count(DISTINCT a) AS application_count ORDER BY version", tenant=tenant, rule_id=rule_id)).data()
-        return [{**row, "body": json.loads(row["body"]), "insufficient_approved": bool(row["insufficient_approved"]), "insufficient_approval_label": "자료 부족 상태로 승인됨" if row["insufficient_approved"] else None} for row in rows]
+        return [{**row, "body": json.loads(row["body"]), "insufficient_approved": bool(row["insufficient_approved"]), "insufficient_approval_label": INSUFFICIENT_APPROVAL_LABEL if row["insufficient_approved"] else None} for row in rows]
     versions = await read_tx(tenant, op)
     return {"rule_id": rule_id, "versions": versions} if versions else None

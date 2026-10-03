@@ -10,6 +10,7 @@ from collections.abc import Awaitable, Callable
 from typing import Any
 
 from jevtriage.db.tx import read_tx
+from jevtriage.domain.serialize import json_value
 from jevtriage.graph.model import (
     EDGE_TYPES,
     FORWARD_UP_TYPES,
@@ -31,7 +32,7 @@ _REF_KEYS = {"run_id": "run_id", "review_id": "review_id", "revision_id": "revis
 
 
 def _iso(value: Any) -> Any:
-    return str(value) if value is not None and not isinstance(value, (str, int, float, bool, list, dict)) else value
+    return json_value(value)
 
 
 def node_record(kind: str, props: dict[str, Any], request_id: str | None) -> dict[str, Any]:
@@ -58,14 +59,15 @@ async def resolve_node(tenant: str, node_id: str, kind: str | None = None):
     kinds = [kind] if kind in KINDS else list(KINDS)
 
     async def op(tx):
+        rows = await (await tx.run(
+            "MATCH (n {tenant_id:$t,id:$id}) WHERE any(l IN labels(n) WHERE l IN $kinds) "
+            "OPTIONAL MATCH (r:Run {tenant_id:$t,id:n.run_id}) "
+            "RETURN labels(n) AS labels,properties(n) AS p,coalesce(n.request_id,r.request_id) AS request_id",
+            t=tenant, id=node_id, kinds=kinds)).data()
         for label in kinds:
-            row = await (await tx.run(
-                f"MATCH (n:{label} {{tenant_id:$t,id:$id}}) "
-                "OPTIONAL MATCH (r:Run {tenant_id:$t,id:n.run_id}) "
-                "RETURN properties(n) AS p, coalesce(n.request_id,r.request_id) AS request_id",
-                t=tenant, id=node_id)).single()
-            if row:
-                return label, dict(row["p"]), row["request_id"]
+            for row in rows:
+                if label in row["labels"]:
+                    return label, dict(row["p"]), row["request_id"]
         return None
     return await read_tx(tenant, op)
 
@@ -131,7 +133,7 @@ def _row_node(row: dict) -> dict:
 
 
 async def collect(tenant: str, visible: Visible, *, request_id=None, run_id=None, rule_id=None,
-                  config_version=None, status=None, depth=6, cap=NODE_CAP) -> dict[str, Any]:
+                  config_version=None, status=None, depth=6, cap=NODE_CAP, preload=None) -> dict[str, Any]:
     depth = max(1, min(depth, MAX_DEPTH))
     cap = max(1, min(cap, NODE_CAP))
     seeds = await read_tx(tenant, lambda tx: _seed_rows(
@@ -156,6 +158,8 @@ async def collect(tenant: str, visible: Visible, *, request_id=None, run_id=None
     async def seed_nodes(tx):
         return await _nodes_by_eid(tx, tenant, sorted(seeds))
     seed_records = await read_tx(tenant, seed_nodes) if seeds else {}
+    if preload:
+        await preload(record["request_id"] for record in seed_records.values())
     for eid, record in seed_records.items():
         if not await admit(eid, record):
             truncated = truncated or len(nodes) >= cap
@@ -174,6 +178,8 @@ async def collect(tenant: str, visible: Visible, *, request_id=None, run_id=None
                     for row in rows:
                         found[row["e"]] = _row_node(row)
             await read_tx(tenant, expand)
+            if preload:
+                await preload(record["request_id"] for record in found.values())
             nxt: list[str] = []
             for eid, record in found.items():
                 if eid in nodes:
@@ -303,13 +309,16 @@ async def edge_props(tenant: str, edges: dict[str, dict], nodes: dict[tuple[str,
            for e in edges.values()]
 
     async def op(tx):
-        out = {}
-        for type_, source, target, source_kind, target_kind in ids:
-            row = await (await tx.run(
-                f"MATCH (a:{source_kind} {{tenant_id:$t,id:$s}})-[r:{type_}]->(b:{target_kind} {{tenant_id:$t,id:$d}}) "
-                "RETURN properties(r) AS p LIMIT 1",
-                t=tenant, s=source, d=target)).single()
-            out[edge_id(type_, source, target)] = {k: _decode(_iso(v)) for k, v in dict(row["p"]).items()} if row else {}
+        rows = await (await tx.run(
+            "UNWIND $edges AS e MATCH (a {tenant_id:$t,id:e.source})-[r]->(b {tenant_id:$t,id:e.target}) "
+            "WHERE type(r)=e.type AND labels(a)[0]=e.source_kind AND labels(b)[0]=e.target_kind "
+            "RETURN e.type AS type,e.source AS source,e.target AS target,properties(r) AS p",
+            t=tenant, edges=[{"type": t, "source": s, "target": d, "source_kind": sk, "target_kind": tk}
+                            for t, s, d, sk, tk in ids])).data()
+        out = {edge_id(row["type"], row["source"], row["target"]):
+               {k: _decode(_iso(v)) for k, v in dict(row["p"]).items()} for row in rows}
+        for type_, source, target, *_ in ids:
+            out.setdefault(edge_id(type_, source, target), {})
         return out
     props = await read_tx(tenant, op)
     for key, value in props.items():
@@ -321,5 +330,3 @@ def reachable(paths: list[tuple[str, list, list]]) -> dict[str, set[str]]:
     for d, nodes, _ in paths:
         result[d].update(n[1] for n in nodes[1:])
     return result
-
-

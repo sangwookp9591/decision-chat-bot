@@ -6,6 +6,7 @@ import json
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
+from pydantic_core import PydanticCustomError
 
 from jevtriage.db.audit import append_audit_in_tx
 from jevtriage.db.events import append_event_in_tx
@@ -13,6 +14,8 @@ from jevtriage.db.idempotency import IdempotencyConflict, get_or_create_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 
 POLICY_SCHEMA_VERSION = "policy-schema-v1"
+LIMIT_MAXIMA = {"text_chars": 20000, "attachments": 5, "file_bytes": 10485760, "total_bytes": 26214400, "pdf_pages": 50}
+RULE_REFERENCE_FIELDS = ("rule_id", "version", "effect", "target", "scope", "action", "context_text", "candidate_id", "decision_id")
 
 
 class RuleReference(BaseModel):
@@ -33,7 +36,7 @@ class RuleReference(BaseModel):
         try:
             validate_rule({"schema": "rule-v1", **self.model_dump(), "rule_id": self.rule_id, "version": self.version})
         except RuleInvariantError as exc:
-            raise ValueError(f"RULE_INVARIANT: {exc}") from exc
+            raise PydanticCustomError("rule_invariant", "{reason}", {"reason": str(exc)}) from exc
         return self
 
 
@@ -71,8 +74,7 @@ class PolicyConfig(BaseModel):
         if len(self.noul_uncertain_band) != 2 or not 0 <= self.noul_uncertain_band[0] < self.noul_uncertain_band[1] <= 1:
             raise ValueError("noul_uncertain_band must satisfy 0 <= low < high <= 1")
         # PRD 7: text 20k chars, 5 attachments, 10 MiB/file, 25 MiB total, 50 PDF pages.
-        maxima = {"text_chars": 20000, "attachments": 5, "file_bytes": 10485760, "total_bytes": 26214400, "pdf_pages": 50}
-        for key, maximum in maxima.items():
+        for key, maximum in LIMIT_MAXIMA.items():
             if key in self.limits and not 0 <= self.limits[key] <= maximum:
                 raise ValueError(f"limits.{key} exceeds supported maximum {maximum}")
         return self
@@ -103,26 +105,6 @@ def validate_invariants(config: dict[str, Any] | PolicyConfig) -> list[dict[str,
     issues: list[dict[str, str]] = []
     if model.risk_clear_max > .5:
         issues.append({"code": "RISK_BAND_TOO_PERMISSIVE", "reason": "risk_clear_max는 0.5를 초과할 수 없습니다."})
-    for rule in model.rules:
-        def weakens(value: Any, parent_key: str = "") -> bool:
-            if isinstance(value, dict):
-                return any(weakens(child, str(key).lower()) for key, child in value.items())
-            key = parent_key.replace("-", "_")
-            if key in {"auto_assign", "automatic_assignment", "allow_auto_assignment"}:
-                return value is True or str(value).lower() in {"allow", "enabled", "on"}
-            if key in {"require_review", "review_required", "mandatory_review", "clinical_review", "safety_review", "regulatory_review", "urgent_review", "uncertain_risk_review"}:
-                return value is False or str(value).lower() in {"disable", "disabled", "off", "false", "skip", "bypass"}
-            if key in {"risk_clear_max", "risk_threshold"}:
-                try:
-                    return float(value) > .5
-                except (TypeError, ValueError):
-                    return False
-            if key in {"conditional", "infeasible", "insufficient_information", "unknown", "uncertain"}:
-                return value is True or str(value).lower() in {"allow", "auto_assign", "bypass_review"}
-            return isinstance(value, list) and any(weakens(child, key) for child in value)
-
-        if weakens(rule.action):
-            issues.append({"code": "RULE_WEAKENS_SAFETY", "reason": f"규칙 {rule.rule_id}@{rule.version} action이 필수 검토 또는 배정 불변 조건을 완화할 수 있습니다."})
     return issues
 
 
@@ -130,7 +112,7 @@ def validate_config(raw: dict[str, Any], *, allow_rules: bool = True) -> tuple[d
     try:
         config = PolicyConfig.model_validate(raw)
     except ValidationError as exc:
-        return None, [{"code": "RULE_INVARIANT" if "RULE_INVARIANT:" in e["msg"] else "SCHEMA_INVALID", "reason": e["msg"]} for e in exc.errors()]
+        return None, [{"code": "RULE_INVARIANT" if e["type"] == "rule_invariant" else "SCHEMA_INVALID", "reason": e["msg"]} for e in exc.errors()]
     issues = validate_invariants(config)
     if not allow_rules and config.rules:
         issues.append({"code": "RULE_ADMIN_REQUIRED", "reason": "rules 변경은 rule_admin 전용 경로에서만 허용됩니다."})
@@ -162,6 +144,45 @@ async def list_versions(tenant: str) -> list[dict[str, Any]]:
     return await read_tx(tenant, op)
 
 
+async def publish_config_in_tx(tx, tenant: str, actor: str, config: dict[str, Any] | None,
+                               reason: str, expected: int, *, event_kind: str,
+                               extra_props: dict[str, Any]):
+    rule_id = extra_props.get("rule_id")
+    reference = extra_props.get("reference")
+    rule_publish = rule_id is not None
+    lock = await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1,p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active,p.next_version AS next", tenant=tenant)).single(strict=True)
+    if lock["active"] != expected:
+        raise PolicyError("ACTIVE_VERSION_CONFLICT", "활성 Config 버전이 다릅니다." if rule_publish else "expected_active_version이 현재 활성 버전과 다릅니다.", 409)
+    prior_row = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant,version:$version}) RETURN c.config_json AS config", tenant=tenant, version=expected)).single() if expected else None
+    if expected and not prior_row:
+        raise PolicyError("ACTIVE_VERSION_MISSING", "활성 Config를 찾을 수 없습니다." if rule_publish else "현재 활성 버전을 찾을 수 없습니다.", 409)
+    prior = json.loads(prior_row["config"]) if prior_row else DEFAULT_CONFIG
+    if not rule_publish:
+        if prior.get("rules", []) != config.get("rules", []):
+            raise PolicyError("RULE_ADMIN_REQUIRED", "rules 변경은 rule_admin 전용 경로에서만 허용됩니다.")
+        diff = {key: {"before": prior.get(key), "after": val} for key, val in config.items() if prior.get(key) != val}
+        payload_json = extra_props["payload_json"]
+        row = await (await tx.run("MATCH (p:Policy {tenant_id:$tenant}) WITH p, p.next_version AS v SET p.next_version=v+1, p.active_version=v WITH p,v OPTIONAL MATCH (old:ConfigVersion {tenant_id:$tenant,status:'active'}) SET old.status='superseded' CREATE (c:ConfigVersion {id:$id, tenant_id:$tenant, version:v, status:'active', created_by:$actor, reason:$reason, config_json:$config_json, diff_json:$diff_json, created_at:datetime()}) RETURN v", tenant=tenant, id=f"cfg_{tenant}_{expected+1}", actor=actor, reason=reason, config_json=payload_json, diff_json=json.dumps(diff, ensure_ascii=False, separators=(",", ":")))).single(strict=True)
+        version = row["v"]
+        await append_audit_in_tx(tx, tenant, actor, "policy.publish", "ConfigVersion", str(version), {"version": expected, "config": prior}, {"version": version, "config": config}, reason)
+        await append_event_in_tx(tx, tenant, event_kind, {"version": version, "previous_version": expected})
+        return {"version": version, "status": "active", "config": config, "diff": diff}
+    rules = [r for r in prior.get("rules", []) if r["rule_id"] != rule_id]
+    if reference is not None:
+        rules.append(reference)
+    updated, errors = validate_config({**prior, "rules": rules})
+    if errors:
+        raise PolicyError(errors[0]["code"], errors[0]["reason"])
+    version = lock["next"]
+    diff = {"rules": {"before": prior.get("rules", []), "after": rules}}
+    await (await tx.run("MATCH (p:Policy {tenant_id:$tenant}) SET p.next_version=$next,p.active_version=$version WITH p OPTIONAL MATCH (old:ConfigVersion {tenant_id:$tenant,status:'active'}) SET old.status='superseded' CREATE (c:ConfigVersion {id:$id,tenant_id:$tenant,version:$version,status:'active',created_by:$actor,reason:$reason,config_json:$config,diff_json:$diff,created_at:datetime()}) RETURN c", tenant=tenant, next=version+1, version=version, id=f"cfg_{tenant}_{version}", actor=actor, reason=reason, config=json.dumps(updated, ensure_ascii=False, sort_keys=True, separators=(",", ":")), diff=json.dumps(diff, ensure_ascii=False, sort_keys=True, separators=(",", ":")))).single(strict=True)
+    if reference is not None:
+        await (await tx.run("MATCH (r:RuleVersion {tenant_id:$tenant,id:$rule}) MATCH (c:ConfigVersion {tenant_id:$tenant,version:$version}) CREATE (r)-[:PUBLISHED_IN]->(c) SET r.status='published'", tenant=tenant, rule=f"{reference['rule_id']}@{reference['version']}", version=version)).consume()
+    await append_audit_in_tx(tx, tenant, actor, event_kind, "ConfigVersion", str(version), {"version": expected, "rules": prior.get("rules", [])}, {"version": version, "rules": rules}, reason)
+    await append_event_in_tx(tx, tenant, event_kind, {"rule_id": rule_id, "config_version": version, "previous_version": expected})
+    return {"config_version": version, "rules": rules}
+
+
 async def publish(tenant: str, actor: str, raw: dict[str, Any], reason: str, expected: int, *, idempotency_key: str):
     config, errors = validate_config(raw, allow_rules=False)
     if errors:
@@ -170,21 +191,8 @@ async def publish(tenant: str, actor: str, raw: dict[str, Any], reason: str, exp
         raise PolicyError("REASON_REQUIRED", "변경 사유가 필요합니다.")
     payload_json = json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     async def op(tx):
-        lock = await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).single(strict=True)
-        if lock["active"] != expected:
-            raise PolicyError("ACTIVE_VERSION_CONFLICT", "expected_active_version이 현재 활성 버전과 다릅니다.", 409)
-        prior_row = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant, version:$v}) RETURN c.config_json AS config_json", tenant=tenant, v=expected)).single() if expected else None
-        prior = json.loads(prior_row["config_json"]) if prior_row else DEFAULT_CONFIG
-        if expected and prior_row is None:
-            raise PolicyError("ACTIVE_VERSION_MISSING", "현재 활성 버전을 찾을 수 없습니다.", 409)
-        if prior.get("rules", []) != config.get("rules", []):
-            raise PolicyError("RULE_ADMIN_REQUIRED", "rules 변경은 rule_admin 전용 경로에서만 허용됩니다.")
-        diff = {key: {"before": prior.get(key), "after": val} for key, val in config.items() if prior.get(key) != val}
-        row = await (await tx.run("MATCH (p:Policy {tenant_id:$tenant}) WITH p, p.next_version AS v SET p.next_version=v+1, p.active_version=v WITH p,v OPTIONAL MATCH (old:ConfigVersion {tenant_id:$tenant,status:'active'}) SET old.status='superseded' CREATE (c:ConfigVersion {id:$id, tenant_id:$tenant, version:v, status:'active', created_by:$actor, reason:$reason, config_json:$config_json, diff_json:$diff_json, created_at:datetime()}) RETURN v", tenant=tenant, id=f"cfg_{tenant}_{expected+1}", actor=actor, reason=reason.strip(), config_json=payload_json, diff_json=json.dumps(diff, ensure_ascii=False, separators=(",", ":")))).single(strict=True)
-        version = row["v"]
-        await append_audit_in_tx(tx, tenant, actor, "policy.publish", "ConfigVersion", str(version), {"version": expected, "config": prior}, {"version": version, "config": config}, reason.strip())
-        await append_event_in_tx(tx, tenant, "policy.published", {"version": version, "previous_version": expected})
-        return {"version": version, "status": "active", "config": config, "diff": diff}
+        return await publish_config_in_tx(tx, tenant, actor, config, reason.strip(), expected,
+                                          event_kind="policy.published", extra_props={"payload_json": payload_json})
     # lock and expected-version check are serialized in the same Neo4j transaction.
     digest = hashlib.sha256((payload_json + reason + str(expected)).encode()).hexdigest()
     try:

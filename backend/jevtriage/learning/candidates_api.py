@@ -8,11 +8,11 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
-from jevtriage.auth.core import Principal, can_review, can_view_request, get_principal
+from jevtriage.auth.core import Principal, can_read_learning_request, get_principal, require_roles
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.serialize import json_value
 from jevtriage.ingest.store import get_request_meta
-from jevtriage.learning.apply import RuleInvariantError, validate_rule
+from jevtriage.learning.apply import RuleInvariantError, validate_rule_or_raise
 from jevtriage.learning.candidates import FIELDS, _json, generate_candidates
 from jevtriage.learning.corrections import get_request_corrections, list_corrections
 
@@ -29,28 +29,36 @@ class HumanCandidate(BaseModel):
     supporting_correction_ids: list[str] = Field(default_factory=list)
 
 
-def _can_list(principal: Principal) -> bool:
-    return bool({"reviewer", "rule_admin", "operator"} & principal.roles)
-
-
 async def _readable_request(principal: Principal, request_id: str) -> bool:
     meta = await get_request_meta(principal.tenant_id, request_id)
-    return bool(meta and can_view_request(principal, meta) and
-                ("rule_admin" in principal.roles or "operator" in principal.roles or can_review(principal, meta)))
+    return bool(meta and can_read_learning_request(principal, meta))
+
+
+async def _readable_requests(principal: Principal, request_ids) -> dict[str, bool]:
+    ids = list(set(request_ids))
+    if not ids:
+        return {}
+    async def op(tx):
+        return await (await tx.run(
+            "UNWIND $ids AS id OPTIONAL MATCH (r:Request {tenant_id:$tenant,id:id}) "
+            "RETURN id,properties(r) AS meta",
+            tenant=principal.tenant_id, ids=ids,
+        )).data()
+    rows = await read_tx(principal.tenant_id, op)
+    return {row["id"]: bool(row["meta"] and can_read_learning_request(principal, row["meta"])) for row in rows}
 
 
 @router.get("/corrections")
 async def corrections(field: str | None = None, request_id: str | None = None,
                       from_: str | None = Query(None, alias="from"), to: str | None = None,
-                      principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not _can_list(principal):
-        raise HTTPException(403, "Insufficient role")
+                      principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
     if request_id and not await _readable_request(principal, request_id):
         raise HTTPException(404, "Request not found")
     rows = await list_corrections(principal.tenant_id, field=field, request_id=request_id,
                                   from_=from_, to=to)
+    readable = await _readable_requests(principal, (row["request_id"] for row in rows))
     for row in rows:
-        if not await _readable_request(principal, row["request_id"]):
+        if not readable[row["request_id"]]:
             row.pop("ai_value", None)
             row.pop("corrected_value", None)
             row.pop("evidence_span_ids", None)
@@ -59,9 +67,7 @@ async def corrections(field: str | None = None, request_id: str | None = None,
 
 @router.get("/candidates")
 async def candidates(status: str | None = None, field: str | None = None,
-                     principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not _can_list(principal):
-        raise HTTPException(403, "Insufficient role")
+                     principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
     async def op(tx):
         rows = await (await tx.run(
             "MATCH (c:RuleCandidate {tenant_id:$tenant}) "
@@ -96,11 +102,12 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
                 "effect": "rule", "target": expected, "scope": body.scope, "action": action,
                 "candidate_id": candidate_id, "decision_id": "pending"}
     try:
-        validate_rule(proposed)
+        validate_rule_or_raise(proposed)
     except RuleInvariantError as exc:
         raise HTTPException(422, detail={"code": "RULE_INVARIANT", "reason": str(exc)}) from exc
-    except ValueError as exc:
-        raise HTTPException(422, detail={"code": "RULE_INVALID", "reason": str(exc)}) from exc
+    except (ValueError, TypeError) as exc:
+        code = "RULE_INVALID"
+        raise HTTPException(422, detail={"code": code, "reason": str(exc)}) from exc
     # Scope accepts only deterministic predicates from the shared rule contract.
     for predicate in body.scope["all"]:
         if not isinstance(predicate, dict) or not (set(predicate) <= {"field", "op", "value", "signal", "catalog_task", "present", "requester_org"}):
@@ -109,12 +116,19 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
             raise HTTPException(422, "Invalid classification predicate")
         if "signal" in predicate and predicate.get("op") not in {"gte", "lte"}:
             raise HTTPException(422, "Invalid signal predicate")
-    valid_corrections = await list_corrections(principal.tenant_id, field=body.field, limit=5000)
+    async def correction_op(tx):
+        return await (await tx.run(
+            "UNWIND $ids AS id MATCH (h:ReviewDecision {tenant_id:$tenant})-[:RECORDED]->"
+            "(c:Correction {tenant_id:$tenant,id:id,field:$field}) RETURN c.id AS id,c.request_id AS request_id",
+            tenant=principal.tenant_id, ids=list(set(body.supporting_correction_ids)), field=body.field,
+        )).data()
+    valid_corrections = await read_tx(principal.tenant_id, correction_op) if body.supporting_correction_ids else []
     by_id = {row["id"]: row for row in valid_corrections}
     if any(cid not in by_id for cid in body.supporting_correction_ids):
         raise HTTPException(404, "Correction not found")
+    readable = await _readable_requests(principal, (row["request_id"] for row in valid_corrections))
     for cid in body.supporting_correction_ids:
-        if not await _readable_request(principal, by_id[cid]["request_id"]):
+        if not readable[by_id[cid]["request_id"]]:
             raise HTTPException(404, "Correction not found")
     uncertainty = {"support_count": len(set(body.supporting_correction_ids)), "counter_count": 0,
                    "minimum_support": 3, "rationale": body.rationale}
@@ -140,9 +154,7 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
 
 
 @router.get("/candidates/{candidate_id}")
-async def candidate_detail(candidate_id: str, principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not _can_list(principal):
-        raise HTTPException(403, "Insufficient role")
+async def candidate_detail(candidate_id: str, principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
     async def op(tx):
         return await (await tx.run(
             "MATCH (n:RuleCandidate {tenant_id:$tenant,id:$id}) "
@@ -157,12 +169,14 @@ async def candidate_detail(candidate_id: str, principal: Principal = Depends(get
     result["proposed_body"] = json.loads(result["proposed_body"])
     result["uncertainty"] = json.loads(result["uncertainty"])
     examples = []
+    readable = await _readable_requests(principal, (link["node"].get("request_id") for link in row["links"]
+                                                   if link and link["node"].get("request_id")))
     for link in row["links"]:
         if not link:
             continue
         node = dict(link["node"])
         request_id = node.get("request_id")
-        if request_id and not await _readable_request(principal, request_id):
+        if request_id and not readable[request_id]:
             continue
         for key in ("ai_value", "corrected_value"):
             if node.get(key) is not None:
@@ -186,7 +200,7 @@ async def candidate_detail(candidate_id: str, principal: Principal = Depends(get
 
 @request_router.get("/{request_id}/corrections")
 async def request_corrections(request_id: str, principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not _can_list(principal) or not await _readable_request(principal, request_id):
+    if not principal.roles.intersection({"reviewer", "rule_admin", "operator"}) or not await _readable_request(principal, request_id):
         raise HTTPException(404, "Request not found")
     rows = await get_request_corrections(principal.tenant_id, request_id)
     if not principal.can_read_source:

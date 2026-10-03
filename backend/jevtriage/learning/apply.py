@@ -18,6 +18,16 @@ class RuleInvariantError(ValueError):
     """An action could weaken a server enforced review or assignment rule."""
 
 
+def validate_rule_or_raise(body: dict[str, Any]) -> dict[str, Any]:
+    """Validate a rule and preserve the invariant versus schema error distinction."""
+    try:
+        return validate_rule(body)
+    except RuleInvariantError:
+        raise
+    except (ValueError, TypeError) as exc:
+        raise ValueError(str(exc)) from exc
+
+
 def validate_rule(body: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(body, dict) or body.get("schema") != "rule-v1":
         raise ValueError("rule schema must be rule-v1")
