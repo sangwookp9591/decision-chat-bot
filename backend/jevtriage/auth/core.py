@@ -2,6 +2,7 @@
 
 import asyncio
 import hashlib
+import os
 import secrets
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -18,6 +19,26 @@ _hasher = PasswordHasher()
 _DUMMY_PASSWORD_HASH = "$argon2id$v=19$m=65536,t=3,p=4$LkzPCpGAGkB5SROqN9l+6A$bVKong4Ml+CFR/rV6mhd+DaNvDW79BaFRYXeEHZkVOE"
 _cookie = APIKeyCookie(name="jev_session", auto_error=False)
 SESSION_HOURS = 12
+LOGIN_FAILURE_LIMIT = int(os.getenv("LOGIN_FAILURE_LIMIT", "10"))
+LOGIN_WINDOW_SECONDS = int(os.getenv("LOGIN_WINDOW_SECONDS", "900"))
+
+
+async def login_attempt_count(tenant_id: str, email: str) -> int:
+    """Read the live window and clear an expired failure count atomically."""
+    driver = await get_driver()
+    async with driver.session() as session:
+        row = await (await session.run(
+            "MERGE (l:LoginAttempt {tenant_id:$tenant,email:$email}) "
+            "ON CREATE SET l.count=0,l.window_start=datetime() "
+            "WITH l, datetime() AS now "
+            "SET l.count=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
+            "THEN 0 ELSE l.count END, "
+            "l.window_start=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
+            "THEN now ELSE l.window_start END "
+            "RETURN l.count AS count",
+            tenant=tenant_id, email=email.lower(), window=LOGIN_WINDOW_SECONDS,
+        )).single(strict=True)
+    return row["count"]
 
 
 async def increment_login_attempt(tenant_id: str, email: str) -> int:
@@ -27,8 +48,13 @@ async def increment_login_attempt(tenant_id: str, email: str) -> int:
         row = await (await session.run(
             "MERGE (l:LoginAttempt {tenant_id:$tenant,email:$email}) "
             "ON CREATE SET l.count=0,l.window_start=datetime() "
-            "SET l.count=l.count+1 RETURN l.count AS count",
-            tenant=tenant_id, email=email.lower(),
+            "WITH l, datetime() AS now "
+            "SET l.count=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
+            "THEN 1 ELSE l.count+1 END, "
+            "l.window_start=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
+            "THEN now ELSE l.window_start END "
+            "RETURN l.count AS count",
+            tenant=tenant_id, email=email.lower(), window=LOGIN_WINDOW_SECONDS,
         )).single(strict=True)
     return row["count"]
 
@@ -145,28 +171,23 @@ def require_roles(*roles: str):
 
 
 def can_view_request(principal: Principal, meta: dict[str, Any]) -> bool:
-    if meta.get("tenant_id") != principal.tenant_id:
-        return False
-    if "operator" in principal.roles:
-        return True  # Operators can inspect metadata; source access remains separately gated.
-    orgs = set(meta.get("shared_org_ids") or ()) | set(meta.get("org_ids") or ())
-    return meta.get("created_by") == principal.user_id or bool(orgs.intersection(principal.org_ids))
+    from jevtriage.auth.policy import can
+    return can(principal, "view_request", meta)
 
 
 def can_review(principal: Principal, meta: dict[str, Any]) -> bool:
-    return can_view_request(principal, meta) and bool({"reviewer", "team_member"}.intersection(principal.roles))
+    from jevtriage.auth.policy import can
+    return can(principal, "review", meta)
 
 
 def can_read_learning_request(principal: Principal, meta: dict[str, Any]) -> bool:
-    return can_view_request(principal, meta) and bool(
-        {"rule_admin", "operator"}.intersection(principal.roles) or can_review(principal, meta))
+    from jevtriage.auth.policy import can
+    return can(principal, "learn_read", meta)
 
 
 def scope_filter_cypher(principal: Principal) -> str:
-    """Return a Cypher predicate for variables `r` and `principal_org_ids`."""
-    if "operator" in principal.roles:
-        return "r.tenant_id = $tenant_id"
-    return "r.tenant_id = $tenant_id AND (r.created_by = $user_id OR any(org_id IN coalesce(r.shared_org_ids, r.org_ids, []) WHERE org_id IN $org_ids))"
+    from jevtriage.auth.policy import scope_filter_cypher as predicate
+    return predicate(principal)
 
 
 async def enforce_csrf(request: Request) -> None:

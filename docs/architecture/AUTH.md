@@ -11,7 +11,11 @@
 | policy_editor | Dynamic Config 편집·게시(별도 구현 모듈에서 강제) |
 | rule_admin | 규칙 후보 승인·범위 수정·기각·검증·게시·중단·되돌리기(08_LEARNING_LOOP 4절) |
 
-역할은 Neo4j Membership 관계에서만 읽고, 요청 본문·헤더의 tenant나 role은 권한 근거가 아니다. `get_principal`은 세션 tenant/user와 조직·역할을 제공한다. `can_view_request`, `can_review`, `scope_filter_cypher`는 요청 목록·상세 구현이 적용할 정책 도우미다. 운영자는 tenant 내 메타데이터를 볼 수 있어도 원문은 `can_read_source`가 별도로 참이어야 한다.
+역할은 Neo4j Membership 관계에서만 읽고, 요청 본문·헤더의 tenant나 role은 권한 근거가 아니다. `get_principal`은 세션 tenant/user와 조직·역할을 제공한다. `auth/policy.py`의 `can(principal, action, resource_meta)`가 요청·검토·업무·Trace·그래프·학습·정책·모니터링 권한을 판정한다. 기존 `can_view_request`, `can_review` 등은 이 정책을 호출하는 호환 래퍼다. 목록의 `scope_filter_cypher`는 단건 조회와 동일하게 `org_ids`와 `shared_org_ids`의 합집합을 사용한다.
+
+검토 결정은 같은 tenant의 **reviewer** 역할과 검토의 `required_reviewer_org` 소속을 모두 요구한다. 판단의 `lead_org`가 정해지지 않아 저장된 `"검토자"` 값은 tenant의 AI 조직(`<tenant>-ai`)으로 해석한다. 호출자 자신의 조직으로 해석하거나 요청 메타에 담당 조직을 삽입하지 않는다. `team_member`는 검토 결정을 할 수 없다.
+
+원문(`InputRevision.text`, 근거 `source_text`, 추출 텍스트)은 `can_read_source=true`인 계정에게만 응답한다. 요청 상세를 포함한 API 응답은 공통 `redact_source(principal, payload)`에서 원문 필드를 제거한다. 운영자는 tenant 안의 메타데이터를 볼 수 있어도 이 플래그가 없으면 원문을 볼 수 없다. 근거 단건 API는 원문 권한이 없으면 404를 반환한다.
 
 ## API와 세션
 
@@ -19,7 +23,8 @@
 - 성공 시 12시간 서버 저장 세션을 만들고 무작위 bearer 값을 HttpOnly `jev_session` 쿠키로 전달한다. DB에는 bearer SHA-256만 보관한다. 브라우저 HTTPS 요청에는 Secure가 설정된다.
 - `GET /api/auth/me`는 사용자·tenant·조직·역할과 CSRF 토큰을 반환한다.
 - `POST /api/auth/logout`은 세션을 폐기한다.
-- 로그인 실패 카운터는 `(tenant_id, email)` 유일 제약이 있는 `LoginAttempt` 노드에 원자적으로 누적한다. tenant/email 키의 `MERGE`와 증가를 한 쿼리로 처리해 동시에 첫 실패가 발생해도 한 노드에 모든 시도가 반영된다. 상태 변경 API는 `X-CSRF-Token`과 `jev_csrf` 쿠키 값을 함께 보내야 하며 double-submit 값을 서버 세션과 비교한다.
+- 로그인 실패 카운터는 `(tenant_id, email)` 유일 제약이 있는 `LoginAttempt` 노드에 원자적으로 누적한다. 기본 시간 창은 15분(`LOGIN_WINDOW_SECONDS=900`), 최대 실패 횟수는 10회(`LOGIN_FAILURE_LIMIT=10`)다. 한도에 도달하면 비밀번호 검증 전에 429를 반환하며, 창이 지나면 카운터를 초기화한다. 미등록 계정도 `unknown` tenant 네임스페이스에서 같은 카운터 형식과 더미 Argon2 검증을 사용한다. 성공 시 카운터를 초기화한다. 상태 변경 API는 `X-CSRF-Token`과 `jev_csrf` 쿠키 값을 함께 보내야 하며 double-submit 값을 서버 세션과 비교한다.
+- SSE 스트림은 연결 중 기본 15초마다(`SSE_SESSION_RECHECK_SECONDS`) 세션을 다시 읽는다. 폐기·만료·비활성화 시 `session-expired` 이벤트를 보내고 연결을 닫는다. 역할·조직이 바뀌면 갱신된 principal로 후속 이벤트의 요청 범위를 판정한다.
 
 ## 개발 계정과 운영 인증
 

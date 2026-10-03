@@ -3,18 +3,18 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from jevtriage.auth.core import Principal, can_read_learning_request, get_principal
+from jevtriage.auth.core import Principal, get_principal
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.db.tx import read_tx
 from jevtriage.graph import query
 from jevtriage.graph.model import KINDS, MAX_DEPTH
 from jevtriage.ingest.store import get_request_meta
 
 router = APIRouter(prefix="/api/graph", tags=["graph"])
-_ROLES = {"reviewer", "rule_admin", "operator"}
 
 
 def _guard(principal: Principal) -> None:
-    if not principal.roles & _ROLES:
+    if not can(principal, "view_graph", {"tenant_id": principal.tenant_id}):
         raise HTTPException(403, "Insufficient role")
 
 
@@ -29,7 +29,7 @@ class Scope:
             return True  # tenant-wide rule lifecycle nodes; role already checked
         if request_id not in self.cache:
             meta = await get_request_meta(self.principal.tenant_id, request_id)
-            self.cache[request_id] = bool(meta and can_read_learning_request(self.principal, meta))
+            self.cache[request_id] = bool(meta and can(self.principal, "view_graph", meta))
         return self.cache[request_id]
 
     async def preload(self, request_ids) -> None:
@@ -43,7 +43,7 @@ class Scope:
                 tenant=self.principal.tenant_id, ids=ids,
             )).data()
         for row in await read_tx(self.principal.tenant_id, op):
-            self.cache[row["id"]] = bool(row["meta"] and can_read_learning_request(self.principal, row["meta"]))
+            self.cache[row["id"]] = bool(row["meta"] and can(self.principal, "view_graph", row["meta"]))
 
 
 @router.get("/judgment")
@@ -61,7 +61,7 @@ async def judgment_graph(request_id: str | None = None, run_id: str | None = Non
                                  status=status, depth=depth)
     result["criteria"] = {"request_id": request_id, "run_id": run_id, "rule_id": rule_id,
                           "config_version": config_version, "status": status, "depth": depth}
-    return result
+    return redact_source(principal, result)
 
 
 async def _visible_paths(principal: Principal, scope: Scope, raw, nodes_by_key):
@@ -109,14 +109,14 @@ async def judgment_path(node_id: str, direction: str = Query("both", pattern="^(
     await query.edge_props(principal.tenant_id, edges, nodes_by_key)
     used = {tuple(n) for _, nodes, _ in paths for n in nodes}
     reach = query.reachable(paths)
-    return {"origin": {"id": node_id, "kind": origin_kind}, "direction": direction, "depth": depth,
+    return redact_source(principal, {"origin": {"id": node_id, "kind": origin_kind}, "direction": direction, "depth": depth,
             "limit": limit, "truncated": truncated,
             "paths": [{"direction": d, "node_ids": [n[1] for n in nodes],
                        "edge_ids": [query.edge_from_rel(r, nodes_by_key)["id"] for r in rels]}
                       for d, nodes, rels in paths],
             "nodes": sorted((nodes_by_key[k] for k in used), key=lambda n: (n["layer"], n["id"])),
             "edges": sorted(edges.values(), key=lambda e: e["id"]),
-            "upstream_ids": sorted(reach["up"]), "downstream_ids": sorted(reach["down"])}
+            "upstream_ids": sorted(reach["up"]), "downstream_ids": sorted(reach["down"])})
 
 
 @router.get("/judgment/nodes/{node_id}")
@@ -152,4 +152,4 @@ async def judgment_node(node_id: str, kind: str | None = None,
                   can_read_source=bool(principal.can_read_source), source_link=None)
     if label == "EvidenceSpan" and request_id and principal.can_read_source:
         record["source_link"] = f"/api/requests/{request_id}/evidence/{node_id}"
-    return record
+    return redact_source(principal, record)

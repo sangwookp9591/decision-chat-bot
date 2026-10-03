@@ -2,7 +2,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from jevtriage.auth.core import Principal, can_view_request, get_principal
+from jevtriage.auth.core import Principal, get_principal
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.db.tx import read_tx
 from jevtriage.domain.serialize import json_value, loads_or
 from jevtriage.ingest.store import get_request_meta
@@ -15,7 +16,7 @@ router = APIRouter(prefix="/api/observe", tags=["observe"])
 
 async def _request_meta(principal: Principal, request_id: str):
     meta = await get_request_meta(principal.tenant_id, request_id)
-    if not meta or not can_view_request(principal,meta): raise HTTPException(404,"Request not found")
+    if not meta or not can(principal,"view_trace",meta): raise HTTPException(404,"Request not found")
     return meta
 
 
@@ -34,7 +35,7 @@ async def flow(run_id: str, principal: Principal = Depends(get_principal)):  # n
     request_id=await _run_meta(principal,run_id)
     result=await get_flow(principal.tenant_id,run_id)
     result["request_id"]=request_id
-    return result
+    return redact_source(principal, result)
 
 
 @router.get("/runs/{run_id}/playback")
@@ -42,14 +43,14 @@ async def playback(run_id: str, principal: Principal = Depends(get_principal)): 
     request_id=await _run_meta(principal,run_id)
     result=await get_playback(principal.tenant_id,run_id)
     result["request_id"]=request_id
-    return result
+    return redact_source(principal, result)
 
 
 @router.get("/requests/{request_id}/topology")
 async def topology(request_id: str, kind: str = "business", principal: Principal = Depends(get_principal)):  # noqa: B008
     if kind not in {"business","service"}: raise HTTPException(422,"kind must be business or service")
     await _request_meta(principal,request_id)
-    return await get_topology(principal.tenant_id,request_id,kind)
+    return redact_source(principal, await get_topology(principal.tenant_id,request_id,kind))
 
 
 @router.get("/steps/{step_id}")
@@ -106,7 +107,7 @@ async def step_detail(step_id: str, principal: Principal = Depends(get_principal
                 output["evidence"].pop("location_json",None)
                 if not principal.can_read_source:
                     output["evidence"] = None
-    return json_value(item)
+    return json_value(redact_source(principal, item))
 
 
 def _loads(value):

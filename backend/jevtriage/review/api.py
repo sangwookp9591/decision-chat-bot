@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, can_review, get_principal
+from jevtriage.auth.policy import redact_source
 from jevtriage.db.tx import read_tx
 from jevtriage.review.service import ReviewError, decide, required_reviewer_org
 from jevtriage.review.store import decode, get_review, list_reviews
@@ -32,9 +33,7 @@ class DecisionCommand(BaseModel):
 def _allowed(principal: Principal, review: dict, request: dict) -> bool:
     required = required_reviewer_org(
         principal.tenant_id, review.get("required_reviewer_org") or "", principal.org_ids)
-    meta = dict(request)
-    meta["org_ids"] = list(set(meta.get("org_ids") or []) | {required})
-    return can_review(principal, meta) and required in principal.org_ids
+    return can_review(principal, {**dict(request), "required_reviewer_org": required})
 
 
 def _output(row: dict, can_read_source: bool) -> dict:
@@ -138,12 +137,12 @@ async def review_detail(review_id: str,
         for correction in decision["corrections"]:
             if correction["field"] in final_classifications:
                 final_classifications[correction["field"]] = correction["corrected_value"]
-    return {"review":v, "request":request, "judgment":judgment,
+    return redact_source(principal, {"review":v, "request":request, "judgment":judgment,
             "outputs":[_output(row, principal.can_read_source) for row in data["outputs"]],
             "drafts":[_draft(row) for row in data["drafts"]], "history":history,
             "review_version":v["review_version"],
             "final_classifications":final_classifications,
-            "final_draft_version":v["draft_version"]}
+            "final_draft_version":v["draft_version"]})
 
 
 @router.post("/{review_id}/decision")

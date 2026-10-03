@@ -10,7 +10,7 @@ from uuid import uuid4
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import StreamingResponse
 
-from jevtriage.auth.core import Principal, can_view_request, get_principal
+from jevtriage.auth.core import Principal, can_view_request, get_principal, session_principal
 from jevtriage.db.events import list_events
 from jevtriage.db.tx import read_tx
 from jevtriage.journal.writer import JournalWriter
@@ -19,6 +19,7 @@ router = APIRouter(prefix="/api/events", tags=["events"])
 POLL_SECONDS = float(os.getenv("SSE_POLL_SECONDS", "0.2"))
 MAX_CONNECTIONS = int(os.getenv("SSE_MAX_CONNECTIONS", "100"))
 MAX_AFTER_AGE_SECONDS = int(os.getenv("SSE_MAX_AFTER_AGE_SECONDS", "604800"))
+SESSION_RECHECK_SECONDS = float(os.getenv("SSE_SESSION_RECHECK_SECONDS", "15"))
 _connections = 0
 _connection_lock = asyncio.Lock()
 _journal = JournalWriter()
@@ -142,9 +143,9 @@ async def stream_events(
 ):
     global _connections
     header_id = request.headers.get("last-event-id")
-    if after is not None and header_id is not None:
-        raise HTTPException(400, "Use either Last-Event-ID or after")
     try:
+        # EventSource keeps the URL on automatic reconnect and adds this header.
+        # The header represents the last event actually received by the browser.
         cursor = int(header_id) if header_id is not None else (after or 0)
         if cursor < 0:
             raise ValueError
@@ -160,8 +161,11 @@ async def stream_events(
         global _connections
         nonlocal cursor
         last_heartbeat = time.monotonic()
+        last_session_check = last_heartbeat - SESSION_RECHECK_SECONDS
+        current_principal = principal
         delivered = 0
         subscription = None
+        token = getattr(getattr(request, "state", None), "session_token", None) or request.cookies.get("jev_session")
         try:
             # A cursor ahead of the committed head, or older than the configured recovery
             # window, cannot be trusted to represent a complete client view.
@@ -169,20 +173,24 @@ async def stream_events(
                 result = await tx.run(
                     "OPTIONAL MATCH (c:EventCounter {tenant_id:$tenant_id}) "
                     "OPTIONAL MATCH (e:Event {tenant_id:$tenant_id}) "
-                    "WITH coalesce(c.seq,0) AS head, min(e.created_at) AS oldest "
+                    "WITH coalesce(c.seq,0) AS head, c.retained_from_seq AS retained_from, "
+                    "min(e.created_at) AS oldest "
                     "OPTIONAL MATCH (at_cursor:Event {tenant_id:$tenant_id, seq:$cursor}) "
-                    "RETURN head, oldest, at_cursor.created_at AS cursor_created",
+                    "RETURN head, retained_from, oldest, at_cursor.created_at AS cursor_created",
                     tenant_id=principal.tenant_id, cursor=cursor,
                 )
                 row = await result.single()
-                return row["head"], row["oldest"], row["cursor_created"]
-            head, oldest, cursor_created = await read_tx(principal.tenant_id, bounds)
+                return row["head"], row["retained_from"], row["oldest"], row["cursor_created"]
+            head, retained_from, oldest, cursor_created = await read_tx(principal.tenant_id, bounds)
             reference_time = cursor_created if cursor else oldest
             reference_native = reference_time.to_native() if reference_time else None
             if reference_native and reference_native.tzinfo is None:
                 reference_native = reference_native.replace(tzinfo=UTC)
             expired = reference_native and (datetime.now(UTC) - reference_native).total_seconds() > MAX_AFTER_AGE_SECONDS
-            if cursor > head or expired:
+            # Events below retained_from_seq were removed by retention, so a cursor
+            # before it may have missed events the client can no longer replay.
+            pruned = retained_from is not None and cursor < retained_from
+            if cursor > head or expired or pruned:
                 yield _sse("snapshot-required", {"reason": "cursor_out_of_range" if cursor > head else "retention_window"})
                 return
             hub, queue = await _subscribe(principal.tenant_id, cursor)
@@ -190,6 +198,13 @@ async def stream_events(
             while True:
                 if await request.is_disconnected():
                     return
+                if token and time.monotonic() - last_session_check >= SESSION_RECHECK_SECONDS:
+                    resolved = await session_principal(token)
+                    if not resolved or resolved[0].tenant_id != principal.tenant_id:
+                        yield _sse("session-expired", {"reason": "session_invalid"})
+                        return
+                    current_principal = resolved[0]
+                    last_session_check = time.monotonic()
                 try:
                     message = await asyncio.wait_for(queue.get(), timeout=POLL_SECONDS)
                 except TimeoutError:
@@ -213,7 +228,7 @@ async def stream_events(
                             continue
                         elif request_id:
                             meta = metas.get(request_id)
-                            if not meta or not can_view_request(principal, meta):
+                            if not meta or not can_view_request(current_principal, meta):
                                 continue
                         elif not str(item["kind"]).startswith(TENANT_WIDE_KINDS):
                             continue

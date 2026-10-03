@@ -5,7 +5,8 @@ import json
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from jevtriage.auth.core import Principal, can_view_request, get_principal
+from jevtriage.auth.core import Principal, get_principal
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.domain.serialize import json_value
 from jevtriage.ingest.store import get_request_meta
 from jevtriage.judgment.store import get_judgment, list_runs
@@ -19,7 +20,7 @@ def _date(value):
 
 async def _visible_request(principal: Principal, request_id: str) -> dict:
     meta = await get_request_meta(principal.tenant_id, request_id)
-    if meta is None or not can_view_request(principal, meta):
+    if meta is None or not can(principal, "view_request", meta):
         raise HTTPException(status_code=404, detail="Request not found")
     return meta
 
@@ -70,7 +71,7 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
                      | {"collab_orgs": json.loads(task.get("collab_orgs") or "[]"),
                         "predecessors": json.loads(task.get("predecessors") or "[]")})
     review = data["review"]
-    return {"id": j["id"], "request_id": request_id, "revision_id": j["revision_id"],
+    return redact_source(principal, {"id": j["id"], "request_id": request_id, "revision_id": j["revision_id"],
             "run_id": chosen_run, "classifications": {key: j.get(key) for key in
                 ("ai_need", "feasibility", "urgency", "lead_org")},
             "risk_confirmed": j["risk_confirmed"], "risks": json.loads(j["risks"]),
@@ -80,7 +81,7 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
             "created_at": _date(j["created_at"]), "outputs": outputs, "draft_tasks": tasks,
             "review_reasons": json.loads(review["reasons"]) if review else [],
             "review": {"id": review["id"], "status": review["status"],
-                       "required_reviewer_org": review["required_reviewer_org"]} if review else None}
+                       "required_reviewer_org": review["required_reviewer_org"]} if review else None})
 
 
 @router.get("/requests/{request_id}/runs")

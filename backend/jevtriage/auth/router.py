@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel
 
 from jevtriage.auth.core import (
+    LOGIN_FAILURE_LIMIT,
     Principal,
     _token_hash,
     authenticate,
@@ -9,6 +10,7 @@ from jevtriage.auth.core import (
     enforce_csrf,
     get_principal,
     increment_login_attempt,
+    login_attempt_count,
     reset_login_attempt,
     session_principal,
 )
@@ -25,18 +27,20 @@ class LoginBody(BaseModel):
 
 @router.post("/login")
 async def login(body: LoginBody, request: Request, response: Response):
+    # Resolve the counter namespace before password work for both known and unknown users.
+    driver = await get_driver()
+    async with driver.session() as session:
+        user = await (await session.run(
+            "MATCH (u:User {email:$email}) RETURN u.tenant_id AS tenant_id LIMIT 1",
+            email=body.email.lower(),
+        )).single()
+    tenant_id = user["tenant_id"] if user else "unknown"
+    if await login_attempt_count(tenant_id, body.email) >= LOGIN_FAILURE_LIMIT:
+        raise HTTPException(status_code=429, detail="Login temporarily unavailable")
     account = await authenticate(body.email.lower(), body.password)
     if not account:
-        # Unknown accounts share a reserved tenant namespace while known accounts
-        # are counted against their tenant/email uniqueness key.
-        driver = await get_driver()
-        async with driver.session() as session:
-            user = await (await session.run(
-                "MATCH (u:User {email:$email}) RETURN u.tenant_id AS tenant_id LIMIT 1",
-                email=body.email.lower(),
-            )).single()
-        count = await increment_login_attempt(user["tenant_id"] if user else "unknown", body.email)
-        if count > 10:
+        count = await increment_login_attempt(tenant_id, body.email)
+        if count > LOGIN_FAILURE_LIMIT:
             raise HTTPException(status_code=429, detail="Login temporarily unavailable")
         raise HTTPException(status_code=401, detail="Invalid email or password")
     await reset_login_attempt(account["tenant_id"], body.email)

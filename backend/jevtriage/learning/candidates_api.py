@@ -8,7 +8,8 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
-from jevtriage.auth.core import Principal, can_read_learning_request, get_principal, require_roles
+from jevtriage.auth.core import Principal, get_principal, require_roles
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.serialize import json_value
 from jevtriage.ingest.store import get_request_meta
@@ -31,7 +32,7 @@ class HumanCandidate(BaseModel):
 
 async def _readable_request(principal: Principal, request_id: str) -> bool:
     meta = await get_request_meta(principal.tenant_id, request_id)
-    return bool(meta and can_read_learning_request(principal, meta))
+    return bool(meta and can(principal, "learn_read", meta))
 
 
 async def _readable_requests(principal: Principal, request_ids) -> dict[str, bool]:
@@ -45,7 +46,7 @@ async def _readable_requests(principal: Principal, request_ids) -> dict[str, boo
             tenant=principal.tenant_id, ids=ids,
         )).data()
     rows = await read_tx(principal.tenant_id, op)
-    return {row["id"]: bool(row["meta"] and can_read_learning_request(principal, row["meta"])) for row in rows}
+    return {row["id"]: bool(row["meta"] and can(principal, "learn_read", row["meta"])) for row in rows}
 
 
 @router.get("/corrections")
@@ -62,7 +63,7 @@ async def corrections(field: str | None = None, request_id: str | None = None,
             row.pop("ai_value", None)
             row.pop("corrected_value", None)
             row.pop("evidence_span_ids", None)
-    return {"corrections": rows}
+    return redact_source(principal, {"corrections": rows})
 
 
 @router.get("/candidates")
@@ -76,19 +77,19 @@ async def candidates(status: str | None = None, field: str | None = None,
             tenant=principal.tenant_id, status=status, field=field,
         )).data()
         return [dict(row["c"]) for row in rows]
-    return json_value({"candidates": await read_tx(principal.tenant_id, op)})
+    return json_value(redact_source(principal, {"candidates": await read_tx(principal.tenant_id, op)}))
 
 
 @router.post("/candidates/generate")
 async def generate(principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not (principal.roles & {"rule_admin", "reviewer"}):
+    if not can(principal, "learn_propose", {"tenant_id": principal.tenant_id}):
         raise HTTPException(403, "Insufficient role")
     return {"candidates": await generate_candidates(principal.tenant_id)}
 
 
 @router.post("/candidates", status_code=201)
 async def propose(body: HumanCandidate, principal: Principal = Depends(get_principal)):  # noqa: B008
-    if not (principal.roles & {"reviewer", "rule_admin"}):
+    if not can(principal, "learn_propose", {"tenant_id": principal.tenant_id}):
         raise HTTPException(403, "Insufficient role")
     if body.field not in FIELDS:
         raise HTTPException(422, "Unsupported correction field")
@@ -195,7 +196,7 @@ async def candidate_detail(candidate_id: str, principal: Principal = Depends(req
     marker = await read_tx(principal.tenant_id, decision_marker)
     result["insufficient_approved"] = bool(marker and marker["approved"])
     result["insufficient_approval_label"] = "자료 부족 상태로 승인됨" if result["insufficient_approved"] else None
-    return json_value(result)
+    return json_value(redact_source(principal, result))
 
 
 @request_router.get("/{request_id}/corrections")
@@ -206,4 +207,4 @@ async def request_corrections(request_id: str, principal: Principal = Depends(ge
     if not principal.can_read_source:
         for row in rows:
             row.pop("evidence_span_ids", None)
-    return {"corrections": rows}
+    return redact_source(principal, {"corrections": rows})
