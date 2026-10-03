@@ -1,0 +1,14 @@
+[
+  {
+    "id": "P3-13",
+    "check": "역할 라벨 한국어(요청자)",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-11",
+    "check": "목록 선택은 URL에 반영되고 뒤로가기로 복원",
+    "ok": true,
+    "note": "http://127.0.0.1:5491/?request_id=req_485a624bcf7341559510630a204a77ef -> http://127.0.0.1:5491/?request_id=req_acb3ece6778f4133a451c5fbd6c3bee8"
+  }
+]

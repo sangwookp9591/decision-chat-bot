@@ -1,0 +1,32 @@
+[
+  {
+    "id": "P3-02",
+    "check": "요청자에게 보완 사유 표시",
+    "ok": true,
+    "note": "검토자가 보완을 요청했습니다  사용 부서와 완료 희망일을 보완해 주세요  보완 내용 입력하기 아래 입력에 내용을 보완해 \"보완 내용 제출\"을 누르면 같은 요청의 새 revision으로 접수되어 다시 분석합니다."
+  },
+  {
+    "id": "P3-02",
+    "check": "상태 배지가 보완 필요(검토 대기 아님)",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-02",
+    "check": "보완 제출 버튼 표시",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-02",
+    "check": "같은 요청의 새 revision으로 접수(새 요청 아님)",
+    "ok": true,
+    "note": "url=http://127.0.0.1:5491/?request_id=req_acb3ece6778f4133a451c5fbd6c3bee8 revisions=2 status=judgment_pending"
+  },
+  {
+    "id": "JS",
+    "check": "pageerror 없음",
+    "ok": true,
+    "note": ""
+  }
+]

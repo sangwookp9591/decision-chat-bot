@@ -1,0 +1,74 @@
+[
+  {
+    "id": "P3-12",
+    "check": "request 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":359,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "상태 배지 줄바꿈 깨짐 없음",
+    "ok": true,
+    "note": "broken=0"
+  },
+  {
+    "id": "P3-12",
+    "check": "request-home 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":359,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "요청 입력(textarea)이 목록보다 먼저(y<700)",
+    "ok": true,
+    "note": "y=359"
+  },
+  {
+    "id": "P3-12",
+    "check": "learning 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "learning-rule 375px 가로 넘침 없음",
+    "ok": false,
+    "note": "{\"sw\":396,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "review 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "tasks 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "observatory 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "map 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "monitoring 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  },
+  {
+    "id": "P3-12",
+    "check": "policy 375px 가로 넘침 없음",
+    "ok": true,
+    "note": "{\"sw\":375,\"vw\":375,\"ta\":null,\"broken\":0}"
+  }
+]

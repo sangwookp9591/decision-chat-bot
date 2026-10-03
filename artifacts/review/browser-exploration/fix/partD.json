@@ -1,0 +1,56 @@
+[
+  {
+    "id": "P3-04",
+    "check": "Flow 노드가 실제 실행 순서(입력 정리→…→결과 저장)",
+    "ok": true,
+    "note": "입력 정리 → Jev 판단 → 근거 연결 → 업무 분해 → 규칙 적용 → 자동 배정 조건 검사 → 결과 저장 → 사람 검토"
+  },
+  {
+    "id": "P3-04",
+    "check": "사람 노드 한국어 이름",
+    "ok": true,
+    "note": "사람 검토"
+  },
+  {
+    "id": "P3-04",
+    "check": "선행 관계 엣지 표시",
+    "ok": true,
+    "note": "7개: 입력 정리 → Jev 판단 / Jev 판단 → 근거 연결 / 근거 연결 → 업무 분해"
+  },
+  {
+    "id": "P3-03",
+    "check": "/observatory?run_id= 만으로 요청·실행 자동 선택(404 아님)",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-03",
+    "check": "모니터링이 생성하는 request_id+run_id 링크 형식이 화면을 연다",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-09",
+    "check": "날짜 비움 → pageerror 없이 입력 오류 안내·적용 비활성",
+    "ok": true,
+    "note": "errors=0 alert=시작과 종료 시각을 모두 올바르게 입력해 주세요."
+  },
+  {
+    "id": "P3-03",
+    "check": "실패 목록 링크 → /observatory 화면 열림(404 아님)",
+    "ok": true,
+    "note": "/observatory?request_id=req_ad2641e055634f17b0dcc8e780e773a7&run_id=run_cb4cee1eae7a4fa39ed51e89ccda5618 -> http://127.0.0.1:5491/observatory?request_id=req_ad2641e055634f17b0dcc8e780e773a7&run_id=run_cb4cee1eae7a4fa39ed51e89ccda5618"
+  },
+  {
+    "id": "P3-10",
+    "check": "판단 맵 → 원문·검토 열기가 대상 요청 검토를 선택",
+    "ok": false,
+    "note": "http://127.0.0.1:5491/review?request_id=req_acb3ece6778f4133a451c5fbd6c3bee8"
+  },
+  {
+    "id": "JS",
+    "check": "operator pageerror",
+    "ok": true,
+    "note": ""
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "P3-05",
+    "check": "채팅 전송 즉시 접수 입력 반영·포커스·위젯 닫힘",
+    "ok": true,
+    "note": "value=\"채팅으로 추가한 회의실 검색 요청입니…\" focus=request-text closed=true"
+  },
+  {
+    "id": "P3-05",
+    "check": "전달 안내 표시",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-11",
+    "check": "새로고침 후 같은 요청 결과·진행 유지",
+    "ok": true,
+    "note": "http://127.0.0.1:5491/?request_id=req_acb3ece6778f4133a451c5fbd6c3bee8"
+  },
+  {
+    "id": "P3-13",
+    "check": "요청 화면에 내부 영문 코드 미노출",
+    "ok": true,
+    "note": ""
+  },
+  {
+    "id": "P3-13",
+    "check": "역할 라벨 한국어",
+    "ok": false,
+    "note": ""
+  },
+  {
+    "id": "JS",
+    "check": "pageerror 없음",
+    "ok": true,
+    "note": ""
+  }
+]
