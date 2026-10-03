@@ -23,6 +23,7 @@ from jevtriage.ingest.store import (
     create_request,
     get_evidence,
     get_request_meta,
+    get_revision_document,
     list_requests,
     request_detail,
     resolve_files,
@@ -288,6 +289,33 @@ async def visible_evidence(principal, request_id: str, span_id: str):
     if not await visible_meta(principal, request_id):
         return None
     return await get_evidence(principal.tenant_id, request_id, span_id)
+
+
+async def visible_document(principal, request_id: str, revision: str, source: str):
+    """Unit list for the source viewer; raw text only when read_source is granted."""
+    from jevtriage.auth.policy import can
+
+    meta = await visible_meta(principal, request_id)
+    if not meta:
+        return None
+    found = await get_revision_document(principal.tenant_id, request_id, revision, source)
+    if not found:
+        return None
+    readable = can(principal, "read_source", meta)
+    name = (found["filename"] or "").lower()
+    kind = ("chat" if source == "chat" else "pdf" if name.endswith(".pdf")
+            else "docx" if name.endswith(".docx") else "md")
+    units = []
+    for order, span in enumerate(found["units"]):
+        unit = {"unit_id": span["id"], "order": order,
+                "location": json.loads(span["location_json"]),
+                "char_start": span["char_start"], "char_end": span["char_end"]}
+        if readable:
+            unit["text"] = span["source_text"]
+        units.append(unit)
+    return {"request_id": request_id, "revision": found["revision"],
+            "revision_id": found["revision_id"], "source": source, "kind": kind,
+            "filename": found["filename"], "can_read_source": readable, "units": units}
 
 
 async def decide_files(

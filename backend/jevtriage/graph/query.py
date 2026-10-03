@@ -41,6 +41,8 @@ def node_record(kind: str, props: dict[str, Any], request_id: str | None) -> dic
     refs: dict[str, Any] = {k: props[k] for k in _REF_KEYS if props.get(k) is not None}
     if request_id:
         refs["request_id"] = request_id
+    if kind == "EvidenceSpan":
+        refs.update(span_id=props["id"], source=props.get("attachment_id") or "chat")
     if kind == "RunStep":
         refs["step_id"] = props["id"]
     if kind == "RuleVersion":

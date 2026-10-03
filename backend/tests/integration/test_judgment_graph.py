@@ -164,10 +164,14 @@ async def test_node_detail_counts_and_source_link_permission(world):
     assert step["refs"]["run_id"] == i["run2"] and step["layer"] == 5
     assert span["source_link"] == f"/api/requests/{i['req1']}/evidence/{i['es1']}"
     assert "source_text" not in str(span)
+    # the viewer anchor (unit = span id, revision, source) is a reference, not source text
+    assert span["refs"]["span_id"] == i["es1"] and span["refs"]["revision_id"] == "rev_1"
+    assert span["refs"]["source"] == "att_1"
     assert rv["downstream_count"] == 4 and rv["refs"]["rule_id"] == "R-ROUTE-07"
     async with client_for(operator(world, can_read_source=False)) as client:
         hidden = (await client.get(f"/api/graph/judgment/nodes/{i['es1']}")).json()
     assert hidden["source_link"] is None and hidden["can_read_source"] is False
+    assert hidden["refs"]["source"] == "att_1" and hidden["refs"]["span_id"] == i["es1"]
 
 
 async def test_authorization_and_tenant_boundaries(world):

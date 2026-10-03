@@ -275,6 +275,44 @@ async def get_evidence(tenant_id: str, request_id: str, span_id: str) -> dict[st
     return await read_tx(tenant_id, op)
 
 
+async def get_revision_document(
+    tenant_id: str, request_id: str, revision: str, source: str
+) -> dict[str, Any] | None:
+    """All extracted units of one revision source ('chat' or an attachment id), in source order."""
+    async def op(tx):
+        number = int(revision) if revision.isdigit() else None
+        row = await (await tx.run(
+            "MATCH (i:InputRevision {request_id:$request_id,tenant_id:$tenant_id}) "
+            "WHERE i.id=$revision OR i.number=$number RETURN i LIMIT 1",
+            request_id=request_id, tenant_id=tenant_id, revision=revision, number=number,
+        )).single()
+        if not row:
+            return None
+        rev = dict(row["i"])
+        filename = None
+        if source != "chat":
+            att = await (await tx.run(
+                "MATCH (:InputRevision {id:$rid,tenant_id:$tenant_id})-[:HAS_ATTACHMENT]->"
+                "(a:Attachment {id:$source,tenant_id:$tenant_id}) RETURN a.filename AS filename",
+                rid=rev["id"], tenant_id=tenant_id, source=source,
+            )).single()
+            if not att:
+                return None
+            filename = att["filename"]
+        spans = await (await tx.run(
+            "MATCH (:InputRevision {id:$rid,tenant_id:$tenant_id})-[:HAS_EVIDENCE]->(e:EvidenceSpan) "
+            "WHERE ($source='chat' AND e.attachment_id IS NULL) OR e.attachment_id=$source "
+            "RETURN e ORDER BY e.char_start, e.id",
+            rid=rev["id"], tenant_id=tenant_id, source=source,
+        )).data()
+        return {
+            "revision_id": rev["id"], "revision": rev.get("number"), "filename": filename,
+            "units": [dict(r["e"]) for r in spans],
+        }
+
+    return await read_tx(tenant_id, op)
+
+
 async def resolve_files(
     tenant_id: str,
     request_id: str,

@@ -240,3 +240,16 @@ async def evidence(request_id: str, span_id: str, principal: Principal = Depends
     if not value:
         raise HTTPException(404, "Evidence not found")
     return redact_source(principal, value)
+
+
+@router.get("/requests/{request_id}/revisions/{revision}/document")
+async def source_document(
+    request_id: str,
+    revision: str,
+    source: str = Query(..., min_length=1),
+    principal: Principal = Depends(get_principal),  # noqa: B008
+):
+    value = await service.visible_document(principal, request_id, revision, source)
+    if not value:
+        raise HTTPException(404, "Document not found")
+    return redact_source(principal, value)

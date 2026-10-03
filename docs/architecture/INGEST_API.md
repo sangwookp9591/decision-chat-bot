@@ -13,6 +13,21 @@ T06 API 초안 구현 계약. 모든 경로는 `/api` 아래이며 인증된 세
 | `POST /requests/{id}/file-decision` | JSON `exclude` attachment ID 배열, `expected_revision`; 새 revision 및 판단 실행 생성 |
 | `POST /requests/{id}/revisions` | multipart 텍스트/첨부 및 `expected_revision`; 이전 결과를 유지하고 새 revision 생성 |
 | `GET /requests/{id}/evidence/{span_id}` | `can_read_source`인 주체에게만 원문 span 반환 |
+| `GET /requests/{id}/revisions/{rev}/document?source=` | 원문 뷰어용 추출 단위 전체(아래). `rev`는 revision 번호 또는 ID, `source`는 `chat` 또는 attachment ID |
+
+### 원문 문서 조회 (원문 뷰어)
+
+`GET /requests/{id}/revisions/{rev}/document?source=chat|<attachment_id>` — 판단 근거(`EvidenceSpan`)가 가리키는 첨부 또는 채팅 revision의 **추출 단위 전체**를 순서대로 돌려준다. 앵커는 `unit_id`(= `EvidenceSpan.id`)이며 판단 결과의 `evidence[].id`와 같다.
+
+```json
+{ "request_id": "req_…", "revision": 1, "revision_id": "rev_…", "source": "att_…", "kind": "pdf|docx|md|chat",
+  "filename": "a.pdf", "can_read_source": true,
+  "units": [{ "unit_id": "esp_…", "order": 0, "location": {"page": 1}, "char_start": 0, "char_end": 120, "text": "…" }] }
+```
+
+- 단위: PDF는 페이지(`location.page`), DOCX는 문단(`paragraph`, 0부터), MD는 행(`line_start`/`line_end`, 1부터), 채팅은 문장(`paragraph`+`sentence`). `order`는 원문 순서(`char_start`)이다.
+- 권한: 요청 접근 범위(`view_request`) 밖이거나 다른 tenant, 존재하지 않는 revision·source는 모두 404. 범위 안이어도 `auth.policy.can(…, 'read_source')`가 거짓이면 `units[].text`는 **서버가 보내지 않는다**(`can_read_source:false`, 위치·메타만). `redact_source`가 한 번 더 `text` 필드를 제거한다.
+- 시험: `backend/tests/integration/test_source_document.py`(요청자·원문 권한 있는/없는 검토자·원문 권한 없는 운영자·같은 tenant 다른 조직·다른 tenant). 화면: `frontend/src/components/EvidenceViewer.tsx`(Main 결과 카드·Review 상세·판단 맵 근거 노드 공용, 앵커 단위로 스크롤·하이라이트).
 
 파일 파싱·임시 저장은 `ingest.parsers.parse_file`과 `ingest.files.store_upload`가 담당한다. 거절 첨부가 남은 revision은 `needs_file_decision`이며 Job을 만들지 않는다. 접근 범위 밖 ID는 404로 응답한다.
 
