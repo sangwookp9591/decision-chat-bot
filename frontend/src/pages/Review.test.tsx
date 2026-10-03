@@ -1,0 +1,6 @@
+import {beforeEach,describe,expect,it,vi} from 'vitest';
+import {fireEvent,render,screen} from '@testing-library/react';
+import {Review} from './Review';
+vi.mock('../api/reviews',()=>({reviewApi:{list:vi.fn().mockResolvedValue({reviews:[{id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족']}]}),detail:vi.fn().mockResolvedValue({review:{id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족']},request:{title:'요청'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1}),decide:vi.fn()}}));
+vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]})}}));
+describe('review comparison',()=>{beforeEach(()=>vi.clearAllMocks());it('renders the preserved AI original alongside the reviewer value',async()=>{render(<Review/>);fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');expect(screen.getByText('원안: 정보 부족')).toBeTruthy();expect(screen.getByLabelText('AI 필요성 수정')).toHaveProperty('value','정보 부족')})});

@@ -1,0 +1,1 @@
+export function Login() { return <main className="login-page"><section className="login-card"><p className="eyebrow">JEV TRIAGE</p><h1>로그인이 필요합니다</h1><p>요청과 판단 결과를 확인하려면 인증된 세션으로 접속해 주세요.</p></section></main>; }
