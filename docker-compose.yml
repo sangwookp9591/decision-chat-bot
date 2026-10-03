@@ -1,0 +1,16 @@
+services:
+  neo4j:
+    image: neo4j:5.26.0-community
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-development-only}
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./.data/neo4j:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u ${NEO4J_USER:-neo4j} -p ${NEO4J_PASSWORD:-development-only} 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s

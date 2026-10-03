@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebMCP compatibility probe</title>
+  <style>
+    body { max-width: 48rem; margin: 3rem auto; padding: 0 1rem; font: 1rem/1.5 system-ui, sans-serif; color: #172033; }
+    .status { padding: 1rem; border: 1px solid #aab4c5; border-radius: .5rem; }
+    code { background: #eef1f5; padding: .1rem .3rem; }
+  </style>
+</head>
+<body>
+  <h1>WebMCP compatibility probe</h1>
+  <p>This page registers one non-sensitive, read-only echo tool when the browser exposes the WebMCP API.</p>
+  <p id="status" class="status" role="status">Checking for <code>document.modelContext</code>…</p>
+  <script>
+    (async () => {
+      const status = document.querySelector('#status');
+      const context = document.modelContext;
+      if (!context || typeof context.registerTool !== 'function') {
+        status.textContent = 'WebMCP is not available in this browser context. The regular page remains usable.';
+        document.documentElement.dataset.webmcp = 'unsupported';
+        return;
+      }
+
+      try {
+        await context.registerTool({
+          name: 'probe.echo',
+          title: 'Echo probe',
+          description: 'Returns the supplied short text unchanged. Read-only and non-sensitive.',
+          inputSchema: {
+            type: 'object',
+            properties: { text: { type: 'string', maxLength: 80 } },
+            required: ['text'],
+            additionalProperties: false
+          },
+          annotations: { readOnlyHint: true },
+          execute: async ({ text }) => ({ echoed: text })
+        });
+        const tools = await context.getTools();
+        const tool = tools.find(({ name }) => name === 'probe.echo');
+        if (!tool) throw new Error('Registered tool not discoverable');
+        if (new URLSearchParams(location.search).has('selfTest')) {
+          const result = await context.executeTool(tool, { text: 'webmcp-probe' });
+          if (result.echoed !== 'webmcp-probe') throw new Error('Unexpected executeTool result');
+          status.textContent = 'WebMCP is available; probe.echo registered, discoverable, and executed via executeTool.';
+          document.documentElement.dataset.webmcp = 'executed';
+        } else {
+          status.textContent = 'WebMCP is available; probe.echo registered and discoverable. Awaiting a browser agent call.';
+          document.documentElement.dataset.webmcp = 'registered';
+        }
+      } catch (error) {
+        status.textContent = `WebMCP detected, but registration failed: ${error.message}`;
+        document.documentElement.dataset.webmcp = 'registration-failed';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,1 +1,18 @@
 .env
+.data/
+backend/.venv/
+frontend/node_modules/
+frontend/dist/
+artifacts/validation/*/raw/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+# Runtime data and large raw logs produced by validation runs (reports stay tracked)
+artifacts/validation/**/data/
+artifacts/validation/**/*.db
+artifacts/validation/**/*.log
+artifacts/validation/**/test-results/
+# Large raw load-test samples are kept locally only (summaries/REPORT.md are tracked)
+artifacts/validation/t25*/**/sse.csv
+artifacts/validation/t25*/**/runs.json

@@ -1,0 +1,7 @@
+services:
+  neo4j:
+    ports:
+      - "127.0.0.1:7475:7474"
+      - "127.0.0.1:${NEO4J_BOLT_PORT:-7689}:7687"
+    volumes:
+      - "${NEO4J_DATA_DIR:-./.data/neo4j}:/data"
