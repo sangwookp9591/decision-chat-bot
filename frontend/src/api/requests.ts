@@ -1,4 +1,4 @@
-import { apiFetch } from './client';
+import { apiFetch, idempotencyKey } from './client';
 
 export type RequestAttachment = { id: string; filename: string; status: string; reason?: string; byte_count?: number; content_type?: string };
 export type RequestDetail = { request: { id: string; status: string; active_run_id?: string | null; revision_number?: number }; revisions: Array<{ id: string; number?: number; revision_number?: number }>; attachments: RequestAttachment[]; active_run?: { status?: string } | null };
@@ -12,6 +12,6 @@ export const requestApi = {
   list: () => apiFetch<{ items: RequestItem[] }>('/api/requests?limit=50'),
   judgment: (id: string, runId?: string) => apiFetch<Judgment>(`/api/requests/${encodeURIComponent(id)}/judgment${runId ? `?run_id=${encodeURIComponent(runId)}` : ''}`),
   runs: (id: string) => apiFetch<RunHistory>(`/api/requests/${encodeURIComponent(id)}/runs`),
-  reanalyze: (id: string, expectedRevision: number, reason?: string) => apiFetch<{ request_id: string; run_id: string; job_id: string; revision_id: string; status: string }>(`/api/requests/${encodeURIComponent(id)}/reanalyze`, { method: 'POST', headers: { 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify({ expected_revision: expectedRevision, ...(reason ? { reason } : {}) }) }),
+  reanalyze: (id: string, expectedRevision: number, reason?: string) => apiFetch<{ request_id: string; run_id: string; job_id: string; revision_id: string; status: string }>(`/api/requests/${encodeURIComponent(id)}/reanalyze`, { method: 'POST', headers: idempotencyKey(), body: JSON.stringify({ expected_revision: expectedRevision, ...(reason ? { reason } : {}) }) }),
   evidence: (id: string, spanId: string) => apiFetch<Evidence & { source_text?: string }>(`/api/requests/${encodeURIComponent(id)}/evidence/${encodeURIComponent(spanId)}`),
 };

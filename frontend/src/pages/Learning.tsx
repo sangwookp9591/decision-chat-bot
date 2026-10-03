@@ -6,7 +6,7 @@ import type { ApiError } from '../api/client';
 import { ErrorState, LoadingState } from '../components';
 import { Actions, type ActionHandlers } from './learning/Actions';
 import { Observation, CycleStrip, EvidenceTable, RuleSummary, ThreePanels, Timeline, ValidationCard, type TimelineItem } from './learning/sections';
-import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
+import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, sourceLabel, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
 import './learning/learning.css';
 
 type Pending = { candidateId: string; decisionId: string } | null;
@@ -31,8 +31,7 @@ export function Learning({ roles }: { roles: string[] }) {
   const [activeConfig, setActiveConfig] = useState(0);
   const [minSample, setMinSample] = useState(DEFAULT_MIN_SAMPLE);
   const [validations, setValidations] = useState<Record<string, ValidationResult>>({});
-  const [effects, setEffects] = useState<RuleEffects | null>(null);
-  const [effectState, setEffectState] = useState<'none' | 'forbidden' | 'unpublished' | 'error' | 'ok'>('none');
+  const [effectResult, setEffectResult] = useState<{ state: 'none' | 'forbidden' | 'unpublished' | 'error' } | { state: 'ok'; effects: RuleEffects }>({ state: 'none' });
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [pending, setPending] = useState<Pending>(null);
   const [loading, setLoading] = useState(true);
@@ -65,13 +64,23 @@ export function Learning({ roles }: { roles: string[] }) {
     if (hit?.body.candidate_id) setSelectedId(hit.body.candidate_id);
   }, [params, selectedId, ruleDetails]);
 
-  const versionsFor = useCallback((candidateId: string): RuleVersionRow[] => (ruleDetails || []).flatMap((r) => r.versions).filter((v) => v.body.candidate_id === candidateId).sort((a, b) => a.version - b.version), [ruleDetails]);
+  const candidateVersions = useMemo(() => {
+    const byCandidate = new Map<string, RuleVersionRow[]>();
+    for (const rule of ruleDetails || []) for (const row of rule.versions) {
+      const rows = byCandidate.get(row.body.candidate_id || '') || []; rows.push(row); byCandidate.set(row.body.candidate_id || '', rows);
+    }
+    for (const rows of byCandidate.values()) rows.sort((a, b) => a.version - b.version);
+    return byCandidate;
+  }, [ruleDetails]);
+  const versionsFor = (candidateId: string) => candidateVersions.get(candidateId) || [];
   const version = useMemo(() => {
     if (!detail) return null;
     const all = versionsFor(detail.id);
     return all.find((v) => v.version === versionNo) || all.slice(-1)[0] || null;
   }, [detail, versionsFor, versionNo]);
   const ruleId = version?.body.rule_id || '';
+  const currentRule = useMemo(() => ruleDetails?.find((rule) => rule.rule_id === ruleId) || null, [ruleDetails, ruleId]);
+  const versions = detail ? versionsFor(detail.id) : [];
   const versionKey = version ? `${ruleId}@${version.version}` : '';
 
   useEffect(() => {
@@ -83,15 +92,15 @@ export function Learning({ roles }: { roles: string[] }) {
 
   // Effects and lifecycle timeline follow the selected rule version (rule administrators only).
   useEffect(() => {
-    setEffects(null); setTimeline([]);
-    if (!version || !detail) { setEffectState('none'); return; }
+    setEffectResult({ state: 'none' }); setTimeline([]);
+    if (!version || !detail) { setEffectResult({ state: 'none' }); return; }
     let live = true;
     learningApi.validations(ruleId, version.version).then(({ validations: rows }) => {
       if (live) setValidations((current) => ({ ...current, [versionKey]: rows[0] }));
     }, () => { if (live) setValidations((current) => { const next = { ...current }; delete next[versionKey]; return next; }); });
-    learningApi.effects(ruleId).then((r) => { if (live) { setEffects(r); setEffectState('ok'); } }, (e: ApiError) => { if (live) setEffectState(e.status === 403 ? 'forbidden' : e.code === 'RULE_NOT_PUBLISHED' ? 'unpublished' : 'error'); });
+    learningApi.effects(ruleId).then((r) => { if (live) { setEffectResult({ state: 'ok', effects: r }); } }, (e: ApiError) => { if (live) setEffectResult({ state: e.status === 403 ? 'forbidden' : e.code === 'RULE_NOT_PUBLISHED' ? 'unpublished' : 'error' }); });
     (async () => {
-      const items: TimelineItem[] = [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: detail.source === 'ai' ? 'AI 가설' : '사람 제안' }];
+      const items: TimelineItem[] = [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: sourceLabel(detail.source) }];
       try {
         const { graphApi } = await import('../api/graph');
         const graph = await graphApi.judgment({ rule_id: versionKey });
@@ -99,7 +108,7 @@ export function Learning({ roles }: { roles: string[] }) {
         if (decision) items.push({ kind: decision.summary?.includes('scope') || decision.status === 'approve_with_scope_change' ? '범위 수정 후 승인' : '승인', at: decision.at, actor: decision.actor, detail: decision.summary || decision.title });
         const validation = graph.nodes.find((n) => n.kind === 'ValidationRun');
         if (validation) items.push({ kind: '비교 검증', at: validation.at, actor: validation.actor, detail: `${validation.id} · ${validation.status || ''}` });
-        const config = new Set(ruleDetails?.find((r) => r.rule_id === ruleId)?.versions.flatMap((v) => v.config_versions) || []);
+        const config = new Set(currentRule?.versions.flatMap((v) => v.config_versions) || []);
         const first = Math.min(...(version.config_versions.length ? version.config_versions : [Infinity]));
         if (Number.isFinite(first)) {
           const history = (await policyApi.versions()).versions.filter((v) => v.version >= first).sort((a, b) => a.version - b.version).slice(0, 12);
@@ -108,7 +117,7 @@ export function Learning({ roles }: { roles: string[] }) {
             const rules = (d.diff as Record<string, { before: Array<{ rule_id: string; version: number }>; after: Array<{ rule_id: string; version: number }> }>).rules;
             if (!rules) continue;
             const before = rules.before?.find((r) => r.rule_id === ruleId), after = rules.after?.find((r) => r.rule_id === ruleId);
-            const everPublished = (ruleDetails?.find((r) => r.rule_id === ruleId)?.versions.find((v) => v.version === after?.version)?.config_versions || []).sort((a, b) => a - b);
+            const everPublished = (currentRule?.versions.find((v) => v.version === after?.version)?.config_versions || []).sort((a, b) => a - b);
             if (after && after.version !== before?.version) items.push({ kind: everPublished[0] === row.version ? '게시 · 운영 중' : '되돌리기', at: row.created_at, actor: row.created_by, config_version: row.version, detail: `${ruleId}@${after.version} · ${row.reason}` });
             else if (before && !after && config.size) items.push({ kind: '중단', at: row.created_at, actor: row.created_by, config_version: row.version, detail: `${ruleId}@${before.version} · ${row.reason}` });
           }
@@ -128,7 +137,7 @@ export function Learning({ roles }: { roles: string[] }) {
   const shown = candidates.filter((c) => filter === 'all' || candidateFilterKey(c.status) === filter);
   const publishedRules = ruleDetails ? new Set(ruleDetails.filter((r) => r.versions.some((v) => v.status === 'published')).map((r) => r.rule_id)).size : null;
   const validation = versionKey ? validations[versionKey] || null : null;
-  const revertTargets = version ? (ruleDetails?.find((r) => r.rule_id === ruleId)?.versions || []).filter((v) => v.version !== version.version && ['published', 'stopped', 'reverted'].includes(v.status)).map((v) => v.version) : [];
+  const revertTargets = version ? (currentRule?.versions || []).filter((v) => v.version !== version.version && ['published', 'stopped', 'reverted'].includes(v.status)).map((v) => v.version) : [];
   const retry = !!detail && pending?.candidateId === detail.id;
   const states = actionStates(perms, { candidate: detail, version, validationOk: !!validation && validation.status === 'completed' && validation.side_effects === 0, revertTargets: revertTargets.length, retryDecision: retry });
   const existingIds = (ruleDetails || []).map((r) => r.rule_id);
@@ -178,21 +187,21 @@ export function Learning({ roles }: { roles: string[] }) {
         </header>
         {shown.length === 0 ? <p className="learning-empty">표시할 후보가 없습니다.</p> : <ul>{shown.map((c) => <li key={c.id}><button type="button" aria-current={c.id === selectedId} onClick={() => choose(c.id)}>
           <span className="mono">{c.id} · {fieldLabel(c.field)}</span><b>{candidateStatusLabel(c.status)}</b>
-          <span>{c.source === 'ai' ? 'AI 가설' : '사람 제안'} · 지지 {c.support_count ?? 0} · 반례 {c.counter_count ?? 0}{c.status === '자료 부족' ? ` · ${c.uncertainty.minimum_support ?? ''}건 필요` : ''}</span>
+          <span>{sourceLabel(c.source)} · 지지 {c.support_count ?? 0} · 반례 {c.counter_count ?? 0}{c.status === '자료 부족' ? ` · ${c.uncertainty.minimum_support ?? ''}건 필요` : ''}</span>
         </button></li>)}</ul>}
       </section>
       <section aria-label="후보 상세" className="learning-detail">
         {!detail || !body ? <p className="learning-empty">왼쪽에서 후보를 선택하세요. 후보는 가설이며 실행에 쓰이지 않습니다.</p> : <>
           <div className="learning-card"><RuleSummary candidate={detail} version={version} />
-            {ruleDetails && versionsFor(detail.id).length > 1 && <label className="learning-inline">규칙 버전<select value={version?.version} onChange={(e) => setVersionNo(Number(e.target.value))}>{versionsFor(detail.id).map((v) => <option key={v.version} value={v.version}>v{v.version} · {versionStatusLabel(v.status)}</option>)}</select></label>}
+            {ruleDetails && versions.length > 1 && <label className="learning-inline">규칙 버전<select value={version?.version} onChange={(e) => setVersionNo(Number(e.target.value))}>{versions.map((v) => <option key={v.version} value={v.version}>v{v.version} · {versionStatusLabel(v.status)}</option>)}</select></label>}
             {(detail.insufficient_approved || version?.insufficient_approved) && <p className="learning-caution" role="status">{version?.insufficient_approval_label || detail.insufficient_approval_label || '자료 부족 상태로 승인됨'}</p>}
             {perms.isAdmin && version && <p className="learning-state">버전 {versionKey} · 상태 {versionStatusLabel(version.status)} · 게시 Config {version.config_versions.length ? version.config_versions.map((v) => `v${v}`).join(', ') : '없음'} · 적용 기록 {version.application_count}건 · 활성 Config v{activeConfig}</p>}
             {!perms.isAdmin && <p className="learning-hint">규칙 버전·검증·효과는 규칙 관리자만 조회합니다.</p>}
           </div>
           <EvidenceTable examples={detail.examples} ruleRef={version ? versionKey : null} />
           {perms.isAdmin && <><ValidationCard result={validation} minimum={minSample} />
-            <Timeline ruleLabel={version ? versionKey : detail.id} items={timeline.length ? timeline : [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: detail.source === 'ai' ? 'AI 가설' : '사람 제안' }]} />
-            <Observation effects={effects} state={effectState} /></>}
+            <Timeline ruleLabel={version ? versionKey : detail.id} items={timeline.length ? timeline : [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: sourceLabel(detail.source) }]} />
+            <Observation effects={effectResult.state === 'ok' ? effectResult.effects : null} state={effectResult.state} /></>}
           <Actions key={`${detail.id}:${versionKey}:${retry}`} states={states} isAdmin={perms.isAdmin} busy={busy} handlers={handlers}
             defaultRuleId={retry || !version ? suggestRuleId(detail.field, existingIds) : ruleId} defaultScope={detail.proposed_body.scope as RuleScope}
             requiresInsufficientAck={detail.status === '자료 부족' || !!detail.insufficient_approved}

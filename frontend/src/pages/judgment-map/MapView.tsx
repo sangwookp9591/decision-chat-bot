@@ -13,7 +13,8 @@ const TILT = 42;
 export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, onPick }: Props) {
   const stage = useRef<HTMLDivElement>(null);
   const behavior = useRef<ZoomBehavior<HTMLDivElement, unknown> | null>(null);
-  const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
+  const pan = useRef<HTMLDivElement>(null);
+  const [zoomPercent, setZoomPercent] = useState(100);
   const layout = useMemo(() => layoutScene(items), [items]);
   const links = useMemo(() => displayEdges(items, edges), [items, edges]);
   const layerMeta = new Map(layers.map((layer) => [layer.layer, layer]));
@@ -33,7 +34,10 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
     if (!element) return;
     const z = d3zoom<HTMLDivElement, unknown>().scaleExtent([0.25, 3])
       .filter((event: Event) => (event.type === 'wheel' ? (event as WheelEvent).ctrlKey || (event as WheelEvent).metaKey : !(event as MouseEvent).button))
-      .on('zoom', (event: D3ZoomEvent<HTMLDivElement, unknown>) => setTransform({ x: event.transform.x, y: event.transform.y, k: event.transform.k }));
+      .on('zoom', (event: D3ZoomEvent<HTMLDivElement, unknown>) => {
+        if (pan.current) pan.current.style.transform = `translate(${event.transform.x}px,${event.transform.y}px) scale(${event.transform.k})`;
+      })
+      .on('end', (event: D3ZoomEvent<HTMLDivElement, unknown>) => setZoomPercent(Math.round(event.transform.k * 100)));
     behavior.current = z;
     select(element).call(z);
     return () => { select(element).on('.zoom', null); };
@@ -46,7 +50,7 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
 
   return <div className="jm-map">
     <div className="jm-stage" ref={stage} data-testid="jm-stage">
-      <div className="jm-pan" style={{ transform: `translate(${transform.x}px,${transform.y}px) scale(${transform.k})` }}>
+      <div className="jm-pan" ref={pan}>
         <div className="jm-persp" style={{ width: SCENE.width, height: sceneHeight * Math.cos(TILT * Math.PI / 180) + 120 }}>
           <div className="jm-scene" style={{ width: SCENE.width, height: sceneHeight, transform: `rotateX(${TILT}deg)` }}>
             {layout.planes.map((plane) => {
@@ -84,7 +88,7 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
       </div>
       <div className="jm-zoom" role="group" aria-label="확대·이동">
         <button type="button" aria-label="축소" onClick={() => scaleBy(1 / 1.25)}>−</button>
-        <span className="mono" data-testid="jm-zoom-pct" aria-live="polite">{Math.round(transform.k * 100)}%</span>
+        <span className="mono" data-testid="jm-zoom-pct" aria-live="polite">{zoomPercent}%</span>
         <button type="button" aria-label="확대" onClick={() => scaleBy(1.25)}>+</button>
         <button type="button" className="jm-fit" onClick={fit}>전체 보기</button>
       </div>

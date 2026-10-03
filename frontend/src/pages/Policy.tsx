@@ -35,21 +35,27 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
     catch { setFieldError(`${key}: 올바른 JSON 값이 아닙니다.`); }
   }
   async function validateDraft() { setSaving(true); try { const result = await policyApi.validate(config); setValidation(result); } catch (e) { setNotice((e as ApiError).message || '검증 요청에 실패했습니다.'); } finally { setSaving(false); } }
+  async function mutate(work: () => Promise<PolicyDetail>, fallback: string, after: (result: PolicyDetail) => void) {
+    setSaving(true); setNotice('');
+    try {
+      const result = await work();
+      setActiveVersion(result.version); setConfig(result.config); setReason(''); after(result); await refresh();
+    } catch (e) {
+      const apiError = e as ApiError;
+      setNotice(apiError.status === 409 ? `활성 버전이 변경되었습니다. 최신 버전을 다시 불러왔습니다. (${apiError.message})` : apiError.message || fallback);
+      if (apiError.status === 409) await refresh();
+    } finally { setSaving(false); }
+  }
   async function publishDraft() {
     if (!reason.trim()) { setNotice('게시 사유를 입력해 주세요.'); return; }
     if (fieldError) return;
-    setSaving(true); setNotice('');
-    try { const result = await policyApi.publish(config, reason, activeVersion); setActiveVersion(result.version); setConfig(result.config); setReason(''); setValidation(null); setNotice(`정책 버전 ${result.version}을 게시했습니다.`); await refresh(); }
-    catch (e) { const apiError = e as ApiError; setNotice(apiError.status === 409 ? `활성 버전이 변경되었습니다. 최신 버전을 다시 불러왔습니다. (${apiError.message})` : apiError.message || '게시하지 못했습니다.'); if (apiError.status === 409) await refresh(); }
-    finally { setSaving(false); }
+    await mutate(() => policyApi.publish(config, reason, activeVersion), '게시하지 못했습니다.', (result) => { setValidation(null); setNotice(`정책 버전 ${result.version}을 게시했습니다.`); });
   }
   async function rollback() {
     if (!selected) return;
     if (!reason.trim()) { setNotice('되돌리기 사유를 입력해 주세요.'); return; }
-    setSaving(true); setNotice('');
-    try { const result = await policyApi.rollback(selected.version, reason, activeVersion); setActiveVersion(result.version); setConfig(result.config); setReason(''); setSelected(null); setNotice(`버전 ${selected.version} 기준 새 정책 버전 ${result.version}을 만들었습니다.`); await refresh(); }
-    catch (e) { const apiError = e as ApiError; setNotice(apiError.status === 409 ? `활성 버전이 변경되었습니다. 최신 버전을 다시 불러왔습니다. (${apiError.message})` : apiError.message || '되돌리지 못했습니다.'); if (apiError.status === 409) await refresh(); }
-    finally { setSaving(false); }
+    const targetVersion = selected.version;
+    await mutate(() => policyApi.rollback(targetVersion, reason, activeVersion), '되돌리지 못했습니다.', (result) => { setSelected(null); setNotice(`버전 ${targetVersion} 기준 새 정책 버전 ${result.version}을 만들었습니다.`); });
   }
   const columns = [
     { key: 'version' as const, label: '버전', render: (v: PolicyVersion) => <button type="button" onClick={() => void chooseVersion(v)}>v{v.version}</button> },

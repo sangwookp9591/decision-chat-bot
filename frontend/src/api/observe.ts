@@ -23,8 +23,6 @@ export const observeApi = {
 export type { RequestItem };
 
 export const actorLabels: Record<string,string> = { ai:'AI', code:'코드', rule:'규칙', external:'외부', human:'사람' };
-export const statusLabels: Record<string,string> = { succeeded:'성공', failed:'실패', skipped:'건너뜀', waiting_human:'사람 검토', running:'진행 중', pending:'대기' };
-export const statusIcons: Record<string,string> = { succeeded:'✓', failed:'!', skipped:'↷', waiting_human:'◷', running:'●', pending:'○' };
 
 export function playbackPosition(events: PlaybackEvent[], elapsedMs: number, nodeIds: string[]) {
   // Preserve source order for equal timestamps; the explicit index tie-breaker keeps playback

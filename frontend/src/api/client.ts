@@ -1,10 +1,12 @@
 export type ApiError = { status: number; code: string; message: string; details?: unknown };
 
-function csrfToken(): string | undefined {
+export function csrfToken(): string | undefined {
   const cookie = document.cookie.split('; ').find((part) => part.startsWith('jev_csrf='));
   if (cookie) return decodeURIComponent(cookie.slice('jev_csrf='.length));
   return document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content || undefined;
 }
+
+export const idempotencyKey = () => ({ 'Idempotency-Key': crypto.randomUUID() });
 
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);

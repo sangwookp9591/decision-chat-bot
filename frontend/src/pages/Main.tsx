@@ -1,20 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
-import { apiFetch, type ApiError } from '../api/client';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { apiFetch, csrfToken, idempotencyKey, type ApiError } from '../api/client';
 import { requestApi, type Judgment, type RequestDetail, type RequestItem } from '../api/requests';
 import { useSession } from '../state/session';
 import { Button, StatusBadge } from '../components';
 import { getStatusPresentation } from '../components/statusLabels';
+import { useEventStream } from '../state/events';
 import './main/main.css';
 
 const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
 const labels: Record<string, string> = { ai_need: 'AI 필요성', feasibility: '개발 가능성', urgency: '긴급도', lead_org: '주관 조직' };
 const classifications: Record<string, string[]> = { ai_need: ['필요', '불필요', '혼합'], feasibility: ['가능', '조건부 가능', '현재 불가'], urgency: ['긴급', '일반'], lead_org: ['AI팀', 'IT팀', '현업'] };
 function errorMessage(error: unknown) { return (error as ApiError)?.message || '요청 처리 중 문제가 발생했습니다.'; }
-function csrf() { return decodeURIComponent(document.cookie.split('; ').find((part) => part.startsWith('jev_csrf='))?.slice(9) || ''); }
 function uploadRequest(data: FormData, onProgress: (value: number) => void, path = '/api/requests') {
   return new Promise<{ request_id: string; status: string; revision: number }>((resolve, reject) => {
     const xhr = new XMLHttpRequest(); xhr.open('POST', path); xhr.withCredentials = true;
-    xhr.setRequestHeader('Idempotency-Key', crypto.randomUUID()); if (csrf()) xhr.setRequestHeader('X-CSRF-Token', csrf());
+    xhr.setRequestHeader('Idempotency-Key', idempotencyKey()['Idempotency-Key']); const token = csrfToken(); if (token) xhr.setRequestHeader('X-CSRF-Token', token);
     xhr.upload.onprogress = (event) => { if (event.lengthComputable) onProgress(Math.round(event.loaded / event.total * 100)); };
     xhr.onerror = () => reject(new Error('서버에 연결할 수 없습니다.'));
     xhr.onload = () => { if (xhr.status >= 200 && xhr.status < 300) resolve(JSON.parse(xhr.responseText)); else reject(new Error('요청을 접수하지 못했습니다.')); };
@@ -28,34 +28,97 @@ export function Main() {
   const [requestId, setRequestId] = useState(''); const [detail, setDetail] = useState<RequestDetail | null>(null); const [judgment, setJudgment] = useState<Judgment | null>(null);
   const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null); const [stage, setStage] = useState(''); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
   const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState('');
+  const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); setStage(''); };
+  const revisionNumber = detail?.request.revision_number || detail?.revisions.length || 0;
   useEffect(() => { const queued = sessionStorage.getItem('chat:request'); if (queued) { setText(queued); sessionStorage.removeItem('chat:request'); } const receive = (event: Event) => { setText((event as CustomEvent<string>).detail || ''); document.getElementById('request-text')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }; window.addEventListener('chat:request', receive); return () => window.removeEventListener('chat:request', receive); }, []);
   useEffect(() => { if (!judgment) return; window.dispatchEvent(new CustomEvent('chat:result', { detail: { urgency: judgment.classifications.urgency, review: Boolean(judgment.review), summary: typeof judgment.summary === 'string' ? judgment.summary : judgment.summary.text } })); }, [judgment]);
   const refresh = useCallback(async (id: string) => {
-    const current = await requestApi.detail(id); setDetail(current); let activeRunId = current.request.active_run_id;
-    try { const result = await requestApi.judgment(id); setJudgment(result); activeRunId = result.run_id; setStage(''); }
-    catch (problem) { if ((problem as ApiError)?.status !== 404) throw problem; }
-    try { const history = await requestApi.runs(id); setRuns(history); const previous = history.runs.find((run) => run.id !== activeRunId); setPreviousJudgment(previous ? await requestApi.judgment(id, previous.id) : null); } catch { setPreviousJudgment(null); /* run history is optional for the initial result */ }
+    const [current, judgmentResult, history] = await Promise.all([
+      requestApi.detail(id),
+      requestApi.judgment(id).then((value) => ({ value }), (reason: unknown) => ({ reason })),
+      requestApi.runs(id).then((value) => ({ value }), () => ({ value: null })),
+    ]);
+    setDetail(current); let activeRunId = current.request.active_run_id;
+    if ('value' in judgmentResult) { setJudgment(judgmentResult.value); activeRunId = judgmentResult.value.run_id; setStage(''); }
+    else if ((judgmentResult.reason as ApiError)?.status !== 404) throw judgmentResult.reason;
+    if ('value' in history && history.value) {
+      setRuns(history.value); const previous = history.value.runs.find((run) => run.id !== activeRunId);
+      try { setPreviousJudgment(previous ? await requestApi.judgment(id, previous.id) : null); } catch { setPreviousJudgment(null); }
+    } else { setRuns(null); setPreviousJudgment(null); }
     if (['failed', 'cancelled', '실패'].includes(current.request.status)) setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.');
   }, []);
   useEffect(() => { requestApi.list().then((value) => setRequests(value.items)).catch(() => undefined); }, [requestId]);
+  const inFlight = useRef(false);
+  const refreshIfPending = useCallback((id: string) => {
+    if (!id || inFlight.current || judgment || error) return;
+    inFlight.current = true;
+    void refresh(id).catch((problem) => setError(errorMessage(problem))).finally(() => { inFlight.current = false; });
+  }, [judgment, error, refresh]);
+  const onStreamEvent = useCallback((event: { type: string; step_name?: string }) => {
+    if (event.type === 'run.step' && event.step_name) setStage(({ '입력 정리': '내용 정리', '업무 분해': '업무 나누기' } as Record<string, string>)[event.step_name] || event.step_name);
+    refreshIfPending(requestId);
+  }, [refreshIfPending, requestId]);
+  useEventStream({ requestId: requestId || undefined, enabled: Boolean(requestId && !judgment && !error) }, undefined, onStreamEvent);
   useEffect(() => {
     if (!requestId || judgment || error) return;
-    let live = true; const sourceEvents = new EventSource('/api/events/stream');
-    sourceEvents.addEventListener('run.step', (event) => { try { const parsed = JSON.parse((event as MessageEvent).data); if (parsed.request_id === requestId && parsed.step_name) setStage(({ '입력 정리': '내용 정리', '업무 분해': '업무 나누기' } as Record<string, string>)[parsed.step_name] || parsed.step_name); } catch { /* ignore malformed transient event */ } });
-    const timer = window.setInterval(() => { if (live) refresh(requestId).catch((problem) => { setError(errorMessage(problem)); }); }, 1500);
-    return () => { live = false; sourceEvents.close(); window.clearInterval(timer); };
-  }, [requestId, judgment, error, refresh]);
+    const timer = window.setInterval(() => refreshIfPending(requestId), 10000);
+    return () => window.clearInterval(timer);
+  }, [requestId, judgment, error, refreshIfPending]);
   async function submit(event: React.FormEvent) {
-    event.preventDefault(); setBusy(true); setError(''); setJudgment(null); setPreviousJudgment(null); setRuns(null); setDetail(null); setStage(''); setUpload(0);
-    try { const form = new FormData(); form.append('text', text); files.forEach((file) => form.append('files', file)); const revising = detail?.request.status === 'needs_file_decision' && requestId; if (revising) form.append('expected_revision', String(detail.request.revision_number || detail.revisions.length)); const accepted = await uploadRequest(form, setUpload, revising ? `/api/requests/${requestId}/revisions` : '/api/requests'); const id = revising ? requestId : accepted.request_id; setRequestId(id); setText(''); setFiles([]); await refresh(id); }
-    catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); setUpload(null); }
+    event.preventDefault();
+    setBusy(true); setError(''); resetRun(); setDetail(null); setUpload(0);
+    try {
+      const form = new FormData();
+      form.append('text', text);
+      files.forEach((file) => form.append('files', file));
+      const revising = detail?.request.status === 'needs_file_decision' && requestId;
+      if (revising) form.append('expected_revision', String(revisionNumber));
+      const path = revising ? `/api/requests/${requestId}/revisions` : '/api/requests';
+      const accepted = await uploadRequest(form, setUpload, path);
+      const id = revising ? requestId : accepted.request_id;
+      setRequestId(id); setText(''); setFiles([]);
+      await refresh(id);
+    } catch (problem) {
+      setError(errorMessage(problem));
+    } finally {
+      setBusy(false); setUpload(null);
+    }
   }
   async function excludeUnread() {
-    if (!detail || !requestId) return; const failed = detail.attachments.filter((file) => file.status !== 'ok').map((file) => file.id);
-    setBusy(true); setError(''); try { const body = { exclude: failed, expected_revision: detail.request.revision_number || detail.revisions.length }; await apiFetch(`/api/requests/${requestId}/file-decision`, { method: 'POST', headers: { 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify(body) }); setJudgment(null); setStage(''); await refresh(requestId); } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
+    if (!detail || !requestId) return;
+    const failed = detail.attachments.filter((file) => file.status !== 'ok').map((file) => file.id);
+    setBusy(true); setError('');
+    try {
+      const body = { exclude: failed, expected_revision: revisionNumber };
+      await apiFetch(`/api/requests/${requestId}/file-decision`, {
+        method: 'POST', headers: idempotencyKey(), body: JSON.stringify(body),
+      });
+      resetRun(); await refresh(requestId);
+    } catch (problem) {
+      setError(errorMessage(problem));
+    } finally {
+      setBusy(false);
+    }
   }
-  async function openRequest(id: string) { setRequestId(id); setJudgment(null); setPreviousJudgment(null); setRuns(null); setError(''); setStage(''); try { await refresh(id); } catch (problem) { setError(errorMessage(problem)); } }
-  async function reanalyze() { if (!requestId || !detail) return; if (!window.confirm('현재 revision으로 새 분석 실행을 시작할까요? 기존 판단과 검토 기록은 보존됩니다.')) return; setBusy(true); setError(''); try { await requestApi.reanalyze(requestId, detail.request.revision_number || detail.revisions.length); setJudgment(null); setPreviousJudgment(null); setStage(''); setRuns(await requestApi.runs(requestId)); await refresh(requestId); } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); } }
+  async function openRequest(id: string) {
+    setRequestId(id); resetRun(); setError('');
+    try { await refresh(id); }
+    catch (problem) { setError(errorMessage(problem)); }
+  }
+  async function reanalyze() {
+    if (!requestId || !detail) return;
+    if (!window.confirm('현재 revision으로 새 분석 실행을 시작할까요? 기존 판단과 검토 기록은 보존됩니다.')) return;
+    setBusy(true); setError('');
+    try {
+      await requestApi.reanalyze(requestId, revisionNumber);
+      resetRun(); setRuns(await requestApi.runs(requestId));
+      await refresh(requestId);
+    } catch (problem) {
+      setError(errorMessage(problem));
+    } finally {
+      setBusy(false);
+    }
+  }
   async function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) { if (!evidence) { setSourceTitle(`${output.question_id} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; } const sourceKind = evidence.source === 'chat' ? '채팅' : '첨부'; setSourceTitle(`${output.question_id} · ${sourceKind} · ${JSON.stringify(evidence.location)}`); setSource(evidence.source_text || '원문 열람 권한이 없어 위치 정보만 표시합니다.'); if (!evidence.source_text && requestId) try { const result = await requestApi.evidence(requestId, evidence.id); setSource(result.source_text || '원문 열람 권한이 없어 위치 정보만 표시합니다.'); } catch { setSource('원문 위치를 확인할 수 없습니다.'); } }
   return <section className="main-page"><div className="main-heading"><div><p className="eyebrow">요청자</p><h1>요청 접수와 판단 결과</h1></div>{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}</div>
     <div className="main-columns"><div className="main-primary">

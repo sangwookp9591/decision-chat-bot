@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ApiError } from '../api/client';
 import { requestApi } from '../api/requests';
-import { actorLabels, observeApi, playbackPosition, statusIcons, type Flow, type Playback, type RequestItem, type StepDetail, type Topology } from '../api/observe';
+import { actorLabels, observeApi, playbackPosition, type Flow, type Playback, type RequestItem, type StepDetail, type Topology } from '../api/observe';
+import { useEventStream } from '../state/events';
+import { statusIcons } from '../components';
 import {getStatusLabel} from '../components/statusLabels';
 import './observatory/observatory.css';
 
@@ -13,7 +15,9 @@ export function Observatory(){
  useEffect(()=>{void observeApi.requests().then(x=>{setRequests(x.items);if(!requestId&&x.items[0])setRequestId(x.items[0].id)}).catch(e=>setError((e as ApiError).message))},[]);
  useEffect(()=>{if(!requestId)return;void observeApi.runs(requestId).then(x=>{setRuns(x.runs);if(!runId&&x.active_run_id)setRunId(x.active_run_id)}).catch(e=>setError((e as ApiError).message))},[requestId]);
  useEffect(()=>{if(!runId)return;let live=true;Promise.all([observeApi.flow(runId),observeApi.playback(runId)]).then(([f,p])=>{if(live){setFlow(f);setPlayback(p);setElapsed(0);setPlaying(false)}}).catch(e=>setError((e as ApiError).message));return()=>{live=false}},[runId]);
- useEffect(()=>{if(!flow?.live||!requestId)return;let live=true;const source=new EventSource('/api/events/stream',{withCredentials:true});source.onopen=()=>live&&setStream('연결됨');source.onerror=()=>live&&setStream('재연결 중');source.addEventListener('run.step',(event:Event)=>{try{const data=JSON.parse((event as MessageEvent).data);if(data.request_id===requestId&&(!data.run_id||data.run_id===runId))void observeApi.flow(runId).then(next=>live&&setFlow(next))}catch{/* ignore malformed transient event */}});return()=>{live=false;source.close()}},[flow?.live,requestId,runId]);
+ const onStreamEvent=useCallback((event:{type:string;run_id?:string})=>{if(event.type==='run.step'&&(!event.run_id||event.run_id===runId))void observeApi.flow(runId).then(setFlow)},[runId]);
+ const streamState=useEventStream({requestId:requestId||undefined,enabled:Boolean(flow?.live&&requestId)},undefined,onStreamEvent);
+ useEffect(()=>{setStream(streamState.status==='connected'?'연결됨':streamState.status==='disconnected'?'연결 끊김':'재연결 중')},[streamState.status]);
  useEffect(()=>{if(tab==='flow'||!requestId)return;let live=true;observeApi.topology(requestId,tab).then(x=>live&&setTopology(x)).catch(e=>setError((e as ApiError).message));return()=>{live=false}},[tab,requestId]);
  useEffect(()=>{if(!playing)return;const timer=window.setInterval(()=>setElapsed(t=>t+250*speed),250);return()=>window.clearInterval(timer)},[playing,speed]);
  const ids=useMemo(()=>flow?.nodes.map(n=>n.id)||[],[flow]);const position=playbackPosition(playback?.events||[],elapsed,ids);const eventTimes=(playback?.events||[]).map(e=>Date.parse(e.at||'')).filter(Number.isFinite);const maxTime=eventTimes.length?Math.max(...eventTimes)-Math.min(...eventTimes):Math.max(0,...(flow?.nodes.map(n=>Date.parse(n.ended_at||'')-Date.parse(n.started_at||''))||[]));

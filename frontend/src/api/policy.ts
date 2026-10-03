@@ -1,4 +1,4 @@
-import { apiFetch } from './client';
+import { apiFetch, idempotencyKey } from './client';
 
 export type PolicyConfig = {
   schema_version: string;
@@ -21,6 +21,6 @@ export const policyApi = {
   versions: () => apiFetch<{ versions: PolicyVersion[] }>('/api/policy/versions'),
   version: (version: number) => apiFetch<PolicyDetail>(`/api/policy/versions/${version}`),
   validate: (config: PolicyConfig) => apiFetch<PolicyValidation>('/api/policy/validate', { method: 'POST', body: JSON.stringify({ config }) }),
-  publish: (config: PolicyConfig, reason: string, expected_active_version: number) => apiFetch<PolicyDetail>('/api/policy/publish', { method: 'POST', headers: { 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify({ config, reason, expected_active_version }) }),
-  rollback: (target_version: number, reason: string, expected_active_version: number) => apiFetch<PolicyDetail>('/api/policy/rollback', { method: 'POST', headers: { 'Idempotency-Key': crypto.randomUUID() }, body: JSON.stringify({ target_version, reason, expected_active_version }) }),
+  publish: (config: PolicyConfig, reason: string, expected_active_version: number) => apiFetch<PolicyDetail>('/api/policy/publish', { method: 'POST', headers: idempotencyKey(), body: JSON.stringify({ config, reason, expected_active_version }) }),
+  rollback: (target_version: number, reason: string, expected_active_version: number) => apiFetch<PolicyDetail>('/api/policy/rollback', { method: 'POST', headers: idempotencyKey(), body: JSON.stringify({ target_version, reason, expected_active_version }) }),
 };

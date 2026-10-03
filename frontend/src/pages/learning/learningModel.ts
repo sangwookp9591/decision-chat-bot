@@ -2,6 +2,7 @@ import type { CandidateDetail, EffectVerdict, Predicate, RuleVersionRow, Validat
 
 export const fieldLabels: Record<string, string> = { ai_need: 'AI 필요성', feasibility: '개발 가능성', urgency: '긴급도', lead_org: '담당 조직 · 주관' };
 export const fieldLabel = (field: string) => fieldLabels[field] || field;
+export const sourceLabel = (source: string) => source === 'ai' ? 'AI 가설' : '사람 제안';
 
 export type CandidateFilter = 'all' | 'review' | 'insufficient' | 'approved' | 'rejected';
 export const filterLabels: Record<CandidateFilter, string> = { all: '전체', review: '검토 필요', insufficient: '자료 부족', approved: '승인', rejected: '기각' };
@@ -90,15 +91,11 @@ export function describeAction(action: Record<string, unknown>): string {
   return JSON.stringify(action);
 }
 
-export const percent = (value: number | null | undefined) => value === null || value === undefined ? '미수집' : `${(value * 100).toFixed(1)}%`;
+export { percent } from '../../lib/format';
 export const millis = (value: number | null | undefined) => value === null || value === undefined ? '미수집' : `${Math.round(value)}ms`;
 export function isoOf(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
-export function formatTime(value: unknown): string {
-  const text = isoOf(value);
-  if (!text) return '—';
-  const date = new Date(text);
-  return Number.isNaN(date.getTime()) ? text : date.toLocaleString('ko-KR', { hour12: false });
-}
+import { formatTime as formatSharedTime } from '../../lib/format';
+export const formatTime = (value: unknown) => formatSharedTime(value, { hour12: false });
 export const valueText = (value: unknown) => value === null || value === undefined ? '—' : typeof value === 'string' ? value : JSON.stringify(value);

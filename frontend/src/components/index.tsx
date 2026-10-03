@@ -3,7 +3,7 @@ import './ui.css';
 
 export type StatusKind = 'success' | 'failure' | 'progress' | 'review' | 'pending' | 'skipped';
 const statusLabels: Record<StatusKind, string> = { success: '성공', failure: '실패', progress: '진행 중', review: '검토 대기', pending: '대기', skipped: '건너뜀' };
-const statusIcons: Record<StatusKind, string> = { success: '✓', failure: '×', progress: '●', review: '♙', pending: '○', skipped: '⊘' };
+export const statusIcons: Record<string, string> = { success: '✓', failure: '×', progress: '●', review: '♙', pending: '○', skipped: '⊘' };
 export function StatusBadge({ status, label }: { status: StatusKind; label?: string }) { return <span className={`status-badge status-${status}`}><span aria-hidden="true">{statusIcons[status]}</span>{label || statusLabels[status]}</span>; }
 
 export type Classification = '가능' | '조건부' | '불가' | '정보 부족' | '판단 보류';

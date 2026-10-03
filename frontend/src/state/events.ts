@@ -1,8 +1,8 @@
-import { createElement, useEffect, useState } from 'react';
+import { createElement, useEffect, useRef, useState } from 'react';
 import { eventApi, type EventSnapshot } from '../api/events';
 
-export type StreamFilter = { requestId?: string };
-export type StreamEvent = { seq: number; type: string; request_id?: string; run_id?: string; status?: string };
+export type StreamFilter = { requestId?: string; enabled?: boolean };
+export type StreamEvent = { seq: number; type: string; request_id?: string; run_id?: string; status?: string; step_name?: string };
 export type StreamStatus = 'connected' | 'reconnecting' | 'disconnected';
 const SEQ_KEY = 'jevtriage:last-event-seq';
 export function lastEventSeq() { const value = Number(sessionStorage.getItem(SEQ_KEY) || 0); return Number.isFinite(value) && value >= 0 ? value : 0; }
@@ -11,23 +11,28 @@ export function acceptEventSeq(seq: number, previous: number) { return Number.is
 export function useEventStream(filters: StreamFilter = {}, onSnapshot?: (snapshot: EventSnapshot) => void, onEvent?: (event: StreamEvent) => void) {
   const [status, setStatus] = useState<StreamStatus>('reconnecting');
   const [lastSeq, setLastSeq] = useState(lastEventSeq);
+  const callbacks = useRef({ onSnapshot, onEvent });
+  callbacks.current = { onSnapshot, onEvent };
   useEffect(() => {
+    if (filters.enabled === false) return;
     let live = true;
     let current = lastEventSeq();
-    let source: EventSource;
-    const kinds = ['request.updated', 'run.updated', 'run.started', 'run.completed', 'policy.published', 'snapshot-required'];
+    let source: EventSource | undefined;
+    let snapshot: EventSnapshot | undefined;
+    const kinds = ['request.updated', 'run.updated', 'run.started', 'run.completed', 'run.step', 'policy.published', 'snapshot-required'];
     const connect = () => {
       if (!live) return;
-      const url = `/api/events/stream${current ? `?after=${current}` : ''}`;
+      const url = `/api/events/stream?after=${current}`;
       source = new EventSource(url, { withCredentials: true });
-      source.onopen = () => live && setStatus('connected');
-      source.onerror = () => live && setStatus(source.readyState === EventSource.CLOSED ? 'disconnected' : 'reconnecting');
-      kinds.forEach((kind) => source.addEventListener(kind, (event: Event) => {
+      const activeSource = source;
+      activeSource.onopen = () => live && setStatus('connected');
+      activeSource.onerror = () => live && setStatus(activeSource.readyState === EventSource.CLOSED ? 'disconnected' : 'reconnecting');
+      kinds.forEach((kind) => activeSource.addEventListener(kind, (event: Event) => {
         if (!live) return;
         if (kind === 'snapshot-required') {
           setStatus('reconnecting');
-          if (filters.requestId) void eventApi.snapshot(filters.requestId).then((snapshot) => { if (!live) return; current = Math.max(current, snapshot.latest_seq); sessionStorage.setItem(SEQ_KEY, String(current)); setLastSeq(current); onSnapshot?.(snapshot); source.close(); connect(); }).catch(() => { if (live) setStatus('disconnected'); });
-          else { source.close(); setStatus('disconnected'); }
+          if (filters.requestId) void eventApi.snapshot(filters.requestId).then((next) => { if (!live) return; snapshot = next; current = Math.max(current, next.latest_seq); sessionStorage.setItem(SEQ_KEY, String(current)); setLastSeq(current); callbacks.current.onSnapshot?.(next); source?.close(); connect(); }).catch(() => { if (live) setStatus('disconnected'); });
+          else { activeSource.close(); setStatus('disconnected'); }
           return;
         }
         const message = event as MessageEvent;
@@ -38,12 +43,23 @@ export function useEventStream(filters: StreamFilter = {}, onSnapshot?: (snapsho
         setLastSeq(seq);
         let data: Record<string, unknown> = {};
         try { data = JSON.parse(message.data) as Record<string, unknown>; } catch { return; }
-        if (!filters.requestId || data.request_id === filters.requestId || kind === 'policy.published') onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined });
+        if (!filters.requestId || data.request_id === filters.requestId || kind === 'policy.published') callbacks.current.onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined, ...(typeof data.step_name === 'string' ? { step_name: data.step_name } : {}) });
       }));
     };
-    connect();
-    return () => { live = false; source.close(); };
-  }, [filters.requestId, onEvent, onSnapshot]);
+    const start = async () => {
+      if (filters.requestId) {
+        try { snapshot = await eventApi.snapshot(filters.requestId); }
+        catch { if (live) setStatus('disconnected'); return; }
+      }
+      if (!live) return;
+      current = Math.max(current, snapshot?.latest_seq || 0);
+      sessionStorage.setItem(SEQ_KEY, String(current));
+      setLastSeq(current);
+      connect();
+    };
+    void start();
+    return () => { live = false; source?.close(); };
+  }, [filters.requestId]);
   return { status, lastSeq };
 }
 

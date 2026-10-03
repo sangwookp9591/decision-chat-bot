@@ -1,4 +1,4 @@
-import { apiFetch } from './client';
+import { apiFetch, idempotencyKey } from './client';
 
 export type Predicate = { field?: string; signal?: string; catalog_task?: string; requester_org?: string; op?: string; value?: unknown; present?: boolean };
 export type RuleScope = { all: Predicate[] };
@@ -49,8 +49,7 @@ export type RuleEffects = {
 export type DecisionAction = 'approve' | 'approve_with_scope_change' | 'reject';
 export type CorrectionList = { corrections: CorrectionCase[] };
 
-const key = () => ({ 'Idempotency-Key': crypto.randomUUID() });
-const post = <T>(path: string, body: unknown) => apiFetch<T>(path, { method: 'POST', headers: key(), body: JSON.stringify(body) });
+const post = <T>(path: string, body: unknown) => apiFetch<T>(path, { method: 'POST', headers: idempotencyKey(), body: JSON.stringify(body) });
 const rule = (id: string) => encodeURIComponent(id);
 
 function parse<T>(value: unknown, fallback: T): T {
