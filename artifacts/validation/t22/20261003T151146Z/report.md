@@ -1,0 +1,37 @@
+# T22 장애 시험 결과
+
+실행: 2026-10-03T15:15:09.408159+00:00 UTC
+증거: `/Users/psw/Projects/decision-chat-bot/artifacts/validation/t22/20261003T151146Z`
+
+| 시나리오 | 판정 | 증거 |
+| --- | --- | --- |
+| Jev 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 파서·Neo4j 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| worker 인계·재시작 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| API 재시작·SSE | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 정책 도중 변경 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 동시 승인 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 관측 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 보완·120초 뒤 회복 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+
+## 기록된 실행 값
+
+```json
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_4b8fc013b6234bea87e94ad8d2fd85e1", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_429", "status": "pass", "request_id": "req_a590d4d8806840138a62d1044d6d5bb8", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_a2047c3d7aaa466f9b220f431bd19dea", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_a51283eb8e414f209af96084cc5ec9b2", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "parser_db_outage", "status": "pass", "damaged_request": "req_439bb16c4a304f92810a05014bef6ad5", "recovered_request": "req_208603511c1b404fac089ce38478aee0", "http_status": 503, "unknown_validity": 1}
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_c250115a73ff4aec834a8c68f5dbe0c4", "generations": [1, 2], "judgments": 1}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_78dea50ea49e4a7e80139b81d5977a10"}
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_f8e7b1faca9b453f8914bf2c98e2a560", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 817, "startup_ms": 698, "terminal_ms": 12637, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_a438188a4c914f739b5953aa23fa8d5f", "run_96cfc249e20f4d0490cce10a030856bc", "run_258d5b7214d546fa81f0ab6bfc9be190"]}
+{"scenario": "parallel_review", "status": "pass", "request_id": "req_e934e68bbb7a4e7e8010e54efb63dd51", "statuses": [200, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409], "counts": {"assignments": 1, "tasks": 1, "distinct_drafts": 1}, "retry_status": 200, "stale_approval_status": 409}
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 292, "collected_after": 292, "reconciliation": {"request_commits_missing_journal": [], "journal_success_missing_db": [], "run_commits_missing_journal": [], "run_status_mismatch": []}}
+{"scenario": "information_wait", "status": "pass", "request_id": "req_b2cd7a0deb304c40acb17f6091c657d1", "judgment_id": "jdg_1abbcb9e091e4cd489ca44ca639aeaf7", "outputs": 11}
+{"scenario": "late_recovery", "status": "pass", "request_id": "req_75720be2c65f42da8f520c71affb6d85", "first_run": "run_4558fc0c8b634991ba87c43d9f3486d7", "recovery_run": "run_35de4b9936154706bf48b0def0f9f95b", "failed_120s": 5, "late_recoveries": 1, "request_metrics": {"eligible_requests": 1, "within_120s": 0, "failed_120s": 1, "pending_120s": 0, "ratio": 0.0, "candidate_commits": 1, "failed_runs": 1, "late_recoveries": 1, "unconfirmed_samples": 0}, "wait_seconds": 121}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}
+```
+
+SSE 재연결 p95: 817ms / 기준 5000ms, 표본 1건. 단일 로컬 표본은 운영 성능 달성 판정으로 사용하지 않는다.
+Jev 장애 주입 결과는 JEV_MODE=mock이며 실연동 품질 게이트를 대체하지 않는다.
