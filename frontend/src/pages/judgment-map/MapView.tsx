@@ -5,16 +5,17 @@ import type { GraphEdge, GraphLayer } from '../../api/graph';
 import { SCENE, displayEdges, edgePath, KIND_LABEL, layoutScene, type DisplayItem, type Highlight } from './logic';
 
 type Props = {
-  items: DisplayItem[]; edges: GraphEdge[]; layers: GraphLayer[]; highlight: Highlight;
+  expanded?: boolean; items: DisplayItem[]; edges: GraphEdge[]; layers: GraphLayer[]; highlight: Highlight;
   tabStop: string | null; onTabStop: (id: string) => void; onPick: (item: DisplayItem) => void;
 };
 const TILT = 42;
 
-export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, onPick }: Props) {
+export function MapView({ expanded = false, items, edges, layers, highlight, tabStop, onTabStop, onPick }: Props) {
   const stage = useRef<HTMLDivElement>(null);
   const behavior = useRef<ZoomBehavior<HTMLDivElement, unknown> | null>(null);
   const pan = useRef<HTMLDivElement>(null);
   const [zoomPercent, setZoomPercent] = useState(100);
+  const touched = useRef(false);
   const layout = useMemo(() => layoutScene(items), [items]);
   const links = useMemo(() => displayEdges(items, edges), [items, edges]);
   const layerMeta = new Map(layers.map((layer) => [layer.layer, layer]));
@@ -35,6 +36,7 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
     const z = d3zoom<HTMLDivElement, unknown>().scaleExtent([0.25, 3])
       .filter((event: Event) => (event.type === 'wheel' ? (event as WheelEvent).ctrlKey || (event as WheelEvent).metaKey : !(event as MouseEvent).button))
       .on('zoom', (event: D3ZoomEvent<HTMLDivElement, unknown>) => {
+        if (event.sourceEvent) touched.current = true;
         if (pan.current) pan.current.style.transform = `translate(${event.transform.x}px,${event.transform.y}px) scale(${event.transform.k})`;
       })
       .on('end', (event: D3ZoomEvent<HTMLDivElement, unknown>) => setZoomPercent(Math.round(event.transform.k * 100)));
@@ -42,9 +44,17 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
     select(element).call(z);
     return () => { select(element).on('.zoom', null); };
   }, []);
-  useLayoutEffect(() => { fit(); }, [fit, items.length]);
+  useLayoutEffect(() => { fit(); }, [fit, items.length, expanded]);
+  // The stage resizes with the window (and with the expanded layout): keep the scene fitted only while the user has not zoomed.
+  useEffect(() => {
+    const element = stage.current;
+    if (!element || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() => { if (!touched.current) fit(); });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [fit]);
 
-  const scaleBy = (factor: number) => { if (stage.current && behavior.current) select(stage.current).call(behavior.current.scaleBy, factor); };
+  const scaleBy = (factor: number) => { touched.current = true; if (stage.current && behavior.current) select(stage.current).call(behavior.current.scaleBy, factor); };
   const dim = highlight.selected !== null;
   const edgeClass = (entry: { edges: GraphEdge[] }) => entry.edges.some((edge) => highlight.edgeIds.has(edge.id)) ? 'is-path' : dim ? 'is-dim' : '';
 
@@ -90,7 +100,7 @@ export function MapView({ items, edges, layers, highlight, tabStop, onTabStop, o
         <button type="button" aria-label="축소" onClick={() => scaleBy(1 / 1.25)}>−</button>
         <span className="mono" data-testid="jm-zoom-pct" aria-live="polite">{zoomPercent}%</span>
         <button type="button" aria-label="확대" onClick={() => scaleBy(1.25)}>+</button>
-        <button type="button" className="jm-fit" onClick={fit}>전체 보기</button>
+        <button type="button" className="jm-fit" onClick={() => { touched.current = false; fit(); }}>전체 보기</button>
       </div>
       <div className="jm-legend" aria-hidden="true"><span><i className="rel" />관계</span><span><i className="path" />선택 경로</span><span><i className="counter" />반례</span></div>
       <p className="jm-hint">드래그로 이동 · Ctrl/⌘+휠 또는 버튼으로 확대</p>

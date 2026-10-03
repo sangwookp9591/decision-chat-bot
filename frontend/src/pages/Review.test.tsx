@@ -4,10 +4,11 @@ import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {Review} from './Review';
 import {reviewApi} from '../api/reviews';
+import {requestApi} from '../api/requests';
 const row=(over:Record<string,unknown>={})=>({id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족'],...over});
 const detail=(over:Record<string,unknown>={})=>({review:row(over),request:{title:'요청'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1});
 vi.mock('../api/reviews',()=>({reviewApi:{list:vi.fn(),detail:vi.fn(),decide:vi.fn()}}));
-vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]})}}));
+vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]}),judgment:vi.fn(),document:vi.fn()}}));
 const renderAt=(url='/review')=>render(<MemoryRouter initialEntries={[url]}><Review/></MemoryRouter>);
 beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any)});
 describe('review comparison',()=>{
@@ -39,5 +40,20 @@ describe('review comparison',()=>{
   let release:(v:unknown)=>void=()=>undefined;vi.mocked(reviewApi.decide).mockReturnValue(new Promise(r=>{release=r}) as any);
   const approve=screen.getByRole('button',{name:/^승인$/});fireEvent.click(approve);fireEvent.click(approve);
   expect(reviewApi.decide).toHaveBeenCalledTimes(1);release({});await screen.findByText(/결정을 저장했습니다/);
+ });
+});
+describe('review evidence viewer',()=>{
+ it('opens the cited unit in the source viewer using the attachment named by the run judgment',async()=>{
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),outputs:[{id:'o1',question_id:'ai_need',type:'Choice',value:'필요',evidence:[{id:'esp_7',location:{paragraph:3}}]}]} as any);
+  vi.mocked(requestApi.judgment).mockResolvedValue({outputs:[{evidence:[{id:'esp_7',attachment_id:'att_2'}]}]} as any);
+  vi.mocked(requestApi.document).mockResolvedValue({request_id:'req_1',revision:1,revision_id:'rev_1',source:'att_2',kind:'docx',filename:'b.docx',can_read_source:false,units:[{unit_id:'esp_6',order:0,location:{paragraph:2},char_start:0,char_end:1},{unit_id:'esp_7',order:1,location:{paragraph:3},char_start:1,char_end:2}]} as any);
+  Element.prototype.scrollTo=vi.fn() as any;
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
+  fireEvent.click(screen.getByRole('button',{name:'원문 열기'}));
+  expect(await screen.findByText(/원문 열람 권한 없음/)).toBeInTheDocument();
+  expect(requestApi.judgment).toHaveBeenCalledWith('req_1','run_1');
+  expect(requestApi.document).toHaveBeenCalledWith('req_1','rev_1','att_2');
+  expect(document.querySelector('[data-unit-id="esp_7"]')).toHaveAttribute('aria-current','location');
+  expect(screen.getAllByText('원문 비공개').length).toBe(2);
  });
 });

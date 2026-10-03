@@ -7,6 +7,7 @@ import { Button, StatusBadge, type StatusKind } from '../components';
 import { attachmentReasonLabel, getStatusPresentation } from '../components/statusLabels';
 import { infoRequest, needsInfo, resultBadge } from './main/requestState';
 import { useEventStream } from '../state/events';
+import { EvidenceViewer, type ViewerTarget } from '../components/EvidenceViewer';
 import './main/main.css';
 
 const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
@@ -30,7 +31,7 @@ export function Main() {
   const [params, setParams] = useSearchParams(); const requestId = params.get('request_id') || ''; const [notice, setNotice] = useState('');
   const [detail, setDetail] = useState<RequestDetail | null>(null); const [judgment, setJudgment] = useState<Judgment | null>(null);
   const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null); const [stage, setStage] = useState(''); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
-  const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState('');
+  const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState(''); const [viewer, setViewer] = useState<ViewerTarget | null>(null);
   const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); setStage(''); };
   const info = infoRequest(detail);
   const revisionNumber = detail?.request.revision_number || detail?.revisions.length || 0;
@@ -133,7 +134,10 @@ export function Main() {
       setBusy(false);
     }
   }
-  async function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) { if (!evidence) { setSourceTitle(`${output.question_id} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; } const sourceKind = evidence.source === 'chat' ? '채팅' : '첨부'; setSourceTitle(`${output.question_id} · ${sourceKind} · ${JSON.stringify(evidence.location)}`); setSource(evidence.source_text || '원문 열람 권한이 없어 위치 정보만 표시합니다.'); if (!evidence.source_text && requestId) try { const result = await requestApi.evidence(requestId, evidence.id); setSource(result.source_text || '원문 열람 권한이 없어 위치 정보만 표시합니다.'); } catch { setSource('원문 위치를 확인할 수 없습니다.'); } }
+  function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) {
+    if (!evidence || !requestId || !judgment) { setSourceTitle(`${output.question_id} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; }
+    setSource(''); setViewer({ requestId, revision: judgment.revision_id, source: evidence.attachment_id || 'chat', unitId: evidence.id, title: `${output.question_id} · 근거 원문` });
+  }
   return <section className="main-page"><div className="main-heading"><div><p className="eyebrow">요청자</p><h1>요청 접수와 판단 결과</h1></div>{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}</div>
     <div className="main-columns"><div className="main-primary">
       <form className="intake-card" onSubmit={submit}><label htmlFor="request-text">요청 내용</label><textarea id="request-text" value={text} onChange={(event) => setText(event.target.value)} placeholder="필요한 업무와 해결하려는 문제를 적어 주세요" rows={5} />
@@ -145,7 +149,7 @@ export function Main() {
       {requestId && <article className="progress-card analysis-card"><div className="card-heading"><h2>분석 진행</h2>{detail && <StatusBadge {...resultBadge(detail, judgment, Boolean(error))} />}</div><ol className="stage-list">{stageNames.map((name, index) => <li key={name} className={name === stage ? 'current' : judgment ? 'done' : 'waiting'}><span>{judgment || stageNames.indexOf(stage) > index ? '✓' : index + 1}</span>{name}</li>)}</ol>{detail?.request.status === 'needs_file_decision' && <div className="file-decision"><p>읽지 못한 첨부가 있습니다. 제외하거나 다시 첨부한 뒤 분석을 진행해 주세요.</p><ul>{detail.attachments.filter((file) => file.status !== 'ok').map((file) => <li key={file.id}>{file.filename} — {attachmentReasonLabel(file.reason)}</li>)}</ul><button className="ui-button primary" type="button" disabled={busy} onClick={excludeUnread}>실패 파일 제외 후 분석</button><span>재첨부는 아래 입력에서 새 revision으로 제출할 수 있습니다.</span></div>}{info && <div className="info-request" role="region" aria-label="보완 요청"><h3>검토자가 보완을 요청했습니다</h3><p>{info.reason || '보완이 필요한 내용을 확인해 주세요.'}</p>{info.needed.length > 0 && <ul>{info.needed.map((item) => <li key={item}>{item}</li>)}</ul>}<button type="button" className="ui-button primary" onClick={() => document.getElementById('request-text')?.focus()}>보완 내용 입력하기</button><span>아래 입력에 내용을 보완해 &quot;보완 내용 제출&quot;을 누르면 같은 요청의 새 revision으로 접수되어 다시 분석합니다.</span></div>}</article>}
       {error && <div className="failure-card" role="alert"><StatusBadge status="failure" label="시스템 실패" /><p>{error}</p></div>}
       {judgment && <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} canReanalyze={Boolean(user?.roles.some((role) => ['requester', 'reviewer', 'operator'].includes(role)))} onReanalyze={() => void reanalyze()} />}
-      {source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
+      <EvidenceViewer target={viewer} onClose={() => setViewer(null)} />{source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
     </div><aside className="request-list"><h2>내 요청</h2>{requests.length ? requests.map((item) => { const state = getStatusPresentation(item.status); return <button type="button" key={item.id} onClick={() => openRequest(item.id)} aria-current={item.id === requestId ? 'true' : undefined}><code>{item.id}</code><StatusBadge status={state.status} label={state.label} /></button>; }) : <p>접수한 요청이 여기에 표시됩니다.</p>}</aside></div>
   </section>;
 }

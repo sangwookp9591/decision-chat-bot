@@ -5,7 +5,7 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 import { Main, Result } from './Main';
 import { requestApi } from '../api/requests';
 
-vi.mock('../api/requests', () => ({ requestApi: { detail: vi.fn(), list: vi.fn(), judgment: vi.fn(), runs: vi.fn(), reanalyze: vi.fn(), evidence: vi.fn() } }));
+vi.mock('../api/requests', () => ({ requestApi: { detail: vi.fn(), list: vi.fn(), judgment: vi.fn(), runs: vi.fn(), reanalyze: vi.fn(), evidence: vi.fn(), document: vi.fn() } }));
 vi.mock('../state/events', () => ({ useEventStream: () => ({ status: 'connected', lastSeq: 0 }) }));
 vi.mock('../state/session', () => ({ useSession: () => ({ user: { id: 'u1', name: 'u1', roles: ['requester'] } }) }));
 afterEach(cleanup);
@@ -87,5 +87,22 @@ describe('Main page UX (P3-02/05/11/13)', () => {
     open('/?request_id=req_1');
     expect((await screen.findByText(/a\.pdf — /)).textContent).toContain('다시 저장해 첨부하거나 제외');
     expect(screen.queryByText(/unsupported_type/)).toBeNull();
+  });
+});
+
+describe('evidence viewer from the result card', () => {
+  it('opens the source viewer on the cited attachment revision and highlights the cited unit', async () => {
+    mockRequest('judgment_saved');
+    const withEvidence = judgmentFixture();
+    vi.mocked(requestApi.judgment).mockResolvedValue({ ...withEvidence, outputs: [{ id: 'o1', question_id: 'ai_need', type: 'Choice', value: '필요', confidence: 0.8, evidence: [{ id: 'esp_9', source: 'attachment', attachment_id: 'att_1', location: { page: 2 } }] }] } as never);
+    vi.mocked(requestApi.document).mockResolvedValue({ request_id: 'req_1', revision: 1, revision_id: 'rev_1', source: 'att_1', kind: 'pdf', filename: 'a.pdf', can_read_source: true,
+      units: [{ unit_id: 'esp_1', order: 0, location: { page: 1 }, char_start: 0, char_end: 3, text: '1쪽 본문' }, { unit_id: 'esp_9', order: 1, location: { page: 2 }, char_start: 3, char_end: 6, text: '2쪽 본문' }] });
+    Element.prototype.scrollTo = vi.fn() as never;
+    open('/?request_id=req_1');
+    fireEvent.click(await screen.findByRole('button', { name: /첨부 · .*근거 열기/ }));
+    expect(await screen.findByText('2쪽 본문')).toBeInTheDocument();
+    expect(requestApi.document).toHaveBeenCalledWith('req_1', 'rev_1', 'att_1');
+    expect(document.querySelector('[data-unit-id="esp_9"]')).toHaveAttribute('aria-current', 'location');
+    expect(document.querySelector('[data-unit-id="esp_1"]')).not.toHaveAttribute('aria-current');
   });
 });

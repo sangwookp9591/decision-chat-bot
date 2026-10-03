@@ -1,4 +1,5 @@
 import type { GraphEdge, GraphNode } from '../../api/graph';
+import { statusText } from '../../components/statusLabels';
 
 export type Highlight = { selected: string | null; nodeIds: Set<string>; edgeIds: Set<string>; upstreamIds: Set<string>; downstreamIds: Set<string> };
 
@@ -22,6 +23,32 @@ export function computeHighlight(edges: GraphEdge[], selected: string | null): H
   walk('downstream', 'upstream', result.upstreamIds);
   walk('upstream', 'downstream', result.downstreamIds);
   return result;
+}
+
+const VERSION_STATUS: Record<string, string> = { published: '운영 중', active: '운영 중', validating: '검증 중', validated: '검증 중', stopped: '중단', reverted: '되돌림' };
+export const versionStatusLabel = (status: string | null | undefined) => (status ? VERSION_STATUS[status] || statusText(status) : '상태 없음');
+
+export type VersionTab = { id: string; ruleId: string; version: number; status: string | null; label: string };
+
+/** Versions of one rule found among the loaded RuleVersion nodes (ascending); [] when there is no version data. */
+export function ruleVersionTabs(nodes: GraphNode[], ruleId: string | null): VersionTab[] {
+  if (!ruleId) return [];
+  return nodes.filter((node) => node.kind === 'RuleVersion' && node.refs.rule_id === ruleId)
+    .map((node) => ({ id: node.id, ruleId, version: Number(String(node.version || '').split('@')[1] ?? NaN), status: node.status, label: versionStatusLabel(node.status) }))
+    .filter((tab) => Number.isFinite(tab.version)).sort((a, b) => a.version - b.version);
+}
+
+/** Rule whose versions to show: the criteria rule, else the only rule among the loaded version nodes. */
+export function tabRuleId(nodes: GraphNode[], criteriaRule?: string): string | null {
+  if (criteriaRule) return criteriaRule.split('@')[0];
+  const rules = new Set(nodes.filter((node) => node.kind === 'RuleVersion').map((node) => String(node.refs.rule_id || '')).filter(Boolean));
+  return rules.size === 1 ? [...rules][0] : null;
+}
+
+/** Nodes and links that one rule version is connected to (monotonic closure both ways); sibling versions drop out. */
+export function versionScope(edges: GraphEdge[], versionNodeId: string) {
+  const { nodeIds, edgeIds } = computeHighlight(edges, versionNodeId);
+  return { nodeIds, edgeIds };
 }
 
 export type DisplayItem = { id: string; layer: number; kind: string; label: string; nodes: GraphNode[]; group: boolean };
