@@ -5,10 +5,23 @@ export const fieldLabel = (field: string) => fieldLabels[field] || field;
 
 const questionLabels: Record<string, string> = {
   ...fieldLabels,
-  ai_team_involvement: 'AI팀 참여', it_team_involvement: 'IT팀 참여', business_involvement: '현업 참여',
-  clinical_safety: '임상 안전', pharmacovigilance: '약물 감시', regulatory: '규제 대응', review_signal: '검토 필요도',
+  ai_team_involvement: 'AI팀 참여 확률', it_team_involvement: 'IT팀 참여 확률', business_involvement: '현업 참여 확률',
+  clinical_safety: '임상·안전 위험 확률', pharmacovigilance: '약물 감시 위험 확률', regulatory: '규제 대응 위험 확률', review_signal: '검토 필요도',
 };
 export const questionLabel = (id: string) => questionLabels[id] || id;
+
+const policyFieldLabels: Record<string, string> = { risk_clear_max: '위험 없음 확인 상한' };
+export const policyFieldLabel = (field: string) => policyFieldLabels[field] || fieldLabel(field);
+
+/** Translate known field/action tokens embedded in graph titles while keeping the surrounding title readable. */
+export function mapNodeTitleLabel(title: string): string {
+  return title.replace(/\b(ai_need|feasibility|urgency|lead_org|ai_team_involvement|it_team_involvement|business_involvement|clinical_safety|pharmacovigilance|regulatory|review_signal|approve_with_scope_change|approve_with_changes|request_info|approve|reject)\b/g,
+    (code) => ({ approve: '승인', reject: '반려', request_info: '정보 요청', approve_with_scope_change: '범위 수정 후 승인', approve_with_changes: '수정 승인' }[code] || questionLabels[code] || fieldLabel(code)));
+}
+export function displayCodeLabel(text: string): string {
+  return text.replace(/\b(APPLIED|risk_clear_max|used|out_of_scope|approve_with_scope_change|approve_with_changes|request_info|approve|reject)\b/g,
+    (code) => ({ APPLIED: '적용', risk_clear_max: policyFieldLabels.risk_clear_max, used: '적용됨', out_of_scope: '범위 밖(미적용)', approve: '승인', reject: '반려', request_info: '정보 요청', approve_with_scope_change: '범위 수정 후 승인', approve_with_changes: '수정 승인' }[code] || code));
+}
 
 const outputTypeLabels: Record<string, string> = { choice: '선택형', noul: '확률형', score: '점수형' };
 export const outputTypeLabel = (type: string) => outputTypeLabels[String(type).toLowerCase()] || String(type);
@@ -19,7 +32,7 @@ const blockReasonLabels: Record<string, string> = {
   draft_reason: '검토에서 확인할 전제 조건이 남아 있습니다.',
   undetermined_draft: '담당 조직이나 산출물이 아직 정해지지 않았습니다.',
 };
-export const blockReasonLabel = (code: string) => blockReasonLabels[code] || code;
+export const blockReasonLabel = (code: string) => blockReasonLabels[code] || displayCodeLabel(code);
 
 /** Review/eligibility reasons are Korean sentences with an embedded internal key ("Choice confidence 미충족: ai_need/lead_org"). */
 const reasonPrefixes: Array<[string, string]> = [

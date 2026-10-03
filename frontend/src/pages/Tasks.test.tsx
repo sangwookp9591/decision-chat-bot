@@ -24,6 +24,13 @@ describe('Tasks block reasons (P4-01)', () => {
     expect(dialog.textContent).not.toContain('feasibility_unresolved');
     expect(screen.getByRole('button', { name: '진행으로 변경' })).toBeDisabled();
   });
+  it('translates policy codes in the task premise shown in details', async () => {
+    setup(task({ reason: 'risk_clear_max 기준 확인 필요' }));
+    fireEvent.click(await screen.findByRole('button', { name: /데이터 확보/ }));
+    const dialog = await screen.findByRole('dialog', { name: '업무 상세' });
+    expect(dialog).toHaveTextContent('위험 없음 확인 상한 기준 확인 필요');
+    expect(dialog).not.toHaveTextContent('risk_clear_max');
+  });
   it('keeps the latest block reasons after a 409 and explains them', async () => {
     setup(task({ status: '대기' }));
     fireEvent.click(await screen.findByRole('button', { name: /데이터 확보/ }));

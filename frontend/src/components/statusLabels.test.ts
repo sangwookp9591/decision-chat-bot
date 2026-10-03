@@ -8,6 +8,7 @@ describe('shared Korean labels (P3-13)', () => {
   it('translates internal codes, review actions and statuses', () => {
     expect(reviewActionLabel('request_info')).toBe('정보 요청'); expect(reviewActionLabel('reject')).toBe('반려');
     expect(statusText('published')).toBe('게시됨'); expect(statusText('validated')).toBe('검증 완료'); expect(statusText('제안')).toBe('제안');
+    expect(statusText('used')).toBe('적용됨'); expect(statusText('out_of_scope')).toBe('범위 밖(미적용)');
     expect(attachmentReasonLabel('unsupported_type')).toContain('다시 저장해 첨부하거나 제외');
     expect(attachmentReasonLabel('something_new')).not.toMatch(/something_new/);
   });

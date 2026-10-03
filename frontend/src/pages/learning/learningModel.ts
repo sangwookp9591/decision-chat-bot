@@ -1,7 +1,7 @@
 import type { CandidateDetail, EffectVerdict, Predicate, RuleVersionRow, ValidationResult } from '../../api/learning';
 
 export { fieldLabels, fieldLabel } from '../../lib/labels';
-import { fieldLabel, ruleDecisionLabel } from '../../lib/labels';
+import { displayCodeLabel, fieldLabel, questionLabel, ruleDecisionLabel } from '../../lib/labels';
 export const sourceLabel = (source: string) => source === 'ai' ? 'AI 가설' : '사람 제안';
 
 export type CandidateFilter = 'all' | 'review' | 'insufficient' | 'approved' | 'rejected';
@@ -77,7 +77,7 @@ export const RULE_ID_PATTERN = /^R-[A-Z_]+-[0-9]{2,}$/;
 const opText: Record<string, string> = { eq: '=', in: '∈', gte: '≥', lte: '≤' };
 export function describePredicate(p: Predicate): string {
   if (p.field) return `${fieldLabel(p.field)} ${opText[p.op || ''] || p.op} ${Array.isArray(p.value) ? p.value.join(', ') : String(p.value)}`;
-  if (p.signal) return `신호 ${p.signal} ${opText[p.op || ''] || p.op} ${String(p.value)}`;
+  if (p.signal) return `신호 ${questionLabel(p.signal)} ${opText[p.op || ''] || p.op} ${String(p.value)}`;
   if (p.catalog_task) return `카탈로그 업무 ${p.catalog_task} ${p.present === false ? '없음' : '있음'}`;
   if (p.requester_org) return `요청 조직 ${p.requester_org}`;
   return JSON.stringify(p);
@@ -111,8 +111,8 @@ export function validationRangeProblem(range: { from: string; to: string }): str
 /** Timeline text of a rule decision node: "approve. 사유: … . 확정 범위 {json}" becomes plain Korean. */
 export function ruleDecisionDetail(summary: string | null | undefined, fallback: string): string {
   const match = /^(\w+)\. 사유: (.*?)\. 확정 범위 (.*)$/s.exec(summary || '');
-  if (!match) return summary || fallback;
+  if (!match) return displayCodeLabel(summary || fallback);
   let scope = match[3];
   try { const parsed = JSON.parse(match[3]); scope = parsed && Array.isArray(parsed.all) ? describeScope(parsed.all) : parsed === null ? '지정 없음' : match[3]; } catch { /* keep raw text */ }
-  return `${ruleDecisionLabel(match[1])} · 사유: ${match[2]} · 확정 범위: ${scope}`;
+  return `${ruleDecisionLabel(match[1])} · 사유: ${match[2]} · 확정 범위: ${displayCodeLabel(scope)}`;
 }

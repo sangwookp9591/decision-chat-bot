@@ -46,6 +46,8 @@ const labels: Record<string, { label: string; kind: StatusKind }> = {
   '반려': { label: '반려됨', kind: 'failure' },
   approved_with_changes: { label: '수정 승인됨', kind: 'success' },
   waiting: { label: '대기', kind: 'pending' },
+  used: { label: '적용됨', kind: 'success' },
+  out_of_scope: { label: '범위 밖(미적용)', kind: 'skipped' },
 };
 
 export const roleLabels: Record<string, string> = { requester: '요청자', reviewer: '검토자', team_member: '팀 담당자', assignee: '팀 담당자', operator: '운영자', policy_editor: '정책 편집자', rule_admin: '규칙 관리자' };

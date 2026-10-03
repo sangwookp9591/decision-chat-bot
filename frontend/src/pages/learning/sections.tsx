@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { RawDetails } from '../../components/RawDetails';
 import type { CandidateDetail, CandidateExample, EffectMetrics, RuleEffects, RuleVersionRow, ValidationResult } from '../../api/learning';
 import { describeAction, describeScope, effectLabels, fieldLabel, formatTime, millis, percent, sampleShortage, validationNotice, valueText, versionStatusLabel } from './learningModel';
+import { displayCodeLabel } from '../../lib/labels';
 
 export const CYCLE = ['수정 기록', '가설', '검토된 규칙', '비교 검증', '게시', '효과 관찰'];
 
@@ -101,7 +102,7 @@ export function Observation({ effects, state }: { effects: RuleEffects | null; s
       <caption className="sr-only">적용 전후와 사용·미사용 집단 비교</caption>
       <thead><tr><th scope="col">지표</th><th scope="col">게시 전 (n={effects.before_after.before.sample_count})</th><th scope="col">게시 후 (n={effects.before_after.after.sample_count})</th><th scope="col">사용 (n={used.sample_count})</th><th scope="col">범위 밖 (n={out_of_scope.sample_count})</th></tr></thead>
       <tbody>{labels.map((label, i) => <tr key={label}><th scope="row">{label}</th><td>{m[0][i]}</td><td>{m[1][i]}</td><td>{m[2][i]}</td><td>{m[3][i]}</td></tr>)}</tbody></table></div>
-    <p className="learning-note">{effects.comparison_conditions}. 관찰 관계이며 인과 효과를 보장하지 않습니다. 기존 SLO 분모와 별도 지표입니다(섀도 {effects.shadow_runs_excluded}건 제외).</p>
+    <p className="learning-note">{displayCodeLabel(effects.comparison_conditions)}. 관찰 관계이며 인과 효과를 보장하지 않습니다. 기존 SLO 분모와 별도 지표입니다(섀도 실행 {effects.shadow_runs_excluded}건 제외).</p>
   </section>;
 }
 

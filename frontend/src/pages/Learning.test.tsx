@@ -114,10 +114,12 @@ describe('Learning page', () => {
     const m = (n: number) => ({ sample_count: n, classification_changes: 0, corrections: 0, review_transitions: 0, failures: 0, latency_sample_count: 0, latency_p50_ms: null, latency_p95_ms: null, classification_change_rate: n ? 0 : null, correction_rate: n ? 0 : null, review_transition_rate: n ? 0 : null, failure_rate: n ? 0 : null });
     setup(['rule_admin'], 'approved', 'published');
     mocks.api.effects.mockResolvedValue({ rule_id: 'R-LEAD_ORG-01', active_config_version: 8, published_at: '2026-10-03T00:00:00Z', window_days: 7, minimum_sample: 20, sample_count: 5,
-      before_after: { before: m(2), after: m(3), before_from: '', before_to: '', after_from: '', after_to: '' }, groups: { used: m(3), out_of_scope: m(0) }, effect: 'insufficient_sample', shadow_runs_excluded: 0, slo_included: false, comparison_conditions: '조건' });
+      before_after: { before: m(2), after: m(3), before_from: '', before_to: '', after_from: '', after_to: '' }, groups: { used: m(3), out_of_scope: m(0) }, effect: 'insufficient_sample', shadow_runs_excluded: 0, slo_included: false, comparison_conditions: 'APPLIED used/out_of_scope' });
     fireEvent.click(await screen.findByRole('button', { name: /cand_1/ }));
     await waitFor(() => expect(screen.getByTestId('effect-verdict')).toHaveTextContent('관찰 중 · 표본 부족'));
     expect(screen.getByTestId('used-count')).toHaveTextContent('3');
+    expect(screen.getByText(/적용 적용됨\/범위 밖\(미적용\)/)).toBeInTheDocument();
+    expect(screen.getByText(/섀도 실행 0건 제외/)).toBeInTheDocument();
     expect(screen.getByText(/표본 부족: 2건 \/ 최소 20건/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '중단' })).toBeDisabled();
     fireEvent.change(screen.getByLabelText('결정 사유'), { target: { value: '중단 사유' } });

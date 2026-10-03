@@ -36,7 +36,7 @@ describe('judgment result', () => {
     const { container } = render(<Result judgment={judgment} runs={null} onEvidence={() => undefined} />);
     expect(container.querySelector('.uncertain-result')?.textContent).toContain('정보 부족');
     expect(screen.getByText('판단 보류')).toBeTruthy();
-    expect(screen.getByText('Choice confidence 72%')).toBeTruthy();
+    expect(screen.getByText('선택 신뢰도 72%')).toBeTruthy();
     expect(screen.getByText('Noul 확률 0.41')).toBeTruthy();
   });
 });

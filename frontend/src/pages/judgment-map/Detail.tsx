@@ -4,6 +4,7 @@ import type { NodeDetail, GraphNode } from '../../api/graph';
 import { EvidenceViewer, type ViewerTarget } from '../../components/EvidenceViewer';
 import { KIND_LABEL } from './logic';
 import { statusText } from '../../components/statusLabels';
+import { mapNodeTitleLabel } from '../../lib/labels';
 
 type Props = { node: GraphNode | null; detail: NodeDetail | null; loading: boolean; onPick: (id: string) => void; layerName: (layer: number) => string };
 
@@ -22,15 +23,15 @@ export function Detail({ node, detail, loading, onPick, layerName }: Props) {
   };
   return <aside className="jm-detail" aria-label="노드 상세" data-testid="jm-detail">
     <div><span className="jm-chip mono">{node.layer}계층 · {layerName(node.layer)}</span> <span className={`jm-chip kind k-${node.kind}`}>{KIND_LABEL[node.kind] || node.kind}</span></div>
-    <h2>{node.title}</h2>
+    <h2>{mapNodeTitleLabel(node.title)}</h2>
     <p className="jm-id mono">{node.id}</p>
     <dl>{rows.map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value || '—'}</dd></div>)}</dl>
     {loading && !data && <p role="status">상세를 불러오는 중…</p>}
     {data && <div className="jm-trace">
       <h3 data-testid="jm-up-count">↑ 근거 쪽으로 {data.upstream_count ?? 0}개</h3>
-      <div className="jm-chips">{data.upstream.map((n) => <button key={n.id} type="button" onClick={() => onPick(n.id)}>{KIND_LABEL[n.kind]} · {n.title}</button>)}</div>
+      <div className="jm-chips">{data.upstream.map((n) => <button key={n.id} type="button" onClick={() => onPick(n.id)}>{KIND_LABEL[n.kind]} · {mapNodeTitleLabel(n.title)}</button>)}</div>
       <h3 data-testid="jm-down-count">↓ 실행 쪽으로 {data.downstream_count ?? 0}개</h3>
-      <div className="jm-chips">{data.downstream.map((n) => <button key={n.id} type="button" onClick={() => onPick(n.id)}>{KIND_LABEL[n.kind]} · {n.title}</button>)}</div>
+      <div className="jm-chips">{data.downstream.map((n) => <button key={n.id} type="button" onClick={() => onPick(n.id)}>{KIND_LABEL[n.kind]} · {mapNodeTitleLabel(n.title)}</button>)}</div>
     </div>}
     <div className="jm-links">
       {node.kind === 'EvidenceSpan' && refs.span_id && refs.source && refs.revision_id && <button type="button" onClick={openSource}>원문 열기</button>}

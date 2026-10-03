@@ -1,5 +1,6 @@
 import type { GraphEdge, GraphNode } from '../../api/graph';
 import { statusText } from '../../components/statusLabels';
+import { mapNodeTitleLabel } from '../../lib/labels';
 
 export type Highlight = { selected: string | null; nodeIds: Set<string>; edgeIds: Set<string>; upstreamIds: Set<string>; downstreamIds: Set<string> };
 
@@ -74,7 +75,7 @@ export function buildDisplay(nodes: GraphNode[], expanded: Set<string>, keep: Se
   return out;
 }
 
-function single(node: GraphNode): DisplayItem { return { id: node.id, layer: node.layer, kind: node.kind, label: node.title, nodes: [node], group: false }; }
+function single(node: GraphNode): DisplayItem { return { id: node.id, layer: node.layer, kind: node.kind, label: mapNodeTitleLabel(node.title), nodes: [node], group: false }; }
 
 /** Move focus between display items: left/right inside a layer, up/down to the nearest index in another layer. */
 export function neighborId(items: DisplayItem[], current: string, key: string): string | null {

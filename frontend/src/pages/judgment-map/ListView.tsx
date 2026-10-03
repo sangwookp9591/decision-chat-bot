@@ -1,5 +1,6 @@
 import type { GraphEdge, GraphLayer, GraphNode } from '../../api/graph';
 import { KIND_LABEL, RELATION_LABEL, pathRows, type Highlight } from './logic';
+import { mapNodeTitleLabel } from '../../lib/labels';
 
 type Props = {
   nodes: GraphNode[]; edges: GraphEdge[]; layers: GraphLayer[]; highlight: Highlight;
@@ -19,7 +20,7 @@ export function ListView({ nodes, edges, layers, highlight, tabStop, onTabStop, 
             className={`jm-item ${highlight.selected === node.id ? 'is-selected' : highlight.nodeIds.has(node.id) ? 'is-path' : highlight.selected ? 'is-dim' : ''}`}
             aria-pressed={highlight.selected === node.id} tabIndex={tabStop === node.id ? 0 : -1}
             onFocus={() => onTabStop(node.id)} onClick={() => onPick(node.id)}>
-            <small>{KIND_LABEL[node.kind] || node.kind}{role(node.id) ? ` · ${role(node.id)}` : ''}</small>{node.title}
+            <small>{KIND_LABEL[node.kind] || node.kind}{role(node.id) ? ` · ${role(node.id)}` : ''}</small>{mapNodeTitleLabel(node.title)}
           </button></li>)}</ul>}
       </section>;
     })}
@@ -29,7 +30,7 @@ export function ListView({ nodes, edges, layers, highlight, tabStop, onTabStop, 
         rows.length === 0 ? <p className="jm-empty-layer">선택한 노드에 저장된 연결이 없습니다.</p> :
         <div className="table-scroll"><table><caption>선택한 노드의 상·하류 경로 (저장된 관계)</caption>
           <thead><tr><th scope="col">근거 쪽 노드</th><th scope="col">관계</th><th scope="col">실행 쪽 노드</th><th scope="col">비고</th></tr></thead>
-          <tbody>{rows.map((row) => <tr key={row.id}><td>{row.upstream ? `${row.upstream.layer}계층 ${KIND_LABEL[row.upstream.kind]} ${row.upstream.title}` : '—'}</td><td>{RELATION_LABEL[row.type] || row.type}</td><td>{row.downstream ? `${row.downstream.layer}계층 ${KIND_LABEL[row.downstream.kind]} ${row.downstream.title}` : '—'}</td><td>{row.outcome ? ({ used: '규칙 사용', out_of_scope: '범위 밖 · 미사용', conflict: '충돌 · 미적용' } as Record<string, string>)[row.outcome] || row.outcome : ''}</td></tr>)}</tbody>
+          <tbody>{rows.map((row) => <tr key={row.id}><td>{row.upstream ? `${row.upstream.layer}계층 ${KIND_LABEL[row.upstream.kind]} ${mapNodeTitleLabel(row.upstream.title)}` : '—'}</td><td>{RELATION_LABEL[row.type] || row.type}</td><td>{row.downstream ? `${row.downstream.layer}계층 ${KIND_LABEL[row.downstream.kind]} ${mapNodeTitleLabel(row.downstream.title)}` : '—'}</td><td>{row.outcome ? ({ used: '적용됨', out_of_scope: '범위 밖(미적용)', conflict: '충돌 · 미적용' } as Record<string, string>)[row.outcome] || row.outcome : ''}</td></tr>)}</tbody>
         </table></div>}
     </section>
   </div>;

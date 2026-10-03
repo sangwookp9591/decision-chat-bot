@@ -16,7 +16,7 @@ describe('Policy page', () => {
     render(<Policy canEdit />); await screen.findByText('버전 이력'); fireEvent.click(screen.getByRole('button',{name:'v2'}));
     await waitFor(() => expect(mocks.version).toHaveBeenCalledWith(2));
     // The active row is v2; detail mock confirms diff rendering via a selected history entry.
-    expect((await screen.findAllByText('risk_clear_max')).length).toBeGreaterThan(1);
+    expect((await screen.findAllByText('위험 없음 확인 상한')).length).toBeGreaterThan(1);
   });
   it('explains a 409 publish conflict and reloads current policy', async () => {
     mocks.validate.mockResolvedValue({valid:true,config,errors:[]});
@@ -30,7 +30,7 @@ describe('Policy page', () => {
   });
   it('lets the editor clear and retype a JSON value without snapping back (P3-08)', async () => {
     render(<Policy canEdit />); await screen.findByText('버전 이력');
-    const field = screen.getByLabelText('risk_clear_max') as HTMLTextAreaElement;
+    const field = screen.getByLabelText('위험 없음 확인 상한') as HTMLTextAreaElement;
     fireEvent.change(field, { target: { value: '' } });
     expect(field.value).toBe('');
     expect(screen.getByRole('alert').textContent).toContain('올바른 JSON');
