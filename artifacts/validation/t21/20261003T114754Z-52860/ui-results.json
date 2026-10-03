@@ -1,0 +1,708 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.acceptance.config.ts"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/playwright.acceptance.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/psw/Projects/decision-chat-bot/artifacts/validation/t21/20261003T114754Z-52860/ui-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config vite.e2e.config.ts --host 127.0.0.1",
+      "url": "http://127.0.0.1:5437",
+      "reuseExistingServer": false,
+      "timeout": 30000,
+      "env": {
+        "E2E_PORT": "5437",
+        "E2E_API": "http://127.0.0.1:8137"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "gates.spec.ts",
+      "file": "gates.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 0,
+                  "error": {
+                    "message": "Error: login reviewer@t-acc21-20261003T114754Z-52860g: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: login reviewer@t-acc21-20261003T114754Z-52860g: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts:31:8",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                      "column": 61,
+                      "line": 15
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mhelpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                        "column": 61,
+                        "line": 15
+                      },
+                      "message": "Error: login reviewer@t-acc21-20261003T114754Z-52860g: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   at helpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts:31:8"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:14.083Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/frontend/test-results/gates-G05-auto-assigned-re-f0c69-DES-appear-on-the-업무-screen/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/frontend/test-results/gates-G05-auto-assigned-re-f0c69-DES-appear-on-the-업무-screen/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                    "column": 61,
+                    "line": 15
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b1e7fd5982b0400c7b53-0ed3c2057585a72e1e97",
+          "file": "gates.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:14.599Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b1e7fd5982b0400c7b53-2a6831b5bd31e1ab9189",
+          "file": "gates.spec.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "scenarios.spec.ts",
+      "file": "scenarios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S1 general technical request: UI result equals stored judgment",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 0,
+                  "error": {
+                    "message": "Error: login requester@t-acc21-20261003T114754Z-52860: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: login requester@t-acc21-20261003T114754Z-52860: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:22:8",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                      "column": 61,
+                      "line": 15
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mhelpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                        "column": 61,
+                        "line": 15
+                      },
+                      "message": "Error: login requester@t-acc21-20261003T114754Z-52860: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   at helpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:22:8"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.058Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/frontend/test-results/scenarios-S1-general-techn-1db29-sult-equals-stored-judgment/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/frontend/test-results/scenarios-S1-general-techn-1db29-sult-equals-stored-judgment/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                    "column": 61,
+                    "line": 15
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-8b967d651a1f00e7b9c7",
+          "file": "scenarios.spec.ts",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-d6bfe621436cdba8eee5",
+          "file": "scenarios.spec.ts",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "S3 urgent request: reasons, review and priority on screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-796e62acb80bb9150bbd",
+          "file": "scenarios.spec.ts",
+          "line": 99,
+          "column": 1
+        },
+        {
+          "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-82482b07b7e4a843fcc5",
+          "file": "scenarios.spec.ts",
+          "line": 125,
+          "column": 1
+        },
+        {
+          "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-e1bb21c96d53875c77b9",
+          "file": "scenarios.spec.ts",
+          "line": 149,
+          "column": 1
+        },
+        {
+          "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-bd6f72c7ed7be15b3a4f",
+          "file": "scenarios.spec.ts",
+          "line": 176,
+          "column": 1
+        },
+        {
+          "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-61ba6f09e99a20a17e00",
+          "file": "scenarios.spec.ts",
+          "line": 213,
+          "column": 1
+        },
+        {
+          "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-2d088c0edb25905a4ec4",
+          "file": "scenarios.spec.ts",
+          "line": 234,
+          "column": 1
+        },
+        {
+          "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-c2e12d921da804c10462",
+          "file": "scenarios.spec.ts",
+          "line": 266,
+          "column": 1
+        },
+        {
+          "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-03T11:48:15.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "228c869e2a0e583b8177-25914baf602f79187de8",
+          "file": "scenarios.spec.ts",
+          "line": 286,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-03T11:48:12.606Z",
+    "duration": 2812.8779999999997,
+    "expected": 0,
+    "skipped": 10,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

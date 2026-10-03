@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="40" failures="0" skipped="0" tests="40" time="1.164" timestamp="2026-10-03T20:45:27.867715+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s1_general_technical_csv_monthly_aggregation" time="0.237"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">fixturedef = &lt;FixtureDef argname='users' scope='session' baseid='tests/acceptance'&gt;
+request = &lt;SubRequest 'users' for &lt;Function test_s1_general_technical_csv_monthly_aggregation&gt;&gt;
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -&gt; object | None:
+        if (
+            fixturedef.argname == "event_loop_policy"
+            and fixturedef.func.__module__ != __name__
+        ):
+            warnings.warn(
+                PytestDeprecationWarning(_EVENT_LOOP_POLICY_FIXTURE_DEPRECATION_WARNING),
+            )
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+                return (yield)
+            if not _is_coroutine_or_asyncgen(fixturedef.func):
+&gt;               return (yield)
+                        ^^^^^
+
+.venv/lib/python3.14/site-packages/pytest_asyncio/plugin.py:926: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:15: in users
+    return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_core_classifications_have_locatable_evidence" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_thin_one_line_input_reports_missing_evidence_not_fake_evidence" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_mixed_forecast_and_alert_tasks_linked_after_approval" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_predecessor_relations_become_stored_precedes_edges" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s3_urgent_request_reason_review_and_priority" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s4_missing_data_permission_approval_no_unapproved_execution" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_documents_pdf_docx_md_with_one_damaged_file" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_citation_coverage_across_attempts" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reviewer_correction_preserves_original_and_final" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reject_and_request_info_are_separate" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s7_reanalysis_separates_runs_and_never_duplicates_tasks" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_flow_and_playback_have_no_side_effects" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_failed_run_from_live_jev_rejection[0]" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_other_tenant_direct_id_calls_are_404" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_same_tenant_other_organisation_is_404" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_approval_without_review_permission_is_blocked" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_policy_publish_and_rollback_require_policy_editor" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_source_text_requires_source_permission" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_injection_sentence_in_document_has_no_policy_or_permission_effect" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_oversize_count_and_text_limits_rejected_before_any_run" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_large_file_parsing_does_not_block_other_requests" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_encrypted_damaged_script_and_huge_page_files_are_handled_safely" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_repeated_and_concurrent_approvals_create_exactly_one_assignment" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_stays_zero_for_unsafe_requests_under_permissive_policy" time="0.081"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401&quot;">@pytest.fixture(scope="module")
+    def auto_assign_policy():
+&gt;       rq, rv, pe = _login_p()
+                     ^^^^^^^^^^
+
+tests/acceptance/acc_b_safety.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/acc_b_safety.py:334: in _login_p
+    return Client("requester", PTENANT), Client("reviewer", PTENANT), Client("policy_editor", PTENANT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9091d0&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699p'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_positive_control_if_live_model_is_confident" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401&quot;">@pytest.fixture(scope="module")
+    def auto_assign_policy():
+&gt;       rq, rv, pe = _login_p()
+                     ^^^^^^^^^^
+
+tests/acceptance/acc_b_safety.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/acc_b_safety.py:334: in _login_p
+    return Client("requester", PTENANT), Client("reviewer", PTENANT), Client("policy_editor", PTENANT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9091d0&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699p'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_required_review_release_is_rejected_for_publish_and_rollback" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401&quot;">@pytest.fixture(scope="module")
+    def auto_assign_policy():
+&gt;       rq, rv, pe = _login_p()
+                     ^^^^^^^^^^
+
+tests/acceptance/acc_b_safety.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/acc_b_safety.py:334: in _login_p
+    return Client("requester", PTENANT), Client("reviewer", PTENANT), Client("policy_editor", PTENANT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9091d0&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699p'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699p: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_b_safety" name="test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_readme_start_health_ready_meta_intake_and_lookup" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_request_review_task_and_trace_survive_api_and_worker_restart" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_worker_restart_while_judging_completes_exactly_once" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_sse_cut_and_resume_converges_to_persisted_state" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_other_users_events_are_not_delivered" time="0.073"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699b: 401&quot;">fixturedef = &lt;FixtureDef argname='other_tenant_users' scope='session' baseid='tests/acceptance'&gt;
+request = &lt;SubRequest 'other_tenant_users' for &lt;Function test_g08_other_users_events_are_not_delivered&gt;&gt;
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -&gt; object | None:
+        if (
+            fixturedef.argname == "event_loop_policy"
+            and fixturedef.func.__module__ != __name__
+        ):
+            warnings.warn(
+                PytestDeprecationWarning(_EVENT_LOOP_POLICY_FIXTURE_DEPRECATION_WARNING),
+            )
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+                return (yield)
+            if not _is_coroutine_or_asyncgen(fixturedef.func):
+&gt;               return (yield)
+                        ^^^^^
+
+.venv/lib/python3.14/site-packages/pytest_asyncio/plugin.py:926: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:22: in other_tenant_users
+    return _login_all(TENANT_B, ["requester", "reviewer", "operator", "policy_editor"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e90b390&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699b'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699b: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_summary_matches_a_known_request_set" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_failures_lead_to_trace_and_raise_alerts" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401&quot;">@pytest.fixture(scope="session")
+    def users():
+&gt;       return _login_all(TENANT, ["requester", "reviewer", "team_member", "operator",
+                                   "policy_editor", "rule_admin", "source_reader",
+                                   "operator_source", "outsider_requester", "outsider_reviewer"])
+
+tests/acceptance/conftest.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/acceptance/conftest.py:9: in _login_all
+    out[role] = Client(role, tenant)
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x1091ecd70&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_e_gates" name="test_g05_auto_assignment_live_end_to_end" time="0.076"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401&quot;">@pytest.fixture(scope="module")
+    def gu():
+        out = {}
+        for role in ("requester", "reviewer", "policy_editor", "operator", "source_reader"):
+&gt;           out[role] = Client(role, G)
+                        ^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_e_gates.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9a4510&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699g'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_policy_version_pinning_and_rollback" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401&quot;">@pytest.fixture(scope="module")
+    def gu():
+        out = {}
+        for role in ("requester", "reviewer", "policy_editor", "operator", "source_reader"):
+&gt;           out[role] = Client(role, G)
+                        ^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_e_gates.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9a4510&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699g'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_stored_relationships_match_topology_and_tasks_api" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401&quot;">@pytest.fixture(scope="module")
+    def gu():
+        out = {}
+        for role in ("requester", "reviewer", "policy_editor", "operator", "source_reader"):
+&gt;           out[role] = Client(role, G)
+                        ^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_e_gates.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9a4510&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699g'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_short_request_missing_evidence_is_safe_and_not_fabricated" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401&quot;">@pytest.fixture(scope="module")
+    def gu():
+        out = {}
+        for role in ("requester", "reviewer", "policy_editor", "operator", "source_reader"):
+&gt;           out[role] = Client(role, G)
+                        ^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_e_gates.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9a4510&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699g'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_evidence_citation_variability_three_repeats" time="0.000"><error message="failed on setup with &quot;AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401&quot;">@pytest.fixture(scope="module")
+    def gu():
+        out = {}
+        for role in ("requester", "reviewer", "policy_editor", "operator", "source_reader"):
+&gt;           out[role] = Client(role, G)
+                        ^^^^^^^^^^^^^^^
+
+tests/acceptance/acc_e_gates.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tests.acceptance.harness.Client object at 0x10e9a4510&gt;
+role = 'requester', tenant = 't-acc21-20261003T114511Z-49699g'
+base = 'http://127.0.0.1:8121'
+
+    def __init__(self, role: str, tenant: str = TENANT, base: str = API):
+        self.role, self.tenant = role, tenant
+        self.http = httpx.Client(base_url=base, timeout=60.0)
+        r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
+&gt;       assert r.status_code == 200, f"login {role}@{tenant}: {r.status_code}"
+               ^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: login requester@t-acc21-20261003T114511Z-49699g: 401
+
+tests/acceptance/harness.py:33: AssertionError</error></testcase></testsuite></testsuites>

@@ -1,0 +1,2874 @@
+[
+  {
+    "gate": "setup",
+    "step": "seed judgments",
+    "status": "pass",
+    "evidence": {
+      "requests": [
+        "req_3db17b262a1546fdb070e52cc03ebc2b",
+        "req_9f6bbe87d6d74d198cf48c5ec4bfceaa",
+        "req_3d34e25aee2f457da1abf7d5c9864ad7",
+        "req_485f383761e34da2b7d1a4aa334d7e9e",
+        "req_35e51ef4e7094ab7b436eb3fa92b4308",
+        "req_96562009f5aa47f199ab51abaeaed935",
+        "req_a621234edfa84a52841609fb51a14bff",
+        "req_fb0bebc2ebe740c5902855dec3c4f7c5"
+      ],
+      "ai_need_groups": {
+        "불필요": 8
+      }
+    },
+    "at": "2026-10-03T09:36:57Z"
+  },
+  {
+    "gate": "X01",
+    "step": "review decisions submitted",
+    "status": "pass",
+    "evidence": {
+      "plan": {
+        "same_direction": [
+          "req_a621234edfa84a52841609fb51a14bff",
+          "req_fb0bebc2ebe740c5902855dec3c4f7c5",
+          "req_96562009f5aa47f199ab51abaeaed935"
+        ],
+        "counter": "req_35e51ef4e7094ab7b436eb3fa92b4308",
+        "other_direction": [
+          "req_485f383761e34da2b7d1a4aa334d7e9e",
+          "req_3d34e25aee2f457da1abf7d5c9864ad7"
+        ]
+      },
+      "original": "불필요",
+      "dir_y": "필요",
+      "dir_z": "혼합"
+    },
+    "at": "2026-10-03T09:36:58Z"
+  },
+  {
+    "gate": "X01",
+    "step": "DB Correction == API(/requests/{id}/corrections, /learning/corrections); AI original kept; CORRECTS->ModelOutput",
+    "status": "fail",
+    "evidence": {
+      "corrections": {
+        "req_a621234edfa84a52841609fb51a14bff": {
+          "correction_id": "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "review_id": "rvw_9da72a2138bb47e5aaf7fe53fd50d252",
+          "run_id": "run_dfbff2f5b2624464b2b403f64bbcb5f1",
+          "revision_id": "rev_1b79c32b807c4cbfb428493e0aaf611d",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.341000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": false,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_fb0bebc2ebe740c5902855dec3c4f7c5": {
+          "correction_id": "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "review_id": "rvw_427ae976239b429fa0424390a600f8c2",
+          "run_id": "run_ac3b864584c54ab7b8344b5238624a7f",
+          "revision_id": "rev_20c1346355a848a4aad995afe24f684b",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.686000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": false,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_96562009f5aa47f199ab51abaeaed935": {
+          "correction_id": "cor_f00d744948d347d5a711f208ca08f2d6",
+          "review_id": "rvw_8ccaf1f4439a46fb921b85a42cd4b678",
+          "run_id": "run_9c254957bedb4cb197f9b8ff7d4bb40c",
+          "revision_id": "rev_ac82895b8cac47528caee9fba3920894",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.781000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": false,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_485f383761e34da2b7d1a4aa334d7e9e": {
+          "correction_id": "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "review_id": "rvw_669c02146d7743138a1d6e4ded460570",
+          "run_id": "run_1af75dc9f7434fc199444c19ecef99ec",
+          "revision_id": "rev_5cc9cde0b04a46bab9e418c3803bb90a",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.959000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": false,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_3d34e25aee2f457da1abf7d5c9864ad7": {
+          "correction_id": "cor_aacb1eb8f9ce4a36ac817912a0eb986d",
+          "review_id": "rvw_79572ea0fcc14a74a5945faf1c749cc8",
+          "run_id": "run_fdf5081bd1af4c93a6365bccc6f58ef6",
+          "revision_id": "rev_1d3145478ffd45378cdb4bd9ad006213",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:58.051000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": false,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "request": "req_a621234edfa84a52841609fb51a14bff",
+          "failed": [
+            "list_api_same"
+          ]
+        },
+        {
+          "request": "req_fb0bebc2ebe740c5902855dec3c4f7c5",
+          "failed": [
+            "list_api_same"
+          ]
+        },
+        {
+          "request": "req_96562009f5aa47f199ab51abaeaed935",
+          "failed": [
+            "list_api_same"
+          ]
+        },
+        {
+          "request": "req_485f383761e34da2b7d1a4aa334d7e9e",
+          "failed": [
+            "list_api_same"
+          ]
+        },
+        {
+          "request": "req_3d34e25aee2f457da1abf7d5c9864ad7",
+          "failed": [
+            "list_api_same"
+          ]
+        }
+      ]
+    },
+    "at": "2026-10-03T09:37:45Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate (3 same direction) linked to Correction IDs with counter/scope/uncertainty",
+    "status": "pass",
+    "evidence": {
+      "generate_status": 200,
+      "candidate": {
+        "id": "cand_8fcc507094e6868374ddec5c",
+        "field": "ai_need",
+        "status": "제안",
+        "support_ids": [
+          "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "cor_f00d744948d347d5a711f208ca08f2d6"
+        ],
+        "counter_ids": [
+          "rdec_3dc2882fea434393b0b6bf97897526d9",
+          "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+          "rdec_c6e4b97fc8724c719141ac81b7226aef"
+        ],
+        "api_support_ids": [
+          "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "cor_f00d744948d347d5a711f208ca08f2d6"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "필요"
+        },
+        "uncertainty": {
+          "counter_count": 3,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 3
+        },
+        "rule_id": "R-AI-NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+        "cor_82a6c2512ed649a8a3a48e82affb9e16",
+        "cor_f00d744948d347d5a711f208ca08f2d6"
+      ],
+      "counter_decision_ids": [
+        "rdec_3dc2882fea434393b0b6bf97897526d9",
+        "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+        "rdec_c6e4b97fc8724c719141ac81b7226aef"
+      ],
+      "counter_plan_request": "req_35e51ef4e7094ab7b436eb3fa92b4308"
+    },
+    "at": "2026-10-03T09:37:45Z"
+  },
+  {
+    "gate": "X02",
+    "step": "other direction with 2 corrections is '자료 부족' (DB==API)",
+    "status": "pass",
+    "evidence": {
+      "candidate": {
+        "id": "cand_e123faef72028b6d12635bef",
+        "field": "ai_need",
+        "status": "자료 부족",
+        "support_ids": [
+          "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+        ],
+        "counter_ids": [
+          "rdec_24fc67ffdcd7422684754a53bc498c8d",
+          "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+          "rdec_9abfa865fcdb48beb5bc48960ad831ca",
+          "rdec_dc33cefabbd14dae882fc97f6fa5d8ce"
+        ],
+        "api_support_ids": [
+          "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "혼합"
+        },
+        "uncertainty": {
+          "counter_count": 4,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 2
+        },
+        "rule_id": "R-AI-NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_1a4435c4bbe4443bb4824d182bad736b",
+        "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+      ]
+    },
+    "at": "2026-10-03T09:37:45Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate generation did not change Config",
+    "status": "pass",
+    "evidence": {
+      "config_version": 1
+    },
+    "at": "2026-10-03T09:37:45Z"
+  },
+  {
+    "gate": "X01",
+    "step": "DB Correction == API(/requests/{id}/corrections, /learning/corrections); AI original kept; CORRECTS->ModelOutput",
+    "status": "pass",
+    "evidence": {
+      "corrections": {
+        "req_a621234edfa84a52841609fb51a14bff": {
+          "correction_id": "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "review_id": "rvw_9da72a2138bb47e5aaf7fe53fd50d252",
+          "run_id": "run_dfbff2f5b2624464b2b403f64bbcb5f1",
+          "revision_id": "rev_1b79c32b807c4cbfb428493e0aaf611d",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.341000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_fb0bebc2ebe740c5902855dec3c4f7c5": {
+          "correction_id": "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "review_id": "rvw_427ae976239b429fa0424390a600f8c2",
+          "run_id": "run_ac3b864584c54ab7b8344b5238624a7f",
+          "revision_id": "rev_20c1346355a848a4aad995afe24f684b",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.686000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_96562009f5aa47f199ab51abaeaed935": {
+          "correction_id": "cor_f00d744948d347d5a711f208ca08f2d6",
+          "review_id": "rvw_8ccaf1f4439a46fb921b85a42cd4b678",
+          "run_id": "run_9c254957bedb4cb197f9b8ff7d4bb40c",
+          "revision_id": "rev_ac82895b8cac47528caee9fba3920894",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.781000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_485f383761e34da2b7d1a4aa334d7e9e": {
+          "correction_id": "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "review_id": "rvw_669c02146d7743138a1d6e4ded460570",
+          "run_id": "run_1af75dc9f7434fc199444c19ecef99ec",
+          "revision_id": "rev_5cc9cde0b04a46bab9e418c3803bb90a",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:57.959000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_3d34e25aee2f457da1abf7d5c9864ad7": {
+          "correction_id": "cor_aacb1eb8f9ce4a36ac817912a0eb986d",
+          "review_id": "rvw_79572ea0fcc14a74a5945faf1c749cc8",
+          "run_id": "run_fdf5081bd1af4c93a6365bccc6f58ef6",
+          "revision_id": "rev_1d3145478ffd45378cdb4bd9ad006213",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38-10031834_reviewer",
+          "corrected_at": "2026-10-03T09:36:58.051000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        }
+      },
+      "mismatches": []
+    },
+    "at": "2026-10-03T09:37:57Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate (3 same direction) linked to Correction IDs with counter/scope/uncertainty",
+    "status": "pass",
+    "evidence": {
+      "generate_status": 200,
+      "candidate": {
+        "id": "cand_8fcc507094e6868374ddec5c",
+        "field": "ai_need",
+        "status": "제안",
+        "support_ids": [
+          "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "cor_f00d744948d347d5a711f208ca08f2d6"
+        ],
+        "counter_ids": [
+          "rdec_3dc2882fea434393b0b6bf97897526d9",
+          "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+          "rdec_c6e4b97fc8724c719141ac81b7226aef"
+        ],
+        "api_support_ids": [
+          "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+          "cor_82a6c2512ed649a8a3a48e82affb9e16",
+          "cor_f00d744948d347d5a711f208ca08f2d6"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "필요"
+        },
+        "uncertainty": {
+          "counter_count": 3,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 3
+        },
+        "rule_id": "R-AI-NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+        "cor_82a6c2512ed649a8a3a48e82affb9e16",
+        "cor_f00d744948d347d5a711f208ca08f2d6"
+      ],
+      "counter_decision_ids": [
+        "rdec_3dc2882fea434393b0b6bf97897526d9",
+        "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+        "rdec_c6e4b97fc8724c719141ac81b7226aef"
+      ],
+      "counter_plan_request": "req_35e51ef4e7094ab7b436eb3fa92b4308"
+    },
+    "at": "2026-10-03T09:37:58Z"
+  },
+  {
+    "gate": "X02",
+    "step": "other direction with 2 corrections is '자료 부족' (DB==API)",
+    "status": "pass",
+    "evidence": {
+      "candidate": {
+        "id": "cand_e123faef72028b6d12635bef",
+        "field": "ai_need",
+        "status": "자료 부족",
+        "support_ids": [
+          "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+        ],
+        "counter_ids": [
+          "rdec_24fc67ffdcd7422684754a53bc498c8d",
+          "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+          "rdec_9abfa865fcdb48beb5bc48960ad831ca",
+          "rdec_dc33cefabbd14dae882fc97f6fa5d8ce"
+        ],
+        "api_support_ids": [
+          "cor_1a4435c4bbe4443bb4824d182bad736b",
+          "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "혼합"
+        },
+        "uncertainty": {
+          "counter_count": 4,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 2
+        },
+        "rule_id": "R-AI-NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_1a4435c4bbe4443bb4824d182bad736b",
+        "cor_aacb1eb8f9ce4a36ac817912a0eb986d"
+      ]
+    },
+    "at": "2026-10-03T09:37:58Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate generation did not change Config",
+    "status": "pass",
+    "evidence": {
+      "config_version": 1
+    },
+    "at": "2026-10-03T09:37:58Z"
+  },
+  {
+    "gate": "X03",
+    "step": "all non-rule_admin roles get 403 on decision/scope-change/reject/version/validate/mark-validated/publish/stop/revert",
+    "status": "pass",
+    "evidence": {
+      "status_by_role": {
+        "requester": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "reviewer": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "team_member": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "operator": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "policy_editor": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        }
+      }
+    },
+    "at": "2026-10-03T09:39:11Z"
+  },
+  {
+    "gate": "X03",
+    "step": "policy_editor cannot publish a rules diff via /api/policy/publish",
+    "status": "fail",
+    "evidence": {
+      "status": 422,
+      "body": "{\"detail\":{\"code\":\"SCHEMA_INVALID\",\"reason\":\"Value error, invalid rule identity\"}}"
+    },
+    "at": "2026-10-03T09:39:11Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rejected calls left candidate/decision/version/config state unchanged",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "14fd7049623a6982"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "6ffc947be1287465"
+        }
+      },
+      "after": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "14fd7049623a6982"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "6ffc947be1287465"
+        }
+      }
+    },
+    "at": "2026-10-03T09:39:11Z"
+  },
+  {
+    "gate": "X03",
+    "step": "single review approval (API) changed no RuleCandidate/RuleDecision/RuleVersion/ConfigVersion",
+    "status": "pass",
+    "evidence": {
+      "review_id": "rvw_3e266286fe64426195517a32a1f3b46c",
+      "request_id": "req_3db17b262a1546fdb070e52cc03ebc2b",
+      "state": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "14fd7049623a6982"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "6ffc947be1287465"
+        }
+      },
+      "active_config": 1
+    },
+    "at": "2026-10-03T09:39:11Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rule_admin scope-change approval: confirmed scope stored (differs from proposal), candidate approved",
+    "status": "pass",
+    "evidence": {
+      "decision_id": "rdec_b9981756b1e342278df9ee206130ae59",
+      "confirmed_scope": {
+        "all": [
+          {
+            "field": "ai_need",
+            "op": "eq",
+            "value": "불필요"
+          },
+          {
+            "field": "lead_org",
+            "op": "eq",
+            "value": "IT팀"
+          },
+          {
+            "op": "lte",
+            "signal": "clinical_safety",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "regulatory",
+            "value": 0.5
+          }
+        ]
+      },
+      "proposed_scope_predicates": 10,
+      "db": {
+        "action": "approve_with_scope_change",
+        "by": "usr_t-x38-10031834_rule_admin",
+        "candidate_status": "approved"
+      }
+    },
+    "at": "2026-10-03T09:39:12Z"
+  },
+  {
+    "gate": "X03",
+    "step": "policy_editor cannot publish a rules diff via /api/policy/publish (retest with a valid rule id)",
+    "status": "pass",
+    "evidence": {
+      "status": 422,
+      "body": "{\"detail\":{\"code\":\"RULE_ADMIN_REQUIRED\",\"reason\":\"rules 변경은 rule_admin 전용 경로에서만 허용됩니다.\"}}"
+    },
+    "at": "2026-10-03T09:39:39Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rule_admin scope-change approval: confirmed scope stored (differs from proposal), candidate approved",
+    "status": "pass",
+    "evidence": {
+      "decision_id": "rdec_b9981756b1e342278df9ee206130ae59",
+      "confirmed_scope": {
+        "all": [
+          {
+            "field": "ai_need",
+            "op": "eq",
+            "value": "불필요"
+          },
+          {
+            "field": "lead_org",
+            "op": "eq",
+            "value": "IT팀"
+          },
+          {
+            "op": "lte",
+            "signal": "clinical_safety",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "regulatory",
+            "value": 0.5
+          }
+        ]
+      },
+      "proposed_scope_predicates": 10,
+      "db": {
+        "action": "approve_with_scope_change",
+        "by": "usr_t-x38-10031834_rule_admin",
+        "candidate_status": "approved"
+      }
+    },
+    "at": "2026-10-03T09:39:39Z"
+  },
+  {
+    "gate": "X03",
+    "step": "publish before validation is refused (409) and Config version unchanged",
+    "status": "pass",
+    "evidence": {
+      "status": 409,
+      "body": "{\"detail\":{\"code\":\"INVALID_TRANSITION\",\"reason\":\"게시 가능한 검증 상태가 아닙니다.\"}}",
+      "active_config": 1
+    },
+    "at": "2026-10-03T09:39:39Z"
+  },
+  {
+    "gate": "X04",
+    "step": "protected nodes (Task/Assignment/Review/ReviewDecision/Event/Request/Judgment/Correction) identical before/after shadow",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "Task": {
+          "count": 7,
+          "sha256": "dd897ccf55536ca8"
+        },
+        "Assignment": {
+          "count": 7,
+          "sha256": "3841469efb3dab33"
+        },
+        "Review": {
+          "count": 8,
+          "sha256": "eec607f2a66efe77"
+        },
+        "ReviewDecision": {
+          "count": 7,
+          "sha256": "1760f5720d2020aa"
+        },
+        "Event": {
+          "count": 129,
+          "sha256": "4ed4e9022e77acd9"
+        },
+        "Request": {
+          "count": 8,
+          "sha256": "6872759db40b9b74"
+        },
+        "Judgment": {
+          "count": 8,
+          "sha256": "3d150acd19f440b5"
+        },
+        "Correction": {
+          "count": 5,
+          "sha256": "2f14bff1a31f6b51"
+        }
+      },
+      "after": {
+        "Task": {
+          "count": 7,
+          "sha256": "dd897ccf55536ca8"
+        },
+        "Assignment": {
+          "count": 7,
+          "sha256": "3841469efb3dab33"
+        },
+        "Review": {
+          "count": 8,
+          "sha256": "eec607f2a66efe77"
+        },
+        "ReviewDecision": {
+          "count": 7,
+          "sha256": "1760f5720d2020aa"
+        },
+        "Event": {
+          "count": 129,
+          "sha256": "4ed4e9022e77acd9"
+        },
+        "Request": {
+          "count": 8,
+          "sha256": "6872759db40b9b74"
+        },
+        "Judgment": {
+          "count": 8,
+          "sha256": "3d150acd19f440b5"
+        },
+        "Correction": {
+          "count": 5,
+          "sha256": "2f14bff1a31f6b51"
+        }
+      }
+    },
+    "at": "2026-10-03T09:39:41Z"
+  },
+  {
+    "gate": "X04",
+    "step": "counts and Request.active_run_id pointers identical before/after shadow",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "Task": 7,
+        "Assignment": 7,
+        "Review": 8,
+        "Event": 129,
+        "Notification": 0,
+        "ReviewDecision": 7,
+        "Judgment": 8,
+        "Request": 8,
+        "active_run_pointers": {
+          "n": 8,
+          "ptr": [
+            "req_35e51ef4e7094ab7b436eb3fa92b4308=run_c067972d6cdd40c2a18cbc529c1c185a",
+            "req_3d34e25aee2f457da1abf7d5c9864ad7=run_fdf5081bd1af4c93a6365bccc6f58ef6",
+            "req_3db17b262a1546fdb070e52cc03ebc2b=run_99d58c815d794f18b9440608e276a3ee",
+            "req_485f383761e34da2b7d1a4aa334d7e9e=run_1af75dc9f7434fc199444c19ecef99ec",
+            "req_96562009f5aa47f199ab51abaeaed935=run_9c254957bedb4cb197f9b8ff7d4bb40c",
+            "req_9f6bbe87d6d74d198cf48c5ec4bfceaa=run_bce2ccfcbce44b719d5821c0d3c6f546",
+            "req_a621234edfa84a52841609fb51a14bff=run_dfbff2f5b2624464b2b403f64bbcb5f1",
+            "req_fb0bebc2ebe740c5902855dec3c4f7c5=run_ac3b864584c54ab7b8344b5238624a7f"
+          ]
+        }
+      },
+      "after": {
+        "Task": 7,
+        "Assignment": 7,
+        "Review": 8,
+        "Event": 129,
+        "Notification": 0,
+        "ReviewDecision": 7,
+        "Judgment": 8,
+        "Request": 8,
+        "active_run_pointers": {
+          "n": 8,
+          "ptr": [
+            "req_35e51ef4e7094ab7b436eb3fa92b4308=run_c067972d6cdd40c2a18cbc529c1c185a",
+            "req_3d34e25aee2f457da1abf7d5c9864ad7=run_fdf5081bd1af4c93a6365bccc6f58ef6",
+            "req_3db17b262a1546fdb070e52cc03ebc2b=run_99d58c815d794f18b9440608e276a3ee",
+            "req_485f383761e34da2b7d1a4aa334d7e9e=run_1af75dc9f7434fc199444c19ecef99ec",
+            "req_96562009f5aa47f199ab51abaeaed935=run_9c254957bedb4cb197f9b8ff7d4bb40c",
+            "req_9f6bbe87d6d74d198cf48c5ec4bfceaa=run_bce2ccfcbce44b719d5821c0d3c6f546",
+            "req_a621234edfa84a52841609fb51a14bff=run_dfbff2f5b2624464b2b403f64bbcb5f1",
+            "req_fb0bebc2ebe740c5902855dec3c4f7c5=run_ac3b864584c54ab7b8344b5238624a7f"
+          ]
+        }
+      }
+    },
+    "at": "2026-10-03T09:39:41Z"
+  },
+  {
+    "gate": "X04",
+    "step": "monitoring SLO/summary denominators and alerts unchanged by shadow",
+    "status": "fail",
+    "evidence": {
+      "before": "08710f1f3dabb7e6",
+      "after": "c89b536d1c4461c1",
+      "summary_after": {
+        "summary": {
+          "availability": {
+            "valid_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "pending_calls": 0,
+            "unknown_validity": 0,
+            "ratio": null
+          },
+          "judgment": {
+            "eligible_requests": 0,
+            "within_120s": 0,
+            "failed_120s": 0,
+            "pending_120s": 0,
+            "ratio": null,
+            "candidate_commits": 0,
+            "failed_runs": 0,
+            "late_recoveries": 0,
+            "unconfirmed_samples": 0
+          },
+          "latency_ms": {
+            "intake_p95": null,
+            "text_first_p95": null,
+            "attachment_first_p95": null,
+            "sse_deliver_p95": null,
+            "revision_p95": null,
+            "step_p95": null
+          },
+          "requests": {
+            "received": 0,
+            "failed_before_id": 0
+          },
+          "file_exclusions": 0,
+          "first_eligible_after_file_decision": 0,
+          "cancellations": 0,
+          "shadow_runs": 0,
+          "usage": {
+            "model_calls": null,
+            "cost": null
+          },
+          "by_version": {},
+          "steps": {},
+          "kinds": {},
+          "failures": {},
+          "filters": {
+            "org": null,
+            "status": null,
+            "version": null
+          },
+          "collection": {
+            "complete": false,
+            "issues": [
+              "collector_stopped"
+            ],
+            "has_collected_events": false,
+            "continuous_30d": false,
+            "damaged_lines_or_truncations": 0,
+            "incomplete_intervals": [],
+            "last_collected_at": null,
+            "limitations": [
+              "org and request status are not recorded independently",
+              "producer heartbeat is activity-based"
+            ]
+          },
+          "unscoped_events": 0,
+          "business": {
+            "request_denominator": 8,
+            "org_unconfirmed": 0,
+            "auto_assignment_count": 0,
+            "review_completed_count": 7
+          }
+        },
+        "slo": {
+          "window_start": "2026-09-03T09:39:41.199722+00:00",
+          "window_end": "2026-10-03T09:39:41.199722+00:00",
+          "verified": false,
+          "availability": {
+            "target": 0.999,
+            "allowed_failure_rate": 0.001,
+            "total": 0,
+            "failures": 0,
+            "remaining_failures": null,
+            "burn_rate_1h": null,
+            "verified": false
+          },
+          "first_judgment": {
+            "target": 0.99,
+            "allowed_failure_rate": 0.01,
+            "total": 0,
+            "failures": 0,
+            "remaining_failures": null,
+            "burn_rate_1h": null,
+            "verified": false
+          },
+          "reason": "Less than 30 days of complete observation",
+          "collection": {
+            "complete": false,
+            "issues": [
+              "collector_stopped"
+            ],
+            "has_collected_events": false,
+            "continuous_30d": false,
+            "damaged_lines_or_truncations": 0,
+            "incomplete_intervals": [],
+            "last_collected_at": null,
+            "limitations": [
+              "org and request status are not recorded independently",
+              "producer heartbeat is activity-based"
+            ]
+          }
+        }
+      }
+    },
+    "at": "2026-10-03T09:39:41Z"
+  },
+  {
+    "gate": "X04",
+    "step": "ValidationRun (POST result == GET API == DB): conditions, sample counts, side_effects=0, run_kind=shadow",
+    "status": "pass",
+    "evidence": {
+      "validation_id": "val_14d2a9f8539a45e6bd94c3a88b748b64",
+      "sample_count": 8,
+      "labeled_count": 7,
+      "changed_count": 8,
+      "changes_by_value": {
+        "ai_need:필요": 8
+      },
+      "base": 1,
+      "candidate": "1+R-AI_NEED-01@1",
+      "human_correction_needed_base/candidate": [
+        5,
+        4
+      ],
+      "window": [
+        "2026-01-01T00:00:00+00:00",
+        "2026-12-31T00:00:00+00:00"
+      ],
+      "shadow_run_kind": [
+        {
+          "kind": "shadow",
+          "status": "completed"
+        }
+      ],
+      "field_equal": {
+        "sample_count": true,
+        "labeled_count": true,
+        "changed_count": true,
+        "side_effects": true,
+        "status": true,
+        "run_kind": true,
+        "base_config_version": true,
+        "candidate_config_version": true,
+        "max_calls": true,
+        "calls": true,
+        "human_correction_needed_base": true,
+        "human_correction_needed_candidate": true
+      }
+    },
+    "at": "2026-10-03T09:39:41Z"
+  },
+  {
+    "gate": "X03",
+    "step": "validated rule published as new Config version (rule in active rules, PUBLISHED_IN), audit + rule.* events recorded",
+    "status": "pass",
+    "evidence": {
+      "config_version": 2,
+      "prior": 1,
+      "active_rules": [
+        "R-AI_NEED-01@1"
+      ],
+      "audit": {
+        "RuleCandidate:cand_8fcc507094e6868374ddec5c": [
+          [
+            "rule.decision",
+            "usr_t-x38-10031834_rule_admin",
+            "T38: 범위를 임상·규제 신호 낮음으로 확정"
+          ]
+        ],
+        "RuleVersion:R-AI_NEED-01@1": [
+          [
+            "rule.version_created",
+            "usr_t-x38-10031834_rule_admin",
+            "T38: 규칙 버전 생성"
+          ],
+          [
+            "rule.validated",
+            "usr_t-x38-10031834_rule_admin",
+            "T38: 부작용 0건 확인"
+          ]
+        ],
+        "ConfigVersion:2": [
+          [
+            "rule.publish",
+            "usr_t-x38-10031834_rule_admin",
+            "T38: 게시"
+          ]
+        ]
+      },
+      "events": [
+        {
+          "kind": "rule.decision",
+          "n": 1
+        },
+        {
+          "kind": "rule.publish",
+          "n": 1
+        },
+        {
+          "kind": "rule.validated",
+          "n": 1
+        },
+        {
+          "kind": "rule.version_created",
+          "n": 1
+        }
+      ]
+    },
+    "at": "2026-10-03T09:39:41Z"
+  },
+  {
+    "gate": "X05",
+    "step": "post-publish in-scope requests: rule used, result changed (불필요→필요), APPLIED(before/after/version) == Judgment API == Trace rule step, Config pinned",
+    "status": "pass",
+    "evidence": {
+      "config_version": 2,
+      "rule": "R-AI_NEED-01@1",
+      "requests": [
+        {
+          "kind": "in_scope",
+          "run_id": "run_86c22cde53de4e72b7b352d94274ed21",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_b33142426994465cacba22c2c69ec588",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_1a0d42d6f6374ea3bfd5382c14de98d5",
+            "step_b33142426994465cacba22c2c69ec588"
+          ],
+          "step_ids_in_applied": [
+            "step_b33142426994465cacba22c2c69ec588"
+          ]
+        },
+        {
+          "kind": "in_scope",
+          "run_id": "run_13310066bb7a498883cae4eeb36df04a",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_19e32c1ebead4412884b8049e2da7b76",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_b5adedd8f5254ff59cf528598a93bbef",
+            "step_19e32c1ebead4412884b8049e2da7b76"
+          ],
+          "step_ids_in_applied": [
+            "step_19e32c1ebead4412884b8049e2da7b76"
+          ]
+        },
+        {
+          "kind": "in_scope",
+          "run_id": "run_bbaa3b9225924c479ceabcd119ea5356",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_d8c89785f2674d00bd4b54fc803c9766",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_2f95b9050d044f4d8478381ae5f86525",
+            "step_d8c89785f2674d00bd4b54fc803c9766"
+          ],
+          "step_ids_in_applied": [
+            "step_d8c89785f2674d00bd4b54fc803c9766"
+          ]
+        }
+      ]
+    },
+    "at": "2026-10-03T09:41:20Z"
+  },
+  {
+    "gate": "X05",
+    "step": "out-of-scope request: APPLIED out_of_scope recorded, classification NOT changed by the rule",
+    "status": "pass",
+    "evidence": {
+      "request": "req_f7a2cacdb0904be78b7f38250d0d54bd",
+      "probe": {
+        "kind": "out_of_scope_probe",
+        "run_id": "run_cf0c6ad86f0b4ff59072d11f1bd3d93e",
+        "api_ai_need": "불필요",
+        "db_ai_need": "불필요",
+        "model_raw_ai_need": "불필요",
+        "api_rule_effects": [
+          {
+            "rule_version": "R-AI_NEED-01@1",
+            "effect": "rule",
+            "outcome": "out_of_scope",
+            "before": "불필요",
+            "after": "불필요",
+            "config_version": 2
+          }
+        ],
+        "db_applied": [
+          {
+            "step": "step_fd7d487ed2934616928b580481f8a11f",
+            "kind": "rule",
+            "rule": "R-AI_NEED-01@1",
+            "outcome": "out_of_scope",
+            "before": "\"불필요\"",
+            "after": "\"불필요\"",
+            "rv": "R-AI_NEED-01@1"
+          }
+        ],
+        "flow_config_version": 2,
+        "flow_rule_steps": [
+          "step_3dfad9443abc4f1bb3d7740c3aadfd40",
+          "step_fd7d487ed2934616928b580481f8a11f"
+        ],
+        "step_ids_in_applied": [
+          "step_fd7d487ed2934616928b580481f8a11f"
+        ]
+      }
+    },
+    "at": "2026-10-03T09:41:20Z"
+  },
+  {
+    "gate": "X05",
+    "step": "pre-publication runs have no APPLIED rows for the rule (and still have their rule step)",
+    "status": "pass",
+    "evidence": {
+      "seed_requests": 8,
+      "applied_rows": 0,
+      "runs_with_rule_step": 8
+    },
+    "at": "2026-10-03T09:41:20Z"
+  },
+  {
+    "gate": "X05",
+    "step": "invariant-weakening rules (feasibility→가능, urgency→일반) are refused; no RuleVersion/Config created",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "attempt": "feasibility→가능",
+          "candidate_status": 404,
+          "candidate_body": "{\"detail\":\"Correction not found\"}"
+        },
+        {
+          "attempt": "urgency→일반",
+          "candidate_status": 404,
+          "candidate_body": "{\"detail\":\"Correction not found\"}"
+        }
+      ],
+      "config_validation_errors": [
+        {
+          "code": "SCHEMA_INVALID",
+          "reason": "Value error, rule weakens mandatory review or assignment safety"
+        }
+      ],
+      "state_before": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "9759e6d10a74a9c3"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "9a8035962587886c"
+        }
+      },
+      "state_after": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "9759e6d10a74a9c3"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "9a8035962587886c"
+        }
+      }
+    },
+    "at": "2026-10-03T09:41:20Z"
+  },
+  {
+    "gate": "X05",
+    "step": "invariant-weakening rules (feasibility→가능, urgency→일반) are refused; no RuleVersion/Config created",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "attempt": "feasibility→가능",
+          "candidate_status": 201,
+          "decision_status": 200,
+          "version_status": 422,
+          "version_body": "{\"detail\":{\"code\":\"RULE_INVALID\",\"reason\":\"rule weakens mandatory review or assignment safety\"}}"
+        },
+        {
+          "attempt": "urgency→일반",
+          "candidate_status": 201,
+          "decision_status": 200,
+          "version_status": 422,
+          "version_body": "{\"detail\":{\"code\":\"RULE_INVALID\",\"reason\":\"rule weakens mandatory review or assignment safety\"}}"
+        }
+      ],
+      "config_validation_errors": [
+        {
+          "code": "SCHEMA_INVALID",
+          "reason": "Value error, rule weakens mandatory review or assignment safety"
+        }
+      ],
+      "state_before": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "9759e6d10a74a9c3"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "9a8035962587886c"
+        }
+      },
+      "state_after": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "9759e6d10a74a9c3"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "9a8035962587886c"
+        }
+      }
+    },
+    "at": "2026-10-03T09:42:02Z"
+  },
+  {
+    "gate": "X05",
+    "step": "(정정) 'invariant-weakening … refused' 첫 PASS 판정은 무효: 후보 생성이 404/500으로 끝나 규칙 버전 검사에 도달하지 못함 — 이후 재시험 항목이 유효",
+    "status": "unverified",
+    "evidence": {
+      "cause": "supporting_correction_ids field mismatch(404), then POST /api/learning/candidates 500 (async generator in any())"
+    },
+    "at": "2026-10-03T09:42:22Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(정정) 'monitoring SLO/summary … unchanged' FAIL: 최초 시도는 SLO 창 시각이 호출마다 달라지고 수집기 미기동으로 값이 전부 0이어서 무의미 — 별도 시험(shadow_monitoring)으로 재수행",
+    "status": "unverified",
+    "evidence": {
+      "cause": "window_start/window_end drift, collector stopped"
+    },
+    "at": "2026-10-03T09:42:22Z"
+  },
+  {
+    "gate": "X09",
+    "step": "effects API counts (before/after/used/out_of_scope: sample, change, correction, review, failure) == independent DB computation",
+    "status": "pass",
+    "evidence": {
+      "api": {
+        "before": {
+          "sample_count": 8,
+          "corrections": 5,
+          "review_transitions": 8,
+          "failures": 0,
+          "classification_changes": 0,
+          "latency_sample_count": 8,
+          "latency_p50_ms": 2924.5,
+          "latency_p95_ms": 4074.35
+        },
+        "after": {
+          "sample_count": 4,
+          "corrections": 0,
+          "review_transitions": 4,
+          "failures": 0,
+          "classification_changes": 3,
+          "latency_sample_count": 4,
+          "latency_p50_ms": 2705.0,
+          "latency_p95_ms": 2797.8
+        },
+        "used": {
+          "sample_count": 3,
+          "corrections": 0,
+          "review_transitions": 3,
+          "failures": 0,
+          "classification_changes": 3,
+          "latency_sample_count": 3,
+          "latency_p50_ms": 2670.0,
+          "latency_p95_ms": 2733.0
+        },
+        "out_of_scope": {
+          "sample_count": 1,
+          "corrections": 0,
+          "review_transitions": 1,
+          "failures": 0,
+          "classification_changes": 0,
+          "latency_sample_count": 1,
+          "latency_p50_ms": 2808.0,
+          "latency_p95_ms": 2808.0
+        }
+      },
+      "db": {
+        "before": {
+          "sample_count": 8,
+          "corrections": 5,
+          "review_transitions": 8,
+          "failures": 0,
+          "classification_changes": 0
+        },
+        "after": {
+          "sample_count": 4,
+          "corrections": 0,
+          "review_transitions": 4,
+          "failures": 0,
+          "classification_changes": 3
+        },
+        "used": {
+          "sample_count": 3,
+          "corrections": 0,
+          "review_transitions": 3,
+          "failures": 0,
+          "classification_changes": 3
+        },
+        "out_of_scope": {
+          "sample_count": 1,
+          "corrections": 0,
+          "review_transitions": 1,
+          "failures": 0,
+          "classification_changes": 0
+        }
+      },
+      "equal": {
+        "before": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "after": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "used": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "out_of_scope": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        }
+      },
+      "published_at": "2026-10-03T09:39:41.451000+00:00",
+      "window_days": 7
+    },
+    "at": "2026-10-03T09:42:22Z"
+  },
+  {
+    "gate": "X09",
+    "step": "sample below minimum -> effect 'insufficient_sample' (undetermined), shadow runs excluded, SLO not included",
+    "status": "pass",
+    "evidence": {
+      "effect": "insufficient_sample",
+      "minimum_sample": 20,
+      "samples": 12,
+      "shadow_runs_excluded": 1,
+      "slo_included": false
+    },
+    "at": "2026-10-03T09:42:22Z"
+  },
+  {
+    "gate": "X01",
+    "step": "corrections on cited outputs keep evidence span IDs (DB Correction.evidence_span_ids == CITES targets of the corrected ModelOutput)",
+    "status": "pass",
+    "evidence": {
+      "urgency_original": {},
+      "target": "판단 보류",
+      "corrections": {
+        "cor_b883b34442f34569bce57d37248bbd8f": {
+          "request": "req_245250b0119d49818ea62ce51724f863",
+          "spans": [
+            "esp_d2376c22cea44767a00d3e7b2b8b9ff7"
+          ]
+        },
+        "cor_3ed68e6a980e4aacba33b94e29d7f632": {
+          "request": "req_957a2ff6918040bb9082bdb10a305065",
+          "spans": [
+            "esp_65cd3dfb4cac406091de5cd3017d295c"
+          ]
+        },
+        "cor_2053d3d03a044b54809204dcf9074c80": {
+          "request": "req_f4e911dcb56547869d7263a1b928d09c",
+          "spans": [
+            "esp_f78a8b8bc3d44475b2df71048917e521"
+          ]
+        }
+      }
+    },
+    "at": "2026-10-03T09:44:10Z"
+  },
+  {
+    "gate": "X02",
+    "step": "evidence-backed candidate (urgency→긴급): support == the 3 Correction IDs with cited spans, scope/uncertainty present",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_861307de943efe054b1e407e",
+      "status": "제안",
+      "support": [
+        "cor_2053d3d03a044b54809204dcf9074c80",
+        "cor_3ed68e6a980e4aacba33b94e29d7f632",
+        "cor_b883b34442f34569bce57d37248bbd8f"
+      ],
+      "counter_count": 1,
+      "scope_predicates": 10,
+      "uncertainty": {
+        "counter_count": 1,
+        "minimum_support": 3,
+        "organization_count": 3,
+        "single_organization_bias": false,
+        "support_count": 3
+      }
+    },
+    "at": "2026-10-03T09:44:11Z"
+  },
+  {
+    "gate": "X04",
+    "step": "second rule validated by shadow: side_effects=0, status completed, sample counts recorded",
+    "status": "pass",
+    "evidence": {
+      "id": "val_ebc6fbf10d634862b9eae78b566dceb2",
+      "sample_count": 16,
+      "labeled_count": 11,
+      "changed_count": 4,
+      "side_effects": 0,
+      "status": "completed",
+      "calls": 0
+    },
+    "at": "2026-10-03T09:44:11Z"
+  },
+  {
+    "gate": "X05",
+    "step": "second rule (urgency): APPLIED rows for a new request == Judgment API rule_effects (both rules evaluated)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_9163956b00194546bd0221bcbdd50ac9",
+      "run": "run_efb9b2f49eae496f9b334a0138fcd7d2",
+      "applied": [
+        {
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "out_of_scope",
+          "b": "\"불필요\"",
+          "a": "\"불필요\""
+        },
+        {
+          "rule": "R-URGENCY-01@1",
+          "outcome": "used",
+          "b": "\"긴급\"",
+          "a": "\"판단 보류\""
+        }
+      ],
+      "api": [
+        {
+          "rule_version": "R-AI_NEED-01@1",
+          "effect": "rule",
+          "outcome": "out_of_scope",
+          "before": "불필요",
+          "after": "불필요",
+          "config_version": 3
+        },
+        {
+          "rule_version": "R-URGENCY-01@1",
+          "effect": "rule",
+          "outcome": "used",
+          "before": "긴급",
+          "after": "판단 보류",
+          "config_version": 3
+        }
+      ],
+      "urgency": "판단 보류"
+    },
+    "at": "2026-10-03T09:44:15Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[request] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 44,
+      "edge_count": 42,
+      "layers": {
+        "1": 31,
+        "2": 2,
+        "3": 7,
+        "4": 2,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[run] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 44,
+      "edge_count": 42,
+      "layers": {
+        "1": 31,
+        "2": 2,
+        "3": 7,
+        "4": 2,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule_urgency] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "fail",
+    "evidence": {
+      "node_count": 16,
+      "edge_count": 15,
+      "layers": {
+        "1": 9,
+        "2": 1,
+        "3": 2,
+        "4": 3,
+        "5": 1
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule_ai_need] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "fail",
+    "evidence": {
+      "node_count": 28,
+      "edge_count": 27,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 3,
+        "5": 9
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[config_2] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 18,
+      "edge_count": 17,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 2,
+        "5": 0
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[candidate_status] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "fail",
+    "evidence": {
+      "node_count": 47,
+      "edge_count": 44,
+      "layers": {
+        "1": 19,
+        "2": 4,
+        "3": 9,
+        "4": 6,
+        "5": 9
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "reverse trace: business step → rule version → decision → candidate → correction → model output → source span (UI-independent /path == Cypher chain)",
+    "status": "pass",
+    "evidence": {
+      "run_step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+      "chains": [
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_3ed68e6a980e4aacba33b94e29d7f632",
+          "o": "mout_45caafb4e2f64ebdb7ddb99a4d50a2ca",
+          "e": "esp_65cd3dfb4cac406091de5cd3017d295c"
+        },
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_b883b34442f34569bce57d37248bbd8f",
+          "o": "mout_01db8264662541e59a2bc6edcfe70abc",
+          "e": "esp_d2376c22cea44767a00d3e7b2b8b9ff7"
+        },
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_2053d3d03a044b54809204dcf9074c80",
+          "o": "mout_4691d13a99e14132ac173283e196b96f",
+          "e": "esp_f78a8b8bc3d44475b2df71048917e521"
+        }
+      ],
+      "api_paths_with_span": 3
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "forward trace: source span → model output → correction → candidate → decision → rule version → business step (rule applied to the new request)",
+    "status": "pass",
+    "evidence": {
+      "span": "esp_65cd3dfb4cac406091de5cd3017d295c",
+      "downstream_count": 10,
+      "reaches_step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+      "path": [
+        "esp_65cd3dfb4cac406091de5cd3017d295c",
+        "mout_45caafb4e2f64ebdb7ddb99a4d50a2ca",
+        "cor_3ed68e6a980e4aacba33b94e29d7f632",
+        "cand_861307de943efe054b1e407e",
+        "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+        "R-URGENCY-01@1",
+        "step_8cf44754bbaa4438ac327e03334fb7c4"
+      ]
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "node detail refs carry the same IDs as Flow/Learning (request_id, run_id, step_id, rule_id, rule_version, config_version)",
+    "status": "pass",
+    "evidence": {
+      "refs": {
+        "run_id": "run_efb9b2f49eae496f9b334a0138fcd7d2",
+        "request_id": "req_9163956b00194546bd0221bcbdd50ac9",
+        "step_id": "step_8cf44754bbaa4438ac327e03334fb7c4"
+      },
+      "source_link_null_without_can_read_source": true
+    },
+    "at": "2026-10-03T09:44:47Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[request] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 44,
+      "edge_count": 42,
+      "layers": {
+        "1": 31,
+        "2": 2,
+        "3": 7,
+        "4": 2,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[run] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 44,
+      "edge_count": 42,
+      "layers": {
+        "1": 31,
+        "2": 2,
+        "3": 7,
+        "4": 2,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule_urgency] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 16,
+      "edge_count": 15,
+      "layers": {
+        "1": 9,
+        "2": 1,
+        "3": 2,
+        "4": 3,
+        "5": 1
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule_ai_need] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 28,
+      "edge_count": 27,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 3,
+        "5": 9
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[config_2] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 18,
+      "edge_count": 17,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 2,
+        "5": 0
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[candidate_status] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 47,
+      "edge_count": 44,
+      "layers": {
+        "1": 19,
+        "2": 4,
+        "3": 9,
+        "4": 6,
+        "5": 9
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "reverse trace: business step → rule version → decision → candidate → correction → model output → source span (UI-independent /path == Cypher chain)",
+    "status": "pass",
+    "evidence": {
+      "run_step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+      "chains": [
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_3ed68e6a980e4aacba33b94e29d7f632",
+          "o": "mout_45caafb4e2f64ebdb7ddb99a4d50a2ca",
+          "e": "esp_65cd3dfb4cac406091de5cd3017d295c"
+        },
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_b883b34442f34569bce57d37248bbd8f",
+          "o": "mout_01db8264662541e59a2bc6edcfe70abc",
+          "e": "esp_d2376c22cea44767a00d3e7b2b8b9ff7"
+        },
+        {
+          "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+          "rv": "R-URGENCY-01@1",
+          "d": "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+          "c": "cand_861307de943efe054b1e407e",
+          "cor": "cor_2053d3d03a044b54809204dcf9074c80",
+          "o": "mout_4691d13a99e14132ac173283e196b96f",
+          "e": "esp_f78a8b8bc3d44475b2df71048917e521"
+        }
+      ],
+      "api_paths_with_span": 3
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "forward trace: source span → model output → correction → candidate → decision → rule version → business step (rule applied to the new request)",
+    "status": "pass",
+    "evidence": {
+      "span": "esp_65cd3dfb4cac406091de5cd3017d295c",
+      "downstream_count": 10,
+      "reaches_step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+      "path": [
+        "esp_65cd3dfb4cac406091de5cd3017d295c",
+        "mout_45caafb4e2f64ebdb7ddb99a4d50a2ca",
+        "cor_3ed68e6a980e4aacba33b94e29d7f632",
+        "cand_861307de943efe054b1e407e",
+        "rdec_ae5e2330872a441ea3fb562b5c28eaf8",
+        "R-URGENCY-01@1",
+        "step_8cf44754bbaa4438ac327e03334fb7c4"
+      ]
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X06",
+    "step": "node detail refs carry the same IDs as Flow/Learning (request_id, run_id, step_id, rule_id, rule_version, config_version)",
+    "status": "pass",
+    "evidence": {
+      "refs": {
+        "run_id": "run_efb9b2f49eae496f9b334a0138fcd7d2",
+        "request_id": "req_9163956b00194546bd0221bcbdd50ac9",
+        "step_id": "step_8cf44754bbaa4438ac327e03334fb7c4"
+      },
+      "source_link_null_without_can_read_source": true
+    },
+    "at": "2026-10-03T09:45:04Z"
+  },
+  {
+    "gate": "X07",
+    "step": "in-flight run started before the stop keeps the pinned (old) Config version and still applies the rule",
+    "status": "fail",
+    "evidence": {
+      "request": "req_1653c8a6a84a465f929389a2939b96ff",
+      "run": "run_8a0fae6e13184ac1aa8b1785c3628310",
+      "run_status_when_stop_called": {
+        "id": "run_8a0fae6e13184ac1aa8b1785c3628310",
+        "status": "pending",
+        "cfg": null
+      },
+      "run_config_version": 4,
+      "stop_config_version": 4,
+      "applied": [
+        {
+          "rule": "R-URGENCY-01@1",
+          "outcome": "out_of_scope"
+        }
+      ],
+      "judgment_committed": "2026-10-03T09:53:08.629Z",
+      "ai_need": "불필요"
+    },
+    "at": "2026-10-03T09:53:10Z"
+  },
+  {
+    "gate": "X07",
+    "step": "after stop: active rules lack the rule; new request has no APPLIED for it and keeps the model value (불필요)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_160dcd95728641b7ba2c41c7a01fb254",
+      "run": "run_e6ab1d7c5ef74f0ca19c5c0ff90700a3",
+      "active_config": 4,
+      "active_rules": [
+        "R-URGENCY-01@1"
+      ],
+      "applied": [
+        {
+          "rule": "R-URGENCY-01@1",
+          "outcome": "out_of_scope"
+        }
+      ],
+      "ai_need": "불필요"
+    },
+    "at": "2026-10-03T09:53:14Z"
+  },
+  {
+    "gate": "X07",
+    "step": "publish v2 then revert to v1 = new Config versions each; v2 used before, v1 used after (APPLIED rule_version), Config pinned per run",
+    "status": "pass",
+    "evidence": {
+      "stop_cfg": 4,
+      "v2_cfg": 5,
+      "revert_cfg": 6,
+      "v2_request": {
+        "req": "req_5d24648202a04d01b7c96729503c9de2",
+        "applied": [
+          {
+            "rule": "R-URGENCY-01@1",
+            "outcome": "out_of_scope"
+          },
+          {
+            "rule": "R-AI_NEED-01@2",
+            "outcome": "used"
+          }
+        ]
+      },
+      "revert_request": {
+        "req": "req_93a9da07d6ec433ea912c76e2f2333f4",
+        "applied": [
+          {
+            "rule": "R-AI_NEED-01@1",
+            "outcome": "used"
+          },
+          {
+            "rule": "R-URGENCY-01@1",
+            "outcome": "out_of_scope"
+          }
+        ]
+      },
+      "rule_version_status": [
+        {
+          "v": 1,
+          "s": "published"
+        },
+        {
+          "v": 2,
+          "s": "reverted"
+        }
+      ],
+      "active_rules": [
+        "R-URGENCY-01@1",
+        "R-AI_NEED-01@1"
+      ]
+    },
+    "at": "2026-10-03T09:53:23Z"
+  },
+  {
+    "gate": "X07",
+    "step": "past records unchanged: earlier APPLIED rows (before/after/outcome), earlier Judgments (hash), earlier Config versions identical",
+    "status": "pass",
+    "evidence": {
+      "applied_rows_before": 10,
+      "applied_rows_now": 10,
+      "judgments_checked": 9,
+      "config_versions_checked": 3
+    },
+    "at": "2026-10-03T09:53:23Z"
+  },
+  {
+    "gate": "X07",
+    "step": "(retest) run in flight when the stop was published keeps the pinned old Config version and applies the rule; the stop is a new Config version",
+    "status": "pass",
+    "evidence": {
+      "attempt": 1,
+      "request": "req_0f3fe5e24d764600bc87e8a2dcc91787",
+      "run": "run_ff8f379c293c41f795d95b0c3995c994",
+      "state_when_stop_called": {
+        "id": "run_ff8f379c293c41f795d95b0c3995c994",
+        "status": "running",
+        "cfg": 6,
+        "committed": false
+      },
+      "active_config_before_stop": 6,
+      "stop_config": 7,
+      "run_config_version": 6,
+      "judgment_committed_at": "2026-10-03T09:53:43.517Z",
+      "applied": [
+        {
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "used",
+          "before": "\"불필요\"",
+          "after": "\"필요\""
+        },
+        {
+          "rule": "R-URGENCY-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"판단 보류\"",
+          "after": "\"판단 보류\""
+        }
+      ],
+      "ai_need": "필요"
+    },
+    "at": "2026-10-03T09:53:45Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest, collector running, non-vacuous) SLO/summary denominators and alerts unchanged by shadow; shadow counted only in shadow_runs",
+    "status": "fail",
+    "evidence": {
+      "nonzero_denominators": {
+        "valid_calls": 22,
+        "requests_received": 14,
+        "eligible_requests": 14
+      },
+      "shadow_runs": [
+        2,
+        3
+      ],
+      "before_hash": "e377a95d2964d1ec",
+      "after_hash": "904b61916473e149",
+      "validation": "val_2471af6ce59c452791b37f51e2b2465c",
+      "side_effects": 0
+    },
+    "at": "2026-10-03T09:54:10Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest) protected nodes and active_run_id pointers identical across the second shadow validation",
+    "status": "pass",
+    "evidence": {
+      "protected": {
+        "Task": {
+          "count": 19,
+          "sha256": "b22d7cccc0dcf649"
+        },
+        "Assignment": {
+          "count": 11,
+          "sha256": "fab842d3e3831f18"
+        },
+        "Review": {
+          "count": 22,
+          "sha256": "017ccb21e7a994cb"
+        },
+        "ReviewDecision": {
+          "count": 11,
+          "sha256": "bb013e6f92306f4b"
+        },
+        "Event": {
+          "count": 360,
+          "sha256": "6daafa4607b3a75c"
+        },
+        "Request": {
+          "count": 22,
+          "sha256": "d489f2ef21003b7d"
+        },
+        "Judgment": {
+          "count": 22,
+          "sha256": "418c7e41635145f5"
+        },
+        "Correction": {
+          "count": 8,
+          "sha256": "6047629d4154f664"
+        }
+      },
+      "pointers": 22
+    },
+    "at": "2026-10-03T09:54:10Z"
+  },
+  {
+    "gate": "X04",
+    "step": "journal records the shadow validation with run_kind='shadow'",
+    "status": "pass",
+    "evidence": {
+      "journal_rows": [
+        {
+          "kind": "shadow_validation",
+          "run_kind": "shadow"
+        }
+      ]
+    },
+    "at": "2026-10-03T09:54:10Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest, collector running, non-vacuous) SLO/summary denominators and alerts unchanged by shadow; shadow counted only in shadow_runs",
+    "status": "fail",
+    "evidence": {
+      "nonzero_denominators": {
+        "valid_calls": 22,
+        "requests_received": 14,
+        "eligible_requests": 14
+      },
+      "shadow_runs": [
+        3,
+        4
+      ],
+      "before_hash": "904b61916473e149",
+      "after_hash": "f2cc37a712ba7b2c",
+      "validation": "val_150e1740ba754061b0e978f34c0a2c5a",
+      "side_effects": 0,
+      "diff": [
+        {
+          "path": "/summary/kinds/shadow_validation",
+          "before": 3,
+          "after": 4
+        }
+      ]
+    },
+    "at": "2026-10-03T09:54:29Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest) protected nodes and active_run_id pointers identical across the second shadow validation",
+    "status": "pass",
+    "evidence": {
+      "protected": {
+        "Task": {
+          "count": 19,
+          "sha256": "b22d7cccc0dcf649"
+        },
+        "Assignment": {
+          "count": 11,
+          "sha256": "fab842d3e3831f18"
+        },
+        "Review": {
+          "count": 22,
+          "sha256": "017ccb21e7a994cb"
+        },
+        "ReviewDecision": {
+          "count": 11,
+          "sha256": "bb013e6f92306f4b"
+        },
+        "Event": {
+          "count": 360,
+          "sha256": "6daafa4607b3a75c"
+        },
+        "Request": {
+          "count": 22,
+          "sha256": "d489f2ef21003b7d"
+        },
+        "Judgment": {
+          "count": 22,
+          "sha256": "418c7e41635145f5"
+        },
+        "Correction": {
+          "count": 8,
+          "sha256": "6047629d4154f664"
+        }
+      },
+      "pointers": 22
+    },
+    "at": "2026-10-03T09:54:29Z"
+  },
+  {
+    "gate": "X04",
+    "step": "journal records the shadow validation with run_kind='shadow'",
+    "status": "pass",
+    "evidence": {
+      "journal_rows": [
+        {
+          "kind": "shadow_validation",
+          "run_kind": "shadow"
+        }
+      ]
+    },
+    "at": "2026-10-03T09:54:29Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest 2: shadow-only fields excluded) SLO/summary denominators and alerts unchanged by shadow; shadow counted only in shadow_runs/kinds.shadow_validation",
+    "status": "pass",
+    "evidence": {
+      "nonzero_denominators": {
+        "valid_calls": 22,
+        "requests_received": 14,
+        "eligible_requests": 14
+      },
+      "shadow_runs": [
+        4,
+        5
+      ],
+      "before_hash": "d11ee4466d6c0c5c",
+      "after_hash": "d11ee4466d6c0c5c",
+      "validation": "val_51fe535c35b74e9296890dd1cfb5f2eb",
+      "side_effects": 0,
+      "diff": []
+    },
+    "at": "2026-10-03T09:54:44Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest) protected nodes and active_run_id pointers identical across the second shadow validation",
+    "status": "pass",
+    "evidence": {
+      "protected": {
+        "Task": {
+          "count": 19,
+          "sha256": "b22d7cccc0dcf649"
+        },
+        "Assignment": {
+          "count": 11,
+          "sha256": "fab842d3e3831f18"
+        },
+        "Review": {
+          "count": 22,
+          "sha256": "017ccb21e7a994cb"
+        },
+        "ReviewDecision": {
+          "count": 11,
+          "sha256": "bb013e6f92306f4b"
+        },
+        "Event": {
+          "count": 360,
+          "sha256": "6daafa4607b3a75c"
+        },
+        "Request": {
+          "count": 22,
+          "sha256": "d489f2ef21003b7d"
+        },
+        "Judgment": {
+          "count": 22,
+          "sha256": "418c7e41635145f5"
+        },
+        "Correction": {
+          "count": 8,
+          "sha256": "6047629d4154f664"
+        }
+      },
+      "pointers": 22
+    },
+    "at": "2026-10-03T09:54:44Z"
+  },
+  {
+    "gate": "X04",
+    "step": "journal records the shadow validation with run_kind='shadow'",
+    "status": "pass",
+    "evidence": {
+      "journal_rows": [
+        {
+          "kind": "shadow_validation",
+          "run_kind": "shadow"
+        }
+      ]
+    },
+    "at": "2026-10-03T09:54:44Z"
+  },
+  {
+    "gate": "X08",
+    "step": "API server + worker + collector restarted: DB truth and public API snapshot before/after differ in 0 fields (candidates, decisions, rule versions, relations, APPLIED rows, validation cards, configs, graph, effects)",
+    "status": "pass",
+    "evidence": {
+      "differences": [],
+      "difference_count": 0,
+      "compared": {
+        "db": {
+          "applied": 18,
+          "candidates": 5,
+          "configs": 8,
+          "corrections": 8,
+          "rule_versions": 4,
+          "validations": 6
+        },
+        "api_candidates": 5,
+        "api_rules": 3,
+        "graph_criteria": 6,
+        "graph_nodes": {
+          "candidate_status": 66,
+          "config_2": 18,
+          "request": 44,
+          "rule_ai_need": 32,
+          "rule_urgency": 21,
+          "run": 44
+        },
+        "graph_edges": {
+          "candidate_status": 72,
+          "config_2": 17,
+          "request": 42,
+          "rule_ai_need": 31,
+          "rule_urgency": 20,
+          "run": 42
+        },
+        "judgments": 9
+      },
+      "pre_sha": "f4a2266b6b7ee096",
+      "post_sha": "f4a2266b6b7ee096"
+    },
+    "at": "2026-10-03T09:56:25Z"
+  },
+  {
+    "gate": "X08",
+    "step": "after restart the new worker processes a new request under the active Config and applies the restored rule (APPLIED recorded)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_bd8a4c33748849238d8e6029b8ced18a",
+      "run": "run_9878dea304e34c49b40f29298505d4b6",
+      "active_config": 8,
+      "applied": [
+        {
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "used",
+          "before": "\"불필요\"",
+          "after": "\"필요\""
+        },
+        {
+          "rule": "R-URGENCY-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"판단 보류\"",
+          "after": "\"판단 보류\""
+        }
+      ],
+      "ai_need": "필요"
+    },
+    "at": "2026-10-03T09:56:58Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rule_admin rejects a candidate: decision+audit recorded, status rejected; approval after rejection and version creation refused; no RuleVersion/Config change",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_3251e2c1a26edd1fedc060d9",
+      "reject": 200,
+      "approve_after_reject": [
+        409,
+        "{\"detail\":{\"code\":\"CANDIDATE_REJECTED\",\"reason\":\"기각된 후보입니다.\"}}"
+      ],
+      "create_version_after_reject": [
+        409,
+        "{\"detail\":{\"code\":\"CANDIDATE_REJECTED\",\"reason\":\"기각된 후보에서 규칙을 만들 수 없습니다.\"}}"
+      ],
+      "db": [
+        {
+          "a": "reject",
+          "by": "usr_t-x38-10031834_rule_admin",
+          "r": "T38: 근거 부족으로 기각",
+          "s": "rejected"
+        }
+      ],
+      "audit": [
+        [
+          "rule.decision",
+          "usr_t-x38-10031834_rule_admin",
+          "T38: 근거 부족으로 기각"
+        ]
+      ]
+    },
+    "at": "2026-10-03T09:59:51Z"
+  },
+  {
+    "gate": "X10",
+    "step": "observe playback/flow/topology of stored runs (with rule steps): no node created/changed (13 labels, count+property hash), no model call",
+    "status": "pass",
+    "evidence": {
+      "calls": [
+        [
+          "playback",
+          200
+        ],
+        [
+          "flow",
+          200
+        ],
+        [
+          "topology",
+          200
+        ],
+        [
+          "playback",
+          200
+        ],
+        [
+          "flow",
+          200
+        ],
+        [
+          "topology",
+          200
+        ]
+      ],
+      "snapshot": {
+        "Task": {
+          "count": 19,
+          "sha256": "b22d7cccc0dcf649"
+        },
+        "Assignment": {
+          "count": 11,
+          "sha256": "fab842d3e3831f18"
+        },
+        "Review": {
+          "count": 23,
+          "sha256": "eeeadf907d148c32"
+        },
+        "ReviewDecision": {
+          "count": 11,
+          "sha256": "bb013e6f92306f4b"
+        },
+        "Event": {
+          "count": 376,
+          "sha256": "c31997190c5cf321"
+        },
+        "Request": {
+          "count": 23,
+          "sha256": "fe43d332a2040f05"
+        },
+        "Judgment": {
+          "count": 23,
+          "sha256": "2e2351e99681229e"
+        },
+        "Correction": {
+          "count": 8,
+          "sha256": "6047629d4154f664"
+        },
+        "RunStep": {
+          "count": 161,
+          "sha256": "8d0a598c1b73acb2"
+        },
+        "Run": {
+          "count": 29,
+          "sha256": "a5ba741b87f76240"
+        },
+        "ModelOutput": {
+          "count": 253,
+          "sha256": "4dffbaea09ae7578"
+        },
+        "RuleVersion": {
+          "count": 4,
+          "sha256": "05eeccb87d22cae2"
+        },
+        "ConfigVersion": {
+          "count": 8,
+          "sha256": "83dc20f65d5e4bfe"
+        }
+      }
+    },
+    "at": "2026-10-03T10:00:01Z"
+  }
+]

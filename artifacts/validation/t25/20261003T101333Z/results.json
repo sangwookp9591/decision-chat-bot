@@ -1,0 +1,147 @@
+{
+  "tests": {
+    "duration_30m": true,
+    "accepted_200": true,
+    "virtual_users_10": true,
+    "mix_50_25_15_10": true,
+    "sse_20": true,
+    "availability_99_9": true,
+    "judgment_99": true,
+    "intake_p95_2s": true,
+    "text_p95_15s": true,
+    "attachment_p95_45s": true,
+    "sse_deliver_p95_2s": true,
+    "sse_recovery_p95_5s": true,
+    "trace_100": true
+  },
+  "passed": 13,
+  "total": 13,
+  "accepted_by_kind": {
+    "pdf": 708,
+    "text": 1411,
+    "docx": 426,
+    "md": 284
+  },
+  "availability": {
+    "valid_calls": 21856,
+    "successful_calls": 21856,
+    "failed_calls": 0,
+    "pending_calls": 0,
+    "unknown_validity": 0,
+    "ratio": 1.0
+  },
+  "judgment": {
+    "eligible_requests": 2829,
+    "within_120s": 2828,
+    "failed_120s": 1,
+    "pending_120s": 0,
+    "ratio": 0.9996465182043125,
+    "candidate_commits": 2828,
+    "failed_runs": 1,
+    "late_recoveries": 0,
+    "unconfirmed_samples": 0
+  },
+  "latency_ms": {
+    "intake_p95": 888.0,
+    "text_first_p95": 3462.776,
+    "attachment_first_p95": 15905.975,
+    "sse_deliver_p95": 2000.0,
+    "revision_p95": 13917.0,
+    "step_p95": 2483.0
+  },
+  "step_latency": {
+    "입력 정리": {
+      "count": 2829,
+      "p50_ms": 25.0,
+      "p95_ms": 100.0
+    },
+    "Jev 판단": {
+      "count": 2829,
+      "p50_ms": 2226.0,
+      "p95_ms": 12943.0
+    },
+    "근거 연결": {
+      "count": 2828,
+      "p50_ms": 16.0,
+      "p95_ms": 80.0
+    },
+    "업무 분해": {
+      "count": 2828,
+      "p50_ms": 16.0,
+      "p95_ms": 82.0
+    },
+    "규칙 적용": {
+      "count": 2828,
+      "p50_ms": 16.0,
+      "p95_ms": 77.0
+    },
+    "자동 배정 조건 검사": {
+      "count": 2828,
+      "p50_ms": 16.0,
+      "p95_ms": 79.0
+    },
+    "결과 저장": {
+      "count": 2828,
+      "p50_ms": 158.0,
+      "p95_ms": 507.0
+    }
+  },
+  "failure_causes": {
+    "other": [
+      {
+        "request_id": "req_75478e74102f490cb151e75b0a5e47ec",
+        "run_id": "run_319344fbdfa04b148cf7839c6aaee092",
+        "attempt_id": "att_341caeaabaac4f6c885aea8db2dc778a",
+        "error_class": "TypeSafeInternalServerError",
+        "ts": "2026-10-03T10:29:52.148409+00:00"
+      }
+    ]
+  },
+  "journal_kinds": {
+    "lookup_received": 19027,
+    "lookup_completed": 19027,
+    "request_received": 2829,
+    "request_completed": 2829,
+    "worker_attempt_start": 2829,
+    "worker_step": 19798,
+    "judgment_committed": 2828,
+    "worker_run": 2829,
+    "worker_attempt_failure": 1
+  },
+  "sse_recovery": {
+    "samples": 600,
+    "p95_ms": 354.9
+  },
+  "trace": {
+    "complete": 2829,
+    "terminal": 2829
+  },
+  "usage": {
+    "attempts": 2828,
+    "input_tokens": 8488121,
+    "output_tokens": 947380,
+    "failed_external_attempts": 1,
+    "jev_calls_inferred_from_run_attempts": 2829
+  },
+  "collector": {
+    "complete": true,
+    "issues": [],
+    "has_collected_events": true,
+    "continuous_30d": false,
+    "damaged_lines_or_truncations": 0,
+    "incomplete_intervals": [],
+    "last_collected_at": "2026-10-03T10:52:31.890193+00:00",
+    "limitations": [
+      "org and request status are not recorded independently",
+      "producer heartbeat is activity-based"
+    ]
+  },
+  "warmup_estimate": {
+    "warmup_seconds": 300,
+    "completed_requests": 465,
+    "observed_calls": 465,
+    "projected_30m_calls": 2790,
+    "calls_per_request": 1.0
+  },
+  "stop_reason": null
+}

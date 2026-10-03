@@ -1,0 +1,85 @@
+{
+  "tests": {
+    "duration_30m": false,
+    "accepted_200": false,
+    "mix_50_25_15_10": false,
+    "sse_20": true,
+    "availability_99_9": true,
+    "judgment_99": true,
+    "intake_p95_2s": false,
+    "text_p95_15s": true,
+    "attachment_p95_45s": true,
+    "sse_deliver_p95_2s": false,
+    "sse_recovery_p95_5s": true,
+    "trace_100": true
+  },
+  "passed": 7,
+  "total": 12,
+  "accepted_by_kind": {
+    "pdf": 4,
+    "text": 5,
+    "docx": 3,
+    "md": 2
+  },
+  "availability": {
+    "valid_calls": 169,
+    "successful_calls": 169,
+    "failed_calls": 0,
+    "pending_calls": 0,
+    "unknown_validity": 0,
+    "ratio": 1.0
+  },
+  "judgment": {
+    "eligible_requests": 14,
+    "within_120s": 14,
+    "failed_120s": 0,
+    "pending_120s": 0,
+    "ratio": 1.0,
+    "candidate_commits": 14,
+    "failed_runs": 0,
+    "late_recoveries": 0,
+    "unconfirmed_samples": 0
+  },
+  "latency_ms": {
+    "intake_p95": 4240.0,
+    "text_first_p95": 6741.570000000001,
+    "attachment_first_p95": 17717.002,
+    "sse_deliver_p95": 7330.0,
+    "revision_p95": 14471.0,
+    "step_p95": 12275.0
+  },
+  "sse_recovery": {
+    "samples": 40,
+    "p95_ms": 244.24
+  },
+  "trace": {
+    "complete": 14,
+    "terminal": 14
+  },
+  "usage": {
+    "attempts": 14,
+    "input_tokens": 41084,
+    "output_tokens": 4690
+  },
+  "collector": {
+    "complete": true,
+    "issues": [],
+    "has_collected_events": true,
+    "continuous_30d": false,
+    "damaged_lines_or_truncations": 0,
+    "incomplete_intervals": [],
+    "last_collected_at": "2026-10-03T10:04:15.084170+00:00",
+    "limitations": [
+      "org and request status are not recorded independently",
+      "producer heartbeat is activity-based"
+    ]
+  },
+  "warmup_estimate": {
+    "warmup_seconds": 5,
+    "completed_requests": 9,
+    "observed_calls": 10,
+    "projected_30m_calls": 24,
+    "calls_per_request": 1.1111111111111112
+  },
+  "stop_reason": null
+}

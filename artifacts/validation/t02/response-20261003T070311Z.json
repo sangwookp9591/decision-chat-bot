@@ -1,0 +1,146 @@
+{
+  "checked_at": "2026-10-03T07:03:11.724320+00:00",
+  "sdk": {
+    "distribution": "typesafe-sdk",
+    "version": "0.7.2"
+  },
+  "requested_model": "jev-1.13.0",
+  "models": {
+    "models": [
+      {
+        "name": "jev-latest",
+        "description": "The latest iteration of TypeSafe's System One Model: Jev",
+        "release_date": "2026-09-10T18:38:01.391457+00:00"
+      },
+      {
+        "name": "jev-preview",
+        "description": "A preview version of `jev-latest`: should be better in most ways",
+        "release_date": "2026-09-10T18:39:06.057655+00:00"
+      }
+    ]
+  },
+  "models_elapsed_ms": 173.6,
+  "judgment_elapsed_ms": 205.1,
+  "response": {
+    "model": "jev-1.13.0",
+    "usage": {
+      "input_tokens": 1189,
+      "output_tokens": 272
+    },
+    "answers": {
+      "ai_need": {
+        "type": "choice",
+        "choice": "불필요",
+        "confidence": 1.0,
+        "probabilities": {
+          "불필요": 1.0,
+          "필요": 0.0,
+          "혼합": 0.0,
+          "정보 부족": 0.0
+        }
+      },
+      "feasibility": {
+        "type": "choice",
+        "choice": "가능",
+        "confidence": 0.41,
+        "probabilities": {
+          "조건부 가능": 0.43,
+          "가능": 0.56,
+          "현재 불가": 0.0,
+          "정보 부족": 0.01
+        }
+      },
+      "urgency": {
+        "type": "choice",
+        "choice": "일반",
+        "confidence": 0.29,
+        "probabilities": {
+          "판단 보류": 0.48,
+          "긴급": 0.0,
+          "일반": 0.52
+        }
+      },
+      "lead_org": {
+        "type": "choice",
+        "choice": "IT팀",
+        "confidence": 0.64,
+        "probabilities": {
+          "현업": 0.22,
+          "판단 보류": 0.05,
+          "AI팀": 0.0,
+          "IT팀": 0.73
+        }
+      },
+      "review_signal": {
+        "type": "score",
+        "score": 1.57,
+        "confidence": 0.36,
+        "legend": {
+          "0": "낮음: 범위와 책임이 명확하고 추가 검토 근거가 없다.",
+          "1": "보통: 기준이나 결과 확인에 담당자 검토가 유용하다.",
+          "2": "높음: 핵심 정보·권한·업무 책임이 불명확하여 검토가 필요하다."
+        },
+        "probabilities": {
+          "0": 0.03,
+          "1": 0.36,
+          "2": 0.61
+        }
+      },
+      "ai_team_involvement": {
+        "type": "noul",
+        "noul": 0.37
+      },
+      "it_team_involvement": {
+        "type": "noul",
+        "noul": 0.53
+      },
+      "business_involvement": {
+        "type": "noul",
+        "noul": 0.63
+      }
+    }
+  },
+  "schema_check": {
+    "model_present": true,
+    "usage_present": true,
+    "all_question_ids_present": true,
+    "answer_count": 8
+  },
+  "error_probes": {
+    "invalid_key_401": {
+      "status": 401,
+      "body": {
+        "detail": {
+          "error_type": "authentication_error",
+          "message": "Cannot authenticate with the server. Please check your API key and try again."
+        }
+      },
+      "elapsed_ms": 171.1
+    },
+    "invalid_schema_422": {
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "dict_type",
+            "loc": [
+              "body",
+              "questions",
+              "x",
+              "choice",
+              "criteria"
+            ],
+            "msg": "Input should be a valid dictionary",
+            "input": []
+          }
+        ]
+      },
+      "elapsed_ms": 177.0
+    }
+  },
+  "not_exercised": [
+    "429 rate limit: do not intentionally consume account rate limit; verify with controlled low quota or service response",
+    "529 overload: provider-side transient; record naturally observed response",
+    "timeout: controlled network fault or short client deadline; distinguish connect/read timeout"
+  ]
+}

@@ -1,0 +1,2 @@
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_3aef0caa0da541a4ac8087eca4fb26aa", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 793, "startup_ms": 699, "terminal_ms": 13224, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

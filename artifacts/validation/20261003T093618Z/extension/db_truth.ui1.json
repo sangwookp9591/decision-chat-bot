@@ -1,0 +1,531 @@
+{
+ "tenant": "t-x38-10031834",
+ "corrections": [
+  {
+   "revision_id": "rev_1b79c32b807c4cbfb428493e0aaf611d",
+   "evidence_span_ids": [],
+   "ai_value": "\"불필요\"",
+   "corrected_value": "\"필요\"",
+   "reason": "T38: ai_need 같은 방향 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 1,
+   "field": "ai_need",
+   "id": "cor_82a6c2512ed649a8a3a48e82affb9e16",
+   "request_id": "req_a621234edfa84a52841609fb51a14bff",
+   "review_id": "rvw_9da72a2138bb47e5aaf7fe53fd50d252",
+   "run_id": "run_dfbff2f5b2624464b2b403f64bbcb5f1",
+   "created_at": "2026-10-03T09:36:57.341000000+00:00",
+   "corrected_at": "2026-10-03T09:36:57.341000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_20c1346355a848a4aad995afe24f684b",
+   "evidence_span_ids": [],
+   "ai_value": "\"불필요\"",
+   "corrected_value": "\"필요\"",
+   "reason": "T38: ai_need 같은 방향 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 1,
+   "field": "ai_need",
+   "id": "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+   "request_id": "req_fb0bebc2ebe740c5902855dec3c4f7c5",
+   "review_id": "rvw_427ae976239b429fa0424390a600f8c2",
+   "run_id": "run_ac3b864584c54ab7b8344b5238624a7f",
+   "created_at": "2026-10-03T09:36:57.686000000+00:00",
+   "corrected_at": "2026-10-03T09:36:57.686000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_ac82895b8cac47528caee9fba3920894",
+   "evidence_span_ids": [],
+   "ai_value": "\"불필요\"",
+   "corrected_value": "\"필요\"",
+   "reason": "T38: ai_need 같은 방향 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 1,
+   "field": "ai_need",
+   "id": "cor_f00d744948d347d5a711f208ca08f2d6",
+   "request_id": "req_96562009f5aa47f199ab51abaeaed935",
+   "review_id": "rvw_8ccaf1f4439a46fb921b85a42cd4b678",
+   "run_id": "run_9c254957bedb4cb197f9b8ff7d4bb40c",
+   "created_at": "2026-10-03T09:36:57.781000000+00:00",
+   "corrected_at": "2026-10-03T09:36:57.781000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_5cc9cde0b04a46bab9e418c3803bb90a",
+   "evidence_span_ids": [],
+   "ai_value": "\"불필요\"",
+   "corrected_value": "\"혼합\"",
+   "reason": "T38: ai_need 다른 방향 수정(2건)",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 1,
+   "field": "ai_need",
+   "id": "cor_1a4435c4bbe4443bb4824d182bad736b",
+   "request_id": "req_485f383761e34da2b7d1a4aa334d7e9e",
+   "review_id": "rvw_669c02146d7743138a1d6e4ded460570",
+   "run_id": "run_1af75dc9f7434fc199444c19ecef99ec",
+   "created_at": "2026-10-03T09:36:57.959000000+00:00",
+   "corrected_at": "2026-10-03T09:36:57.959000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_1d3145478ffd45378cdb4bd9ad006213",
+   "evidence_span_ids": [],
+   "ai_value": "\"불필요\"",
+   "corrected_value": "\"혼합\"",
+   "reason": "T38: ai_need 다른 방향 수정(2건)",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 1,
+   "field": "ai_need",
+   "id": "cor_aacb1eb8f9ce4a36ac817912a0eb986d",
+   "request_id": "req_3d34e25aee2f457da1abf7d5c9864ad7",
+   "review_id": "rvw_79572ea0fcc14a74a5945faf1c749cc8",
+   "run_id": "run_fdf5081bd1af4c93a6365bccc6f58ef6",
+   "created_at": "2026-10-03T09:36:58.051000000+00:00",
+   "corrected_at": "2026-10-03T09:36:58.051000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_182f9b3402284af8897423ed2ee98958",
+   "evidence_span_ids": [
+    "esp_d2376c22cea44767a00d3e7b2b8b9ff7"
+   ],
+   "ai_value": "\"긴급\"",
+   "corrected_value": "\"판단 보류\"",
+   "reason": "T38: 근거 있는 urgency 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 2,
+   "field": "urgency",
+   "id": "cor_b883b34442f34569bce57d37248bbd8f",
+   "request_id": "req_245250b0119d49818ea62ce51724f863",
+   "review_id": "rvw_fa97997157f040cd9fd0cee099848827",
+   "run_id": "run_723f5661b4f24f3da3c01bcaef1e3d03",
+   "created_at": "2026-10-03T09:44:03.052000000+00:00",
+   "corrected_at": "2026-10-03T09:44:03.052000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_ebb15fa9a36a4e0f85cfa0c786cfbdb1",
+   "evidence_span_ids": [
+    "esp_65cd3dfb4cac406091de5cd3017d295c"
+   ],
+   "ai_value": "\"긴급\"",
+   "corrected_value": "\"판단 보류\"",
+   "reason": "T38: 근거 있는 urgency 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 2,
+   "field": "urgency",
+   "id": "cor_3ed68e6a980e4aacba33b94e29d7f632",
+   "request_id": "req_957a2ff6918040bb9082bdb10a305065",
+   "review_id": "rvw_12eb8441810c47998c139bc73594daea",
+   "run_id": "run_fbf783b8a1534994a06bbb86384dc077",
+   "created_at": "2026-10-03T09:44:03.247000000+00:00",
+   "corrected_at": "2026-10-03T09:44:03.247000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  },
+  {
+   "revision_id": "rev_76f6bb7cf8e840a59ed494511333407a",
+   "evidence_span_ids": [
+    "esp_f78a8b8bc3d44475b2df71048917e521"
+   ],
+   "ai_value": "\"긴급\"",
+   "corrected_value": "\"판단 보류\"",
+   "reason": "T38: 근거 있는 urgency 수정",
+   "tenant_id": "t-x38-10031834",
+   "config_version": 2,
+   "field": "urgency",
+   "id": "cor_2053d3d03a044b54809204dcf9074c80",
+   "request_id": "req_f4e911dcb56547869d7263a1b928d09c",
+   "review_id": "rvw_c50cfbb939d6445bbcdf5819255716d1",
+   "run_id": "run_23c51ff911b14e1ab9f461437e54965b",
+   "created_at": "2026-10-03T09:44:03.328000000+00:00",
+   "corrected_at": "2026-10-03T09:44:03.328000000+00:00",
+   "corrected_by": "usr_t-x38-10031834_reviewer",
+   "action": "approve_with_changes"
+  }
+ ],
+ "candidates": [
+  {
+   "id": "cand_10385a10ef7bb9b9b9d496a3",
+   "field": "urgency",
+   "status": "approved",
+   "support": 0,
+   "counter": 0,
+   "unc": "{\"counter_count\":0,\"minimum_support\":3,\"rationale\":\"T38 약화 규칙 시험 urgency→일반\",\"support_count\":0}",
+   "links": [
+    {
+     "id": null,
+     "role": null,
+     "label": null
+    }
+   ]
+  },
+  {
+   "id": "cand_861307de943efe054b1e407e",
+   "field": "urgency",
+   "status": "approved",
+   "support": 3,
+   "counter": 1,
+   "unc": "{\"counter_count\":1,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}",
+   "links": [
+    {
+     "id": "rdec_c1a0446218c44976a875b0a6ec581cec",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "cor_3ed68e6a980e4aacba33b94e29d7f632",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "cor_b883b34442f34569bce57d37248bbd8f",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "cor_2053d3d03a044b54809204dcf9074c80",
+     "role": "support",
+     "label": "Correction"
+    }
+   ]
+  },
+  {
+   "id": "cand_8fcc507094e6868374ddec5c",
+   "field": "ai_need",
+   "status": "approved",
+   "support": 3,
+   "counter": 3,
+   "unc": "{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}",
+   "links": [
+    {
+     "id": "rdec_8d27fc6761b3473cbbd1a921341f59a8",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "cor_f00d744948d347d5a711f208ca08f2d6",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "rdec_c6e4b97fc8724c719141ac81b7226aef",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "cor_82a6c2512ed649a8a3a48e82affb9e16",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "cor_8145d2c72e3a4221b2e1564ec7ef3c58",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "rdec_3dc2882fea434393b0b6bf97897526d9",
+     "role": "counter",
+     "label": "ReviewDecision"
+    }
+   ]
+  },
+  {
+   "id": "cand_98a515be1dc7951ee1f85863",
+   "field": "feasibility",
+   "status": "approved",
+   "support": 0,
+   "counter": 0,
+   "unc": "{\"counter_count\":0,\"minimum_support\":3,\"rationale\":\"T38 약화 규칙 시험 feasibility→가능\",\"support_count\":0}",
+   "links": [
+    {
+     "id": null,
+     "role": null,
+     "label": null
+    }
+   ]
+  },
+  {
+   "id": "cand_e123faef72028b6d12635bef",
+   "field": "ai_need",
+   "status": "자료 부족",
+   "support": 2,
+   "counter": 4,
+   "unc": "{\"counter_count\":4,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":2}",
+   "links": [
+    {
+     "id": "rdec_8d27fc6761b3473cbbd1a921341f59a8",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "cor_1a4435c4bbe4443bb4824d182bad736b",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "rdec_80d15e9e652c47ac90a8aa675b6c2618",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "cor_aacb1eb8f9ce4a36ac817912a0eb986d",
+     "role": "support",
+     "label": "Correction"
+    },
+    {
+     "id": "rdec_dc33cefabbd14dae882fc97f6fa5d8ce",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "rdec_24fc67ffdcd7422684754a53bc498c8d",
+     "role": "counter",
+     "label": "ReviewDecision"
+    },
+    {
+     "id": "rdec_9abfa865fcdb48beb5bc48960ad831ca",
+     "role": "counter",
+     "label": "ReviewDecision"
+    }
+   ]
+  }
+ ],
+ "rule_versions": [
+  {
+   "id": "R-AI_NEED-01@1",
+   "rule_id": "R-AI_NEED-01",
+   "version": 1,
+   "status": "published",
+   "body": "{\"action\":{\"set\":\"필요\"},\"candidate_id\":\"cand_8fcc507094e6868374ddec5c\",\"decision_id\":\"rdec_b9981756b1e342278df9ee206130ae59\",\"effect\":\"rule\",\"rule_id\":\"R-AI_NEED-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"불필요\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"regulatory\",\"value\":0.5}]},\"target\":\"ai_need\",\"version\":1}",
+   "configs": [
+    2
+   ],
+   "applications": 9,
+   "used": 3,
+   "oos": 6
+  },
+  {
+   "id": "R-URGENCY-01@1",
+   "rule_id": "R-URGENCY-01",
+   "version": 1,
+   "status": "published",
+   "body": "{\"action\":{\"set\":\"판단 보류\"},\"candidate_id\":\"cand_861307de943efe054b1e407e\",\"decision_id\":\"rdec_ae5e2330872a441ea3fb562b5c28eaf8\",\"effect\":\"rule\",\"rule_id\":\"R-URGENCY-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"불필요\"},{\"field\":\"feasibility\",\"op\":\"eq\",\"value\":\"정보 부족\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"ai_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"business_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"it_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"pharmacovigilance\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"regulatory\",\"value\":0.5},{\"field\":\"urgency\",\"op\":\"eq\",\"value\":\"긴급\"}]},\"target\":\"urgency\",\"version\":1}",
+   "configs": [
+    3
+   ],
+   "applications": 1,
+   "used": 1,
+   "oos": 0
+  }
+ ],
+ "validations": [
+  {
+   "created_by": "usr_t-x38-10031834_rule_admin",
+   "failures": "[]",
+   "status": "completed",
+   "sample_count": 8,
+   "candidate_config_version": "1+R-AI_NEED-01@1",
+   "tenant_id": "t-x38-10031834",
+   "to_at": "2026-12-31T00:00:00.000000000+00:00",
+   "changed_count": 8,
+   "review_transition_candidate": 0,
+   "run_kind": "shadow",
+   "calls": 0,
+   "changes_by_value": "{\"ai_need:필요\":8}",
+   "id": "val_14d2a9f8539a45e6bd94c3a88b748b64",
+   "base_config_version": 1,
+   "rule_version": "R-AI_NEED-01@1",
+   "human_correction_needed_base": 5,
+   "max_calls": 20,
+   "labeled_count": 7,
+   "usage": "{}",
+   "created_at": "2026-10-03T09:39:41.016000000+00:00",
+   "human_correction_needed_candidate": 4,
+   "review_transition_base": 0,
+   "side_effects": 0,
+   "from_at": "2026-01-01T00:00:00.000000000+00:00"
+  },
+  {
+   "created_by": "usr_t-x38-10031834_rule_admin",
+   "failures": "[]",
+   "status": "completed",
+   "sample_count": 16,
+   "candidate_config_version": "2+R-URGENCY-01@1",
+   "tenant_id": "t-x38-10031834",
+   "to_at": "2026-10-03T09:45:11.000000000+00:00",
+   "changed_count": 4,
+   "review_transition_candidate": 0,
+   "run_kind": "shadow",
+   "calls": 0,
+   "changes_by_value": "{\"urgency:판단 보류\":4}",
+   "id": "val_ebc6fbf10d634862b9eae78b566dceb2",
+   "base_config_version": 2,
+   "rule_version": "R-URGENCY-01@1",
+   "human_correction_needed_base": 7,
+   "max_calls": 20,
+   "labeled_count": 11,
+   "usage": "{}",
+   "created_at": "2026-10-03T09:44:11.369000000+00:00",
+   "human_correction_needed_candidate": 5,
+   "review_transition_base": 0,
+   "side_effects": 0,
+   "from_at": "2026-01-01T00:00:00.000000000+00:00"
+  }
+ ],
+ "configs": [
+  {
+   "version": 1,
+   "status": "superseded",
+   "reason": "보수적 초기 정책",
+   "by": "system:bootstrap",
+   "rules": []
+  },
+  {
+   "version": 2,
+   "status": "superseded",
+   "reason": "T38: 게시",
+   "by": "usr_t-x38-10031834_rule_admin",
+   "rules": [
+    "R-AI_NEED-01@1"
+   ]
+  },
+  {
+   "version": 3,
+   "status": "active",
+   "reason": "T38: 게시",
+   "by": "usr_t-x38-10031834_rule_admin",
+   "rules": [
+    "R-AI_NEED-01@1",
+    "R-URGENCY-01@1"
+   ]
+  }
+ ],
+ "applied": [
+  {
+   "step": "step_095b778ca66e488f83f7e9b980acb699",
+   "run": "run_23c51ff911b14e1ab9f461437e54965b",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  },
+  {
+   "step": "step_19e32c1ebead4412884b8049e2da7b76",
+   "run": "run_13310066bb7a498883cae4eeb36df04a",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "used",
+   "before": "\"불필요\"",
+   "after": "\"필요\""
+  },
+  {
+   "step": "step_6d04378bf0d14892b8c5a585dabe08bf",
+   "run": "run_0e0e1a71d1234475836c6e1312715d0b",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  },
+  {
+   "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+   "run": "run_efb9b2f49eae496f9b334a0138fcd7d2",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  },
+  {
+   "step": "step_8cf44754bbaa4438ac327e03334fb7c4",
+   "run": "run_efb9b2f49eae496f9b334a0138fcd7d2",
+   "rule": "R-URGENCY-01@1",
+   "outcome": "used",
+   "before": "\"긴급\"",
+   "after": "\"판단 보류\""
+  },
+  {
+   "step": "step_ae06e42457224e0180371e6850baa2aa",
+   "run": "run_fbf783b8a1534994a06bbb86384dc077",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  },
+  {
+   "step": "step_ae266094ab9c4e408d436872ed210002",
+   "run": "run_723f5661b4f24f3da3c01bcaef1e3d03",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  },
+  {
+   "step": "step_b33142426994465cacba22c2c69ec588",
+   "run": "run_86c22cde53de4e72b7b352d94274ed21",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "used",
+   "before": "\"불필요\"",
+   "after": "\"필요\""
+  },
+  {
+   "step": "step_d8c89785f2674d00bd4b54fc803c9766",
+   "run": "run_bbaa3b9225924c479ceabcd119ea5356",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "used",
+   "before": "\"불필요\"",
+   "after": "\"필요\""
+  },
+  {
+   "step": "step_fd7d487ed2934616928b580481f8a11f",
+   "run": "run_cf0c6ad86f0b4ff59072d11f1bd3d93e",
+   "rule": "R-AI_NEED-01@1",
+   "outcome": "out_of_scope",
+   "before": "\"불필요\"",
+   "after": "\"불필요\""
+  }
+ ],
+ "effects": {
+  "R-AI_NEED-01": {
+   "before": {
+    "sample_count": 8,
+    "corrections": 5,
+    "review_transitions": 8,
+    "failures": 0,
+    "classification_changes": 0
+   },
+   "after": {
+    "sample_count": 9,
+    "corrections": 3,
+    "review_transitions": 9,
+    "failures": 0,
+    "classification_changes": 3
+   },
+   "used": {
+    "sample_count": 3,
+    "corrections": 0,
+    "review_transitions": 3,
+    "failures": 0,
+    "classification_changes": 3
+   },
+   "out_of_scope": {
+    "sample_count": 6,
+    "corrections": 3,
+    "review_transitions": 6,
+    "failures": 0,
+    "classification_changes": 0
+   }
+  }
+ }
+}

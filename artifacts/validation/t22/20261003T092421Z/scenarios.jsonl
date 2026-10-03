@@ -1,0 +1,3 @@
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_a683acf5c5d04b1db19dbf32f96aae14", "generations": [1, 2]}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_8a5271925be3494eae3d82431d605cf6"}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

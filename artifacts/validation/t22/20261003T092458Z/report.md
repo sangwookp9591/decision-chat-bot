@@ -1,0 +1,36 @@
+# T22 장애 시험 결과
+
+실행: 2026-10-03T09:28:44.221812+00:00 UTC
+증거: `/Users/psw/Projects/decision-chat-bot/artifacts/validation/t22/20261003T092458Z`
+
+| 시나리오 | 판정 | 증거 |
+| --- | --- | --- |
+| Jev 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 파서·Neo4j 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| worker 인계·재시작 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| API 재시작·SSE | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 정책 도중 변경 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 동시 승인 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 관측 장애 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+| 보완·120초 뒤 회복 | 통과 | `pytest.log`, `junit.xml`, `scenarios.jsonl` |
+
+## 기록된 실행 값
+
+```json
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_bc8356ae51c84df68b38a35fff433750", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_429", "status": "pass", "request_id": "req_95fd8c7394a04174b61bcf646934d9e8", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_b452342408bd4c85bdbf96fc3fb43251", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_4bb9efe2b0514b5ca01bad5c85a11a29", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "parser_db_outage", "status": "pass", "damaged_request": "req_f1623aafc2094d5388ffaf6596fd8dc6", "recovered_request": "req_014f343ee9cd42c68bbd637d56c843ce", "http_status": 503, "unknown_validity": 1}
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_0d19d75b43c949178f4b83ca579ab7c9", "generations": [1, 2]}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_67e1cdf953dd48d4808f3a0a3f7a2610"}
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_13060c85e5ed4ce98ea15e04f5e0f6aa", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 13134, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_a185ec4f8f4f4887b6469cb13f0b4c2b", "run_d4585e8a6c784ea996ace539849bc606", "run_06ed3512506e46b2a49f2888bab79041"]}
+{"scenario": "parallel_review", "status": "pass", "request_id": "req_7ca34c81c08149c99e8a7c6ebd08c883", "statuses": [200, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409], "counts": {"assignments": 1, "tasks": 1, "distinct_drafts": 1}, "retry_status": 200}
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 270, "collected_after": 270}
+{"scenario": "information_wait", "status": "pass", "request_id": "req_6266d5b33c7c473db8c9a20a23293374", "judgment_id": "jdg_452f2d374b4a49baaefbf0db0054b54d", "outputs": 11}
+{"scenario": "late_recovery", "status": "pass", "request_id": "req_91bd0de528ba4b4fb7ad1c2629e44dcc", "first_run": "run_112cb6b2cb4144faba6dec093d20faaa", "recovery_run": "run_146824ffc9414633a25a813189330df0", "failed_120s": 5, "late_recoveries": 1, "wait_seconds": 121}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}
+```
+
+SSE 5초 p95 기준은 표본 1건으로 운영 달성을 판정하지 않는다.

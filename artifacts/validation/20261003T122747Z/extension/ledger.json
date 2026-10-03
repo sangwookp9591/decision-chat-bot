@@ -1,0 +1,3173 @@
+[
+  {
+    "gate": "setup",
+    "step": "seed judgments",
+    "status": "pass",
+    "evidence": {
+      "requests": [
+        "req_3dc8f5415b7c4804aede76f9b9e7e187",
+        "req_52d6c424653d4808947ab85ffb7550b8",
+        "req_2744ff85abff43d18524b8fbff205485",
+        "req_e13745e1a3324d48812e6baef41f3ada",
+        "req_0b2ee90b9862459694a714133217bf73",
+        "req_31aeb1815a934213b2021a8a332e223c",
+        "req_b94acf8a7799418e83ed3ce36b33e30b",
+        "req_e5a4b6149b7a4a468bc95b086a2bfd7e"
+      ],
+      "ai_need_groups": {
+        "불필요": 8
+      }
+    },
+    "at": "2026-10-03T12:28:32Z"
+  },
+  {
+    "gate": "X01",
+    "step": "review decisions submitted",
+    "status": "pass",
+    "evidence": {
+      "plan": {
+        "same_direction": [
+          "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+          "req_b94acf8a7799418e83ed3ce36b33e30b",
+          "req_31aeb1815a934213b2021a8a332e223c"
+        ],
+        "counter": "req_0b2ee90b9862459694a714133217bf73",
+        "other_direction": [
+          "req_e13745e1a3324d48812e6baef41f3ada",
+          "req_2744ff85abff43d18524b8fbff205485"
+        ]
+      },
+      "original": "불필요",
+      "dir_y": "필요",
+      "dir_z": "혼합"
+    },
+    "at": "2026-10-03T12:28:32Z"
+  },
+  {
+    "gate": "X01",
+    "step": "DB Correction == API(/requests/{id}/corrections, /learning/corrections); AI original kept; CORRECTS->ModelOutput",
+    "status": "pass",
+    "evidence": {
+      "corrections": {
+        "req_e5a4b6149b7a4a468bc95b086a2bfd7e": {
+          "correction_id": "cor_e1c531571fd64851b38fb3f407ad7ff9",
+          "review_id": "rvw_0e3194df0bf843c98f0f08d9f365d65c",
+          "run_id": "run_b3e6a3027d744d8e972f0a999631de78",
+          "revision_id": "rev_ba6b067b935e4d9ca046462ad2336852",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38r-10031227_reviewer",
+          "corrected_at": "2026-10-03T12:28:32.313000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_b94acf8a7799418e83ed3ce36b33e30b": {
+          "correction_id": "cor_a12d0808c0124f07baf6b7d73b7663b8",
+          "review_id": "rvw_c7d671018f264efd98a1cae261bc01e7",
+          "run_id": "run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+          "revision_id": "rev_254e80318d894c0291d70bed85eb9ab0",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38r-10031227_reviewer",
+          "corrected_at": "2026-10-03T12:28:32.432000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_31aeb1815a934213b2021a8a332e223c": {
+          "correction_id": "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+          "review_id": "rvw_85d90a10337c4fd1862038d2a323db2a",
+          "run_id": "run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+          "revision_id": "rev_98bcef7e05a447be9b17bfc080df6f1c",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"필요\"",
+          "corrected_by": "usr_t-x38r-10031227_reviewer",
+          "corrected_at": "2026-10-03T12:28:32.535000000+00:00",
+          "reason": "T38: ai_need 같은 방향 수정",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_e13745e1a3324d48812e6baef41f3ada": {
+          "correction_id": "cor_f0817ad4222842cf9d759be1a3e4e647",
+          "review_id": "rvw_936263d8e48241dea545e019b49b4490",
+          "run_id": "run_ab12ee5450ad4e89b02353b250f37d8e",
+          "revision_id": "rev_d6bd685d9da746bcb5e31900ea8a1aa1",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38r-10031227_reviewer",
+          "corrected_at": "2026-10-03T12:28:32.703000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        },
+        "req_2744ff85abff43d18524b8fbff205485": {
+          "correction_id": "cor_58af725183634ae9aeaa16b373a5f990",
+          "review_id": "rvw_242f1c7fa4bb4c08a333a97a2d510549",
+          "run_id": "run_9b2d04842f38492fbb92687b8dd98874",
+          "revision_id": "rev_d7e32ec1bcb64ed2913b9169ae209e23",
+          "config_version": 1,
+          "ai_value": "\"불필요\"",
+          "corrected_value": "\"혼합\"",
+          "corrected_by": "usr_t-x38r-10031227_reviewer",
+          "corrected_at": "2026-10-03T12:28:32.794000000+00:00",
+          "reason": "T38: ai_need 다른 방향 수정(2건)",
+          "evidence_span_ids": [],
+          "checks": {
+            "id": true,
+            "ai_value": true,
+            "corrected_value": true,
+            "reason": true,
+            "corrected_by": true,
+            "corrected_at": true,
+            "revision_id": true,
+            "run_id": true,
+            "config_version": true,
+            "list_api_same": true,
+            "ai_original_preserved": true,
+            "corrects_original_output": true
+          }
+        }
+      },
+      "mismatches": []
+    },
+    "at": "2026-10-03T12:28:37Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate (3 same direction) linked to Correction IDs with counter/scope/uncertainty",
+    "status": "pass",
+    "evidence": {
+      "generate_status": 200,
+      "candidate": {
+        "id": "cand_8fcc507094e6868374ddec5c",
+        "field": "ai_need",
+        "status": "제안",
+        "support_ids": [
+          "cor_a12d0808c0124f07baf6b7d73b7663b8",
+          "cor_e1c531571fd64851b38fb3f407ad7ff9",
+          "cor_e4a28aea4e6c4d4880eb64292314cdc1"
+        ],
+        "counter_ids": [
+          "rdec_2a438b8572a843b1ac79745b7a27e559",
+          "rdec_631ea52db0da4ace8c86c03d503d984e",
+          "rdec_63e79ba5a7ee49a5a49a024eede69a88"
+        ],
+        "api_support_ids": [
+          "cor_a12d0808c0124f07baf6b7d73b7663b8",
+          "cor_e1c531571fd64851b38fb3f407ad7ff9",
+          "cor_e4a28aea4e6c4d4880eb64292314cdc1"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "필요"
+        },
+        "uncertainty": {
+          "counter_count": 3,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 3
+        },
+        "rule_id": "R-AI_NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_a12d0808c0124f07baf6b7d73b7663b8",
+        "cor_e1c531571fd64851b38fb3f407ad7ff9",
+        "cor_e4a28aea4e6c4d4880eb64292314cdc1"
+      ],
+      "counter_decision_ids": [
+        "rdec_2a438b8572a843b1ac79745b7a27e559",
+        "rdec_631ea52db0da4ace8c86c03d503d984e",
+        "rdec_63e79ba5a7ee49a5a49a024eede69a88"
+      ],
+      "counter_plan_request": "req_0b2ee90b9862459694a714133217bf73"
+    },
+    "at": "2026-10-03T12:28:37Z"
+  },
+  {
+    "gate": "X02",
+    "step": "other direction with 2 corrections is '자료 부족' (DB==API)",
+    "status": "pass",
+    "evidence": {
+      "candidate": {
+        "id": "cand_e123faef72028b6d12635bef",
+        "field": "ai_need",
+        "status": "자료 부족",
+        "support_ids": [
+          "cor_58af725183634ae9aeaa16b373a5f990",
+          "cor_f0817ad4222842cf9d759be1a3e4e647"
+        ],
+        "counter_ids": [
+          "rdec_02aa1223828b43a59b9c06e5c82f787d",
+          "rdec_2a438b8572a843b1ac79745b7a27e559",
+          "rdec_40c1dad28a67463891676cfb8db7c9c2",
+          "rdec_f92a47759ade4ea9a683e537655d0b69"
+        ],
+        "api_support_ids": [
+          "cor_58af725183634ae9aeaa16b373a5f990",
+          "cor_f0817ad4222842cf9d759be1a3e4e647"
+        ],
+        "scope": {
+          "all": [
+            {
+              "field": "ai_need",
+              "op": "eq",
+              "value": "불필요"
+            },
+            {
+              "field": "feasibility",
+              "op": "eq",
+              "value": "정보 부족"
+            },
+            {
+              "field": "lead_org",
+              "op": "eq",
+              "value": "IT팀"
+            },
+            {
+              "op": "lte",
+              "signal": "ai_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "business_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "clinical_safety",
+              "value": 0.5
+            },
+            {
+              "op": "gte",
+              "signal": "it_team_involvement",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "pharmacovigilance",
+              "value": 0.5
+            },
+            {
+              "op": "lte",
+              "signal": "regulatory",
+              "value": 0.5
+            },
+            {
+              "field": "urgency",
+              "op": "eq",
+              "value": "판단 보류"
+            }
+          ]
+        },
+        "action": {
+          "set": "혼합"
+        },
+        "uncertainty": {
+          "counter_count": 4,
+          "minimum_support": 3,
+          "organization_count": 3,
+          "single_organization_bias": false,
+          "support_count": 2
+        },
+        "rule_id": "R-AI_NEED-01",
+        "author": "code:candidate@v1"
+      },
+      "expected_support": [
+        "cor_58af725183634ae9aeaa16b373a5f990",
+        "cor_f0817ad4222842cf9d759be1a3e4e647"
+      ]
+    },
+    "at": "2026-10-03T12:28:37Z"
+  },
+  {
+    "gate": "X02",
+    "step": "candidate generation did not change Config",
+    "status": "pass",
+    "evidence": {
+      "config_version": 1
+    },
+    "at": "2026-10-03T12:28:37Z"
+  },
+  {
+    "gate": "X03",
+    "step": "all non-rule_admin roles get 403 on decision/scope-change/reject/version/validate/mark-validated/publish/stop/revert",
+    "status": "pass",
+    "evidence": {
+      "status_by_role": {
+        "requester": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "reviewer": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "team_member": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "operator": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        },
+        "policy_editor": {
+          "decision": 403,
+          "decision_scope_change": 403,
+          "reject": 403,
+          "create_version": 403,
+          "validate": 403,
+          "mark_validated": 403,
+          "publish": 403,
+          "stop": 403,
+          "revert": 403
+        }
+      }
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "policy_editor cannot publish a rules diff via /api/policy/publish",
+    "status": "pass",
+    "evidence": {
+      "status": 422,
+      "body": "{\"detail\":{\"code\":\"RULE_ADMIN_REQUIRED\",\"reason\":\"rules 변경은 rule_admin 전용 경로에서만 허용됩니다.\"}}"
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rejected calls left candidate/decision/version/config state unchanged",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "f7d41f43d05be529"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "fa2ca75ce47e9eec"
+        }
+      },
+      "after": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "f7d41f43d05be529"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "fa2ca75ce47e9eec"
+        }
+      }
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "single review approval (API) changed no RuleCandidate/RuleDecision/RuleVersion/ConfigVersion",
+    "status": "pass",
+    "evidence": {
+      "review_id": "rvw_9243de34868b452c98e10e4adc4d303d",
+      "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+      "state": {
+        "RuleCandidate": {
+          "count": 2,
+          "sha256": "f7d41f43d05be529"
+        },
+        "RuleDecision": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "RuleVersion": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c"
+        },
+        "ConfigVersion": {
+          "count": 1,
+          "sha256": "fa2ca75ce47e9eec"
+        }
+      },
+      "active_config": 1
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "policy_editor cannot publish a rules diff via /api/policy/publish (retest with a valid rule id)",
+    "status": "pass",
+    "evidence": {
+      "status": 422,
+      "body": "{\"detail\":{\"code\":\"RULE_ADMIN_REQUIRED\",\"reason\":\"rules 변경은 rule_admin 전용 경로에서만 허용됩니다.\"}}"
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rule_admin scope-change approval: confirmed scope stored (differs from proposal), candidate approved",
+    "status": "pass",
+    "evidence": {
+      "decision_id": "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+      "confirmed_scope": {
+        "all": [
+          {
+            "field": "ai_need",
+            "op": "eq",
+            "value": "불필요"
+          },
+          {
+            "field": "lead_org",
+            "op": "eq",
+            "value": "IT팀"
+          },
+          {
+            "op": "lte",
+            "signal": "clinical_safety",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "regulatory",
+            "value": 0.5
+          }
+        ]
+      },
+      "proposed_scope_predicates": 10,
+      "db": {
+        "action": "approve_with_scope_change",
+        "by": "usr_t-x38r-10031227_rule_admin",
+        "candidate_status": "approved"
+      }
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X03",
+    "step": "publish before validation is refused (409) and Config version unchanged",
+    "status": "pass",
+    "evidence": {
+      "status": 409,
+      "body": "{\"detail\":{\"code\":\"INVALID_TRANSITION\",\"reason\":\"게시 가능한 검증 상태가 아닙니다.\"}}",
+      "active_config": 1
+    },
+    "at": "2026-10-03T12:28:38Z"
+  },
+  {
+    "gate": "X04",
+    "step": "protected nodes (Task/Assignment/Review/ReviewDecision/Event/Request/Judgment/Correction) identical before/after shadow",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "Task": {
+          "count": 7,
+          "sha256": "f71a9c39197509e1"
+        },
+        "Assignment": {
+          "count": 7,
+          "sha256": "c57064d76245a475"
+        },
+        "Review": {
+          "count": 8,
+          "sha256": "bcbd649ffefa550e"
+        },
+        "ReviewDecision": {
+          "count": 7,
+          "sha256": "9e69d59644bab7f9"
+        },
+        "Event": {
+          "count": 129,
+          "sha256": "a114a4f812623660"
+        },
+        "Request": {
+          "count": 8,
+          "sha256": "6897273ce444d8ed"
+        },
+        "Judgment": {
+          "count": 8,
+          "sha256": "09f2ede64c8bf8a6"
+        },
+        "Correction": {
+          "count": 5,
+          "sha256": "6f2398434d50c9d8"
+        }
+      },
+      "after": {
+        "Task": {
+          "count": 7,
+          "sha256": "f71a9c39197509e1"
+        },
+        "Assignment": {
+          "count": 7,
+          "sha256": "c57064d76245a475"
+        },
+        "Review": {
+          "count": 8,
+          "sha256": "bcbd649ffefa550e"
+        },
+        "ReviewDecision": {
+          "count": 7,
+          "sha256": "9e69d59644bab7f9"
+        },
+        "Event": {
+          "count": 129,
+          "sha256": "a114a4f812623660"
+        },
+        "Request": {
+          "count": 8,
+          "sha256": "6897273ce444d8ed"
+        },
+        "Judgment": {
+          "count": 8,
+          "sha256": "09f2ede64c8bf8a6"
+        },
+        "Correction": {
+          "count": 5,
+          "sha256": "6f2398434d50c9d8"
+        }
+      }
+    },
+    "at": "2026-10-03T12:28:39Z"
+  },
+  {
+    "gate": "X04",
+    "step": "counts and Request.active_run_id pointers identical before/after shadow",
+    "status": "pass",
+    "evidence": {
+      "before": {
+        "Task": 7,
+        "Assignment": 7,
+        "Review": 8,
+        "Event": 129,
+        "Notification": 0,
+        "ReviewDecision": 7,
+        "Judgment": 8,
+        "Request": 8,
+        "active_run_pointers": {
+          "n": 8,
+          "ptr": [
+            "req_0b2ee90b9862459694a714133217bf73=run_b86655052ae84b32a8e741e951a6b54e",
+            "req_2744ff85abff43d18524b8fbff205485=run_9b2d04842f38492fbb92687b8dd98874",
+            "req_31aeb1815a934213b2021a8a332e223c=run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+            "req_3dc8f5415b7c4804aede76f9b9e7e187=run_bfdfc2c144124be08abfa8c20f7a7aae",
+            "req_52d6c424653d4808947ab85ffb7550b8=run_6f374fb67f8c4674b97d713284109350",
+            "req_b94acf8a7799418e83ed3ce36b33e30b=run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+            "req_e13745e1a3324d48812e6baef41f3ada=run_ab12ee5450ad4e89b02353b250f37d8e",
+            "req_e5a4b6149b7a4a468bc95b086a2bfd7e=run_b3e6a3027d744d8e972f0a999631de78"
+          ]
+        }
+      },
+      "after": {
+        "Task": 7,
+        "Assignment": 7,
+        "Review": 8,
+        "Event": 129,
+        "Notification": 0,
+        "ReviewDecision": 7,
+        "Judgment": 8,
+        "Request": 8,
+        "active_run_pointers": {
+          "n": 8,
+          "ptr": [
+            "req_0b2ee90b9862459694a714133217bf73=run_b86655052ae84b32a8e741e951a6b54e",
+            "req_2744ff85abff43d18524b8fbff205485=run_9b2d04842f38492fbb92687b8dd98874",
+            "req_31aeb1815a934213b2021a8a332e223c=run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+            "req_3dc8f5415b7c4804aede76f9b9e7e187=run_bfdfc2c144124be08abfa8c20f7a7aae",
+            "req_52d6c424653d4808947ab85ffb7550b8=run_6f374fb67f8c4674b97d713284109350",
+            "req_b94acf8a7799418e83ed3ce36b33e30b=run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+            "req_e13745e1a3324d48812e6baef41f3ada=run_ab12ee5450ad4e89b02353b250f37d8e",
+            "req_e5a4b6149b7a4a468bc95b086a2bfd7e=run_b3e6a3027d744d8e972f0a999631de78"
+          ]
+        }
+      }
+    },
+    "at": "2026-10-03T12:28:39Z"
+  },
+  {
+    "gate": "X04",
+    "step": "monitoring SLO/summary denominators and alerts unchanged by shadow",
+    "status": "fail",
+    "evidence": {
+      "before": "7e8ffa57d6bac3b8",
+      "after": "462c4711f207c27a",
+      "summary_after": {
+        "summary": {
+          "availability": {
+            "valid_calls": 8,
+            "successful_calls": 8,
+            "failed_calls": 0,
+            "pending_calls": 0,
+            "unknown_validity": 0,
+            "ratio": 1.0
+          },
+          "judgment": {
+            "eligible_requests": 8,
+            "within_120s": 8,
+            "failed_120s": 0,
+            "pending_120s": 0,
+            "ratio": 1.0,
+            "candidate_commits": 8,
+            "failed_runs": 0,
+            "late_recoveries": 0,
+            "unconfirmed_samples": 0
+          },
+          "latency_ms": {
+            "intake_p95": 188.0,
+            "text_first_p95": null,
+            "attachment_first_p95": 15296.810000000001,
+            "sse_deliver_p95": null,
+            "revision_p95": 3692.0,
+            "step_p95": 3306.0
+          },
+          "requests": {
+            "received": 8,
+            "failed_before_id": 0
+          },
+          "file_exclusions": 0,
+          "first_eligible_after_file_decision": 0,
+          "cancellations": 0,
+          "shadow_runs": 0,
+          "usage": {
+            "model_calls": null,
+            "cost": null
+          },
+          "by_version": {
+            "config=1|model=jev-1.13.0": {
+              "saved": 8
+            }
+          },
+          "steps": {
+            "입력 정리": {
+              "count": 8,
+              "p50_ms": 8.0,
+              "p95_ms": 19.0
+            },
+            "Jev 판단": {
+              "count": 8,
+              "p50_ms": 3241.0,
+              "p95_ms": 3452.0
+            },
+            "근거 연결": {
+              "count": 8,
+              "p50_ms": 14.0,
+              "p95_ms": 24.0
+            },
+            "업무 분해": {
+              "count": 8,
+              "p50_ms": 11.0,
+              "p95_ms": 16.0
+            },
+            "규칙 적용": {
+              "count": 8,
+              "p50_ms": 9.0,
+              "p95_ms": 13.0
+            },
+            "자동 배정 조건 검사": {
+              "count": 8,
+              "p50_ms": 10.0,
+              "p95_ms": 13.0
+            },
+            "결과 저장": {
+              "count": 8,
+              "p50_ms": 71.0,
+              "p95_ms": 168.0
+            }
+          },
+          "kinds": {
+            "request_received": 8,
+            "request_completed": 8,
+            "worker_attempt_start": 8,
+            "worker_step": 56,
+            "judgment_committed": 8,
+            "worker_run": 8
+          },
+          "failures": {},
+          "filters": {
+            "org": null,
+            "status": null,
+            "version": null
+          },
+          "collection": {
+            "complete": true,
+            "issues": [],
+            "has_collected_events": true,
+            "continuous_30d": false,
+            "damaged_lines_or_truncations": 0,
+            "incomplete_intervals": [],
+            "last_collected_at": "2026-10-03T12:28:38.705225+00:00",
+            "limitations": [
+              "org and request status are not recorded independently",
+              "producer heartbeat is activity-based"
+            ]
+          },
+          "unscoped_events": 0,
+          "business": {
+            "request_denominator": 8,
+            "org_unconfirmed": 0,
+            "auto_assignment_count": 0,
+            "review_completed_count": 7
+          }
+        },
+        "slo": {
+          "window_start": "2026-09-03T12:28:39.251536+00:00",
+          "window_end": "2026-10-03T12:28:39.251536+00:00",
+          "verified": false,
+          "availability": {
+            "target": 0.999,
+            "allowed_failure_rate": 0.001,
+            "total": 8,
+            "failures": 0,
+            "remaining_failures": null,
+            "burn_rate_1h": 0.0,
+            "verified": false
+          },
+          "first_judgment": {
+            "target": 0.99,
+            "allowed_failure_rate": 0.01,
+            "total": 8,
+            "failures": 0,
+            "remaining_failures": null,
+            "burn_rate_1h": 0.0,
+            "verified": false
+          },
+          "reason": "Less than 30 days of complete observation",
+          "collection": {
+            "complete": true,
+            "issues": [],
+            "has_collected_events": true,
+            "continuous_30d": false,
+            "damaged_lines_or_truncations": 0,
+            "incomplete_intervals": [],
+            "last_collected_at": "2026-10-03T12:28:38.705225+00:00",
+            "limitations": [
+              "org and request status are not recorded independently",
+              "producer heartbeat is activity-based"
+            ]
+          }
+        }
+      }
+    },
+    "at": "2026-10-03T12:28:39Z"
+  },
+  {
+    "gate": "X04",
+    "step": "ValidationRun (POST result == GET API == DB): conditions, sample counts, side_effects=0, run_kind=shadow",
+    "status": "fail",
+    "evidence": {
+      "validation_id": "val_ae2b8a074e3d412aa003c57a6efab5d4",
+      "sample_count": 8,
+      "labeled_count": 7,
+      "changed_count": 8,
+      "changes_by_value": {
+        "ai_need:필요": 8
+      },
+      "base": 1,
+      "candidate": "1+R-AI_NEED-01@1",
+      "human_correction_needed_base/candidate": [
+        5,
+        4
+      ],
+      "window": [
+        "2026-01-01T00:00:00+00:00",
+        "2026-12-31T00:00:00+00:00"
+      ],
+      "shadow_run_kind": [],
+      "field_equal": {
+        "sample_count": true,
+        "labeled_count": true,
+        "changed_count": true,
+        "side_effects": true,
+        "status": true,
+        "run_kind": true,
+        "base_config_version": true,
+        "candidate_config_version": true,
+        "max_calls": true,
+        "calls": true,
+        "human_correction_needed_base": true,
+        "human_correction_needed_candidate": true
+      }
+    },
+    "at": "2026-10-03T12:28:39Z"
+  },
+  {
+    "gate": "X03",
+    "step": "validated rule published as new Config version (rule in active rules, PUBLISHED_IN), audit + rule.* events recorded",
+    "status": "pass",
+    "evidence": {
+      "config_version": 2,
+      "prior": 1,
+      "active_rules": [
+        "R-AI_NEED-01@1"
+      ],
+      "audit": {
+        "RuleCandidate:cand_8fcc507094e6868374ddec5c": [
+          [
+            "rule.decision",
+            "usr_t-x38r-10031227_rule_admin",
+            "T38: 범위를 임상·규제 신호 낮음으로 확정"
+          ]
+        ],
+        "RuleVersion:R-AI_NEED-01@1": [
+          [
+            "rule.version_created",
+            "usr_t-x38r-10031227_rule_admin",
+            "T38: 규칙 버전 생성"
+          ],
+          [
+            "rule.validated",
+            "usr_t-x38r-10031227_rule_admin",
+            "T38: 부작용 0건 확인"
+          ]
+        ],
+        "ConfigVersion:2": [
+          [
+            "rule.publish",
+            "usr_t-x38r-10031227_rule_admin",
+            "T38: 게시"
+          ]
+        ]
+      },
+      "events": [
+        {
+          "kind": "rule.decision",
+          "n": 1
+        },
+        {
+          "kind": "rule.publish",
+          "n": 1
+        },
+        {
+          "kind": "rule.validated",
+          "n": 1
+        },
+        {
+          "kind": "rule.version_created",
+          "n": 1
+        }
+      ]
+    },
+    "at": "2026-10-03T12:28:39Z"
+  },
+  {
+    "gate": "X05",
+    "step": "post-publish in-scope requests: rule used, result changed (불필요→필요), APPLIED(before/after/version) == Judgment API == Trace rule step, Config pinned",
+    "status": "pass",
+    "evidence": {
+      "config_version": 2,
+      "rule": "R-AI_NEED-01@1",
+      "requests": [
+        {
+          "kind": "in_scope",
+          "run_id": "run_2c5c765f9cbc4211b33f06e883bd0552",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_30e7c2a911fc40f58ba3238032ba45b0",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_b70923f5d4d540409e2392221e6c4367",
+            "step_30e7c2a911fc40f58ba3238032ba45b0"
+          ],
+          "step_ids_in_applied": [
+            "step_30e7c2a911fc40f58ba3238032ba45b0"
+          ]
+        },
+        {
+          "kind": "in_scope",
+          "run_id": "run_4711fecab95a4d4e9ab4b4d7862c7e73",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_1c25f6f5e6c841c1ad9837be8e8b555b",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_67fa9fd0549c427799fd1613b591dc7e",
+            "step_1c25f6f5e6c841c1ad9837be8e8b555b"
+          ],
+          "step_ids_in_applied": [
+            "step_1c25f6f5e6c841c1ad9837be8e8b555b"
+          ]
+        },
+        {
+          "kind": "in_scope",
+          "run_id": "run_d97a42f321e4486489579ed167f27c00",
+          "api_ai_need": "필요",
+          "db_ai_need": "필요",
+          "model_raw_ai_need": "불필요",
+          "api_rule_effects": [
+            {
+              "rule_version": "R-AI_NEED-01@1",
+              "effect": "rule",
+              "outcome": "used",
+              "before": "불필요",
+              "after": "필요",
+              "config_version": 2
+            }
+          ],
+          "db_applied": [
+            {
+              "step": "step_36320b9b1a0f4b5d8943692df49d3e88",
+              "kind": "rule",
+              "rule": "R-AI_NEED-01@1",
+              "outcome": "used",
+              "before": "\"불필요\"",
+              "after": "\"필요\"",
+              "rv": "R-AI_NEED-01@1"
+            }
+          ],
+          "flow_config_version": 2,
+          "flow_rule_steps": [
+            "step_5e46a3a415d342a0b81811010b82615d",
+            "step_36320b9b1a0f4b5d8943692df49d3e88"
+          ],
+          "step_ids_in_applied": [
+            "step_36320b9b1a0f4b5d8943692df49d3e88"
+          ]
+        }
+      ]
+    },
+    "at": "2026-10-03T12:29:23Z"
+  },
+  {
+    "gate": "X05",
+    "step": "out-of-scope request: APPLIED out_of_scope recorded, classification NOT changed by the rule",
+    "status": "pass",
+    "evidence": {
+      "request": "req_6b09736cb81f40eb96a451f595f44c66",
+      "probe": {
+        "kind": "out_of_scope_probe",
+        "run_id": "run_ca70aafc128d4634b4518075ee66995c",
+        "api_ai_need": "불필요",
+        "db_ai_need": "불필요",
+        "model_raw_ai_need": "불필요",
+        "api_rule_effects": [
+          {
+            "rule_version": "R-AI_NEED-01@1",
+            "effect": "rule",
+            "outcome": "out_of_scope",
+            "before": "불필요",
+            "after": "불필요",
+            "config_version": 2
+          }
+        ],
+        "db_applied": [
+          {
+            "step": "step_3a8e4c6e9bc94cc58250723621fe7d75",
+            "kind": "rule",
+            "rule": "R-AI_NEED-01@1",
+            "outcome": "out_of_scope",
+            "before": "\"불필요\"",
+            "after": "\"불필요\"",
+            "rv": "R-AI_NEED-01@1"
+          }
+        ],
+        "flow_config_version": 2,
+        "flow_rule_steps": [
+          "step_e42e11c51bf44614a39fe9a601be05a9",
+          "step_3a8e4c6e9bc94cc58250723621fe7d75"
+        ],
+        "step_ids_in_applied": [
+          "step_3a8e4c6e9bc94cc58250723621fe7d75"
+        ]
+      }
+    },
+    "at": "2026-10-03T12:29:23Z"
+  },
+  {
+    "gate": "X05",
+    "step": "pre-publication runs have no APPLIED rows for the rule (and still have their rule step)",
+    "status": "pass",
+    "evidence": {
+      "seed_requests": 8,
+      "applied_rows": 0,
+      "runs_with_rule_step": 8
+    },
+    "at": "2026-10-03T12:29:23Z"
+  },
+  {
+    "gate": "X05",
+    "step": "invariant-weakening rules (feasibility→가능, urgency→일반) are refused; no RuleVersion/Config created",
+    "status": "fail",
+    "evidence": {
+      "attempts": [
+        {
+          "attempt": "feasibility→가능",
+          "candidate_status": 422,
+          "candidate_body": "{\"detail\":{\"code\":\"RULE_INVARIANT\",\"reason\":\"action is outside the target safety allowlist\"}}"
+        },
+        {
+          "attempt": "urgency→일반",
+          "candidate_status": 422,
+          "candidate_body": "{\"detail\":{\"code\":\"RULE_INVARIANT\",\"reason\":\"action is outside the target safety allowlist\"}}"
+        }
+      ],
+      "config_validation_errors": [
+        {
+          "code": "RULE_INVARIANT",
+          "reason": "Value error, RULE_INVARIANT: action is outside the target safety allowlist"
+        }
+      ],
+      "state_before": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "d1c34b14bd303783"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "49d807531b63f38a"
+        }
+      },
+      "state_after": {
+        "RuleVersion": {
+          "count": 1,
+          "sha256": "d1c34b14bd303783"
+        },
+        "ConfigVersion": {
+          "count": 2,
+          "sha256": "49d807531b63f38a"
+        }
+      }
+    },
+    "at": "2026-10-03T12:30:32Z"
+  },
+  {
+    "gate": "X09",
+    "step": "effects API counts (before/after/used/out_of_scope: sample, change, correction, review, failure) == independent DB computation",
+    "status": "pass",
+    "evidence": {
+      "api": {
+        "before": {
+          "sample_count": 8,
+          "corrections": 5,
+          "review_transitions": 8,
+          "failures": 0,
+          "classification_changes": 0,
+          "latency_sample_count": 8,
+          "latency_p50_ms": 3501.0,
+          "latency_p95_ms": 3657.0
+        },
+        "after": {
+          "sample_count": 4,
+          "corrections": 0,
+          "review_transitions": 4,
+          "failures": 0,
+          "classification_changes": 3,
+          "latency_sample_count": 4,
+          "latency_p50_ms": 3534.0,
+          "latency_p95_ms": 4479.75
+        },
+        "used": {
+          "sample_count": 3,
+          "corrections": 0,
+          "review_transitions": 3,
+          "failures": 0,
+          "classification_changes": 3,
+          "latency_sample_count": 3,
+          "latency_p50_ms": 3434.0,
+          "latency_p95_ms": 3614.0
+        },
+        "out_of_scope": {
+          "sample_count": 1,
+          "corrections": 0,
+          "review_transitions": 1,
+          "failures": 0,
+          "classification_changes": 0,
+          "latency_sample_count": 1,
+          "latency_p50_ms": 4629.0,
+          "latency_p95_ms": 4629.0
+        }
+      },
+      "db": {
+        "before": {
+          "sample_count": 8,
+          "corrections": 5,
+          "review_transitions": 8,
+          "failures": 0,
+          "classification_changes": 0
+        },
+        "after": {
+          "sample_count": 4,
+          "corrections": 0,
+          "review_transitions": 4,
+          "failures": 0,
+          "classification_changes": 3
+        },
+        "used": {
+          "sample_count": 3,
+          "corrections": 0,
+          "review_transitions": 3,
+          "failures": 0,
+          "classification_changes": 3
+        },
+        "out_of_scope": {
+          "sample_count": 1,
+          "corrections": 0,
+          "review_transitions": 1,
+          "failures": 0,
+          "classification_changes": 0
+        }
+      },
+      "equal": {
+        "before": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "after": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "used": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        },
+        "out_of_scope": {
+          "sample_count": true,
+          "corrections": true,
+          "review_transitions": true,
+          "failures": true,
+          "classification_changes": true
+        }
+      },
+      "published_at": "2026-10-03T12:28:39.333000+00:00",
+      "window_days": 7
+    },
+    "at": "2026-10-03T12:30:32Z"
+  },
+  {
+    "gate": "X09",
+    "step": "sample below minimum -> effect 'insufficient_sample' (undetermined), shadow runs excluded, SLO not included",
+    "status": "pass",
+    "evidence": {
+      "effect": "insufficient_sample",
+      "minimum_sample": 20,
+      "samples": 12,
+      "shadow_runs_excluded": 1,
+      "slo_included": false
+    },
+    "at": "2026-10-03T12:30:32Z"
+  },
+  {
+    "gate": "F4",
+    "step": "candidate save: feasibility→가능, urgency→일반, urgency→판단 보류 are 422 RULE_INVARIANT for reviewer and rule_admin; no candidate stored",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "role": "reviewer",
+          "field": "feasibility",
+          "value": "가능",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "feasibility",
+          "value": "가능",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "reviewer",
+          "field": "urgency",
+          "value": "일반",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "urgency",
+          "value": "일반",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "reviewer",
+          "field": "urgency",
+          "value": "판단 보류",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "urgency",
+          "value": "판단 보류",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        }
+      ],
+      "candidates_before": 2,
+      "candidates_after": 2
+    },
+    "at": "2026-10-03T12:32:46Z"
+  },
+  {
+    "gate": "F4",
+    "step": "Config publish/validate with weakening rule is refused (422) and no Config version is created",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "rule": "urgency→판단 보류",
+          "publish_status": 422,
+          "publish_code": "RULE_INVARIANT",
+          "validate_status": 200,
+          "validate_body": "{\"valid\":false,\"config\":null,\"errors\":[{\"code\":\"RULE_INVARIANT\",\"reason\":\"Value error, RULE_INVARIANT: action is outside the target safety allowlist\"}]}"
+        },
+        {
+          "rule": "feasibility→가능",
+          "publish_status": 422,
+          "publish_code": "RULE_INVARIANT",
+          "validate_status": 200,
+          "validate_body": "{\"valid\":false,\"config\":null,\"errors\":[{\"code\":\"RULE_INVARIANT\",\"reason\":\"Value error, RULE_INVARIANT: action is outside the target safety allowlist\"}]}"
+        }
+      ],
+      "active_config": 2
+    },
+    "at": "2026-10-03T12:32:46Z"
+  },
+  {
+    "gate": "F4",
+    "step": "candidate save: feasibility→가능, urgency→일반, urgency→판단 보류 are 422 RULE_INVARIANT for reviewer and rule_admin; no candidate stored",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "role": "reviewer",
+          "field": "feasibility",
+          "value": "가능",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "feasibility",
+          "value": "가능",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "reviewer",
+          "field": "urgency",
+          "value": "일반",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "urgency",
+          "value": "일반",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "reviewer",
+          "field": "urgency",
+          "value": "판단 보류",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "role": "rule_admin",
+          "field": "urgency",
+          "value": "판단 보류",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        }
+      ],
+      "candidates_before": 2,
+      "candidates_after": 2
+    },
+    "at": "2026-10-03T12:32:56Z"
+  },
+  {
+    "gate": "F4",
+    "step": "Config publish/validate with weakening rule is refused (422) and no Config version is created",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "rule": "urgency→판단 보류",
+          "publish_status": 422,
+          "publish_code": "RULE_INVARIANT",
+          "validate_status": 200,
+          "validate_body": "{\"valid\":false,\"config\":null,\"errors\":[{\"code\":\"RULE_INVARIANT\",\"reason\":\"Value error, RULE_INVARIANT: action is outside the target safety allowlist\"}]}"
+        },
+        {
+          "rule": "feasibility→가능",
+          "publish_status": 422,
+          "publish_code": "RULE_INVARIANT",
+          "validate_status": 200,
+          "validate_body": "{\"valid\":false,\"config\":null,\"errors\":[{\"code\":\"RULE_INVARIANT\",\"reason\":\"Value error, RULE_INVARIANT: action is outside the target safety allowlist\"}]}"
+        }
+      ],
+      "active_config": 2
+    },
+    "at": "2026-10-03T12:32:56Z"
+  },
+  {
+    "gate": "F4",
+    "step": "publish of a DB-injected violating rule version is refused (422 RULE_INVARIANT); Config unchanged",
+    "status": "pass",
+    "evidence": {
+      "attempts": [
+        {
+          "rule": "R-URGENCY-91",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        },
+        {
+          "rule": "R-FEASIBILITY-92",
+          "status": 422,
+          "code": "RULE_INVARIANT"
+        }
+      ],
+      "config": 1,
+      "tenant": "t-x38r-10031227i"
+    },
+    "at": "2026-10-03T12:32:57Z"
+  },
+  {
+    "gate": "F4",
+    "step": "DB-injected violating rules (urgency→판단 보류, feasibility→가능) are recorded blocked_by_invariant at apply time; classification = model output; APPLIED = Judgment API = Trace step API",
+    "status": "pass",
+    "evidence": {
+      "tenant": "t-x38r-10031227i",
+      "request": "req_c89f7bb6abf549efbee8e901316c260c",
+      "run": "run_30b0b4829e9047b9adb4d6136b3d1e09",
+      "config_version": 2,
+      "applied": [
+        {
+          "step": "step_34a8e70ab52e4436bfd0166122c6d5d1",
+          "rule": "R-FEASIBILITY-92@1",
+          "outcome": "blocked_by_invariant",
+          "before": "\"정보 부족\"",
+          "after": "\"정보 부족\""
+        },
+        {
+          "step": "step_34a8e70ab52e4436bfd0166122c6d5d1",
+          "rule": "R-URGENCY-91@1",
+          "outcome": "blocked_by_invariant",
+          "before": "\"판단 보류\"",
+          "after": "\"판단 보류\""
+        }
+      ],
+      "model_raw": {
+        "feasibility": "정보 부족",
+        "urgency": "판단 보류"
+      },
+      "final": {
+        "urgency": "판단 보류",
+        "feasibility": "정보 부족"
+      },
+      "api_rule_effects": [
+        {
+          "rule_version": "R-URGENCY-91@1",
+          "effect": "rule",
+          "outcome": "blocked_by_invariant",
+          "before": "판단 보류",
+          "after": "판단 보류",
+          "config_version": 2
+        },
+        {
+          "rule_version": "R-FEASIBILITY-92@1",
+          "effect": "rule",
+          "outcome": "blocked_by_invariant",
+          "before": "정보 부족",
+          "after": "정보 부족",
+          "config_version": 2
+        }
+      ],
+      "trace_step_applications": [
+        {
+          "rule_version": "R-FEASIBILITY-92@1",
+          "rule_id": "R-FEASIBILITY-92",
+          "version": 1,
+          "effect": "rule",
+          "outcome": "blocked_by_invariant",
+          "before": "정보 부족",
+          "after": "정보 부족",
+          "config_versions": [
+            2
+          ]
+        },
+        {
+          "rule_version": "R-URGENCY-91@1",
+          "rule_id": "R-URGENCY-91",
+          "version": 1,
+          "effect": "rule",
+          "outcome": "blocked_by_invariant",
+          "before": "판단 보류",
+          "after": "판단 보류",
+          "config_versions": [
+            2
+          ]
+        }
+      ]
+    },
+    "at": "2026-10-03T12:33:06Z"
+  },
+  {
+    "gate": "F3",
+    "step": "Trace step detail API rule_applications (rule_id@version, outcome, before/after) == stored APPLIED rows (in-scope: used 불필요→필요; out-of-scope: out_of_scope)",
+    "status": "pass",
+    "evidence": {
+      "in_scope": {
+        "request": "req_b7638d574aa7420e8c8e632e206247d8",
+        "run": "run_2c5c765f9cbc4211b33f06e883bd0552",
+        "step": "step_30e7c2a911fc40f58ba3238032ba45b0",
+        "api_rule_applications": [
+          {
+            "rule_version": "R-AI_NEED-01@1",
+            "rule_id": "R-AI_NEED-01",
+            "version": 1,
+            "effect": "rule",
+            "outcome": "used",
+            "before": "불필요",
+            "after": "필요",
+            "config_versions": [
+              2
+            ]
+          }
+        ],
+        "db_applied": [
+          {
+            "rule": "R-AI_NEED-01@1",
+            "rule_id": "R-AI_NEED-01",
+            "version": 1,
+            "outcome": "used",
+            "before": "\"불필요\"",
+            "after": "\"필요\""
+          }
+        ],
+        "config_version": 2,
+        "flow_node_kind": "rule",
+        "equal": true
+      },
+      "out_of_scope": {
+        "request": "req_6b09736cb81f40eb96a451f595f44c66",
+        "run": "run_ca70aafc128d4634b4518075ee66995c",
+        "step": "step_3a8e4c6e9bc94cc58250723621fe7d75",
+        "api_rule_applications": [
+          {
+            "rule_version": "R-AI_NEED-01@1",
+            "rule_id": "R-AI_NEED-01",
+            "version": 1,
+            "effect": "rule",
+            "outcome": "out_of_scope",
+            "before": "불필요",
+            "after": "불필요",
+            "config_versions": [
+              2
+            ]
+          }
+        ],
+        "db_applied": [
+          {
+            "rule": "R-AI_NEED-01@1",
+            "rule_id": "R-AI_NEED-01",
+            "version": 1,
+            "outcome": "out_of_scope",
+            "before": "\"불필요\"",
+            "after": "\"불필요\""
+          }
+        ],
+        "config_version": 2,
+        "flow_node_kind": "rule",
+        "equal": true
+      }
+    },
+    "at": "2026-10-03T12:33:13Z"
+  },
+  {
+    "gate": "F5",
+    "step": "자료 부족 candidate approval without acknowledgement → 422 INSUFFICIENT_ACK_REQUIRED; with acknowledgement but reason <10 chars → 422; nothing stored",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_e123faef72028b6d12635bef",
+      "status": "자료 부족",
+      "no_ack": [
+        422,
+        "INSUFFICIENT_ACK_REQUIRED"
+      ],
+      "short_reason": [
+        422,
+        "INSUFFICIENT_ACK_REQUIRED"
+      ]
+    },
+    "at": "2026-10-03T12:33:14Z"
+  },
+  {
+    "gate": "F5",
+    "step": "acknowledged approval stored: decision.insufficient_approved=true, response/candidate detail show '자료 부족 상태로 승인됨', audit has reason",
+    "status": "pass",
+    "evidence": {
+      "decision": "rdec_86485b0355534353b4d3a4aec8ade3c1",
+      "label": "자료 부족 상태로 승인됨",
+      "db": {
+        "ins": true,
+        "action": "approve",
+        "reason": "T38-R: 표본 2건뿐임을 확인하고 자료 부족 상태로 승인"
+      },
+      "audit": [
+        [
+          "rule.decision",
+          "usr_t-x38r-10031227_rule_admin",
+          "T38-R: 표본 2건뿐임을 확인하고 자료 부족 상태로 승인"
+        ]
+      ]
+    },
+    "at": "2026-10-03T12:33:14Z"
+  },
+  {
+    "gate": "F5",
+    "step": "rule version from an insufficient approval: refused without acknowledgement (422), created with it; version list shows the label",
+    "status": "pass",
+    "evidence": {
+      "no_ack": [
+        422,
+        "INSUFFICIENT_ACK_REQUIRED"
+      ],
+      "version": "R-AI_NEED-02@1",
+      "label": "자료 부족 상태로 승인됨"
+    },
+    "at": "2026-10-03T12:33:14Z"
+  },
+  {
+    "gate": "X01",
+    "step": "lead_org corrections (text-only requests) keep evidence span IDs: Correction.evidence_span_ids == CITES targets of the corrected ModelOutput; spans are chat sentences",
+    "status": "fail",
+    "evidence": {
+      "original_lead_org": "IT팀",
+      "target": "현업",
+      "corrections": {
+        "cor_503b976a073f4aef9f95a2f9474ca09b": {
+          "request": "req_44f8f9b084594f8187684e9781f642fb",
+          "spans": []
+        },
+        "cor_382a770a59a5438682cf9d5a21d0a74d": {
+          "request": "req_f893e67063944583806ba8391bee4914",
+          "spans": []
+        },
+        "cor_a2f1d4fe9a4c4f919deefe62082320a3": {
+          "request": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+          "spans": []
+        }
+      },
+      "span_sources": []
+    },
+    "at": "2026-10-03T12:33:31Z"
+  },
+  {
+    "gate": "X02",
+    "step": "lead_org candidate: support == the 3 Correction IDs, status 제안, scope/uncertainty present",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_9a49449bb55ab51162c213e0",
+      "status": "제안",
+      "action": {
+        "set": "현업"
+      },
+      "support": [
+        "cor_382a770a59a5438682cf9d5a21d0a74d",
+        "cor_503b976a073f4aef9f95a2f9474ca09b",
+        "cor_a2f1d4fe9a4c4f919deefe62082320a3"
+      ],
+      "counter_count": 3,
+      "scope": {
+        "all": [
+          {
+            "field": "ai_need",
+            "op": "eq",
+            "value": "혼합"
+          },
+          {
+            "field": "feasibility",
+            "op": "eq",
+            "value": "정보 부족"
+          },
+          {
+            "field": "lead_org",
+            "op": "eq",
+            "value": "IT팀"
+          },
+          {
+            "op": "lte",
+            "signal": "ai_team_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "business_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "clinical_safety",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "it_team_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "pharmacovigilance",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "regulatory",
+            "value": 0.5
+          },
+          {
+            "field": "urgency",
+            "op": "eq",
+            "value": "판단 보류"
+          }
+        ]
+      },
+      "uncertainty": {
+        "counter_count": 3,
+        "minimum_support": 3,
+        "organization_count": 3,
+        "single_organization_bias": false,
+        "support_count": 3
+      }
+    },
+    "at": "2026-10-03T12:33:32Z"
+  },
+  {
+    "gate": "X04",
+    "step": "lead_org rule validated by shadow: side_effects=0, completed, sample counts recorded, shadow Run id != ValidationRun id",
+    "status": "pass",
+    "evidence": {
+      "id": "val_e8697532f8bc4b8cabcee5205d372aba",
+      "run_id": "run_shadow_1335947c489b4ab297ef717994dc285b",
+      "sample_count": 18,
+      "labeled_count": 13,
+      "changed_count": 6,
+      "side_effects": 0,
+      "status": "completed",
+      "calls": 0
+    },
+    "at": "2026-10-03T12:33:32Z"
+  },
+  {
+    "gate": "X05",
+    "step": "lead_org rule applied to a new text-only request: APPLIED used (before→after) == Judgment API rule_effects; classification changed from the model value; both rules evaluated",
+    "status": "pass",
+    "evidence": {
+      "request": "req_1b06d22ddfbd4c26b4dfeef6ebfa2eb6",
+      "run": "run_37c1373717254589994b666d8dc5f0d9",
+      "applied": [
+        {
+          "step": "step_47ee821f73b24916b0799981d2b833c2",
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "out_of_scope",
+          "b": "\"혼합\"",
+          "a": "\"혼합\""
+        },
+        {
+          "step": "step_47ee821f73b24916b0799981d2b833c2",
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "used",
+          "b": "\"IT팀\"",
+          "a": "\"현업\""
+        }
+      ],
+      "api": [
+        {
+          "rule_version": "R-AI_NEED-01@1",
+          "effect": "rule",
+          "outcome": "out_of_scope",
+          "before": "혼합",
+          "after": "혼합",
+          "config_version": 3
+        },
+        {
+          "rule_version": "R-LEAD_ORG-01@1",
+          "effect": "rule",
+          "outcome": "used",
+          "before": "IT팀",
+          "after": "현업",
+          "config_version": 3
+        }
+      ],
+      "model_raw": "IT팀",
+      "final": "현업"
+    },
+    "at": "2026-10-03T12:33:36Z"
+  },
+  {
+    "gate": "X01",
+    "step": "(retest) lead_org corrections: Correction.evidence_span_ids == CITES targets of the corrected ModelOutput (both empty: Jev cites no span for lead_org)",
+    "status": "pass",
+    "evidence": {
+      "corrections": {
+        "cor_503b976a073f4aef9f95a2f9474ca09b": {
+          "request": "req_44f8f9b084594f8187684e9781f642fb",
+          "spans": [],
+          "cites": []
+        },
+        "cor_382a770a59a5438682cf9d5a21d0a74d": {
+          "request": "req_f893e67063944583806ba8391bee4914",
+          "spans": [],
+          "cites": []
+        },
+        "cor_a2f1d4fe9a4c4f919deefe62082320a3": {
+          "request": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+          "spans": [],
+          "cites": []
+        }
+      }
+    },
+    "at": "2026-10-03T12:35:06Z"
+  },
+  {
+    "gate": "X01",
+    "step": "feasibility corrections (feas, text-only requests): Correction.evidence_span_ids == CITES targets of the corrected ModelOutput; every correction has chat-sentence spans",
+    "status": "pass",
+    "evidence": {
+      "original": "정보 부족",
+      "target": "조건부 가능",
+      "corrections": {
+        "cor_f3c482e76e094ce5825c7264717b5d06": {
+          "request": "req_7c3fde8d66cb4f708cd0112299129235",
+          "spans": [
+            "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+          ]
+        },
+        "cor_f53eaee7e65f4d4a97866d464f631bec": {
+          "request": "req_1af31c93fd864e398be8734a8e0787c8",
+          "spans": [
+            "esp_5406be984af944e2b3032d16c1f079fe"
+          ]
+        },
+        "cor_88104cfdf04742de93884ec0aa95a41f": {
+          "request": "req_be8192ae007e4a7c92089b38c3aef6ea",
+          "spans": [
+            "esp_00bcd34b6147453d9ce1aa6d1bfde782"
+          ]
+        }
+      },
+      "span_sources": [
+        {
+          "id": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+          "source": "chat"
+        },
+        {
+          "id": "esp_5406be984af944e2b3032d16c1f079fe",
+          "source": "chat"
+        },
+        {
+          "id": "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+          "source": "chat"
+        }
+      ]
+    },
+    "at": "2026-10-03T12:35:19Z"
+  },
+  {
+    "gate": "X02",
+    "step": "feasibility candidate: support == the 3 Correction IDs, status 제안, scope/uncertainty present, action = set 조건부 가능",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_79f6d9ca44e33854681ab0b0",
+      "status": "제안",
+      "action": {
+        "set": "조건부 가능"
+      },
+      "support": [
+        "cor_88104cfdf04742de93884ec0aa95a41f",
+        "cor_f3c482e76e094ce5825c7264717b5d06",
+        "cor_f53eaee7e65f4d4a97866d464f631bec"
+      ],
+      "counter_count": 3,
+      "scope": {
+        "all": [
+          {
+            "field": "ai_need",
+            "op": "eq",
+            "value": "필요"
+          },
+          {
+            "field": "feasibility",
+            "op": "eq",
+            "value": "정보 부족"
+          },
+          {
+            "field": "lead_org",
+            "op": "eq",
+            "value": "IT팀"
+          },
+          {
+            "op": "lte",
+            "signal": "ai_team_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "business_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "clinical_safety",
+            "value": 0.5
+          },
+          {
+            "op": "gte",
+            "signal": "it_team_involvement",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "pharmacovigilance",
+            "value": 0.5
+          },
+          {
+            "op": "lte",
+            "signal": "regulatory",
+            "value": 0.5
+          },
+          {
+            "field": "urgency",
+            "op": "eq",
+            "value": "판단 보류"
+          }
+        ]
+      },
+      "uncertainty": {
+        "counter_count": 3,
+        "minimum_support": 3,
+        "organization_count": 3,
+        "single_organization_bias": false,
+        "support_count": 3
+      }
+    },
+    "at": "2026-10-03T12:35:20Z"
+  },
+  {
+    "gate": "X04",
+    "step": "feasibility rule validated by shadow: side_effects=0, completed, sample counts recorded, shadow Run id != ValidationRun id",
+    "status": "pass",
+    "evidence": {
+      "id": "val_c9703714627f4b33862c115123f71ef8",
+      "run_id": "run_shadow_f9db69bc78d746e9a6ca6b4fd3c1e7c0",
+      "sample_count": 31,
+      "labeled_count": 19,
+      "changed_count": 20,
+      "side_effects": 0,
+      "status": "completed",
+      "calls": 0
+    },
+    "at": "2026-10-03T12:35:21Z"
+  },
+  {
+    "gate": "X05",
+    "step": "feasibility rule applied to a new text-only request: APPLIED used (before→after) == Judgment API rule_effects; value changed from the model output; every active rule evaluated",
+    "status": "pass",
+    "evidence": {
+      "request": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+      "run": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+      "applied": [
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "used",
+          "b": "\"불필요\"",
+          "a": "\"필요\""
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rule": "R-FEASIBILITY-01@1",
+          "outcome": "used",
+          "b": "\"정보 부족\"",
+          "a": "\"조건부 가능\""
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "out_of_scope",
+          "b": "\"IT팀\"",
+          "a": "\"IT팀\""
+        }
+      ],
+      "api": [
+        {
+          "rule_version": "R-AI_NEED-01@1",
+          "effect": "rule",
+          "outcome": "used",
+          "before": "불필요",
+          "after": "필요",
+          "config_version": 4
+        },
+        {
+          "rule_version": "R-LEAD_ORG-01@1",
+          "effect": "rule",
+          "outcome": "out_of_scope",
+          "before": "IT팀",
+          "after": "IT팀",
+          "config_version": 4
+        },
+        {
+          "rule_version": "R-FEASIBILITY-01@1",
+          "effect": "rule",
+          "outcome": "used",
+          "before": "정보 부족",
+          "after": "조건부 가능",
+          "config_version": 4
+        }
+      ],
+      "model_raw": "정보 부족",
+      "final": "조건부 가능"
+    },
+    "at": "2026-10-03T12:35:25Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "text-only request (0 attachments): judgment map evidence layer contains the stored chat EvidenceSpan nodes (API node ids == Neo4j span ids)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+      "attachments": 0,
+      "db_spans": 2,
+      "api_span_nodes": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+        "esp_5406be984af944e2b3032d16c1f079fe",
+        "esp_c9e7262214c943eabe7a37e332f75154",
+        "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+      ],
+      "layer1": {
+        "layer": 1,
+        "name": "근거",
+        "desc": "문서 구간 · 모델 반환값 · 사람 수정",
+        "count": 37
+      },
+      "sources": [
+        "chat"
+      ]
+    },
+    "at": "2026-10-03T12:35:30Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "business step → rule version → decision → candidate → correction → model output → chat EvidenceSpan: Cypher chain == /graph/judgment/path (UI-independent)",
+    "status": "pass",
+    "evidence": {
+      "step": "step_a4920d1256274c3db4d14c561ed044d4",
+      "chains": [
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_88104cfdf04742de93884ec0aa95a41f",
+          "o": "mout_b896ac7666e045a297e3424e1a3654c9",
+          "e": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f53eaee7e65f4d4a97866d464f631bec",
+          "o": "mout_1c4e0b450f0742c3b8096da917a7e74b",
+          "e": "esp_5406be984af944e2b3032d16c1f079fe",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f3c482e76e094ce5825c7264717b5d06",
+          "o": "mout_745e1a145a844068af3af7d022fcd032",
+          "e": "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+          "source": "chat"
+        }
+      ],
+      "api_paths": 19
+    },
+    "at": "2026-10-03T12:35:31Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[request] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 58,
+      "edge_count": 56,
+      "layers": {
+        "1": 37,
+        "2": 3,
+        "3": 13,
+        "4": 3,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:31Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[run] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 58,
+      "edge_count": 56,
+      "layers": {
+        "1": 37,
+        "2": 3,
+        "3": 13,
+        "4": 3,
+        "5": 2
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:31Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule2] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 18,
+      "edge_count": 17,
+      "layers": {
+        "1": 9,
+        "2": 1,
+        "3": 4,
+        "4": 3,
+        "5": 1
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[rule_ai_need] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 43,
+      "edge_count": 42,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 3,
+        "5": 24
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[config_2] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 18,
+      "edge_count": 17,
+      "layers": {
+        "1": 10,
+        "2": 1,
+        "3": 5,
+        "4": 2,
+        "5": 0
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "graph API[candidate_status] nodes/edges == Neo4j stored nodes and ALL stored relationships among them (counts, layers)",
+    "status": "pass",
+    "evidence": {
+      "node_count": 80,
+      "edge_count": 98,
+      "layers": {
+        "1": 25,
+        "2": 4,
+        "3": 17,
+        "4": 10,
+        "5": 24
+      },
+      "missing_in_api": [],
+      "extra_in_api": []
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "reverse trace: business step → rule version → decision → candidate → correction → model output → source span (UI-independent /path == Cypher chain)",
+    "status": "pass",
+    "evidence": {
+      "run_step": "step_a4920d1256274c3db4d14c561ed044d4",
+      "chains": [
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_88104cfdf04742de93884ec0aa95a41f",
+          "o": "mout_b896ac7666e045a297e3424e1a3654c9",
+          "e": "esp_00bcd34b6147453d9ce1aa6d1bfde782"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f53eaee7e65f4d4a97866d464f631bec",
+          "o": "mout_1c4e0b450f0742c3b8096da917a7e74b",
+          "e": "esp_5406be984af944e2b3032d16c1f079fe"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f3c482e76e094ce5825c7264717b5d06",
+          "o": "mout_745e1a145a844068af3af7d022fcd032",
+          "e": "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+        }
+      ],
+      "api_paths_with_span": 3
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "forward trace: source span → model output → correction → candidate → decision → rule version → business step (rule applied to the new request)",
+    "status": "pass",
+    "evidence": {
+      "span": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+      "downstream_count": 10,
+      "reaches_step": "step_a4920d1256274c3db4d14c561ed044d4",
+      "path": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+        "mout_b896ac7666e045a297e3424e1a3654c9",
+        "cor_88104cfdf04742de93884ec0aa95a41f",
+        "cand_79f6d9ca44e33854681ab0b0",
+        "rdec_65ada79162344602b90a1ae72c736684",
+        "R-FEASIBILITY-01@1",
+        "step_a4920d1256274c3db4d14c561ed044d4"
+      ]
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "X06",
+    "step": "node detail refs carry the same IDs as Flow/Learning (request_id, run_id, step_id, rule_id, rule_version, config_version)",
+    "status": "pass",
+    "evidence": {
+      "refs": {
+        "run_id": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+        "request_id": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+        "step_id": "step_a4920d1256274c3db4d14c561ed044d4"
+      },
+      "source_link_null_without_can_read_source": true
+    },
+    "at": "2026-10-03T12:35:32Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "text-only request (0 attachments): judgment map evidence layer shows the chat EvidenceSpan nodes cited by the run (API span node ids ⊇ Cypher CITES targets, ⊆ stored spans of the request)",
+    "status": "fail",
+    "evidence": {
+      "request": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+      "attachments": 0,
+      "stored_spans": 2,
+      "cited_by_run": [
+        "esp_c9e7262214c943eabe7a37e332f75154"
+      ],
+      "api_span_nodes": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+        "esp_5406be984af944e2b3032d16c1f079fe",
+        "esp_c9e7262214c943eabe7a37e332f75154",
+        "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+      ],
+      "layer1": {
+        "layer": 1,
+        "name": "근거",
+        "desc": "문서 구간 · 모델 반환값 · 사람 수정",
+        "count": 37
+      },
+      "sources": [
+        "chat"
+      ]
+    },
+    "at": "2026-10-03T12:35:41Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "business step → rule version → decision → candidate → correction → model output → chat EvidenceSpan: Cypher chain == /graph/judgment/path (UI-independent)",
+    "status": "pass",
+    "evidence": {
+      "step": "step_a4920d1256274c3db4d14c561ed044d4",
+      "chains": [
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_88104cfdf04742de93884ec0aa95a41f",
+          "o": "mout_b896ac7666e045a297e3424e1a3654c9",
+          "e": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f53eaee7e65f4d4a97866d464f631bec",
+          "o": "mout_1c4e0b450f0742c3b8096da917a7e74b",
+          "e": "esp_5406be984af944e2b3032d16c1f079fe",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f3c482e76e094ce5825c7264717b5d06",
+          "o": "mout_745e1a145a844068af3af7d022fcd032",
+          "e": "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+          "source": "chat"
+        }
+      ],
+      "api_paths": 19
+    },
+    "at": "2026-10-03T12:35:41Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "text-only request (0 attachments): judgment map evidence layer shows the chat EvidenceSpan nodes cited by the run (API span node ids ⊇ Cypher CITES targets of the run; extra nodes = spans of the rule's supporting corrections)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+      "attachments": 0,
+      "stored_spans": 2,
+      "cited_by_run": [
+        "esp_c9e7262214c943eabe7a37e332f75154"
+      ],
+      "api_span_nodes": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+        "esp_5406be984af944e2b3032d16c1f079fe",
+        "esp_c9e7262214c943eabe7a37e332f75154",
+        "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+      ],
+      "support_correction_spans": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+        "esp_5406be984af944e2b3032d16c1f079fe",
+        "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+      ],
+      "layer1": {
+        "layer": 1,
+        "name": "근거",
+        "desc": "문서 구간 · 모델 반환값 · 사람 수정",
+        "count": 37
+      },
+      "sources": [
+        "chat"
+      ]
+    },
+    "at": "2026-10-03T12:35:53Z"
+  },
+  {
+    "gate": "EVID",
+    "step": "business step → rule version → decision → candidate → correction → model output → chat EvidenceSpan: Cypher chain == /graph/judgment/path (UI-independent)",
+    "status": "pass",
+    "evidence": {
+      "step": "step_a4920d1256274c3db4d14c561ed044d4",
+      "chains": [
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_88104cfdf04742de93884ec0aa95a41f",
+          "o": "mout_b896ac7666e045a297e3424e1a3654c9",
+          "e": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f53eaee7e65f4d4a97866d464f631bec",
+          "o": "mout_1c4e0b450f0742c3b8096da917a7e74b",
+          "e": "esp_5406be984af944e2b3032d16c1f079fe",
+          "source": "chat"
+        },
+        {
+          "step": "step_a4920d1256274c3db4d14c561ed044d4",
+          "rv": "R-FEASIBILITY-01@1",
+          "d": "rdec_65ada79162344602b90a1ae72c736684",
+          "c": "cand_79f6d9ca44e33854681ab0b0",
+          "cor": "cor_f3c482e76e094ce5825c7264717b5d06",
+          "o": "mout_745e1a145a844068af3af7d022fcd032",
+          "e": "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+          "source": "chat"
+        }
+      ],
+      "api_paths": 19
+    },
+    "at": "2026-10-03T12:35:53Z"
+  },
+  {
+    "gate": "F5",
+    "step": "human candidate without supporting corrections is stored as '자료 부족' (UI approval target)",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_0c4749cc88828c487a3d8ead",
+      "status": "자료 부족"
+    },
+    "at": "2026-10-03T12:37:33Z"
+  },
+  {
+    "gate": "X07",
+    "step": "in-flight run started before the stop keeps the pinned (old) Config version and still applies the rule",
+    "status": "fail",
+    "evidence": {
+      "request": "req_4f64895718614271894b4fb1193202ff",
+      "run": "run_6c83a7f407af47c98dd6d9aefd71e746",
+      "run_status_when_stop_called": {
+        "id": "run_6c83a7f407af47c98dd6d9aefd71e746",
+        "status": "pending",
+        "cfg": null
+      },
+      "run_config_version": 5,
+      "stop_config_version": 5,
+      "applied": [
+        {
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "out_of_scope"
+        },
+        {
+          "rule": "R-FEASIBILITY-01@1",
+          "outcome": "out_of_scope"
+        }
+      ],
+      "judgment_committed": "2026-10-03T12:42:30.234Z",
+      "ai_need": "불필요"
+    },
+    "at": "2026-10-03T12:42:30Z"
+  },
+  {
+    "gate": "X07",
+    "step": "after stop: active rules lack the rule; new request has no APPLIED for it and keeps the model value (불필요)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_86170fbfe48e4a668f38914f738360d4",
+      "run": "run_521d9511612545ce82e4770a937a81e0",
+      "active_config": 5,
+      "active_rules": [
+        "R-LEAD_ORG-01@1",
+        "R-FEASIBILITY-01@1"
+      ],
+      "applied": [
+        {
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "out_of_scope"
+        },
+        {
+          "rule": "R-FEASIBILITY-01@1",
+          "outcome": "out_of_scope"
+        }
+      ],
+      "ai_need": "불필요"
+    },
+    "at": "2026-10-03T12:42:34Z"
+  },
+  {
+    "gate": "X07",
+    "step": "publish v2 then revert to v1 = new Config versions each; v2 used before, v1 used after (APPLIED rule_version), Config pinned per run",
+    "status": "pass",
+    "evidence": {
+      "stop_cfg": 5,
+      "v2_cfg": 6,
+      "revert_cfg": 7,
+      "v2_request": {
+        "req": "req_ffb17c16c9b545beb734728696da558a",
+        "applied": [
+          {
+            "rule": "R-LEAD_ORG-01@1",
+            "outcome": "out_of_scope"
+          },
+          {
+            "rule": "R-FEASIBILITY-01@1",
+            "outcome": "out_of_scope"
+          },
+          {
+            "rule": "R-AI_NEED-01@2",
+            "outcome": "used"
+          }
+        ]
+      },
+      "revert_request": {
+        "req": "req_e69c48ef3dfa45c88198a8451420164c",
+        "applied": [
+          {
+            "rule": "R-AI_NEED-01@1",
+            "outcome": "used"
+          },
+          {
+            "rule": "R-LEAD_ORG-01@1",
+            "outcome": "out_of_scope"
+          },
+          {
+            "rule": "R-FEASIBILITY-01@1",
+            "outcome": "out_of_scope"
+          }
+        ]
+      },
+      "rule_version_status": [
+        {
+          "v": 1,
+          "s": "published"
+        },
+        {
+          "v": 2,
+          "s": "reverted"
+        }
+      ],
+      "active_rules": [
+        "R-LEAD_ORG-01@1",
+        "R-FEASIBILITY-01@1",
+        "R-AI_NEED-01@1"
+      ]
+    },
+    "at": "2026-10-03T12:42:44Z"
+  },
+  {
+    "gate": "X07",
+    "step": "past records unchanged: earlier APPLIED rows (before/after/outcome), earlier Judgments (hash), earlier Config versions identical",
+    "status": "pass",
+    "evidence": {
+      "applied_rows_before": 39,
+      "applied_rows_now": 39,
+      "judgments_checked": 24,
+      "config_versions_checked": 4
+    },
+    "at": "2026-10-03T12:42:44Z"
+  },
+  {
+    "gate": "X07",
+    "step": "(retest) run in flight when the stop was published keeps the pinned old Config version and applies the rule; the stop is a new Config version",
+    "status": "pass",
+    "evidence": {
+      "attempt": 1,
+      "request": "req_e8f1978855af49d9be5425991e13d20f",
+      "run": "run_6a589d0855d74739b6ebbf4fc5ce3228",
+      "state_when_stop_called": {
+        "id": "run_6a589d0855d74739b6ebbf4fc5ce3228",
+        "status": "running",
+        "cfg": 7,
+        "committed": false
+      },
+      "active_config_before_stop": 7,
+      "stop_config": 8,
+      "run_config_version": 7,
+      "judgment_committed_at": "2026-10-03T12:42:48.669Z",
+      "applied": [
+        {
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "used",
+          "before": "\"불필요\"",
+          "after": "\"필요\""
+        },
+        {
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"IT팀\"",
+          "after": "\"IT팀\""
+        },
+        {
+          "rule": "R-FEASIBILITY-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"정보 부족\"",
+          "after": "\"정보 부족\""
+        }
+      ],
+      "ai_need": "필요"
+    },
+    "at": "2026-10-03T12:42:49Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest 2: shadow-only fields excluded) SLO/summary denominators and alerts unchanged by shadow; shadow counted only in shadow_runs/kinds.shadow_validation",
+    "status": "pass",
+    "evidence": {
+      "nonzero_denominators": {
+        "valid_calls": 55,
+        "requests_received": 37,
+        "eligible_requests": 37
+      },
+      "shadow_runs": [
+        4,
+        5
+      ],
+      "before_hash": "c7f33075398529af",
+      "after_hash": "c7f33075398529af",
+      "validation": "val_84f211ef173545f4929360f37b2cd600",
+      "side_effects": 0,
+      "diff": []
+    },
+    "at": "2026-10-03T12:42:58Z"
+  },
+  {
+    "gate": "X04",
+    "step": "(retest) protected nodes and active_run_id pointers identical across the second shadow validation",
+    "status": "pass",
+    "evidence": {
+      "protected": {
+        "Task": {
+          "count": 29,
+          "sha256": "e2894d895be6aef4"
+        },
+        "Assignment": {
+          "count": 19,
+          "sha256": "dcd9403dc1fd8378"
+        },
+        "Review": {
+          "count": 37,
+          "sha256": "67d284f4d6311cd9"
+        },
+        "ReviewDecision": {
+          "count": 19,
+          "sha256": "924cb11e65f1bfb6"
+        },
+        "Event": {
+          "count": 597,
+          "sha256": "d902eefee7b59147"
+        },
+        "Request": {
+          "count": 37,
+          "sha256": "33c750e1a1881e89"
+        },
+        "Judgment": {
+          "count": 37,
+          "sha256": "1f3e70e09f958056"
+        },
+        "Correction": {
+          "count": 11,
+          "sha256": "b4504e5105de637c"
+        }
+      },
+      "pointers": 37
+    },
+    "at": "2026-10-03T12:42:58Z"
+  },
+  {
+    "gate": "X04",
+    "step": "journal records the shadow validation with run_kind='shadow'",
+    "status": "pass",
+    "evidence": {
+      "journal_rows": [
+        {
+          "kind": "shadow_validation",
+          "run_kind": "shadow"
+        }
+      ]
+    },
+    "at": "2026-10-03T12:42:58Z"
+  },
+  {
+    "gate": "F5",
+    "step": "browser approval of the 자료 부족 candidate stored: decision.insufficient_approved=true with a ≥10-char reason, rule version (validating) created, API shows the label",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_0c4749cc88828c487a3d8ead",
+      "decision": [
+        {
+          "id": "rdec_84495d2d93af4a2083f886cb6bfe97cc",
+          "ins": true,
+          "reason": "T38-R 화면 시험: 지지 수정 0건 확인",
+          "by": "usr_t-x38r-10031227_rule_admin"
+        }
+      ],
+      "versions": [
+        {
+          "id": "R-AI_NEED-03@1",
+          "status": "validating"
+        }
+      ],
+      "label": "자료 부족 상태로 승인됨",
+      "status": "approved"
+    },
+    "at": "2026-10-03T12:43:13Z"
+  },
+  {
+    "gate": "X03",
+    "step": "rule_admin rejects a candidate: decision+audit recorded, status rejected; approval after rejection and version creation refused; no RuleVersion/Config change",
+    "status": "pass",
+    "evidence": {
+      "candidate": "cand_c17cccefbccbc8ec2ba3f9c2",
+      "reject": 200,
+      "approve_after_reject": [
+        409,
+        "{\"detail\":{\"code\":\"CANDIDATE_REJECTED\",\"reason\":\"기각된 후보입니다.\"}}"
+      ],
+      "create_version_after_reject": [
+        409,
+        "{\"detail\":{\"code\":\"CANDIDATE_REJECTED\",\"reason\":\"기각된 후보에서 규칙을 만들 수 없습니다.\"}}"
+      ],
+      "db": [
+        {
+          "a": "reject",
+          "by": "usr_t-x38r-10031227_rule_admin",
+          "r": "T38: 근거 부족으로 기각",
+          "s": "rejected"
+        }
+      ],
+      "audit": [
+        [
+          "rule.decision",
+          "usr_t-x38r-10031227_rule_admin",
+          "T38: 근거 부족으로 기각"
+        ]
+      ]
+    },
+    "at": "2026-10-03T12:43:13Z"
+  },
+  {
+    "gate": "X08",
+    "step": "API server + worker + collector restarted: DB truth and public API snapshot before/after differ in 0 fields (candidates, decisions, rule versions, relations, APPLIED rows, validation cards, configs, graph, effects)",
+    "status": "pass",
+    "evidence": {
+      "differences": [],
+      "difference_count": 0,
+      "compared": {
+        "db": {
+          "applied": 52,
+          "candidates": 6,
+          "chat_spans": 102,
+          "configs": 9,
+          "corrections": 11,
+          "inv_applied": 2,
+          "rule_versions": 6,
+          "shadow_runs": 5,
+          "validations": 5
+        },
+        "api_candidates": 6,
+        "api_rules": 5,
+        "graph_criteria": 6,
+        "graph_nodes": {
+          "candidate_status": 94,
+          "config_2": 18,
+          "request": 58,
+          "rule2": 23,
+          "rule_ai_need": 47,
+          "run": 58
+        },
+        "graph_edges": {
+          "candidate_status": 119,
+          "config_2": 17,
+          "request": 56,
+          "rule2": 22,
+          "rule_ai_need": 46,
+          "run": 56
+        },
+        "judgments": 9
+      },
+      "pre_sha": "eee93324f597d0fe",
+      "post_sha": "eee93324f597d0fe"
+    },
+    "at": "2026-10-03T12:45:13Z"
+  },
+  {
+    "gate": "X08",
+    "step": "after restart the new worker processes a new request under the active Config and applies the restored rule (APPLIED recorded)",
+    "status": "pass",
+    "evidence": {
+      "request": "req_01626ab5ff9e4a64bd4620528eaf53dd",
+      "run": "run_ca76571f8f02467bb1f80045c8299d93",
+      "active_config": 9,
+      "applied": [
+        {
+          "rule": "R-AI_NEED-01@1",
+          "outcome": "used",
+          "before": "\"불필요\"",
+          "after": "\"필요\""
+        },
+        {
+          "rule": "R-LEAD_ORG-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"IT팀\"",
+          "after": "\"IT팀\""
+        },
+        {
+          "rule": "R-FEASIBILITY-01@1",
+          "outcome": "out_of_scope",
+          "before": "\"정보 부족\"",
+          "after": "\"정보 부족\""
+        }
+      ],
+      "ai_need": "필요"
+    },
+    "at": "2026-10-03T12:45:17Z"
+  },
+  {
+    "gate": "X08",
+    "step": "after restart + one new request, stored learning state is unchanged (corrections, candidates, rule versions, validations, Configs equal) and graph differences are only the new request's own nodes (none removed)",
+    "status": "fail",
+    "evidence": {
+      "unchanged_db": {
+        "corrections": true,
+        "candidates": true,
+        "rule_versions": false,
+        "validations": true,
+        "configs": true
+      },
+      "removed": {
+        "candidate_status": [],
+        "config_2": [],
+        "request": [],
+        "rule2": [],
+        "rule_ai_need": [],
+        "run": []
+      },
+      "added_not_owned_by_new_request": {
+        "candidate_status": [],
+        "config_2": [],
+        "request": [],
+        "rule2": [],
+        "rule_ai_need": [],
+        "run": []
+      },
+      "new_request": "req_01626ab5ff9e4a64bd4620528eaf53dd"
+    },
+    "at": "2026-10-03T12:46:33Z"
+  },
+  {
+    "gate": "X08",
+    "step": "after restart + one new request, stored learning state is unchanged (corrections, candidates, rule versions, validations, Configs equal) and graph differences are only the new request's own nodes (none removed)",
+    "status": "pass",
+    "evidence": {
+      "unchanged_db": {
+        "corrections": true,
+        "candidates": true,
+        "validations": true,
+        "configs": true,
+        "rule_versions(id,status,body,configs)": true
+      },
+      "removed": {
+        "candidate_status": [],
+        "config_2": [],
+        "request": [],
+        "rule2": [],
+        "rule_ai_need": [],
+        "run": []
+      },
+      "added_not_owned_by_new_request": {
+        "candidate_status": [],
+        "config_2": [],
+        "request": [],
+        "rule2": [],
+        "rule_ai_need": [],
+        "run": []
+      },
+      "new_request": "req_01626ab5ff9e4a64bd4620528eaf53dd",
+      "application_count_growth_per_rule_version": {
+        "R-AI_NEED-01@1": 1,
+        "R-AI_NEED-01@2": 0,
+        "R-AI_NEED-02@1": 0,
+        "R-AI_NEED-03@1": 0,
+        "R-FEASIBILITY-01@1": 1,
+        "R-LEAD_ORG-01@1": 1
+      }
+    },
+    "at": "2026-10-03T12:46:54Z"
+  },
+  {
+    "gate": "F6",
+    "step": "every ValidationRun has its own shadow Run (id run_shadow_*, run_kind=shadow, != ValidationRun id); no Run shares a ValidationRun id; journal shadow rows are keyed by the shadow run id and tagged run_kind=shadow",
+    "status": "pass",
+    "evidence": {
+      "validations": [
+        {
+          "validation": "val_ae2b8a074e3d412aa003c57a6efab5d4",
+          "shadow_run": "run_shadow_a61b92f4dda34dd994dc11f709618207",
+          "rule": "R-AI_NEED-01@1"
+        },
+        {
+          "validation": "val_e8697532f8bc4b8cabcee5205d372aba",
+          "shadow_run": "run_shadow_1335947c489b4ab297ef717994dc285b",
+          "rule": "R-LEAD_ORG-01@1"
+        },
+        {
+          "validation": "val_c9703714627f4b33862c115123f71ef8",
+          "shadow_run": "run_shadow_f9db69bc78d746e9a6ca6b4fd3c1e7c0",
+          "rule": "R-FEASIBILITY-01@1"
+        },
+        {
+          "validation": "val_7c3f38b9de3c4741b418b6198f00fcdd",
+          "shadow_run": "run_shadow_a3d841b58f5b473e9239dad250463c8b",
+          "rule": "R-AI_NEED-01@2"
+        },
+        {
+          "validation": "val_84f211ef173545f4929360f37b2cd600",
+          "shadow_run": "run_shadow_1c4da96d22864289a184d87e3f5151af",
+          "rule": "R-AI_NEED-02@1"
+        }
+      ],
+      "id_clashes": 0,
+      "journal_rows_for_tenant": 5
+    },
+    "at": "2026-10-03T12:47:14Z"
+  },
+  {
+    "gate": "X04",
+    "step": "ValidationRun (POST result == GET API == DB): conditions, sample counts, side_effects=0, run_kind=shadow",
+    "status": "pass",
+    "evidence": {
+      "retest_of_first_attempt": "first attempt looked up Run by ValidationRun id (stale after the F6 id split); retested via HAS_SHADOW_RUN",
+      "validation": "val_ae2b8a074e3d412aa003c57a6efab5d4",
+      "shadow_run": "run_shadow_a61b92f4dda34dd994dc11f709618207",
+      "api_equals_db": {
+        "sample_count": true,
+        "labeled_count": true,
+        "changed_count": true,
+        "side_effects": true,
+        "status": true,
+        "run_kind": true,
+        "base_config_version": true,
+        "candidate_config_version": true,
+        "max_calls": true,
+        "calls": true,
+        "human_correction_needed_base": true,
+        "human_correction_needed_candidate": true
+      }
+    },
+    "at": "2026-10-03T12:47:14Z"
+  },
+  {
+    "gate": "X10",
+    "step": "observe playback/flow/topology of stored runs (with rule steps): no node created/changed (13 labels, count+property hash); observe module imports no Jev client (grep)",
+    "status": "pass",
+    "evidence": {
+      "calls": [
+        [
+          "playback",
+          200
+        ],
+        [
+          "flow",
+          200
+        ],
+        [
+          "topology",
+          200
+        ],
+        [
+          "playback",
+          200
+        ],
+        [
+          "flow",
+          200
+        ],
+        [
+          "topology",
+          200
+        ]
+      ],
+      "snapshot": {
+        "Task": {
+          "count": 29,
+          "sha256": "e2894d895be6aef4"
+        },
+        "Assignment": {
+          "count": 19,
+          "sha256": "dcd9403dc1fd8378"
+        },
+        "Review": {
+          "count": 38,
+          "sha256": "66e66aba12b1763f"
+        },
+        "ReviewDecision": {
+          "count": 19,
+          "sha256": "924cb11e65f1bfb6"
+        },
+        "Event": {
+          "count": 613,
+          "sha256": "a1893c4bd9a47fcf"
+        },
+        "Request": {
+          "count": 38,
+          "sha256": "d3fab69257f91f53"
+        },
+        "Judgment": {
+          "count": 38,
+          "sha256": "98f9cc5a27f63fb2"
+        },
+        "Correction": {
+          "count": 11,
+          "sha256": "b4504e5105de637c"
+        },
+        "RunStep": {
+          "count": 266,
+          "sha256": "3c26dd4eafbfd2ef"
+        },
+        "Run": {
+          "count": 43,
+          "sha256": "c224d6b85c60737e"
+        },
+        "ModelOutput": {
+          "count": 418,
+          "sha256": "7ab6df757cd4a1b6"
+        },
+        "RuleVersion": {
+          "count": 6,
+          "sha256": "232c6d7ca4f4ecf4"
+        },
+        "ConfigVersion": {
+          "count": 9,
+          "sha256": "789bf974a3564fc1"
+        }
+      }
+    },
+    "at": "2026-10-03T12:47:14Z"
+  },
+  {
+    "gate": "F7",
+    "step": "Flow nodes and step detail serialise started_at/ended_at as ISO-8601 strings (no `_DateTime__` internals)",
+    "status": "pass",
+    "evidence": {
+      "run": "run_2c5c765f9cbc4211b33f06e883bd0552",
+      "nodes": 8,
+      "sample": [
+        [
+          "step_7dde2055fd904545b9698b8c6e84c717",
+          "2026-10-03T12:29:18.162000000+00:00",
+          "2026-10-03T12:29:18.238000000+00:00"
+        ],
+        [
+          "step_b70923f5d4d540409e2392221e6c4367",
+          "2026-10-03T12:29:18.138000000+00:00",
+          "2026-10-03T12:29:18.150000000+00:00"
+        ]
+      ],
+      "bad": []
+    },
+    "at": "2026-10-03T12:59:46Z"
+  }
+]

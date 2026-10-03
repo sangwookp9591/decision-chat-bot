@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="34" time="204.578" timestamp="2026-10-03T19:36:45.761560+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s1_general_technical_csv_monthly_aggregation" time="4.769" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_core_classifications_have_locatable_evidence" time="6.438" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_thin_one_line_input_reports_missing_evidence_not_fake_evidence" time="3.069" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_mixed_forecast_and_alert_tasks_linked_after_approval" time="3.228" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_predecessor_relations_become_stored_precedes_edges" time="3.388" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s3_urgent_request_reason_review_and_priority" time="6.198" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s4_missing_data_permission_approval_no_unapproved_execution" time="3.148" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_documents_pdf_docx_md_with_one_damaged_file" time="12.194"><failure message="AssertionError: judgment citations cover only ['returns.pdf', 'rooms.md']&#10;assert {'returns.pdf', 'rooms.md'} == {'approval.do...', 'rooms.md'}&#10;  &#10;  Extra items in the right set:&#10;  'approval.docx'&#10;  Use -v to get more diff">users = {'operator': &lt;tests.acceptance.harness.Client object at 0x10e8009d0&gt;, 'operator_source': &lt;tests.acceptance.harness.Cli...rness.Client object at 0x1096e3750&gt;, 'outsider_reviewer': &lt;tests.acceptance.harness.Client object at 0x1096e3e50&gt;, ...}
+
+    def test_s5_documents_pdf_docx_md_with_one_damaged_file(users):
+        rq, sr = users["requester"], users["source_reader"]
+        r = rq.submit("세 문서의 요청 내용을 함께 검토해 주세요.", _doc_files())
+        assert r.status_code == 202 and r.json()["status"] == "needs_file_decision"
+        rid = r.json()["request_id"]
+        time.sleep(1)
+        d = rq.detail(rid)
+        atts = {a["filename"]: a for a in d["attachments"]}
+        assert atts["broken.pdf"]["status"] == "rejected" and atts["broken.pdf"]["reason"] == "corrupted"
+        assert all(atts[n]["status"] == "ok" for n in ("returns.pdf", "approval.docx", "rooms.md"))
+        # no silent ignore: no run/job until the requester picks include/exclude explicitly
+        assert counts(TENANT, rid)["runs"] == 0
+        # per-file extraction with locations (stored spans); source text only for source readers
+        spans = db_read(TENANT, "MATCH (e:EvidenceSpan {tenant_id:$tenant,request_id:$rid}) "
+                        "RETURN e.attachment_id AS att,e.location_json AS loc,e.source_text AS txt", rid=rid)
+        by_file = {}
+        for s in spans:
+            name = next(a["filename"] for a in d["attachments"] if a["id"] == s["att"])
+            by_file.setdefault(name, []).append(s)
+        assert {"returns.pdf", "approval.docx", "rooms.md"} &lt;= set(by_file)
+        assert any("PDFMARKER7731" in s["txt"] for s in by_file["returns.pdf"])
+        assert any("DOCXMARKER4482" in s["txt"] for s in by_file["approval.docx"])
+        assert any("MDMARKER9915" in s["txt"] for s in by_file["rooms.md"])
+        assert all(s["loc"] for ss in by_file.values() for s in ss)
+        # explicit exclusion of the damaged file -&gt; new revision + judgment
+        res = rq.post(f"/api/requests/{rid}/file-decision",
+                      json={"exclude": [atts["broken.pdf"]["id"]], "expected_revision": 1})
+        assert res.status_code == 202 and res.json()["revision"] == 2
+        d = rq.wait(rid)
+        j = judgment(sr, rid)
+        _assert_judgment_shape(j)
+        excluded = [a for a in d["attachments"] if a.get("excluded")]
+        assert [a["filename"] for a in excluded] == ["broken.pdf"]
+        # source readers can open stored per-file source spans; plain requester cannot read operator-only text
+        span = next(s for s in db_read(TENANT, "MATCH (e:EvidenceSpan {tenant_id:$tenant,request_id:$rid}) "
+                                       "RETURN e.id AS id,e.source_text AS txt", rid=rid)
+                    if "PDFMARKER7731" in s["txt"])
+        assert sr.get(f"/api/requests/{rid}/evidence/{span['id']}").status_code in (200, 404)
+        cited_files = {a["filename"] for o in j["outputs"] for e in o["evidence"]
+                       for a in d["attachments"] if a["id"] == e["attachment_id"]}
+        record("s5", {"request_id": rid, "run_id": j["run_id"], "stored_spans_per_file":
+                      {k: len(v) for k, v in by_file.items()}, "excluded": ["broken.pdf"],
+                      "files_cited_by_judgment": sorted(cited_files),
+                      "review_reasons": j["review_reasons"]})
+&gt;       assert cited_files == {"returns.pdf", "approval.docx", "rooms.md"}, (
+            f"judgment citations cover only {sorted(cited_files)}")
+E       AssertionError: judgment citations cover only ['returns.pdf', 'rooms.md']
+E       assert {'returns.pdf', 'rooms.md'} == {'approval.do...', 'rooms.md'}
+E         
+E         Extra items in the right set:
+E         'approval.docx'
+E         Use -v to get more diff
+
+tests/acceptance/acc_a_scenarios.py:315: AssertionError</failure></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reviewer_correction_preserves_original_and_final" time="3.361" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reject_and_request_info_are_separate" time="6.283" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s7_reanalysis_separates_runs_and_never_duplicates_tasks" time="10.765" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_flow_and_playback_have_no_side_effects" time="7.416" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_failed_run_from_live_jev_rejection[0]" time="3.291" /><testcase classname="tests.acceptance.acc_b_safety" name="test_other_tenant_direct_id_calls_are_404" time="7.888" /><testcase classname="tests.acceptance.acc_b_safety" name="test_same_tenant_other_organisation_is_404" time="0.268" /><testcase classname="tests.acceptance.acc_b_safety" name="test_approval_without_review_permission_is_blocked" time="0.104" /><testcase classname="tests.acceptance.acc_b_safety" name="test_policy_publish_and_rollback_require_policy_editor" time="0.175" /><testcase classname="tests.acceptance.acc_b_safety" name="test_source_text_requires_source_permission" time="0.095" /><testcase classname="tests.acceptance.acc_b_safety" name="test_injection_sentence_in_document_has_no_policy_or_permission_effect" time="6.439" /><testcase classname="tests.acceptance.acc_b_safety" name="test_oversize_count_and_text_limits_rejected_before_any_run" time="0.308" /><testcase classname="tests.acceptance.acc_b_safety" name="test_large_file_parsing_does_not_block_other_requests" time="21.094" /><testcase classname="tests.acceptance.acc_b_safety" name="test_encrypted_damaged_script_and_huge_page_files_are_handled_safely" time="2.543" /><testcase classname="tests.acceptance.acc_b_safety" name="test_repeated_and_concurrent_approvals_create_exactly_one_assignment" time="9.620" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_stays_zero_for_unsafe_requests_under_permissive_policy" time="11.231" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_positive_control_if_live_model_is_confident" time="6.132" /><testcase classname="tests.acceptance.acc_b_safety" name="test_required_review_release_is_rejected_for_publish_and_rollback" time="0.163" /><testcase classname="tests.acceptance.acc_b_safety" name="test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses" time="4.374" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_readme_start_health_ready_meta_intake_and_lookup" time="3.270" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_request_review_task_and_trace_survive_api_and_worker_restart" time="15.665" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_worker_restart_while_judging_completes_exactly_once" time="5.235" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_sse_cut_and_resume_converges_to_persisted_state" time="6.851" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_other_users_events_are_not_delivered" time="8.178" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_summary_matches_a_known_request_set" time="11.539" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_failures_lead_to_trace_and_raise_alerts" time="9.583" /></testsuite></testsuites>

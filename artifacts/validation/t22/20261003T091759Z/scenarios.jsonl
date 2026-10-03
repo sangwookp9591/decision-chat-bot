@@ -1,0 +1,11 @@
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_8d9575c15deb4a3389022884cae49fde", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_429", "status": "pass", "request_id": "req_9af6d261edd24285bb6fda53f9b872fa", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_c244af3a2c7b419cb997f063351df278", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_cd19df5c6be4496c8d6a9603611659b6", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "parser_db_outage", "status": "pass", "damaged_request": "req_6e057ea118434cc384712ce37916fe51", "recovered_request": "req_6656cdeb0b2445e39d1fccca942facc6", "http_status": 503}
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_1386c94a2deb497a9c2adb02ca1af1ae", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 14787, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_c9002e58a00b453aaeb2a6bf6ad079ba", "run_b5c4a97dba404064a2ee5994506d6f67", "run_60c9cfd334e2407998083e4b17104514"]}
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 233, "collected_after": 233}
+{"scenario": "information_wait", "status": "pass", "request_id": "req_c478ff4b17194a3c8ce2d09361204878", "judgment_id": "jdg_f7eb9d68db144191a5286c0bb9698ae3", "outputs": 11}
+{"scenario": "late_recovery", "status": "pass", "request_id": "req_aa6d334ac27049cc811f7cace0c71aee", "first_run": "run_5bf5b9e7af964504af1b306328be9899", "recovery_run": "run_8a2541b1f4874b769b74c147a03008ff", "failed_120s": 7, "late_recoveries": 1, "wait_seconds": 121}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

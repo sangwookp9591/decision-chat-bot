@@ -1,0 +1,19 @@
+{
+  "ended_at": "2026-10-03T10:04:14.648648+00:00",
+  "accepted_by_kind": {
+    "text": 15,
+    "pdf": 4,
+    "docx": 3,
+    "md": 2
+  },
+  "attempted": 25,
+  "sse_rows": 7245,
+  "stop_reason": null,
+  "warmup_estimate": {
+    "warmup_seconds": 5,
+    "completed_requests": 9,
+    "observed_calls": 10,
+    "projected_30m_calls": 24,
+    "calls_per_request": 1.1111111111111112
+  }
+}

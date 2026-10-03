@@ -1,0 +1,5 @@
+{
+ "verdict": "통과",
+ "note": "make test 백엔드 136 통과·1 건너뜀(live 전용)+vitest 37 통과, make test-fault 11/11, make test-acceptance 백엔드 40/40·UI 12/12, 확장 게이트 pytest 9/9",
+ "markdown": "모두 이번 실행 중(2026-10-03, 이 tenant 시나리오 실행 뒤) 저장소 최신 코드로 재실행했다. 추가 환경변수 없음(`make up` 후 실행).\n\n| 명령 | 결과 | 증거 |\n| --- | --- | --- |\n| `make test` | 백엔드 **136 통과·1 건너뜀**(live 전용), 프런트 vitest **37 통과**(11 파일) | `logs/make-test.log` |\n| `make test-fault` (전용 컨테이너 7688) | **11/11 통과**(187.5초) | `artifacts/validation/t22/20261003T124810Z/`(junit.xml, report.md), `logs/make-test-fault.log` |\n| `make test-acceptance` (ACC_PORT=8143, ACC_UI_PORT=5443, live Jev) | 백엔드 **40/40 통과**·UI(Playwright) **12/12 통과**, exit 0 | `artifacts/validation/t21/20261003t125137z-27336/`(junit.xml, ui-results.json), `logs/make-test-acceptance.log` |\n| `X38_RUN=1 pytest tests/acceptance/extension` (확장 게이트 원장 검사) | **9 통과** | 이 폴더 `ledger.json` |\n| `npx tsc --noEmit`(frontend) | 오류 없음 | — |\n\n기존 게이트(G01–G12) 판정은 T27 소관이며 여기서는 재실행 결과만 인용한다."
+}

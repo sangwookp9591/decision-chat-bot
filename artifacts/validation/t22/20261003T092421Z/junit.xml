@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="17.785" timestamp="2026-10-03T18:24:33.924894+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.fault.scenarios" name="test_worker_handoff_and_kill_recovery" time="17.433" /></testsuite></testsuites>

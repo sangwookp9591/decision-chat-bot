@@ -1,0 +1,383 @@
+{
+  "aggregate": {
+    "classifications": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업"
+    },
+    "raw_model_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "ai_need": {
+          "type": "choice",
+          "choice": "필요",
+          "confidence": 0.27,
+          "probabilities": {
+            "불필요": 0.36,
+            "필요": 0.45,
+            "정보 부족": 0.17,
+            "혼합": 0.02
+          }
+        },
+        "feasibility": {
+          "type": "choice",
+          "choice": "가능",
+          "confidence": 0.39,
+          "probabilities": {
+            "가능": 0.54,
+            "정보 부족": 0.25,
+            "조건부 가능": 0.11,
+            "현재 불가": 0.1
+          }
+        },
+        "urgency": {
+          "type": "choice",
+          "choice": "일반",
+          "confidence": 0.93,
+          "probabilities": {
+            "긴급": 0.0,
+            "일반": 0.95,
+            "판단 보류": 0.05
+          }
+        },
+        "lead_org": {
+          "type": "choice",
+          "choice": "현업",
+          "confidence": 0.38,
+          "probabilities": {
+            "AI팀": 0.02,
+            "IT팀": 0.11,
+            "현업": 0.53,
+            "판단 보류": 0.34
+          }
+        },
+        "ai_team_involvement": {
+          "type": "noul",
+          "noul": 0.25
+        },
+        "it_team_involvement": {
+          "type": "noul",
+          "noul": 0.31
+        },
+        "business_involvement": {
+          "type": "noul",
+          "noul": 0.32
+        },
+        "clinical_safety": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "pharmacovigilance": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "regulatory": {
+          "type": "noul",
+          "noul": 0.1
+        },
+        "review_signal": {
+          "type": "score",
+          "score": 0.05,
+          "confidence": 0.92,
+          "legend": {
+            "0": "Low",
+            "1": "Moderate",
+            "2": "High"
+          },
+          "probabilities": {
+            "0": 0.96,
+            "1": 0.03,
+            "2": 0.01
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 971,
+        "output_tokens": 329
+      },
+      "mode": "live",
+      "latency_ms": 415.5955000023823,
+      "attempts": 1
+    },
+    "evidence": {
+      "ai_need": [],
+      "feasibility": [],
+      "urgency": [],
+      "lead_org": []
+    },
+    "summary": {
+      "text": "월별 매출 데이터를 집계해 부서별 리포트로 제공한다.",
+      "author": "code:extractive@1"
+    },
+    "draft_tasks": [],
+    "review_reasons": [
+      "입력 확정 미완료",
+      "업무 초안 없음",
+      "정책에서 자동 배정 비허용"
+    ],
+    "eligibility": {
+      "allowed": false,
+      "reasons": [
+        "입력 확정 미완료",
+        "업무 초안 없음",
+        "정책에서 자동 배정 비허용"
+      ]
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v1",
+      "catalog": "catalog-v1",
+      "schema": "judgment-v1"
+    },
+    "usage": {
+      "input_tokens": 971,
+      "output_tokens": 329,
+      "latency_ms": 415.5955000023823,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "decomposition_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "needed_data_review": {
+          "type": "noul",
+          "noul": 0.43
+        },
+        "needed_requirements": {
+          "type": "noul",
+          "noul": 0.42
+        },
+        "needed_ai_assessment": {
+          "type": "noul",
+          "noul": 0.42
+        },
+        "needed_integration": {
+          "type": "noul",
+          "noul": 0.44
+        },
+        "needed_reporting": {
+          "type": "noul",
+          "noul": 0.44
+        },
+        "needed_alerts": {
+          "type": "noul",
+          "noul": 0.41
+        },
+        "needed_security": {
+          "type": "noul",
+          "noul": 0.44
+        },
+        "needed_operations": {
+          "type": "noul",
+          "noul": 0.43
+        },
+        "needed_regulatory": {
+          "type": "noul",
+          "noul": 0.41
+        }
+      },
+      "usage": {
+        "input_tokens": 746,
+        "output_tokens": 169
+      },
+      "mode": "live",
+      "latency_ms": 218.42520800419152,
+      "attempts": 1
+    }
+  },
+  "forecast_alert": {
+    "classifications": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업"
+    },
+    "raw_model_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "ai_need": {
+          "type": "choice",
+          "choice": "불필요",
+          "confidence": 0.43,
+          "probabilities": {
+            "정보 부족": 0.1,
+            "혼합": 0.02,
+            "불필요": 0.58,
+            "필요": 0.3
+          }
+        },
+        "feasibility": {
+          "type": "choice",
+          "choice": "가능",
+          "confidence": 0.64,
+          "probabilities": {
+            "조건부 가능": 0.07,
+            "현재 불가": 0.04,
+            "가능": 0.73,
+            "정보 부족": 0.16
+          }
+        },
+        "urgency": {
+          "type": "choice",
+          "choice": "일반",
+          "confidence": 0.88,
+          "probabilities": {
+            "일반": 0.92,
+            "긴급": 0.01,
+            "판단 보류": 0.07
+          }
+        },
+        "lead_org": {
+          "type": "choice",
+          "choice": "현업",
+          "confidence": 0.41,
+          "probabilities": {
+            "현업": 0.55,
+            "AI팀": 0.04,
+            "IT팀": 0.06,
+            "판단 보류": 0.35
+          }
+        },
+        "ai_team_involvement": {
+          "type": "noul",
+          "noul": 0.19
+        },
+        "it_team_involvement": {
+          "type": "noul",
+          "noul": 0.2
+        },
+        "business_involvement": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "clinical_safety": {
+          "type": "noul",
+          "noul": 0.07
+        },
+        "pharmacovigilance": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "regulatory": {
+          "type": "noul",
+          "noul": 0.19
+        },
+        "review_signal": {
+          "type": "score",
+          "score": 0.21,
+          "confidence": 0.69,
+          "legend": {
+            "0": "Low",
+            "1": "Moderate",
+            "2": "High"
+          },
+          "probabilities": {
+            "0": 0.84,
+            "1": 0.1,
+            "2": 0.06
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 983,
+        "output_tokens": 330
+      },
+      "mode": "live",
+      "latency_ms": 213.3327499977895,
+      "attempts": 1
+    },
+    "evidence": {
+      "ai_need": [],
+      "feasibility": [],
+      "urgency": [],
+      "lead_org": [
+        {
+          "unit_id": "chat:0",
+          "text": "수요 예측 결과가 기준을 넘으면 운영 담당자에게 알림을 보낸다.",
+          "probability": 0.66,
+          "author": "jev:jev-1.13.0"
+        }
+      ]
+    },
+    "summary": {
+      "text": "수요 예측 결과가 기준을 넘으면 운영 담당자에게 알림을 보낸다.",
+      "author": "code:extractive@1"
+    },
+    "draft_tasks": [],
+    "review_reasons": [
+      "입력 확정 미완료",
+      "업무 초안 없음",
+      "정책에서 자동 배정 비허용"
+    ],
+    "eligibility": {
+      "allowed": false,
+      "reasons": [
+        "입력 확정 미완료",
+        "업무 초안 없음",
+        "정책에서 자동 배정 비허용"
+      ]
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v1",
+      "catalog": "catalog-v1",
+      "schema": "judgment-v1"
+    },
+    "usage": {
+      "input_tokens": 983,
+      "output_tokens": 330,
+      "latency_ms": 213.3327499977895,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "decomposition_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "needed_data_review": {
+          "type": "noul",
+          "noul": 0.35
+        },
+        "needed_requirements": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_ai_assessment": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_integration": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_reporting": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_alerts": {
+          "type": "noul",
+          "noul": 0.32
+        },
+        "needed_security": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_operations": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_regulatory": {
+          "type": "noul",
+          "noul": 0.35
+        }
+      },
+      "usage": {
+        "input_tokens": 758,
+        "output_tokens": 169
+      },
+      "mode": "live",
+      "latency_ms": 209.80120800231816,
+      "attempts": 1
+    }
+  }
+}

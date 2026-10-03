@@ -1,0 +1,7 @@
+{
+  "warmup_seconds": 300,
+  "completed_requests": 465,
+  "observed_calls": 465,
+  "projected_30m_calls": 2790,
+  "calls_per_request": 1.0
+}

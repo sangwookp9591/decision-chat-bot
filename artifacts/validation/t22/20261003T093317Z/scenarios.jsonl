@@ -1,0 +1,3 @@
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_02b515efdac24742bbe06021f87131bc", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 17426, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "parallel_review", "status": "pass", "request_id": "req_39f36957d64c42f38bc36da312aacc8a", "statuses": [200, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409], "counts": {"assignments": 1, "tasks": 1, "distinct_drafts": 1}, "retry_status": 200, "stale_approval_status": 409}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

@@ -1,0 +1,5252 @@
+{
+ "api": {
+  "candidate_detail": {
+   "cand_0c4749cc88828c487a3d8ead": {
+    "_lock": "61ae4969-bad7-4975-9022-a9fee68037ac",
+    "author": "usr_t-x38r-10031227_reviewer",
+    "counter_count": 0,
+    "created_at": "2026-10-03T12:37:33.202000000+00:00",
+    "examples": [],
+    "field": "ai_need",
+    "id": "cand_0c4749cc88828c487a3d8ead",
+    "insufficient_approval_label": "자료 부족 상태로 승인됨",
+    "insufficient_approved": true,
+    "proposed_body": {
+     "action": {
+      "set": "혼합"
+     },
+     "candidate_id": "cand_0c4749cc88828c487a3d8ead",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-AI_NEED-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": [
+       {
+        "field": "lead_org",
+        "op": "eq",
+        "value": "현업"
+       }
+      ]
+     },
+     "target": "ai_need",
+     "version": 1
+    },
+    "rationale": "T38-R: 화면에서 자료 부족 확인 흐름을 시험하기 위한 사람 제안(지지 수정 0건)",
+    "source": "human",
+    "status": "approved",
+    "support_count": 0,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 0,
+     "minimum_support": 3,
+     "rationale": "T38-R: 화면에서 자료 부족 확인 흐름을 시험하기 위한 사람 제안(지지 수정 0건)",
+     "support_count": 0
+    }
+   },
+   "cand_79f6d9ca44e33854681ab0b0": {
+    "_lock": "2d949ef5-c25d-4a5e-9f59-a01f5b18ebc3",
+    "author": "code:candidate@v1",
+    "counter_count": 3,
+    "created_at": "2026-10-03T12:35:19.748000000+00:00",
+    "examples": [
+     {
+      "case": {
+       "ai_value": "정보 부족",
+       "config_version": 3,
+       "corrected_at": "2026-10-03T12:35:19.301000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "조건부 가능",
+       "created_at": "2026-10-03T12:35:19.301000000+00:00",
+       "evidence_span_ids": [
+        "esp_00bcd34b6147453d9ce1aa6d1bfde782"
+       ],
+       "field": "feasibility",
+       "id": "cor_88104cfdf04742de93884ec0aa95a41f",
+       "reason": "T38-R: feasibility 수정(같은 방향)",
+       "request_id": "req_be8192ae007e4a7c92089b38c3aef6ea",
+       "review_id": "rvw_b3cedd83eb254b15adcfb8fe794377ae",
+       "revision_id": "rev_f843fc039b0c4f87bbd86ed371ca95af",
+       "run_id": "run_65f93e7e6f9145f2badd61cfeb35d552",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:35:19.460000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_2a82202b9f1642399d386e5b5058b228",
+       "needed_info": "[]",
+       "reason": "T38-R: 그 외 요청 — 수정 없이 승인",
+       "request_id": "req_188cbc7a8c304c11a5c32ed792d60631",
+       "review_id": "rvw_9ecb024a7a3140f29aeaf65d8d1b4233",
+       "review_version": 1,
+       "revision_id": "rev_a9cd2028235a489583ff0f9d092545ed",
+       "run_id": "run_c093cc60240d4be586305fa0048b6fc1",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "정보 부족",
+       "config_version": 3,
+       "corrected_at": "2026-10-03T12:35:19.231000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "조건부 가능",
+       "created_at": "2026-10-03T12:35:19.231000000+00:00",
+       "evidence_span_ids": [
+        "esp_5406be984af944e2b3032d16c1f079fe"
+       ],
+       "field": "feasibility",
+       "id": "cor_f53eaee7e65f4d4a97866d464f631bec",
+       "reason": "T38-R: feasibility 수정(같은 방향)",
+       "request_id": "req_1af31c93fd864e398be8734a8e0787c8",
+       "review_id": "rvw_f95ebb3a8acf4541b6ea30f26804859b",
+       "revision_id": "rev_a7e3c95889824bd688582346fa1703eb",
+       "run_id": "run_9ca99cb1506740b9b110dee76c5f17ce",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:35:19.355000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_09efc4f954f54dceb95e629ecb12548f",
+       "needed_info": "[]",
+       "reason": "T38-R: feasibility 반례 — 수정 없이 승인",
+       "request_id": "req_5dd4c92e42f34cab931db68777bcd799",
+       "review_id": "rvw_47db561cd9ee44448312b8ab20c8d6a8",
+       "review_version": 1,
+       "revision_id": "rev_6a79b5b4163442ec9829c7a84ab53ac3",
+       "run_id": "run_c63791baf80c4f2392cda2a944ce22e7",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:35:19.407000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_96a268c1834a439b80ca4fa8ca072536",
+       "needed_info": "[]",
+       "reason": "T38-R: 그 외 요청 — 수정 없이 승인",
+       "request_id": "req_2893786409184f4f86f1db13f8095f1a",
+       "review_id": "rvw_c96ba19f46ef46b488f1cedfefc41fa7",
+       "review_version": 1,
+       "revision_id": "rev_02bea58ecebc48c2b3fd774f14049780",
+       "run_id": "run_3b3371d25e9249cf932cd5cae044505f",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "정보 부족",
+       "config_version": 3,
+       "corrected_at": "2026-10-03T12:35:19.134000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "조건부 가능",
+       "created_at": "2026-10-03T12:35:19.134000000+00:00",
+       "evidence_span_ids": [
+        "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+       ],
+       "field": "feasibility",
+       "id": "cor_f3c482e76e094ce5825c7264717b5d06",
+       "reason": "T38-R: feasibility 수정(같은 방향)",
+       "request_id": "req_7c3fde8d66cb4f708cd0112299129235",
+       "review_id": "rvw_9829cf5f930d43f8b55a2ae5cfa92eca",
+       "revision_id": "rev_95cd88899b684d7c85d9c4a42b25dc8d",
+       "run_id": "run_14b3672bb391453bbe1753afbe70697a",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     }
+    ],
+    "field": "feasibility",
+    "id": "cand_79f6d9ca44e33854681ab0b0",
+    "insufficient_approval_label": null,
+    "insufficient_approved": false,
+    "proposed_body": {
+     "action": {
+      "set": "조건부 가능"
+     },
+     "candidate_id": "cand_79f6d9ca44e33854681ab0b0",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-FEASIBILITY-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": [
+       {
+        "field": "ai_need",
+        "op": "eq",
+        "value": "필요"
+       },
+       {
+        "field": "feasibility",
+        "op": "eq",
+        "value": "정보 부족"
+       },
+       {
+        "field": "lead_org",
+        "op": "eq",
+        "value": "IT팀"
+       },
+       {
+        "op": "lte",
+        "signal": "ai_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "business_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "clinical_safety",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "it_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "pharmacovigilance",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "regulatory",
+        "value": 0.5
+       },
+       {
+        "field": "urgency",
+        "op": "eq",
+        "value": "판단 보류"
+       }
+      ]
+     },
+     "target": "feasibility",
+     "version": 1
+    },
+    "source": "ai",
+    "status": "approved",
+    "support_count": 3,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 3,
+     "minimum_support": 3,
+     "organization_count": 3,
+     "single_organization_bias": false,
+     "support_count": 3
+    }
+   },
+   "cand_8fcc507094e6868374ddec5c": {
+    "_lock": "2718b723-6175-46cf-bb85-c7d2d0708dbd",
+    "author": "code:candidate@v1",
+    "counter_count": 3,
+    "created_at": "2026-10-03T12:28:37.382000000+00:00",
+    "examples": [
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:38.436000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+       "needed_info": "[]",
+       "reason": "T38: 단건 승인 — 규칙 상태 불변 확인",
+       "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+       "review_id": "rvw_9243de34868b452c98e10e4adc4d303d",
+       "review_version": 1,
+       "revision_id": "rev_73f739fa154644018e388f5f313f8485",
+       "run_id": "run_bfdfc2c144124be08abfa8c20f7a7aae",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve_with_changes",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.691000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+       "needed_info": "[]",
+       "reason": "T38: ai_need 다른 방향 수정(2건)",
+       "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+       "review_id": "rvw_936263d8e48241dea545e019b49b4490",
+       "review_version": 1,
+       "revision_id": "rev_d6bd685d9da746bcb5e31900ea8a1aa1",
+       "run_id": "run_ab12ee5450ad4e89b02353b250f37d8e",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "불필요",
+       "config_version": 1,
+       "corrected_at": "2026-10-03T12:28:32.535000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "필요",
+       "created_at": "2026-10-03T12:28:32.535000000+00:00",
+       "evidence_span_ids": [],
+       "field": "ai_need",
+       "id": "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+       "review_id": "rvw_85d90a10337c4fd1862038d2a323db2a",
+       "revision_id": "rev_98bcef7e05a447be9b17bfc080df6f1c",
+       "run_id": "run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "ai_value": "불필요",
+       "config_version": 1,
+       "corrected_at": "2026-10-03T12:28:32.432000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "필요",
+       "created_at": "2026-10-03T12:28:32.432000000+00:00",
+       "evidence_span_ids": [],
+       "field": "ai_need",
+       "id": "cor_a12d0808c0124f07baf6b7d73b7663b8",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+       "review_id": "rvw_c7d671018f264efd98a1cae261bc01e7",
+       "revision_id": "rev_254e80318d894c0291d70bed85eb9ab0",
+       "run_id": "run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "ai_value": "불필요",
+       "config_version": 1,
+       "corrected_at": "2026-10-03T12:28:32.313000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "필요",
+       "created_at": "2026-10-03T12:28:32.313000000+00:00",
+       "evidence_span_ids": [],
+       "field": "ai_need",
+       "id": "cor_e1c531571fd64851b38fb3f407ad7ff9",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+       "review_id": "rvw_0e3194df0bf843c98f0f08d9f365d65c",
+       "revision_id": "rev_ba6b067b935e4d9ca046462ad2336852",
+       "run_id": "run_b3e6a3027d744d8e972f0a999631de78",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.611000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_2a438b8572a843b1ac79745b7a27e559",
+       "needed_info": "[]",
+       "reason": "T38: 반례 — 수정 없이 승인",
+       "request_id": "req_0b2ee90b9862459694a714133217bf73",
+       "review_id": "rvw_349a420147fb4c7aa9723ce2dd52b8d4",
+       "review_version": 1,
+       "revision_id": "rev_adc59fbc14e1421797bcd9a1cca8483d",
+       "run_id": "run_b86655052ae84b32a8e741e951a6b54e",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve_with_changes",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.781000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_631ea52db0da4ace8c86c03d503d984e",
+       "needed_info": "[]",
+       "reason": "T38: ai_need 다른 방향 수정(2건)",
+       "request_id": "req_2744ff85abff43d18524b8fbff205485",
+       "review_id": "rvw_242f1c7fa4bb4c08a333a97a2d510549",
+       "review_version": 1,
+       "revision_id": "rev_d7e32ec1bcb64ed2913b9169ae209e23",
+       "run_id": "run_9b2d04842f38492fbb92687b8dd98874",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     }
+    ],
+    "field": "ai_need",
+    "id": "cand_8fcc507094e6868374ddec5c",
+    "insufficient_approval_label": null,
+    "insufficient_approved": false,
+    "proposed_body": {
+     "action": {
+      "set": "필요"
+     },
+     "candidate_id": "cand_8fcc507094e6868374ddec5c",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-AI_NEED-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": [
+       {
+        "field": "ai_need",
+        "op": "eq",
+        "value": "불필요"
+       },
+       {
+        "field": "feasibility",
+        "op": "eq",
+        "value": "정보 부족"
+       },
+       {
+        "field": "lead_org",
+        "op": "eq",
+        "value": "IT팀"
+       },
+       {
+        "op": "lte",
+        "signal": "ai_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "business_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "clinical_safety",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "it_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "pharmacovigilance",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "regulatory",
+        "value": 0.5
+       },
+       {
+        "field": "urgency",
+        "op": "eq",
+        "value": "판단 보류"
+       }
+      ]
+     },
+     "target": "ai_need",
+     "version": 1
+    },
+    "source": "ai",
+    "status": "approved",
+    "support_count": 3,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 3,
+     "minimum_support": 3,
+     "organization_count": 3,
+     "single_organization_bias": false,
+     "support_count": 3
+    }
+   },
+   "cand_9a49449bb55ab51162c213e0": {
+    "_lock": "8167526f-9e73-4967-9302-1c0eb7684618",
+    "author": "code:candidate@v1",
+    "counter_count": 3,
+    "created_at": "2026-10-03T12:33:31.898000000+00:00",
+    "examples": [
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:33:31.487000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+       "needed_info": "[]",
+       "reason": "T38-R: lead_org 반례 — 수정 없이 승인",
+       "request_id": "req_b17830e45a7f498ca6ae9734f0ce350b",
+       "review_id": "rvw_3d988cdfccda49d898bad486336876ef",
+       "review_version": 1,
+       "revision_id": "rev_7512cd5c304242e4a9d5949e6710ab98",
+       "run_id": "run_5581dde6126b405cbac1526c53fd7227",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:33:31.562000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_8d2aef0473c64e66b07aa028f1ad2785",
+       "needed_info": "[]",
+       "reason": "T38-R: 그 외 요청 — 수정 없이 승인",
+       "request_id": "req_5310f833b924401292261b9029e18bd5",
+       "review_id": "rvw_779681ab8b67454c979a8029ef0392b9",
+       "review_version": 1,
+       "revision_id": "rev_59a4d6a6d8834c1fbab0a3e5265e4be4",
+       "run_id": "run_38e448562be243698ad4b526453c0a8e",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "IT팀",
+       "config_version": 2,
+       "corrected_at": "2026-10-03T12:33:31.194000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "현업",
+       "created_at": "2026-10-03T12:33:31.194000000+00:00",
+       "evidence_span_ids": [],
+       "field": "lead_org",
+       "id": "cor_503b976a073f4aef9f95a2f9474ca09b",
+       "reason": "T38-R: lead_org 수정(같은 방향)",
+       "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+       "review_id": "rvw_50ceca73f3dc4700816d13ac0bc21750",
+       "revision_id": "rev_27891de21d264e788a771f6b2fccbe94",
+       "run_id": "run_87b928775dd441aab961db472e20131a",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:33:31.642000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_0d45434a86404c929c0929258d1d5036",
+       "needed_info": "[]",
+       "reason": "T38-R: 그 외 요청 — 수정 없이 승인",
+       "request_id": "req_c0fba9bcad4f43ad8f117b7e9fd1a4a1",
+       "review_id": "rvw_1f01616937d443caa1ba9b6a9e965b25",
+       "review_version": 1,
+       "revision_id": "rev_0df5786383214fc2b16ae777443befde",
+       "run_id": "run_e99a65d6663241a2886382653df04c5c",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "IT팀",
+       "config_version": 2,
+       "corrected_at": "2026-10-03T12:33:31.388000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "현업",
+       "created_at": "2026-10-03T12:33:31.388000000+00:00",
+       "evidence_span_ids": [],
+       "field": "lead_org",
+       "id": "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+       "reason": "T38-R: lead_org 수정(같은 방향)",
+       "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+       "review_id": "rvw_30d5e8fc790047ab95d3b2ddd0f6f67c",
+       "revision_id": "rev_705edca3ba8b458fa0af61e57af5c621",
+       "run_id": "run_940aae3c02ce43deb04f4454d0500669",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "ai_value": "IT팀",
+       "config_version": 2,
+       "corrected_at": "2026-10-03T12:33:31.293000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "현업",
+       "created_at": "2026-10-03T12:33:31.293000000+00:00",
+       "evidence_span_ids": [],
+       "field": "lead_org",
+       "id": "cor_382a770a59a5438682cf9d5a21d0a74d",
+       "reason": "T38-R: lead_org 수정(같은 방향)",
+       "request_id": "req_f893e67063944583806ba8391bee4914",
+       "review_id": "rvw_48cab2360a81484093427258f845be12",
+       "revision_id": "rev_e0315c54ca0043118bf71b802c8eaac9",
+       "run_id": "run_08eb9405a8e449a4bb2767ba8222a7e4",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     }
+    ],
+    "field": "lead_org",
+    "id": "cand_9a49449bb55ab51162c213e0",
+    "insufficient_approval_label": null,
+    "insufficient_approved": false,
+    "proposed_body": {
+     "action": {
+      "set": "현업"
+     },
+     "candidate_id": "cand_9a49449bb55ab51162c213e0",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-LEAD_ORG-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": [
+       {
+        "field": "ai_need",
+        "op": "eq",
+        "value": "혼합"
+       },
+       {
+        "field": "feasibility",
+        "op": "eq",
+        "value": "정보 부족"
+       },
+       {
+        "field": "lead_org",
+        "op": "eq",
+        "value": "IT팀"
+       },
+       {
+        "op": "lte",
+        "signal": "ai_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "business_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "clinical_safety",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "it_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "pharmacovigilance",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "regulatory",
+        "value": 0.5
+       },
+       {
+        "field": "urgency",
+        "op": "eq",
+        "value": "판단 보류"
+       }
+      ]
+     },
+     "target": "lead_org",
+     "version": 1
+    },
+    "source": "ai",
+    "status": "approved",
+    "support_count": 3,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 3,
+     "minimum_support": 3,
+     "organization_count": 3,
+     "single_organization_bias": false,
+     "support_count": 3
+    }
+   },
+   "cand_c17cccefbccbc8ec2ba3f9c2": {
+    "_lock": "b4901b14-5a46-46e0-b6a1-36adc44cb75a",
+    "author": "usr_t-x38r-10031227_reviewer",
+    "counter_count": 0,
+    "created_at": "2026-10-03T12:43:13.457000000+00:00",
+    "examples": [],
+    "field": "ai_need",
+    "id": "cand_c17cccefbccbc8ec2ba3f9c2",
+    "insufficient_approval_label": null,
+    "insufficient_approved": false,
+    "proposed_body": {
+     "action": {
+      "set": "혼합"
+     },
+     "candidate_id": "cand_c17cccefbccbc8ec2ba3f9c2",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-AI_NEED-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": []
+     },
+     "target": "ai_need",
+     "version": 1
+    },
+    "rationale": "T38 기각 시험용 사람 제안",
+    "source": "human",
+    "status": "rejected",
+    "support_count": 0,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 0,
+     "minimum_support": 3,
+     "rationale": "T38 기각 시험용 사람 제안",
+     "support_count": 0
+    }
+   },
+   "cand_e123faef72028b6d12635bef": {
+    "_lock": "c5828748-362c-4e62-bf61-1c4c255878ee",
+    "author": "code:candidate@v1",
+    "counter_count": 4,
+    "created_at": "2026-10-03T12:28:37.291000000+00:00",
+    "examples": [
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:38.436000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+       "needed_info": "[]",
+       "reason": "T38: 단건 승인 — 규칙 상태 불변 확인",
+       "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+       "review_id": "rvw_9243de34868b452c98e10e4adc4d303d",
+       "review_version": 1,
+       "revision_id": "rev_73f739fa154644018e388f5f313f8485",
+       "run_id": "run_bfdfc2c144124be08abfa8c20f7a7aae",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve_with_changes",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.282000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_f92a47759ade4ea9a683e537655d0b69",
+       "needed_info": "[]",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+       "review_id": "rvw_0e3194df0bf843c98f0f08d9f365d65c",
+       "review_version": 1,
+       "revision_id": "rev_ba6b067b935e4d9ca046462ad2336852",
+       "run_id": "run_b3e6a3027d744d8e972f0a999631de78",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "ai_value": "불필요",
+       "config_version": 1,
+       "corrected_at": "2026-10-03T12:28:32.794000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "혼합",
+       "created_at": "2026-10-03T12:28:32.794000000+00:00",
+       "evidence_span_ids": [],
+       "field": "ai_need",
+       "id": "cor_58af725183634ae9aeaa16b373a5f990",
+       "reason": "T38: ai_need 다른 방향 수정(2건)",
+       "request_id": "req_2744ff85abff43d18524b8fbff205485",
+       "review_id": "rvw_242f1c7fa4bb4c08a333a97a2d510549",
+       "revision_id": "rev_d7e32ec1bcb64ed2913b9169ae209e23",
+       "run_id": "run_9b2d04842f38492fbb92687b8dd98874",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "ai_value": "불필요",
+       "config_version": 1,
+       "corrected_at": "2026-10-03T12:28:32.703000000+00:00",
+       "corrected_by": "usr_t-x38r-10031227_reviewer",
+       "corrected_value": "혼합",
+       "created_at": "2026-10-03T12:28:32.703000000+00:00",
+       "evidence_span_ids": [],
+       "field": "ai_need",
+       "id": "cor_f0817ad4222842cf9d759be1a3e4e647",
+       "reason": "T38: ai_need 다른 방향 수정(2건)",
+       "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+       "review_id": "rvw_936263d8e48241dea545e019b49b4490",
+       "revision_id": "rev_d6bd685d9da746bcb5e31900ea8a1aa1",
+       "run_id": "run_ab12ee5450ad4e89b02353b250f37d8e",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "support"
+     },
+     {
+      "case": {
+       "action": "approve_with_changes",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.523000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_02aa1223828b43a59b9c06e5c82f787d",
+       "needed_info": "[]",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+       "review_id": "rvw_85d90a10337c4fd1862038d2a323db2a",
+       "review_version": 1,
+       "revision_id": "rev_98bcef7e05a447be9b17bfc080df6f1c",
+       "run_id": "run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve_with_changes",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.421000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_40c1dad28a67463891676cfb8db7c9c2",
+       "needed_info": "[]",
+       "reason": "T38: ai_need 같은 방향 수정",
+       "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+       "review_id": "rvw_c7d671018f264efd98a1cae261bc01e7",
+       "review_version": 1,
+       "revision_id": "rev_254e80318d894c0291d70bed85eb9ab0",
+       "run_id": "run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     },
+     {
+      "case": {
+       "action": "approve",
+       "actor_id": "usr_t-x38r-10031227_reviewer",
+       "created_at": "2026-10-03T12:28:32.611000000+00:00",
+       "draft_version": 1,
+       "id": "rdec_2a438b8572a843b1ac79745b7a27e559",
+       "needed_info": "[]",
+       "reason": "T38: 반례 — 수정 없이 승인",
+       "request_id": "req_0b2ee90b9862459694a714133217bf73",
+       "review_id": "rvw_349a420147fb4c7aa9723ce2dd52b8d4",
+       "review_version": 1,
+       "revision_id": "rev_adc59fbc14e1421797bcd9a1cca8483d",
+       "run_id": "run_b86655052ae84b32a8e741e951a6b54e",
+       "tenant_id": "t-x38r-10031227"
+      },
+      "role": "counter"
+     }
+    ],
+    "field": "ai_need",
+    "id": "cand_e123faef72028b6d12635bef",
+    "insufficient_approval_label": "자료 부족 상태로 승인됨",
+    "insufficient_approved": true,
+    "proposed_body": {
+     "action": {
+      "set": "혼합"
+     },
+     "candidate_id": "cand_e123faef72028b6d12635bef",
+     "decision_id": "pending",
+     "effect": "rule",
+     "rule_id": "R-AI_NEED-01",
+     "schema": "rule-v1",
+     "scope": {
+      "all": [
+       {
+        "field": "ai_need",
+        "op": "eq",
+        "value": "불필요"
+       },
+       {
+        "field": "feasibility",
+        "op": "eq",
+        "value": "정보 부족"
+       },
+       {
+        "field": "lead_org",
+        "op": "eq",
+        "value": "IT팀"
+       },
+       {
+        "op": "lte",
+        "signal": "ai_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "business_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "clinical_safety",
+        "value": 0.5
+       },
+       {
+        "op": "gte",
+        "signal": "it_team_involvement",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "pharmacovigilance",
+        "value": 0.5
+       },
+       {
+        "op": "lte",
+        "signal": "regulatory",
+        "value": 0.5
+       },
+       {
+        "field": "urgency",
+        "op": "eq",
+        "value": "판단 보류"
+       }
+      ]
+     },
+     "target": "ai_need",
+     "version": 1
+    },
+    "source": "ai",
+    "status": "approved",
+    "support_count": 2,
+    "tenant_id": "t-x38r-10031227",
+    "uncertainty": {
+     "counter_count": 4,
+     "minimum_support": 3,
+     "organization_count": 3,
+     "single_organization_bias": false,
+     "support_count": 2
+    }
+   }
+  },
+  "candidates": [
+   {
+    "counter": 0,
+    "field": "ai_need",
+    "id": "cand_0c4749cc88828c487a3d8ead",
+    "status": "approved",
+    "support": 0
+   },
+   {
+    "counter": 3,
+    "field": "feasibility",
+    "id": "cand_79f6d9ca44e33854681ab0b0",
+    "status": "approved",
+    "support": 3
+   },
+   {
+    "counter": 3,
+    "field": "ai_need",
+    "id": "cand_8fcc507094e6868374ddec5c",
+    "status": "approved",
+    "support": 3
+   },
+   {
+    "counter": 3,
+    "field": "lead_org",
+    "id": "cand_9a49449bb55ab51162c213e0",
+    "status": "approved",
+    "support": 3
+   },
+   {
+    "counter": 0,
+    "field": "ai_need",
+    "id": "cand_c17cccefbccbc8ec2ba3f9c2",
+    "status": "rejected",
+    "support": 0
+   },
+   {
+    "counter": 4,
+    "field": "ai_need",
+    "id": "cand_e123faef72028b6d12635bef",
+    "status": "approved",
+    "support": 2
+   }
+  ],
+  "corrections": [
+   {
+    "ai_value": "정보 부족",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.301000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "조건부 가능",
+    "created_at": "2026-10-03T12:35:19.301000000+00:00",
+    "evidence_span_ids": [
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782"
+    ],
+    "field": "feasibility",
+    "id": "cor_88104cfdf04742de93884ec0aa95a41f",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_be8192ae007e4a7c92089b38c3aef6ea",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_1581c3b4773a4ce0aa96579e50a7a6c1",
+    "review_id": "rvw_b3cedd83eb254b15adcfb8fe794377ae",
+    "revision_id": "rev_f843fc039b0c4f87bbd86ed371ca95af",
+    "run_id": "run_65f93e7e6f9145f2badd61cfeb35d552",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "정보 부족",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.231000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "조건부 가능",
+    "created_at": "2026-10-03T12:35:19.231000000+00:00",
+    "evidence_span_ids": [
+     "esp_5406be984af944e2b3032d16c1f079fe"
+    ],
+    "field": "feasibility",
+    "id": "cor_f53eaee7e65f4d4a97866d464f631bec",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_1af31c93fd864e398be8734a8e0787c8",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_f5257e6469c843a7a51f17c673c61edc",
+    "review_id": "rvw_f95ebb3a8acf4541b6ea30f26804859b",
+    "revision_id": "rev_a7e3c95889824bd688582346fa1703eb",
+    "run_id": "run_9ca99cb1506740b9b110dee76c5f17ce",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "정보 부족",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.134000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "조건부 가능",
+    "created_at": "2026-10-03T12:35:19.134000000+00:00",
+    "evidence_span_ids": [
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+    ],
+    "field": "feasibility",
+    "id": "cor_f3c482e76e094ce5825c7264717b5d06",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_7c3fde8d66cb4f708cd0112299129235",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_00a699ef87f744e3a37c06ddb3b6ae4b",
+    "review_id": "rvw_9829cf5f930d43f8b55a2ae5cfa92eca",
+    "revision_id": "rev_95cd88899b684d7c85d9c4a42b25dc8d",
+    "run_id": "run_14b3672bb391453bbe1753afbe70697a",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "IT팀",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.388000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "현업",
+    "created_at": "2026-10-03T12:33:31.388000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_a979568bac8e459eb8792c3aa03f7319",
+    "review_id": "rvw_30d5e8fc790047ab95d3b2ddd0f6f67c",
+    "revision_id": "rev_705edca3ba8b458fa0af61e57af5c621",
+    "run_id": "run_940aae3c02ce43deb04f4454d0500669",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "IT팀",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.293000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "현업",
+    "created_at": "2026-10-03T12:33:31.293000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_382a770a59a5438682cf9d5a21d0a74d",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_f893e67063944583806ba8391bee4914",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_a202f8c5b2d442b2b51c6cbbd3e8ec92",
+    "review_id": "rvw_48cab2360a81484093427258f845be12",
+    "revision_id": "rev_e0315c54ca0043118bf71b802c8eaac9",
+    "run_id": "run_08eb9405a8e449a4bb2767ba8222a7e4",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "IT팀",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.194000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "현업",
+    "created_at": "2026-10-03T12:33:31.194000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_503b976a073f4aef9f95a2f9474ca09b",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_1be570f478ed446288b515651fa05805",
+    "review_id": "rvw_50ceca73f3dc4700816d13ac0bc21750",
+    "revision_id": "rev_27891de21d264e788a771f6b2fccbe94",
+    "run_id": "run_87b928775dd441aab961db472e20131a",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "불필요",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.794000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "혼합",
+    "created_at": "2026-10-03T12:28:32.794000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_58af725183634ae9aeaa16b373a5f990",
+    "reason": "T38: ai_need 다른 방향 수정(2건)",
+    "request_id": "req_2744ff85abff43d18524b8fbff205485",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_631ea52db0da4ace8c86c03d503d984e",
+    "review_id": "rvw_242f1c7fa4bb4c08a333a97a2d510549",
+    "revision_id": "rev_d7e32ec1bcb64ed2913b9169ae209e23",
+    "run_id": "run_9b2d04842f38492fbb92687b8dd98874",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "불필요",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.703000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "혼합",
+    "created_at": "2026-10-03T12:28:32.703000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_f0817ad4222842cf9d759be1a3e4e647",
+    "reason": "T38: ai_need 다른 방향 수정(2건)",
+    "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+    "review_id": "rvw_936263d8e48241dea545e019b49b4490",
+    "revision_id": "rev_d6bd685d9da746bcb5e31900ea8a1aa1",
+    "run_id": "run_ab12ee5450ad4e89b02353b250f37d8e",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "불필요",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.535000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "필요",
+    "created_at": "2026-10-03T12:28:32.535000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_02aa1223828b43a59b9c06e5c82f787d",
+    "review_id": "rvw_85d90a10337c4fd1862038d2a323db2a",
+    "revision_id": "rev_98bcef7e05a447be9b17bfc080df6f1c",
+    "run_id": "run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "불필요",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.432000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "필요",
+    "created_at": "2026-10-03T12:28:32.432000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_a12d0808c0124f07baf6b7d73b7663b8",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_40c1dad28a67463891676cfb8db7c9c2",
+    "review_id": "rvw_c7d671018f264efd98a1cae261bc01e7",
+    "revision_id": "rev_254e80318d894c0291d70bed85eb9ab0",
+    "run_id": "run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "ai_value": "불필요",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.313000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "필요",
+    "created_at": "2026-10-03T12:28:32.313000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_e1c531571fd64851b38fb3f407ad7ff9",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+    "review_action": "approve_with_changes",
+    "review_decision_id": "rdec_f92a47759ade4ea9a683e537655d0b69",
+    "review_id": "rvw_0e3194df0bf843c98f0f08d9f365d65c",
+    "revision_id": "rev_ba6b067b935e4d9ca046462ad2336852",
+    "run_id": "run_b3e6a3027d744d8e972f0a999631de78",
+    "tenant_id": "t-x38r-10031227"
+   }
+  ],
+  "effects": {
+   "R-AI_NEED-01": {
+    "active_config_version": 9,
+    "before_after": {
+     "after": {
+      "classification_change_rate": 0.6666666666666666,
+      "classification_changes": 20,
+      "correction_rate": 0.2,
+      "corrections": 6,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3396.5,
+      "latency_p95_ms": 3709.9,
+      "latency_sample_count": 30,
+      "review_transition_rate": 1.0,
+      "review_transitions": 30,
+      "sample_count": 30
+     },
+     "after_from": "2026-10-03T12:28:39.333000+00:00",
+     "after_to": "2026-10-10T12:28:39.333000+00:00",
+     "before": {
+      "classification_change_rate": 0.0,
+      "classification_changes": 0,
+      "correction_rate": 0.625,
+      "corrections": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3501.0,
+      "latency_p95_ms": 3657.0,
+      "latency_sample_count": 8,
+      "review_transition_rate": 1.0,
+      "review_transitions": 8,
+      "sample_count": 8
+     },
+     "before_from": "2026-09-26T12:28:39.333000+00:00",
+     "before_to": "2026-10-03T12:28:39.333000+00:00"
+    },
+    "comparison_conditions": "게시 시각 전후 동일 길이 창의 실제 Run; 게시 후 APPLIED used/out_of_scope 집단; shadow 제외",
+    "effect": "insufficient_sample",
+    "groups": {
+     "out_of_scope": {
+      "classification_change_rate": 0.0,
+      "classification_changes": 0,
+      "correction_rate": 0.375,
+      "corrections": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3418.0,
+      "latency_p95_ms": 4214.95,
+      "latency_sample_count": 8,
+      "review_transition_rate": 1.0,
+      "review_transitions": 8,
+      "sample_count": 8
+     },
+     "used": {
+      "classification_change_rate": 1.0,
+      "classification_changes": 20,
+      "correction_rate": 0.15,
+      "corrections": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 2979.0,
+      "latency_p95_ms": 3640.9,
+      "latency_sample_count": 20,
+      "review_transition_rate": 1.0,
+      "review_transitions": 20,
+      "sample_count": 20
+     }
+    },
+    "minimum_sample": 20,
+    "published_at": "2026-10-03T12:28:39.333000+00:00",
+    "rule_id": "R-AI_NEED-01",
+    "sample_count": 38,
+    "shadow_runs_excluded": 2,
+    "slo_included": false,
+    "window_days": 7
+   },
+   "R-FEASIBILITY-01": {
+    "active_config_version": 9,
+    "before_after": {
+     "after": {
+      "classification_change_rate": 0.14285714285714285,
+      "classification_changes": 1,
+      "correction_rate": 0.0,
+      "corrections": 0,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3444.0,
+      "latency_p95_ms": 3708.1,
+      "latency_sample_count": 7,
+      "review_transition_rate": 1.0,
+      "review_transitions": 7,
+      "sample_count": 7
+     },
+     "after_from": "2026-10-03T12:35:21.213000+00:00",
+     "after_to": "2026-10-10T12:35:21.213000+00:00",
+     "before": {
+      "classification_change_rate": 0.0,
+      "classification_changes": 0,
+      "correction_rate": 0.3548387096774194,
+      "corrections": 11,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3420.0,
+      "latency_p95_ms": 3656.0,
+      "latency_sample_count": 31,
+      "review_transition_rate": 1.0,
+      "review_transitions": 31,
+      "sample_count": 31
+     },
+     "before_from": "2026-09-26T12:35:21.213000+00:00",
+     "before_to": "2026-10-03T12:35:21.213000+00:00"
+    },
+    "comparison_conditions": "게시 시각 전후 동일 길이 창의 실제 Run; 게시 후 APPLIED used/out_of_scope 집단; shadow 제외",
+    "effect": "insufficient_sample",
+    "groups": {
+     "out_of_scope": {
+      "classification_change_rate": 0.0,
+      "classification_changes": 0,
+      "correction_rate": 0.0,
+      "corrections": 0,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 3479.0,
+      "latency_p95_ms": 3718.75,
+      "latency_sample_count": 6,
+      "review_transition_rate": 1.0,
+      "review_transitions": 6,
+      "sample_count": 6
+     },
+     "used": {
+      "classification_change_rate": 1.0,
+      "classification_changes": 1,
+      "correction_rate": 0.0,
+      "corrections": 0,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "latency_p50_ms": 2531.0,
+      "latency_p95_ms": 2531.0,
+      "latency_sample_count": 1,
+      "review_transition_rate": 1.0,
+      "review_transitions": 1,
+      "sample_count": 1
+     }
+    },
+    "minimum_sample": 20,
+    "published_at": "2026-10-03T12:35:21.213000+00:00",
+    "rule_id": "R-FEASIBILITY-01",
+    "sample_count": 38,
+    "shadow_runs_excluded": 1,
+    "slo_included": false,
+    "window_days": 7
+   }
+  },
+  "graph": {
+   "candidate_status": {
+    "edge_count": 122,
+    "edges": [
+     "APPLIED:step_04109e4c8724484cb7a3de51320f7bd4->R-AI_NEED-01@1",
+     "APPLIED:step_04109e4c8724484cb7a3de51320f7bd4->R-LEAD_ORG-01@1",
+     "APPLIED:step_04d6b7406539430cad7b550416980c1d->R-AI_NEED-01@1",
+     "APPLIED:step_04d6b7406539430cad7b550416980c1d->R-LEAD_ORG-01@1",
+     "APPLIED:step_1c25f6f5e6c841c1ad9837be8e8b555b->R-AI_NEED-01@1",
+     "APPLIED:step_22a03d26d0c641698d3ad58be98a2e34->R-AI_NEED-01@1",
+     "APPLIED:step_22a03d26d0c641698d3ad58be98a2e34->R-LEAD_ORG-01@1",
+     "APPLIED:step_30e7c2a911fc40f58ba3238032ba45b0->R-AI_NEED-01@1",
+     "APPLIED:step_35036ce34a4d4fb2b1333dab2f7ae8f1->R-FEASIBILITY-01@1",
+     "APPLIED:step_35036ce34a4d4fb2b1333dab2f7ae8f1->R-LEAD_ORG-01@1",
+     "APPLIED:step_36320b9b1a0f4b5d8943692df49d3e88->R-AI_NEED-01@1",
+     "APPLIED:step_392910e317774890b8b5952609133296->R-AI_NEED-01@1",
+     "APPLIED:step_392910e317774890b8b5952609133296->R-FEASIBILITY-01@1",
+     "APPLIED:step_392910e317774890b8b5952609133296->R-LEAD_ORG-01@1",
+     "APPLIED:step_3a8e4c6e9bc94cc58250723621fe7d75->R-AI_NEED-01@1",
+     "APPLIED:step_47c1f4ad43374159b08575c3bdf774f1->R-AI_NEED-01@1",
+     "APPLIED:step_47c1f4ad43374159b08575c3bdf774f1->R-FEASIBILITY-01@1",
+     "APPLIED:step_47c1f4ad43374159b08575c3bdf774f1->R-LEAD_ORG-01@1",
+     "APPLIED:step_47ec10033cad4a5d9abc0fa49e9b1876->R-AI_NEED-01@1",
+     "APPLIED:step_47ee821f73b24916b0799981d2b833c2->R-AI_NEED-01@1",
+     "APPLIED:step_47ee821f73b24916b0799981d2b833c2->R-LEAD_ORG-01@1",
+     "APPLIED:step_4a50f7f4beff4f98bde920744a2b263f->R-AI_NEED-01@1",
+     "APPLIED:step_66aa218a6b9748c0896ca28982854ed1->R-AI_NEED-01@1",
+     "APPLIED:step_66aa218a6b9748c0896ca28982854ed1->R-LEAD_ORG-01@1",
+     "APPLIED:step_733cf94a64d74da490be4f3baea63299->R-AI_NEED-01@1",
+     "APPLIED:step_733cf94a64d74da490be4f3baea63299->R-LEAD_ORG-01@1",
+     "APPLIED:step_74417f599b094a15af7dae420465d632->R-AI_NEED-01@1",
+     "APPLIED:step_74417f599b094a15af7dae420465d632->R-LEAD_ORG-01@1",
+     "APPLIED:step_7776f5d35d4847e480fc02bfff41534b->R-AI_NEED-01@1",
+     "APPLIED:step_7776f5d35d4847e480fc02bfff41534b->R-LEAD_ORG-01@1",
+     "APPLIED:step_7f076741040343fdbdfa4a94c582337c->R-AI_NEED-01@1",
+     "APPLIED:step_7f076741040343fdbdfa4a94c582337c->R-LEAD_ORG-01@1",
+     "APPLIED:step_8dacd6fa77974c20aba62c57c947faf4->R-AI_NEED-01@1",
+     "APPLIED:step_8f3cbea9063a461190cd7971a27e80e8->R-AI_NEED-01@1",
+     "APPLIED:step_8f3cbea9063a461190cd7971a27e80e8->R-LEAD_ORG-01@1",
+     "APPLIED:step_92068e5f980042a1a7a8e77cba6526f3->R-AI_NEED-01@1",
+     "APPLIED:step_92068e5f980042a1a7a8e77cba6526f3->R-LEAD_ORG-01@1",
+     "APPLIED:step_9b2c025fe97b4d8189e6847efdedacfb->R-AI_NEED-01@1",
+     "APPLIED:step_9b2c025fe97b4d8189e6847efdedacfb->R-LEAD_ORG-01@1",
+     "APPLIED:step_a037cb1d32a74dc792d09b34df265421->R-AI_NEED-01@1",
+     "APPLIED:step_a26e0068ccef488ea9db7bb12f53e6e1->R-AI_NEED-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-AI_NEED-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-FEASIBILITY-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-LEAD_ORG-01@1",
+     "APPLIED:step_a65cf2593c6b4c569897409b53b9fdaa->R-AI_NEED-01@1",
+     "APPLIED:step_d9a0f65b9cfe45f2843ad756dbc6e670->R-AI_NEED-01@1",
+     "APPLIED:step_d9a0f65b9cfe45f2843ad756dbc6e670->R-LEAD_ORG-01@1",
+     "APPLIED:step_e3c61097123242f2b042fa2c0ed43ac1->R-FEASIBILITY-01@1",
+     "APPLIED:step_e3c61097123242f2b042fa2c0ed43ac1->R-LEAD_ORG-01@1",
+     "APPLIED:step_ef1b270335a34d5091c4993140f4f6e9->R-AI_NEED-01@2",
+     "APPLIED:step_ef1b270335a34d5091c4993140f4f6e9->R-FEASIBILITY-01@1",
+     "APPLIED:step_ef1b270335a34d5091c4993140f4f6e9->R-LEAD_ORG-01@1",
+     "APPLIED:step_f14aaf2e11f84ec884e9523c9d9f3e3a->R-AI_NEED-01@1",
+     "APPLIED:step_f14aaf2e11f84ec884e9523c9d9f3e3a->R-FEASIBILITY-01@1",
+     "APPLIED:step_f14aaf2e11f84ec884e9523c9d9f3e3a->R-LEAD_ORG-01@1",
+     "CITES:mout_1c4e0b450f0742c3b8096da917a7e74b->esp_5406be984af944e2b3032d16c1f079fe",
+     "CITES:mout_745e1a145a844068af3af7d022fcd032->esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "CITES:mout_b896ac7666e045a297e3424e1a3654c9->esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "CORRECTS:cor_382a770a59a5438682cf9d5a21d0a74d->mout_7d3ce38a2ab147a2b5463315070374c0",
+     "CORRECTS:cor_503b976a073f4aef9f95a2f9474ca09b->mout_8cf82f27990a4d51b9f07adb59469284",
+     "CORRECTS:cor_58af725183634ae9aeaa16b373a5f990->mout_c474170fe772467285202d8c92416784",
+     "CORRECTS:cor_88104cfdf04742de93884ec0aa95a41f->mout_b896ac7666e045a297e3424e1a3654c9",
+     "CORRECTS:cor_a12d0808c0124f07baf6b7d73b7663b8->mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "CORRECTS:cor_a2f1d4fe9a4c4f919deefe62082320a3->mout_ebec206f55f24a95a1e267ee50543bc3",
+     "CORRECTS:cor_e1c531571fd64851b38fb3f407ad7ff9->mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "CORRECTS:cor_e4a28aea4e6c4d4880eb64292314cdc1->mout_68ebea9898834333ae31b39f45d475f2",
+     "CORRECTS:cor_f0817ad4222842cf9d759be1a3e4e647->mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "CORRECTS:cor_f3c482e76e094ce5825c7264717b5d06->mout_745e1a145a844068af3af7d022fcd032",
+     "CORRECTS:cor_f53eaee7e65f4d4a97866d464f631bec->mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "DECIDES:rdec_16b2b896cc344614b98c2423db381d52->cand_9a49449bb55ab51162c213e0",
+     "DECIDES:rdec_65ada79162344602b90a1ae72c736684->cand_79f6d9ca44e33854681ab0b0",
+     "DECIDES:rdec_84495d2d93af4a2083f886cb6bfe97cc->cand_0c4749cc88828c487a3d8ead",
+     "DECIDES:rdec_86485b0355534353b4d3a4aec8ade3c1->cand_e123faef72028b6d12635bef",
+     "DECIDES:rdec_f01ba658005b4be0bbc4f24cb8accb2f->cand_8fcc507094e6868374ddec5c",
+     "DERIVED_FROM:R-AI_NEED-01@1->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "DERIVED_FROM:R-AI_NEED-01@2->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "DERIVED_FROM:R-AI_NEED-02@1->rdec_86485b0355534353b4d3a4aec8ade3c1",
+     "DERIVED_FROM:R-AI_NEED-03@1->rdec_84495d2d93af4a2083f886cb6bfe97cc",
+     "DERIVED_FROM:R-FEASIBILITY-01@1->rdec_65ada79162344602b90a1ae72c736684",
+     "DERIVED_FROM:R-LEAD_ORG-01@1->rdec_16b2b896cc344614b98c2423db381d52",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_2",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_7",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_9",
+     "PUBLISHED_IN:R-AI_NEED-01@2->cfg_t-x38r-10031227_6",
+     "PUBLISHED_IN:R-FEASIBILITY-01@1->cfg_t-x38r-10031227_4",
+     "PUBLISHED_IN:R-LEAD_ORG-01@1->cfg_t-x38r-10031227_3",
+     "RECORDED:rdec_02aa1223828b43a59b9c06e5c82f787d->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "RECORDED:rdec_40c1dad28a67463891676cfb8db7c9c2->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "RECORDED:rdec_631ea52db0da4ace8c86c03d503d984e->cor_58af725183634ae9aeaa16b373a5f990",
+     "RECORDED:rdec_63e79ba5a7ee49a5a49a024eede69a88->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "RECORDED:rdec_f92a47759ade4ea9a683e537655d0b69->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_88104cfdf04742de93884ec0aa95a41f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f3c482e76e094ce5825c7264717b5d06",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f53eaee7e65f4d4a97866d464f631bec",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_09efc4f954f54dceb95e629ecb12548f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_2a82202b9f1642399d386e5b5058b228",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_96a268c1834a439b80ca4fa8ca072536",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_631ea52db0da4ace8c86c03d503d984e",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_382a770a59a5438682cf9d5a21d0a74d",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_503b976a073f4aef9f95a2f9474ca09b",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_0d45434a86404c929c0929258d1d5036",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->cor_58af725183634ae9aeaa16b373a5f990",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->rdec_02aa1223828b43a59b9c06e5c82f787d",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->rdec_40c1dad28a67463891676cfb8db7c9c2",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "SUPPORTED_BY:cand_e123faef72028b6d12635bef->rdec_f92a47759ade4ea9a683e537655d0b69",
+     "VALIDATES:val_7c3f38b9de3c4741b418b6198f00fcdd->R-AI_NEED-01@2",
+     "VALIDATES:val_84f211ef173545f4929360f37b2cd600->R-AI_NEED-02@1",
+     "VALIDATES:val_ae2b8a074e3d412aa003c57a6efab5d4->R-AI_NEED-01@1",
+     "VALIDATES:val_c9703714627f4b33862c115123f71ef8->R-FEASIBILITY-01@1",
+     "VALIDATES:val_e8697532f8bc4b8cabcee5205d372aba->R-LEAD_ORG-01@1"
+    ],
+    "layers": {
+     "1": 25,
+     "2": 5,
+     "3": 18,
+     "4": 17,
+     "5": 30
+    },
+    "node_count": 95,
+    "node_kinds": {
+     "R-AI_NEED-01@1": "RuleVersion",
+     "R-AI_NEED-01@2": "RuleVersion",
+     "R-AI_NEED-02@1": "RuleVersion",
+     "R-AI_NEED-03@1": "RuleVersion",
+     "R-FEASIBILITY-01@1": "RuleVersion",
+     "R-LEAD_ORG-01@1": "RuleVersion",
+     "cand_0c4749cc88828c487a3d8ead": "RuleCandidate",
+     "cand_79f6d9ca44e33854681ab0b0": "RuleCandidate",
+     "cand_8fcc507094e6868374ddec5c": "RuleCandidate",
+     "cand_9a49449bb55ab51162c213e0": "RuleCandidate",
+     "cand_e123faef72028b6d12635bef": "RuleCandidate",
+     "cfg_t-x38r-10031227_2": "ConfigVersion",
+     "cfg_t-x38r-10031227_3": "ConfigVersion",
+     "cfg_t-x38r-10031227_4": "ConfigVersion",
+     "cfg_t-x38r-10031227_6": "ConfigVersion",
+     "cfg_t-x38r-10031227_7": "ConfigVersion",
+     "cfg_t-x38r-10031227_9": "ConfigVersion",
+     "cor_382a770a59a5438682cf9d5a21d0a74d": "Correction",
+     "cor_503b976a073f4aef9f95a2f9474ca09b": "Correction",
+     "cor_58af725183634ae9aeaa16b373a5f990": "Correction",
+     "cor_88104cfdf04742de93884ec0aa95a41f": "Correction",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8": "Correction",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3": "Correction",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9": "Correction",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1": "Correction",
+     "cor_f0817ad4222842cf9d759be1a3e4e647": "Correction",
+     "cor_f3c482e76e094ce5825c7264717b5d06": "Correction",
+     "cor_f53eaee7e65f4d4a97866d464f631bec": "Correction",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782": "EvidenceSpan",
+     "esp_5406be984af944e2b3032d16c1f079fe": "EvidenceSpan",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845": "EvidenceSpan",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b": "ModelOutput",
+     "mout_68ebea9898834333ae31b39f45d475f2": "ModelOutput",
+     "mout_745e1a145a844068af3af7d022fcd032": "ModelOutput",
+     "mout_7d3ce38a2ab147a2b5463315070374c0": "ModelOutput",
+     "mout_8cf82f27990a4d51b9f07adb59469284": "ModelOutput",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84": "ModelOutput",
+     "mout_b896ac7666e045a297e3424e1a3654c9": "ModelOutput",
+     "mout_c474170fe772467285202d8c92416784": "ModelOutput",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a": "ModelOutput",
+     "mout_ebec206f55f24a95a1e267ee50543bc3": "ModelOutput",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1": "ModelOutput",
+     "rdec_02aa1223828b43a59b9c06e5c82f787d": "ReviewDecision",
+     "rdec_09efc4f954f54dceb95e629ecb12548f": "ReviewDecision",
+     "rdec_0d45434a86404c929c0929258d1d5036": "ReviewDecision",
+     "rdec_16b2b896cc344614b98c2423db381d52": "RuleDecision",
+     "rdec_2a438b8572a843b1ac79745b7a27e559": "ReviewDecision",
+     "rdec_2a82202b9f1642399d386e5b5058b228": "ReviewDecision",
+     "rdec_40c1dad28a67463891676cfb8db7c9c2": "ReviewDecision",
+     "rdec_631ea52db0da4ace8c86c03d503d984e": "ReviewDecision",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88": "ReviewDecision",
+     "rdec_65ada79162344602b90a1ae72c736684": "RuleDecision",
+     "rdec_84495d2d93af4a2083f886cb6bfe97cc": "RuleDecision",
+     "rdec_86485b0355534353b4d3a4aec8ade3c1": "RuleDecision",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785": "ReviewDecision",
+     "rdec_96a268c1834a439b80ca4fa8ca072536": "ReviewDecision",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f": "ReviewDecision",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f": "ReviewDecision",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f": "RuleDecision",
+     "rdec_f92a47759ade4ea9a683e537655d0b69": "ReviewDecision",
+     "step_04109e4c8724484cb7a3de51320f7bd4": "RunStep",
+     "step_04d6b7406539430cad7b550416980c1d": "RunStep",
+     "step_1c25f6f5e6c841c1ad9837be8e8b555b": "RunStep",
+     "step_22a03d26d0c641698d3ad58be98a2e34": "RunStep",
+     "step_30e7c2a911fc40f58ba3238032ba45b0": "RunStep",
+     "step_35036ce34a4d4fb2b1333dab2f7ae8f1": "RunStep",
+     "step_36320b9b1a0f4b5d8943692df49d3e88": "RunStep",
+     "step_392910e317774890b8b5952609133296": "RunStep",
+     "step_3a8e4c6e9bc94cc58250723621fe7d75": "RunStep",
+     "step_47c1f4ad43374159b08575c3bdf774f1": "RunStep",
+     "step_47ec10033cad4a5d9abc0fa49e9b1876": "RunStep",
+     "step_47ee821f73b24916b0799981d2b833c2": "RunStep",
+     "step_4a50f7f4beff4f98bde920744a2b263f": "RunStep",
+     "step_66aa218a6b9748c0896ca28982854ed1": "RunStep",
+     "step_733cf94a64d74da490be4f3baea63299": "RunStep",
+     "step_74417f599b094a15af7dae420465d632": "RunStep",
+     "step_7776f5d35d4847e480fc02bfff41534b": "RunStep",
+     "step_7f076741040343fdbdfa4a94c582337c": "RunStep",
+     "step_8dacd6fa77974c20aba62c57c947faf4": "RunStep",
+     "step_8f3cbea9063a461190cd7971a27e80e8": "RunStep",
+     "step_92068e5f980042a1a7a8e77cba6526f3": "RunStep",
+     "step_9b2c025fe97b4d8189e6847efdedacfb": "RunStep",
+     "step_a037cb1d32a74dc792d09b34df265421": "RunStep",
+     "step_a26e0068ccef488ea9db7bb12f53e6e1": "RunStep",
+     "step_a4920d1256274c3db4d14c561ed044d4": "RunStep",
+     "step_a65cf2593c6b4c569897409b53b9fdaa": "RunStep",
+     "step_d9a0f65b9cfe45f2843ad756dbc6e670": "RunStep",
+     "step_e3c61097123242f2b042fa2c0ed43ac1": "RunStep",
+     "step_ef1b270335a34d5091c4993140f4f6e9": "RunStep",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a": "RunStep",
+     "val_7c3f38b9de3c4741b418b6198f00fcdd": "ValidationRun",
+     "val_84f211ef173545f4929360f37b2cd600": "ValidationRun",
+     "val_ae2b8a074e3d412aa003c57a6efab5d4": "ValidationRun",
+     "val_c9703714627f4b33862c115123f71ef8": "ValidationRun",
+     "val_e8697532f8bc4b8cabcee5205d372aba": "ValidationRun"
+    },
+    "nodes": [
+     "R-AI_NEED-01@1",
+     "R-AI_NEED-01@2",
+     "R-AI_NEED-02@1",
+     "R-AI_NEED-03@1",
+     "R-FEASIBILITY-01@1",
+     "R-LEAD_ORG-01@1",
+     "cand_0c4749cc88828c487a3d8ead",
+     "cand_79f6d9ca44e33854681ab0b0",
+     "cand_8fcc507094e6868374ddec5c",
+     "cand_9a49449bb55ab51162c213e0",
+     "cand_e123faef72028b6d12635bef",
+     "cfg_t-x38r-10031227_2",
+     "cfg_t-x38r-10031227_3",
+     "cfg_t-x38r-10031227_4",
+     "cfg_t-x38r-10031227_6",
+     "cfg_t-x38r-10031227_7",
+     "cfg_t-x38r-10031227_9",
+     "cor_382a770a59a5438682cf9d5a21d0a74d",
+     "cor_503b976a073f4aef9f95a2f9474ca09b",
+     "cor_58af725183634ae9aeaa16b373a5f990",
+     "cor_88104cfdf04742de93884ec0aa95a41f",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "cor_f0817ad4222842cf9d759be1a3e4e647",
+     "cor_f3c482e76e094ce5825c7264717b5d06",
+     "cor_f53eaee7e65f4d4a97866d464f631bec",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "esp_5406be984af944e2b3032d16c1f079fe",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "mout_68ebea9898834333ae31b39f45d475f2",
+     "mout_745e1a145a844068af3af7d022fcd032",
+     "mout_7d3ce38a2ab147a2b5463315070374c0",
+     "mout_8cf82f27990a4d51b9f07adb59469284",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "mout_b896ac7666e045a297e3424e1a3654c9",
+     "mout_c474170fe772467285202d8c92416784",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "mout_ebec206f55f24a95a1e267ee50543bc3",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "rdec_02aa1223828b43a59b9c06e5c82f787d",
+     "rdec_09efc4f954f54dceb95e629ecb12548f",
+     "rdec_0d45434a86404c929c0929258d1d5036",
+     "rdec_16b2b896cc344614b98c2423db381d52",
+     "rdec_2a438b8572a843b1ac79745b7a27e559",
+     "rdec_2a82202b9f1642399d386e5b5058b228",
+     "rdec_40c1dad28a67463891676cfb8db7c9c2",
+     "rdec_631ea52db0da4ace8c86c03d503d984e",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "rdec_65ada79162344602b90a1ae72c736684",
+     "rdec_84495d2d93af4a2083f886cb6bfe97cc",
+     "rdec_86485b0355534353b4d3a4aec8ade3c1",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "rdec_96a268c1834a439b80ca4fa8ca072536",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "rdec_f92a47759ade4ea9a683e537655d0b69",
+     "step_04109e4c8724484cb7a3de51320f7bd4",
+     "step_04d6b7406539430cad7b550416980c1d",
+     "step_1c25f6f5e6c841c1ad9837be8e8b555b",
+     "step_22a03d26d0c641698d3ad58be98a2e34",
+     "step_30e7c2a911fc40f58ba3238032ba45b0",
+     "step_35036ce34a4d4fb2b1333dab2f7ae8f1",
+     "step_36320b9b1a0f4b5d8943692df49d3e88",
+     "step_392910e317774890b8b5952609133296",
+     "step_3a8e4c6e9bc94cc58250723621fe7d75",
+     "step_47c1f4ad43374159b08575c3bdf774f1",
+     "step_47ec10033cad4a5d9abc0fa49e9b1876",
+     "step_47ee821f73b24916b0799981d2b833c2",
+     "step_4a50f7f4beff4f98bde920744a2b263f",
+     "step_66aa218a6b9748c0896ca28982854ed1",
+     "step_733cf94a64d74da490be4f3baea63299",
+     "step_74417f599b094a15af7dae420465d632",
+     "step_7776f5d35d4847e480fc02bfff41534b",
+     "step_7f076741040343fdbdfa4a94c582337c",
+     "step_8dacd6fa77974c20aba62c57c947faf4",
+     "step_8f3cbea9063a461190cd7971a27e80e8",
+     "step_92068e5f980042a1a7a8e77cba6526f3",
+     "step_9b2c025fe97b4d8189e6847efdedacfb",
+     "step_a037cb1d32a74dc792d09b34df265421",
+     "step_a26e0068ccef488ea9db7bb12f53e6e1",
+     "step_a4920d1256274c3db4d14c561ed044d4",
+     "step_a65cf2593c6b4c569897409b53b9fdaa",
+     "step_d9a0f65b9cfe45f2843ad756dbc6e670",
+     "step_e3c61097123242f2b042fa2c0ed43ac1",
+     "step_ef1b270335a34d5091c4993140f4f6e9",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a",
+     "val_7c3f38b9de3c4741b418b6198f00fcdd",
+     "val_84f211ef173545f4929360f37b2cd600",
+     "val_ae2b8a074e3d412aa003c57a6efab5d4",
+     "val_c9703714627f4b33862c115123f71ef8",
+     "val_e8697532f8bc4b8cabcee5205d372aba"
+    ],
+    "truncated": false
+   },
+   "config_2": {
+    "edge_count": 17,
+    "edges": [
+     "CORRECTS:cor_58af725183634ae9aeaa16b373a5f990->mout_c474170fe772467285202d8c92416784",
+     "CORRECTS:cor_a12d0808c0124f07baf6b7d73b7663b8->mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "CORRECTS:cor_e1c531571fd64851b38fb3f407ad7ff9->mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "CORRECTS:cor_e4a28aea4e6c4d4880eb64292314cdc1->mout_68ebea9898834333ae31b39f45d475f2",
+     "CORRECTS:cor_f0817ad4222842cf9d759be1a3e4e647->mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "DECIDES:rdec_f01ba658005b4be0bbc4f24cb8accb2f->cand_8fcc507094e6868374ddec5c",
+     "DERIVED_FROM:R-AI_NEED-01@1->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_2",
+     "RECORDED:rdec_631ea52db0da4ace8c86c03d503d984e->cor_58af725183634ae9aeaa16b373a5f990",
+     "RECORDED:rdec_63e79ba5a7ee49a5a49a024eede69a88->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_631ea52db0da4ace8c86c03d503d984e",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f"
+    ],
+    "layers": {
+     "1": 10,
+     "2": 1,
+     "3": 5,
+     "4": 2,
+     "5": 0
+    },
+    "node_count": 18,
+    "node_kinds": {
+     "R-AI_NEED-01@1": "RuleVersion",
+     "cand_8fcc507094e6868374ddec5c": "RuleCandidate",
+     "cfg_t-x38r-10031227_2": "ConfigVersion",
+     "cor_58af725183634ae9aeaa16b373a5f990": "Correction",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8": "Correction",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9": "Correction",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1": "Correction",
+     "cor_f0817ad4222842cf9d759be1a3e4e647": "Correction",
+     "mout_68ebea9898834333ae31b39f45d475f2": "ModelOutput",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84": "ModelOutput",
+     "mout_c474170fe772467285202d8c92416784": "ModelOutput",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a": "ModelOutput",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1": "ModelOutput",
+     "rdec_2a438b8572a843b1ac79745b7a27e559": "ReviewDecision",
+     "rdec_631ea52db0da4ace8c86c03d503d984e": "ReviewDecision",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88": "ReviewDecision",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f": "ReviewDecision",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f": "RuleDecision"
+    },
+    "nodes": [
+     "R-AI_NEED-01@1",
+     "cand_8fcc507094e6868374ddec5c",
+     "cfg_t-x38r-10031227_2",
+     "cor_58af725183634ae9aeaa16b373a5f990",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "cor_f0817ad4222842cf9d759be1a3e4e647",
+     "mout_68ebea9898834333ae31b39f45d475f2",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "mout_c474170fe772467285202d8c92416784",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "rdec_2a438b8572a843b1ac79745b7a27e559",
+     "rdec_631ea52db0da4ace8c86c03d503d984e",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f"
+    ],
+    "truncated": false
+   },
+   "request": {
+    "edge_count": 56,
+    "edges": [
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-AI_NEED-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-FEASIBILITY-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-LEAD_ORG-01@1",
+     "CITES:mout_1c4e0b450f0742c3b8096da917a7e74b->esp_5406be984af944e2b3032d16c1f079fe",
+     "CITES:mout_745e1a145a844068af3af7d022fcd032->esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "CITES:mout_9670a9d9427a483fb7cb3dbd4d0b56ae->esp_c9e7262214c943eabe7a37e332f75154",
+     "CITES:mout_b896ac7666e045a297e3424e1a3654c9->esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "CORRECTS:cor_382a770a59a5438682cf9d5a21d0a74d->mout_7d3ce38a2ab147a2b5463315070374c0",
+     "CORRECTS:cor_503b976a073f4aef9f95a2f9474ca09b->mout_8cf82f27990a4d51b9f07adb59469284",
+     "CORRECTS:cor_58af725183634ae9aeaa16b373a5f990->mout_c474170fe772467285202d8c92416784",
+     "CORRECTS:cor_88104cfdf04742de93884ec0aa95a41f->mout_b896ac7666e045a297e3424e1a3654c9",
+     "CORRECTS:cor_a12d0808c0124f07baf6b7d73b7663b8->mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "CORRECTS:cor_a2f1d4fe9a4c4f919deefe62082320a3->mout_ebec206f55f24a95a1e267ee50543bc3",
+     "CORRECTS:cor_e1c531571fd64851b38fb3f407ad7ff9->mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "CORRECTS:cor_e4a28aea4e6c4d4880eb64292314cdc1->mout_68ebea9898834333ae31b39f45d475f2",
+     "CORRECTS:cor_f0817ad4222842cf9d759be1a3e4e647->mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "CORRECTS:cor_f3c482e76e094ce5825c7264717b5d06->mout_745e1a145a844068af3af7d022fcd032",
+     "CORRECTS:cor_f53eaee7e65f4d4a97866d464f631bec->mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "DECIDES:rdec_16b2b896cc344614b98c2423db381d52->cand_9a49449bb55ab51162c213e0",
+     "DECIDES:rdec_65ada79162344602b90a1ae72c736684->cand_79f6d9ca44e33854681ab0b0",
+     "DECIDES:rdec_f01ba658005b4be0bbc4f24cb8accb2f->cand_8fcc507094e6868374ddec5c",
+     "DERIVED_FROM:R-AI_NEED-01@1->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "DERIVED_FROM:R-FEASIBILITY-01@1->rdec_65ada79162344602b90a1ae72c736684",
+     "DERIVED_FROM:R-LEAD_ORG-01@1->rdec_16b2b896cc344614b98c2423db381d52",
+     "RECORDED:rdec_631ea52db0da4ace8c86c03d503d984e->cor_58af725183634ae9aeaa16b373a5f990",
+     "RECORDED:rdec_63e79ba5a7ee49a5a49a024eede69a88->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_88104cfdf04742de93884ec0aa95a41f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f3c482e76e094ce5825c7264717b5d06",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f53eaee7e65f4d4a97866d464f631bec",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_09efc4f954f54dceb95e629ecb12548f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_2a82202b9f1642399d386e5b5058b228",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_96a268c1834a439b80ca4fa8ca072536",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_631ea52db0da4ace8c86c03d503d984e",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_382a770a59a5438682cf9d5a21d0a74d",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_503b976a073f4aef9f95a2f9474ca09b",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_0d45434a86404c929c0929258d1d5036",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_50074689b4a24bd0a7c34c12707aba4e",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_59c9a4dfb4ca4972a02eb7ab0f7fd630",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_5a33c5dc2a384f9bb0b8e536b4a82bf6",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_66f2bb1dc5f4480790b41818e52c9c06",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_9140ae96833b49568f2e1cc82bbeb89d",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_9670a9d9427a483fb7cb3dbd4d0b56ae",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_a1b4d6a2ae5e4402bd01882726b35942",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_b3ab3843328a4208a625b665709547c8",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_c6dfbef44b8441b9b3845efc9a7f2790",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_faa31df942fe4945bd34da9d86c95579"
+    ],
+    "layers": {
+     "1": 37,
+     "2": 3,
+     "3": 13,
+     "4": 3,
+     "5": 2
+    },
+    "node_count": 58,
+    "node_kinds": {
+     "R-AI_NEED-01@1": "RuleVersion",
+     "R-FEASIBILITY-01@1": "RuleVersion",
+     "R-LEAD_ORG-01@1": "RuleVersion",
+     "cand_79f6d9ca44e33854681ab0b0": "RuleCandidate",
+     "cand_8fcc507094e6868374ddec5c": "RuleCandidate",
+     "cand_9a49449bb55ab51162c213e0": "RuleCandidate",
+     "cor_382a770a59a5438682cf9d5a21d0a74d": "Correction",
+     "cor_503b976a073f4aef9f95a2f9474ca09b": "Correction",
+     "cor_58af725183634ae9aeaa16b373a5f990": "Correction",
+     "cor_88104cfdf04742de93884ec0aa95a41f": "Correction",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8": "Correction",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3": "Correction",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9": "Correction",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1": "Correction",
+     "cor_f0817ad4222842cf9d759be1a3e4e647": "Correction",
+     "cor_f3c482e76e094ce5825c7264717b5d06": "Correction",
+     "cor_f53eaee7e65f4d4a97866d464f631bec": "Correction",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782": "EvidenceSpan",
+     "esp_5406be984af944e2b3032d16c1f079fe": "EvidenceSpan",
+     "esp_c9e7262214c943eabe7a37e332f75154": "EvidenceSpan",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845": "EvidenceSpan",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b": "ModelOutput",
+     "mout_50074689b4a24bd0a7c34c12707aba4e": "ModelOutput",
+     "mout_59c9a4dfb4ca4972a02eb7ab0f7fd630": "ModelOutput",
+     "mout_5a33c5dc2a384f9bb0b8e536b4a82bf6": "ModelOutput",
+     "mout_66f2bb1dc5f4480790b41818e52c9c06": "ModelOutput",
+     "mout_68ebea9898834333ae31b39f45d475f2": "ModelOutput",
+     "mout_745e1a145a844068af3af7d022fcd032": "ModelOutput",
+     "mout_7d3ce38a2ab147a2b5463315070374c0": "ModelOutput",
+     "mout_8cf82f27990a4d51b9f07adb59469284": "ModelOutput",
+     "mout_9140ae96833b49568f2e1cc82bbeb89d": "ModelOutput",
+     "mout_9670a9d9427a483fb7cb3dbd4d0b56ae": "ModelOutput",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84": "ModelOutput",
+     "mout_a1b4d6a2ae5e4402bd01882726b35942": "ModelOutput",
+     "mout_b3ab3843328a4208a625b665709547c8": "ModelOutput",
+     "mout_b896ac7666e045a297e3424e1a3654c9": "ModelOutput",
+     "mout_c474170fe772467285202d8c92416784": "ModelOutput",
+     "mout_c6dfbef44b8441b9b3845efc9a7f2790": "ModelOutput",
+     "mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed": "ModelOutput",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a": "ModelOutput",
+     "mout_ebec206f55f24a95a1e267ee50543bc3": "ModelOutput",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1": "ModelOutput",
+     "mout_faa31df942fe4945bd34da9d86c95579": "ModelOutput",
+     "rdec_09efc4f954f54dceb95e629ecb12548f": "ReviewDecision",
+     "rdec_0d45434a86404c929c0929258d1d5036": "ReviewDecision",
+     "rdec_16b2b896cc344614b98c2423db381d52": "RuleDecision",
+     "rdec_2a438b8572a843b1ac79745b7a27e559": "ReviewDecision",
+     "rdec_2a82202b9f1642399d386e5b5058b228": "ReviewDecision",
+     "rdec_631ea52db0da4ace8c86c03d503d984e": "ReviewDecision",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88": "ReviewDecision",
+     "rdec_65ada79162344602b90a1ae72c736684": "RuleDecision",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785": "ReviewDecision",
+     "rdec_96a268c1834a439b80ca4fa8ca072536": "ReviewDecision",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f": "ReviewDecision",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f": "ReviewDecision",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f": "RuleDecision",
+     "step_210cc72089d347f49ff880b4ee1e07ac": "RunStep",
+     "step_a4920d1256274c3db4d14c561ed044d4": "RunStep"
+    },
+    "nodes": [
+     "R-AI_NEED-01@1",
+     "R-FEASIBILITY-01@1",
+     "R-LEAD_ORG-01@1",
+     "cand_79f6d9ca44e33854681ab0b0",
+     "cand_8fcc507094e6868374ddec5c",
+     "cand_9a49449bb55ab51162c213e0",
+     "cor_382a770a59a5438682cf9d5a21d0a74d",
+     "cor_503b976a073f4aef9f95a2f9474ca09b",
+     "cor_58af725183634ae9aeaa16b373a5f990",
+     "cor_88104cfdf04742de93884ec0aa95a41f",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "cor_f0817ad4222842cf9d759be1a3e4e647",
+     "cor_f3c482e76e094ce5825c7264717b5d06",
+     "cor_f53eaee7e65f4d4a97866d464f631bec",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "esp_5406be984af944e2b3032d16c1f079fe",
+     "esp_c9e7262214c943eabe7a37e332f75154",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "mout_50074689b4a24bd0a7c34c12707aba4e",
+     "mout_59c9a4dfb4ca4972a02eb7ab0f7fd630",
+     "mout_5a33c5dc2a384f9bb0b8e536b4a82bf6",
+     "mout_66f2bb1dc5f4480790b41818e52c9c06",
+     "mout_68ebea9898834333ae31b39f45d475f2",
+     "mout_745e1a145a844068af3af7d022fcd032",
+     "mout_7d3ce38a2ab147a2b5463315070374c0",
+     "mout_8cf82f27990a4d51b9f07adb59469284",
+     "mout_9140ae96833b49568f2e1cc82bbeb89d",
+     "mout_9670a9d9427a483fb7cb3dbd4d0b56ae",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "mout_a1b4d6a2ae5e4402bd01882726b35942",
+     "mout_b3ab3843328a4208a625b665709547c8",
+     "mout_b896ac7666e045a297e3424e1a3654c9",
+     "mout_c474170fe772467285202d8c92416784",
+     "mout_c6dfbef44b8441b9b3845efc9a7f2790",
+     "mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "mout_ebec206f55f24a95a1e267ee50543bc3",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "mout_faa31df942fe4945bd34da9d86c95579",
+     "rdec_09efc4f954f54dceb95e629ecb12548f",
+     "rdec_0d45434a86404c929c0929258d1d5036",
+     "rdec_16b2b896cc344614b98c2423db381d52",
+     "rdec_2a438b8572a843b1ac79745b7a27e559",
+     "rdec_2a82202b9f1642399d386e5b5058b228",
+     "rdec_631ea52db0da4ace8c86c03d503d984e",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "rdec_65ada79162344602b90a1ae72c736684",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "rdec_96a268c1834a439b80ca4fa8ca072536",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "step_210cc72089d347f49ff880b4ee1e07ac",
+     "step_a4920d1256274c3db4d14c561ed044d4"
+    ],
+    "truncated": false
+   },
+   "rule2": {
+    "edge_count": 23,
+    "edges": [
+     "APPLIED:step_35036ce34a4d4fb2b1333dab2f7ae8f1->R-FEASIBILITY-01@1",
+     "APPLIED:step_392910e317774890b8b5952609133296->R-FEASIBILITY-01@1",
+     "APPLIED:step_47c1f4ad43374159b08575c3bdf774f1->R-FEASIBILITY-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-FEASIBILITY-01@1",
+     "APPLIED:step_e3c61097123242f2b042fa2c0ed43ac1->R-FEASIBILITY-01@1",
+     "APPLIED:step_ef1b270335a34d5091c4993140f4f6e9->R-FEASIBILITY-01@1",
+     "APPLIED:step_f14aaf2e11f84ec884e9523c9d9f3e3a->R-FEASIBILITY-01@1",
+     "CITES:mout_1c4e0b450f0742c3b8096da917a7e74b->esp_5406be984af944e2b3032d16c1f079fe",
+     "CITES:mout_745e1a145a844068af3af7d022fcd032->esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "CITES:mout_b896ac7666e045a297e3424e1a3654c9->esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "CORRECTS:cor_88104cfdf04742de93884ec0aa95a41f->mout_b896ac7666e045a297e3424e1a3654c9",
+     "CORRECTS:cor_f3c482e76e094ce5825c7264717b5d06->mout_745e1a145a844068af3af7d022fcd032",
+     "CORRECTS:cor_f53eaee7e65f4d4a97866d464f631bec->mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "DECIDES:rdec_65ada79162344602b90a1ae72c736684->cand_79f6d9ca44e33854681ab0b0",
+     "DERIVED_FROM:R-FEASIBILITY-01@1->rdec_65ada79162344602b90a1ae72c736684",
+     "PUBLISHED_IN:R-FEASIBILITY-01@1->cfg_t-x38r-10031227_4",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_88104cfdf04742de93884ec0aa95a41f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f3c482e76e094ce5825c7264717b5d06",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f53eaee7e65f4d4a97866d464f631bec",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_09efc4f954f54dceb95e629ecb12548f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_2a82202b9f1642399d386e5b5058b228",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_96a268c1834a439b80ca4fa8ca072536",
+     "VALIDATES:val_c9703714627f4b33862c115123f71ef8->R-FEASIBILITY-01@1"
+    ],
+    "layers": {
+     "1": 9,
+     "2": 1,
+     "3": 4,
+     "4": 3,
+     "5": 7
+    },
+    "node_count": 24,
+    "node_kinds": {
+     "R-FEASIBILITY-01@1": "RuleVersion",
+     "cand_79f6d9ca44e33854681ab0b0": "RuleCandidate",
+     "cfg_t-x38r-10031227_4": "ConfigVersion",
+     "cor_88104cfdf04742de93884ec0aa95a41f": "Correction",
+     "cor_f3c482e76e094ce5825c7264717b5d06": "Correction",
+     "cor_f53eaee7e65f4d4a97866d464f631bec": "Correction",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782": "EvidenceSpan",
+     "esp_5406be984af944e2b3032d16c1f079fe": "EvidenceSpan",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845": "EvidenceSpan",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b": "ModelOutput",
+     "mout_745e1a145a844068af3af7d022fcd032": "ModelOutput",
+     "mout_b896ac7666e045a297e3424e1a3654c9": "ModelOutput",
+     "rdec_09efc4f954f54dceb95e629ecb12548f": "ReviewDecision",
+     "rdec_2a82202b9f1642399d386e5b5058b228": "ReviewDecision",
+     "rdec_65ada79162344602b90a1ae72c736684": "RuleDecision",
+     "rdec_96a268c1834a439b80ca4fa8ca072536": "ReviewDecision",
+     "step_35036ce34a4d4fb2b1333dab2f7ae8f1": "RunStep",
+     "step_392910e317774890b8b5952609133296": "RunStep",
+     "step_47c1f4ad43374159b08575c3bdf774f1": "RunStep",
+     "step_a4920d1256274c3db4d14c561ed044d4": "RunStep",
+     "step_e3c61097123242f2b042fa2c0ed43ac1": "RunStep",
+     "step_ef1b270335a34d5091c4993140f4f6e9": "RunStep",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a": "RunStep",
+     "val_c9703714627f4b33862c115123f71ef8": "ValidationRun"
+    },
+    "nodes": [
+     "R-FEASIBILITY-01@1",
+     "cand_79f6d9ca44e33854681ab0b0",
+     "cfg_t-x38r-10031227_4",
+     "cor_88104cfdf04742de93884ec0aa95a41f",
+     "cor_f3c482e76e094ce5825c7264717b5d06",
+     "cor_f53eaee7e65f4d4a97866d464f631bec",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "esp_5406be984af944e2b3032d16c1f079fe",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "mout_745e1a145a844068af3af7d022fcd032",
+     "mout_b896ac7666e045a297e3424e1a3654c9",
+     "rdec_09efc4f954f54dceb95e629ecb12548f",
+     "rdec_2a82202b9f1642399d386e5b5058b228",
+     "rdec_65ada79162344602b90a1ae72c736684",
+     "rdec_96a268c1834a439b80ca4fa8ca072536",
+     "step_35036ce34a4d4fb2b1333dab2f7ae8f1",
+     "step_392910e317774890b8b5952609133296",
+     "step_47c1f4ad43374159b08575c3bdf774f1",
+     "step_a4920d1256274c3db4d14c561ed044d4",
+     "step_e3c61097123242f2b042fa2c0ed43ac1",
+     "step_ef1b270335a34d5091c4993140f4f6e9",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a",
+     "val_c9703714627f4b33862c115123f71ef8"
+    ],
+    "truncated": false
+   },
+   "rule_ai_need": {
+    "edge_count": 47,
+    "edges": [
+     "APPLIED:step_04109e4c8724484cb7a3de51320f7bd4->R-AI_NEED-01@1",
+     "APPLIED:step_04d6b7406539430cad7b550416980c1d->R-AI_NEED-01@1",
+     "APPLIED:step_1c25f6f5e6c841c1ad9837be8e8b555b->R-AI_NEED-01@1",
+     "APPLIED:step_22a03d26d0c641698d3ad58be98a2e34->R-AI_NEED-01@1",
+     "APPLIED:step_30e7c2a911fc40f58ba3238032ba45b0->R-AI_NEED-01@1",
+     "APPLIED:step_36320b9b1a0f4b5d8943692df49d3e88->R-AI_NEED-01@1",
+     "APPLIED:step_392910e317774890b8b5952609133296->R-AI_NEED-01@1",
+     "APPLIED:step_3a8e4c6e9bc94cc58250723621fe7d75->R-AI_NEED-01@1",
+     "APPLIED:step_47c1f4ad43374159b08575c3bdf774f1->R-AI_NEED-01@1",
+     "APPLIED:step_47ec10033cad4a5d9abc0fa49e9b1876->R-AI_NEED-01@1",
+     "APPLIED:step_47ee821f73b24916b0799981d2b833c2->R-AI_NEED-01@1",
+     "APPLIED:step_4a50f7f4beff4f98bde920744a2b263f->R-AI_NEED-01@1",
+     "APPLIED:step_66aa218a6b9748c0896ca28982854ed1->R-AI_NEED-01@1",
+     "APPLIED:step_733cf94a64d74da490be4f3baea63299->R-AI_NEED-01@1",
+     "APPLIED:step_74417f599b094a15af7dae420465d632->R-AI_NEED-01@1",
+     "APPLIED:step_7776f5d35d4847e480fc02bfff41534b->R-AI_NEED-01@1",
+     "APPLIED:step_7f076741040343fdbdfa4a94c582337c->R-AI_NEED-01@1",
+     "APPLIED:step_8dacd6fa77974c20aba62c57c947faf4->R-AI_NEED-01@1",
+     "APPLIED:step_8f3cbea9063a461190cd7971a27e80e8->R-AI_NEED-01@1",
+     "APPLIED:step_92068e5f980042a1a7a8e77cba6526f3->R-AI_NEED-01@1",
+     "APPLIED:step_9b2c025fe97b4d8189e6847efdedacfb->R-AI_NEED-01@1",
+     "APPLIED:step_a037cb1d32a74dc792d09b34df265421->R-AI_NEED-01@1",
+     "APPLIED:step_a26e0068ccef488ea9db7bb12f53e6e1->R-AI_NEED-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-AI_NEED-01@1",
+     "APPLIED:step_a65cf2593c6b4c569897409b53b9fdaa->R-AI_NEED-01@1",
+     "APPLIED:step_d9a0f65b9cfe45f2843ad756dbc6e670->R-AI_NEED-01@1",
+     "APPLIED:step_f14aaf2e11f84ec884e9523c9d9f3e3a->R-AI_NEED-01@1",
+     "CORRECTS:cor_58af725183634ae9aeaa16b373a5f990->mout_c474170fe772467285202d8c92416784",
+     "CORRECTS:cor_a12d0808c0124f07baf6b7d73b7663b8->mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "CORRECTS:cor_e1c531571fd64851b38fb3f407ad7ff9->mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "CORRECTS:cor_e4a28aea4e6c4d4880eb64292314cdc1->mout_68ebea9898834333ae31b39f45d475f2",
+     "CORRECTS:cor_f0817ad4222842cf9d759be1a3e4e647->mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "DECIDES:rdec_f01ba658005b4be0bbc4f24cb8accb2f->cand_8fcc507094e6868374ddec5c",
+     "DERIVED_FROM:R-AI_NEED-01@1->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_2",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_7",
+     "PUBLISHED_IN:R-AI_NEED-01@1->cfg_t-x38r-10031227_9",
+     "RECORDED:rdec_631ea52db0da4ace8c86c03d503d984e->cor_58af725183634ae9aeaa16b373a5f990",
+     "RECORDED:rdec_63e79ba5a7ee49a5a49a024eede69a88->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_631ea52db0da4ace8c86c03d503d984e",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "VALIDATES:val_ae2b8a074e3d412aa003c57a6efab5d4->R-AI_NEED-01@1"
+    ],
+    "layers": {
+     "1": 10,
+     "2": 1,
+     "3": 5,
+     "4": 5,
+     "5": 27
+    },
+    "node_count": 48,
+    "node_kinds": {
+     "R-AI_NEED-01@1": "RuleVersion",
+     "cand_8fcc507094e6868374ddec5c": "RuleCandidate",
+     "cfg_t-x38r-10031227_2": "ConfigVersion",
+     "cfg_t-x38r-10031227_7": "ConfigVersion",
+     "cfg_t-x38r-10031227_9": "ConfigVersion",
+     "cor_58af725183634ae9aeaa16b373a5f990": "Correction",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8": "Correction",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9": "Correction",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1": "Correction",
+     "cor_f0817ad4222842cf9d759be1a3e4e647": "Correction",
+     "mout_68ebea9898834333ae31b39f45d475f2": "ModelOutput",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84": "ModelOutput",
+     "mout_c474170fe772467285202d8c92416784": "ModelOutput",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a": "ModelOutput",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1": "ModelOutput",
+     "rdec_2a438b8572a843b1ac79745b7a27e559": "ReviewDecision",
+     "rdec_631ea52db0da4ace8c86c03d503d984e": "ReviewDecision",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88": "ReviewDecision",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f": "ReviewDecision",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f": "RuleDecision",
+     "step_04109e4c8724484cb7a3de51320f7bd4": "RunStep",
+     "step_04d6b7406539430cad7b550416980c1d": "RunStep",
+     "step_1c25f6f5e6c841c1ad9837be8e8b555b": "RunStep",
+     "step_22a03d26d0c641698d3ad58be98a2e34": "RunStep",
+     "step_30e7c2a911fc40f58ba3238032ba45b0": "RunStep",
+     "step_36320b9b1a0f4b5d8943692df49d3e88": "RunStep",
+     "step_392910e317774890b8b5952609133296": "RunStep",
+     "step_3a8e4c6e9bc94cc58250723621fe7d75": "RunStep",
+     "step_47c1f4ad43374159b08575c3bdf774f1": "RunStep",
+     "step_47ec10033cad4a5d9abc0fa49e9b1876": "RunStep",
+     "step_47ee821f73b24916b0799981d2b833c2": "RunStep",
+     "step_4a50f7f4beff4f98bde920744a2b263f": "RunStep",
+     "step_66aa218a6b9748c0896ca28982854ed1": "RunStep",
+     "step_733cf94a64d74da490be4f3baea63299": "RunStep",
+     "step_74417f599b094a15af7dae420465d632": "RunStep",
+     "step_7776f5d35d4847e480fc02bfff41534b": "RunStep",
+     "step_7f076741040343fdbdfa4a94c582337c": "RunStep",
+     "step_8dacd6fa77974c20aba62c57c947faf4": "RunStep",
+     "step_8f3cbea9063a461190cd7971a27e80e8": "RunStep",
+     "step_92068e5f980042a1a7a8e77cba6526f3": "RunStep",
+     "step_9b2c025fe97b4d8189e6847efdedacfb": "RunStep",
+     "step_a037cb1d32a74dc792d09b34df265421": "RunStep",
+     "step_a26e0068ccef488ea9db7bb12f53e6e1": "RunStep",
+     "step_a4920d1256274c3db4d14c561ed044d4": "RunStep",
+     "step_a65cf2593c6b4c569897409b53b9fdaa": "RunStep",
+     "step_d9a0f65b9cfe45f2843ad756dbc6e670": "RunStep",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a": "RunStep",
+     "val_ae2b8a074e3d412aa003c57a6efab5d4": "ValidationRun"
+    },
+    "nodes": [
+     "R-AI_NEED-01@1",
+     "cand_8fcc507094e6868374ddec5c",
+     "cfg_t-x38r-10031227_2",
+     "cfg_t-x38r-10031227_7",
+     "cfg_t-x38r-10031227_9",
+     "cor_58af725183634ae9aeaa16b373a5f990",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "cor_f0817ad4222842cf9d759be1a3e4e647",
+     "mout_68ebea9898834333ae31b39f45d475f2",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "mout_c474170fe772467285202d8c92416784",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "rdec_2a438b8572a843b1ac79745b7a27e559",
+     "rdec_631ea52db0da4ace8c86c03d503d984e",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "step_04109e4c8724484cb7a3de51320f7bd4",
+     "step_04d6b7406539430cad7b550416980c1d",
+     "step_1c25f6f5e6c841c1ad9837be8e8b555b",
+     "step_22a03d26d0c641698d3ad58be98a2e34",
+     "step_30e7c2a911fc40f58ba3238032ba45b0",
+     "step_36320b9b1a0f4b5d8943692df49d3e88",
+     "step_392910e317774890b8b5952609133296",
+     "step_3a8e4c6e9bc94cc58250723621fe7d75",
+     "step_47c1f4ad43374159b08575c3bdf774f1",
+     "step_47ec10033cad4a5d9abc0fa49e9b1876",
+     "step_47ee821f73b24916b0799981d2b833c2",
+     "step_4a50f7f4beff4f98bde920744a2b263f",
+     "step_66aa218a6b9748c0896ca28982854ed1",
+     "step_733cf94a64d74da490be4f3baea63299",
+     "step_74417f599b094a15af7dae420465d632",
+     "step_7776f5d35d4847e480fc02bfff41534b",
+     "step_7f076741040343fdbdfa4a94c582337c",
+     "step_8dacd6fa77974c20aba62c57c947faf4",
+     "step_8f3cbea9063a461190cd7971a27e80e8",
+     "step_92068e5f980042a1a7a8e77cba6526f3",
+     "step_9b2c025fe97b4d8189e6847efdedacfb",
+     "step_a037cb1d32a74dc792d09b34df265421",
+     "step_a26e0068ccef488ea9db7bb12f53e6e1",
+     "step_a4920d1256274c3db4d14c561ed044d4",
+     "step_a65cf2593c6b4c569897409b53b9fdaa",
+     "step_d9a0f65b9cfe45f2843ad756dbc6e670",
+     "step_f14aaf2e11f84ec884e9523c9d9f3e3a",
+     "val_ae2b8a074e3d412aa003c57a6efab5d4"
+    ],
+    "truncated": false
+   },
+   "run": {
+    "edge_count": 56,
+    "edges": [
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-AI_NEED-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-FEASIBILITY-01@1",
+     "APPLIED:step_a4920d1256274c3db4d14c561ed044d4->R-LEAD_ORG-01@1",
+     "CITES:mout_1c4e0b450f0742c3b8096da917a7e74b->esp_5406be984af944e2b3032d16c1f079fe",
+     "CITES:mout_745e1a145a844068af3af7d022fcd032->esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "CITES:mout_9670a9d9427a483fb7cb3dbd4d0b56ae->esp_c9e7262214c943eabe7a37e332f75154",
+     "CITES:mout_b896ac7666e045a297e3424e1a3654c9->esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "CORRECTS:cor_382a770a59a5438682cf9d5a21d0a74d->mout_7d3ce38a2ab147a2b5463315070374c0",
+     "CORRECTS:cor_503b976a073f4aef9f95a2f9474ca09b->mout_8cf82f27990a4d51b9f07adb59469284",
+     "CORRECTS:cor_58af725183634ae9aeaa16b373a5f990->mout_c474170fe772467285202d8c92416784",
+     "CORRECTS:cor_88104cfdf04742de93884ec0aa95a41f->mout_b896ac7666e045a297e3424e1a3654c9",
+     "CORRECTS:cor_a12d0808c0124f07baf6b7d73b7663b8->mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "CORRECTS:cor_a2f1d4fe9a4c4f919deefe62082320a3->mout_ebec206f55f24a95a1e267ee50543bc3",
+     "CORRECTS:cor_e1c531571fd64851b38fb3f407ad7ff9->mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "CORRECTS:cor_e4a28aea4e6c4d4880eb64292314cdc1->mout_68ebea9898834333ae31b39f45d475f2",
+     "CORRECTS:cor_f0817ad4222842cf9d759be1a3e4e647->mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "CORRECTS:cor_f3c482e76e094ce5825c7264717b5d06->mout_745e1a145a844068af3af7d022fcd032",
+     "CORRECTS:cor_f53eaee7e65f4d4a97866d464f631bec->mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "DECIDES:rdec_16b2b896cc344614b98c2423db381d52->cand_9a49449bb55ab51162c213e0",
+     "DECIDES:rdec_65ada79162344602b90a1ae72c736684->cand_79f6d9ca44e33854681ab0b0",
+     "DECIDES:rdec_f01ba658005b4be0bbc4f24cb8accb2f->cand_8fcc507094e6868374ddec5c",
+     "DERIVED_FROM:R-AI_NEED-01@1->rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "DERIVED_FROM:R-FEASIBILITY-01@1->rdec_65ada79162344602b90a1ae72c736684",
+     "DERIVED_FROM:R-LEAD_ORG-01@1->rdec_16b2b896cc344614b98c2423db381d52",
+     "RECORDED:rdec_631ea52db0da4ace8c86c03d503d984e->cor_58af725183634ae9aeaa16b373a5f990",
+     "RECORDED:rdec_63e79ba5a7ee49a5a49a024eede69a88->cor_f0817ad4222842cf9d759be1a3e4e647",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_88104cfdf04742de93884ec0aa95a41f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f3c482e76e094ce5825c7264717b5d06",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->cor_f53eaee7e65f4d4a97866d464f631bec",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_09efc4f954f54dceb95e629ecb12548f",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_2a82202b9f1642399d386e5b5058b228",
+     "SUPPORTED_BY:cand_79f6d9ca44e33854681ab0b0->rdec_96a268c1834a439b80ca4fa8ca072536",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_2a438b8572a843b1ac79745b7a27e559",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_631ea52db0da4ace8c86c03d503d984e",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "SUPPORTED_BY:cand_8fcc507094e6868374ddec5c->rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_382a770a59a5438682cf9d5a21d0a74d",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_503b976a073f4aef9f95a2f9474ca09b",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_0d45434a86404c929c0929258d1d5036",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "SUPPORTED_BY:cand_9a49449bb55ab51162c213e0->rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_50074689b4a24bd0a7c34c12707aba4e",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_59c9a4dfb4ca4972a02eb7ab0f7fd630",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_5a33c5dc2a384f9bb0b8e536b4a82bf6",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_66f2bb1dc5f4480790b41818e52c9c06",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_9140ae96833b49568f2e1cc82bbeb89d",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_9670a9d9427a483fb7cb3dbd4d0b56ae",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_a1b4d6a2ae5e4402bd01882726b35942",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_b3ab3843328a4208a625b665709547c8",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_c6dfbef44b8441b9b3845efc9a7f2790",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed",
+     "USED_OUTPUT:step_210cc72089d347f49ff880b4ee1e07ac->mout_faa31df942fe4945bd34da9d86c95579"
+    ],
+    "layers": {
+     "1": 37,
+     "2": 3,
+     "3": 13,
+     "4": 3,
+     "5": 2
+    },
+    "node_count": 58,
+    "node_kinds": {
+     "R-AI_NEED-01@1": "RuleVersion",
+     "R-FEASIBILITY-01@1": "RuleVersion",
+     "R-LEAD_ORG-01@1": "RuleVersion",
+     "cand_79f6d9ca44e33854681ab0b0": "RuleCandidate",
+     "cand_8fcc507094e6868374ddec5c": "RuleCandidate",
+     "cand_9a49449bb55ab51162c213e0": "RuleCandidate",
+     "cor_382a770a59a5438682cf9d5a21d0a74d": "Correction",
+     "cor_503b976a073f4aef9f95a2f9474ca09b": "Correction",
+     "cor_58af725183634ae9aeaa16b373a5f990": "Correction",
+     "cor_88104cfdf04742de93884ec0aa95a41f": "Correction",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8": "Correction",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3": "Correction",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9": "Correction",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1": "Correction",
+     "cor_f0817ad4222842cf9d759be1a3e4e647": "Correction",
+     "cor_f3c482e76e094ce5825c7264717b5d06": "Correction",
+     "cor_f53eaee7e65f4d4a97866d464f631bec": "Correction",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782": "EvidenceSpan",
+     "esp_5406be984af944e2b3032d16c1f079fe": "EvidenceSpan",
+     "esp_c9e7262214c943eabe7a37e332f75154": "EvidenceSpan",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845": "EvidenceSpan",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b": "ModelOutput",
+     "mout_50074689b4a24bd0a7c34c12707aba4e": "ModelOutput",
+     "mout_59c9a4dfb4ca4972a02eb7ab0f7fd630": "ModelOutput",
+     "mout_5a33c5dc2a384f9bb0b8e536b4a82bf6": "ModelOutput",
+     "mout_66f2bb1dc5f4480790b41818e52c9c06": "ModelOutput",
+     "mout_68ebea9898834333ae31b39f45d475f2": "ModelOutput",
+     "mout_745e1a145a844068af3af7d022fcd032": "ModelOutput",
+     "mout_7d3ce38a2ab147a2b5463315070374c0": "ModelOutput",
+     "mout_8cf82f27990a4d51b9f07adb59469284": "ModelOutput",
+     "mout_9140ae96833b49568f2e1cc82bbeb89d": "ModelOutput",
+     "mout_9670a9d9427a483fb7cb3dbd4d0b56ae": "ModelOutput",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84": "ModelOutput",
+     "mout_a1b4d6a2ae5e4402bd01882726b35942": "ModelOutput",
+     "mout_b3ab3843328a4208a625b665709547c8": "ModelOutput",
+     "mout_b896ac7666e045a297e3424e1a3654c9": "ModelOutput",
+     "mout_c474170fe772467285202d8c92416784": "ModelOutput",
+     "mout_c6dfbef44b8441b9b3845efc9a7f2790": "ModelOutput",
+     "mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed": "ModelOutput",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a": "ModelOutput",
+     "mout_ebec206f55f24a95a1e267ee50543bc3": "ModelOutput",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1": "ModelOutput",
+     "mout_faa31df942fe4945bd34da9d86c95579": "ModelOutput",
+     "rdec_09efc4f954f54dceb95e629ecb12548f": "ReviewDecision",
+     "rdec_0d45434a86404c929c0929258d1d5036": "ReviewDecision",
+     "rdec_16b2b896cc344614b98c2423db381d52": "RuleDecision",
+     "rdec_2a438b8572a843b1ac79745b7a27e559": "ReviewDecision",
+     "rdec_2a82202b9f1642399d386e5b5058b228": "ReviewDecision",
+     "rdec_631ea52db0da4ace8c86c03d503d984e": "ReviewDecision",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88": "ReviewDecision",
+     "rdec_65ada79162344602b90a1ae72c736684": "RuleDecision",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785": "ReviewDecision",
+     "rdec_96a268c1834a439b80ca4fa8ca072536": "ReviewDecision",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f": "ReviewDecision",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f": "ReviewDecision",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f": "RuleDecision",
+     "step_210cc72089d347f49ff880b4ee1e07ac": "RunStep",
+     "step_a4920d1256274c3db4d14c561ed044d4": "RunStep"
+    },
+    "nodes": [
+     "R-AI_NEED-01@1",
+     "R-FEASIBILITY-01@1",
+     "R-LEAD_ORG-01@1",
+     "cand_79f6d9ca44e33854681ab0b0",
+     "cand_8fcc507094e6868374ddec5c",
+     "cand_9a49449bb55ab51162c213e0",
+     "cor_382a770a59a5438682cf9d5a21d0a74d",
+     "cor_503b976a073f4aef9f95a2f9474ca09b",
+     "cor_58af725183634ae9aeaa16b373a5f990",
+     "cor_88104cfdf04742de93884ec0aa95a41f",
+     "cor_a12d0808c0124f07baf6b7d73b7663b8",
+     "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+     "cor_e1c531571fd64851b38fb3f407ad7ff9",
+     "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+     "cor_f0817ad4222842cf9d759be1a3e4e647",
+     "cor_f3c482e76e094ce5825c7264717b5d06",
+     "cor_f53eaee7e65f4d4a97866d464f631bec",
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+     "esp_5406be984af944e2b3032d16c1f079fe",
+     "esp_c9e7262214c943eabe7a37e332f75154",
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+     "mout_1c4e0b450f0742c3b8096da917a7e74b",
+     "mout_50074689b4a24bd0a7c34c12707aba4e",
+     "mout_59c9a4dfb4ca4972a02eb7ab0f7fd630",
+     "mout_5a33c5dc2a384f9bb0b8e536b4a82bf6",
+     "mout_66f2bb1dc5f4480790b41818e52c9c06",
+     "mout_68ebea9898834333ae31b39f45d475f2",
+     "mout_745e1a145a844068af3af7d022fcd032",
+     "mout_7d3ce38a2ab147a2b5463315070374c0",
+     "mout_8cf82f27990a4d51b9f07adb59469284",
+     "mout_9140ae96833b49568f2e1cc82bbeb89d",
+     "mout_9670a9d9427a483fb7cb3dbd4d0b56ae",
+     "mout_99b4ea1161404faa92a2f3ed84c3ca84",
+     "mout_a1b4d6a2ae5e4402bd01882726b35942",
+     "mout_b3ab3843328a4208a625b665709547c8",
+     "mout_b896ac7666e045a297e3424e1a3654c9",
+     "mout_c474170fe772467285202d8c92416784",
+     "mout_c6dfbef44b8441b9b3845efc9a7f2790",
+     "mout_d61d0e2a0af14ecf84efb8c8a0eaf4ed",
+     "mout_d9b2618c1aa04c5897d7573e03290c7a",
+     "mout_ebec206f55f24a95a1e267ee50543bc3",
+     "mout_f0fbf34505534d6f851bc0af83b1a8a1",
+     "mout_faa31df942fe4945bd34da9d86c95579",
+     "rdec_09efc4f954f54dceb95e629ecb12548f",
+     "rdec_0d45434a86404c929c0929258d1d5036",
+     "rdec_16b2b896cc344614b98c2423db381d52",
+     "rdec_2a438b8572a843b1ac79745b7a27e559",
+     "rdec_2a82202b9f1642399d386e5b5058b228",
+     "rdec_631ea52db0da4ace8c86c03d503d984e",
+     "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+     "rdec_65ada79162344602b90a1ae72c736684",
+     "rdec_8d2aef0473c64e66b07aa028f1ad2785",
+     "rdec_96a268c1834a439b80ca4fa8ca072536",
+     "rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+     "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+     "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+     "step_210cc72089d347f49ff880b4ee1e07ac",
+     "step_a4920d1256274c3db4d14c561ed044d4"
+    ],
+    "truncated": false
+   }
+  },
+  "judgments": {
+   "req_37be29fc5ba64774855602dc6604fb3e": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 2,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@1"
+     }
+    ],
+    "run_id": "run_d97a42f321e4486489579ed167f27c00",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 2,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_4f64895718614271894b4fb1193202ff": {
+    "classifications": {
+     "ai_need": "불필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "IT팀",
+      "before": "IT팀",
+      "config_version": 5,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-LEAD_ORG-01@1"
+     },
+     {
+      "after": "정보 부족",
+      "before": "정보 부족",
+      "config_version": 5,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-FEASIBILITY-01@1"
+     }
+    ],
+    "run_id": "run_6c83a7f407af47c98dd6d9aefd71e746",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 5,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_6b09736cb81f40eb96a451f595f44c66": {
+    "classifications": {
+     "ai_need": "불필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "긴급"
+    },
+    "rule_effects": [
+     {
+      "after": "불필요",
+      "before": "불필요",
+      "config_version": 2,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-AI_NEED-01@1"
+     }
+    ],
+    "run_id": "run_ca70aafc128d4634b4518075ee66995c",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 2,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_86170fbfe48e4a668f38914f738360d4": {
+    "classifications": {
+     "ai_need": "불필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "IT팀",
+      "before": "IT팀",
+      "config_version": 5,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-LEAD_ORG-01@1"
+     },
+     {
+      "after": "정보 부족",
+      "before": "정보 부족",
+      "config_version": 5,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-FEASIBILITY-01@1"
+     }
+    ],
+    "run_id": "run_521d9511612545ce82e4770a937a81e0",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 5,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_b7638d574aa7420e8c8e632e206247d8": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 2,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@1"
+     }
+    ],
+    "run_id": "run_2c5c765f9cbc4211b33f06e883bd0552",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 2,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_ce5ec4dbc4614a1ebb1e72c2b5e9aaff": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 2,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@1"
+     }
+    ],
+    "run_id": "run_4711fecab95a4d4e9ab4b4d7862c7e73",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 2,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_d5c5e1811fac42849b0260daa9e6e9aa": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "조건부 가능",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 4,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@1"
+     },
+     {
+      "after": "IT팀",
+      "before": "IT팀",
+      "config_version": 4,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-LEAD_ORG-01@1"
+     },
+     {
+      "after": "조건부 가능",
+      "before": "정보 부족",
+      "config_version": 4,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-FEASIBILITY-01@1"
+     }
+    ],
+    "run_id": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 4,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_e69c48ef3dfa45c88198a8451420164c": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "IT팀",
+      "before": "IT팀",
+      "config_version": 7,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-LEAD_ORG-01@1"
+     },
+     {
+      "after": "정보 부족",
+      "before": "정보 부족",
+      "config_version": 7,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-FEASIBILITY-01@1"
+     },
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 7,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@1"
+     }
+    ],
+    "run_id": "run_aba3bb30dcc143ecb0ea6197a3349652",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 7,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   },
+   "req_ffb17c16c9b545beb734728696da558a": {
+    "classifications": {
+     "ai_need": "필요",
+     "feasibility": "정보 부족",
+     "lead_org": "IT팀",
+     "urgency": "판단 보류"
+    },
+    "rule_effects": [
+     {
+      "after": "IT팀",
+      "before": "IT팀",
+      "config_version": 6,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-LEAD_ORG-01@1"
+     },
+     {
+      "after": "정보 부족",
+      "before": "정보 부족",
+      "config_version": 6,
+      "effect": "rule",
+      "outcome": "out_of_scope",
+      "rule_version": "R-FEASIBILITY-01@1"
+     },
+     {
+      "after": "필요",
+      "before": "불필요",
+      "config_version": 6,
+      "effect": "rule",
+      "outcome": "used",
+      "rule_version": "R-AI_NEED-01@2"
+     }
+    ],
+    "run_id": "run_03daecf7b64c417f9f538355d7267061",
+    "versions": {
+     "catalog": "catalog-v2",
+     "config_version": 6,
+     "model": "jev-1.13.0",
+     "qset": "qset-v2",
+     "schema": "judgment-v1"
+    }
+   }
+  },
+  "policy_active": {
+   "config": {
+    "auto_assign": false,
+    "catalog_noul_threshold": 0.6,
+    "choice_confidence_thresholds": {
+     "ai_need": 0.8,
+     "feasibility": 0.8,
+     "lead_org": 0.8,
+     "urgency": 0.8
+    },
+    "evidence_noul_threshold": 0.6,
+    "feature_flags": {},
+    "learning": {
+     "effect_window_days": 7,
+     "min_effect_sample": 20,
+     "min_support": 3,
+     "shadow_max_calls": 20
+    },
+    "limits": {
+     "attachments": 5,
+     "file_bytes": 10485760,
+     "pdf_pages": 50,
+     "text_chars": 20000,
+     "total_bytes": 26214400
+    },
+    "noul_probability_thresholds": {
+     "catalog": 0.6,
+     "evidence": 0.6
+    },
+    "noul_uncertain_band": [
+     0.35,
+     0.65
+    ],
+    "reviewer_groups": {},
+    "risk_clear_max": 0.2,
+    "rules": [
+     {
+      "action": {
+       "set": "현업"
+      },
+      "candidate_id": "cand_9a49449bb55ab51162c213e0",
+      "context_text": null,
+      "decision_id": "rdec_16b2b896cc344614b98c2423db381d52",
+      "effect": "rule",
+      "rule_id": "R-LEAD_ORG-01",
+      "scope": {
+       "all": [
+        {
+         "field": "ai_need",
+         "op": "eq",
+         "value": "혼합"
+        },
+        {
+         "field": "feasibility",
+         "op": "eq",
+         "value": "정보 부족"
+        },
+        {
+         "field": "lead_org",
+         "op": "eq",
+         "value": "IT팀"
+        },
+        {
+         "op": "lte",
+         "signal": "ai_team_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "business_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "clinical_safety",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "it_team_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "pharmacovigilance",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "regulatory",
+         "value": 0.5
+        },
+        {
+         "field": "urgency",
+         "op": "eq",
+         "value": "판단 보류"
+        }
+       ]
+      },
+      "target": "lead_org",
+      "version": 1
+     },
+     {
+      "action": {
+       "set": "조건부 가능"
+      },
+      "candidate_id": "cand_79f6d9ca44e33854681ab0b0",
+      "context_text": null,
+      "decision_id": "rdec_65ada79162344602b90a1ae72c736684",
+      "effect": "rule",
+      "rule_id": "R-FEASIBILITY-01",
+      "scope": {
+       "all": [
+        {
+         "field": "ai_need",
+         "op": "eq",
+         "value": "필요"
+        },
+        {
+         "field": "feasibility",
+         "op": "eq",
+         "value": "정보 부족"
+        },
+        {
+         "field": "lead_org",
+         "op": "eq",
+         "value": "IT팀"
+        },
+        {
+         "op": "lte",
+         "signal": "ai_team_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "business_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "lte",
+         "signal": "clinical_safety",
+         "value": 0.5
+        },
+        {
+         "op": "gte",
+         "signal": "it_team_involvement",
+         "value": 0.5
+        },
+        {
+         "op": "lte",
+         "signal": "pharmacovigilance",
+         "value": 0.5
+        },
+        {
+         "op": "lte",
+         "signal": "regulatory",
+         "value": 0.5
+        },
+        {
+         "field": "urgency",
+         "op": "eq",
+         "value": "판단 보류"
+        }
+       ]
+      },
+      "target": "feasibility",
+      "version": 1
+     },
+     {
+      "action": {
+       "set": "필요"
+      },
+      "candidate_id": "cand_8fcc507094e6868374ddec5c",
+      "context_text": null,
+      "decision_id": "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+      "effect": "rule",
+      "rule_id": "R-AI_NEED-01",
+      "scope": {
+       "all": [
+        {
+         "field": "ai_need",
+         "op": "eq",
+         "value": "불필요"
+        },
+        {
+         "field": "lead_org",
+         "op": "eq",
+         "value": "IT팀"
+        },
+        {
+         "op": "lte",
+         "signal": "clinical_safety",
+         "value": 0.5
+        },
+        {
+         "op": "lte",
+         "signal": "regulatory",
+         "value": 0.5
+        }
+       ]
+      },
+      "target": "ai_need",
+      "version": 1
+     }
+    ],
+    "schema_version": "policy-schema-v1"
+   },
+   "version": 9
+  },
+  "policy_versions": {
+   "versions": [
+    {
+     "created_at": "2026-10-03T12:42:49.359Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: 시험 후 v1 복원",
+     "status": "active",
+     "version": 9
+    },
+    {
+     "created_at": "2026-10-03T12:42:45.21Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: 진행 중 실행 시험 1",
+     "status": "superseded",
+     "version": 8
+    },
+    {
+     "created_at": "2026-10-03T12:42:39.968Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: v1로 되돌리기",
+     "status": "superseded",
+     "version": 7
+    },
+    {
+     "created_at": "2026-10-03T12:42:35.612Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: v2 게시",
+     "status": "superseded",
+     "version": 6
+    },
+    {
+     "created_at": "2026-10-03T12:42:26.426Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: 중단(진행 중 실행 시험)",
+     "status": "superseded",
+     "version": 5
+    },
+    {
+     "created_at": "2026-10-03T12:35:21.213Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38-R: 게시",
+     "status": "superseded",
+     "version": 4
+    },
+    {
+     "created_at": "2026-10-03T12:33:32.731Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38-R: 게시",
+     "status": "superseded",
+     "version": 3
+    },
+    {
+     "created_at": "2026-10-03T12:28:39.333Z",
+     "created_by": "usr_t-x38r-10031227_rule_admin",
+     "reason": "T38: 게시",
+     "status": "superseded",
+     "version": 2
+    },
+    {
+     "created_at": "2026-10-03T12:27:54.645Z",
+     "created_by": "system:bootstrap",
+     "reason": "보수적 초기 정책",
+     "status": "superseded",
+     "version": 1
+    }
+   ]
+  },
+  "rules": {
+   "R-AI_NEED-01": {
+    "rule_id": "R-AI_NEED-01",
+    "versions": [
+     {
+      "application_count": 27,
+      "body": {
+       "action": {
+        "set": "필요"
+       },
+       "candidate_id": "cand_8fcc507094e6868374ddec5c",
+       "decision_id": "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+       "effect": "rule",
+       "rule_id": "R-AI_NEED-01",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "ai_need",
+          "op": "eq",
+          "value": "불필요"
+         },
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "IT팀"
+         },
+         {
+          "op": "lte",
+          "signal": "clinical_safety",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "regulatory",
+          "value": 0.5
+         }
+        ]
+       },
+       "target": "ai_need",
+       "version": 1
+      },
+      "config_versions": [
+       9,
+       7,
+       2
+      ],
+      "insufficient_approval_label": null,
+      "insufficient_approved": false,
+      "status": "published",
+      "version": 1
+     },
+     {
+      "application_count": 1,
+      "body": {
+       "action": {
+        "set": "필요"
+       },
+       "candidate_id": "cand_8fcc507094e6868374ddec5c",
+       "decision_id": "rdec_f01ba658005b4be0bbc4f24cb8accb2f",
+       "effect": "rule",
+       "rule_id": "R-AI_NEED-01",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "ai_need",
+          "op": "eq",
+          "value": "불필요"
+         },
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "IT팀"
+         },
+         {
+          "op": "lte",
+          "signal": "clinical_safety",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "regulatory",
+          "value": 0.5
+         }
+        ]
+       },
+       "target": "ai_need",
+       "version": 2
+      },
+      "config_versions": [
+       6
+      ],
+      "insufficient_approval_label": null,
+      "insufficient_approved": false,
+      "status": "reverted",
+      "version": 2
+     }
+    ]
+   },
+   "R-AI_NEED-02": {
+    "rule_id": "R-AI_NEED-02",
+    "versions": [
+     {
+      "application_count": 0,
+      "body": {
+       "action": {
+        "set": "혼합"
+       },
+       "candidate_id": "cand_e123faef72028b6d12635bef",
+       "decision_id": "rdec_86485b0355534353b4d3a4aec8ade3c1",
+       "effect": "rule",
+       "rule_id": "R-AI_NEED-02",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "ai_need",
+          "op": "eq",
+          "value": "불필요"
+         },
+         {
+          "field": "feasibility",
+          "op": "eq",
+          "value": "정보 부족"
+         },
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "IT팀"
+         },
+         {
+          "op": "lte",
+          "signal": "ai_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "business_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "clinical_safety",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "it_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "pharmacovigilance",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "regulatory",
+          "value": 0.5
+         },
+         {
+          "field": "urgency",
+          "op": "eq",
+          "value": "판단 보류"
+         }
+        ]
+       },
+       "target": "ai_need",
+       "version": 1
+      },
+      "config_versions": [],
+      "insufficient_approval_label": "자료 부족 상태로 승인됨",
+      "insufficient_approved": true,
+      "status": "validating",
+      "version": 1
+     }
+    ]
+   },
+   "R-AI_NEED-03": {
+    "rule_id": "R-AI_NEED-03",
+    "versions": [
+     {
+      "application_count": 0,
+      "body": {
+       "action": {
+        "set": "혼합"
+       },
+       "candidate_id": "cand_0c4749cc88828c487a3d8ead",
+       "decision_id": "rdec_84495d2d93af4a2083f886cb6bfe97cc",
+       "effect": "rule",
+       "rule_id": "R-AI_NEED-03",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "현업"
+         }
+        ]
+       },
+       "target": "ai_need",
+       "version": 1
+      },
+      "config_versions": [],
+      "insufficient_approval_label": "자료 부족 상태로 승인됨",
+      "insufficient_approved": true,
+      "status": "validating",
+      "version": 1
+     }
+    ]
+   },
+   "R-FEASIBILITY-01": {
+    "rule_id": "R-FEASIBILITY-01",
+    "versions": [
+     {
+      "application_count": 7,
+      "body": {
+       "action": {
+        "set": "조건부 가능"
+       },
+       "candidate_id": "cand_79f6d9ca44e33854681ab0b0",
+       "decision_id": "rdec_65ada79162344602b90a1ae72c736684",
+       "effect": "rule",
+       "rule_id": "R-FEASIBILITY-01",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "ai_need",
+          "op": "eq",
+          "value": "필요"
+         },
+         {
+          "field": "feasibility",
+          "op": "eq",
+          "value": "정보 부족"
+         },
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "IT팀"
+         },
+         {
+          "op": "lte",
+          "signal": "ai_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "business_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "clinical_safety",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "it_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "pharmacovigilance",
+          "value": 0.5
+         },
+         {
+          "op": "lte",
+          "signal": "regulatory",
+          "value": 0.5
+         },
+         {
+          "field": "urgency",
+          "op": "eq",
+          "value": "판단 보류"
+         }
+        ]
+       },
+       "target": "feasibility",
+       "version": 1
+      },
+      "config_versions": [
+       4
+      ],
+      "insufficient_approval_label": null,
+      "insufficient_approved": false,
+      "status": "published",
+      "version": 1
+     }
+    ]
+   },
+   "R-LEAD_ORG-01": {
+    "rule_id": "R-LEAD_ORG-01",
+    "versions": [
+     {
+      "application_count": 20,
+      "body": {
+       "action": {
+        "set": "현업"
+       },
+       "candidate_id": "cand_9a49449bb55ab51162c213e0",
+       "decision_id": "rdec_16b2b896cc344614b98c2423db381d52",
+       "effect": "rule",
+       "rule_id": "R-LEAD_ORG-01",
+       "schema": "rule-v1",
+       "scope": {
+        "all": [
+         {
+          "field": "ai_need",
+          "op": "eq",
+          "value": "혼합"
+         },
+         {
+          "field": "feasibility",
+          "op": "eq",
+          "value": "정보 부족"
+         },
+         {
+          "field": "lead_org",
+          "op": "eq",
+          "value": "IT팀"
+         },
+         {
+          "op": "lte",
+          "signal": "ai_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "business_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "clinical_safety",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "it_team_involvement",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "pharmacovigilance",
+          "value": 0.5
+         },
+         {
+          "op": "gte",
+          "signal": "regulatory",
+          "value": 0.5
+         },
+         {
+          "field": "urgency",
+          "op": "eq",
+          "value": "판단 보류"
+         }
+        ]
+       },
+       "target": "lead_org",
+       "version": 1
+      },
+      "config_versions": [
+       3
+      ],
+      "insufficient_approval_label": null,
+      "insufficient_approved": false,
+      "status": "published",
+      "version": 1
+     }
+    ]
+   }
+  },
+  "validations": {
+   "R-AI_NEED-01@1": {
+    "validations": [
+     {
+      "base_config_version": 1,
+      "calls": 0,
+      "candidate_config_version": "1+R-AI_NEED-01@1",
+      "changed_count": 8,
+      "changes_by_value": "{\"ai_need:필요\":8}",
+      "created_at": "2026-10-03T12:28:39.083000000+00:00",
+      "created_by": "usr_t-x38r-10031227_rule_admin",
+      "failures": "[]",
+      "from_at": "2026-01-01T00:00:00.000000000+00:00",
+      "human_correction_needed_base": 5,
+      "human_correction_needed_candidate": 4,
+      "id": "val_ae2b8a074e3d412aa003c57a6efab5d4",
+      "labeled_count": 7,
+      "max_calls": 20,
+      "review_transition_base": 0,
+      "review_transition_candidate": 0,
+      "rule_version": "R-AI_NEED-01@1",
+      "run_kind": "shadow",
+      "sample_count": 8,
+      "side_effects": 0,
+      "status": "completed",
+      "tenant_id": "t-x38r-10031227",
+      "to_at": "2026-12-31T00:00:00.000000000+00:00",
+      "usage": "{}"
+     }
+    ]
+   },
+   "R-AI_NEED-01@2": {
+    "validations": [
+     {
+      "base_config_version": 5,
+      "calls": 0,
+      "candidate_config_version": "5+R-AI_NEED-01@2",
+      "changed_count": 10,
+      "changes_by_value": "{\"ai_need:필요\":10}",
+      "created_at": "2026-10-03T12:42:35.568000000+00:00",
+      "created_by": "usr_t-x38r-10031227_rule_admin",
+      "failures": "[]",
+      "from_at": "2026-01-01T00:00:00.000000000+00:00",
+      "human_correction_needed_base": 11,
+      "human_correction_needed_candidate": 10,
+      "id": "val_7c3f38b9de3c4741b418b6198f00fcdd",
+      "labeled_count": 19,
+      "max_calls": 20,
+      "review_transition_base": 0,
+      "review_transition_candidate": 0,
+      "rule_version": "R-AI_NEED-01@2",
+      "run_kind": "shadow",
+      "sample_count": 34,
+      "side_effects": 0,
+      "status": "completed",
+      "tenant_id": "t-x38r-10031227",
+      "to_at": "2026-10-03T12:43:34.000000000+00:00",
+      "usage": "{}"
+     }
+    ]
+   },
+   "R-AI_NEED-02@1": {
+    "validations": [
+     {
+      "base_config_version": 9,
+      "calls": 0,
+      "candidate_config_version": "9+R-AI_NEED-02@1",
+      "changed_count": 0,
+      "changes_by_value": "{}",
+      "created_at": "2026-10-03T12:42:54.525000000+00:00",
+      "created_by": "usr_t-x38r-10031227_rule_admin",
+      "failures": "[]",
+      "from_at": "2026-01-01T00:00:00.000000000+00:00",
+      "human_correction_needed_base": 10,
+      "human_correction_needed_candidate": 10,
+      "id": "val_84f211ef173545f4929360f37b2cd600",
+      "labeled_count": 19,
+      "max_calls": 20,
+      "review_transition_base": 0,
+      "review_transition_candidate": 0,
+      "rule_version": "R-AI_NEED-02@1",
+      "run_kind": "shadow",
+      "sample_count": 37,
+      "side_effects": 0,
+      "status": "completed",
+      "tenant_id": "t-x38r-10031227",
+      "to_at": "2026-10-03T12:43:53.000000000+00:00",
+      "usage": "{}"
+     }
+    ]
+   },
+   "R-AI_NEED-03@1": {
+    "validations": []
+   },
+   "R-FEASIBILITY-01@1": {
+    "validations": [
+     {
+      "base_config_version": 3,
+      "calls": 0,
+      "candidate_config_version": "3+R-FEASIBILITY-01@1",
+      "changed_count": 20,
+      "changes_by_value": "{\"feasibility:조건부 가능\":20}",
+      "created_at": "2026-10-03T12:35:21.181000000+00:00",
+      "created_by": "usr_t-x38r-10031227_rule_admin",
+      "failures": "[]",
+      "from_at": "2026-01-01T00:00:00.000000000+00:00",
+      "human_correction_needed_base": 10,
+      "human_correction_needed_candidate": 13,
+      "id": "val_c9703714627f4b33862c115123f71ef8",
+      "labeled_count": 19,
+      "max_calls": 20,
+      "review_transition_base": 0,
+      "review_transition_candidate": 0,
+      "rule_version": "R-FEASIBILITY-01@1",
+      "run_kind": "shadow",
+      "sample_count": 31,
+      "side_effects": 0,
+      "status": "completed",
+      "tenant_id": "t-x38r-10031227",
+      "to_at": "2026-10-03T12:36:20.000000000+00:00",
+      "usage": "{}"
+     }
+    ]
+   },
+   "R-LEAD_ORG-01@1": {
+    "validations": [
+     {
+      "base_config_version": 2,
+      "calls": 0,
+      "candidate_config_version": "2+R-LEAD_ORG-01@1",
+      "changed_count": 6,
+      "changes_by_value": "{\"lead_org:현업\":6}",
+      "created_at": "2026-10-03T12:33:32.701000000+00:00",
+      "created_by": "usr_t-x38r-10031227_rule_admin",
+      "failures": "[]",
+      "from_at": "2026-01-01T00:00:00.000000000+00:00",
+      "human_correction_needed_base": 7,
+      "human_correction_needed_candidate": 7,
+      "id": "val_e8697532f8bc4b8cabcee5205d372aba",
+      "labeled_count": 13,
+      "max_calls": 20,
+      "review_transition_base": 0,
+      "review_transition_candidate": 0,
+      "rule_version": "R-LEAD_ORG-01@1",
+      "run_kind": "shadow",
+      "sample_count": 18,
+      "side_effects": 0,
+      "status": "completed",
+      "tenant_id": "t-x38r-10031227",
+      "to_at": "2026-10-03T12:34:32.000000000+00:00",
+      "usage": "{}"
+     }
+    ]
+   }
+  }
+ },
+ "db": {
+  "applied": [
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_9ca99cb1506740b9b110dee76c5f17ce",
+    "step": "step_04109e4c8724484cb7a3de51320f7bd4"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_9ca99cb1506740b9b110dee76c5f17ce",
+    "step": "step_04109e4c8724484cb7a3de51320f7bd4"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_ead5ebd30c5d425596a77a6f72e35bbb",
+    "step": "step_04d6b7406539430cad7b550416980c1d"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_ead5ebd30c5d425596a77a6f72e35bbb",
+    "step": "step_04d6b7406539430cad7b550416980c1d"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_4711fecab95a4d4e9ab4b4d7862c7e73",
+    "step": "step_1c25f6f5e6c841c1ad9837be8e8b555b"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_0526d869844c4011a1a0db9826c27290",
+    "step": "step_22a03d26d0c641698d3ad58be98a2e34"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_0526d869844c4011a1a0db9826c27290",
+    "step": "step_22a03d26d0c641698d3ad58be98a2e34"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_2c5c765f9cbc4211b33f06e883bd0552",
+    "step": "step_30e7c2a911fc40f58ba3238032ba45b0"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_6c83a7f407af47c98dd6d9aefd71e746",
+    "step": "step_35036ce34a4d4fb2b1333dab2f7ae8f1"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_6c83a7f407af47c98dd6d9aefd71e746",
+    "step": "step_35036ce34a4d4fb2b1333dab2f7ae8f1"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_d97a42f321e4486489579ed167f27c00",
+    "step": "step_36320b9b1a0f4b5d8943692df49d3e88"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_6a589d0855d74739b6ebbf4fc5ce3228",
+    "step": "step_392910e317774890b8b5952609133296"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_6a589d0855d74739b6ebbf4fc5ce3228",
+    "step": "step_392910e317774890b8b5952609133296"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_6a589d0855d74739b6ebbf4fc5ce3228",
+    "step": "step_392910e317774890b8b5952609133296"
+   },
+   {
+    "after": "\"불필요\"",
+    "before": "\"불필요\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_ca70aafc128d4634b4518075ee66995c",
+    "step": "step_3a8e4c6e9bc94cc58250723621fe7d75"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_aba3bb30dcc143ecb0ea6197a3349652",
+    "step": "step_47c1f4ad43374159b08575c3bdf774f1"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_aba3bb30dcc143ecb0ea6197a3349652",
+    "step": "step_47c1f4ad43374159b08575c3bdf774f1"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_aba3bb30dcc143ecb0ea6197a3349652",
+    "step": "step_47c1f4ad43374159b08575c3bdf774f1"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_38e448562be243698ad4b526453c0a8e",
+    "step": "step_47ec10033cad4a5d9abc0fa49e9b1876"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_37c1373717254589994b666d8dc5f0d9",
+    "step": "step_47ee821f73b24916b0799981d2b833c2"
+   },
+   {
+    "after": "\"현업\"",
+    "before": "\"IT팀\"",
+    "outcome": "used",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_37c1373717254589994b666d8dc5f0d9",
+    "step": "step_47ee821f73b24916b0799981d2b833c2"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_e99a65d6663241a2886382653df04c5c",
+    "step": "step_4a50f7f4beff4f98bde920744a2b263f"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_3b3371d25e9249cf932cd5cae044505f",
+    "step": "step_66aa218a6b9748c0896ca28982854ed1"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_3b3371d25e9249cf932cd5cae044505f",
+    "step": "step_66aa218a6b9748c0896ca28982854ed1"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_c093cc60240d4be586305fa0048b6fc1",
+    "step": "step_733cf94a64d74da490be4f3baea63299"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_c093cc60240d4be586305fa0048b6fc1",
+    "step": "step_733cf94a64d74da490be4f3baea63299"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_78466e1830484e4a8167cbbd49ebe400",
+    "step": "step_74417f599b094a15af7dae420465d632"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_78466e1830484e4a8167cbbd49ebe400",
+    "step": "step_74417f599b094a15af7dae420465d632"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_65f93e7e6f9145f2badd61cfeb35d552",
+    "step": "step_7776f5d35d4847e480fc02bfff41534b"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_65f93e7e6f9145f2badd61cfeb35d552",
+    "step": "step_7776f5d35d4847e480fc02bfff41534b"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_dd45050f8b6e4baeb92f099c4aa3823c",
+    "step": "step_7f076741040343fdbdfa4a94c582337c"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_dd45050f8b6e4baeb92f099c4aa3823c",
+    "step": "step_7f076741040343fdbdfa4a94c582337c"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_940aae3c02ce43deb04f4454d0500669",
+    "step": "step_8dacd6fa77974c20aba62c57c947faf4"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_c63791baf80c4f2392cda2a944ce22e7",
+    "step": "step_8f3cbea9063a461190cd7971a27e80e8"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_c63791baf80c4f2392cda2a944ce22e7",
+    "step": "step_8f3cbea9063a461190cd7971a27e80e8"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_14b3672bb391453bbe1753afbe70697a",
+    "step": "step_92068e5f980042a1a7a8e77cba6526f3"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_14b3672bb391453bbe1753afbe70697a",
+    "step": "step_92068e5f980042a1a7a8e77cba6526f3"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_e29abdbb01b04625a425a37eb6a7f41a",
+    "step": "step_9b2c025fe97b4d8189e6847efdedacfb"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_e29abdbb01b04625a425a37eb6a7f41a",
+    "step": "step_9b2c025fe97b4d8189e6847efdedacfb"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_08eb9405a8e449a4bb2767ba8222a7e4",
+    "step": "step_a037cb1d32a74dc792d09b34df265421"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_87b928775dd441aab961db472e20131a",
+    "step": "step_a26e0068ccef488ea9db7bb12f53e6e1"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+    "step": "step_a4920d1256274c3db4d14c561ed044d4"
+   },
+   {
+    "after": "\"조건부 가능\"",
+    "before": "\"정보 부족\"",
+    "outcome": "used",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+    "step": "step_a4920d1256274c3db4d14c561ed044d4"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_72bd2dbf13e043a2a1a3ed4b06377d0c",
+    "step": "step_a4920d1256274c3db4d14c561ed044d4"
+   },
+   {
+    "after": "\"혼합\"",
+    "before": "\"혼합\"",
+    "outcome": "out_of_scope",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_5581dde6126b405cbac1526c53fd7227",
+    "step": "step_a65cf2593c6b4c569897409b53b9fdaa"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_9a658beb09f44dd1bd2c1d27877c06db",
+    "step": "step_d9a0f65b9cfe45f2843ad756dbc6e670"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_9a658beb09f44dd1bd2c1d27877c06db",
+    "step": "step_d9a0f65b9cfe45f2843ad756dbc6e670"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_521d9511612545ce82e4770a937a81e0",
+    "step": "step_e3c61097123242f2b042fa2c0ed43ac1"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_521d9511612545ce82e4770a937a81e0",
+    "step": "step_e3c61097123242f2b042fa2c0ed43ac1"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@2",
+    "run": "run_03daecf7b64c417f9f538355d7267061",
+    "step": "step_ef1b270335a34d5091c4993140f4f6e9"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_03daecf7b64c417f9f538355d7267061",
+    "step": "step_ef1b270335a34d5091c4993140f4f6e9"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_03daecf7b64c417f9f538355d7267061",
+    "step": "step_ef1b270335a34d5091c4993140f4f6e9"
+   },
+   {
+    "after": "\"필요\"",
+    "before": "\"불필요\"",
+    "outcome": "used",
+    "rule": "R-AI_NEED-01@1",
+    "run": "run_ca76571f8f02467bb1f80045c8299d93",
+    "step": "step_f14aaf2e11f84ec884e9523c9d9f3e3a"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "out_of_scope",
+    "rule": "R-FEASIBILITY-01@1",
+    "run": "run_ca76571f8f02467bb1f80045c8299d93",
+    "step": "step_f14aaf2e11f84ec884e9523c9d9f3e3a"
+   },
+   {
+    "after": "\"IT팀\"",
+    "before": "\"IT팀\"",
+    "outcome": "out_of_scope",
+    "rule": "R-LEAD_ORG-01@1",
+    "run": "run_ca76571f8f02467bb1f80045c8299d93",
+    "step": "step_f14aaf2e11f84ec884e9523c9d9f3e3a"
+   }
+  ],
+  "candidates": [
+   {
+    "counter": 0,
+    "field": "ai_need",
+    "id": "cand_0c4749cc88828c487a3d8ead",
+    "links": [
+     {
+      "id": null,
+      "label": null,
+      "role": null
+     }
+    ],
+    "status": "approved",
+    "support": 0,
+    "unc": "{\"counter_count\":0,\"minimum_support\":3,\"rationale\":\"T38-R: 화면에서 자료 부족 확인 흐름을 시험하기 위한 사람 제안(지지 수정 0건)\",\"support_count\":0}"
+   },
+   {
+    "counter": 3,
+    "field": "feasibility",
+    "id": "cand_79f6d9ca44e33854681ab0b0",
+    "links": [
+     {
+      "id": "cor_88104cfdf04742de93884ec0aa95a41f",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "rdec_2a82202b9f1642399d386e5b5058b228",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_f53eaee7e65f4d4a97866d464f631bec",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "rdec_09efc4f954f54dceb95e629ecb12548f",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_96a268c1834a439b80ca4fa8ca072536",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_f3c482e76e094ce5825c7264717b5d06",
+      "label": "Correction",
+      "role": "support"
+     }
+    ],
+    "status": "approved",
+    "support": 3,
+    "unc": "{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}"
+   },
+   {
+    "counter": 3,
+    "field": "ai_need",
+    "id": "cand_8fcc507094e6868374ddec5c",
+    "links": [
+     {
+      "id": "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_63e79ba5a7ee49a5a49a024eede69a88",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "cor_a12d0808c0124f07baf6b7d73b7663b8",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "cor_e1c531571fd64851b38fb3f407ad7ff9",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "rdec_2a438b8572a843b1ac79745b7a27e559",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_631ea52db0da4ace8c86c03d503d984e",
+      "label": "ReviewDecision",
+      "role": "counter"
+     }
+    ],
+    "status": "approved",
+    "support": 3,
+    "unc": "{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}"
+   },
+   {
+    "counter": 3,
+    "field": "lead_org",
+    "id": "cand_9a49449bb55ab51162c213e0",
+    "links": [
+     {
+      "id": "rdec_cbfa84d0ade2452aab2e7d0d84e8294f",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_8d2aef0473c64e66b07aa028f1ad2785",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_503b976a073f4aef9f95a2f9474ca09b",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "rdec_0d45434a86404c929c0929258d1d5036",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "cor_382a770a59a5438682cf9d5a21d0a74d",
+      "label": "Correction",
+      "role": "support"
+     }
+    ],
+    "status": "approved",
+    "support": 3,
+    "unc": "{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}"
+   },
+   {
+    "counter": 0,
+    "field": "ai_need",
+    "id": "cand_c17cccefbccbc8ec2ba3f9c2",
+    "links": [
+     {
+      "id": null,
+      "label": null,
+      "role": null
+     }
+    ],
+    "status": "rejected",
+    "support": 0,
+    "unc": "{\"counter_count\":0,\"minimum_support\":3,\"rationale\":\"T38 기각 시험용 사람 제안\",\"support_count\":0}"
+   },
+   {
+    "counter": 4,
+    "field": "ai_need",
+    "id": "cand_e123faef72028b6d12635bef",
+    "links": [
+     {
+      "id": "rdec_e8d3d960805b4dbc85fb2ce2ba3ed87f",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_f92a47759ade4ea9a683e537655d0b69",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "cor_58af725183634ae9aeaa16b373a5f990",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "cor_f0817ad4222842cf9d759be1a3e4e647",
+      "label": "Correction",
+      "role": "support"
+     },
+     {
+      "id": "rdec_02aa1223828b43a59b9c06e5c82f787d",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_40c1dad28a67463891676cfb8db7c9c2",
+      "label": "ReviewDecision",
+      "role": "counter"
+     },
+     {
+      "id": "rdec_2a438b8572a843b1ac79745b7a27e559",
+      "label": "ReviewDecision",
+      "role": "counter"
+     }
+    ],
+    "status": "approved",
+    "support": 2,
+    "unc": "{\"counter_count\":4,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":2}"
+   }
+  ],
+  "chat_spans": [
+   {
+    "id": "esp_d2b630a26a6c47b188ec4f232959d818",
+    "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+    "source": "chat"
+   },
+   {
+    "id": "esp_da7fb8468b92433fa617f1c0b903cd70",
+    "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+    "source": "chat"
+   },
+   {
+    "id": "esp_42dd026d0dd54313a19adf6517d449ed",
+    "request_id": "req_3dc8f5415b7c4804aede76f9b9e7e187",
+    "source": null
+   },
+   {
+    "id": "esp_ccca7b8263214228a9b9bdddf5242ae1",
+    "request_id": "req_52d6c424653d4808947ab85ffb7550b8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d286c9ab95d142fd9b17957e9fcbe6d8",
+    "request_id": "req_52d6c424653d4808947ab85ffb7550b8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5c3c522ec8c4445f8cfd4ee08050c828",
+    "request_id": "req_52d6c424653d4808947ab85ffb7550b8",
+    "source": null
+   },
+   {
+    "id": "esp_e02f6aac3e7f4e938fc03c31be2fe2f8",
+    "request_id": "req_2744ff85abff43d18524b8fbff205485",
+    "source": "chat"
+   },
+   {
+    "id": "esp_b577ff3b7ce640a6bfc9b648d37d2c5d",
+    "request_id": "req_2744ff85abff43d18524b8fbff205485",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5a93bd4bd521456e8e4de8bdf530d4b0",
+    "request_id": "req_2744ff85abff43d18524b8fbff205485",
+    "source": null
+   },
+   {
+    "id": "esp_bc4b29d751644762a84fca02502b6155",
+    "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+    "source": "chat"
+   },
+   {
+    "id": "esp_812f989aafdd4ce68c0c91c6788fc0f0",
+    "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3f62f2b3174d4583856ae0f555381218",
+    "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+    "source": null
+   },
+   {
+    "id": "esp_b5e282a079a848acab2a193744497943",
+    "request_id": "req_0b2ee90b9862459694a714133217bf73",
+    "source": "chat"
+   },
+   {
+    "id": "esp_a5050fa5f3dc4e469e56a5a978c53dfc",
+    "request_id": "req_0b2ee90b9862459694a714133217bf73",
+    "source": "chat"
+   },
+   {
+    "id": "esp_bed58a80f7404d369e3876d1f9289150",
+    "request_id": "req_0b2ee90b9862459694a714133217bf73",
+    "source": null
+   },
+   {
+    "id": "esp_56bde98788454ffca5d50233d3cbef50",
+    "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+    "source": "chat"
+   },
+   {
+    "id": "esp_b136401c16484acba7c3f88439ff1059",
+    "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+    "source": "chat"
+   },
+   {
+    "id": "esp_956b4178702a463ca472cf7f43b24e44",
+    "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+    "source": null
+   },
+   {
+    "id": "esp_6f3feea604b44e7f893468c89eef6a18",
+    "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+    "source": "chat"
+   },
+   {
+    "id": "esp_527854f9a40940babc47137231ebcde2",
+    "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+    "source": "chat"
+   },
+   {
+    "id": "esp_b0c5fc2edb2c4ffe8414c563c2e8b99a",
+    "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+    "source": null
+   },
+   {
+    "id": "esp_3c0ca99a22ca4747819d5a6f3b20c370",
+    "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_2883ee3b50e340f59732ca35d08c5cc8",
+    "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3b855fb53eb8444085a49ea08667394d",
+    "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+    "source": null
+   },
+   {
+    "id": "esp_3a01c4069f8a481389b75957cb99a824",
+    "request_id": "req_b7638d574aa7420e8c8e632e206247d8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_b9730dce1766460c99cbe20c9cfb330a",
+    "request_id": "req_b7638d574aa7420e8c8e632e206247d8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_2c21a9ef2fa94c38b385fbd53ff3d16c",
+    "request_id": "req_b7638d574aa7420e8c8e632e206247d8",
+    "source": null
+   },
+   {
+    "id": "esp_32107774a1454a20aa2486d49c8c60d9",
+    "request_id": "req_ce5ec4dbc4614a1ebb1e72c2b5e9aaff",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3ba14e4a14ac47ffae80e90733bd3952",
+    "request_id": "req_ce5ec4dbc4614a1ebb1e72c2b5e9aaff",
+    "source": "chat"
+   },
+   {
+    "id": "esp_03adf938abbf4ff38caf963144e211bb",
+    "request_id": "req_ce5ec4dbc4614a1ebb1e72c2b5e9aaff",
+    "source": null
+   },
+   {
+    "id": "esp_d650f2b37bb84472b93a946d6bb00b3b",
+    "request_id": "req_37be29fc5ba64774855602dc6604fb3e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_6e47ee30fff24c42852f59a15e7a2ed6",
+    "request_id": "req_37be29fc5ba64774855602dc6604fb3e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_0a0f260c3ca64d619172e56932cb5d88",
+    "request_id": "req_37be29fc5ba64774855602dc6604fb3e",
+    "source": null
+   },
+   {
+    "id": "esp_bbfa866b7e6248b6a285226c8dafbe9c",
+    "request_id": "req_6b09736cb81f40eb96a451f595f44c66",
+    "source": "chat"
+   },
+   {
+    "id": "esp_920ba2a4cbdf4635802da615e0e8e994",
+    "request_id": "req_6b09736cb81f40eb96a451f595f44c66",
+    "source": "chat"
+   },
+   {
+    "id": "esp_dc0be7beb750463c80adafa7aa9a2ebf",
+    "request_id": "req_6b09736cb81f40eb96a451f595f44c66",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3876b2239ac5421cb57269f63c99bf13",
+    "request_id": "req_6b09736cb81f40eb96a451f595f44c66",
+    "source": null
+   },
+   {
+    "id": "esp_f99bde27973c490dbacd462291c9f083",
+    "request_id": "req_5310f833b924401292261b9029e18bd5",
+    "source": "chat"
+   },
+   {
+    "id": "esp_e612ca32347c4b24ae838c615f036ec9",
+    "request_id": "req_5310f833b924401292261b9029e18bd5",
+    "source": "chat"
+   },
+   {
+    "id": "esp_c8de02fdf00d486396b22a24c83ebae6",
+    "request_id": "req_5310f833b924401292261b9029e18bd5",
+    "source": "chat"
+   },
+   {
+    "id": "esp_2d77a163d4214825bed9a64a13512d92",
+    "request_id": "req_c0fba9bcad4f43ad8f117b7e9fd1a4a1",
+    "source": "chat"
+   },
+   {
+    "id": "esp_edfcc2a28b184f2a8b1aa27edb368c95",
+    "request_id": "req_c0fba9bcad4f43ad8f117b7e9fd1a4a1",
+    "source": "chat"
+   },
+   {
+    "id": "esp_96e7360dad744b92b9a164c77f715f64",
+    "request_id": "req_c0fba9bcad4f43ad8f117b7e9fd1a4a1",
+    "source": "chat"
+   },
+   {
+    "id": "esp_e3c8155e8d6847f6825535c4dc45e777",
+    "request_id": "req_b17830e45a7f498ca6ae9734f0ce350b",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3c43fc605410416e894a845e0948dc29",
+    "request_id": "req_b17830e45a7f498ca6ae9734f0ce350b",
+    "source": "chat"
+   },
+   {
+    "id": "esp_4df703148f2341339e0f009b0a94f75d",
+    "request_id": "req_b17830e45a7f498ca6ae9734f0ce350b",
+    "source": "chat"
+   },
+   {
+    "id": "esp_6c9691d854204c10bda740f645a782bf",
+    "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_fda71d07797b4e84b082de10a63a7896",
+    "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_a019282858e04332b7463a6109d40401",
+    "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+    "source": "chat"
+   },
+   {
+    "id": "esp_70395afc978d4c9c8fa1284449b33b62",
+    "request_id": "req_f893e67063944583806ba8391bee4914",
+    "source": "chat"
+   },
+   {
+    "id": "esp_476b9218a4e14f96bbdd16cfe12a060b",
+    "request_id": "req_f893e67063944583806ba8391bee4914",
+    "source": "chat"
+   },
+   {
+    "id": "esp_69a1db0f29f14d9ba4682135abca3264",
+    "request_id": "req_f893e67063944583806ba8391bee4914",
+    "source": "chat"
+   },
+   {
+    "id": "esp_50f3c3b4fd3948f2a045863760893682",
+    "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5bd5d460e41448b9a2e6eb7942515250",
+    "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+    "source": "chat"
+   },
+   {
+    "id": "esp_f78ac68f9b5c49db8004db989c809011",
+    "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+    "source": "chat"
+   },
+   {
+    "id": "esp_04567f1a4d1949809d40e764c313f03a",
+    "request_id": "req_1b06d22ddfbd4c26b4dfeef6ebfa2eb6",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5b90ccb636064118a46bf82a0c915e1b",
+    "request_id": "req_1b06d22ddfbd4c26b4dfeef6ebfa2eb6",
+    "source": "chat"
+   },
+   {
+    "id": "esp_596d5015bf1e47158b6dbe49a7f7ba61",
+    "request_id": "req_1b06d22ddfbd4c26b4dfeef6ebfa2eb6",
+    "source": "chat"
+   },
+   {
+    "id": "esp_a643dc02864a457cb6f85d306391a912",
+    "request_id": "req_4b37b80f965e476481ff4ea8cd82df13",
+    "source": "chat"
+   },
+   {
+    "id": "esp_cb3d63b175244b53a9d6fe4ee2293eda",
+    "request_id": "req_4b37b80f965e476481ff4ea8cd82df13",
+    "source": "chat"
+   },
+   {
+    "id": "esp_b1cda1da7785443fae572b4f37e99a13",
+    "request_id": "req_4b37b80f965e476481ff4ea8cd82df13",
+    "source": "chat"
+   },
+   {
+    "id": "esp_56a5632c1a5a48f4b4d637d2640a51d3",
+    "request_id": "req_1c54d03091524bb5af32adb71ec62895",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d9a262378dbd4148a6bf71478d6c57f3",
+    "request_id": "req_1c54d03091524bb5af32adb71ec62895",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d352b933d9cd4a38b0acb86e21625f0f",
+    "request_id": "req_110e95fc9645475b8340578f093d7639",
+    "source": "chat"
+   },
+   {
+    "id": "esp_9020a1d1758249fe8be4f56cc352f66f",
+    "request_id": "req_110e95fc9645475b8340578f093d7639",
+    "source": "chat"
+   },
+   {
+    "id": "esp_2ea9ee5e776c4113a63705c1a949261c",
+    "request_id": "req_110e95fc9645475b8340578f093d7639",
+    "source": "chat"
+   },
+   {
+    "id": "esp_09c46da72a9b48968ab642f614208c85",
+    "request_id": "req_2fb951b3896a4023a7093461634c6237",
+    "source": "chat"
+   },
+   {
+    "id": "esp_a6939e8644a0467b9dea23eb7903ba0a",
+    "request_id": "req_2fb951b3896a4023a7093461634c6237",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5e4cc7ead3b74e5983a865e23bef808d",
+    "request_id": "req_d809698edeb84c8f9bfe19558b919d29",
+    "source": "chat"
+   },
+   {
+    "id": "esp_bdd9a65571cb4c7cbd89031b5430a278",
+    "request_id": "req_d809698edeb84c8f9bfe19558b919d29",
+    "source": "chat"
+   },
+   {
+    "id": "esp_f9b3ee0e4f5d4a8d89bcca65ba33522d",
+    "request_id": "req_d809698edeb84c8f9bfe19558b919d29",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d850b837f12343c385e63a7f1c7f4e25",
+    "request_id": "req_29b2e0f0f58a4b579a38bc6ffcfcd902",
+    "source": "chat"
+   },
+   {
+    "id": "esp_296c1c94dc91470f9ee844ea2fd91d91",
+    "request_id": "req_29b2e0f0f58a4b579a38bc6ffcfcd902",
+    "source": "chat"
+   },
+   {
+    "id": "esp_765e9b9d77884f5582c0b6d8bc88b332",
+    "request_id": "req_2893786409184f4f86f1db13f8095f1a",
+    "source": "chat"
+   },
+   {
+    "id": "esp_ce7d252becc345e1a4e995e759548454",
+    "request_id": "req_2893786409184f4f86f1db13f8095f1a",
+    "source": "chat"
+   },
+   {
+    "id": "esp_37df40fee6c640a9a627440db7750244",
+    "request_id": "req_188cbc7a8c304c11a5c32ed792d60631",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5228823bcb28443892eb0e8afa361950",
+    "request_id": "req_188cbc7a8c304c11a5c32ed792d60631",
+    "source": "chat"
+   },
+   {
+    "id": "esp_ef15920a3d7643f5a3733fa334063808",
+    "request_id": "req_be8192ae007e4a7c92089b38c3aef6ea",
+    "source": "chat"
+   },
+   {
+    "id": "esp_00bcd34b6147453d9ce1aa6d1bfde782",
+    "request_id": "req_be8192ae007e4a7c92089b38c3aef6ea",
+    "source": "chat"
+   },
+   {
+    "id": "esp_37466fda24c241e09db27ff7ed6e0305",
+    "request_id": "req_5dd4c92e42f34cab931db68777bcd799",
+    "source": "chat"
+   },
+   {
+    "id": "esp_ef4d61a78ae7426ca19109613c71fe55",
+    "request_id": "req_5dd4c92e42f34cab931db68777bcd799",
+    "source": "chat"
+   },
+   {
+    "id": "esp_abe1047dfa1d4b5f9bc465f89fc385a5",
+    "request_id": "req_1af31c93fd864e398be8734a8e0787c8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_5406be984af944e2b3032d16c1f079fe",
+    "request_id": "req_1af31c93fd864e398be8734a8e0787c8",
+    "source": "chat"
+   },
+   {
+    "id": "esp_8b71566fbc284f25a0672adf4971c5ce",
+    "request_id": "req_7c3fde8d66cb4f708cd0112299129235",
+    "source": "chat"
+   },
+   {
+    "id": "esp_df1e8a54e1a5433a9b2c4e038e56e845",
+    "request_id": "req_7c3fde8d66cb4f708cd0112299129235",
+    "source": "chat"
+   },
+   {
+    "id": "esp_546dfb09ea79416badb43409d65ff053",
+    "request_id": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+    "source": "chat"
+   },
+   {
+    "id": "esp_c9e7262214c943eabe7a37e332f75154",
+    "request_id": "req_d5c5e1811fac42849b0260daa9e6e9aa",
+    "source": "chat"
+   },
+   {
+    "id": "esp_560478e567e0407ebaf3e60c3be39f09",
+    "request_id": "req_4f64895718614271894b4fb1193202ff",
+    "source": "chat"
+   },
+   {
+    "id": "esp_421b36046eb447999dedd89827fc548a",
+    "request_id": "req_4f64895718614271894b4fb1193202ff",
+    "source": "chat"
+   },
+   {
+    "id": "esp_906bf7f619ce41f4a4ee525a45aed5a2",
+    "request_id": "req_4f64895718614271894b4fb1193202ff",
+    "source": null
+   },
+   {
+    "id": "esp_e8a6c8053c5a4e7d8f35b675ade5387c",
+    "request_id": "req_86170fbfe48e4a668f38914f738360d4",
+    "source": "chat"
+   },
+   {
+    "id": "esp_6f8c9709ebb44a89bcd49a21ddccd77b",
+    "request_id": "req_86170fbfe48e4a668f38914f738360d4",
+    "source": "chat"
+   },
+   {
+    "id": "esp_1c9c074e17844c3aa9e09e6332ce8cfa",
+    "request_id": "req_86170fbfe48e4a668f38914f738360d4",
+    "source": null
+   },
+   {
+    "id": "esp_48c84dbc778943dcb8391824ea672456",
+    "request_id": "req_ffb17c16c9b545beb734728696da558a",
+    "source": "chat"
+   },
+   {
+    "id": "esp_32a1d67b661a4d53802b5fcdbcbdf2c8",
+    "request_id": "req_ffb17c16c9b545beb734728696da558a",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d283a19c42184c10afa129d3020eb6cd",
+    "request_id": "req_ffb17c16c9b545beb734728696da558a",
+    "source": null
+   },
+   {
+    "id": "esp_53e929eaad03488cb6e03b61b0e1e909",
+    "request_id": "req_e69c48ef3dfa45c88198a8451420164c",
+    "source": "chat"
+   },
+   {
+    "id": "esp_3352a547e0e0478b9bc302b6a218b5f5",
+    "request_id": "req_e69c48ef3dfa45c88198a8451420164c",
+    "source": "chat"
+   },
+   {
+    "id": "esp_83ff48fba0f544db8f6765e85b01381e",
+    "request_id": "req_e69c48ef3dfa45c88198a8451420164c",
+    "source": null
+   },
+   {
+    "id": "esp_21fd0a5cf3f2451daacdb0c8e52bf1f4",
+    "request_id": "req_e8f1978855af49d9be5425991e13d20f",
+    "source": "chat"
+   },
+   {
+    "id": "esp_d4dcdc71ad314376b5430f33665204f0",
+    "request_id": "req_e8f1978855af49d9be5425991e13d20f",
+    "source": "chat"
+   },
+   {
+    "id": "esp_778cf209a1124a1ca2003904176eb0e5",
+    "request_id": "req_e8f1978855af49d9be5425991e13d20f",
+    "source": null
+   },
+   {
+    "id": "esp_fd31be6b019e470abbddc4d67d9aed2e",
+    "request_id": "req_01626ab5ff9e4a64bd4620528eaf53dd",
+    "source": "chat"
+   },
+   {
+    "id": "esp_64510e6fdce944299aa434ea559bde2a",
+    "request_id": "req_01626ab5ff9e4a64bd4620528eaf53dd",
+    "source": "chat"
+   },
+   {
+    "id": "esp_cb7ff47ecfc74571bc0be60775895424",
+    "request_id": "req_01626ab5ff9e4a64bd4620528eaf53dd",
+    "source": null
+   }
+  ],
+  "configs": [
+   {
+    "by": "system:bootstrap",
+    "reason": "보수적 초기 정책",
+    "rules": [],
+    "status": "superseded",
+    "version": 1
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: 게시",
+    "rules": [
+     "R-AI_NEED-01@1"
+    ],
+    "status": "superseded",
+    "version": 2
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38-R: 게시",
+    "rules": [
+     "R-AI_NEED-01@1",
+     "R-LEAD_ORG-01@1"
+    ],
+    "status": "superseded",
+    "version": 3
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38-R: 게시",
+    "rules": [
+     "R-AI_NEED-01@1",
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1"
+    ],
+    "status": "superseded",
+    "version": 4
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: 중단(진행 중 실행 시험)",
+    "rules": [
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1"
+    ],
+    "status": "superseded",
+    "version": 5
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: v2 게시",
+    "rules": [
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1",
+     "R-AI_NEED-01@2"
+    ],
+    "status": "superseded",
+    "version": 6
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: v1로 되돌리기",
+    "rules": [
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1",
+     "R-AI_NEED-01@1"
+    ],
+    "status": "superseded",
+    "version": 7
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: 진행 중 실행 시험 1",
+    "rules": [
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1"
+    ],
+    "status": "superseded",
+    "version": 8
+   },
+   {
+    "by": "usr_t-x38r-10031227_rule_admin",
+    "reason": "T38: 시험 후 v1 복원",
+    "rules": [
+     "R-LEAD_ORG-01@1",
+     "R-FEASIBILITY-01@1",
+     "R-AI_NEED-01@1"
+    ],
+    "status": "active",
+    "version": 9
+   }
+  ],
+  "corrections": [
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"불필요\"",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.313000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"필요\"",
+    "created_at": "2026-10-03T12:28:32.313000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_e1c531571fd64851b38fb3f407ad7ff9",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_e5a4b6149b7a4a468bc95b086a2bfd7e",
+    "review_id": "rvw_0e3194df0bf843c98f0f08d9f365d65c",
+    "revision_id": "rev_ba6b067b935e4d9ca046462ad2336852",
+    "run_id": "run_b3e6a3027d744d8e972f0a999631de78",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"불필요\"",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.432000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"필요\"",
+    "created_at": "2026-10-03T12:28:32.432000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_a12d0808c0124f07baf6b7d73b7663b8",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_b94acf8a7799418e83ed3ce36b33e30b",
+    "review_id": "rvw_c7d671018f264efd98a1cae261bc01e7",
+    "revision_id": "rev_254e80318d894c0291d70bed85eb9ab0",
+    "run_id": "run_f9904b08f4ad46aeb19f3c3f61d73c1b",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"불필요\"",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.535000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"필요\"",
+    "created_at": "2026-10-03T12:28:32.535000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_e4a28aea4e6c4d4880eb64292314cdc1",
+    "reason": "T38: ai_need 같은 방향 수정",
+    "request_id": "req_31aeb1815a934213b2021a8a332e223c",
+    "review_id": "rvw_85d90a10337c4fd1862038d2a323db2a",
+    "revision_id": "rev_98bcef7e05a447be9b17bfc080df6f1c",
+    "run_id": "run_ee52a1ccef9b42d4a31203c5f08e9eb2",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"불필요\"",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.703000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"혼합\"",
+    "created_at": "2026-10-03T12:28:32.703000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_f0817ad4222842cf9d759be1a3e4e647",
+    "reason": "T38: ai_need 다른 방향 수정(2건)",
+    "request_id": "req_e13745e1a3324d48812e6baef41f3ada",
+    "review_id": "rvw_936263d8e48241dea545e019b49b4490",
+    "revision_id": "rev_d6bd685d9da746bcb5e31900ea8a1aa1",
+    "run_id": "run_ab12ee5450ad4e89b02353b250f37d8e",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"불필요\"",
+    "config_version": 1,
+    "corrected_at": "2026-10-03T12:28:32.794000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"혼합\"",
+    "created_at": "2026-10-03T12:28:32.794000000+00:00",
+    "evidence_span_ids": [],
+    "field": "ai_need",
+    "id": "cor_58af725183634ae9aeaa16b373a5f990",
+    "reason": "T38: ai_need 다른 방향 수정(2건)",
+    "request_id": "req_2744ff85abff43d18524b8fbff205485",
+    "review_id": "rvw_242f1c7fa4bb4c08a333a97a2d510549",
+    "revision_id": "rev_d7e32ec1bcb64ed2913b9169ae209e23",
+    "run_id": "run_9b2d04842f38492fbb92687b8dd98874",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"IT팀\"",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.194000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"현업\"",
+    "created_at": "2026-10-03T12:33:31.194000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_503b976a073f4aef9f95a2f9474ca09b",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_44f8f9b084594f8187684e9781f642fb",
+    "review_id": "rvw_50ceca73f3dc4700816d13ac0bc21750",
+    "revision_id": "rev_27891de21d264e788a771f6b2fccbe94",
+    "run_id": "run_87b928775dd441aab961db472e20131a",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"IT팀\"",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.293000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"현업\"",
+    "created_at": "2026-10-03T12:33:31.293000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_382a770a59a5438682cf9d5a21d0a74d",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_f893e67063944583806ba8391bee4914",
+    "review_id": "rvw_48cab2360a81484093427258f845be12",
+    "revision_id": "rev_e0315c54ca0043118bf71b802c8eaac9",
+    "run_id": "run_08eb9405a8e449a4bb2767ba8222a7e4",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"IT팀\"",
+    "config_version": 2,
+    "corrected_at": "2026-10-03T12:33:31.388000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"현업\"",
+    "created_at": "2026-10-03T12:33:31.388000000+00:00",
+    "evidence_span_ids": [],
+    "field": "lead_org",
+    "id": "cor_a2f1d4fe9a4c4f919deefe62082320a3",
+    "reason": "T38-R: lead_org 수정(같은 방향)",
+    "request_id": "req_bef8e1a8aa97464aaf1dcb1d0586db4e",
+    "review_id": "rvw_30d5e8fc790047ab95d3b2ddd0f6f67c",
+    "revision_id": "rev_705edca3ba8b458fa0af61e57af5c621",
+    "run_id": "run_940aae3c02ce43deb04f4454d0500669",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"정보 부족\"",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.134000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"조건부 가능\"",
+    "created_at": "2026-10-03T12:35:19.134000000+00:00",
+    "evidence_span_ids": [
+     "esp_df1e8a54e1a5433a9b2c4e038e56e845"
+    ],
+    "field": "feasibility",
+    "id": "cor_f3c482e76e094ce5825c7264717b5d06",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_7c3fde8d66cb4f708cd0112299129235",
+    "review_id": "rvw_9829cf5f930d43f8b55a2ae5cfa92eca",
+    "revision_id": "rev_95cd88899b684d7c85d9c4a42b25dc8d",
+    "run_id": "run_14b3672bb391453bbe1753afbe70697a",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"정보 부족\"",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.231000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"조건부 가능\"",
+    "created_at": "2026-10-03T12:35:19.231000000+00:00",
+    "evidence_span_ids": [
+     "esp_5406be984af944e2b3032d16c1f079fe"
+    ],
+    "field": "feasibility",
+    "id": "cor_f53eaee7e65f4d4a97866d464f631bec",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_1af31c93fd864e398be8734a8e0787c8",
+    "review_id": "rvw_f95ebb3a8acf4541b6ea30f26804859b",
+    "revision_id": "rev_a7e3c95889824bd688582346fa1703eb",
+    "run_id": "run_9ca99cb1506740b9b110dee76c5f17ce",
+    "tenant_id": "t-x38r-10031227"
+   },
+   {
+    "action": "approve_with_changes",
+    "ai_value": "\"정보 부족\"",
+    "config_version": 3,
+    "corrected_at": "2026-10-03T12:35:19.301000000+00:00",
+    "corrected_by": "usr_t-x38r-10031227_reviewer",
+    "corrected_value": "\"조건부 가능\"",
+    "created_at": "2026-10-03T12:35:19.301000000+00:00",
+    "evidence_span_ids": [
+     "esp_00bcd34b6147453d9ce1aa6d1bfde782"
+    ],
+    "field": "feasibility",
+    "id": "cor_88104cfdf04742de93884ec0aa95a41f",
+    "reason": "T38-R: feasibility 수정(같은 방향)",
+    "request_id": "req_be8192ae007e4a7c92089b38c3aef6ea",
+    "review_id": "rvw_b3cedd83eb254b15adcfb8fe794377ae",
+    "revision_id": "rev_f843fc039b0c4f87bbd86ed371ca95af",
+    "run_id": "run_65f93e7e6f9145f2badd61cfeb35d552",
+    "tenant_id": "t-x38r-10031227"
+   }
+  ],
+  "effects": {
+   "R-AI_NEED-01": {
+    "after": {
+     "classification_changes": 20,
+     "corrections": 6,
+     "failures": 0,
+     "review_transitions": 30,
+     "sample_count": 30
+    },
+    "before": {
+     "classification_changes": 0,
+     "corrections": 5,
+     "failures": 0,
+     "review_transitions": 8,
+     "sample_count": 8
+    },
+    "out_of_scope": {
+     "classification_changes": 0,
+     "corrections": 3,
+     "failures": 0,
+     "review_transitions": 8,
+     "sample_count": 8
+    },
+    "used": {
+     "classification_changes": 20,
+     "corrections": 3,
+     "failures": 0,
+     "review_transitions": 20,
+     "sample_count": 20
+    }
+   }
+  },
+  "inv_applied": [
+   {
+    "after": "\"판단 보류\"",
+    "before": "\"판단 보류\"",
+    "outcome": "blocked_by_invariant",
+    "rule": "R-URGENCY-91@1",
+    "run": "run_30b0b4829e9047b9adb4d6136b3d1e09",
+    "step": "step_34a8e70ab52e4436bfd0166122c6d5d1"
+   },
+   {
+    "after": "\"정보 부족\"",
+    "before": "\"정보 부족\"",
+    "outcome": "blocked_by_invariant",
+    "rule": "R-FEASIBILITY-92@1",
+    "run": "run_30b0b4829e9047b9adb4d6136b3d1e09",
+    "step": "step_34a8e70ab52e4436bfd0166122c6d5d1"
+   }
+  ],
+  "rule_versions": [
+   {
+    "applications": 27,
+    "body": "{\"action\":{\"set\":\"필요\"},\"candidate_id\":\"cand_8fcc507094e6868374ddec5c\",\"decision_id\":\"rdec_f01ba658005b4be0bbc4f24cb8accb2f\",\"effect\":\"rule\",\"rule_id\":\"R-AI_NEED-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"불필요\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"regulatory\",\"value\":0.5}]},\"target\":\"ai_need\",\"version\":1}",
+    "configs": [
+     9,
+     7,
+     2
+    ],
+    "id": "R-AI_NEED-01@1",
+    "oos": 24,
+    "rule_id": "R-AI_NEED-01",
+    "status": "published",
+    "used": 57,
+    "version": 1
+   },
+   {
+    "applications": 1,
+    "body": "{\"action\":{\"set\":\"필요\"},\"candidate_id\":\"cand_8fcc507094e6868374ddec5c\",\"decision_id\":\"rdec_f01ba658005b4be0bbc4f24cb8accb2f\",\"effect\":\"rule\",\"rule_id\":\"R-AI_NEED-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"불필요\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"regulatory\",\"value\":0.5}]},\"target\":\"ai_need\",\"version\":2}",
+    "configs": [
+     6
+    ],
+    "id": "R-AI_NEED-01@2",
+    "oos": 0,
+    "rule_id": "R-AI_NEED-01",
+    "status": "reverted",
+    "used": 1,
+    "version": 2
+   },
+   {
+    "applications": 0,
+    "body": "{\"action\":{\"set\":\"혼합\"},\"candidate_id\":\"cand_e123faef72028b6d12635bef\",\"decision_id\":\"rdec_86485b0355534353b4d3a4aec8ade3c1\",\"effect\":\"rule\",\"rule_id\":\"R-AI_NEED-02\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"불필요\"},{\"field\":\"feasibility\",\"op\":\"eq\",\"value\":\"정보 부족\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"ai_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"business_involvement\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"it_team_involvement\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"pharmacovigilance\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"regulatory\",\"value\":0.5},{\"field\":\"urgency\",\"op\":\"eq\",\"value\":\"판단 보류\"}]},\"target\":\"ai_need\",\"version\":1}",
+    "configs": [],
+    "id": "R-AI_NEED-02@1",
+    "oos": 0,
+    "rule_id": "R-AI_NEED-02",
+    "status": "validating",
+    "used": 0,
+    "version": 1
+   },
+   {
+    "applications": 0,
+    "body": "{\"action\":{\"set\":\"혼합\"},\"candidate_id\":\"cand_0c4749cc88828c487a3d8ead\",\"decision_id\":\"rdec_84495d2d93af4a2083f886cb6bfe97cc\",\"effect\":\"rule\",\"rule_id\":\"R-AI_NEED-03\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"현업\"}]},\"target\":\"ai_need\",\"version\":1}",
+    "configs": [],
+    "id": "R-AI_NEED-03@1",
+    "oos": 0,
+    "rule_id": "R-AI_NEED-03",
+    "status": "validating",
+    "used": 0,
+    "version": 1
+   },
+   {
+    "applications": 7,
+    "body": "{\"action\":{\"set\":\"조건부 가능\"},\"candidate_id\":\"cand_79f6d9ca44e33854681ab0b0\",\"decision_id\":\"rdec_65ada79162344602b90a1ae72c736684\",\"effect\":\"rule\",\"rule_id\":\"R-FEASIBILITY-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"필요\"},{\"field\":\"feasibility\",\"op\":\"eq\",\"value\":\"정보 부족\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"ai_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"business_involvement\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"it_team_involvement\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"pharmacovigilance\",\"value\":0.5},{\"op\":\"lte\",\"signal\":\"regulatory\",\"value\":0.5},{\"field\":\"urgency\",\"op\":\"eq\",\"value\":\"판단 보류\"}]},\"target\":\"feasibility\",\"version\":1}",
+    "configs": [
+     4
+    ],
+    "id": "R-FEASIBILITY-01@1",
+    "oos": 6,
+    "rule_id": "R-FEASIBILITY-01",
+    "status": "published",
+    "used": 1,
+    "version": 1
+   },
+   {
+    "applications": 20,
+    "body": "{\"action\":{\"set\":\"현업\"},\"candidate_id\":\"cand_9a49449bb55ab51162c213e0\",\"decision_id\":\"rdec_16b2b896cc344614b98c2423db381d52\",\"effect\":\"rule\",\"rule_id\":\"R-LEAD_ORG-01\",\"schema\":\"rule-v1\",\"scope\":{\"all\":[{\"field\":\"ai_need\",\"op\":\"eq\",\"value\":\"혼합\"},{\"field\":\"feasibility\",\"op\":\"eq\",\"value\":\"정보 부족\"},{\"field\":\"lead_org\",\"op\":\"eq\",\"value\":\"IT팀\"},{\"op\":\"lte\",\"signal\":\"ai_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"business_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"clinical_safety\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"it_team_involvement\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"pharmacovigilance\",\"value\":0.5},{\"op\":\"gte\",\"signal\":\"regulatory\",\"value\":0.5},{\"field\":\"urgency\",\"op\":\"eq\",\"value\":\"판단 보류\"}]},\"target\":\"lead_org\",\"version\":1}",
+    "configs": [
+     3
+    ],
+    "id": "R-LEAD_ORG-01@1",
+    "oos": 19,
+    "rule_id": "R-LEAD_ORG-01",
+    "status": "published",
+    "used": 1,
+    "version": 1
+   }
+  ],
+  "shadow_runs": [
+   {
+    "kind": "shadow",
+    "run_id": "run_shadow_a61b92f4dda34dd994dc11f709618207",
+    "validation_id": "val_ae2b8a074e3d412aa003c57a6efab5d4"
+   },
+   {
+    "kind": "shadow",
+    "run_id": "run_shadow_1335947c489b4ab297ef717994dc285b",
+    "validation_id": "val_e8697532f8bc4b8cabcee5205d372aba"
+   },
+   {
+    "kind": "shadow",
+    "run_id": "run_shadow_f9db69bc78d746e9a6ca6b4fd3c1e7c0",
+    "validation_id": "val_c9703714627f4b33862c115123f71ef8"
+   },
+   {
+    "kind": "shadow",
+    "run_id": "run_shadow_a3d841b58f5b473e9239dad250463c8b",
+    "validation_id": "val_7c3f38b9de3c4741b418b6198f00fcdd"
+   },
+   {
+    "kind": "shadow",
+    "run_id": "run_shadow_1c4da96d22864289a184d87e3f5151af",
+    "validation_id": "val_84f211ef173545f4929360f37b2cd600"
+   }
+  ],
+  "tenant": "t-x38r-10031227",
+  "validations": [
+   {
+    "base_config_version": 1,
+    "calls": 0,
+    "candidate_config_version": "1+R-AI_NEED-01@1",
+    "changed_count": 8,
+    "changes_by_value": "{\"ai_need:필요\":8}",
+    "created_at": "2026-10-03T12:28:39.083000000+00:00",
+    "created_by": "usr_t-x38r-10031227_rule_admin",
+    "failures": "[]",
+    "from_at": "2026-01-01T00:00:00.000000000+00:00",
+    "human_correction_needed_base": 5,
+    "human_correction_needed_candidate": 4,
+    "id": "val_ae2b8a074e3d412aa003c57a6efab5d4",
+    "labeled_count": 7,
+    "max_calls": 20,
+    "review_transition_base": 0,
+    "review_transition_candidate": 0,
+    "rule_version": "R-AI_NEED-01@1",
+    "run_kind": "shadow",
+    "sample_count": 8,
+    "side_effects": 0,
+    "status": "completed",
+    "tenant_id": "t-x38r-10031227",
+    "to_at": "2026-12-31T00:00:00.000000000+00:00",
+    "usage": "{}"
+   },
+   {
+    "base_config_version": 2,
+    "calls": 0,
+    "candidate_config_version": "2+R-LEAD_ORG-01@1",
+    "changed_count": 6,
+    "changes_by_value": "{\"lead_org:현업\":6}",
+    "created_at": "2026-10-03T12:33:32.701000000+00:00",
+    "created_by": "usr_t-x38r-10031227_rule_admin",
+    "failures": "[]",
+    "from_at": "2026-01-01T00:00:00.000000000+00:00",
+    "human_correction_needed_base": 7,
+    "human_correction_needed_candidate": 7,
+    "id": "val_e8697532f8bc4b8cabcee5205d372aba",
+    "labeled_count": 13,
+    "max_calls": 20,
+    "review_transition_base": 0,
+    "review_transition_candidate": 0,
+    "rule_version": "R-LEAD_ORG-01@1",
+    "run_kind": "shadow",
+    "sample_count": 18,
+    "side_effects": 0,
+    "status": "completed",
+    "tenant_id": "t-x38r-10031227",
+    "to_at": "2026-10-03T12:34:32.000000000+00:00",
+    "usage": "{}"
+   },
+   {
+    "base_config_version": 3,
+    "calls": 0,
+    "candidate_config_version": "3+R-FEASIBILITY-01@1",
+    "changed_count": 20,
+    "changes_by_value": "{\"feasibility:조건부 가능\":20}",
+    "created_at": "2026-10-03T12:35:21.181000000+00:00",
+    "created_by": "usr_t-x38r-10031227_rule_admin",
+    "failures": "[]",
+    "from_at": "2026-01-01T00:00:00.000000000+00:00",
+    "human_correction_needed_base": 10,
+    "human_correction_needed_candidate": 13,
+    "id": "val_c9703714627f4b33862c115123f71ef8",
+    "labeled_count": 19,
+    "max_calls": 20,
+    "review_transition_base": 0,
+    "review_transition_candidate": 0,
+    "rule_version": "R-FEASIBILITY-01@1",
+    "run_kind": "shadow",
+    "sample_count": 31,
+    "side_effects": 0,
+    "status": "completed",
+    "tenant_id": "t-x38r-10031227",
+    "to_at": "2026-10-03T12:36:20.000000000+00:00",
+    "usage": "{}"
+   },
+   {
+    "base_config_version": 5,
+    "calls": 0,
+    "candidate_config_version": "5+R-AI_NEED-01@2",
+    "changed_count": 10,
+    "changes_by_value": "{\"ai_need:필요\":10}",
+    "created_at": "2026-10-03T12:42:35.568000000+00:00",
+    "created_by": "usr_t-x38r-10031227_rule_admin",
+    "failures": "[]",
+    "from_at": "2026-01-01T00:00:00.000000000+00:00",
+    "human_correction_needed_base": 11,
+    "human_correction_needed_candidate": 10,
+    "id": "val_7c3f38b9de3c4741b418b6198f00fcdd",
+    "labeled_count": 19,
+    "max_calls": 20,
+    "review_transition_base": 0,
+    "review_transition_candidate": 0,
+    "rule_version": "R-AI_NEED-01@2",
+    "run_kind": "shadow",
+    "sample_count": 34,
+    "side_effects": 0,
+    "status": "completed",
+    "tenant_id": "t-x38r-10031227",
+    "to_at": "2026-10-03T12:43:34.000000000+00:00",
+    "usage": "{}"
+   },
+   {
+    "base_config_version": 9,
+    "calls": 0,
+    "candidate_config_version": "9+R-AI_NEED-02@1",
+    "changed_count": 0,
+    "changes_by_value": "{}",
+    "created_at": "2026-10-03T12:42:54.525000000+00:00",
+    "created_by": "usr_t-x38r-10031227_rule_admin",
+    "failures": "[]",
+    "from_at": "2026-01-01T00:00:00.000000000+00:00",
+    "human_correction_needed_base": 10,
+    "human_correction_needed_candidate": 10,
+    "id": "val_84f211ef173545f4929360f37b2cd600",
+    "labeled_count": 19,
+    "max_calls": 20,
+    "review_transition_base": 0,
+    "review_transition_candidate": 0,
+    "rule_version": "R-AI_NEED-02@1",
+    "run_kind": "shadow",
+    "sample_count": 37,
+    "side_effects": 0,
+    "status": "completed",
+    "tenant_id": "t-x38r-10031227",
+    "to_at": "2026-10-03T12:43:53.000000000+00:00",
+    "usage": "{}"
+   }
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+  "started_at": "2026-10-03T11:05:44.325501+00:00",
+  "code_sha": "e55b42d40858b9341009fec45d637a223ade6a01",
+  "uncommitted": true,
+  "machine": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "cpu": "arm",
+  "logical_cpus": 10,
+  "memory_bytes": "25769803776",
+  "api_workers": 2,
+  "worker_concurrency": 10,
+  "sse_connections": 20,
+  "client_slots": 10,
+  "jev_mode": "live",
+  "model": "jev-1.13.0",
+  "duration_seconds": 600,
+  "warmup_seconds": 120,
+  "target_requests": 200,
+  "jev_call_cap": 8000,
+  "input_bytes": {
+    "text": 508,
+    "text_near": 44450,
+    "pdf": 3484,
+    "pdf_near": 5430730,
+    "docx": 36841,
+    "docx_near": 37263,
+    "md": 688,
+    "md_near": 7728
+  },
+  "input_characters": {
+    "text": 228,
+    "text_near": 19950,
+    "pdf": 228,
+    "pdf_near": 228,
+    "docx": 228,
+    "docx_near": 228,
+    "md": 228,
+    "md_near": 228
+  },
+  "attachment_extracted_characters": {
+    "text": 0,
+    "text_near": 0,
+    "pdf": 1440,
+    "pdf_near": 17950,
+    "docx": 12600,
+    "docx_near": 16760,
+    "md": 657,
+    "md_near": 7377
+  },
+  "database": "dedicated Neo4j 5.26.0, bolt 7694",
+  "measurement_started_at": "2026-10-03T11:07:45.237553+00:00",
+  "measurement_ended_at": "2026-10-03T11:17:45.237614+00:00",
+  "measured_jev_calls_reported_by_successful_runs": 1032,
+  "failed_external_attempts": 0,
+  "jev_calls_inferred_from_run_attempts": 1032,
+  "input_tokens_recorded": 3106570,
+  "output_tokens_recorded": 345720,
+  "run_versions": [
+    "{\"policy\": 1, \"config\": 1, \"model\": \"jev-1.13.0\", \"qset\": \"qset-v2\", \"schema\": \"judgment-v1\", \"catalog\": \"catalog-v2\"}"
+  ]
+}

@@ -1,0 +1,1 @@
+export X38_OUT=/Users/psw/Projects/decision-chat-bot/artifacts/validation/20261003T122747Z/extension X38_TENANT=t-x38r-10031227 X38_API=http://127.0.0.1:8138 DATA_DIR=/Users/psw/Projects/decision-chat-bot/.data/x38r/20261003T122747Z

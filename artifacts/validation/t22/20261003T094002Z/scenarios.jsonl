@@ -1,0 +1,2 @@
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 8, "collected_after": 8, "reconciliation": {"request_commits_missing_journal": [], "journal_success_missing_db": [], "run_commits_missing_journal": [], "run_status_mismatch": []}}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

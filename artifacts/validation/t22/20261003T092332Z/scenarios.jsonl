@@ -1,0 +1,2 @@
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_7a49314e35884485b8256a52135a313c", "generations": [1, 2]}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

@@ -1,0 +1,2533 @@
+[
+  {
+    "id": "pharma-001",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": [
+        "임상·안전성 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9566666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2231,
+      "output_tokens": 330,
+      "latency_ms": 337.8764590015635,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-002",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.98,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2189,
+      "output_tokens": 330,
+      "latency_ms": 340.6580410010065,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-003",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7366666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2164,
+      "output_tokens": 329,
+      "latency_ms": 232.33424999489216,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-004",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8866666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2189,
+      "output_tokens": 329,
+      "latency_ms": 222.68337500281632,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-005",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.79,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2193,
+      "output_tokens": 332,
+      "latency_ms": 231.97254099795828,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-006",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9933333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2225,
+      "output_tokens": 333,
+      "latency_ms": 212.88883299712325,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-007",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8833333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2199,
+      "output_tokens": 332,
+      "latency_ms": 225.2770419945591,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-008",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": [
+        "규제 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9566666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 333,
+      "latency_ms": 239.36462500569178,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-009",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.87,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2193,
+      "output_tokens": 331,
+      "latency_ms": 234.82437500206288,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-010",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9733333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2197,
+      "output_tokens": 332,
+      "latency_ms": 233.29150000063237,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-011",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.87,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2199,
+      "output_tokens": 331,
+      "latency_ms": 214.69345899822656,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-012",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9433333333333334,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2197,
+      "output_tokens": 333,
+      "latency_ms": 225.71045799850253,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-013",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.6866666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2167,
+      "output_tokens": 331,
+      "latency_ms": 234.84162500244565,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-014",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": [
+        "약물감시 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7066666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 331,
+      "latency_ms": 214.95062499889173,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-015",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": [
+        "약물감시 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7266666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 331,
+      "latency_ms": 221.56245799851604,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-016",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "긴급",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8233333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2201,
+      "output_tokens": 332,
+      "latency_ms": 217.71587500552414,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-017",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8233333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2183,
+      "output_tokens": 329,
+      "latency_ms": 206.22770900081377,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-018",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9766666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2215,
+      "output_tokens": 330,
+      "latency_ms": 220.67412499745842,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-019",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.82,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2189,
+      "output_tokens": 329,
+      "latency_ms": 230.79225000401493,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-020",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9033333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2187,
+      "output_tokens": 331,
+      "latency_ms": 285.3858750022482,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-021",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7166666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2191,
+      "output_tokens": 332,
+      "latency_ms": 240.49179199937498,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-022",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": [
+        "약물감시 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7233333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2237,
+      "output_tokens": 332,
+      "latency_ms": 213.1189589999849,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-023",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7433333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2167,
+      "output_tokens": 334,
+      "latency_ms": 215.08225000434322,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-024",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8966666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2195,
+      "output_tokens": 332,
+      "latency_ms": 209.5821669936413,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-025",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7933333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2191,
+      "output_tokens": 331,
+      "latency_ms": 276.7370830042637,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-026",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8933333333333332,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2195,
+      "output_tokens": 332,
+      "latency_ms": 254.44995799625758,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-027",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": [
+        "규제 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9166666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2219,
+      "output_tokens": 332,
+      "latency_ms": 272.20608300558524,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-028",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "일반",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8966666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2195,
+      "output_tokens": 333,
+      "latency_ms": 239.31599999923492,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-029",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": [
+        "임상·안전성 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.91,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2239,
+      "output_tokens": 331,
+      "latency_ms": 215.4210420048912,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-030",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9366666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2227,
+      "output_tokens": 331,
+      "latency_ms": 224.7113330013235,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-031",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.6766666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2201,
+      "output_tokens": 330,
+      "latency_ms": 222.19516699988162,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-032",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "일반",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8433333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2199,
+      "output_tokens": 332,
+      "latency_ms": 223.50666599959368,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-033",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.6566666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2173,
+      "output_tokens": 331,
+      "latency_ms": 217.05541700066533,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-034",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9766666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2213,
+      "output_tokens": 332,
+      "latency_ms": 217.42995800013887,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-035",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7833333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2215,
+      "output_tokens": 331,
+      "latency_ms": 242.70979200082365,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-036",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": [
+        "규제 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2237,
+      "output_tokens": 331,
+      "latency_ms": 225.58195799501846,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-037",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7566666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2217,
+      "output_tokens": 334,
+      "latency_ms": 216.83570800087182,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-038",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9933333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 335,
+      "latency_ms": 218.54137499758508,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-039",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.85,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2223,
+      "output_tokens": 334,
+      "latency_ms": 227.00433299905853,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-040",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": [
+        "약물감시 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "판단 보류",
+      "lead_org": "현업",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7366666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2263,
+      "output_tokens": 334,
+      "latency_ms": 222.53541599638993,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-041",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8133333333333334,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2217,
+      "output_tokens": 335,
+      "latency_ms": 239.93870800040895,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-042",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9866666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2249,
+      "output_tokens": 334,
+      "latency_ms": 237.99679199873935,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-043",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": [
+        "규제 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.87,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2191,
+      "output_tokens": 334,
+      "latency_ms": 221.9191670010332,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-044",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "판단 보류",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9666666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 335,
+      "latency_ms": 233.45016600069357,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-045",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.6966666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2221,
+      "output_tokens": 333,
+      "latency_ms": 260.3428329966846,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-046",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9633333333333334,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2225,
+      "output_tokens": 333,
+      "latency_ms": 254.40974999946775,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-047",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7433333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2227,
+      "output_tokens": 332,
+      "latency_ms": 226.10837499814807,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-048",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9199999999999999,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2225,
+      "output_tokens": 334,
+      "latency_ms": 239.5558330026688,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-049",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8766666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2185,
+      "output_tokens": 329,
+      "latency_ms": 208.2051670004148,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-050",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": [
+        "약물감시 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "현업"
+      ],
+      "confidence": 0.7433333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2209,
+      "output_tokens": 330,
+      "latency_ms": 225.51662499608938,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-051",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8066666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2191,
+      "output_tokens": 329,
+      "latency_ms": 211.30620800249744,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-052",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9033333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2189,
+      "output_tokens": 329,
+      "latency_ms": 227.4958330017398,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-053",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "현업"
+      ],
+      "risk_areas": [
+        "규제 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.7799999999999999,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2179,
+      "output_tokens": 332,
+      "latency_ms": 234.6772079981747,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-054",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9933333333333333,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2225,
+      "output_tokens": 333,
+      "latency_ms": 231.3655830002972,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-055",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.8933333333333334,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2199,
+      "output_tokens": 332,
+      "latency_ms": 296.03608299657935,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-056",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "조건부 가능",
+      "urgency": "긴급",
+      "lead_org": "현업",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.93,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2197,
+      "output_tokens": 332,
+      "latency_ms": 227.97449999779928,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-057",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "IT팀"
+      ],
+      "risk_areas": [
+        "임상·안전성 검토"
+      ]
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9500000000000001,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": false,
+    "usage": {
+      "input_tokens": 2239,
+      "output_tokens": 332,
+      "latency_ms": 214.02320800552843,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-058",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "현업"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "불필요",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9700000000000001,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2197,
+      "output_tokens": 332,
+      "latency_ms": 231.63891700096428,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-059",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "혼합",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "IT팀",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9066666666666666,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2199,
+      "output_tokens": 331,
+      "latency_ms": 214.9416669999482,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  },
+  {
+    "id": "pharma-060",
+    "label_status": "proposed",
+    "proposed_labels": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "team_set": [
+        "AI팀",
+        "IT팀"
+      ],
+      "risk_areas": []
+    },
+    "predictions": {
+      "ai_need": "정보 부족",
+      "feasibility": "현재 불가",
+      "urgency": "긴급",
+      "lead_org": "판단 보류",
+      "team_set": [
+        "IT팀",
+        "현업"
+      ],
+      "confidence": 0.9466666666666667,
+      "requires_review": true,
+      "auto_allowed": false
+    },
+    "correct": true,
+    "usage": {
+      "input_tokens": 2197,
+      "output_tokens": 333,
+      "latency_ms": 210.94525000080466,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v2",
+      "catalog": "catalog-v2",
+      "schema": "judgment-v1"
+    },
+    "run_status": "success"
+  }
+]

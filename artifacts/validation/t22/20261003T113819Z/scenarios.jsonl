@@ -1,0 +1,14 @@
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_7d1893e31eca4d2589b4e705d07e1081", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_429", "status": "pass", "request_id": "req_86d7cb49dbc544f5bb7678c0601230f1", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_64fb3318261a4f32885729a443914902", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_5b83000fcb6241bab047b91571694c2f", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "parser_db_outage", "status": "pass", "damaged_request": "req_0eab61ec7a4e45d0a8c807c264f9c200", "recovered_request": "req_028e979fca8d49f0bfa4eee4f0265612", "http_status": 503, "unknown_validity": 1}
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_5fa61965451943388f255a46d70f1368", "generations": [1, 2], "judgments": 1}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_870a76bc0a9949e6b14080036813bc62"}
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_287ba26614e64bacb5ace61b50690d83", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 995, "startup_ms": 907, "terminal_ms": 13131, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_ac71842bb1bb4e3e9b53fd5337962a5c", "run_2e57bb5104e847eb87071350f72b4b5b", "run_0bb34038062b4796b474af48d66d6d8e"]}
+{"scenario": "parallel_review", "status": "pass", "request_id": "req_126ab923cfba48939499e579146c8517", "statuses": [200, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409, 409], "counts": {"assignments": 1, "tasks": 1, "distinct_drafts": 1}, "retry_status": 200, "stale_approval_status": 409}
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 292, "collected_after": 292, "reconciliation": {"request_commits_missing_journal": [], "journal_success_missing_db": [], "run_commits_missing_journal": [], "run_status_mismatch": []}}
+{"scenario": "information_wait", "status": "pass", "request_id": "req_235148d877b348368c8a9d5bd2db4427", "judgment_id": "jdg_bbf0c74bd74945f28bcc6793509cc72d", "outputs": 11}
+{"scenario": "late_recovery", "status": "pass", "request_id": "req_c28b38545dd1469ca38b3407b1ed2890", "first_run": "run_65e24f742bff4efcbc7f74fb40888e20", "recovery_run": "run_d0c845719b184fca972699665818675b", "failed_120s": 5, "late_recoveries": 1, "request_metrics": {"eligible_requests": 1, "within_120s": 0, "failed_120s": 1, "pending_120s": 0, "ratio": 0.0, "candidate_commits": 1, "failed_runs": 1, "late_recoveries": 1, "unconfirmed_samples": 0}, "wait_seconds": 121}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

@@ -1,0 +1,77 @@
+{
+  "g05_tasks_screen": {
+    "req_4b54af0f63814fb1aeb2eae3d99a8a23": {
+      "tasks": [
+        {
+          "id": "task_31a8e27f04884aa9a97704c38df21bf5",
+          "title": "화면·리포트 개발",
+          "status": "대기"
+        }
+      ],
+      "precedes": []
+    },
+    "req_14ff7099c92f48ffa415c09e3f45d363": {
+      "tasks": [
+        {
+          "id": "task_5014c2f026484dd1ad358369bf1a6f6f",
+          "title": "화면·리포트 개발",
+          "status": "대기"
+        }
+      ],
+      "precedes": []
+    },
+    "req_9c361ec55b76434a81cdcead61ac6d54": {
+      "tasks": [
+        {
+          "id": "task_cc7b781a681f4556b5a37e7df517fe34",
+          "title": "화면·리포트 개발",
+          "status": "대기"
+        }
+      ],
+      "precedes": []
+    },
+    "req_c86fabd05e154d33b4795383e4f2d109": {
+      "tasks": [
+        {
+          "id": "task_54f7f0e414f14b85a2f9b11a746338b3",
+          "title": "화면·리포트 개발",
+          "status": "막힘"
+        },
+        {
+          "id": "task_38494e935f464ea88b21b3d9b153ed86",
+          "title": "데이터 연결·ETL",
+          "status": "대기"
+        }
+      ],
+      "precedes": [
+        [
+          "task_38494e935f464ea88b21b3d9b153ed86",
+          "task_54f7f0e414f14b85a2f9b11a746338b3"
+        ]
+      ]
+    }
+  },
+  "g06_graph_ui": {
+    "request_id": "req_9bdcd0f954114f7c9cfd937d0805dd66",
+    "nodes": [
+      "request:req_9bdcd0f954114f7c9cfd937d0805dd66",
+      "task:task_a4fbe94ca2ba442e98659859646100f3",
+      "task:task_dfeaeb4bc6234cb68b2eea5c0b1b8772",
+      "org:t-acc21-20261003t114858z-54105g-it",
+      "org:t-acc21-20261003t114858z-54105g-business"
+    ],
+    "edges": [
+      "HAS_TASK|req_9bdcd0f954114f7c9cfd937d0805dd66|task_a4fbe94ca2ba442e98659859646100f3|",
+      "HAS_TASK|req_9bdcd0f954114f7c9cfd937d0805dd66|task_dfeaeb4bc6234cb68b2eea5c0b1b8772|",
+      "ASSIGNED_TO|task_a4fbe94ca2ba442e98659859646100f3|t-acc21-20261003t114858z-54105g-it|lead",
+      "ASSIGNED_TO|task_a4fbe94ca2ba442e98659859646100f3|t-acc21-20261003t114858z-54105g-business|collab",
+      "ASSIGNED_TO|task_dfeaeb4bc6234cb68b2eea5c0b1b8772|t-acc21-20261003t114858z-54105g-it|lead",
+      "ASSIGNED_TO|task_dfeaeb4bc6234cb68b2eea5c0b1b8772|t-acc21-20261003t114858z-54105g-business|collab",
+      "PRECEDES|task_a4fbe94ca2ba442e98659859646100f3|task_dfeaeb4bc6234cb68b2eea5c0b1b8772|"
+    ],
+    "tasks_screen": {
+      "task_dfeaeb4bc6234cb68b2eea5c0b1b8772": "닫기 화면·리포트 개발 task_dfeaeb4bc6234cb68b2eea5c0b1b8772 · 요청 req_9bdcd0f954114f7c9cfd937d0805dd66 처리 방식: 일반 기술 · 주관: IT팀 · 협업: 현업 산출물: 검증된 화면 또는 리포트 선행 업무 데이터 연결·ETL · 대기 후행 업무",
+      "task_a4fbe94ca2ba442e98659859646100f3": "닫기 데이터 연결·ETL task_a4fbe94ca2ba442e98659859646100f3 · 요청 req_9bdcd0f954114f7c9cfd937d0805dd66 처리 방식: 일반 기술 · 주관: IT팀 · 협업: 현업 산출물: 검증된 데이터 흐름 선행 업무 후행 업무 화면·리포트 개발 · 막힘 진행으로 변경"
+    }
+  }
+}

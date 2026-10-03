@@ -1,0 +1,57 @@
+{
+  "g05_tasks_screen": {
+    "req_57277eae3d1f4773a939e832e72e8ffa": {
+      "tasks": [
+        {
+          "id": "task_e8681ab964dc46f9b3e1bd9010933ba7",
+          "title": "화면·리포트 개발",
+          "status": "대기"
+        }
+      ],
+      "precedes": []
+    },
+    "req_b55765be72d348c48807375d51329fc2": {
+      "tasks": [
+        {
+          "id": "task_cab232d8f0bb49968981036f76d8455a",
+          "title": "화면·리포트 개발",
+          "status": "막힘"
+        },
+        {
+          "id": "task_4e16017bf5f2418a8b488877448408b9",
+          "title": "데이터 연결·ETL",
+          "status": "대기"
+        }
+      ],
+      "precedes": [
+        [
+          "task_4e16017bf5f2418a8b488877448408b9",
+          "task_cab232d8f0bb49968981036f76d8455a"
+        ]
+      ]
+    }
+  },
+  "g06_graph_ui": {
+    "request_id": "req_8578c28e4ee64d609c9a37ac8ab0787f",
+    "nodes": [
+      "request:req_8578c28e4ee64d609c9a37ac8ab0787f",
+      "task:task_c6357a9972614f35a4d8c024e1f2b513",
+      "task:task_cc72a2f897874307a8b213fdc2bcae61",
+      "org:t-acc21-20261003t125137z-27336g-it",
+      "org:t-acc21-20261003t125137z-27336g-business"
+    ],
+    "edges": [
+      "HAS_TASK|req_8578c28e4ee64d609c9a37ac8ab0787f|task_c6357a9972614f35a4d8c024e1f2b513|",
+      "HAS_TASK|req_8578c28e4ee64d609c9a37ac8ab0787f|task_cc72a2f897874307a8b213fdc2bcae61|",
+      "ASSIGNED_TO|task_c6357a9972614f35a4d8c024e1f2b513|t-acc21-20261003t125137z-27336g-it|lead",
+      "ASSIGNED_TO|task_c6357a9972614f35a4d8c024e1f2b513|t-acc21-20261003t125137z-27336g-business|collab",
+      "ASSIGNED_TO|task_cc72a2f897874307a8b213fdc2bcae61|t-acc21-20261003t125137z-27336g-business|collab",
+      "ASSIGNED_TO|task_cc72a2f897874307a8b213fdc2bcae61|t-acc21-20261003t125137z-27336g-it|lead",
+      "PRECEDES|task_c6357a9972614f35a4d8c024e1f2b513|task_cc72a2f897874307a8b213fdc2bcae61|"
+    ],
+    "tasks_screen": {
+      "task_cc72a2f897874307a8b213fdc2bcae61": "닫기 화면·리포트 개발 task_cc72a2f897874307a8b213fdc2bcae61 · 요청 req_8578c28e4ee64d609c9a37ac8ab0787f 처리 방식: 일반 기술 · 주관: IT팀 · 협업: 현업 산출물: 검증된 화면 또는 리포트 선행 업무 데이터 연결·ETL · 대기 후행 업무",
+      "task_c6357a9972614f35a4d8c024e1f2b513": "닫기 데이터 연결·ETL task_c6357a9972614f35a4d8c024e1f2b513 · 요청 req_8578c28e4ee64d609c9a37ac8ab0787f 처리 방식: 일반 기술 · 주관: IT팀 · 협업: 현업 산출물: 검증된 데이터 흐름 선행 업무 후행 업무 화면·리포트 개발 · 막힘 진행으로 변경"
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "s1": {
+    "request_id": "req_7ec8e24a01f34b4789aaf183f2231af4",
+    "run_id": "run_efb7e24bb1724ecf855a6d5b97c3a556",
+    "ui": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀"
+    }
+  },
+  "s2": {
+    "request_id": "req_70c2fa619db84a9ba9f9dc014e6cf0ef",
+    "review_id": "rvw_4825b324e2bf442f98fe19f16c33f82d",
+    "tasks": [
+      {
+        "id": "task_1b4836a7d0a74e05ae5c5971ad108d7b",
+        "title": "권한·보안 검토",
+        "method": "사람",
+        "lead": "IT팀",
+        "collab": [
+          "현업"
+        ],
+        "pred": [],
+        "status": "대기"
+      },
+      {
+        "id": "task_75153db6e8614424a04a2cfafce8a203",
+        "title": "규제·안전 검토",
+        "method": "사람",
+        "lead": "현업",
+        "collab": [
+          "AI팀",
+          "IT팀"
+        ],
+        "pred": [],
+        "status": "막힘"
+      },
+      {
+        "id": "task_a868818ab01e45b58e1b408c3e1fd306",
+        "title": "현업 승인·운영 기준 확정",
+        "method": "사람",
+        "lead": "현업",
+        "collab": [
+          "IT팀"
+        ],
+        "pred": [],
+        "status": "대기"
+      },
+      {
+        "id": "task_9f0bfed70a4b404ea8430b8e8a35aa6e",
+        "title": "데이터 연결·ETL",
+        "method": "일반 기술",
+        "lead": "IT팀",
+        "collab": [
+          "현업"
+        ],
+        "pred": [],
+        "status": "막힘"
+      },
+      {
+        "id": "task_858059f341fe49ffb1321f00fed795fb",
+        "title": "예측·AI 모델 검토",
+        "method": "AI",
+        "lead": "AI팀",
+        "collab": [
+          "현업",
+          "IT팀"
+        ],
+        "pred": [],
+        "status": "대기"
+      }
+    ]
+  },
+  "s3": {
+    "request_id": "req_fad2f2427b5c4382a9fbb95bc38b32e5",
+    "run_id": "run_6d0d5f400218495e871ada4906f52350",
+    "reasons": [
+      "개발 가능성 미충족",
+      "Choice confidence 미충족: ai_need",
+      "미정 분류: feasibility",
+      "필수 검토: urgent",
+      "Noul 참여 불확실: it_team_involvement",
+      "Noul 참여 불확실: business_involvement",
+      "업무 책임 또는 산출물 누락",
+      "정책에서 자동 배정 비허용"
+    ]
+  },
+  "s4": {
+    "request_id": "req_79d3de5571c542d083056e515a8f0153",
+    "status": "보완 필요",
+    "reasons": [
+      "개발 가능성 미충족",
+      "Choice confidence 미충족: ai_need",
+      "미정 분류: feasibility",
+      "미정 분류: urgency",
+      "미정 분류: lead_org",
+      "Choice confidence 미충족: lead_org",
+      "필수 검토: 위험 여부 미확정",
+      "필수 검토: regulatory",
+      "정책에서 자동 배정 비허용"
+    ]
+  },
+  "s5": {
+    "request_id": "req_4ea33edf75314107bd8e9e8caddec0c0",
+    "revision": 2,
+    "excluded": [
+      "broken.pdf"
+    ],
+    "evidence_buttons": 3
+  },
+  "s6": {
+    "request_id": "req_0628885a92d541c39a6a0bf66b5569a0",
+    "review_id": "rvw_58e7fdc3740a413c9535fd2d7c439a0d",
+    "original": {
+      "ai_need": "불필요",
+      "feasibility": "정보 부족",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀"
+    },
+    "final": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "판단 보류",
+      "lead_org": "IT팀"
+    },
+    "others": {
+      "reject": "반려",
+      "request_info": "보완 필요"
+    }
+  },
+  "s7": {
+    "request_id": "req_70c2fa619db84a9ba9f9dc014e6cf0ef",
+    "tasks_unchanged": 5
+  },
+  "s8": {
+    "success": {
+      "request_id": "req_70c2fa619db84a9ba9f9dc014e6cf0ef",
+      "run_id": "run_f4b1ff5219e443aa9ba052be9e080a50",
+      "nodes": [
+        "결과 저장:succeeded",
+        "자동 배정 조건 검사:succeeded",
+        "규칙 적용:succeeded",
+        "업무 분해:succeeded",
+        "근거 연결:succeeded",
+        "Jev 판단:succeeded",
+        "입력 정리:succeeded"
+      ],
+      "totals_unchanged": {
+        "tasks": 31,
+        "reviews": 0,
+        "requests": 52,
+        "runs": 48,
+        "outputs": 528
+      }
+    },
+    "waiting": {
+      "request_id": "req_fad2f2427b5c4382a9fbb95bc38b32e5",
+      "run_id": "run_6d0d5f400218495e871ada4906f52350",
+      "nodes": [
+        "결과 저장:succeeded",
+        "자동 배정 조건 검사:succeeded",
+        "규칙 적용:succeeded",
+        "업무 분해:succeeded",
+        "근거 연결:succeeded",
+        "Jev 판단:succeeded",
+        "입력 정리:succeeded",
+        "human:waiting_human"
+      ],
+      "totals_unchanged": {
+        "tasks": 31,
+        "reviews": 0,
+        "requests": 52,
+        "runs": 48,
+        "outputs": 528
+      }
+    },
+    "failed": {
+      "request_id": "req_f8af3fdd12124bb1b3a69d77684b2735",
+      "run_id": "run_898cd2bc1d0d4f129dccf6e592588de4",
+      "nodes": [
+        "Jev 판단:failed",
+        "입력 정리:succeeded"
+      ],
+      "totals_unchanged": {
+        "tasks": 0,
+        "reviews": 0,
+        "requests": 5,
+        "runs": 5,
+        "outputs": 0
+      }
+    }
+  },
+  "s9": {
+    "request_id": "req_550e7bcdee2944dcbc55f0c12d11a7ae",
+    "dialogs": 0
+  },
+  "g10_handlers": {
+    "foreign_request": "req_70c2fa619db84a9ba9f9dc014e6cf0ef",
+    "get_request": "API_ERROR 404 HTTP_404: Request not found",
+    "get_trace": "API_ERROR 404 HTTP_404: Run not found",
+    "own_request_ok": "req_2cd644514d664796b6201012e6b94a53",
+    "real_browser_agent_invocation": "not performed (blocked)"
+  }
+}

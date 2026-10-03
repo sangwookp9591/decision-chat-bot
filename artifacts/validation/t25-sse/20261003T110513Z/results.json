@@ -1,0 +1,134 @@
+{
+  "tests": {
+    "duration_30m": false,
+    "accepted_200": true,
+    "virtual_users_10": true,
+    "mix_50_25_15_10": true,
+    "sse_20": true,
+    "availability_99_9": true,
+    "judgment_99": true,
+    "intake_p95_2s": true,
+    "text_p95_15s": true,
+    "attachment_p95_45s": true,
+    "sse_deliver_p95_2s": true,
+    "sse_recovery_p95_5s": true,
+    "trace_100": true
+  },
+  "passed": 12,
+  "total": 13,
+  "accepted_by_kind": {
+    "pdf": 260,
+    "text": 512,
+    "docx": 156,
+    "md": 104
+  },
+  "availability": {
+    "valid_calls": 7711,
+    "successful_calls": 7711,
+    "failed_calls": 0,
+    "pending_calls": 0,
+    "unknown_validity": 0,
+    "ratio": 1.0
+  },
+  "judgment": {
+    "eligible_requests": 1032,
+    "within_120s": 1032,
+    "failed_120s": 0,
+    "pending_120s": 0,
+    "ratio": 1.0,
+    "candidate_commits": 1032,
+    "failed_runs": 0,
+    "late_recoveries": 0,
+    "unconfirmed_samples": 0
+  },
+  "latency_ms": {
+    "intake_p95": 456.0,
+    "text_first_p95": 2707.074,
+    "attachment_first_p95": 13707.314999999999,
+    "sse_deliver_p95": 275.0,
+    "revision_p95": 12763.0,
+    "step_p95": 2417.0
+  },
+  "step_latency": {
+    "입력 정리": {
+      "count": 1032,
+      "p50_ms": 18.0,
+      "p95_ms": 54.0
+    },
+    "Jev 판단": {
+      "count": 1032,
+      "p50_ms": 2228.0,
+      "p95_ms": 12249.0
+    },
+    "근거 연결": {
+      "count": 1032,
+      "p50_ms": 12.0,
+      "p95_ms": 36.0
+    },
+    "업무 분해": {
+      "count": 1032,
+      "p50_ms": 12.0,
+      "p95_ms": 41.0
+    },
+    "규칙 적용": {
+      "count": 1032,
+      "p50_ms": 13.0,
+      "p95_ms": 43.0
+    },
+    "자동 배정 조건 검사": {
+      "count": 1032,
+      "p50_ms": 13.0,
+      "p95_ms": 46.0
+    },
+    "결과 저장": {
+      "count": 1032,
+      "p50_ms": 95.0,
+      "p95_ms": 235.0
+    }
+  },
+  "failure_causes": {},
+  "journal_kinds": {
+    "lookup_received": 6679,
+    "lookup_completed": 6679,
+    "request_received": 1032,
+    "request_completed": 1032,
+    "worker_attempt_start": 1032,
+    "worker_step": 7224,
+    "judgment_committed": 1032,
+    "worker_run": 1032
+  },
+  "sse_recovery": {
+    "samples": 200,
+    "p95_ms": 209.94
+  },
+  "trace": {
+    "complete": 1032,
+    "terminal": 1032
+  },
+  "usage": {
+    "attempts": 1032,
+    "input_tokens": 3106570,
+    "output_tokens": 345720
+  },
+  "collector": {
+    "complete": true,
+    "issues": [],
+    "has_collected_events": true,
+    "continuous_30d": false,
+    "damaged_lines_or_truncations": 0,
+    "incomplete_intervals": [],
+    "last_collected_at": "2026-10-03T11:18:07.271775+00:00",
+    "limitations": [
+      "org and request status are not recorded independently",
+      "producer heartbeat is activity-based"
+    ]
+  },
+  "warmup_estimate": {
+    "warmup_seconds": 120,
+    "completed_requests": 180,
+    "observed_calls": 180,
+    "projected_30m_calls": 2700,
+    "calls_per_request": 1.0
+  },
+  "stop_reason": null
+}

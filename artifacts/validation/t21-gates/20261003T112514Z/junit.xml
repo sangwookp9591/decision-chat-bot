@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="40" time="290.519" timestamp="2026-10-03T20:25:30.062901+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s1_general_technical_csv_monthly_aggregation" time="4.401" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_core_classifications_have_locatable_evidence" time="6.376" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_g03_thin_one_line_input_reports_missing_evidence_not_fake_evidence" time="3.132" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_mixed_forecast_and_alert_tasks_linked_after_approval" time="3.383" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s2_predecessor_relations_become_stored_precedes_edges" time="3.328" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s3_urgent_request_reason_review_and_priority" time="6.237" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s4_missing_data_permission_approval_no_unapproved_execution" time="3.219" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_documents_pdf_docx_md_with_one_damaged_file" time="11.241" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s5_citation_coverage_across_attempts" time="9.866"><failure message="AssertionError: attempt cited no file evidence: ['근거 미완료', '개발 가능성 미충족', 'Choice confidence 미충족: ai_need', '미정 분류: feasibility', 'Choice confidence 미충족: feasibility', '미정 분류: urgency', 'Choice confidence 미충족: urgency', 'Choice confidence 미충족: lead_org', '필수 검토: 위험 여부 미확정', '필수 검토: regulatory', '정책에서 자동 배정 비허용']&#10;assert set()">users = {'operator': &lt;tests.acceptance.harness.Client object at 0x10b318d60&gt;, 'operator_source': &lt;tests.acceptance.harness.Cli...rness.Client object at 0x10b2e3e50&gt;, 'outsider_reviewer': &lt;tests.acceptance.harness.Client object at 0x10b2c8b50&gt;, ...}
+
+    def test_s5_citation_coverage_across_attempts(users):
+        """Each of three differently-themed files should be reflected as cited evidence. Live Jev varies,
+        so three attempts are recorded; every attempt must cite something and together all files appear."""
+        rq, sr = users["requester"], users["source_reader"]
+        per_attempt, union = [], set()
+        for _ in range(3):
+            r = rq.submit("세 문서의 요청 내용을 함께 검토해 주세요.", _doc_files(with_bad=False))
+            assert r.status_code == 202
+            rid = r.json()["request_id"]
+            d = rq.wait(rid)
+            j = judgment(sr, rid)
+            names = {a["id"]: a["filename"] for a in d["attachments"]}
+            cited = {names[e["attachment_id"]] for o in j["outputs"] for e in o["evidence"]}
+            per_attempt.append({"request_id": rid, "run_id": j["run_id"], "cited_files": sorted(cited)})
+            union |= cited
+&gt;           assert cited, f"attempt cited no file evidence: {j['review_reasons']}"
+E           AssertionError: attempt cited no file evidence: ['근거 미완료', '개발 가능성 미충족', 'Choice confidence 미충족: ai_need', '미정 분류: feasibility', 'Choice confidence 미충족: feasibility', '미정 분류: urgency', 'Choice confidence 미충족: urgency', 'Choice confidence 미충족: lead_org', '필수 검토: 위험 여부 미확정', '필수 검토: regulatory', '정책에서 자동 배정 비허용']
+E           assert set()
+
+tests/acceptance/acc_a_scenarios.py:336: AssertionError</failure></testcase><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reviewer_correction_preserves_original_and_final" time="3.297" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s6_reject_and_request_info_are_separate" time="6.346" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s7_reanalysis_separates_runs_and_never_duplicates_tasks" time="10.757" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_flow_and_playback_have_no_side_effects" time="7.513" /><testcase classname="tests.acceptance.acc_a_scenarios" name="test_s8_failed_run_from_live_jev_rejection[0]" time="3.253" /><testcase classname="tests.acceptance.acc_b_safety" name="test_other_tenant_direct_id_calls_are_404" time="7.313" /><testcase classname="tests.acceptance.acc_b_safety" name="test_same_tenant_other_organisation_is_404" time="0.152" /><testcase classname="tests.acceptance.acc_b_safety" name="test_approval_without_review_permission_is_blocked" time="0.073" /><testcase classname="tests.acceptance.acc_b_safety" name="test_policy_publish_and_rollback_require_policy_editor" time="0.156" /><testcase classname="tests.acceptance.acc_b_safety" name="test_source_text_requires_source_permission" time="0.090" /><testcase classname="tests.acceptance.acc_b_safety" name="test_injection_sentence_in_document_has_no_policy_or_permission_effect" time="6.394" /><testcase classname="tests.acceptance.acc_b_safety" name="test_oversize_count_and_text_limits_rejected_before_any_run" time="0.364" /><testcase classname="tests.acceptance.acc_b_safety" name="test_large_file_parsing_does_not_block_other_requests" time="21.287" /><testcase classname="tests.acceptance.acc_b_safety" name="test_encrypted_damaged_script_and_huge_page_files_are_handled_safely" time="2.281" /><testcase classname="tests.acceptance.acc_b_safety" name="test_repeated_and_concurrent_approvals_create_exactly_one_assignment" time="9.427" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_stays_zero_for_unsafe_requests_under_permissive_policy" time="10.917" /><testcase classname="tests.acceptance.acc_b_safety" name="test_auto_assignment_positive_control_if_live_model_is_confident" time="6.189" /><testcase classname="tests.acceptance.acc_b_safety" name="test_required_review_release_is_rejected_for_publish_and_rollback" time="0.138" /><testcase classname="tests.acceptance.acc_b_safety" name="test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses" time="2.998" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_readme_start_health_ready_meta_intake_and_lookup" time="3.144" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_request_review_task_and_trace_survive_api_and_worker_restart" time="15.407" /><testcase classname="tests.acceptance.acc_c_g01_restart" name="test_g01_worker_restart_while_judging_completes_exactly_once" time="5.219" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_sse_cut_and_resume_converges_to_persisted_state" time="6.763" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g08_other_users_events_are_not_delivered" time="8.148" /><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_summary_matches_a_known_request_set" time="12.063"><failure message="assert False is True">users = {'operator': &lt;tests.acceptance.harness.Client object at 0x10b318d60&gt;, 'operator_source': &lt;tests.acceptance.harness.Cli...rness.Client object at 0x10b2e3e50&gt;, 'outsider_reviewer': &lt;tests.acceptance.harness.Client object at 0x10b2c8b50&gt;, ...}
+
+    def test_g09_summary_matches_a_known_request_set(users):
+        rq, op = users["requester"], users["operator"]
+        base = _summary(op)
+        rec0, elig0, within0 = (base["requests"]["received"], base["judgment"]["eligible_requests"],
+                                base["judgment"]["within_120s"])
+        pre_id0 = base["requests"]["failed_before_id"]
+        ids = [judge(rq, f"관측 대조용 요청 {i}: 월별 재고 조회 화면이 필요합니다.")[0] for i in range(3)]
+        bad = rq.submit("개수 초과", [(f"{i}.md", b"x", "text/markdown") for i in range(6)])
+        assert bad.status_code == 400
+        s = _stable_summary(op, lambda x: x["judgment"]["eligible_requests"] &gt;= elig0 + 3
+                            and x["requests"]["failed_before_id"] &gt;= pre_id0 + 1)
+        d_rec = s["requests"]["received"] - rec0
+        d_elig = s["judgment"]["eligible_requests"] - elig0
+        d_within = s["judgment"]["within_120s"] - within0
+        d_pre = s["requests"]["failed_before_id"] - pre_id0
+        assert d_elig == 3 and d_within == 3 and d_pre == 1, (d_elig, d_within, d_pre)
+        assert d_rec &gt;= 3
+        assert s["judgment"]["failed_120s"] == base["judgment"]["failed_120s"]
+        saved = db_read(TENANT, "MATCH (j:Judgment {tenant_id:$tenant}) RETURN count(j) AS n")[0]["n"]
+        by_version = sum(v["saved"] for v in s["by_version"].values())
+        assert by_version == saved or s["judgment"]["candidate_commits"] &gt;= by_version
+&gt;       assert s["collection"]["complete"] is True
+E       assert False is True
+
+tests/acceptance/acc_d_events_monitoring.py:143: AssertionError</failure></testcase><testcase classname="tests.acceptance.acc_d_events_monitoring" name="test_g09_failures_lead_to_trace_and_raise_alerts" time="9.597" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g05_auto_assignment_live_end_to_end" time="16.488" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_policy_version_pinning_and_rollback" time="19.362" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g06_stored_relationships_match_topology_and_tasks_api" time="6.439" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_short_request_missing_evidence_is_safe_and_not_fabricated" time="12.512" /><testcase classname="tests.acceptance.acc_e_gates" name="test_g03_evidence_citation_variability_three_repeats" time="24.944" /></testsuite></testsuites>

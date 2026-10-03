@@ -1,0 +1,8 @@
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_df23cd6524fe49c39afb93bf8e5922d8", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_429", "status": "pass", "request_id": "req_f3b508bd020d4532bd97983a22762e25", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_544da2efbc2e46b9b014650c6f3ad775", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_2a9dba0f87794f71b6482a423b14f54f", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_5e9cbd9559934a63bf335da7df416ec3", "generations": [1, 2]}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_ec42d6444dbd4400b47ce82b5397a7c0"}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_9b9651d4597e472db915c72d3e4f1fbc", "run_fb478f13ed604d538da5331e76f4ce9b", "run_8b076404c42040ccb1ad98e7ce6eb99b"]}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

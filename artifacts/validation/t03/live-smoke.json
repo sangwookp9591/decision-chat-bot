@@ -1,0 +1,519 @@
+{
+  "aggregate": {
+    "classifications": {
+      "ai_need": "필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업"
+    },
+    "raw_model_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "ai_need": {
+          "type": "choice",
+          "choice": "필요",
+          "confidence": 0.32,
+          "probabilities": {
+            "불필요": 0.31,
+            "필요": 0.5,
+            "정보 부족": 0.16,
+            "혼합": 0.03
+          }
+        },
+        "feasibility": {
+          "type": "choice",
+          "choice": "가능",
+          "confidence": 0.5,
+          "probabilities": {
+            "가능": 0.62,
+            "조건부 가능": 0.1,
+            "정보 부족": 0.2,
+            "현재 불가": 0.08
+          }
+        },
+        "urgency": {
+          "type": "choice",
+          "choice": "일반",
+          "confidence": 0.92,
+          "probabilities": {
+            "긴급": 0.0,
+            "일반": 0.95,
+            "판단 보류": 0.05
+          }
+        },
+        "lead_org": {
+          "type": "choice",
+          "choice": "현업",
+          "confidence": 0.44,
+          "probabilities": {
+            "AI팀": 0.02,
+            "IT팀": 0.1,
+            "현업": 0.57,
+            "판단 보류": 0.31
+          }
+        },
+        "ai_team_involvement": {
+          "type": "noul",
+          "noul": 0.27
+        },
+        "it_team_involvement": {
+          "type": "noul",
+          "noul": 0.29
+        },
+        "business_involvement": {
+          "type": "noul",
+          "noul": 0.32
+        },
+        "clinical_safety": {
+          "type": "noul",
+          "noul": 0.04
+        },
+        "pharmacovigilance": {
+          "type": "noul",
+          "noul": 0.02
+        },
+        "regulatory": {
+          "type": "noul",
+          "noul": 0.09
+        },
+        "review_signal": {
+          "type": "score",
+          "score": 0.07,
+          "confidence": 0.89,
+          "legend": {
+            "0": "Low",
+            "1": "Moderate",
+            "2": "High"
+          },
+          "probabilities": {
+            "0": 0.94,
+            "1": 0.04,
+            "2": 0.02
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 971,
+        "output_tokens": 329
+      },
+      "mode": "live",
+      "latency_ms": 338.84437500091735,
+      "attempts": 1
+    },
+    "evidence": {
+      "ai_need": [],
+      "feasibility": [],
+      "urgency": [],
+      "lead_org": []
+    },
+    "summary": {
+      "text": "월별 매출 데이터를 집계해 부서별 리포트로 제공한다.",
+      "author": "code:extractive@1"
+    },
+    "draft_tasks": [
+      {
+        "draft_task_id": "draft-1",
+        "title": "데이터 확인",
+        "method": "일반 기술",
+        "lead_org": "IT팀",
+        "collab_org": [
+          "현업"
+        ],
+        "deliverable": "데이터 범위·품질 확인 결과",
+        "predecessors": [],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-2",
+        "title": "규제·안전 검토",
+        "method": "사람",
+        "lead_org": "현업",
+        "collab_org": [
+          "AI팀",
+          "IT팀"
+        ],
+        "deliverable": "전문 검토와 승인 기록",
+        "predecessors": [],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-3",
+        "title": "권한·보안 검토",
+        "method": "사람",
+        "lead_org": "IT팀",
+        "collab_org": [
+          "현업"
+        ],
+        "deliverable": "접근 통제·보안 확인",
+        "predecessors": [],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-4",
+        "title": "데이터 연결·ETL",
+        "method": "일반 기술",
+        "lead_org": "IT팀",
+        "collab_org": [
+          "현업"
+        ],
+        "deliverable": "검증된 데이터 흐름",
+        "predecessors": [
+          "draft-1"
+        ],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-5",
+        "title": "요구 기준 확정",
+        "method": "사람",
+        "lead_org": "현업",
+        "collab_org": [],
+        "deliverable": "승인된 기준과 수용 조건",
+        "predecessors": [
+          "draft-1"
+        ],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-6",
+        "title": "예측·AI 모델 검토",
+        "method": "AI",
+        "lead_org": "AI팀",
+        "collab_org": [
+          "현업",
+          "IT팀"
+        ],
+        "deliverable": "모델 적합성·평가 계획",
+        "predecessors": [
+          "draft-1",
+          "draft-5"
+        ],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-7",
+        "title": "알림 연동",
+        "method": "일반 기술",
+        "lead_org": "IT팀",
+        "collab_org": [
+          "현업"
+        ],
+        "deliverable": "수신·오탐 기준을 갖춘 알림",
+        "predecessors": [
+          "draft-5",
+          "draft-4"
+        ],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      },
+      {
+        "draft_task_id": "draft-8",
+        "title": "화면·리포트 개발",
+        "method": "일반 기술",
+        "lead_org": "IT팀",
+        "collab_org": [
+          "현업"
+        ],
+        "deliverable": "검증된 화면 또는 리포트",
+        "predecessors": [
+          "draft-5",
+          "draft-4"
+        ],
+        "evidence_refs": [],
+        "author": "catalog:catalog-v1",
+        "status": "초안"
+      }
+    ],
+    "review_reasons": [
+      "입력 확정 미완료",
+      "정책에서 자동 배정 비허용"
+    ],
+    "eligibility": {
+      "allowed": false,
+      "reasons": [
+        "입력 확정 미완료",
+        "정책에서 자동 배정 비허용"
+      ]
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v1",
+      "catalog": "catalog-v1",
+      "schema": "judgment-v1"
+    },
+    "usage": {
+      "input_tokens": 971,
+      "output_tokens": 329,
+      "latency_ms": 338.84437500091735,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "decomposition_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "needed_ai_assessment": {
+          "type": "noul",
+          "noul": 0.42
+        },
+        "needed_data_review": {
+          "type": "noul",
+          "noul": 0.43
+        },
+        "needed_integration": {
+          "type": "noul",
+          "noul": 0.41
+        },
+        "needed_reporting": {
+          "type": "noul",
+          "noul": 0.42
+        },
+        "needed_alerts": {
+          "type": "noul",
+          "noul": 0.43
+        },
+        "needed_security": {
+          "type": "noul",
+          "noul": 0.41
+        },
+        "needed_operations": {
+          "type": "noul",
+          "noul": 0.39
+        },
+        "needed_regulatory": {
+          "type": "noul",
+          "noul": 0.41
+        },
+        "needed_requirements": {
+          "type": "noul",
+          "noul": 0.44
+        }
+      },
+      "usage": {
+        "input_tokens": 746,
+        "output_tokens": 169
+      },
+      "mode": "live",
+      "latency_ms": 198.17833400156815,
+      "attempts": 1
+    }
+  },
+  "forecast_alert": {
+    "classifications": {
+      "ai_need": "불필요",
+      "feasibility": "가능",
+      "urgency": "일반",
+      "lead_org": "현업"
+    },
+    "raw_model_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "ai_need": {
+          "type": "choice",
+          "choice": "불필요",
+          "confidence": 0.46,
+          "probabilities": {
+            "필요": 0.28,
+            "불필요": 0.59,
+            "혼합": 0.02,
+            "정보 부족": 0.11
+          }
+        },
+        "feasibility": {
+          "type": "choice",
+          "choice": "가능",
+          "confidence": 0.66,
+          "probabilities": {
+            "현재 불가": 0.04,
+            "조건부 가능": 0.07,
+            "정보 부족": 0.15,
+            "가능": 0.74
+          }
+        },
+        "urgency": {
+          "type": "choice",
+          "choice": "일반",
+          "confidence": 0.87,
+          "probabilities": {
+            "일반": 0.91,
+            "긴급": 0.01,
+            "판단 보류": 0.08
+          }
+        },
+        "lead_org": {
+          "type": "choice",
+          "choice": "현업",
+          "confidence": 0.36,
+          "probabilities": {
+            "AI팀": 0.04,
+            "IT팀": 0.06,
+            "현업": 0.52,
+            "판단 보류": 0.38
+          }
+        },
+        "ai_team_involvement": {
+          "type": "noul",
+          "noul": 0.21
+        },
+        "it_team_involvement": {
+          "type": "noul",
+          "noul": 0.19
+        },
+        "business_involvement": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "clinical_safety": {
+          "type": "noul",
+          "noul": 0.07
+        },
+        "pharmacovigilance": {
+          "type": "noul",
+          "noul": 0.03
+        },
+        "regulatory": {
+          "type": "noul",
+          "noul": 0.21
+        },
+        "review_signal": {
+          "type": "score",
+          "score": 0.19,
+          "confidence": 0.71,
+          "legend": {
+            "0": "Low",
+            "1": "Moderate",
+            "2": "High"
+          },
+          "probabilities": {
+            "0": 0.86,
+            "1": 0.09,
+            "2": 0.05
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 983,
+        "output_tokens": 330
+      },
+      "mode": "live",
+      "latency_ms": 231.84158300136914,
+      "attempts": 1
+    },
+    "evidence": {
+      "ai_need": [],
+      "feasibility": [],
+      "urgency": [],
+      "lead_org": [
+        {
+          "unit_id": "chat:0",
+          "text": "수요 예측 결과가 기준을 넘으면 운영 담당자에게 알림을 보낸다.",
+          "probability": 0.66,
+          "author": "jev:jev-1.13.0"
+        }
+      ]
+    },
+    "summary": {
+      "text": "수요 예측 결과가 기준을 넘으면 운영 담당자에게 알림을 보낸다.",
+      "author": "code:extractive@1"
+    },
+    "draft_tasks": [
+      {
+        "draft_task_id": "draft-1",
+        "title": "업무 분해 미정",
+        "method": "미정",
+        "lead_org": "미정",
+        "collab_org": [],
+        "deliverable": "필요 업무 유형 확인",
+        "predecessors": [],
+        "evidence_refs": [],
+        "author": "code:decompose@1",
+        "status": "미정",
+        "reason": "업무 유형 필요성 신호가 정책 임계값을 넘지 않음"
+      }
+    ],
+    "review_reasons": [
+      "입력 확정 미완료",
+      "정책에서 자동 배정 비허용"
+    ],
+    "eligibility": {
+      "allowed": false,
+      "reasons": [
+        "입력 확정 미완료",
+        "정책에서 자동 배정 비허용"
+      ]
+    },
+    "versions": {
+      "model": "jev-1.13.0",
+      "qset": "qset-v1",
+      "catalog": "catalog-v1",
+      "schema": "judgment-v1"
+    },
+    "usage": {
+      "input_tokens": 983,
+      "output_tokens": 330,
+      "latency_ms": 231.84158300136914,
+      "attempts": 1,
+      "mode": "live"
+    },
+    "decomposition_output": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "needed_data_review": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_requirements": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_ai_assessment": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_integration": {
+          "type": "noul",
+          "noul": 0.35
+        },
+        "needed_reporting": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_alerts": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_security": {
+          "type": "noul",
+          "noul": 0.33
+        },
+        "needed_operations": {
+          "type": "noul",
+          "noul": 0.34
+        },
+        "needed_regulatory": {
+          "type": "noul",
+          "noul": 0.33
+        }
+      },
+      "usage": {
+        "input_tokens": 758,
+        "output_tokens": 169
+      },
+      "mode": "live",
+      "latency_ms": 220.67616599815665,
+      "attempts": 1
+    }
+  }
+}
