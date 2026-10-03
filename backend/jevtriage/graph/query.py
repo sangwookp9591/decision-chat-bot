@@ -59,12 +59,13 @@ async def resolve_node(tenant: str, node_id: str, kind: str | None = None):
     kinds = [kind] if kind in KINDS else list(KINDS)
 
     async def op(tx):
-        rows = await (await tx.run(
-            "MATCH (n {tenant_id:$t,id:$id}) WHERE any(l IN labels(n) WHERE l IN $kinds) "
-            "OPTIONAL MATCH (r:Run {tenant_id:$t,id:n.run_id}) "
-            "RETURN labels(n) AS labels,properties(n) AS p,coalesce(n.request_id,r.request_id) AS request_id",
-            t=tenant, id=node_id, kinds=kinds)).data()
         for label in kinds:
+            rows = await (await tx.run(
+                f"MATCH (n:{label} {{tenant_id:$t,id:$id}}) "
+                "OPTIONAL MATCH (r:Run {tenant_id:$t,id:n.run_id}) "
+                "RETURN labels(n) AS labels,properties(n) AS p,"
+                "coalesce(n.request_id,r.request_id) AS request_id",
+                t=tenant, id=node_id)).data()
             for row in rows:
                 if label in row["labels"]:
                     return label, dict(row["p"]), row["request_id"]
@@ -201,8 +202,9 @@ async def _induced_edges(tenant: str, nodes: dict[str, dict]) -> list[dict]:
     async def op(tx):
         return await (await tx.run(
             f"MATCH (a)-[r:{ALL_TYPES}]->(b) WHERE elementId(a) IN $ids AND elementId(b) IN $ids "
+            "AND a.tenant_id=$t AND b.tenant_id=$t "
             "RETURN elementId(a) AS a, elementId(b) AS b, type(r) AS type, properties(r) AS p",
-            ids=eids)).data()
+            ids=eids, t=tenant)).data()
     rows = await read_tx(tenant, op)
     edges = []
     for row in rows:
@@ -309,12 +311,17 @@ async def edge_props(tenant: str, edges: dict[str, dict], nodes: dict[tuple[str,
            for e in edges.values()]
 
     async def op(tx):
-        rows = await (await tx.run(
-            "UNWIND $edges AS e MATCH (a {tenant_id:$t,id:e.source})-[r]->(b {tenant_id:$t,id:e.target}) "
-            "WHERE type(r)=e.type AND labels(a)[0]=e.source_kind AND labels(b)[0]=e.target_kind "
-            "RETURN e.type AS type,e.source AS source,e.target AS target,properties(r) AS p",
-            t=tenant, edges=[{"type": t, "source": s, "target": d, "source_kind": sk, "target_kind": tk}
-                            for t, s, d, sk, tk in ids])).data()
+        rows = []
+        for source_kind, target_kind in {(sk, tk) for _, _, _, sk, tk in ids}:
+            pair_edges = [{"type": typ, "source": source, "target": target}
+                          for typ, source, target, sk, tk in ids
+                          if (sk, tk) == (source_kind, target_kind)]
+            rows.extend(await (await tx.run(
+                f"UNWIND $edges AS e MATCH (a:{source_kind} {{tenant_id:$t,id:e.source}})"
+                f"-[r]->(b:{target_kind} {{tenant_id:$t,id:e.target}}) "
+                "WHERE type(r)=e.type "
+                "RETURN e.type AS type,e.source AS source,e.target AS target,properties(r) AS p",
+                t=tenant, edges=pair_edges)).data())
         out = {edge_id(row["type"], row["source"], row["target"]):
                {k: _decode(_iso(v)) for k, v in dict(row["p"]).items()} for row in rows}
         for type_, source, target, *_ in ids:

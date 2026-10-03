@@ -179,13 +179,15 @@ class JobContext:
 class Worker:
     def __init__(self, *, concurrency=2, lease_seconds=15.0, poll_seconds=0.5,
                  deadline_seconds=120.0, max_attempts=3, owner_id=None, journal=None,
-                 handlers=None, tenants=None):
-        if min(concurrency, lease_seconds, poll_seconds, deadline_seconds, max_attempts) <= 0:
+                 handlers=None, tenants=None, max_poll_seconds=8.0):
+        if min(concurrency, lease_seconds, poll_seconds, deadline_seconds, max_attempts,
+               max_poll_seconds) <= 0:
             raise ValueError("worker settings must be positive")
         self.owner_id = owner_id or f"worker_{uuid4().hex}"
         self.concurrency = concurrency
         self.lease_seconds = lease_seconds
         self.poll_seconds = poll_seconds
+        self.max_poll_seconds = max(max_poll_seconds, poll_seconds)
         self.deadline_seconds = deadline_seconds
         self.max_attempts = max_attempts
         self.journal = journal or JournalWriter()
@@ -197,10 +199,12 @@ class Worker:
         self._last_producer_heartbeat = 0.0
 
     async def candidates(self):
-        # Discovery is intentionally cross-tenant; each mutation below is tenant scoped.
+        # Kept for diagnostics; the polling loop uses claim_next instead.
         async def op(tx):
             rows = await tx.run(
-                "MATCH (j:Job) WHERE (size($tenants)=0 OR j.tenant_id IN $tenants) AND "
+                "MATCH (j:Job) USING INDEX j:Job(status) "
+                "WHERE j.status IN ['pending', 'running'] "
+                "AND (size($tenants)=0 OR j.tenant_id IN $tenants) AND "
                 "(j.status = 'pending' OR (j.status = 'running' AND j.lease_expires_at <= datetime())) "
                 "RETURN j.id AS job_id, j.tenant_id AS tenant_id "
                 "ORDER BY j.created_at LIMIT $limit",
@@ -208,6 +212,31 @@ class Worker:
             )
             return [dict(row) async for row in rows]
         return await read_tx("worker-discovery", op)
+
+    async def claim_next(self):
+        """Select and claim one eligible job in a managed write transaction."""
+        async def op(tx):
+            result = await tx.run(
+                "MATCH (j:Job) USING INDEX j:Job(status) "
+                "WHERE j.status IN ['pending', 'running'] "
+                "AND (size($tenants)=0 OR j.tenant_id IN $tenants) "
+                "AND NOT j.id IN $excluded "
+                "AND (j.status='pending' OR j.lease_expires_at <= datetime()) "
+                "WITH j ORDER BY j.created_at, j.id LIMIT 1 "
+                "SET j._lock=randomUUID() "
+                "WITH j WHERE j.status='pending' OR "
+                "(j.status='running' AND j.lease_expires_at <= datetime()) "
+                "SET j.owner_id=$owner_id, j.status='running', "
+                "j.lease_generation=coalesce(j.lease_generation, 0)+1, "
+                "j.lease_expires_at=datetime()+duration({milliseconds:$ms}) "
+                "RETURN j.id AS job_id, j.tenant_id AS tenant_id, "
+                "j.lease_generation AS generation",
+                tenants=list(self.tenants), excluded=list(self.active_jobs),
+                owner_id=self.owner_id, ms=max(1, round(self.lease_seconds * 1000)),
+            )
+            row = await result.single()
+            return dict(row) if row else None
+        return await write_tx("worker-discovery", op)
 
     async def _load(self, tenant_id, job_id):
         async def op(tx):
@@ -353,9 +382,10 @@ class Worker:
             ctx._journal("ownership_lost", status="lost", error_class=type(exc).__name__)
             handler_task.cancel()
 
-    async def process_job(self, tenant_id, job_id):
-        generation = await claim_or_takeover(tenant_id, job_id, self.owner_id,
-                                             self.lease_seconds)
+    async def process_job(self, tenant_id, job_id, generation=None):
+        if generation is None:
+            generation = await claim_or_takeover(tenant_id, job_id, self.owner_id,
+                                                 self.lease_seconds)
         pair = await self._load(tenant_id, job_id)
         if pair is None:
             raise LookupError("claimed job has no run")
@@ -403,6 +433,7 @@ class Worker:
                 await beat
 
     async def run(self):
+        delay = self.poll_seconds
         while not self.stopping.is_set():
             if time.monotonic() - self._last_producer_heartbeat >= 5:
                 try:
@@ -410,14 +441,16 @@ class Worker:
                 except OSError:
                     pass  # The independent watchdog detects low disk space.
                 self._last_producer_heartbeat = time.monotonic()
-            for row in await self.candidates():
-                if len(self.tasks) >= self.concurrency or self.stopping.is_set():
+            found = False
+            while len(self.tasks) < self.concurrency and not self.stopping.is_set():
+                row = await self.claim_next()
+                if row is None:
                     break
+                found = True
                 job_id = row["job_id"]
-                if job_id in self.active_jobs:
-                    continue
                 self.active_jobs.add(job_id)
-                task = asyncio.create_task(self.process_job(row["tenant_id"], job_id))
+                task = asyncio.create_task(self.process_job(
+                    row["tenant_id"], job_id, row["generation"]))
                 self.tasks.add(task)
                 def done(future, job_id=job_id):
                     self.active_jobs.discard(job_id)
@@ -425,8 +458,10 @@ class Worker:
                     with suppress(OwnershipLost, asyncio.CancelledError):
                         future.result()
                 task.add_done_callback(done)
+            delay = self.poll_seconds if found or self.tasks else min(
+                self.max_poll_seconds, delay * 2)
             try:
-                await asyncio.wait_for(self.stopping.wait(), timeout=self.poll_seconds)
+                await asyncio.wait_for(self.stopping.wait(), timeout=delay)
             except TimeoutError:
                 pass
         if self.tasks:
@@ -441,6 +476,7 @@ async def main():
     parser.add_argument("--concurrency", type=int, default=2)
     parser.add_argument("--lease-seconds", type=float, default=15)
     parser.add_argument("--poll-seconds", type=float, default=0.5)
+    parser.add_argument("--max-poll-seconds", type=float, default=8)
     parser.add_argument("--deadline-seconds", type=float, default=120)
     parser.add_argument("--max-attempts", type=int, default=3)
     parser.add_argument("--tenant", action="append", default=[], help="Process jobs for this tenant only (repeatable)")

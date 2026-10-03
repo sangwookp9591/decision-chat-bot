@@ -9,7 +9,13 @@ LABELS = (
     "Assignment", "Task", "Team", "Policy", "ConfigVersion", "Event", "EventCounter",
     "Idempotency", "Audit", "Attachment", "EvidenceSpan", "ModelOutput", "Correction",
     "RuleCandidate", "RuleDecision", "RuleVersion", "ValidationRun", "RuleApplication",
+    "Session", "User", "Org", "Tenant", "Judgment", "Draft", "DraftTask", "RuleSeries",
+    "LoginAttempt",
 )
+TENANT_SCOPED_IDS = frozenset({
+    "RuleCandidate", "RuleVersion", "Org", "Judgment", "Draft", "DraftTask",
+    "RuleSeries", "LoginAttempt",
+})
 
 
 async def apply_schema() -> None:
@@ -17,7 +23,7 @@ async def apply_schema() -> None:
     async with driver.session() as session:
         # Public learning IDs can repeat across tenants. Migrate earlier global
         # uniqueness constraints before installing tenant scoped replacements.
-        for label in ("RuleCandidate", "RuleVersion"):
+        for label in TENANT_SCOPED_IDS:
             await (await session.run(
                 f"DROP CONSTRAINT {label.lower()}_id_unique IF EXISTS"
             )).consume()
@@ -25,8 +31,12 @@ async def apply_schema() -> None:
                 f"CREATE CONSTRAINT {label.lower()}_tenant_id_unique IF NOT EXISTS "
                 f"FOR (n:{label}) REQUIRE (n.tenant_id, n.id) IS UNIQUE"
             )).consume()
+        # A uniqueness constraint owns its backing range index; migrate older
+        # nonunique indexes on the same properties before installing it.
+        for name in ("event_tenant_seq", "judgment_tenant_run"):
+            await (await session.run(f"DROP INDEX {name} IF EXISTS")).consume()
         for label in LABELS:
-            if label in {"RuleCandidate", "RuleVersion"}:
+            if label in TENANT_SCOPED_IDS:
                 continue
             await (await session.run(
                 f"CREATE CONSTRAINT {label.lower()}_id_unique IF NOT EXISTS "
@@ -38,6 +48,11 @@ async def apply_schema() -> None:
             ("task_draft_unique", "Task", "assignment_id, draft_task_id"),
             ("idempotency_key_unique", "Idempotency", "tenant_id, scope, key"),
             ("event_counter_tenant_unique", "EventCounter", "tenant_id"),
+            ("session_token_hash_unique", "Session", "token_hash"),
+            ("user_email_unique", "User", "email"),
+            ("configversion_tenant_version_unique", "ConfigVersion", "tenant_id, version"),
+            ("event_tenant_seq_unique", "Event", "tenant_id, seq"),
+            ("judgment_tenant_run_unique", "Judgment", "tenant_id, run_id"),
         ):
             properties = ", ".join(f"n.{field.strip()}" for field in fields.split(","))
             await (await session.run(
@@ -48,9 +63,20 @@ async def apply_schema() -> None:
             ("request_tenant_created", "Request", "tenant_id, created_at"),
             ("run_tenant_request", "Run", "tenant_id, request_id"),
             ("job_tenant_status", "Job", "tenant_id, status"),
-            ("event_tenant_seq", "Event", "tenant_id, seq"),
             ("review_tenant_status", "Review", "tenant_id, status"),
             ("task_tenant_status", "Task", "tenant_id, status"),
+            ("judgment_tenant_request", "Judgment", "tenant_id, request_id"),
+            ("modeloutput_tenant_run", "ModelOutput", "tenant_id, run_id"),
+            ("draft_tenant_run_version", "Draft", "tenant_id, run_id, draft_version"),
+            ("drafttask_tenant_run", "DraftTask", "tenant_id, run_id"),
+            ("evidencespan_tenant_revision", "EvidenceSpan", "tenant_id, revision_id"),
+            ("runstep_tenant_run", "RunStep", "tenant_id, run_id"),
+            ("event_tenant_request", "Event", "tenant_id, request_id"),
+            ("job_status", "Job", "status"),
+            ("job_status_lease", "Job", "status, lease_expires_at"),
+            ("job_tenant_status_lease", "Job", "tenant_id, status, lease_expires_at"),
+            ("review_tenant_request_status", "Review", "tenant_id, request_id, status"),
+            ("task_tenant_request", "Task", "tenant_id, request_id"),
         ):
             properties = ", ".join(f"n.{field.strip()}" for field in fields.split(","))
             await (await session.run(
