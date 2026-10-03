@@ -2,7 +2,7 @@
 
 `POST /api/learning/rules/{rule_id}/versions/{v}/validate`는 `rule_admin`이 기간(`from` 포함, `to` 제외), 요청 ID `scope_filter`, 선택적 `max_calls`를 지정한다. 활성 Config의 저장된 모델 반환값에 기준 규칙과 후보 규칙을 각각 적용한다. `ReviewDecision.action`이 `approve` 또는 `approve_with_changes`인 판단만 정답 표본으로 센다. 정답은 원 Judgment 분류에 해당 결정의 `Correction.corrected_value`를 덮어쓴 값이다. 두 규칙 결과가 정답과 다른 판단 수를 `human_correction_needed_base/candidate`로 저장한다.
 
-`GET /api/learning/validations/{id}`는 단일 tenant 내 ValidationRun을 조회하고, `GET /api/learning/rules/{rule_id}/versions/{v}/validations`는 해당 RuleVersion에 연결된 결과를 최신순으로 반환한다. 두 조회는 `rule_admin`, `operator`, `reviewer`가 사용할 수 있다. 시각과 기간 등 Neo4j temporal 값은 ISO 8601 문자열로 직렬화한다. 학습 화면은 이 조회 결과로 검증 카드를 복원하므로 새로고침 후에도 유지된다.
+`GET /api/learning/validations/{id}`는 단일 tenant 내 ValidationRun을 조회하고, `GET /api/learning/rules/{rule_id}/versions/{v}/validations`는 해당 RuleVersion에 연결된 결과를 최신순으로 반환한다. 두 조회는 `rule_admin`, `operator`, `reviewer`가 사용할 수 있다. 시각과 기간 등 Neo4j temporal 값은 ISO 8601 문자열로 직렬화한다. 학습 화면은 이 조회 결과로 검증 카드를 복원하므로 새로고침 후에도 유지된다. 검증 실행(POST)·단건 조회·목록 조회는 같은 DTO를 반환한다(`validation_dto`): 저장 시 JSON 문자열로 둔 `changes_by_value`(객체, 키는 `<필드>:<값>`)·`usage`(객체)·`failures`(목록)는 풀어서 반환하고, `failure_count`(정수)를 추가하며, 저장 속성 `from_at`/`to_at`은 응답 필드 `from`/`to`로도 제공한다(`from_at`/`to_at`은 호환을 위해 유지). 화면은 변경 수를 '담당 조직 · 주관 → 현업 8건'처럼 표시한다.
 
 새 섀도 검증은 `val_<uuid>` ValidationRun과 별도 `run_shadow_<uuid>` Run을 만들고 `(ValidationRun)-[:HAS_SHADOW_RUN]->(Run)`으로 연결한다. 검증 API의 `id`는 ValidationRun ID이며 `run_id`는 섀도 Run ID다. 기존 저장 데이터의 ID는 변경하지 않는다.
 

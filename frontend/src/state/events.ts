@@ -1,65 +1,108 @@
 import { createElement, useEffect, useRef, useState } from 'react';
+import { apiFetch } from '../api/client';
 import { eventApi, type EventSnapshot } from '../api/events';
 
 export type StreamFilter = { requestId?: string; enabled?: boolean };
 export type StreamEvent = { seq: number; type: string; request_id?: string; run_id?: string; status?: string; step_name?: string };
 export type StreamStatus = 'connected' | 'reconnecting' | 'disconnected';
-const SEQ_KEY = 'jevtriage:last-event-seq';
-export function lastEventSeq() { const value = Number(sessionStorage.getItem(SEQ_KEY) || 0); return Number.isFinite(value) && value >= 0 ? value : 0; }
-export function acceptEventSeq(seq: number, previous: number) { return Number.isInteger(seq) && seq > previous; }
 
-export function useEventStream(filters: StreamFilter = {}, onSnapshot?: (snapshot: EventSnapshot) => void, onEvent?: (event: StreamEvent) => void) {
+/**
+ * Every `kind` the server publishes (backend: `append_event*`, `publish_config_in_tx(event_kind=…)`).
+ * EventSource only delivers named events to listeners registered for that exact name, so this list must
+ * stay equal to the server's kinds; `events.test.ts` greps the backend and fails when they drift.
+ * Tenant-wide kinds (`policy.*`, `rule.*`) carry no request id and bypass the request filter.
+ */
+export const EVENT_KINDS = [
+  'run.step', 'judgment_saved', 'judgment_failed', 'reanalysis.compared',
+  'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned',
+  'policy.published',
+  'rule.decision', 'rule.version_created', 'rule.validated', 'rule.publish', 'rule.stop', 'rule.revert',
+] as const;
+export type EventKind = (typeof EVENT_KINDS)[number];
+const isTenantWide = (kind: string) => kind.startsWith('policy.') || kind.startsWith('rule.');
+
+// Cursors are tenant-wide server sequence numbers, so the stored cursor is scoped to tenant + user.
+let cursorScope = '';
+export function setEventCursorScope(scope: string) { cursorScope = scope; }
+const seqKey = () => `jevtriage:last-event-seq:${cursorScope}`;
+export function lastEventSeq() { const value = Number(sessionStorage.getItem(seqKey()) || 0); return Number.isFinite(value) && value >= 0 ? value : 0; }
+export function acceptEventSeq(seq: number, previous: number) { return Number.isInteger(seq) && seq > previous; }
+export const streamUrl = (after: number) => `/api/events/stream?after=${after}`;
+export const reconnectDelay = (attempt: number) => Math.min(30000, 1000 * 2 ** attempt);
+const MAX_FAILURES = 6;
+
+type StreamCallbacks = { onSnapshot?: (snapshot: EventSnapshot) => void; onEvent?: (event: StreamEvent) => void; onResync?: () => void };
+
+export function useEventStream(filters: StreamFilter = {}, onSnapshot?: (snapshot: EventSnapshot) => void, onEvent?: (event: StreamEvent) => void, onResync?: () => void) {
   const [status, setStatus] = useState<StreamStatus>('reconnecting');
   const [lastSeq, setLastSeq] = useState(lastEventSeq);
-  const callbacks = useRef({ onSnapshot, onEvent });
-  callbacks.current = { onSnapshot, onEvent };
+  const callbacks = useRef<StreamCallbacks>({ onSnapshot, onEvent, onResync });
+  callbacks.current = { onSnapshot, onEvent, onResync };
   useEffect(() => {
     if (filters.enabled === false) return;
     let live = true;
     let current = lastEventSeq();
     let source: EventSource | undefined;
-    let snapshot: EventSnapshot | undefined;
-    const kinds = ['request.updated', 'run.updated', 'run.started', 'run.completed', 'run.step', 'policy.published', 'snapshot-required'];
-    const connect = () => {
+    let timer: number | undefined;
+    let failures = 0;
+    const remember = (seq: number) => { current = seq; sessionStorage.setItem(seqKey(), String(seq)); setLastSeq(seq); };
+    // The browser's own auto-reconnect would add `Last-Event-ID` next to `?after=`, which the server rejects
+    // with 400 (and then EventSource gives up). So every error closes the source and we reconnect ourselves.
+    const scheduleReconnect = () => {
       if (!live) return;
-      const url = `/api/events/stream?after=${current}`;
-      source = new EventSource(url, { withCredentials: true });
-      const activeSource = source;
-      activeSource.onopen = () => live && setStatus('connected');
-      activeSource.onerror = () => live && setStatus(activeSource.readyState === EventSource.CLOSED ? 'disconnected' : 'reconnecting');
-      kinds.forEach((kind) => activeSource.addEventListener(kind, (event: Event) => {
+      if (failures >= MAX_FAILURES) { setStatus('disconnected'); return; }
+      setStatus('reconnecting');
+      timer = window.setTimeout(connect, reconnectDelay(failures++));
+    };
+    const recover = (kind: string) => {
+      source?.close();
+      if (filters.requestId) {
+        setStatus('reconnecting');
+        void eventApi.snapshot(filters.requestId).then((next) => {
+          if (!live) return;
+          remember(Math.max(current, next.latest_seq)); callbacks.current.onSnapshot?.(next); callbacks.current.onResync?.(); connect();
+        }).catch(() => { if (live) setStatus('disconnected'); });
+      } else if (kind === 'snapshot-required' && failures < MAX_FAILURES) {
+        // No request to take a snapshot of: drop the stale cursor, let the screen reload, replay from the start.
+        failures += 1; remember(0); callbacks.current.onResync?.(); connect();
+      } else setStatus('disconnected');
+    };
+    function connect() {
+      if (!live) return;
+      const active = new EventSource(streamUrl(current), { withCredentials: true });
+      source = active;
+      active.onopen = () => { if (!live) return; failures = 0; setStatus('connected'); };
+      active.onerror = () => {
         if (!live) return;
-        if (kind === 'snapshot-required') {
-          setStatus('reconnecting');
-          if (filters.requestId) void eventApi.snapshot(filters.requestId).then((next) => { if (!live) return; snapshot = next; current = Math.max(current, next.latest_seq); sessionStorage.setItem(SEQ_KEY, String(current)); setLastSeq(current); callbacks.current.onSnapshot?.(next); source?.close(); connect(); }).catch(() => { if (live) setStatus('disconnected'); });
-          else { activeSource.close(); setStatus('disconnected'); }
-          return;
-        }
+        active.close();
+        void apiFetch('/api/auth/me').catch(() => undefined); // an expired session surfaces as auth:unauthorized
+        scheduleReconnect();
+      };
+      active.addEventListener('snapshot-required', () => { if (live) recover('snapshot-required'); });
+      active.addEventListener('session-expired', () => { if (!live) return; active.close(); setStatus('disconnected'); window.dispatchEvent(new CustomEvent('auth:unauthorized')); });
+      EVENT_KINDS.forEach((kind) => active.addEventListener(kind, (event: Event) => {
+        if (!live) return;
         const message = event as MessageEvent;
         const seq = Number(message.lastEventId);
         if (!acceptEventSeq(seq, current)) return;
-        current = seq;
-        sessionStorage.setItem(SEQ_KEY, String(seq));
-        setLastSeq(seq);
+        remember(seq);
         let data: Record<string, unknown> = {};
         try { data = JSON.parse(message.data) as Record<string, unknown>; } catch { return; }
-        if (!filters.requestId || data.request_id === filters.requestId || kind === 'policy.published') callbacks.current.onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined, ...(typeof data.step_name === 'string' ? { step_name: data.step_name } : {}) });
+        if (!filters.requestId || data.request_id === filters.requestId || isTenantWide(kind)) {
+          callbacks.current.onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined, ...(typeof data.step_name === 'string' ? { step_name: data.step_name } : {}) });
+        }
       }));
-    };
+    }
     const start = async () => {
       if (filters.requestId) {
-        try { snapshot = await eventApi.snapshot(filters.requestId); }
+        try { const snapshot = await eventApi.snapshot(filters.requestId); if (!live) return; remember(Math.max(current, snapshot.latest_seq)); }
         catch { if (live) setStatus('disconnected'); return; }
       }
-      if (!live) return;
-      current = Math.max(current, snapshot?.latest_seq || 0);
-      sessionStorage.setItem(SEQ_KEY, String(current));
-      setLastSeq(current);
-      connect();
+      if (live) connect();
     };
     void start();
-    return () => { live = false; source?.close(); };
-  }, [filters.requestId]);
+    return () => { live = false; window.clearTimeout(timer); source?.close(); };
+  }, [filters.requestId, filters.enabled]);
   return { status, lastSeq };
 }
 

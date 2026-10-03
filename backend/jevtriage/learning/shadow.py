@@ -10,7 +10,7 @@ from uuid import uuid4
 
 from jevtriage.config import get_settings
 from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.domain.serialize import json_value
+from jevtriage.domain.serialize import json_value, loads_or
 from jevtriage.journal.writer import JournalWriter
 from jevtriage.judgment.jev_client import JevClient
 from jevtriage.judgment.pipeline import run_judgment
@@ -25,12 +25,13 @@ def _json(value):
 
 async def _protected_snapshot(tx, tenant):
     # Properties as well as counts matter: an in-place edit is a side effect too.
-    rows = await (await tx.run(
-        "MATCH (n {tenant_id:$tenant}) WHERE n:Task OR n:Assignment OR n:Review "
-        "OR n:Event OR n:Request OR n:Judgment "
-        "RETURN labels(n) AS labels,properties(n) AS properties ORDER BY labels, n.id",
-        tenant=tenant,
-    )).data()
+    rows = []
+    for label in ("Task", "Assignment", "Review", "Event", "Request", "Judgment"):
+        rows.extend(await (await tx.run(
+            f"MATCH (n:{label} {{tenant_id:$tenant}}) "
+            "RETURN labels(n) AS labels, properties(n) AS properties ORDER BY n.id",
+            tenant=tenant,
+        )).data())
     canonical = _json(rows).encode()
     return {"count": len(rows), "sha256": hashlib.sha256(canonical).hexdigest()}
 
@@ -192,9 +193,21 @@ async def validate_rules(tenant: str, actor: str, rule_id: str, version: int,
             "human_correction_needed_base": fix_base,
             "human_correction_needed_candidate": fix_candidate,
             "review_transition_base": 0, "review_transition_candidate": 0,
-            "failures": failures, "side_effects": side, "status": status,
+            "failures": failures, "failure_count": len(failures), "side_effects": side, "status": status,
             "max_calls": limit, "calls": limited.calls if limited else 0,
             "usage": dict(limited.usage) if limited else {}}
+
+
+def validation_dto(stored: dict) -> dict:
+    """Same shape as the POST response: JSON-string properties decoded, period exposed as from/to."""
+    dto = dict(stored)
+    for key, empty in (("changes_by_value", {}), ("usage", {}), ("failures", [])):
+        raw = dto.get(key)
+        decoded = loads_or(raw, empty) if isinstance(raw, str) else raw
+        dto[key] = decoded if isinstance(decoded, type(empty)) else empty
+    dto["failure_count"] = len(dto["failures"])
+    dto["from"], dto["to"] = dto.get("from_at"), dto.get("to_at")
+    return dto
 
 
 async def validation_detail(tenant: str, validation_id: str) -> dict | None:
@@ -205,7 +218,8 @@ async def validation_detail(tenant: str, validation_id: str) -> dict | None:
             tenant=tenant, id=validation_id,
         )).single()
         return dict(row["validation"]) if row else None
-    return json_value(await read_tx(tenant, op))
+    found = await read_tx(tenant, op)
+    return validation_dto(json_value(found)) if found else None
 
 
 async def rule_validations(tenant: str, rule_id: str, version: int) -> list[dict]:
@@ -217,4 +231,4 @@ async def rule_validations(tenant: str, rule_id: str, version: int) -> list[dict
             tenant=tenant, rule=f"{rule_id}@{version}",
         )).data()
         return [dict(row["validation"]) for row in rows]
-    return json_value(await read_tx(tenant, op))
+    return [validation_dto(item) for item in json_value(await read_tx(tenant, op))]

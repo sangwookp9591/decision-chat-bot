@@ -8,6 +8,7 @@ import { ListView } from './judgment-map/ListView';
 import { Detail } from './judgment-map/Detail';
 import { buildDisplay, computeHighlight, mergeGraph, neighborId, type DisplayItem } from './judgment-map/logic';
 import './judgment-map/judgment-map.css';
+import { statusText } from '../components/statusLabels';
 
 const CRITERIA_FIELDS: Array<[keyof GraphCriteria, string]> = [['request_id', '요청 ID'], ['run_id', '실행 ID'], ['rule_id', '규칙 ID'], ['config_version', 'Config 버전'], ['status', '상태']];
 const STATUSES = ['published', 'validated', 'validating', 'stopped', 'reverted', '제안', '자료 부족', 'approved', 'rejected', 'completed', 'active'];
@@ -101,7 +102,7 @@ export function JudgmentMap() {
     <form className="jm-filters" onSubmit={apply} aria-label="탐색 기준">
       <strong>탐색 기준</strong>
       {CRITERIA_FIELDS.map(([key, label]) => key === 'status'
-        ? <label key={key}>{label}<select value={draft.status || ''} onChange={(e) => setDraft({ ...draft, status: e.target.value })}><option value="">전체</option>{STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}</select></label>
+        ? <label key={key}>{label}<select value={draft.status || ''} onChange={(e) => setDraft({ ...draft, status: e.target.value })}><option value="">전체</option>{STATUSES.map((s) => <option key={s} value={s}>{statusText(s)}</option>)}</select></label>
         : <label key={key}>{label}<input value={draft[key] || ''} onChange={(e) => setDraft({ ...draft, [key]: e.target.value })} /></label>)}
       <button type="submit">적용</button>
       <button type="button" onClick={() => setParams(new URLSearchParams())}>초기화</button>

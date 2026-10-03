@@ -44,17 +44,17 @@ export function playbackPosition(events: PlaybackEvent[], elapsedMs: number, nod
     if (event.type === 'step_started') active.add(event.step_id!);
     if (event.type === 'step_ended') { active.delete(event.step_id!); if (event.status === 'failed') stopped = true; }
   }
-  let reached = -1;
+  let reached = -1; const reachedIds = new Set<string>();
   for (const event of steps) {
     if (timestamp(event)>clock) break;
-    const index=nodeIds.indexOf(event.step_id!); if(event.type==='step_started'&&index>=0) reached=Math.max(reached,index);
+    const index=nodeIds.indexOf(event.step_id!); if(event.type==='step_started'&&index>=0) { reached=Math.max(reached,index); reachedIds.add(event.step_id!); }
     if(event.type==='step_ended'&&event.status==='failed') break;
   }
   // A review wait is a node of its own (`review:<id>`); once its wait has started the node is reached.
   if (!stopped) for (const event of events) {
     if (event.type !== 'human_wait_started' || !event.review_id || timestamp(event) > clock) continue;
-    const index = nodeIds.indexOf(`review:${event.review_id}`); if (index >= 0) reached = Math.max(reached, index);
+    const index = nodeIds.indexOf(`review:${event.review_id}`); if (index >= 0) { reached = Math.max(reached, index); reachedIds.add(`review:${event.review_id}`); }
   }
   const human = events.filter(e=>e.type==='human_wait_started').map(e=>({ id:e.review_id!, compressed:true, actualMs:events.find(x=>x.type==='human_wait_ended'&&x.review_id===e.review_id)?.duration_ms ?? null }));
-  return { active, reached, failed: stopped, human };
+  return { active, reached, reachedIds, failed: stopped, human };
 }

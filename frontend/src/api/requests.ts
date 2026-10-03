@@ -1,7 +1,7 @@
 import { apiFetch, idempotencyKey } from './client';
 
 export type RequestAttachment = { id: string; filename: string; status: string; reason?: string; byte_count?: number; content_type?: string };
-export type RequestDetail = { request: { id: string; status: string; active_run_id?: string | null; revision_number?: number }; revisions: Array<{ id: string; number?: number; revision_number?: number }>; attachments: RequestAttachment[]; active_run?: { status?: string } | null };
+export type RequestDetail = { request: { id: string; status: string; active_run_id?: string | null; revision_number?: number; info_requested?: string | null; needed_info?: string | string[] | null }; revisions: Array<{ id: string; number?: number; revision_number?: number; text?: string }>; attachments: RequestAttachment[]; active_run?: { status?: string } | null };
 export type RequestItem = { id: string; status: string; created_at?: string };
 export type Evidence = { id: string; source?: 'chat' | 'attachment'; attachment_id?: string | null; location: Record<string, unknown>; source_text?: string; probability?: number };
 export type JudgmentOutput = { id: string; question_id: string; type: string; value: unknown; confidence?: number; noul?: unknown; probabilities?: unknown; evidence: Evidence[] };

@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Policy } from './Policy';
 
@@ -26,5 +27,26 @@ describe('Policy page', () => {
     fireEvent.click(screen.getByRole('button',{name:'게시'}));
     expect(await screen.findByText(/활성 버전이 변경되었습니다/)).toBeTruthy();
     expect(mocks.active).toHaveBeenCalledTimes(2);
+  });
+  it('lets the editor clear and retype a JSON value without snapping back (P3-08)', async () => {
+    render(<Policy canEdit />); await screen.findByText('버전 이력');
+    const field = screen.getByLabelText('risk_clear_max') as HTMLTextAreaElement;
+    fireEvent.change(field, { target: { value: '' } });
+    expect(field.value).toBe('');
+    expect(screen.getByRole('alert').textContent).toContain('올바른 JSON');
+    expect(screen.getByRole('button', { name: '서버 검증' })).toBeEnabled();
+    fireEvent.change(field, { target: { value: '0.1' } });
+    expect(field.value).toBe('0.1');
+    expect(screen.queryByRole('alert')).toBeNull();
+    mocks.validate.mockResolvedValue({ valid: true, config, errors: [] });
+    fireEvent.click(screen.getByRole('button', { name: '서버 검증' }));
+    await waitFor(() => expect(mocks.validate).toHaveBeenCalledWith(expect.objectContaining({ risk_clear_max: 0.1 })));
+  });
+  it('shows validation errors in Korean with the internal code under technical details (P3-13)', async () => {
+    mocks.validate.mockResolvedValue({ valid: false, config, errors: [{ code: 'SCHEMA_INVALID', reason: 'Value error, thresholds must be between 0 and 1' }] });
+    render(<Policy canEdit />); await screen.findByText('버전 이력');
+    fireEvent.click(screen.getByRole('button', { name: '서버 검증' }));
+    const item = (await screen.findByText(/임계값은 0과 1 사이여야 합니다/)).closest('li')!;
+    expect(item.querySelector('details code')?.textContent).toContain('SCHEMA_INVALID');
   });
 });

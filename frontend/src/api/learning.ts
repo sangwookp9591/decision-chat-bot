@@ -32,7 +32,7 @@ export type ValidationResult = {
   sample_count: number; labeled_count: number; changed_count: number; changes_by_value: Record<string, number>;
   human_correction_needed_base: number; human_correction_needed_candidate: number;
   review_transition_base: number; review_transition_candidate: number;
-  failures: number; side_effects: number; status: string; max_calls: number; calls: number; usage: Record<string, unknown>;
+  failures: Array<Record<string, unknown>> | number; failure_count?: number; side_effects: number; status: string; max_calls: number; calls: number; usage: Record<string, unknown>;
 };
 export type EffectMetrics = {
   sample_count: number; classification_changes: number; corrections: number; review_transitions: number; failures: number;

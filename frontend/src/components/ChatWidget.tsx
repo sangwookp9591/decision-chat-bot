@@ -56,7 +56,7 @@ export function ChatWidget({ onSend }: { onSend?: (message: string) => void }) {
     {open && <div role="region" aria-label="일동이 채팅"><section ref={panelRef} className="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chat-title">
       <header><div><img src="/assets/icons/hello.webp" alt="" /><strong id="chat-title">일동이 채팅</strong></div><button className="ui-button plain" aria-label="채팅 닫기" onClick={() => setOpen(false)}>×</button></header>
       <div className="chat-content">{urgent ? <div className="chat-urgent" role="alert">⚠ 긴급 요청은 사람의 확인이 필요합니다.</div> : <img className="chat-mascot" src={`/assets/icons/${icon}.webp`} alt="" />}<h2>{result ? (urgent ? '긴급 확인 필요' : result.review ? '검토가 필요해요' : '요청을 정리했어요') : '무엇을 도와드릴까요?'}</h2><p>{result?.summary || '요청 내용을 입력하면 접수 화면에서 이어서 처리할 수 있어요.'}</p></div>
-      <form className="chat-compose" onSubmit={(event) => { event.preventDefault(); if (text.trim()) { onSend?.(text.trim()); setText(''); } }}><label className="sr-only" htmlFor="chat-message">메시지</label><textarea id="chat-message" value={text} onChange={(event) => setText(event.target.value)} placeholder="요청 내용을 입력하세요" /><button className="ui-button primary" type="submit">보내기</button></form>
+      <form className="chat-compose" onSubmit={(event) => { event.preventDefault(); if (text.trim()) { onSend?.(text.trim()); setText(''); setOpen(false); } }}><label className="sr-only" htmlFor="chat-message">메시지</label><textarea id="chat-message" value={text} onChange={(event) => setText(event.target.value)} placeholder="요청 내용을 입력하세요" /><button className="ui-button primary" type="submit">보내기</button></form>
     </section></div>}
   </>;
 }

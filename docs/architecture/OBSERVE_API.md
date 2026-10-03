@@ -4,7 +4,7 @@
 
 ## Flow
 
-`GET /api/observe/runs/{run_id}/flow`는 `RunStep`의 저장 상태, 시작/종료/소요시간, 주체, attempt, 버전, 입력·출력 요약과 실제 `predecessor_ids` 및 `parent_step_id` 연결을 반환한다. 단계가 같은 predecessor를 가리키면 병렬 분기는 엣지로 표현된다. pending Review는 생성시각부터 결정 전까지 `waiting_human` 노드로 표현된다.
+`GET /api/observe/runs/{run_id}/flow`는 `RunStep`의 저장 상태, 시작/종료/소요시간, 주체, attempt, 버전, 입력·출력 요약과 실제 `predecessor_ids` 및 `parent_step_id` 연결을 반환한다. 단계가 같은 predecessor를 가리키면 병렬 분기는 엣지로 표현된다. pending Review는 생성시각부터 결정 전까지 `waiting_human` 노드로 표현된다. `nodes`는 predecessor/parent 연결을 따르는 위상 순서이며 같은 단계 후보는 시작 시각, 그다음 ID 순이다(저장 순서·`collect` 순서에 의존하지 않는다). 선행 정보가 없는 단계는 시작 순서대로 `kind: sequence` 엣지로 이어지고, Review 노드(`name: 사람 검토`)는 마지막 단계에서 `kind: review` 엣지로 이어진다. 프런트는 이 순서와 엣지로 Flow를 그리고(`obs-edges` 목록, 각 노드의 '선행' 표시) 재생 도달 여부는 배열 위치가 아니라 노드 ID로 판단한다. `/observatory`는 `request_id`·`run_id` 쿼리를 모두 받으며 `run_id`만 있으면 flow 응답의 `request_id`로 요청을 맞춘다. 모니터링의 실패 Trace 링크는 `/observatory?request_id=…&run_id=…`이며 요청·실행 없이 시도 ID만 있는 실패는 링크 없이 시도 ID만 표시한다.
 
 ## Topology
 

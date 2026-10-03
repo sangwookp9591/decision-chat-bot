@@ -32,3 +32,4 @@
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media(max-width:900px){.learning-grid{grid-template-columns:1fr}}
 .learning-card table{min-width:640px}.learning-card td,.learning-card th{overflow-wrap:anywhere}.learning-card .table-scroll{overflow-x:auto}
+@media(max-width:900px){.learning-grid{grid-template-columns:minmax(0,1fr)}.learning-grid>*,.learning-card{min-width:0;max-width:100%}.learning-card{overflow-wrap:anywhere}.learning-card .table-scroll{max-width:100%}}

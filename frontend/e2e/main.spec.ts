@@ -32,7 +32,7 @@ test('live damaged attachment can be excluded before a new revision judgment', a
   await page.getByLabel('요청 내용').fill('분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.');
   await page.getByLabel('파일 첨부').setInputFiles({ name: 'damaged.pdf', mimeType: 'application/pdf', buffer: Buffer.from('not a valid pdf') });
   await page.getByRole('button', { name: '요청 보내기' }).click();
-  await expect(page.getByRole('button', { name: /보완 필요|파일 선택 필요/ })).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole('button', { name: /보완 필요|파일 선택 필요|파일 결정 필요/ })).toBeVisible({ timeout: 30_000 });
   await page.getByRole('button', { name: '실패 파일 제외 후 분석' }).click();
   await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
   await expect(page.locator('.environment-badge.mode-live').last()).toBeVisible();

@@ -48,7 +48,7 @@ async def test_observe_reads_saved_steps_reviews_and_real_topology():
         assert person["reviewer_id"] == "reviewer_1" and person["ended_at"] is not None
         assert isinstance(person["started_at"], str) and isinstance(person["ended_at"], str)
         assert all(isinstance(n.get("started_at"), str) for n in flow["nodes"] if n.get("started_at"))
-        assert {e["from"] for e in flow["edges"]} == {step_a}
+        assert {e["from"] for e in flow["edges"] if e["kind"] == "predecessor"} == {step_a}
         async def counts(tx):
             labels = ["Judgment", "ModelOutput", "Job", "Assignment", "Task", "Event", "Review"]
             result = {}

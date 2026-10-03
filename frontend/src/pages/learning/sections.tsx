@@ -44,6 +44,10 @@ function Delta({ label, base, candidate, note }: { label: string; base: number; 
   return <div className="learning-metric"><span>{label}</span><b>{base} → {candidate}</b><small>{note || (base === candidate ? '변화 없음' : candidate < base ? '감소' : '증가')}</small></div>;
 }
 
+/** `changes_by_value` keys are `<field>:<new value>`; show them as "담당 조직 · 주관 → 현업 8건". */
+export function changeLabel(key: string, count: number) { const at = key.indexOf(':'); return at < 0 ? `${key} ${count}건` : `${fieldLabel(key.slice(0, at))} → ${key.slice(at + 1)} ${count}건`; }
+export const failureCount = (result: Pick<ValidationResult, 'failures' | 'failure_count'>) => result.failure_count ?? (Array.isArray(result.failures) ? result.failures.length : Number(result.failures) || 0);
+
 export function ValidationCard({ result, minimum }: { result: ValidationResult | null; minimum: number }) {
   if (!result) return <section className="learning-card" aria-label="비교 검증"><h3>비교 검증</h3><p className="learning-empty">이 규칙 버전의 비교 검증 결과가 이 화면에 없습니다. 검증을 실행하면 결과가 표시됩니다.</p></section>;
   const changes = Object.entries(result.changes_by_value || {});
@@ -51,10 +55,10 @@ export function ValidationCard({ result, minimum }: { result: ValidationResult |
     <header><h3>비교 검증 · <span className="mono">{result.id}</span></h3><span className="learning-tag">섀도 실행 · 배정·알림 없음</span></header>
     <p>기준 Config v{result.base_config_version} ↔ 후보 {result.candidate_config_version} · {formatTime(result.from)} ~ {formatTime(result.to)}{result.scope_filter ? ` · 범위 ${result.scope_filter}` : ''} · 표본 {result.sample_count}건 · 사람 확정 정답 {result.labeled_count}건</p>
     <div className="learning-metrics">
-      <div className="learning-metric"><span>분류 변경</span><b>{result.changed_count} / {result.sample_count}</b><small>{changes.length ? changes.map(([k, n]) => `${k} ${n}`).join(' · ') : '변경 없음'}</small></div>
+      <div className="learning-metric"><span>분류 변경</span><b>{result.changed_count} / {result.sample_count}</b><small>{changes.length ? changes.map(([k, n]) => changeLabel(k, n)).join(' · ') : '변경 없음'}</small></div>
       <Delta label={`사람 수정 필요 (정답 ${result.labeled_count}건)`} base={result.human_correction_needed_base} candidate={result.human_correction_needed_candidate} />
       <Delta label="검토 전환" base={result.review_transition_base} candidate={result.review_transition_candidate} />
-      <div className="learning-metric"><span>실패 · 호출</span><b>실패 {result.failures} · 호출 {result.calls}/{result.max_calls}</b><small>지연은 재평가 검증에서 측정하지 않음 (미수집)</small></div>
+      <div className="learning-metric"><span>실패 · 호출</span><b>실패 {failureCount(result)} · 호출 {result.calls}/{result.max_calls}</b><small>지연은 재평가 검증에서 측정하지 않음 (미수집)</small></div>
     </div>
     <p className="learning-state">상태 {result.status === 'completed' ? '완료' : result.status === 'failed' ? '실패' : result.status} · 부작용 {result.side_effects}건</p>
     {validationNotice(result, minimum).map((note) => <p key={note} className="learning-caution">{note}</p>)}

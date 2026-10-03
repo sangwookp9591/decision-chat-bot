@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { graphApi, type NodeDetail, type GraphNode } from '../../api/graph';
 import { KIND_LABEL } from './logic';
+import { statusText } from '../../components/statusLabels';
 
 type Props = { node: GraphNode | null; detail: NodeDetail | null; loading: boolean; onPick: (id: string) => void; layerName: (layer: number) => string };
 
@@ -13,7 +14,7 @@ export function Detail({ node, detail, loading, onPick, layerName }: Props) {
   const refs = (data || node).refs;
   const rows: Array<[string, string | null | undefined]> = [
     ['출처', (data || node).source], ['내용', (data || node).summary], ['결정 주체', (data || node).actor],
-    ['시각', (data || node).at], ['버전', (data || node).version], ['상태', (data || node).status],
+    ['시각', (data || node).at], ['버전', (data || node).version], ['상태', statusText((data || node).status)],
   ];
   const openSource = async () => {
     if (!data?.source_link) return;
