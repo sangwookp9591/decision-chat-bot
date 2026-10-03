@@ -2,75 +2,93 @@
   "v": 3,
   "attachments": {},
   "boards": {
-    "ChatWidget.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "is_interactive": true,
-      "title": "04 일동이 챗봇 위젯",
-      "w": 1440,
-      "x": 0,
-      "y": 1980
-    },
-    "Foundations.dc.html": {
-      "h": 1640,
-      "title": "08 디자인 기초 · 일동이 규칙",
-      "w": 1440,
-      "x": 1520,
-      "y": 3720
-    },
     "Main.dc.html": {
-      "expand": "fill",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
       "h": 1560,
-      "is_interactive": true,
       "title": "01 요청 접수 · 판단 결과",
-      "w": 1440,
-      "x": 0,
-      "y": 0
-    },
-    "Monitoring.dc.html": {
       "expand": "fill",
-      "h": 1320,
-      "is_interactive": true,
-      "title": "06 모니터링 · SLO",
-      "w": 1440,
-      "x": 3040,
-      "y": 1980
-    },
-    "Observatory.dc.html": {
-      "expand": "fill",
-      "h": 1180,
-      "is_interactive": true,
-      "title": "05 실행 관찰 · Play",
-      "w": 1440,
-      "x": 1520,
-      "y": 1980
-    },
-    "Policy.dc.html": {
-      "expand": "fill",
-      "h": 1060,
-      "is_interactive": true,
-      "title": "07 정책 · Dynamic Config",
-      "w": 1440,
-      "x": 0,
-      "y": 3720
+      "is_interactive": true
     },
     "Review.dc.html": {
-      "expand": "fill",
-      "h": 1240,
-      "is_interactive": true,
-      "title": "02 검토 대기",
-      "w": 1440,
       "x": 1520,
-      "y": 0
+      "y": 0,
+      "w": 1440,
+      "h": 1240,
+      "title": "02 검토 대기",
+      "expand": "fill",
+      "is_interactive": true
     },
     "Tasks.dc.html": {
-      "expand": "fill",
-      "h": 1120,
-      "is_interactive": true,
-      "title": "03 업무",
-      "w": 1440,
       "x": 3040,
-      "y": 0
+      "y": 0,
+      "w": 1440,
+      "h": 1120,
+      "title": "03 업무",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "ChatWidget.dc.html": {
+      "x": 0,
+      "y": 1980,
+      "w": 1440,
+      "h": 900,
+      "title": "04 일동이 챗봇 위젯",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Observatory.dc.html": {
+      "x": 1520,
+      "y": 1980,
+      "w": 1440,
+      "h": 1180,
+      "title": "05 실행 관찰 · Play",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Monitoring.dc.html": {
+      "x": 3040,
+      "y": 1980,
+      "w": 1440,
+      "h": 1320,
+      "title": "06 모니터링 · SLO",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Policy.dc.html": {
+      "x": 0,
+      "y": 3720,
+      "w": 1440,
+      "h": 1060,
+      "title": "07 정책 · Dynamic Config",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Foundations.dc.html": {
+      "x": 1520,
+      "y": 3720,
+      "w": 1440,
+      "h": 1640,
+      "title": "08 디자인 기초 · 일동이 규칙"
+    },
+    "JudgmentMap.dc.html": {
+      "x": 0,
+      "y": 5780,
+      "w": 1440,
+      "h": 1120,
+      "title": "09 입체 판단 맵",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Learning.dc.html": {
+      "x": 1520,
+      "y": 5780,
+      "w": 1440,
+      "h": 1380,
+      "title": "10 규칙 학습",
+      "expand": "fill",
+      "is_interactive": true
     }
   },
   "createdOnFiles": {
@@ -83,28 +101,32 @@
   },
   "notes": {
     "row1": {
-      "kind": "title1",
-      "maxW": 4480,
-      "text": "요청자 · 검토자 · 담당 팀 흐름",
-      "w": 240,
       "x": 0,
-      "y": -300
+      "y": -300,
+      "text": "요청자 · 검토자 · 담당 팀 흐름",
+      "kind": "title1",
+      "maxW": 4480
     },
     "row2": {
-      "kind": "title1",
-      "maxW": 4480,
-      "text": "일동이 챗봇 · 실행 관찰 · 모니터링",
-      "w": 240,
       "x": 0,
-      "y": 1680
+      "y": 1680,
+      "text": "일동이 챗봇 · 실행 관찰 · 모니터링",
+      "kind": "title1",
+      "maxW": 4480
     },
     "row3": {
-      "kind": "title1",
-      "maxW": 2960,
-      "text": "정책 · 디자인 기초",
-      "w": 240,
       "x": 0,
-      "y": 3420
+      "y": 3420,
+      "text": "정책 · 디자인 기초",
+      "kind": "title1",
+      "maxW": 2960
+    },
+    "row4": {
+      "x": 0,
+      "y": 5480,
+      "text": "수정 경험 학습 순환 · 판단 관계",
+      "kind": "title1",
+      "maxW": 2960
     }
   },
   "order": [
@@ -115,7 +137,9 @@
     "Observatory.dc.html",
     "Monitoring.dc.html",
     "Policy.dc.html",
-    "Foundations.dc.html"
+    "Foundations.dc.html",
+    "JudgmentMap.dc.html",
+    "Learning.dc.html"
   ],
   "pages": [],
   "title": "Jev Triage 디자인"

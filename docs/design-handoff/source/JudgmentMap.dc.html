@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>입체 판단 맵</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.jm{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+.mapsvg{cursor:grab;touch-action:none;user-select:none}
+.mapsvg:active{cursor:grabbing}
+.node{cursor:pointer}
+@media (max-width:1240px){.jm{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink" href="Tasks.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink" href="Observatory.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink on" href="JudgmentMap.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"></path><path d="m2 17 10 5 10-5M2 12l10 5 10-5"></path></svg>판단 맵</a>
+<a class="navlink" href="Learning.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg>규칙 학습<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">2</span></a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink" href="Policy.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">최○○</span>
+<span style="font-size: 12px; color: #6B6259">규칙 관리자 · 플랫폼팀</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">근거 → 가설 → 판단 → 적용 → 업무 단계</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">입체 판단 맵</h1>
+</div>
+<div role="group" aria-label="보기 방식" style="display: flex; border: 1px solid #D3CCC2; border-radius: 8px; overflow: hidden">
+<button type="button" onClick="{{showMap}}" aria-pressed="{{isMap}}" style="min-height: 40px; padding: 0 14px; border: 0; background: {{mapBtnBg}}; color: {{mapBtnFg}}; font-size: 13px; font-weight: 600; cursor: pointer">입체 맵</button>
+<button type="button" onClick="{{showList}}" aria-pressed="{{isList}}" style="min-height: 40px; padding: 0 14px; border: 0; background: {{listBtnBg}}; color: {{listBtnFg}}; font-size: 13px; font-weight: 600; cursor: pointer">목록 보기</button>
+</div>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+
+<main style="padding: 20px 32px 48px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<span style="font-size: 12px; font-weight: 600; color: #4A433B">탐색 기준</span>
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+<button type="button" onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid {{f.bd}}; background: {{f.bg}}; color: {{f.fg}}; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap">{{f.label}}</button>
+</sc-for>
+<span style="font-size: 12px; color: #4A433B; margin-left: auto">노드와 연결은 저장된 관계에서만 그립니다. 없는 관계는 만들지 않습니다.</span>
+</div>
+
+<div class="jm">
+<section aria-label="판단 맵" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; overflow: hidden; min-width: 0; position: relative">
+<sc-if value="{{isMap}}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; background: #F1EDE8; background-image: radial-gradient(#D9D2C9 1px, transparent 1px); background-size: 18px 18px">
+<svg class="mapsvg" viewBox="0 0 960 880" width="100%" role="img" aria-label="다섯 계층 판단 맵. 목록 보기에서 같은 정보를 볼 수 있습니다." onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerLeave="{{up}}" style="display: block; height: auto">
+<g transform="translate({{tx}} {{ty}}) scale({{z}})">
+<sc-for list="{{planes}}" as="p" hint-placeholder-count="5">
+<g>
+<polygon points="{{p.front}}" fill="#DDD6CD"></polygon>
+<polygon points="{{p.top}}" fill="{{p.fill}}" stroke="#CFC7BD" stroke-width="1"></polygon>
+<text x="{{p.lx}}" y="{{p.ly}}" font-size="15" font-weight="700" fill="#1B1712" font-family="IBM Plex Sans KR, sans-serif"><tspan fill="{{p.numColor}}" font-family="IBM Plex Mono, monospace">{{p.count}}</tspan>  {{p.name}}</text>
+<text x="{{p.rx}}" y="{{p.ly}}" font-size="11" fill="#4A433B" text-anchor="end" font-family="IBM Plex Sans KR, sans-serif">{{p.desc}}</text>
+</g>
+</sc-for>
+<sc-for list="{{edges}}" as="e" hint-placeholder-count="12">
+<path d="{{e.d}}" fill="none" stroke="{{e.stroke}}" stroke-width="{{e.w}}" stroke-dasharray="{{e.dash}}" opacity="{{e.op}}"></path>
+</sc-for>
+<sc-for list="{{nodes}}" as="n" hint-placeholder-count="20">
+<g class="node" onClick="{{n.pick}}" opacity="{{n.op}}">
+<polygon points="{{n.shadow}}" fill="#1B1712" opacity="0.08"></polygon>
+<polygon points="{{n.poly}}" fill="{{n.fill}}" stroke="{{n.stroke}}" stroke-width="{{n.sw}}" stroke-dasharray="{{n.dash}}"></polygon>
+<text x="{{n.cx}}" y="{{n.ty}}" font-size="11.5" font-weight="600" fill="{{n.fg}}" text-anchor="middle" font-family="IBM Plex Sans KR, sans-serif">{{n.label}}</text>
+</g>
+</sc-for>
+</g>
+</svg>
+<div style="position: absolute; left: 14px; bottom: 14px; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E6E1DA; box-shadow: 0 4px 14px rgba(27, 23, 18, 0.08)">
+<button type="button" onClick="{{zoomOut}}" aria-label="축소" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent; font-size: 18px; cursor: pointer">−</button>
+<span class="mono" style="min-width: 48px; text-align: center; font-size: 12px; font-weight: 600">{{zoomPct}}</span>
+<button type="button" onClick="{{zoomIn}}" aria-label="확대" style="width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent; font-size: 18px; cursor: pointer">+</button>
+<button type="button" onClick="{{fit}}" style="height: 40px; padding: 0 12px; border: 0; border-radius: 8px; background: #F6F4F1; font-size: 12px; font-weight: 600; cursor: pointer">전체 보기</button>
+</div>
+<div style="position: absolute; right: 14px; bottom: 14px; display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 12px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E6E1DA; font-size: 11px; color: #3A332C">
+<span style="display: flex; align-items: center; gap: 6px"><svg width="22" height="8" aria-hidden="true"><path d="M1 4h20" stroke="#B5ACA1" stroke-width="1.5" stroke-dasharray="3 3"></path></svg>관계</span>
+<span style="display: flex; align-items: center; gap: 6px"><svg width="22" height="8" aria-hidden="true"><path d="M1 4h20" stroke="#F15921" stroke-width="2.5"></path></svg>선택 경로</span>
+<span style="display: flex; align-items: center; gap: 6px"><svg width="22" height="8" aria-hidden="true"><path d="M1 4h20" stroke="#B42318" stroke-width="1.5" stroke-dasharray="5 3"></path></svg>반례</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 18px">
+<sc-for list="{{layers}}" as="L" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 700"><span class="mono" style="color: #B33F0E; margin-right: 6px">{{L.count}}</span>{{L.name}} <span style="font-weight: 400; color: #4A433B; font-size: 12px">· {{L.desc}}</span></h2>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{L.items}}" as="it" hint-placeholder-count="4">
+<button type="button" onClick="{{it.pick}}" aria-pressed="{{it.sel}}" style="min-height: 40px; padding: 6px 12px; border-radius: 8px; border: {{it.bd}}; background: {{it.bg}}; color: {{it.fg}}; font-size: 12px; font-weight: 600; text-align: left; cursor: pointer; opacity: {{it.op}}">{{it.label}}</button>
+</sc-for>
+<sc-if value="{{L.empty}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #6B6259">이 기준에 해당하는 노드가 없습니다.</span></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</section>
+
+<aside aria-label="노드 상세" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="display: flex; gap: 6px; flex-wrap: wrap"><span class="mono" style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; background: #F1ECE6; color: #3A332C">{{d.layer}}</span><span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: {{d.kindBg}}; color: {{d.kindFg}}">{{d.kind}}</span></span>
+<h2 style="margin: 0; font-size: 17px; font-weight: 700; line-height: 1.4">{{d.title}}</h2>
+</div>
+<dl style="margin: 0; display: flex; flex-direction: column">
+<sc-for list="{{d.rows}}" as="r" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-bottom: 1px solid #F1ECE6">
+<dt style="font-size: 12px; color: #6B6259">{{r.k}}</dt>
+<dd style="margin: 0; font-size: 13px; line-height: 1.5">{{r.v}}</dd>
+</div>
+</sc-for>
+</dl>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; font-weight: 700; color: #4A433B">↑ 근거 쪽으로 {{d.upCount}}개</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{d.ups}}" as="u" hint-placeholder-count="3">
+<button type="button" onClick="{{u.pick}}" style="min-height: 32px; padding: 0 10px; border-radius: 6px; border: 1px solid #D3CCC2; background: #FBFAF8; font-size: 12px; cursor: pointer">{{u.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; font-weight: 700; color: #4A433B">↓ 실행 쪽으로 {{d.downCount}}개</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{d.downs}}" as="u" hint-placeholder-count="3">
+<button type="button" onClick="{{u.pick}}" style="min-height: 32px; padding: 0 10px; border-radius: 6px; border: 1px solid #D3CCC2; background: #FBFAF8; font-size: 12px; cursor: pointer">{{u.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px">
+<a href="Review.dc.html" style="display: flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid #D3CCC2; color: #1B1712; text-decoration: none; font-size: 12px; font-weight: 600">원문·검토 열기</a>
+<a href="Observatory.dc.html" style="display: flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid #D3CCC2; color: #1B1712; text-decoration: none; font-size: 12px; font-weight: 600">Flow에서 보기</a>
+<a href="Learning.dc.html" style="display: flex; align-items: center; min-height: 40px; padding: 0 12px; border-radius: 8px; background: #0E7C86; color: #FFFFFF; text-decoration: none; font-size: 12px; font-weight: 600">규칙 학습에서 보기</a>
+</div>
+<span style="font-size: 11px; color: #6B6259; line-height: 1.5">요청·실행·판단·규칙 버전 ID는 Flow·Topology·규칙 학습 화면과 같습니다.</span>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1120}}'>
+class Component extends DCLogic {
+  state = { sel: 'R1', filter: 'all', view: 'map', z: 1, tx: 0, ty: 0 };
+  drag = null;
+
+  down = (e) => { this.drag = { x: e.clientX, y: e.clientY, tx: this.state.tx, ty: this.state.ty }; };
+  move = (e) => {
+    if (!this.drag) return;
+    const k = 960 / ((e.currentTarget && e.currentTarget.clientWidth) || 960);
+    this.setState({ tx: this.drag.tx + (e.clientX - this.drag.x) * k, ty: this.drag.ty + (e.clientY - this.drag.y) * k });
+  };
+  up = () => { this.drag = null; };
+
+  renderVals() {
+    const s = this.state;
+    const PX = 60, W = 800, SK = 70, TOP = 'DEMO';
+    const PL = [
+      { id: 1, name: '근거', desc: '문서 구간 · 입력 · 모델 반환값 · 사람 수정', py: 30, D: 120, fill: '#FFFFFF' },
+      { id: 2, name: '가설', desc: '근거에서 나온 규칙 후보', py: 220, D: 70, fill: '#FBFAF8' },
+      { id: 3, name: '판단', desc: '요청 결정 · 후보 승인·기각', py: 370, D: 70, fill: '#FFFFFF' },
+      { id: 4, name: '적용', desc: '규칙·Config 버전 · 범위 · 상태', py: 520, D: 70, fill: '#FBFAF8' },
+      { id: 5, name: '업무 단계', desc: '판단과 규칙을 실제로 쓴 실행 단계', py: 670, D: 70, fill: '#FFFFFF' }
+    ];
+    const K = {
+      doc: { t: '문서 근거', fill: '#FFFFFF', st: '#8C8378', fg: '#1B1712', dash: '' },
+      input: { t: '입력 revision', fill: '#FFFFFF', st: '#8C8378', fg: '#1B1712', dash: '' },
+      model: { t: 'Jev 반환값', fill: '#E7F3F4', st: '#0E7C86', fg: '#0B5E66', dash: '' },
+      corr: { t: '사람 수정', fill: '#FDF3EE', st: '#F15921', fg: '#8A2F09', dash: '' },
+      counter: { t: '반례 · 관찰', fill: '#FDF0EE', st: '#B42318', fg: '#8F1D14', dash: '' },
+      hypAI: { t: 'AI 가설', fill: '#FFFFFF', st: '#0E7C86', fg: '#0B5E66', dash: '5 3' },
+      hypLow: { t: 'AI 가설 · 자료 부족', fill: '#F6F4F1', st: '#8C8378', fg: '#4A433B', dash: '3 3' },
+      decReq: { t: '요청 검토 결정', fill: '#F4F0FD', st: '#6941C6', fg: '#3B1F86', dash: '' },
+      decRule: { t: '승인된 규칙', fill: '#0E7C86', st: '#0E7C86', fg: '#FFFFFF', dash: '' },
+      appPub: { t: '게시', fill: '#0E7C86', st: '#0E7C86', fg: '#FFFFFF', dash: '' },
+      appVal: { t: '검증 완료', fill: '#EDF7F1', st: '#1F7A4D', fg: '#1F5E3B', dash: '' },
+      appOld: { t: '이전 운영 버전', fill: '#EDE8E2', st: '#B5ACA1', fg: '#3A332C', dash: '' },
+      step: { t: '실행 단계', fill: '#FFFFFF', st: '#4A433B', fg: '#1B1712', dash: '' },
+      stepRule: { t: '규칙 사용', fill: '#FFFFFF', st: '#0E7C86', fg: '#0B5E66', dash: '' },
+      stepSkip: { t: '범위 밖 · 미사용', fill: '#FBFAF8', st: '#B5ACA1', fg: '#4A433B', dash: '3 3' }
+    };
+    const N = [
+      { id: 'E1', L: 1, u: .1, v: .3, k: 'doc', label: '판매실적.pdf p.3 ¶2', tags: ['REQ-0142'], rows: [['출처', '판매실적_2026Q3.pdf · 3쪽 2문단'], ['내용', '“병원별 월 판매량은 2025년 7월부터 집계…”'], ['결정 주체', '— (관찰 사실)'], ['시각', '10-02 10:02 추출'], ['버전', '입력 rev-2 · 파서 v2.1'], ['상태', '보존']] },
+      { id: 'E2', L: 1, u: .3, v: .3, k: 'doc', label: '요구사항.md 12–18행', tags: ['REQ-0142'], rows: [['출처', '요구사항_메모.md · 12–18행'], ['내용', '“목표 미달 병원은 담당자가 직접 확인…”'], ['시각', '10-02 10:02 추출'], ['버전', '입력 rev-2'], ['상태', '보존']] },
+      { id: 'E3', L: 1, u: .5, v: .3, k: 'input', label: 'REQ-0142 입력 rev-2', tags: ['REQ-0142'], rows: [['출처', '채팅 + 첨부 3개'], ['내용', '추가 질문 답변 반영 (알림 기준 80%)'], ['시각', '10-02 10:03'], ['버전', 'rev-2 (rev-1 보존)'], ['상태', '보존']] },
+      { id: 'E4', L: 1, u: .7, v: .3, k: 'model', label: 'Jev · 담당 AI팀 0.72', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05d'], ['내용', 'Choice: 주관 AI팀, confidence 0.72'], ['결정 주체', 'Jev [모델 버전]'], ['시각', '10-02 10:03:00'], ['버전', '정책 v14 · 스키마 v3'], ['상태', '원안 보존']] },
+      { id: 'E5', L: 1, u: .9, v: .3, k: 'model', label: 'Jev · 가능성 0.67', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05b'], ['내용', 'Choice: 조건부 가능, confidence 0.67'], ['결정 주체', 'Jev [모델 버전]'], ['버전', '정책 v14'], ['상태', '원안 보존']] },
+      { id: 'C1', L: 1, u: .1, v: .78, k: 'corr', label: '수정 · 0142 AI→IT', tags: ['REQ-0142', 'R-ROUTE-07'], rows: [['출처', 'REQ-2026-0142 검토'], ['내용', '주관 조직 AI팀 → IT팀. 사유: 알림 구현 범위가 큼'], ['결정 주체', '김○○ (검토자)'], ['시각', '10-02 12:31'], ['버전', '입력 rev-2 · run_7f3a2c · 정책 v14'], ['상태', '요청 한 건에만 적용']] },
+      { id: 'C2', L: 1, u: .3, v: .78, k: 'corr', label: '수정 · 0127 AI→IT', tags: ['R-ROUTE-07'], rows: [['출처', 'REQ-2026-0127 검토'], ['내용', '주관 조직 AI팀 → IT팀. 사유: 메신저 연동이 핵심'], ['결정 주체', '박○○'], ['시각', '09-27 15:04'], ['버전', 'run_4c19aa · 정책 v13'], ['상태', '요청 한 건에만 적용']] },
+      { id: 'C3', L: 1, u: .5, v: .78, k: 'corr', label: '수정 · 0119 AI→IT', tags: ['R-ROUTE-07'], rows: [['출처', 'REQ-2026-0119 검토'], ['내용', '주관 조직 AI팀 → IT팀'], ['결정 주체', '김○○'], ['시각', '09-24 11:20'], ['버전', 'run_0b72de · 정책 v13'], ['상태', '요청 한 건에만 적용']] },
+      { id: 'X1', L: 1, u: .7, v: .78, k: 'counter', label: '반례 · 0110 AI팀 유지', tags: ['R-ROUTE-07'], rows: [['출처', 'REQ-2026-0110 검토'], ['내용', '알림 포함 혼합 요청이지만 예측 모델이 핵심이라 AI팀 주관 유지'], ['결정 주체', '윤○○'], ['시각', '09-19 09:48'], ['버전', 'run_93ef11 · 정책 v12'], ['상태', '반례로 연결']] },
+      { id: 'H1', L: 2, u: .22, v: .5, k: 'hypAI', label: '알림·연동 큰 혼합 → IT 주관', tags: ['R-ROUTE-07'], rows: [['출처', 'AI 가설 · 수정 기록 3건에서 도출'], ['내용', '알림·연동 구현 비중이 큰 혼합 요청은 IT팀이 주관'], ['결정 주체', '제안: 생성 모델 [버전]'], ['시각', '10-02 18:00 제안'], ['버전', '후보 HYP-031'], ['상태', '지지 3 · 반례 1 · 채택됨']] },
+      { id: 'H2', L: 2, u: .68, v: .5, k: 'hypLow', label: '보유 기간 미기재 → 정보 부족', tags: [], rows: [['출처', 'AI 가설 · 근거 1건'], ['내용', '데이터 보유 기간이 없으면 개발 가능성을 정보 부족으로'], ['결정 주체', '제안: 생성 모델 [버전]'], ['시각', '10-02 18:00'], ['버전', '후보 HYP-032'], ['상태', '자료 부족 · 사례 1건 (최소 5건 필요) · 판단 없음']] },
+      { id: 'D1', L: 3, u: .1, v: .5, k: 'decReq', label: '0142 수정 후 승인', tags: ['REQ-0142'], rows: [['출처', 'REQ-2026-0142 검토 결정'], ['내용', '주관 IT팀으로 수정, 업무 5건 승인'], ['결정 주체', '김○○ (검토자)'], ['시각', '10-02 12:31'], ['버전', '판단 버전 2 · 정책 v14'], ['상태', '확정 · 공통 규칙 아님']] },
+      { id: 'R1', L: 3, u: .42, v: .5, k: 'decRule', label: 'R-ROUTE-07 범위 수정 승인', tags: ['R-ROUTE-07'], rows: [['출처', 'HYP-031 결정'], ['내용', '범위를 “영업기획 · 혼합 · 알림 포함”으로 좁혀 승인'], ['결정 주체', '최○○ (규칙 관리자)'], ['시각', '10-03 08:40'], ['버전', '규칙 R-ROUTE-07 v1'], ['상태', '승인 · 검증 후 게시']] },
+      { id: 'A0', L: 4, u: .08, v: .5, k: 'appOld', label: 'Config v14', tags: ['REQ-0142'], rows: [['출처', 'Dynamic Config'], ['내용', '검토 임계값 0.75 · R-ROUTE-07 없음'], ['결정 주체', '최○○'], ['시각', '09-30 14:12 게시'], ['버전', 'v14'], ['상태', '이전 운영 · 과거 실행 기록 보존']] },
+      { id: 'A1', L: 4, u: .38, v: .5, k: 'appVal', label: 'R-ROUTE-07 v1 검증', tags: ['R-ROUTE-07'], rows: [['출처', '섀도 비교 VAL-012'], ['내용', '기준 v14 vs 후보 · 42건 · 배정·알림 없음'], ['결정 주체', '시스템 실행 · 최○○ 시작'], ['시각', '10-03 08:52'], ['버전', '후보 v15-rc1'], ['상태', '검증 완료 · 효과 일부 확인']] },
+      { id: 'A2', L: 4, u: .66, v: .5, k: 'appPub', label: 'Config v15 게시', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'Dynamic Config'], ['내용', 'R-ROUTE-07 v1 포함 · 범위: 영업기획·혼합·알림'], ['결정 주체', '최○○'], ['시각', '10-03 09:10 게시'], ['버전', 'v15'], ['상태', '운영 중 · 중단·되돌리기 가능']] },
+      { id: 'S1', L: 5, u: .05, v: .5, k: 'step', label: '0142 · 검토 전환', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_08'], ['내용', '0.67 < 0.75 → 사람 검토'], ['결정 주체', '규칙 (정책 v14)'], ['시각', '10-02 10:03:13'], ['버전', '정책 v14'], ['상태', '성공']] },
+      { id: 'S2', L: 5, u: .27, v: .5, k: 'step', label: '0142 · 업무 배정', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_10'], ['내용', '승인 후 업무 5건 생성 (1회)'], ['결정 주체', '일반 코드'], ['시각', '10-02 12:31'], ['버전', '정책 v14'], ['상태', '성공']] },
+      { id: 'S3', L: 5, u: .52, v: .5, k: 'stepRule', label: '0151 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_b21e90 · step_05d'], ['내용', 'R-ROUTE-07 v1 적용 → IT팀 주관'], ['결정 주체', 'Jev + 규칙'], ['시각', '10-03 09:41'], ['버전', 'Config v15 · R-ROUTE-07 v1'], ['상태', '규칙 사용 · 모델 변경 없음']] },
+      { id: 'S4', L: 5, u: .77, v: .5, k: 'stepSkip', label: '0153 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_c0a4f1 · step_05d'], ['내용', '재무팀 요청 → R-ROUTE-07 범위 밖'], ['결정 주체', 'Jev'], ['시각', '10-03 10:05'], ['버전', 'Config v15'], ['상태', '범위 밖 · 규칙 미사용 기록']] }
+    ];
+    const EG = [
+      ['C1', 'H1'], ['C2', 'H1'], ['C3', 'H1'], ['X1', 'H1', 'contra'], ['E5', 'H2'],
+      ['E1', 'D1'], ['E2', 'D1'], ['E3', 'D1'], ['E4', 'D1'], ['C1', 'D1'],
+      ['H1', 'R1'], ['R1', 'A1'], ['A1', 'A2'],
+      ['A0', 'S1'], ['E5', 'S1'], ['D1', 'S2'], ['A0', 'S2'],
+      ['A2', 'S3'], ['A2', 'S4', 'skip']
+    ];
+    const byId = {};
+    N.forEach((n) => { byId[n.id] = n; });
+    const pos = (n) => {
+      const p = PL[n.L - 1];
+      return { x: PX + SK * (1 - n.v) + n.u * W, y: p.py + n.v * p.D };
+    };
+    const up = {}, dn = {};
+    EG.forEach((e) => { (dn[e[0]] = dn[e[0]] || []).push(e[1]); (up[e[1]] = up[e[1]] || []).push(e[0]); });
+    const walk = (start, m) => { const seen = {}; const st = [start]; while (st.length) { const c = st.pop(); (m[c] || []).forEach((x) => { if (!seen[x]) { seen[x] = 1; st.push(x); } }); } return seen; };
+    const anc = walk(s.sel, up), des = walk(s.sel, dn);
+    const onPath = (id) => id === s.sel || anc[id] || des[id];
+    const fOk = (n) => s.filter === 'all' || n.tags.indexOf(s.filter) >= 0;
+
+    const CW = 150, CH = 30, CS = 10;
+    const nodes = N.map((n) => {
+      const p = pos(n), k = K[n.k];
+      const x = p.x - CW / 2, y = p.y - CH / 2;
+      const poly = (x + CS) + ',' + y + ' ' + (x + CS + CW) + ',' + y + ' ' + (x + CW) + ',' + (y + CH) + ' ' + x + ',' + (y + CH);
+      const sh = (x + CS + 3) + ',' + (y + 5) + ' ' + (x + CS + CW + 3) + ',' + (y + 5) + ' ' + (x + CW + 3) + ',' + (y + CH + 5) + ' ' + (x + 3) + ',' + (y + CH + 5);
+      const sel = n.id === s.sel;
+      const op = !fOk(n) ? 0.18 : (onPath(n.id) ? 1 : 0.38);
+      return { id: n.id, cx: p.x + CS / 2, ty: p.y + 4, label: n.label, poly, shadow: sh, fill: k.fill, stroke: sel ? '#F15921' : k.st, sw: sel ? 2.5 : 1.2, dash: k.dash, fg: k.fg, op, pick: () => this.setState({ sel: n.id }) };
+    });
+    const edges = EG.map((e) => {
+      const a = byId[e[0]], b = byId[e[1]];
+      const pa = pos(a), pb = pos(b);
+      const x1 = pa.x + CS / 2, y1 = pa.y + CH / 2, x2 = pb.x + CS / 2, y2 = pb.y - CH / 2;
+      const dy = (y2 - y1) * 0.5;
+      const hl = onPath(e[0]) && onPath(e[1]) && (e[0] === s.sel || e[1] === s.sel || (anc[e[0]] && (anc[e[1]] || e[1] === s.sel)) || (des[e[1]] && (des[e[0]] || e[0] === s.sel)));
+      const contra = e[2] === 'contra';
+      const visible = fOk(a) && fOk(b);
+      return {
+        d: 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + (y1 + dy) + ' ' + x2 + ' ' + (y2 - dy) + ' ' + x2 + ' ' + y2,
+        stroke: contra ? '#B42318' : (hl ? '#F15921' : '#B5ACA1'),
+        w: hl ? 2.5 : 1.4,
+        dash: hl && !contra ? '' : (contra ? '5 3' : (e[2] === 'skip' ? '2 4' : '3 3')),
+        op: !visible ? 0.1 : (hl ? 1 : 0.55)
+      };
+    });
+    const planes = PL.map((p) => {
+      const a = (PX + SK) + ',' + p.py, b = (PX + SK + W + 40) + ',' + p.py, c = (PX + W + 40) + ',' + (p.py + p.D), d = PX + ',' + (p.py + p.D);
+      const f = PX + ',' + (p.py + p.D) + ' ' + (PX + W + 40) + ',' + (p.py + p.D) + ' ' + (PX + W + 40) + ',' + (p.py + p.D + 10) + ' ' + PX + ',' + (p.py + p.D + 10);
+      const cnt = N.filter((n) => n.L === p.id && fOk(n)).length;
+      return { top: a + ' ' + b + ' ' + c + ' ' + d, front: f, fill: p.fill, lx: PX + 4, rx: PX + W + 36, ly: p.py + p.D + 32, name: p.name, desc: p.desc, count: String(cnt), numColor: '#B33F0E' };
+    });
+
+    const n = byId[s.sel] || byId.R1;
+    const K2 = K[n.k];
+    const lbl = (id) => ({ label: byId[id].label, pick: () => this.setState({ sel: id }) });
+    const d = {
+      layer: n.L + ' · ' + PL[n.L - 1].name, kind: K2.t, kindBg: K2.fill === '#FFFFFF' ? '#F1ECE6' : K2.fill, kindFg: K2.fg,
+      title: n.label, rows: n.rows.map((r) => ({ k: r[0], v: r[1] })),
+      ups: (up[n.id] || []).map(lbl), downs: (dn[n.id] || []).map(lbl),
+      upCount: String((up[n.id] || []).length), downCount: String((dn[n.id] || []).length)
+    };
+
+    const FL = [['all', '전체'], ['REQ-0142', 'REQ-2026-0142'], ['R-ROUTE-07', '규칙 R-ROUTE-07'], ['v15', 'Config v15']];
+    const filters = FL.map((f) => {
+      const on = s.filter === f[0];
+      return { label: f[1], on, bg: on ? '#0E7C86' : '#FFFFFF', fg: on ? '#FFFFFF' : '#1B1712', bd: on ? '#0E7C86' : '#D3CCC2', pick: () => this.setState({ filter: f[0] }) };
+    });
+    const layers = PL.map((p) => {
+      const items = N.filter((x) => x.L === p.id).map((x) => {
+        const sel = x.id === s.sel, k = K[x.k];
+        return { label: k.t + ' · ' + x.label, sel, pick: () => this.setState({ sel: x.id }), bd: sel ? '2px solid #F15921' : '1px solid ' + k.st, bg: k.fill, fg: k.fg, op: !fOk(x) ? '0.35' : (onPath(x.id) ? '1' : '0.6') };
+      });
+      return { name: p.name, desc: p.desc, count: String(items.length), items, empty: items.length === 0 };
+    });
+    const isMap = s.view === 'map';
+    return {
+      planes, nodes, edges, d, filters, layers,
+      tx: s.tx, ty: s.ty, z: s.z, zoomPct: Math.round(s.z * 100) + '%',
+      zoomIn: () => this.setState({ z: Math.min(2, +(s.z + 0.2).toFixed(2)) }),
+      zoomOut: () => this.setState({ z: Math.max(0.6, +(s.z - 0.2).toFixed(2)) }),
+      fit: () => this.setState({ z: 1, tx: 0, ty: 0 }),
+      down: this.down, move: this.move, up: this.up,
+      isMap, isList: !isMap,
+      mapBtnBg: isMap ? '#0E7C86' : '#FFFFFF', mapBtnFg: isMap ? '#FFFFFF' : '#1B1712',
+      listBtnBg: !isMap ? '#0E7C86' : '#FFFFFF', listBtnFg: !isMap ? '#FFFFFF' : '#1B1712',
+      showMap: () => this.setState({ view: 'map' }), showList: () => this.setState({ view: 'list' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>규칙 학습</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F4F1;color:#1B1712;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#B33F0E}a:hover{color:#8A2F09}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #F15921;outline-offset:2px}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+.shell{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh}
+.rail{background:#FFFFFF;color:#1B1712;border-right:1px solid #E6E1DA;display:flex;flex-direction:column;gap:28px;padding:20px 14px;position:sticky;top:0;height:100vh}
+.nav{display:flex;flex-direction:column;gap:2px}
+.navlink{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:8px;color:#4A433B;text-decoration:none;font-size:14px;font-weight:500}
+.navlink:hover{background:#F1ECE6;color:#1B1712}
+.navlink.on{background:#F15921;color:#1B1712;font-weight:600}
+.rail-foot{margin-top:auto}
+.lg{display:grid;grid-template-columns:290px minmax(0,1fr) 360px;gap:20px;align-items:start}
+@media (max-width:1320px){.lg{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.shell{grid-template-columns:minmax(0,1fr)}.rail{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:12px}.nav{flex-direction:row}.navlink{white-space:nowrap}.rail-foot{display:none}}
+</style>
+</helmet>
+<div class="shell">
+<nav class="rail" aria-label="주 메뉴">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
+<div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+</div>
+<div class="nav">
+<a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
+<a class="navlink" href="Review.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>검토 대기<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">4</span></a>
+<a class="navlink" href="Tasks.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 7v7M12 7v4M16 7v9"></path></svg>업무</a>
+<a class="navlink" href="Observatory.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><path d="M7 6h10M6 8l5 8M18 8l-5 8"></path></svg>실행 관찰</a>
+<a class="navlink" href="JudgmentMap.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"></path><path d="m2 17 10 5 10-5M2 12l10 5 10-5"></path></svg>판단 맵</a>
+<a class="navlink on" href="Learning.dc.html" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg>규칙 학습<span class="mono" style="margin-left: auto; font-size: 11px; padding: 2px 7px; border-radius: 999px; background: #0E7C86; color: #FFFFFF">2</span></a>
+<a class="navlink" href="Monitoring.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>모니터링</a>
+<a class="navlink" href="Policy.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>정책</a>
+</div>
+<div class="rail-foot" style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 10px; background: #F6F4F1">
+<span class="mono" style="font-size: 11px; color: #8A2F09">DEMO · 모의 연동</span>
+<span style="font-size: 13px; color: #1B1712; font-weight: 600">최○○</span>
+<span style="font-size: 12px; color: #6B6259">규칙 관리자 · 게시 권한</span>
+</div>
+</nav>
+
+<div style="display: flex; flex-direction: column; min-width: 0">
+<header style="display: flex; align-items: center; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #E6E1DA; background: #FFFFFF; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 200px">
+<span style="font-size: 12px; color: #6B6259">수정 기록 → 가설 → 검토된 규칙 → 비교 검증 → 게시 → 효과 관찰</span>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em">규칙 학습</h1>
+</div>
+<span style="font-size: 12px; color: #4A433B">모델 재학습 없음 · 규칙·컨텍스트로만 반영</span>
+<span class="mono" style="font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px dashed #B33F0E; color: #8A2F09; background: #FDF3EE">모의 환경 · 샘플 데이터</span>
+</header>
+
+<main style="padding: 24px 32px 56px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px">
+<div style="display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<span style="width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid #8C8378; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A433B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path></svg></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">관찰 사실</span><span style="font-size: 12px; color: #4A433B">원문·입력·모델 반환·사람 수정. 수정 기록 14건</span></div>
+</div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1.5px dashed #0E7C86">
+<span style="width: 36px; height: 36px; border-radius: 8px; border: 1.5px dashed #0E7C86; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0B5E66; font-weight: 700; font-size: 15px">?</span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700; color: #0B5E66">가설 (규칙 후보)</span><span style="font-size: 12px; color: #4A433B">실행에 쓰이지 않음. 후보 4건</span></div>
+</div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E6E1DA">
+<span style="width: 36px; height: 36px; border-radius: 8px; background: #0E7C86; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">승인된 규칙</span><span style="font-size: 12px; color: #4A433B">권한자 승인 + 검증 후 게시. 운영 중 1건</span></div>
+</div>
+</div>
+
+<div class="lg">
+<section aria-label="규칙 후보 목록" style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; display: flex; flex-direction: column">
+<div style="padding: 16px; border-bottom: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">규칙 후보</h2>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<button type="button" aria-pressed="true" style="min-height: 32px; padding: 0 10px; border-radius: 999px; border: 1px solid #0E7C86; background: #0E7C86; color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer">전체 4</button>
+<button type="button" aria-pressed="false" style="min-height: 32px; padding: 0 10px; border-radius: 999px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 12px; cursor: pointer">검토 필요 1</button>
+<button type="button" aria-pressed="false" style="min-height: 32px; padding: 0 10px; border-radius: 999px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 12px; cursor: pointer">자료 부족 1</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; padding: 8px; gap: 2px">
+<button type="button" aria-current="true" style="display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border-radius: 10px; border: 1.5px solid #F15921; background: #FDF3EE; cursor: pointer">
+<span style="display: flex; justify-content: space-between; width: 100%"><span class="mono" style="font-size: 11px; color: #4A433B">HYP-031 · 담당 조직</span><span style="font-size: 11px; font-weight: 700; color: #0B5E66">게시됨 v15</span></span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.45">알림·연동 구현 비중이 큰 혼합 요청은 IT팀 주관</span>
+<span style="display: flex; gap: 4px; flex-wrap: wrap"><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; border: 1px dashed #0E7C86; color: #0B5E66">AI 가설</span><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #F1ECE6">지지 3 · 반례 1</span></span>
+</button>
+<button type="button" style="display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border-radius: 10px; border: 1px solid transparent; background: #FFFFFF; cursor: pointer">
+<span style="display: flex; justify-content: space-between; width: 100%"><span class="mono" style="font-size: 11px; color: #4A433B">HYP-034 · 검토 전환</span><span style="font-size: 11px; font-weight: 700; color: #4A2A9A">검토 필요</span></span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.45">SAP 권한 변경이 언급되면 IT보안 협업 추가</span>
+<span style="display: flex; gap: 4px; flex-wrap: wrap"><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #F4F0FD; color: #4A2A9A">사람 제안 · 박○○</span><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #F1ECE6">지지 6 · 반례 0</span></span>
+</button>
+<button type="button" style="display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border-radius: 10px; border: 1px solid transparent; background: #FFFFFF; cursor: pointer">
+<span style="display: flex; justify-content: space-between; width: 100%"><span class="mono" style="font-size: 11px; color: #4A433B">HYP-032 · 개발 가능성</span><span style="font-size: 11px; font-weight: 700; color: #4A433B">자료 부족</span></span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.45">데이터 보유 기간 미기재 → 정보 부족</span>
+<span style="display: flex; gap: 4px; flex-wrap: wrap"><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; border: 1px dashed #8C8378; color: #4A433B">AI 가설</span><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #F1ECE6">지지 1 · 5건 필요</span></span>
+</button>
+<button type="button" style="display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border-radius: 10px; border: 1px solid transparent; background: #FFFFFF; cursor: pointer">
+<span style="display: flex; justify-content: space-between; width: 100%"><span class="mono" style="font-size: 11px; color: #4A433B">HYP-028 · 긴급도</span><span style="font-size: 11px; font-weight: 700; color: #B42318">기각</span></span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.45">“오늘” 언급 시 긴급으로 판단</span>
+<span style="display: flex; gap: 4px; flex-wrap: wrap"><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; border: 1px dashed #0E7C86; color: #0B5E66">AI 가설</span><span style="font-size: 11px; padding: 2px 7px; border-radius: 4px; background: #F1ECE6">반례 4 · 사유 기록</span></span>
+</button>
+</div>
+</section>
+
+<section aria-label="후보 상세" style="display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center">
+<span class="mono" style="font-size: 12px; color: #4A433B">HYP-031 → R-ROUTE-07</span>
+<span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; border: 1px dashed #0E7C86; color: #0B5E66">AI 가설 · 생성 모델 [버전]</span>
+<span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; background: #0E7C86; color: #FFFFFF">승인 규칙 · 최○○</span>
+</div>
+<h2 style="margin: 0; font-size: 20px; font-weight: 700; line-height: 1.45; letter-spacing: -0.01em">알림·연동 구현 비중이 큰 혼합 요청은 IT팀이 주관한다</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 10px">
+<div style="padding: 12px; border-radius: 10px; background: #F6F4F1; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">적용 범위 (확정)</span><span style="font-size: 13px; font-weight: 600">영업기획 · 혼합 요청 · 알림 포함</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #F6F4F1; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">판단 항목</span><span style="font-size: 13px; font-weight: 600">담당 조직 · 주관</span></div>
+<div style="padding: 12px; border-radius: 10px; background: #F6F4F1; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">불확실성</span><span style="font-size: 13px; font-weight: 600">사례 3건 · 한 조직에 치우침</span></div>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: #F4F0FD; font-size: 13px; line-height: 1.6; color: #3B1F86">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4M12 16h.01"></path></svg>
+<span>필수 검토 조건(임상·안전·규제·긴급, 승인 전 배정 금지)은 이 규칙으로 바뀌지 않습니다. 저장할 때 자동으로 확인합니다.</span>
+</div>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 700">근거가 된 수정 기록</h3>
+<a href="JudgmentMap.dc.html" style="font-size: 13px; font-weight: 600">판단 맵에서 경로 보기</a>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 13px">
+<thead>
+<tr style="text-align: left; color: #6B6259; font-size: 12px">
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">요청</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">AI 원안 → 수정</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">수정자 · 시각</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">입력 · 실행 버전</th>
+<th scope="col" style="padding: 8px 10px; border-bottom: 1px solid #E6E1DA; font-weight: 600">관계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">REQ-0142</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="text-decoration: line-through; color: #6B6259">AI팀</span> → <strong>IT팀</strong></td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">김○○ · 10-02 12:31</td>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6; font-size: 12px">rev-2 · run_7f3a2c · v14</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="font-size: 11px; font-weight: 700; color: #1F5E3B">지지</span></td>
+</tr>
+<tr>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">REQ-0127</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="text-decoration: line-through; color: #6B6259">AI팀</span> → <strong>IT팀</strong></td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">박○○ · 09-27 15:04</td>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6; font-size: 12px">rev-1 · run_4c19aa · v13</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="font-size: 11px; font-weight: 700; color: #1F5E3B">지지</span></td>
+</tr>
+<tr>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">REQ-0119</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="text-decoration: line-through; color: #6B6259">AI팀</span> → <strong>IT팀</strong></td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6">김○○ · 09-24 11:20</td>
+<td class="mono" style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6; font-size: 12px">rev-1 · run_0b72de · v13</td>
+<td style="padding: 11px 10px; border-bottom: 1px solid #F1ECE6"><span style="font-size: 11px; font-weight: 700; color: #1F5E3B">지지</span></td>
+</tr>
+<tr style="background: #FDF0EE">
+<td class="mono" style="padding: 11px 10px">REQ-0110</td>
+<td style="padding: 11px 10px">AI팀 유지 (수정 없음)</td>
+<td style="padding: 11px 10px">윤○○ · 09-19 09:48</td>
+<td class="mono" style="padding: 11px 10px; font-size: 12px">rev-1 · run_93ef11 · v12</td>
+<td style="padding: 11px 10px"><span style="font-size: 11px; font-weight: 700; color: #B42318">반례 · 예측 모델이 핵심</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<span style="font-size: 12px; color: #4A433B">반례 때문에 범위를 "알림 포함 + 예측 모델 신규 개발 없음"으로 좁히는 안도 검토했습니다. 결정 기록에 남아 있습니다.</span>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 700">비교 검증 · VAL-012</h3>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: #F1ECE6; color: #3A332C"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>섀도 실행 · 배정·알림 없음</span>
+</div>
+<span class="mono" style="font-size: 12px; color: #4A433B">기준 Config v14 ↔ 후보 v15-rc1 · 최근 30일 영업기획 요청 42건 · 사람 확정 정답 19건</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 10px">
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">주관 조직 변경</span><span class="mono" style="font-size: 20px; font-weight: 600">7 / 42</span><span style="font-size: 11px; color: #4A433B">모두 AI팀 → IT팀</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">사람 수정 필요 (정답 19건)</span><span class="mono" style="font-size: 20px; font-weight: 600">5 → 2</span><span style="font-size: 11px; color: #1F5E3B; font-weight: 600">감소 · 표본 작음</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">검토 전환</span><span class="mono" style="font-size: 20px; font-weight: 600">11 → 11</span><span style="font-size: 11px; color: #4A433B">변화 없음</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #E6E1DA; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #4A433B">실패 · 지연 p95</span><span class="mono" style="font-size: 20px; font-weight: 600">0 · +0.1초</span><span style="font-size: 11px; color: #4A433B">영향 없음</span></div>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: #FDF3EE; border: 1px solid #F7C3A9; font-size: 13px; line-height: 1.6">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B33F0E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>
+<span><strong>효과 일부 확인 · 확정 아님.</strong> 정답이 있는 표본이 19건이라 수정 감소를 확정할 수 없습니다. 게시 후 효과 관찰을 계속합니다.</span>
+</div>
+</div>
+</section>
+
+<aside aria-label="규칙 상태와 동작" style="display: flex; flex-direction: column; gap: 16px">
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">R-ROUTE-07 수명</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0">
+<li style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding-bottom: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #1F7A4D; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">후보 제안</span><span style="font-size: 12px; color: #4A433B">AI 가설 · 10-02 18:00</span></span></li>
+<li style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding-bottom: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #1F7A4D; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">범위 수정 후 승인</span><span style="font-size: 12px; color: #4A433B">최○○ · 10-03 08:40</span></span></li>
+<li style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding-bottom: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #1F7A4D; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">비교 검증</span><span style="font-size: 12px; color: #4A433B">VAL-012 · 42건 · 10-03 08:52</span></span></li>
+<li style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding-bottom: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #F15921; box-shadow: 0 0 0 4px #FDE1D3"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">게시 · 운영 중</span><span style="font-size: 12px; color: #4A433B">Config v15 · 10-03 09:10 · 이후 시작 실행부터</span></span></li>
+<li style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px"><span style="width: 22px; height: 22px; border-radius: 50%; border: 1.5px dashed #8C8378"></span><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 600; color: #4A433B">중단 · 되돌리기</span><span style="font-size: 12px; color: #4A433B">새 Config 버전으로 기록, 과거 실행은 그대로</span></span></li>
+</ol>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button type="button" style="min-height: 44px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">중단</button>
+<button type="button" style="min-height: 44px; border-radius: 8px; border: 1px solid #D3CCC2; background: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">v14로 되돌리기</button>
+</div>
+<span style="font-size: 11px; color: #4A433B; line-height: 1.5">진행 중 실행 2건은 v15로 끝까지 처리됩니다.</span>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 15px; font-weight: 700">게시 후 관찰</h2><span class="mono" style="font-size: 11px; color: #4A433B">10-03 09:10 ~ 10:43</span></div>
+<div style="display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; min-height: 38px; align-items: center; border-bottom: 1px solid #F1ECE6; font-size: 13px"><span>범위 안 실행 · 규칙 사용</span><span class="mono" style="font-weight: 600">3</span></div>
+<div style="display: flex; justify-content: space-between; min-height: 38px; align-items: center; border-bottom: 1px solid #F1ECE6; font-size: 13px"><span>범위 밖 · 미사용 기록</span><span class="mono" style="font-weight: 600">5</span></div>
+<div style="display: flex; justify-content: space-between; min-height: 38px; align-items: center; border-bottom: 1px solid #F1ECE6; font-size: 13px"><span>사용 후 사람 수정</span><span class="mono" style="font-weight: 600">0 / 1 검토 완료</span></div>
+<div style="display: flex; justify-content: space-between; min-height: 38px; align-items: center; font-size: 13px"><span>효과 판정</span><span style="font-size: 12px; font-weight: 700; color: #4A433B">관찰 중 · 표본 부족</span></div>
+</div>
+<a href="JudgmentMap.dc.html" style="font-size: 13px; font-weight: 600">사용한 실행 단계 보기</a>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #E6E1DA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">권한</h2>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.5; color: #3A332C">
+<span>후보 제안 · 검토자 이상</span>
+<span>후보 승인·기각 · 규칙 관리자</span>
+<span>검증·게시·중단·되돌리기 · 규칙 관리자 (각각 감사 기록)</span>
+<span style="color: #4A433B">요청 한 건의 수정 승인은 규칙 게시가 아닙니다.</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1380}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
