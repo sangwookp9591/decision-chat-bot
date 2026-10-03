@@ -23,6 +23,11 @@ export function displayCodeLabel(text: string): string {
     (code) => ({ APPLIED: '적용', risk_clear_max: policyFieldLabels.risk_clear_max, used: '적용됨', out_of_scope: '범위 밖(미적용)', approve: '승인', reject: '반려', request_info: '정보 요청', approve_with_scope_change: '범위 수정 후 승인', approve_with_changes: '수정 승인' }[code] || code));
 }
 
+/** 학습 효과 비교 조건 설명: 서버의 원시 표현(APPLIED/shadow)을 문장 단위로 한국어화한다. */
+export function comparisonConditionsLabel(text: string): string {
+  return /shadow|APPLIED|out_of_scope/.test(text) ? '실제 실행 / 규칙 적용·범위 밖 집단 / 비교 검증 실행 제외' : displayCodeLabel(text);
+}
+
 const outputTypeLabels: Record<string, string> = { choice: '선택형', noul: '확률형', score: '점수형' };
 export const outputTypeLabel = (type: string) => outputTypeLabels[String(type).toLowerCase()] || String(type);
 

@@ -118,8 +118,8 @@ describe('Learning page', () => {
     fireEvent.click(await screen.findByRole('button', { name: /cand_1/ }));
     await waitFor(() => expect(screen.getByTestId('effect-verdict')).toHaveTextContent('관찰 중 · 표본 부족'));
     expect(screen.getByTestId('used-count')).toHaveTextContent('3');
-    expect(screen.getByText(/적용 적용됨\/범위 밖\(미적용\)/)).toBeInTheDocument();
-    expect(screen.getByText(/섀도 실행 0건 제외/)).toBeInTheDocument();
+    expect(screen.getByText(/실제 실행 \/ 규칙 적용·범위 밖 집단 \/ 비교 검증 실행 제외/)).toBeInTheDocument();
+    expect(screen.getByText(/비교 검증 실행 0건 제외/)).toBeInTheDocument();
     expect(screen.getByText(/표본 부족: 2건 \/ 최소 20건/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '중단' })).toBeDisabled();
     fireEvent.change(screen.getByLabelText('결정 사유'), { target: { value: '중단 사유' } });

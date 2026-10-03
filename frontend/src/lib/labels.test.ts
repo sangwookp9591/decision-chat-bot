@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { alertKindLabel, blockReasonLabel, collectionIssueLabel, fieldLabel, questionLabel, reviewReasonLabel, sloReasonLabel, mapNodeTitleLabel, policyFieldLabel, displayCodeLabel } from './labels';
+import { alertKindLabel, blockReasonLabel, collectionIssueLabel, fieldLabel, questionLabel, reviewReasonLabel, sloReasonLabel, mapNodeTitleLabel, policyFieldLabel, displayCodeLabel, comparisonConditionsLabel } from './labels';
 
 describe('shared labels (P4-05)', () => {
   it('translates codes and passes unknown text through', () => {
@@ -20,5 +20,13 @@ describe('shared labels (P4-05)', () => {
     expect(collectionIssueLabel('collector_stopped')).toContain('수집기');
     expect(alertKindLabel('worker_stopped')).toContain('작업자');
     expect(sloReasonLabel('Less than 30 days of complete observation')).toContain('30일');
+  });
+});
+
+describe('comparisonConditionsLabel', () => {
+  it('rewrites the raw server sentence (APPLIED/shadow) into plain Korean', () => {
+    const text = comparisonConditionsLabel('게시 시각 전후 동일 길이 창의 실제 Run; 게시 후 APPLIED used/out_of_scope 집단; shadow 제외');
+    expect(text).toBe('실제 실행 / 규칙 적용·범위 밖 집단 / 비교 검증 실행 제외');
+    expect(text).not.toMatch(/shadow|APPLIED|Run/);
   });
 });

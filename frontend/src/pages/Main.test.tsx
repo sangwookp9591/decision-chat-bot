@@ -116,4 +116,19 @@ describe('internal codes on the result card (P4-05)', () => {
     expect(visible.textContent).not.toMatch(/ai_need|feasibility|lead_org|urgent/);
     expect(container.querySelector('details')?.textContent).toContain('ai_need/feasibility/lead_org');
   });
+
+  it('shows each task once from the current draft and keeps the original in the comparison (P6-01)', () => {
+    const task = (version: number, lead: string) => ({ id: `d${version}`, draft_task_id: 'draft-1', draft_version: version, title: '화면 개발', method: '일반 기술', lead_org: lead, collab_orgs: [], predecessors: [] });
+    const withDrafts: Judgment = { ...judgment, draft_tasks: [task(2, '현업')], current_draft_version: 2, draft_versions: [
+      { draft_version: 1, source: 'ai', created_by: 'ai', created_at: null, tasks: [task(1, 'IT팀')] },
+      { draft_version: 2, source: 'reviewer', created_by: 'reviewer', created_at: null, tasks: [task(2, '현업')] }] };
+    const { container } = render(<Result judgment={withDrafts} runs={null} onEvidence={() => undefined} />);
+    expect(container.querySelectorAll('.result-summary > .task-row')).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: /업무 분담 \(v2 검토자 수정안\)/ })).toBeTruthy();
+    const compare = container.querySelector('details.draft-compare') as HTMLElement;
+    expect(compare.querySelector('summary')?.textContent).toContain('원안과 비교');
+    expect(compare.querySelectorAll('[data-draft-version]')).toHaveLength(2);
+    expect(compare.textContent).toContain('v1 · AI 원안');
+    expect(compare.textContent).toContain('원안 대비 변경: 주관');
+  });
 });

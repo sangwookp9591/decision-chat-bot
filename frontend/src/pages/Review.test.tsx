@@ -12,6 +12,16 @@ vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({re
 const renderAt=(url='/review')=>render(<MemoryRouter initialEntries={[url]}><Review/></MemoryRouter>);
 beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any)});
 describe('review comparison',()=>{
+ it('lists each task once from the current draft and separates the AI original (P6-01)',async()=>{
+  const t=(v:number,lead:string)=>({id:`d${v}`,draft_task_id:'draft-1',draft_version:v,title:'화면 개발',method:'일반 기술',lead_org:lead,collab_orgs:[],predecessors:[],deliverable:'결과'});
+  const d1={draft_version:1,source:'ai',created_by:'ai',tasks:[t(1,'IT팀')]},d2={draft_version:2,source:'reviewer',created_by:'reviewer',tasks:[t(2,'현업')]};
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail({status:'approved',draft_version:2}),drafts:[d1,d2],original_draft:d1,current_draft:d2} as any);
+  const {container}=renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
+  expect(container.querySelectorAll('.review-task')).toHaveLength(1);
+  expect(screen.getByRole('heading',{name:/업무 분담 \(v2 검토자 수정안\)/})).toBeTruthy();
+  expect(container.querySelector('.review-task small')?.textContent).toContain('AI 원안: IT팀');
+  expect(container.querySelectorAll('[data-draft-version]')).toHaveLength(2);
+ });
  it('renders the preserved AI original alongside the reviewer value',async()=>{renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');expect(screen.getByText('원안: 정보 부족')).toBeTruthy();expect(screen.getByLabelText('AI 필요성 수정')).toHaveProperty('value','정보 부족')});
  it('keeps the 409 conflict notice after reloading the latest review (P3-07)',async()=>{
   renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');

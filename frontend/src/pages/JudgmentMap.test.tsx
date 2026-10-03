@@ -50,7 +50,7 @@ describe('display helpers', () => {
   it('bundles crowded layers by kind but keeps path members visible', () => {
     const many = Array.from({ length: 14 }, (_, i) => node(`mo${i}`, 'ModelOutput', 1));
     const items = buildDisplay(many, new Set(), new Set(['mo3']));
-    expect(items.filter((i) => i.group).map((i) => [i.label, i.nodes.length])).toEqual([['ModelOutput 외 13개', 13]]);
+    expect(items.filter((i) => i.group).map((i) => [i.label, i.nodes.length])).toEqual([['Jev 반환값 외 13개', 13]]);
     expect(items.some((i) => i.id === 'mo3')).toBe(true);
     expect(buildDisplay(many, new Set(['group:1:ModelOutput']), new Set()).length).toBe(14);
     expect(displayEdges(items, [edge('CITES', 'mo6', 'mo7')])).toEqual([]); // both ends bundled together: no self link

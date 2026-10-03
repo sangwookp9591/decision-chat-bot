@@ -69,7 +69,7 @@ export function buildDisplay(nodes: GraphNode[], expanded: Set<string>, keep: Se
       const shown = members.filter((node) => keep.has(node.id));
       shown.forEach((node) => out.push(single(node)));
       const hidden = members.filter((node) => !keep.has(node.id));
-      if (hidden.length) out.push({ id: groupId, layer, kind, label: `${kind} 외 ${hidden.length}개`, nodes: hidden, group: true });
+      if (hidden.length) out.push({ id: groupId, layer, kind, label: `${KIND_LABEL[kind] || kind} 외 ${hidden.length}개`, nodes: hidden, group: true });
     }
   }
   return out;
@@ -110,7 +110,7 @@ export function pathRows(nodes: GraphNode[], edges: GraphEdge[], highlight: High
 
 export const KIND_LABEL: Record<string, string> = {
   EvidenceSpan: '문서 근거', ModelOutput: 'Jev 반환값', Correction: '사람 수정', RuleCandidate: '규칙 후보',
-  RuleDecision: '규칙 결정', ReviewDecision: '요청 검토 결정', RuleVersion: '규칙 버전', ValidationRun: '섀도 검증',
+  RuleDecision: '규칙 결정', ReviewDecision: '요청 검토 결정', RuleVersion: '규칙 버전', ValidationRun: '비교 검증',
   ConfigVersion: 'Config 버전', RunStep: '실행 단계',
 };
 export const RELATION_LABEL: Record<string, string> = {
