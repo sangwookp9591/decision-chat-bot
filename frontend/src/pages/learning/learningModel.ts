@@ -1,7 +1,7 @@
 import type { CandidateDetail, EffectVerdict, Predicate, RuleVersionRow, ValidationResult } from '../../api/learning';
 
-export const fieldLabels: Record<string, string> = { ai_need: 'AI 필요성', feasibility: '개발 가능성', urgency: '긴급도', lead_org: '담당 조직 · 주관' };
-export const fieldLabel = (field: string) => fieldLabels[field] || field;
+export { fieldLabels, fieldLabel } from '../../lib/labels';
+import { fieldLabel, ruleDecisionLabel } from '../../lib/labels';
 export const sourceLabel = (source: string) => source === 'ai' ? 'AI 가설' : '사람 제안';
 
 export type CandidateFilter = 'all' | 'review' | 'insufficient' | 'approved' | 'rejected';
@@ -84,10 +84,11 @@ export function describePredicate(p: Predicate): string {
 }
 export const describeScope = (predicates: Predicate[]) => predicates.length ? predicates.map(describePredicate).join(' · ') : '조건 없음 (모든 요청)';
 
+const plain = (value: unknown): string => typeof value === 'string' ? value : Array.isArray(value) ? value.map(plain).join(', ') : JSON.stringify(value);
 export function describeAction(action: Record<string, unknown>): string {
-  if ('set' in action) return `값을 ${JSON.stringify(action.set)}(으)로 설정`;
-  if ('add' in action) return `협업 조직에 ${JSON.stringify(action.add)} 추가`;
-  if ('require_review' in action) return `검토 전환: ${JSON.stringify(action.require_review)}`;
+  if ('set' in action) return `값을 ${plain(action.set)}(으)로 설정`;
+  if ('add' in action) return `협업 조직에 ${plain(action.add)} 추가`;
+  if ('require_review' in action) return `검토 전환: ${plain(action.require_review)}`;
   return JSON.stringify(action);
 }
 
@@ -99,3 +100,19 @@ export function isoOf(value: unknown): string {
 import { formatTime as formatSharedTime } from '../../lib/format';
 export const formatTime = (value: unknown) => formatSharedTime(value, { hour12: false });
 export const valueText = (value: unknown) => value === null || value === undefined ? '—' : typeof value === 'string' ? value : JSON.stringify(value);
+
+/** Both dates are required and the start must not be after the end; returns the Korean hint or ''. */
+export function validationRangeProblem(range: { from: string; to: string }): string {
+  const from = new Date(range.from), to = new Date(range.to);
+  if (!range.from || !range.to || Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) return '시작과 끝 날짜를 모두 올바르게 입력해 주세요.';
+  return from > to ? '시작은 끝보다 앞서야 합니다.' : '';
+}
+
+/** Timeline text of a rule decision node: "approve. 사유: … . 확정 범위 {json}" becomes plain Korean. */
+export function ruleDecisionDetail(summary: string | null | undefined, fallback: string): string {
+  const match = /^(\w+)\. 사유: (.*?)\. 확정 범위 (.*)$/s.exec(summary || '');
+  if (!match) return summary || fallback;
+  let scope = match[3];
+  try { const parsed = JSON.parse(match[3]); scope = parsed && Array.isArray(parsed.all) ? describeScope(parsed.all) : parsed === null ? '지정 없음' : match[3]; } catch { /* keep raw text */ }
+  return `${ruleDecisionLabel(match[1])} · 사유: ${match[2]} · 확정 범위: ${scope}`;
+}

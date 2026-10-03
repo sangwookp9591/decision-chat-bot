@@ -4,9 +4,10 @@ import { learningApi, type CandidateDetail, type RuleDetail, type RuleEffects, t
 import { policyApi } from '../api/policy';
 import type { ApiError } from '../api/client';
 import { ErrorState, LoadingState } from '../components';
+import { statusText } from '../components/statusLabels';
 import { Actions, type ActionHandlers } from './learning/Actions';
 import { Observation, CycleStrip, EvidenceTable, RuleSummary, ThreePanels, Timeline, ValidationCard, type TimelineItem } from './learning/sections';
-import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, sourceLabel, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
+import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, ruleDecisionDetail, sourceLabel, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
 import './learning/learning.css';
 
 type Pending = { candidateId: string; decisionId: string } | null;
@@ -105,9 +106,9 @@ export function Learning({ roles }: { roles: string[] }) {
         const { graphApi } = await import('../api/graph');
         const graph = await graphApi.judgment({ rule_id: versionKey });
         const decision = graph.nodes.find((n) => n.kind === 'RuleDecision');
-        if (decision) items.push({ kind: decision.summary?.includes('scope') || decision.status === 'approve_with_scope_change' ? '범위 수정 후 승인' : '승인', at: decision.at, actor: decision.actor, detail: decision.summary || decision.title });
+        if (decision) items.push({ kind: decision.summary?.includes('scope') || decision.status === 'approve_with_scope_change' ? '범위 수정 후 승인' : '승인', at: decision.at, actor: decision.actor, detail: ruleDecisionDetail(decision.summary, decision.title), raw: decision.summary || undefined });
         const validation = graph.nodes.find((n) => n.kind === 'ValidationRun');
-        if (validation) items.push({ kind: '비교 검증', at: validation.at, actor: validation.actor, detail: `${validation.id} · ${validation.status || ''}` });
+        if (validation) items.push({ kind: '비교 검증', at: validation.at, actor: validation.actor, detail: `검증 ${validation.id}${validation.status ? ` · ${statusText(validation.status)}` : ''}` });
         const config = new Set(currentRule?.versions.flatMap((v) => v.config_versions) || []);
         const first = Math.min(...(version.config_versions.length ? version.config_versions : [Infinity]));
         if (Number.isFinite(first)) {

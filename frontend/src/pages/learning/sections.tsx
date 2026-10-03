@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { RawDetails } from '../../components/RawDetails';
 import type { CandidateDetail, CandidateExample, EffectMetrics, RuleEffects, RuleVersionRow, ValidationResult } from '../../api/learning';
 import { describeAction, describeScope, effectLabels, fieldLabel, formatTime, millis, percent, sampleShortage, validationNotice, valueText, versionStatusLabel } from './learningModel';
 
@@ -65,12 +66,12 @@ export function ValidationCard({ result, minimum }: { result: ValidationResult |
   </section>;
 }
 
-export type TimelineItem = { kind: string; at?: string | null; actor?: string | null; detail: string; config_version?: number };
+export type TimelineItem = { kind: string; at?: string | null; actor?: string | null; detail: string; raw?: string; config_version?: number };
 export function Timeline({ ruleLabel, items }: { ruleLabel: string; items: TimelineItem[] }) {
   return <section className="learning-card" aria-label="규칙 수명">
     <h3>{ruleLabel} 수명</h3>
     {items.length === 0 ? <p className="learning-empty">기록된 수명 단계가 없습니다.</p> : <ol className="learning-timeline">{items.map((item, i) => <li key={`${item.kind}-${i}`}>
-      <b>{item.kind}</b><span>{item.detail}</span><small>{formatTime(item.at)}{item.actor ? ` · ${item.actor}` : ''}{item.config_version !== undefined ? ` · Config v${item.config_version}` : ''}</small>
+      <b>{item.kind}</b><span>{item.detail}</span>{item.raw && item.raw !== item.detail && <RawDetails>{item.raw}</RawDetails>}<small>{formatTime(item.at)}{item.actor ? ` · ${item.actor}` : ''}{item.config_version !== undefined ? ` · Config v${item.config_version}` : ''}</small>
     </li>)}</ol>}
     <p className="learning-note">게시·중단·되돌리기는 새 Config 버전으로 기록되며 과거 실행은 그대로입니다. 진행 중 실행은 시작 시 고정한 버전으로 끝까지 처리됩니다.</p>
   </section>;
@@ -121,7 +122,7 @@ export function RuleSummary({ candidate, version }: { candidate: CandidateDetail
     <p className="learning-hint">후보 문장은 결정적 규칙 본문에서 만든 것이며 실행에는 쓰이지 않습니다. {insufficient && <strong>자료 부족: 효과를 주장하지 않습니다.</strong>}</p>
     <div className="learning-facts">
       <div><span>적용 범위 ({confirmed ? '확정' : '제안'})</span><b>{describeScope(body.scope.all)}</b></div>
-      <div><span>판단 항목</span><b>{fieldLabel(candidate.field)} · 대상 {body.target}</b></div>
+      <div><span>판단 항목</span><b>{fieldLabel(candidate.field)} · 대상 {fieldLabel(body.target)}</b></div>
       <div><span>불확실성</span><b>지지 {u.support_count ?? candidate.support_count ?? 0}건 · 반례 {u.counter_count ?? candidate.counter_count ?? 0}건{u.minimum_support ? ` · 최소 ${u.minimum_support}건` : ''}{u.single_organization_bias ? ' · 한 조직에 치우침' : ''}{u.rationale ? ` · ${u.rationale}` : ''}</b></div>
     </div>
     <p className="learning-invariant">필수 검토 조건(임상·안전·규제·긴급, 승인 전 배정 금지)은 이 규칙으로 바뀌지 않습니다. 저장할 때 서버가 자동으로 확인합니다.</p>

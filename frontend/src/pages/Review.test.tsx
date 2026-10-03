@@ -57,3 +57,27 @@ describe('review evidence viewer',()=>{
   expect(screen.getAllByText('원문 비공개').length).toBe(2);
  });
 });
+describe('review detail error ownership (P4-03)',()=>{
+ it('keeps the detail error when the list refresh finishes afterwards',async()=>{
+  let release:(v:unknown)=>void=()=>undefined;
+  vi.mocked(reviewApi.list).mockReturnValue(new Promise(r=>{release=r}) as any);
+  vi.mocked(reviewApi.detail).mockRejectedValue({status:404,code:'HTTP_404',message:'Review not found'});
+  renderAt('/review?review_id=rvw_x');
+  await waitFor(()=>expect(reviewApi.detail).toHaveBeenCalled());
+  await screen.findByText(/검토를 찾을 수 없습니다|Review not found/);
+  release({reviews:[]});
+  await waitFor(()=>expect(screen.getByText(/대기 0건/)).toBeTruthy());
+  expect(screen.getByRole('alert').textContent).toMatch(/검토를 찾을 수 없습니다|Review not found/);
+ });
+ it('shows Korean question and reason labels instead of internal codes (P4-05)',async()=>{
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),outputs:[{id:'o1',question_id:'ai_need',type:'Choice',value:'필요',confidence:0.8,evidence:[]}]} as any);
+  renderAt('/review?review_id=rvw_1');await screen.findByText('원안: 정보 부족');
+  expect(screen.getByText(/AI 필요성 · 선택형/)).toBeTruthy();
+  expect(screen.queryByText(/ai_need · Choice/)).toBeNull();
+ });
+});
+it('translates comma-joined reason summaries in the review list (P4-05)',async()=>{
+ vi.mocked(reviewApi.list).mockImplementation(async()=>({reviews:[row({reasons_summary:'개발 가능성 미충족, Choice confidence 미충족: ai_need, 미정 분류: lead_org'}) as any]}));
+ renderAt();const item=await screen.findByRole('button',{name:/req_1/});
+ expect(item.textContent).toContain('선택 확신도 미충족: AI 필요성');expect(item.textContent).toContain('분류 미확정: 담당 조직 · 주관');expect(item.textContent).not.toMatch(/ai_need|lead_org/);
+});

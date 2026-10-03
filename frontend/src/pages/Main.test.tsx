@@ -106,3 +106,14 @@ describe('evidence viewer from the result card', () => {
     expect(document.querySelector('[data-unit-id="esp_1"]')).not.toHaveAttribute('aria-current');
   });
 });
+
+describe('internal codes on the result card (P4-05)', () => {
+  it('shows Korean review reasons and keeps raw codes out of the regular view', () => {
+    const { container } = render(<Result judgment={{ ...judgment, review_reasons: ['Choice confidence 미충족: ai_need/feasibility/lead_org', '필수 검토: urgent'] }} runs={null} onEvidence={() => undefined} />);
+    expect(container.textContent).toContain('선택 확신도 미충족: AI 필요성 · 개발 가능성 · 담당 조직 · 주관');
+    expect(container.textContent).toContain('필수 검토: 긴급 요청');
+    const visible = container.cloneNode(true) as HTMLElement; visible.querySelectorAll('details').forEach((node) => node.remove());
+    expect(visible.textContent).not.toMatch(/ai_need|feasibility|lead_org|urgent/);
+    expect(container.querySelector('details')?.textContent).toContain('ai_need/feasibility/lead_org');
+  });
+});

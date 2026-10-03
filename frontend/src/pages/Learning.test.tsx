@@ -143,3 +143,17 @@ describe('Review rule-learning link', () => {
     expect(screen.getByText(/요청 한 건의 수정 승인은 규칙 게시가 아닙니다/)).toBeInTheDocument();
   });
 });
+
+describe('validation inputs (P4-02)', () => {
+  it('disables 검증 실행 with a Korean hint when a date is cleared, and never throws', async () => {
+    setup(['rule_admin'], 'approved', 'validating');
+    fireEvent.click(await screen.findByRole('button', { name: /cand_1/ }));
+    const from = await screen.findByLabelText('검증 시작');
+    fireEvent.change(from, { target: { value: '' } });
+    expect(screen.getByRole('button', { name: '검증 실행' })).toBeDisabled();
+    expect(screen.getByText('시작과 끝 날짜를 모두 올바르게 입력해 주세요.')).toBeInTheDocument();
+    fireEvent.change(from, { target: { value: '2999-01-01T00:00' } });
+    expect(screen.getByText('시작은 끝보다 앞서야 합니다.')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '검증 실행' })).toBeDisabled();
+  });
+});
