@@ -16,3 +16,6 @@ artifacts/validation/**/test-results/
 # Large raw load-test samples are kept locally only (summaries/REPORT.md are tracked)
 artifacts/validation/t25*/**/sse.csv
 artifacts/validation/t25*/**/runs.json
+frontend/test-results/
+frontend/playwright-report/
+frontend/tsconfig.tsbuildinfo
