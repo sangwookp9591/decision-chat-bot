@@ -1,12 +1,11 @@
 """Authenticated, read-only execution observation endpoints."""
 
-import json
-
 from fastapi import APIRouter, Depends, HTTPException
 
 from jevtriage.auth.core import Principal, can_view_request, get_principal
 from jevtriage.db.tx import read_tx
-from jevtriage.domain.serialize import json_value
+from jevtriage.domain.serialize import json_value, loads_or
+from jevtriage.ingest.store import get_request_meta
 from jevtriage.observe.flow import get_flow
 from jevtriage.observe.playback import get_playback
 from jevtriage.observe.topology import get_topology
@@ -15,10 +14,7 @@ router = APIRouter(prefix="/api/observe", tags=["observe"])
 
 
 async def _request_meta(principal: Principal, request_id: str):
-    async def op(tx):
-        row = await (await tx.run("MATCH (r:Request {tenant_id:$tenant_id,id:$request_id}) RETURN r",tenant_id=principal.tenant_id,request_id=request_id)).single()
-        return dict(row["r"]) if row else None
-    meta=await read_tx(principal.tenant_id,op)
+    meta = await get_request_meta(principal.tenant_id, request_id)
     if not meta or not can_view_request(principal,meta): raise HTTPException(404,"Request not found")
     return meta
 
@@ -114,4 +110,4 @@ async def step_detail(step_id: str, principal: Principal = Depends(get_principal
 
 
 def _loads(value):
-    return json.loads(value) if value else {}
+    return loads_or(value, {})

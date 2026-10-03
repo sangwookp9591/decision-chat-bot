@@ -18,6 +18,7 @@ from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.requests import StaleRun, assert_active_run_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.ids import new_id
+from jevtriage.domain.serialize import to_native
 from jevtriage.journal.reader import producer_heartbeat
 from jevtriage.journal.writer import JournalWriter, failure_count
 from jevtriage.observe.trace_store import finish_step_in_tx, start_step_in_tx
@@ -243,7 +244,7 @@ class Worker:
             started = current.get("started_at") or current.get("created_at")
             elapsed = 0.0
             if started:
-                started = started.to_native() if hasattr(started, "to_native") else started
+                started = to_native(started)
                 elapsed = (datetime.now(UTC) - started.astimezone(UTC)).total_seconds()
             deadline = current.get("deadline_seconds") or self.deadline_seconds
             expired = elapsed >= deadline or count > self.max_attempts

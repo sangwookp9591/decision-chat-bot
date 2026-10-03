@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -33,8 +34,8 @@ def _range(start: str | None, end: str | None) -> tuple[datetime, datetime]:
     return begin, stop
 
 
-def _rows(principal: Principal, begin: datetime, stop: datetime) -> tuple[list[dict], int]:
-    all_rows = events_between(get_settings().data_dir, begin, stop)
+async def _rows(principal: Principal, begin: datetime, stop: datetime) -> tuple[list[dict], int]:
+    all_rows = await asyncio.to_thread(events_between, get_settings().data_dir, begin, stop, principal.tenant_id)
     known_requests = {r["request_id"] for r in all_rows
                       if r.get("tenant_id") == principal.tenant_id and r.get("request_id")}
     scoped = [r for r in all_rows if r.get("tenant_id") == principal.tenant_id or
@@ -55,14 +56,24 @@ async def summary(from_: str | None = Query(None, alias="from"), to: str | None 
                   version: str | None = None,
                   principal: Principal = Depends(require_roles("operator"))):  # noqa: B008
     begin, stop = _range(from_, to)
-    rows, unscoped = _rows(principal, begin, stop)
-    try:
-        business = await business_counts(principal.tenant_id, begin, stop, org, status)
-    except Exception as exc:
+    rows, unscoped = await _rows(principal, begin, stop)
+    business_result, review_result = await asyncio.gather(
+            business_counts(principal.tenant_id, begin, stop, org, status),
+            review_wait(principal.tenant_id, org, status),
+            return_exceptions=True,
+        )
+    if isinstance(business_result, Exception):
         if org or status:
-            raise HTTPException(503, "Request scope filter unavailable") from exc
+            raise HTTPException(503, "Request scope filter unavailable") from business_result
         business = {"request_denominator": None, "org_unconfirmed": None,
                     "auto_assignment_count": None, "review_completed_count": None}
+    else:
+        business = business_result
+    if isinstance(review_result, Exception):
+        review = {"p50": None, "p95": None, "longest": None,
+                  "unresolved": None, "source_status": "unavailable"}
+    else:
+        review = review_result
     if org or status:
         scoped_requests = set(business.pop("request_ids", []))
         rows = [r for r in rows if r.get("request_id") in scoped_requests]
@@ -82,11 +93,7 @@ async def summary(from_: str | None = Query(None, alias="from"), to: str | None 
                       "unknown_validity", "ratio"):
             result["availability"][field] = None
         result["availability"]["scope_incomplete"] = True
-    try:
-        result["review_wait_ms"] = await review_wait(principal.tenant_id, org, status)
-    except Exception:  # noqa: BLE001 - metrics remain available during business DB failure
-        result["review_wait_ms"] = {"p50": None, "p95": None, "longest": None,
-                                    "unresolved": None, "source_status": "unavailable"}
+    result["review_wait_ms"] = review
     result.update({"from": begin.isoformat(), "to": stop.isoformat(),
                    "filters": {"org": org, "status": status, "version": version},
                    "collection": collection_status(get_settings().data_dir),
@@ -98,7 +105,7 @@ async def summary(from_: str | None = Query(None, alias="from"), to: str | None 
 @router.get("/slo")
 async def slo(principal: Principal = Depends(require_roles("operator"))):  # noqa: B008
     now = datetime.now(UTC)
-    rows, unscoped = _rows(principal, datetime(1970, 1, 1, tzinfo=UTC), now)
+    rows, unscoped = await _rows(principal, datetime(1970, 1, 1, tzinfo=UTC), now)
     state = collection_status(get_settings().data_dir)
     result = error_budget(rows, now=now, collection_complete=state["continuous_30d"] and unscoped == 0)
     result["collection"] = state
@@ -109,7 +116,7 @@ async def slo(principal: Principal = Depends(require_roles("operator"))):  # noq
 async def failures(from_: str | None = Query(None, alias="from"), to: str | None = None,
                    principal: Principal = Depends(require_roles("operator"))):  # noqa: B008
     begin, stop = _range(from_, to)
-    rows, unscoped = _rows(principal, begin, stop)
+    rows, unscoped = await _rows(principal, begin, stop)
     return {"from": begin.isoformat(), "to": stop.isoformat(),
             "causes": summarize(rows, now=stop)["failures"], "unscoped_events": unscoped}
 

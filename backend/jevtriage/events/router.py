@@ -206,7 +206,12 @@ async def stream_events(
                         if item["seq"] <= cursor:
                             continue
                         request_id = item["request_id"]
-                        if request_id:
+                        audience = item.get("audience")
+                        if audience == "tenant":
+                            pass
+                        elif audience == "request" and not request_id:
+                            continue
+                        elif request_id:
                             meta = metas.get(request_id)
                             if not meta or not can_view_request(principal, meta):
                                 continue
@@ -217,7 +222,7 @@ async def stream_events(
                         data.update({k: payload[k] for k in SAFE_PAYLOAD_FIELDS if k in payload})
                         yield _sse(item["kind"], data, item["seq"])
                         now = datetime.now(UTC)
-                        created = datetime.fromisoformat(item["created_at"])
+                        created = item["created_at"]
                         await asyncio.to_thread(_journal.append, {"event_id": f"evt_{uuid4().hex}", "attempt_id": f"att_{uuid4().hex}", "request_id": request_id, "run_id": item["run_id"], "tenant_id": principal.tenant_id, "kind": "sse_deliver", "ts": now.isoformat(), "duration_ms": max(0, int((now-created).total_seconds()*1000))})
                         delivered += 1
                         if max_events is not None and delivered >= max_events:

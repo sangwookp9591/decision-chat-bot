@@ -1,7 +1,7 @@
 """Read-only execution flow projections."""
 
 from jevtriage.db.tx import read_tx
-from jevtriage.domain.serialize import json_value
+from jevtriage.domain.serialize import json_value, loads_or
 
 
 async def get_flow(tenant_id: str, run_id: str):
@@ -37,5 +37,4 @@ async def get_flow(tenant_id: str, run_id: str):
 
 
 def _json_field(value):
-    import json
-    return json.loads(value) if value else {}
+    return loads_or(value, {})

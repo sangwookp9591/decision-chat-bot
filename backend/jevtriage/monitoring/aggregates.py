@@ -25,12 +25,16 @@ def percentile(values: list[float], rank: float) -> float | None:
     return ordered[max(0, ceil(rank * len(ordered)) - 1)]
 
 
-def events_between(data_dir: Path, start: datetime, end: datetime) -> list[dict]:
+def events_between(data_dir: Path, start: datetime, end: datetime, tenant_id: str | None = None) -> list[dict]:
     if not metrics_path(data_dir).exists():
         return []
     with closing(connect(data_dir)) as db:
-        rows = db.execute("SELECT * FROM events WHERE ts >= ? AND ts <= ? ORDER BY ts,event_id",
-                          (start.isoformat(), end.isoformat())).fetchall()
+        query = "SELECT * FROM events WHERE ts >= ? AND ts <= ?"
+        params: tuple = (start.isoformat(), end.isoformat())
+        if tenant_id is not None:
+            query += " AND (json_extract(payload,'$.tenant_id') = ? OR json_extract(payload,'$.tenant_id') IS NULL)"
+            params += (tenant_id,)
+        rows = db.execute(query + " ORDER BY ts,event_id", params).fetchall()
     return [dict(row) | json.loads(row["payload"]) for row in rows]
 
 
