@@ -1,0 +1,37 @@
+# 독립 관측 수집과 모니터링
+
+T18 구현 메모, 2026-10-03.
+
+## 실행과 저장
+
+`make up` 이후 API·worker와 별도 터미널에서 `make collector`, `make watchdog`을 실행한다. `DATA_DIR` 기본값은 프로세스 작업 디렉터리 기준 `.data`다. Makefile 명령은 `backend/`에서 실행하므로 journal, metrics, alerts는 기본적으로 `backend/.data/` 아래에 놓인다. 운영 환경에서는 세 프로세스가 같은 영속 `DATA_DIR`을 보도록 설정해야 한다.
+
+수집기는 `journal/archive-*.jsonl`과 `journal/current.jsonl`의 완성된 줄만 읽고 `metrics/metrics.db`의 `events`에 `event_id`를 고유 키로 넣는다. 파일 inode별 바이트 오프셋을 같은 SQLite 트랜잭션에서 갱신한다. 손상된 줄·잘린 파일은 `collection_issues`에 기록한다. 수집기 heartbeat는 `metrics/collector-heartbeat.json`이다. 10초 간격 체크포인트와 30초 초과 수집 공백은 `collector_ticks`·`collection_gaps`에 저장한다. DB와 독립적으로 작동하며 journal을 재생해 업무 트랜잭션을 실행하지 않는다.
+
+watchdog은 collector heartbeat, 생산자 heartbeat·journal 쓰기 실패 누적값, 디스크 여유, 최근 실패와 오류 예산 소진 속도를 검사한다. 알림은 `alerts/alert_*.json`에 기록하고 표준 출력에도 보낸다. `MONITORING_WEBHOOK_URL`을 설정하면 같은 알림을 HTTP POST로 전송한다. 전송 실패도 표준 출력에 남기며 로컬 알림 파일은 유지한다. API·worker는 유휴 중에도 약 5초마다 heartbeat를 갱신한다. 로컬 알림 파일을 쓸 수 없는 디스크 장애에서는 표준 출력과 설정된 webhook 경로가 남는다.
+
+## 집계 계약
+
+- 접수·조회 가용성은 `request_received`/`lookup_received`와 같은 attempt의 종료 레코드를 짝짓는다. 유효 호출의 HTTP 2xx만 성공이다. DB 실패 503은 ID가 없어도 분모·실패에 남는다. 응답 레코드가 없으면 미확정으로 표시하고 성공으로 채우지 않는다.
+- 최초 판단은 첫 적격 접수·파일 제외·보완 revision의 수신 시각과 `judgment_committed`를 request ID로 연결한다. 이 이벤트는 Run의 `first_judgment_committed_at`이 실제 저장된 경우에만 worker가 기록한다. 재시도는 같은 요청의 최초 시각을 유지하고 120초 이후 성공은 회복 건수로 별도 집계한다. 120초를 지난 미완료 건은 120,000ms 실패 표본이다. 아직 120초가 지나지 않은 미완료 건은 대기 표본이다.
+- 섀도 실행은 `run_kind=shadow`인 Run 집계와 판단 완료에서 제외하고 별도 건수를 보인다. revision/run 지연은 최초 요청 지연과 별개다. 파일 제외·첫 적격 보완 경로·SSE 전달·단계별 지연·버전별 결과를 기록된 필드만으로 집계한다. 사용량·비용처럼 생산자가 기록하지 않는 값은 `null`이다.
+- 30일 오류 예산은 가용성 허용 실패율 0.1%, 판단 허용 실패율 1%다. 30일 전부터 이어진 수집기 체크포인트, 최근 heartbeat, 공백·손상 없음이 확인되지 않으면 `verified=false`와 잔여 예산 `null`로 표시한다. 최근 1시간 소진율은 조기 알림을 위해 별도로 계산하며 30일 달성 판정과 구별한다.
+- 사람 검토 대기는 Neo4j `Review.created_at`/`decided_at`에서 별도 조회한다. 업무 DB가 중단되면 검토 지표만 `null`과 `source_status=unavailable`로 보이고 journal 기반 시스템 지표는 조회 가능하다.
+
+## API와 대조
+
+운영자 역할만 `/api/monitoring/summary`, `/slo`, `/failures`, `/alerts`, `/collection-status`에 접근할 수 있다. journal에 `tenant_id`가 있는 이벤트만 해당 운영자의 테넌트 집계에 포함된다. 새 SSE 이벤트에도 tenant ID를 적고, 이전 SSE 이벤트는 같은 기간의 테넌트가 확인된 request ID와 연결될 때만 포함한다. 연결할 수 없는 이전 이벤트는 합치지 않고 `unscoped_events`로 공개한다. `/failures`는 원인별 request/run/attempt ID와 시각을 돌려준다. `reconcile_commits(tenant_id, rows)`는 `db.tx.read_tx`로 Neo4j의 Request/Run ID와 journal ID를 비교해 누락·불일치를 반환한다. 이 함수는 조회만 수행한다.
+
+새 접수에서는 요청자의 org ID를 Request와 journal에 기록한다. `/summary`의 `org`·`status` 필터는 기간 내 Request의 현재 조직·상태로 범위를 결정한 뒤 journal을 같은 요청 ID로 제한한다. 과거 Request에 조직 필드가 없으면 조직을 추정하지 않고 필터 대상 미확정 표본으로 공개한다. 필터 없는 journal 집계는 DB 장애에도 가능하지만, org/status 필터는 정확한 분모를 위해 업무 DB 장애 때 503을 반환한다. `version`은 worker에 기록된 Config 버전을 사용한다. 버전 필터에서는 요청 ID가 없는 실패를 정확히 귀속할 수 없어 가용성 분모와 비율을 `null`로 표시한다. 비용 미수집값도 `null`이다. 로컬 watchdog의 원격 수신·호스트 전체 유실 복구 보장은 T26 운영 검증 대상이다.
+
+## 검증
+
+`make up` 후 `cd backend && .venv/bin/pytest tests/integration/test_monitoring_collector.py -q`로 실제 writer 기록, SQLite 재수집 중복, 손상 줄, DB 실패 표본, 120초 실패·지연, 섀도 제외, 조직 저장·필터, 커밋 대조, 수집 공백, 빠른 오류 예산 소진·반복 장애 watchdog 알림 및 30일 미검증 상태를 검사한다. 13개 시험이 통과했다. 전체 백엔드 시험 결과는 TASK T18 상태 메모에 남긴다.
+# Monitoring business filters and counts
+
+T22의 API 경계 journal(`api_boundary_received`/`api_boundary_completed`)은 인증 전에도 남는다. DB 중단으로 인증이 끝나지 않은 접수는 `request_received`/`request_failed`의 `validity=undetermined` 표본으로 보존하며, tenant별 가용성 분모에 추정 합산하지 않는다.
+인증 전 경계 진단 레코드는 정상 호출에도 tenant 미지정으로 남으므로, 모니터링의 `unscoped_events`는 이 두 진단 kind를 제외하고 실제 미귀속 업무 표본만 계산한다.
+
+`GET /api/monitoring/summary` accepts `org` and `status` alongside its time and version filters. These filters select requests from tenant scoped `Request` records by current status and `org_id`/`org_ids`; journal rows are then restricted to those exact request IDs, so events with missing historical attribution do not inflate a filtered denominator. Business counts use the request creation cohort and remain separate from SLO calculations: `business.request_denominator`, `business.org_unconfirmed`, `business.auto_assignment_count` (Assignment pathway `auto`), and `business.review_completed_count` (persisted ReviewDecision records). Legacy requests with neither organization field are counted as `org_unconfirmed` when they fall in the selected scope.
+
+The same summary includes review queue wait percentiles based on the request's organization and current status. These are operational workload measures, not SLO samples.
