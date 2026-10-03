@@ -1,0 +1,33 @@
+[project]
+name = "jevtriage"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "pydantic>=2,<3",
+  "pydantic-settings>=2,<3",
+  "neo4j>=5.25,<7",
+  "argon2-cffi>=23.1,<26",
+  "httpx>=0.27,<1",
+  "python-multipart>=0.0.12,<1",
+  "typesafe-sdk==0.7.2",
+  "pypdf>=5,<7",
+  "python-docx>=1.1,<2",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.8,<1", "mypy>=1.13,<2", "reportlab>=4,<5"]
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["jevtriage"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,1 @@
+class DependencyCycleError(ValueError): pass
