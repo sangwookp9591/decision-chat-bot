@@ -14,6 +14,7 @@ from jevtriage.db.requests import assert_active_run_in_tx
 from jevtriage.db.tx import write_tx
 from jevtriage.domain.ids import new_id
 from jevtriage.judgment.eligibility import evaluate_auto_assign
+from jevtriage.judgment.questions import CLASS_KEYS, OPTIONS
 from jevtriage.policy.service import DEFAULT_CONFIG
 
 
@@ -30,15 +31,17 @@ def org_key(tenant: str, value: str) -> str:
     return value
 
 
+def required_reviewer_org(tenant: str, value: str, org_ids) -> str:
+    if value == "검토자":
+        return next(iter(org_ids), "")
+    return org_key(tenant, value or "")
+
+
 def _json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
 
 
-CLASS_VALUES = {
-    "ai_need":{"필요", "불필요", "혼합", "정보 부족"},
-    "feasibility":{"가능", "조건부 가능", "현재 불가", "정보 부족"},
-    "urgency":{"긴급", "일반", "판단 보류"},
-}
+CLASS_VALUES = {key: set(OPTIONS[key]) for key in CLASS_KEYS if key in OPTIONS}
 
 
 def _draft_task(node) -> dict:
@@ -257,9 +260,8 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
         if review.get("request_id") != request_id:
             raise ReviewError("검토를 찾을 수 없습니다", 404)
         meta = dict(request)
-        reviewer_org = org_key(tenant, review.get("required_reviewer_org") or "")
-        if review.get("required_reviewer_org") == "검토자":
-            reviewer_org = next(iter(principal.org_ids), "")
+        reviewer_org = required_reviewer_org(
+            tenant, review.get("required_reviewer_org") or "", principal.org_ids)
         meta["org_ids"] = list(set(meta.get("org_ids") or []) | {reviewer_org})
         if not can_review(principal, meta) or reviewer_org not in principal.org_ids:
             raise ReviewError("검토 권한이 없습니다", 403)

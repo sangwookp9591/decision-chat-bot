@@ -47,6 +47,7 @@ ORG_DEFINITIONS = {
     "business_involvement": "the business team: supplying domain rules or data, deciding acceptance, approving, or reviewing results.",
 }
 RISK_KEYS = ("clinical_safety", "pharmacovigilance", "regulatory")
+CLASS_KEYS = ("ai_need", "feasibility", "urgency", "lead_org")
 RISK_DEFINITIONS = {
     "clinical_safety": "patient or trial subject safety, or clinical judgment, where an error could affect people's health",
     "pharmacovigilance": "adverse event, side effect or product safety signal handling or reporting",

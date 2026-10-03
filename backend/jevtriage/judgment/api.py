@@ -6,6 +6,7 @@ import json
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from jevtriage.auth.core import Principal, can_view_request, get_principal
+from jevtriage.domain.serialize import json_value
 from jevtriage.ingest.store import get_request_meta
 from jevtriage.judgment.store import get_judgment, list_runs
 
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/api")
 
 
 def _date(value):
-    return str(value) if value is not None else None
+    return json_value(value)
 
 
 async def _visible_request(principal: Principal, request_id: str) -> dict:

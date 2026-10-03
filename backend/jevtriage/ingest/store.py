@@ -126,7 +126,9 @@ async def _create_input(
     await (
         await tx.run(
             "MATCH (r:Request {id:$request_id,tenant_id:$tenant_id}) "
-            "SET r.status=$status, r.first_received_at=coalesce(r.first_received_at,datetime($received)), "
+            # An assigned request keeps its assignment status; only a rejected file changes it.
+            "SET r.status=CASE WHEN r.assignment_id IS NOT NULL AND $status='received' "
+            "THEN r.status ELSE $status END, r.first_received_at=coalesce(r.first_received_at,datetime($received)), "
             "r.original_exclusion_reasons=coalesce(r.original_exclusion_reasons,$reasons), "
             "r.original_exclusion_count=coalesce(r.original_exclusion_count,size($reasons)), "
             "r.first_supported_revision=CASE WHEN $supported AND size($reasons)=0 "
@@ -170,7 +172,8 @@ async def _create_run_job(tx, tenant_id: str, request_id: str, revision_id: str)
     await (
         await tx.run(
             "MATCH (r:Request {id:$request_id,tenant_id:$tenant_id}) "
-            "SET r.active_run_id=$run_id, r.status='judgment_pending'",
+            "SET r.active_run_id=$run_id, "
+            "r.status=CASE WHEN r.assignment_id IS NULL THEN 'judgment_pending' ELSE r.status END",
             request_id=request_id,
             tenant_id=tenant_id,
             run_id=run_id,
@@ -438,7 +441,7 @@ async def add_revision(
                 supported=True,
             )
             result["status"] = (
-                "judgment_pending"
+                ("배정 완료" if request.get("assignment_id") else "judgment_pending")
                 if not any(a["status"] == "rejected" for a in all_attachments)
                 else "needs_file_decision"
             )

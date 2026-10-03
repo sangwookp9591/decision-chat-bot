@@ -13,7 +13,7 @@ from jevtriage.db.events import list_events
 from jevtriage.db.schema import apply_schema
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.ingest.service import reanalyze
-from jevtriage.ingest.store import create_request, get_request_meta
+from jevtriage.ingest.store import add_revision, create_request, get_request_meta
 from jevtriage.jobs.worker import Worker
 from jevtriage.judgment.jev_client import JevClient
 from jevtriage.judgment.service import execute_judgment
@@ -105,6 +105,23 @@ async def test_assigned_reanalysis_is_comparison_only(tenant):
     assert "judgment_saved" not in kinds
     assert "assignment_created" not in kinds
 
+
+async def test_assigned_request_keeps_status_after_supplement_revision(tenant):
+    request_id = await new_request(tenant)
+    await run_worker(tenant, (await get_request_meta(tenant, request_id))["active_run_id"])
+    async def assigned(tx):
+        await (await tx.run(
+            "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
+            "SET q.assignment_id=$assignment,q.status='배정 완료'",
+            tenant=tenant, request=request_id, assignment=f"as_{uuid4().hex}",
+        )).consume()
+    await write_tx(tenant, assigned)
+    await add_revision(tenant, request_id, "requester", 1, "추가 정보입니다.", [],
+                       str(uuid4()), str(uuid4()))
+    meta = await get_request_meta(tenant, request_id)
+    assert meta["status"] == "배정 완료"
+    await run_worker(tenant, meta["active_run_id"])
+    assert (await get_request_meta(tenant, request_id))["status"] == "배정 완료"
 
 async def test_pending_review_superseded_and_old_approval_conflicts(tenant):
     request_id = await new_request(tenant)

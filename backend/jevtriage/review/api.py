@@ -10,7 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, can_review, get_principal
 from jevtriage.db.tx import read_tx
-from jevtriage.review.service import ReviewError, decide, org_key
+from jevtriage.review.service import ReviewError, decide, required_reviewer_org
 from jevtriage.review.store import decode, get_review, list_reviews
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
@@ -30,9 +30,8 @@ class DecisionCommand(BaseModel):
 
 
 def _allowed(principal: Principal, review: dict, request: dict) -> bool:
-    required = org_key(principal.tenant_id, review.get("required_reviewer_org") or "")
-    if review.get("required_reviewer_org") == "검토자":
-        required = next(iter(principal.org_ids), "")
+    required = required_reviewer_org(
+        principal.tenant_id, review.get("required_reviewer_org") or "", principal.org_ids)
     meta = dict(request)
     meta["org_ids"] = list(set(meta.get("org_ids") or []) | {required})
     return can_review(principal, meta) and required in principal.org_ids

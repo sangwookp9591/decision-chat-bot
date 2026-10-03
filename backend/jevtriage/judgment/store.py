@@ -152,13 +152,6 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
         tenant_id=tenant_id, run_id=run_id, request_id=request_id, policy_version=policy_version,
     )).consume()
     if compare_only:
-        # A revision on an already assigned request sets judgment_pending (ingest); the compare-only
-        # result must hand the status back so the request does not look "in analysis" forever.
-        await (await tx.run(
-            "MATCH (q:Request {tenant_id:$tenant_id,id:$request_id,status:'judgment_pending'}) "
-            "WHERE q.assignment_id IS NOT NULL SET q.status='배정 완료'",
-            tenant_id=tenant_id, request_id=request_id,
-        )).consume()
         await append_event_in_tx(tx, tenant_id, "reanalysis.compared",
             {"judgment_id": judgment_id, "mode": result["usage"]["mode"]},
             request_id=request_id, run_id=run_id)
