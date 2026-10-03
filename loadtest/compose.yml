@@ -1,0 +1,16 @@
+services:
+  neo4j:
+    image: neo4j:5.26.0-community
+    environment:
+      NEO4J_AUTH: neo4j/development-only
+    ports:
+      - "${T25_NEO4J_HTTP_PORT:-7490}:7474"
+      - "${T25_NEO4J_BOLT_PORT:-7690}:7687"
+    volumes:
+      - ${T25_NEO4J_DIR:?}:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p development-only 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 24
+      start_period: 30s
