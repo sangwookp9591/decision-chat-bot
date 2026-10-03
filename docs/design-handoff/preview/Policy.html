@@ -78,11 +78,12 @@ button,input,textarea,select{font:inherit;color:inherit}
 <span style="font-size: 12px; color: #4A433B">AI 필요성 · 개발 가능성 · 긴급도 · 담당 조직 중 하나라도 이 값보다 낮으면 사람 검토로 보냅니다.</span>
 </label>
 <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
-<legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">항상 검토로 보내는 업무</legend>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">임상</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">안전성 · 약물감시</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">규제 · 인허가</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #F15921">긴급도 “긴급”</label>
+<legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">항상 검토로 보내는 업무 · 필수</legend>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" disabled="" style="width: 18px; height: 18px; accent-color: #F15921">임상</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" disabled="" style="width: 18px; height: 18px; accent-color: #F15921">안전성 · 약물감시</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" disabled="" style="width: 18px; height: 18px; accent-color: #F15921">규제 · 인허가</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 14px"><input type="checkbox" checked="" disabled="" style="width: 18px; height: 18px; accent-color: #F15921">긴급도 “긴급”</label>
+<p style="margin: 0; font-size: 12px; color: #4A433B">필수 검토 항목은 해제할 수 없습니다. 위험 여부가 불확실한 요청도 검토로 보냅니다.</p>
 </fieldset>
 <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">변경 사유 (필수)
 <textarea rows="2" style="resize: vertical; border: 1px solid #D3CCC2; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 400; line-height: 1.5">검토 대기 p95가 4시간을 넘어 임계값을 낮춥니다. 2주 후 오분류율과 함께 재평가합니다.</textarea>
