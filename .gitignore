@@ -19,3 +19,5 @@ artifacts/validation/t25*/**/runs.json
 frontend/test-results/
 frontend/playwright-report/
 frontend/tsconfig.tsbuildinfo
+# Ad-hoc E2E run logs
+artifacts/*-e2e/
