@@ -23,6 +23,8 @@ def connect(data_dir: Path | None = None) -> sqlite3.Connection:
           error_class TEXT, duration_ms REAL, validity TEXT, payload TEXT NOT NULL
         );
         CREATE INDEX IF NOT EXISTS events_ts ON events(ts);
+        CREATE INDEX IF NOT EXISTS events_tenant_ts
+          ON events(json_extract(payload, '$.tenant_id'), ts, kind);
         CREATE INDEX IF NOT EXISTS events_request ON events(request_id);
         CREATE INDEX IF NOT EXISTS events_attempt ON events(attempt_id);
         CREATE TABLE IF NOT EXISTS offsets (

@@ -22,11 +22,14 @@ watchdog은 collector heartbeat, 생산자 heartbeat·journal 쓰기 실패 누�
 
 운영자 역할만 `/api/monitoring/summary`, `/slo`, `/failures`, `/alerts`, `/collection-status`에 접근할 수 있다. journal에 `tenant_id`가 있는 이벤트만 해당 운영자의 테넌트 집계에 포함된다. 새 SSE 이벤트에도 tenant ID를 적고, 이전 SSE 이벤트는 같은 기간의 테넌트가 확인된 request ID와 연결될 때만 포함한다. 연결할 수 없는 이전 이벤트는 합치지 않고 `unscoped_events`로 공개한다. `/failures`는 원인별 request/run/attempt ID와 시각을 돌려준다. `reconcile_commits(tenant_id, rows)`는 `db.tx.read_tx`로 Neo4j의 Request/Run ID와 journal ID를 비교해 누락·불일치를 반환한다. 이 함수는 조회만 수행한다.
 
+모니터링 조회는 SQLite `events_tenant_ts` 식 인덱스(`payload.tenant_id`, `ts`, `kind`)를 사용한다. 같은 프로세스·테넌트·data directory의 summary/SLO/failures 요청은 최대 5초 동안 원시 이벤트 스냅샷을 공유하고, 동시에 시작한 조회는 하나의 SQLite 작업을 기다린다. 각 요청은 공유 스냅샷에서 자신의 기간을 다시 선택하므로 SLO 30일 창과 분모 정의는 그대로 유지된다. 이 짧은 캐시 기간에는 새 수집 이벤트가 최대 5초 늦게 보일 수 있다. summary의 journal 조회와 Neo4j 업무·검토 조회는 함께 시작한다. 현재 데이터에서 측정한 지연 및 조회 계획은 `artifacts/validation/perf/monitoring.md`에 기록했다.
+
 새 접수에서는 요청자의 org ID를 Request와 journal에 기록한다. `/summary`의 `org`·`status` 필터는 기간 내 Request의 현재 조직·상태로 범위를 결정한 뒤 journal을 같은 요청 ID로 제한한다. 과거 Request에 조직 필드가 없으면 조직을 추정하지 않고 필터 대상 미확정 표본으로 공개한다. 필터 없는 journal 집계는 DB 장애에도 가능하지만, org/status 필터는 정확한 분모를 위해 업무 DB 장애 때 503을 반환한다. `version`은 worker에 기록된 Config 버전을 사용한다. 버전 필터에서는 요청 ID가 없는 실패를 정확히 귀속할 수 없어 가용성 분모와 비율을 `null`로 표시한다. 비용 미수집값도 `null`이다. 로컬 watchdog의 원격 수신·호스트 전체 유실 복구 보장은 T26 운영 검증 대상이다.
 
 ## 검증
 
-`make up` 후 `cd backend && .venv/bin/pytest tests/integration/test_monitoring_collector.py -q`로 실제 writer 기록, SQLite 재수집 중복, 손상 줄, DB 실패 표본, 120초 실패·지연, 섀도 제외, 조직 저장·필터, 커밋 대조, 수집 공백, 빠른 오류 예산 소진·반복 장애 watchdog 알림 및 30일 미검증 상태를 검사한다. 13개 시험이 통과했다. 전체 백엔드 시험 결과는 TASK T18 상태 메모에 남긴다.
+`make up` 후 `cd backend && .venv/bin/pytest tests/integration/test_monitoring_collector.py -q`로 실제 writer 기록, SQLite 재수집 중복, 손상 줄, DB 실패 표본, 120초 실패·지연, 섀도 제외, 조직 저장·필터, 커밋 대조, 수집 공백, 빠른 오류 예산 소진·반복 장애 watchdog 알림, 30일 미검증 상태, 스냅샷 공유·만료·테넌트 격리·기존 SSE 귀속을 검사한다.
+
 # Monitoring business filters and counts
 
 T22의 API 경계 journal(`api_boundary_received`/`api_boundary_completed`)은 인증 전에도 남는다. DB 중단으로 인증이 끝나지 않은 접수는 `request_received`/`request_failed`의 `validity=undetermined` 표본으로 보존하며, tenant별 가용성 분모에 추정 합산하지 않는다.

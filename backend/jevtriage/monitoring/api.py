@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import time
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
@@ -21,6 +23,9 @@ from jevtriage.monitoring.alerts import list_alerts
 from jevtriage.monitoring.slo import error_budget
 
 router = APIRouter(prefix="/api/monitoring", tags=["monitoring"])
+_snapshot_cache: dict[tuple[asyncio.AbstractEventLoop, Path, str],
+                      tuple[float, asyncio.Task[list[dict]]]] = {}
+_SNAPSHOT_TTL = 5.0
 
 
 def _range(start: str | None, end: str | None) -> tuple[datetime, datetime]:
@@ -35,7 +40,29 @@ def _range(start: str | None, end: str | None) -> tuple[datetime, datetime]:
 
 
 async def _rows(principal: Principal, begin: datetime, stop: datetime) -> tuple[list[dict], int]:
-    all_rows = await asyncio.to_thread(events_between, get_settings().data_dir, begin, stop, principal.tenant_id)
+    data_dir = Path(get_settings().data_dir)
+    key = (asyncio.get_running_loop(), data_dir, principal.tenant_id)
+    current = time.monotonic()
+    cached = _snapshot_cache.get(key)
+    if cached is None or current - cached[0] >= _SNAPSHOT_TTL:
+        # The full tenant stream serves summary, SLO, and failures with different windows.
+        task = asyncio.create_task(asyncio.to_thread(
+            events_between, data_dir, datetime.min.replace(tzinfo=UTC),
+            datetime.max.replace(tzinfo=UTC), principal.tenant_id))
+        _snapshot_cache[key] = (current, task)
+    else:
+        task = cached[1]
+    try:
+        all_rows = [row for row in await asyncio.shield(task)
+                    if begin <= datetime.fromisoformat(row["ts"]).astimezone(UTC) <= stop]
+    except Exception:
+        if _snapshot_cache.get(key, (None, None))[1] is task:
+            _snapshot_cache.pop(key, None)
+        raise
+    if len(_snapshot_cache) > 32:
+        for old_key, (created, _) in list(_snapshot_cache.items()):
+            if current - created >= _SNAPSHOT_TTL:
+                _snapshot_cache.pop(old_key, None)
     known_requests = {r["request_id"] for r in all_rows
                       if r.get("tenant_id") == principal.tenant_id and r.get("request_id")}
     scoped = [r for r in all_rows if r.get("tenant_id") == principal.tenant_id or
@@ -56,12 +83,15 @@ async def summary(from_: str | None = Query(None, alias="from"), to: str | None 
                   version: str | None = None,
                   principal: Principal = Depends(require_roles("operator"))):  # noqa: B008
     begin, stop = _range(from_, to)
-    rows, unscoped = await _rows(principal, begin, stop)
-    business_result, review_result = await asyncio.gather(
+    rows_result, business_result, review_result = await asyncio.gather(
+            _rows(principal, begin, stop),
             business_counts(principal.tenant_id, begin, stop, org, status),
             review_wait(principal.tenant_id, org, status),
             return_exceptions=True,
         )
+    if isinstance(rows_result, Exception):
+        raise rows_result
+    rows, unscoped = rows_result
     if isinstance(business_result, Exception):
         if org or status:
             raise HTTPException(503, "Request scope filter unavailable") from business_result

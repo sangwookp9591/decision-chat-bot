@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 from contextlib import closing
 from datetime import UTC, datetime, timedelta
@@ -24,6 +25,88 @@ from jevtriage.monitoring import api as monitoring_api
 from jevtriage.monitoring.aggregates import collection_status, events_between, summarize
 from jevtriage.monitoring.api import reconcile_commits
 from jevtriage.monitoring.slo import error_budget
+
+
+@pytest.mark.asyncio
+async def test_monitoring_rows_share_one_snapshot_for_concurrent_windows(tmp_path, monkeypatch):
+    now = datetime.now(UTC)
+    writer = JournalWriter(tmp_path)
+    _record(writer, now - timedelta(seconds=1), "shared-1", "a1", "request_received",
+            validity="valid")
+    _record(writer, now, "shared-2", "a1", "request_failed", error_class="ModelTimeout")
+    collect_once(tmp_path)
+    monkeypatch.setattr(monitoring_api, "get_settings",
+                        lambda: SimpleNamespace(data_dir=tmp_path))
+    original = monitoring_api.events_between
+    calls = []
+
+    def counted(*args):
+        calls.append(args)
+        return original(*args)
+
+    monkeypatch.setattr(monitoring_api, "events_between", counted)
+    principal = Principal("t-alpha", "operator", (), frozenset({"operator"}))
+    windows = [(now - timedelta(days=30), now + timedelta(seconds=1)),
+               (datetime(1970, 1, 1, tzinfo=UTC), now + timedelta(seconds=1))]
+    first, second = await asyncio.gather(*(monitoring_api._rows(principal, *w) for w in windows))
+    assert len(calls) == 1
+    assert first == second
+    assert len(first[0]) == 2
+
+
+@pytest.mark.asyncio
+async def test_monitoring_snapshot_expires_and_stays_tenant_scoped(tmp_path, monkeypatch):
+    now = datetime.now(UTC)
+    writer = JournalWriter(tmp_path)
+    _record(writer, now, "alpha", "a1", "request_received", validity="valid")
+    writer.append({"event_id": "beta", "attempt_id": "b1", "kind": "request_received",
+                   "ts": now.isoformat(), "tenant_id": "t-beta", "validity": "valid"})
+    writer.flush()
+    collect_once(tmp_path)
+    monkeypatch.setattr(monitoring_api, "get_settings",
+                        lambda: SimpleNamespace(data_dir=tmp_path))
+    window = (now - timedelta(seconds=1), now + timedelta(seconds=2))
+    alpha = Principal("t-alpha", "operator", (), frozenset({"operator"}))
+    beta = Principal("t-beta", "operator", (), frozenset({"operator"}))
+    assert {r["event_id"] for r in (await monitoring_api._rows(alpha, *window))[0]} == {"alpha"}
+    assert {r["event_id"] for r in (await monitoring_api._rows(beta, *window))[0]} == {"beta"}
+    _record(writer, now + timedelta(seconds=1), "alpha-new", "a2", "request_received",
+            validity="valid")
+    collect_once(tmp_path)
+    assert {r["event_id"] for r in (await monitoring_api._rows(alpha, *window))[0]} == {"alpha"}
+    key = (asyncio.get_running_loop(), tmp_path, "t-alpha")
+    created, task = monitoring_api._snapshot_cache[key]
+    monitoring_api._snapshot_cache[key] = (created - monitoring_api._SNAPSHOT_TTL, task)
+    assert {r["event_id"] for r in (await monitoring_api._rows(alpha, *window))[0]} == {
+        "alpha", "alpha-new"}
+
+
+@pytest.mark.asyncio
+async def test_monitoring_snapshot_keeps_windowed_legacy_sse_attribution(tmp_path, monkeypatch):
+    now = datetime.now(UTC)
+    writer = JournalWriter(tmp_path)
+    _record(writer, now - timedelta(minutes=2), "outside", "a1", "request_completed",
+            request_id="old-request")
+    _record(writer, now, "inside", "a2", "request_completed", request_id="new-request")
+    for event_id, request_id in (("linked", "new-request"), ("unlinked", "old-request")):
+        writer.append({"event_id": event_id, "attempt_id": event_id,
+                       "kind": "sse_deliver", "request_id": request_id,
+                       "ts": now.isoformat()})
+    writer.flush()
+    collect_once(tmp_path)
+    monkeypatch.setattr(monitoring_api, "get_settings",
+                        lambda: SimpleNamespace(data_dir=tmp_path))
+    principal = Principal("t-alpha", "operator", (), frozenset({"operator"}))
+    rows, unscoped = await monitoring_api._rows(
+        principal, now - timedelta(seconds=1), now + timedelta(seconds=1))
+    assert {r["event_id"] for r in rows} == {"inside", "linked"}
+    assert unscoped == 1
+
+
+def test_metrics_store_has_tenant_time_index(tmp_path):
+    with closing(connect(tmp_path)) as db:
+        indexes = {row[1] for row in db.execute("PRAGMA index_list(events)")}
+    assert "events_tenant_ts" in indexes
 
 
 def _record(writer, when, event, attempt, kind, **fields):
