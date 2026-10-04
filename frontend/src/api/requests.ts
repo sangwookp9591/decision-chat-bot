@@ -9,7 +9,9 @@ export type Judgment = { id: string; request_id: string; revision_id: string; ru
 export type RunHistory = { active_run_id?: string | null; runs: Array<{ id: string; revision_id?: string; status: string; versions: Record<string, unknown>; created_at?: string }> };
 export type SourceUnit = { unit_id: string; order: number; location: Record<string, unknown>; char_start: number; char_end: number; text?: string };
 export type SourceDocument = { request_id: string; revision: number; revision_id: string; source: string; kind: 'pdf' | 'docx' | 'md' | 'chat'; filename: string | null; can_read_source: boolean; units: SourceUnit[] };
+export type { ProgressSnapshot } from '../state/progress';
 export const requestApi = {
+  progress: (id: string, runId?: string) => apiFetch<import('../state/progress').ProgressSnapshot>(`/api/requests/${encodeURIComponent(id)}/progress${runId ? `?run_id=${encodeURIComponent(runId)}` : ''}`),
   detail: (id: string) => apiFetch<RequestDetail>(`/api/requests/${encodeURIComponent(id)}`),
   list: () => apiFetch<{ items: RequestItem[] }>('/api/requests?limit=50'),
   judgment: (id: string, runId?: string) => apiFetch<Judgment>(`/api/requests/${encodeURIComponent(id)}/judgment${runId ? `?run_id=${encodeURIComponent(runId)}` : ''}`),

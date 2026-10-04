@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { useDelayedFlag } from '../state/useDelayedFlag';
 import './ui.css';
 
 export type StatusKind = 'success' | 'failure' | 'progress' | 'review' | 'pending' | 'skipped';
@@ -14,7 +15,8 @@ export function EvidenceLink({ children, location, onClick }: { children: ReactN
 export function IdChip({ id }: { id: string }) { const [copied, setCopied] = useState(false); return <button type="button" className="id-chip mono" title="ID 복사" onClick={async () => { try { await navigator.clipboard.writeText(id); setCopied(true); window.setTimeout(() => setCopied(false), 1400); } catch { setCopied(false); } }}><span>{id}</span><span aria-live="polite">{copied ? '복사됨' : '복사'}</span></button>; }
 export function EmptyState({ title, children }: { title: string; children?: ReactNode }) { return <div className="state-panel empty-state"><span aria-hidden="true">◇</span><h2>{title}</h2>{children && <p>{children}</p>}</div>; }
 export function ErrorState({ title = '문제가 발생했습니다', children, onRetry }: { title?: string; children?: ReactNode; onRetry?: () => void }) { return <div className="state-panel error-state" role="alert"><span aria-hidden="true">!</span><h2>{title}</h2>{children && <p>{children}</p>}{onRetry && <Button onClick={onRetry}>다시 시도</Button>}</div>; }
-export function LoadingState({ label = '불러오는 중' }: { label?: string }) { return <div className="loading-state" role="status"><span className="spinner" aria-hidden="true" />{label}</div>; }
+/** `delayMs` withholds the spinner for short loads (default 200ms, same as Suspensive's Delay) so quick fetches never flash. */
+export function LoadingState({ label = '불러오는 중', delayMs = 200 }: { label?: string; delayMs?: number }) { const visible = useDelayedFlag(true, delayMs); return <div className="loading-state" role="status" aria-busy="true">{visible && <><span className="spinner" aria-hidden="true" />{label}</>}</div>; }
 export function Button({ children, variant = 'primary', ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'plain' }) { return <button {...props} className={`ui-button ${variant} ${props.className || ''}`}>{children}</button>; }
 export function Tabs({ tabs, value, onChange }: { tabs: { id: string; label: string }[]; value: string; onChange: (id: string) => void }) { return <div className="ui-tabs" role="tablist">{tabs.map((tab) => <button key={tab.id} type="button" role="tab" aria-selected={value === tab.id} className={value === tab.id ? 'active' : ''} onClick={() => onChange(tab.id)}>{tab.label}</button>)}</div>; }
 export function Modal({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) { return <Overlay open={open} title={title} onClose={onClose} className="modal-panel">{children}</Overlay>; }

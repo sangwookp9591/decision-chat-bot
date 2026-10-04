@@ -67,8 +67,10 @@ test('shell, status, primary color and touch target contracts are visible', asyn
   const chat = page.locator('.chat-panel');
   await expect(chat).toBeVisible();
   expect(await chat.evaluate((el) => ({ width: el.getBoundingClientRect().width, height: el.getBoundingClientRect().height }))).toMatchObject({ width: 520, height: 900 });
-  mkdirSync(resolve(process.cwd(), '../artifacts/validation/t23'), { recursive: true });
-  await page.screenshot({ path: resolve(process.cwd(), `../artifacts/validation/t23/${test.info().project.name}-responsive-520.png`), fullPage: true });
+  // A11Y_SHOT_DIR keeps regression reruns from overwriting the archived t23 evidence PNGs.
+  const shotDir = resolve(process.cwd(), process.env.A11Y_SHOT_DIR || '../artifacts/validation/t23');
+  mkdirSync(shotDir, { recursive: true });
+  await page.screenshot({ path: resolve(shotDir, `${test.info().project.name}-responsive-520.png`), fullPage: true });
 });
 
 test('reduced motion and Safari mascot media preference are respected', async ({ page, browserName }) => {

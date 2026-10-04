@@ -3,7 +3,7 @@ import { apiFetch } from '../api/client';
 import { eventApi, type EventSnapshot } from '../api/events';
 
 export type StreamFilter = { requestId?: string; enabled?: boolean };
-export type StreamEvent = { seq: number; type: string; request_id?: string; run_id?: string; status?: string; step_name?: string };
+export type StreamEvent = { seq: number; type: string; request_id?: string; run_id?: string; status?: string; step_name?: string; payload?: Record<string, unknown> };
 export type StreamStatus = 'connected' | 'reconnecting' | 'disconnected';
 
 /**
@@ -13,7 +13,7 @@ export type StreamStatus = 'connected' | 'reconnecting' | 'disconnected';
  * Tenant-wide kinds (`policy.*`, `rule.*`) carry no request id and bypass the request filter.
  */
 export const EVENT_KINDS = [
-  'run.step', 'judgment_saved', 'judgment_failed', 'reanalysis.compared',
+  'request.received', 'run.step', 'judgment.partial', 'judgment.evidence_ready', 'judgment.tasks_ready', 'judgment_saved', 'judgment_failed', 'reanalysis.compared',
   'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned',
   'policy.published',
   'rule.decision', 'rule.version_created', 'rule.validated', 'rule.publish', 'rule.stop', 'rule.revert',
@@ -89,7 +89,7 @@ export function useEventStream(filters: StreamFilter = {}, onSnapshot?: (snapsho
         let data: Record<string, unknown> = {};
         try { data = JSON.parse(message.data) as Record<string, unknown>; } catch { return; }
         if (!filters.requestId || data.request_id === filters.requestId || isTenantWide(kind)) {
-          callbacks.current.onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined, ...(typeof data.step_name === 'string' ? { step_name: data.step_name } : {}) });
+          callbacks.current.onEvent?.({ seq, type: kind, request_id: data.request_id as string | undefined, run_id: data.run_id as string | undefined, status: data.status as string | undefined, payload: data, ...(typeof data.step_name === 'string' ? { step_name: data.step_name } : {}) });
         }
       }));
     }

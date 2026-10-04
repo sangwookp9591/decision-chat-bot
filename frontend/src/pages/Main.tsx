@@ -1,42 +1,35 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { DraftVersionCompare, sourceLabel } from './main/DraftVersions';
 import { useSearchParams } from 'react-router-dom';
-import { apiFetch, csrfToken, idempotencyKey, type ApiError } from '../api/client';
+import { apiFetch, idempotencyKey, type ApiError } from '../api/client';
 import { requestApi, type Judgment, type RequestDetail, type RequestItem } from '../api/requests';
 import { useSession } from '../state/session';
 import { Button, StatusBadge, type StatusKind } from '../components';
 import { attachmentReasonLabel, getStatusPresentation } from '../components/statusLabels';
 import { infoRequest, needsInfo, resultBadge } from './main/requestState';
-import { useEventStream } from '../state/events';
+import { useEventStream, type StreamEvent } from '../state/events';
 import { EvidenceViewer, type ViewerTarget } from '../components/EvidenceViewer';
 import { RawDetails } from '../components/RawDetails';
 import { locationLabel, questionLabel, reviewReasonLabel } from '../lib/labels';
+import { uploadRequest } from './main/uploadRequest';
+import { OptimisticRequestCard, ProvisionalResult, SlowNotice, classificationChoices as classifications, classificationLabels as labels, stepLabel } from './main/ProgressivePanel';
+import { initialProgress, progressReducer } from '../state/progress';
 import './main/main.css';
 
 const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
-const labels: Record<string, string> = { ai_need: 'AI 필요성', feasibility: '개발 가능성', urgency: '긴급도', lead_org: '주관 조직' };
-const classifications: Record<string, string[]> = { ai_need: ['필요', '불필요', '혼합'], feasibility: ['가능', '조건부 가능', '현재 불가'], urgency: ['긴급', '일반'], lead_org: ['AI팀', 'IT팀', '현업'] };
 function errorMessage(error: unknown) { return (error as ApiError)?.message || '요청 처리 중 문제가 발생했습니다.'; }
-function uploadRequest(data: FormData, onProgress: (value: number) => void, path = '/api/requests') {
-  return new Promise<{ request_id: string; status: string; revision: number }>((resolve, reject) => {
-    const xhr = new XMLHttpRequest(); xhr.open('POST', path); xhr.withCredentials = true;
-    xhr.setRequestHeader('Idempotency-Key', idempotencyKey()['Idempotency-Key']); const token = csrfToken(); if (token) xhr.setRequestHeader('X-CSRF-Token', token);
-    xhr.upload.onprogress = (event) => { if (event.lengthComputable) onProgress(Math.round(event.loaded / event.total * 100)); };
-    xhr.onerror = () => reject(new Error('서버에 연결할 수 없습니다.'));
-    xhr.onload = () => { if (xhr.status >= 200 && xhr.status < 300) resolve(JSON.parse(xhr.responseText)); else reject(new Error('요청을 접수하지 못했습니다.')); };
-    xhr.send(data);
-  });
-}
-
 export function Main() {
   const { user } = useSession();
   const [text, setText] = useState(''); const [files, setFiles] = useState<File[]>([]); const [upload, setUpload] = useState<number | null>(null);
   const [params, setParams] = useSearchParams(); const requestId = params.get('request_id') || ''; const [notice, setNotice] = useState('');
   const [detail, setDetail] = useState<RequestDetail | null>(null); const [judgment, setJudgment] = useState<Judgment | null>(null);
-  const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null); const [stage, setStage] = useState(''); const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
+  const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null); const [progress, dispatch] = useReducer(progressReducer, initialProgress); const progressRef = useRef(progress); progressRef.current = progress;
+  const [error, setError] = useState(''); const [retry, setRetry] = useState<'' | 'submit' | 'reanalyze'>(''); const [busy, setBusy] = useState(false);
   const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState(''); const [viewer, setViewer] = useState<ViewerTarget | null>(null);
-  const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); setStage(''); };
+  const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); };
+  const stage = stepLabel(progress.currentStep);
   const info = infoRequest(detail);
+  const stepDone = (name: string, index: number) => Boolean(judgment) || progress.phase === 'final' || stageNames.indexOf(stage) > index || progress.steps.some((step) => stepLabel(step.name) === name && step.status === 'succeeded');
   const revisionNumber = detail?.request.revision_number || detail?.revisions.length || 0;
   useEffect(() => {
     // Text from the chat widget lands in the intake form right away (also when it was sent from another page).
@@ -46,6 +39,8 @@ export function Main() {
     window.addEventListener('chat:request', listener); return () => window.removeEventListener('chat:request', listener);
   }, []);
   useEffect(() => { if (!judgment) return; window.dispatchEvent(new CustomEvent('chat:result', { detail: { urgency: judgment.classifications.urgency, review: Boolean(judgment.review), summary: typeof judgment.summary === 'string' ? judgment.summary : judgment.summary.text } })); }, [judgment]);
+  useEffect(() => { window.dispatchEvent(new CustomEvent('chat:progress', { detail: progress.phase === 'submitting' || progress.phase === 'received' || progress.phase === 'preliminary' ? { phase: progress.phase, step: stage } : null })); }, [progress.phase, stage]);
+  const restoreProgress = useCallback((id: string) => { void Promise.resolve().then(() => requestApi.progress(id)).then((snapshot) => dispatch({ type: 'restore', progress: snapshot })).catch(() => undefined); }, []);
   const refresh = useCallback(async (id: string) => {
     const [current, judgmentResult, history] = await Promise.all([
       requestApi.detail(id),
@@ -53,14 +48,15 @@ export function Main() {
       requestApi.runs(id).then((value) => ({ value }), () => ({ value: null })),
     ]);
     setDetail(current); let activeRunId = current.request.active_run_id;
-    if ('value' in judgmentResult) { setJudgment(judgmentResult.value); activeRunId = judgmentResult.value.run_id; setStage(''); }
+    if ('value' in judgmentResult) { setJudgment(judgmentResult.value); activeRunId = judgmentResult.value.run_id; }
     else if ((judgmentResult.reason as ApiError)?.status !== 404) throw judgmentResult.reason;
+    else restoreProgress(id); // still running: rebuild the step timeline and provisional cards from the progress API
     if ('value' in history && history.value) {
       setRuns(history.value); const previous = history.value.runs.find((run) => run.id !== activeRunId);
       try { setPreviousJudgment(previous ? await requestApi.judgment(id, previous.id) : null); } catch { setPreviousJudgment(null); }
     } else { setRuns(null); setPreviousJudgment(null); }
     if (['failed', 'cancelled', '실패'].includes(current.request.status)) setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.');
-  }, []);
+  }, [restoreProgress]);
   useEffect(() => { requestApi.list().then((value) => setRequests(value.items)).catch(() => undefined); }, [requestId, detail?.request.status]);
   const inFlight = useRef(false);
   const load = useCallback((id: string) => {
@@ -70,25 +66,28 @@ export function Main() {
   }, [refresh]);
   const refreshIfPending = useCallback((id: string) => { if (!judgment && !error) load(id); }, [judgment, error, load]);
   // A saved judgment is not final: review decisions, info requests and assignments keep changing the request status.
-  const onStreamEvent = useCallback((event: { type: string; step_name?: string }) => {
-    if (event.type === 'run.step' && event.step_name) setStage(({ '입력 정리': '내용 정리', '업무 분해': '업무 나누기' } as Record<string, string>)[event.step_name] || event.step_name);
+  const onStreamEvent = useCallback((event: StreamEvent) => {
+    dispatch({ type: 'event', event });
     if (['review_decided', 'assignment_created', 'auto_assignment_deferred', 'reanalysis.compared'].includes(event.type)) load(requestId);
-    else refreshIfPending(requestId);
+    else if (['request.received', 'judgment_saved', 'judgment_failed'].includes(event.type)) refreshIfPending(requestId);
   }, [refreshIfPending, load, requestId]);
   useEventStream({ requestId: requestId || undefined, enabled: Boolean(requestId) }, undefined, onStreamEvent, () => load(requestId));
   useEffect(() => {
     // The selected request lives in the URL (?request_id=), so reload / back / shared links restore it.
-    resetRun(); setDetail(null); setError('');
+    resetRun(); setDetail(null); setError(''); setRetry('');
+    if (progressRef.current.requestId !== requestId) dispatch({ type: 'reset' }); // an optimistic card just confirmed with this id keeps its state
     if (requestId) load(requestId);
   }, [requestId]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (progress.phase === 'failed' && !judgment) { setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.'); setRetry('reanalyze'); } }, [progress.phase, judgment]);
   useEffect(() => {
     if (!requestId || judgment || error) return;
     const timer = window.setInterval(() => refreshIfPending(requestId), 10000);
     return () => window.clearInterval(timer);
   }, [requestId, judgment, error, refreshIfPending]);
-  async function submit(event: React.FormEvent) {
-    event.preventDefault();
-    setBusy(true); setError(''); setNotice(''); resetRun(); setUpload(0);
+  async function submit(event?: React.FormEvent) {
+    event?.preventDefault();
+    setBusy(true); setError(''); setRetry(''); setNotice(''); resetRun(); setUpload(0);
+    dispatch({ type: 'optimistic', text: text.trim() || files.map((file) => file.name).join(', '), at: Date.now() });
     try {
       const form = new FormData();
       form.append('text', text);
@@ -98,10 +97,11 @@ export function Main() {
       const path = revising ? `/api/requests/${requestId}/revisions` : '/api/requests';
       const accepted = await uploadRequest(form, setUpload, path);
       const id = revising ? requestId : accepted.request_id;
+      dispatch({ type: 'accepted', requestId: id });
       setText(''); setFiles([]);
       if (id === requestId) await refresh(id); else { setDetail(null); setParams({ request_id: id }); }
     } catch (problem) {
-      setError(errorMessage(problem));
+      dispatch({ type: 'rejected', message: errorMessage(problem) }); setError(errorMessage(problem)); setRetry('submit');
     } finally {
       setBusy(false); setUpload(null);
     }
@@ -129,7 +129,7 @@ export function Main() {
     setBusy(true); setError('');
     try {
       await requestApi.reanalyze(requestId, revisionNumber);
-      resetRun(); setRuns(await requestApi.runs(requestId));
+      resetRun(); dispatch({ type: 'reset' }); setRuns(await requestApi.runs(requestId));
       await refresh(requestId);
     } catch (problem) {
       setError(errorMessage(problem));
@@ -148,9 +148,12 @@ export function Main() {
         <div className="intake-actions"><label className="ui-button secondary attach-button">{detail?.request.status === 'needs_file_decision' ? '읽기 실패 파일 재첨부' : '파일 첨부'}<input aria-label="파일 첨부" type="file" accept=".pdf,.docx,.md" multiple onChange={(event) => setFiles(Array.from(event.target.files || []).slice(0, 5))} /></label><span>PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB</span><button className="ui-button primary" type="submit" disabled={busy || (!text.trim() && files.length === 0)}>{detail?.request.status === 'needs_file_decision' ? '재첨부 후 새 revision' : needsInfo(detail?.request.status) ? '보완 내용 제출 (새 revision)' : '요청 보내기'}</button></div>
       </form>
       {notice && <p className="chat-handoff" role="status">{notice}</p>}
+      {!judgment && <OptimisticRequestCard state={progress} />}
       {upload !== null && <div className="progress-card" aria-live="polite"><strong>업로드 진행</strong><progress max="100" value={upload} /> <span>{upload}%</span></div>}
-      {requestId && <article className="progress-card analysis-card"><div className="card-heading"><h2>분석 진행</h2>{detail && <StatusBadge {...resultBadge(detail, judgment, Boolean(error))} />}</div><ol className="stage-list">{stageNames.map((name, index) => <li key={name} className={name === stage ? 'current' : judgment ? 'done' : 'waiting'}><span>{judgment || stageNames.indexOf(stage) > index ? '✓' : index + 1}</span>{name}</li>)}</ol>{detail?.request.status === 'needs_file_decision' && <div className="file-decision"><p>읽지 못한 첨부가 있습니다. 제외하거나 다시 첨부한 뒤 분석을 진행해 주세요.</p><ul>{detail.attachments.filter((file) => file.status !== 'ok').map((file) => <li key={file.id}>{file.filename} — {attachmentReasonLabel(file.reason)}</li>)}</ul><button className="ui-button primary" type="button" disabled={busy} onClick={excludeUnread}>실패 파일 제외 후 분석</button><span>재첨부는 아래 입력에서 새 revision으로 제출할 수 있습니다.</span></div>}{info && <div className="info-request" role="region" aria-label="보완 요청"><h3>검토자가 보완을 요청했습니다</h3><p>{info.reason || '보완이 필요한 내용을 확인해 주세요.'}</p>{info.needed.length > 0 && <ul>{info.needed.map((item) => <li key={item}>{item}</li>)}</ul>}<button type="button" className="ui-button primary" onClick={() => document.getElementById('request-text')?.focus()}>보완 내용 입력하기</button><span>아래 입력에 내용을 보완해 &quot;보완 내용 제출&quot;을 누르면 같은 요청의 새 revision으로 접수되어 다시 분석합니다.</span></div>}</article>}
-      {error && <div className="failure-card" role="alert"><StatusBadge status="failure" label="시스템 실패" /><p>{error}</p></div>}
+      {requestId && <article className="progress-card analysis-card"><div className="card-heading"><h2>분석 진행</h2>{detail && <StatusBadge {...resultBadge(detail, judgment, Boolean(error))} />}</div><ol className="stage-list">{stageNames.map((name, index) => <li key={name} className={stepDone(name, index) ? 'done' : name === stage ? 'current' : 'waiting'}><span>{stepDone(name, index) ? '✓' : index + 1}</span>{name}</li>)}</ol>{detail?.request.status === 'needs_file_decision' && <div className="file-decision"><p>읽지 못한 첨부가 있습니다. 제외하거나 다시 첨부한 뒤 분석을 진행해 주세요.</p><ul>{detail.attachments.filter((file) => file.status !== 'ok').map((file) => <li key={file.id}>{file.filename} — {attachmentReasonLabel(file.reason)}</li>)}</ul><button className="ui-button primary" type="button" disabled={busy} onClick={excludeUnread}>실패 파일 제외 후 분석</button><span>재첨부는 아래 입력에서 새 revision으로 제출할 수 있습니다.</span></div>}{info && <div className="info-request" role="region" aria-label="보완 요청"><h3>검토자가 보완을 요청했습니다</h3><p>{info.reason || '보완이 필요한 내용을 확인해 주세요.'}</p>{info.needed.length > 0 && <ul>{info.needed.map((item) => <li key={item}>{item}</li>)}</ul>}<button type="button" className="ui-button primary" onClick={() => document.getElementById('request-text')?.focus()}>보완 내용 입력하기</button><span>아래 입력에 내용을 보완해 &quot;보완 내용 제출&quot;을 누르면 같은 요청의 새 revision으로 접수되어 다시 분석합니다.</span></div>}</article>}
+      {!judgment && !error && <SlowNotice state={progress} />}
+      {!judgment && <ProvisionalResult state={progress} />}
+      {error && <div className="failure-card" role="alert"><StatusBadge status="failure" label="시스템 실패" /><p>{error}</p>{retry && <Button type="button" variant="secondary" disabled={busy} onClick={() => { if (retry === 'submit') void submit(); else void reanalyze(); }}>다시 시도</Button>}</div>}
       {judgment && <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} canReanalyze={Boolean(user?.roles.some((role) => ['requester', 'reviewer', 'operator'].includes(role)))} onReanalyze={() => void reanalyze()} />}
       <EvidenceViewer target={viewer} onClose={() => setViewer(null)} />{source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
     </div><aside className="request-list"><h2>내 요청</h2>{requests.length ? requests.map((item) => { const state = getStatusPresentation(item.status); return <button type="button" key={item.id} onClick={() => openRequest(item.id)} aria-current={item.id === requestId ? 'true' : undefined}><code>{item.id}</code><StatusBadge status={state.status} label={state.label} /></button>; }) : <p>접수한 요청이 여기에 표시됩니다.</p>}</aside></div>
