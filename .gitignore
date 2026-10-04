@@ -21,3 +21,6 @@ frontend/playwright-report/
 frontend/tsconfig.tsbuildinfo
 # Ad-hoc E2E run logs
 artifacts/*-e2e/
+artifacts/demo/**/*.webm
+artifacts/demo/**/*.mp4
+artifacts/demo/**/raw/

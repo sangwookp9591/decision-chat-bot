@@ -1,0 +1,153 @@
+{
+  "tenant": "t-demo-20261004t100724z",
+  "ids": [
+    "req_1a5e8b45f1a74cad88cf6b441c78d289",
+    "req_04e7deab030a4ce7a1232fe4d6e487f1",
+    "req_5b07d6d88c9745f0b1716fc931d2febb",
+    "req_cfe052770ae34b8b9de8d7ebfa726c4a",
+    "req_e8e81ed1edce463385e92200b13372e3",
+    "req_b7a5d33551c84d3481424c05dfb3177f"
+  ],
+  "timing": {
+    "start": 1791108471765,
+    "preliminary": 1324,
+    "final": null,
+    "shared_summary_region_ms": 1324,
+    "final_measurement_note": "최초 측정 선택자가 잠정·최종 공용 영역을 감지했으므로 최종 표시 실측은 폐기함. provisional-badge 측정은 유효."
+  },
+  "notes": [],
+  "scenes": [
+    {
+      "n": 1,
+      "title": "Jev Triage — 업무 요청이 업무가 되기까지",
+      "status": "completed",
+      "limitations": [],
+      "start": 0,
+      "duration": 13.166667
+    },
+    {
+      "n": 2,
+      "title": "요청 접수부터 원문 근거까지",
+      "status": "completed",
+      "limitations": [],
+      "start": 13.166667,
+      "duration": 41.766667
+    },
+    {
+      "n": 3,
+      "title": "일동이 ChatWidget으로 요청 보내기",
+      "status": "completed",
+      "limitations": [],
+      "start": 54.933334,
+      "duration": 18.8
+    },
+    {
+      "n": 4,
+      "title": "검토자가 원안을 수정 승인",
+      "status": "completed",
+      "limitations": [],
+      "start": 73.733334,
+      "duration": 30.833333
+    },
+    {
+      "n": 5,
+      "title": "팀 담당자의 배정 업무와 상태 전이",
+      "status": "completed",
+      "limitations": [],
+      "start": 104.566667,
+      "duration": 23.833333
+    },
+    {
+      "n": 6,
+      "title": "실행 Flow 재생과 Trace·Topology",
+      "status": "completed",
+      "limitations": [],
+      "start": 128.4,
+      "duration": 29.966667
+    },
+    {
+      "n": 7,
+      "title": "입체 판단 맵으로 관계 탐색",
+      "status": "completed",
+      "limitations": [],
+      "start": 158.366667,
+      "duration": 25.966667
+    },
+    {
+      "n": 8,
+      "title": "수정 기록에서 규칙 학습·게시·중단",
+      "status": "completed",
+      "limitations": [],
+      "start": 184.333334,
+      "duration": 40
+    },
+    {
+      "n": 9,
+      "title": "모니터링 KPI·SLO·지연·실패",
+      "status": "partial",
+      "limitations": [
+        "데모에 실제 실패가 없어 실패→Trace 링크 시연 불가"
+      ],
+      "start": 224.333334,
+      "duration": 24.033333
+    },
+    {
+      "n": 10,
+      "title": "정책 검증·게시·diff·되돌리기",
+      "status": "completed",
+      "limitations": [],
+      "start": 248.366667,
+      "duration": 36.966667
+    },
+    {
+      "n": 11,
+      "title": "평가 라벨 확정·보류와 키보드",
+      "status": "completed",
+      "limitations": [],
+      "start": 285.33333400000004,
+      "duration": 21.833333
+    },
+    {
+      "n": 12,
+      "title": "다른 회사 요청 URL은 접근 차단",
+      "status": "completed",
+      "limitations": [],
+      "start": 307.166667,
+      "duration": 16.966667
+    },
+    {
+      "n": 13,
+      "title": "요청에서 실행·학습·통제까지",
+      "status": "completed",
+      "limitations": [],
+      "start": 324.133334,
+      "duration": 15.066667
+    }
+  ],
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1440,
+        "height": 900,
+        "r_frame_rate": "30/1"
+      }
+    ],
+    "format": {
+      "duration": "339.200000",
+      "size": "10141825"
+    }
+  },
+  "recorded_commit": "a783292e2f2afea25dcf34e25aa961dcbf8bb511",
+  "verified_rule": {
+    "candidate_id": "cand_8fcc507094e6868374ddec5c",
+    "rule_version": "R-DEMO-01@1",
+    "support": 3,
+    "validation_id": "val_67a5ec68e27d42b7a990240e55f30ed7",
+    "side_effects": 0,
+    "used": 1,
+    "status": "stopped"
+  }
+}
