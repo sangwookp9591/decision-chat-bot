@@ -14,12 +14,14 @@ from jevtriage.auth.router import router as auth_router
 from jevtriage.config import get_settings
 from jevtriage.db.driver import create_driver
 from jevtriage.domain.ids import new_id
+from jevtriage.evaluation.service import router as evaluation_router
 from jevtriage.events.router import router as events_router
 from jevtriage.graph.api import router as graph_router
 from jevtriage.ingest.api import router as ingest_router
 from jevtriage.journal.reader import producer_heartbeat
-from jevtriage.journal.writer import JournalWriter, failure_count
+from jevtriage.journal.writer import JournalWriter, failure_count, flush_all
 from jevtriage.judgment.api import router as judgment_router
+from jevtriage.judgment.progress import router as progress_router
 from jevtriage.learning.candidates_api import request_router as request_learning_router
 from jevtriage.learning.candidates_api import router as learning_router
 from jevtriage.learning.effects_api import router as effects_router
@@ -51,6 +53,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         heartbeat_task.cancel()
         with suppress(asyncio.CancelledError):
             await heartbeat_task
+        await asyncio.to_thread(flush_all)
         await app.state.neo4j_driver.close()
 
 
@@ -59,11 +62,13 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
     app.include_router(ingest_router)
     app.include_router(judgment_router)
+    app.include_router(progress_router)
     app.include_router(learning_rules_router)
     app.include_router(shadow_router)
     app.include_router(validation_router)
     app.include_router(effects_router)
     app.include_router(events_router)
+    app.include_router(evaluation_router)
     app.include_router(policy_router)
     app.include_router(monitoring_router)
     app.include_router(review_router)

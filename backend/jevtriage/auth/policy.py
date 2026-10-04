@@ -47,6 +47,8 @@ def can(principal: Principal, action: str, resource_meta: dict[str, Any]) -> boo
     if action == "learn_propose":
         return bool(roles.intersection({"reviewer", "rule_admin"}))
     tenant_roles = {"policy_edit": {"policy_editor"}, "monitoring_read": {"operator"}}
+    if action == "eval_label":
+        return bool(roles.intersection({"labeler", "reviewer"}))
     if action in tenant_roles:
         return bool(roles.intersection(tenant_roles[action]))
     raise ValueError(f"Unknown authorization action: {action}")

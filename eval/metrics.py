@@ -69,6 +69,7 @@ def confidence_metrics(rows: Iterable[dict[str, Any]], bins: list[float] | None 
 
 def evaluate(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
     rows = list(rows)
+    rows = [r for r in rows if r.get("label_status") == "confirmed"] or rows
     labels = {key: classification_metrics(rows, key) for key in ("ai_need", "feasibility", "urgency")}
     review = sum(bool(r.get("predictions", {}).get("requires_review")) for r in rows)
     auto = sum(bool(r.get("predictions", {}).get("auto_allowed")) for r in rows)

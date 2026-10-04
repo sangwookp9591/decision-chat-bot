@@ -12,7 +12,7 @@ from jevtriage.db.driver import close_driver, get_driver
 from jevtriage.db.schema import apply_schema
 from jevtriage.policy.service import bootstrap_policy
 
-ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin")
+ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin", "labeler")
 
 
 async def bootstrap(password: str) -> None:

@@ -81,7 +81,13 @@ async def run(split: str, max_samples: int, concurrency: int, retries: int) -> P
     split_hash = hashlib.sha256(split_path.read_bytes()).hexdigest()
     if split_hash != split_info["sha256"]:
         raise RuntimeError("candidate split hash does not match manifest")
-    rows = _read_jsonl(split_path)[:max_samples]
+    rows = _read_jsonl(split_path)
+    confirmed_path = ROOT / "eval/candidates/confirmed.jsonl"
+    if confirmed_path.exists():
+        confirmed = {r["id"]: r for r in _read_jsonl(confirmed_path)
+                     if r.get("label_status") == "confirmed"}
+        rows = [confirmed.get(r["id"], r) for r in rows]
+    rows = rows[:max_samples]
     client = JevClient(settings.jev_api_key.get_secret_value(), mode="live", max_retries=2)
     policy = {"max_evidence_units": 1, "max_evidence_chars": 2000,
               "evidence_noul_threshold": 0.6, "catalog_noul_threshold": 0.5,

@@ -1,5 +1,11 @@
 # T24 평가 표본과 러너
 
+## 현업 라벨 검토 (G12-T)
+
+`/evaluation`은 reviewer 또는 labeler 역할의 사용자가 표본을 검토하는 화면이다. 후보 API는 동결된 `tuning.jsonl`·`final.jsonl`에서 요청과 제안 라벨, 근거 메모를 읽는다. 라벨 수정·확정 또는 보류(사유 필수) 및 확신도는 Neo4j `EvalLabel`에 사용자·시각과 함께 저장하며 `AuditEvent`를 남긴다. 두 명 이상이 같은 표본을 라벨링하면 일치 여부를 합의 상태로 표시한다. final 분할에서는 편향 방지를 위해 API가 모델 예측 정보를 반환하지 않는다.
+
+화면에서 `1`–`4`는 라벨 선택, Enter는 확정, J/K는 표본 이동 단축키다. `python -m jevtriage.evaluation.export`는 최종 라벨을 `candidates/confirmed.jsonl`에 내보내고 manifest의 해시와 개수를 갱신한다. 러너는 해당 파일의 confirmed 라벨을 우선 사용하며, 아직 확정하지 않은 후보만 제안 라벨로 계산하므로 상태를 잠정으로 유지한다. tuning과 final의 분리 및 final 표본의 튜닝 재사용 금지 원칙은 그대로 적용한다.
+
 `candidates/requests.jsonl`에는 제약사 업무 맥락을 반영한 가상 한국어 요청 120건이 있다. 환자·임직원 개인정보, 실명, 실제 회사명은 사용하지 않았다. 제안 라벨은 구현자가 만든 평가 후보일 뿐이며 모든 행의 `label_status`는 `proposed`다. 따라서 현업이 정답을 검토·확정하기 전 산출 지표는 `잠정(현업 미확정)`으로만 해석한다.
 
 ## 분할과 누출 방지
