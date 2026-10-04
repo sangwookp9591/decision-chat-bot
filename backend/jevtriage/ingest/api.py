@@ -18,7 +18,7 @@ from fastapi import (
 from pydantic import BaseModel
 
 from jevtriage.auth.core import Principal, enforce_csrf, get_principal
-from jevtriage.auth.policy import redact_source
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.config import get_settings
 from jevtriage.db.idempotency import IdempotencyConflict
 from jevtriage.domain.ids import new_id
@@ -230,6 +230,8 @@ async def request_detail(request_id: str, principal: Principal = Depends(get_pri
                      request_status=(value.get("request") or {}).get("status"),
                      request_id=request_id, status_code=200,
                      duration_ms=round((time.monotonic() - started) * 1000))
+    if can(principal, "request:read", value["request"]):
+        return value
     return redact_source(principal, value)
 
 
@@ -238,6 +240,9 @@ async def evidence(request_id: str, span_id: str, principal: Principal = Depends
     value = await service.visible_evidence(principal, request_id, span_id)
     if not value:
         raise HTTPException(404, "Evidence not found")
+    meta = await service.visible_meta(principal, request_id)
+    if meta and can(principal, "request:read", meta):
+        return value
     return redact_source(principal, value)
 
 
@@ -251,4 +256,6 @@ async def source_document(
     value = await service.visible_document(principal, request_id, revision, source)
     if not value:
         raise HTTPException(404, "Document not found")
+    if value["can_read_source"]:
+        return value
     return redact_source(principal, value)

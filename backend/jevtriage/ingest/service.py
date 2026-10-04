@@ -291,7 +291,12 @@ async def visible_list(principal, status=None, start=None, end=None, skip=0, lim
     if end:
         predicate += " AND r.created_at <= datetime($end)"
         params["end"] = end
-    return _public(await list_requests(principal.tenant_id, predicate, params))
+    items = _public(await list_requests(principal.tenant_id, predicate, params))
+    for item in items:
+        owner = item.get("created_by") == principal.user_id
+        if not (principal.can_read_source or owner):
+            item.pop("preview", None)
+    return items
 
 
 def _public(value):
@@ -310,9 +315,8 @@ async def visible_detail(principal, request_id: str):
 
 
 async def visible_evidence(principal, request_id: str, span_id: str):
-    if not principal.can_read_source:
-        return None
-    if not await visible_meta(principal, request_id):
+    meta = await visible_meta(principal, request_id)
+    if not meta or not (can(principal, "read_source", meta) or can(principal, "request:read", meta)):
         return None
     return await get_evidence(principal.tenant_id, request_id, span_id)
 
@@ -325,7 +329,8 @@ async def visible_document(principal, request_id: str, revision: str, source: st
     found = await get_revision_document(principal.tenant_id, request_id, revision, source)
     if not found:
         return None
-    readable = can(principal, "read_source", meta)
+    readable = (can(principal, "read_source", meta)
+                or can(principal, "request:read", meta))
     name = (found["filename"] or "").lower()
     kind = ("chat" if source == "chat" else "pdf" if name.endswith(".pdf")
             else "docx" if name.endswith(".docx") else "md")

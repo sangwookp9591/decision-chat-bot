@@ -12,6 +12,20 @@ from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.runs import start_run_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.ids import new_id
+from jevtriage.domain.masking import MaskingSession, mask_for_external
+
+
+def _display_fields(text: str) -> tuple[str, str]:
+    """Build persisted, display-safe request labels with the model mask rules."""
+    text = text.strip()
+    if not text:
+        return "", ""
+    first = re.split(r"(?<=[.!?。！？])\s+|\r?\n", text, maxsplit=1)[0]
+    session = MaskingSession()
+    policy = {"_masking_session": session}
+    title = mask_for_external(first, policy)[:60]
+    preview = mask_for_external(text, policy)[:140]
+    return title, preview
 
 
 async def _create_input(
@@ -27,6 +41,10 @@ async def _create_input(
     supported: bool,
     first_received_at: str | None = None,
 ) -> dict[str, Any]:
+    display_text = text or " ".join(
+        unit.get("text", "") for item in attachments for unit in item.get("units", [])
+    )
+    display_title, display_preview = _display_fields(display_text)
     await (
         await tx.run(
             "CREATE (i:InputRevision {id:$revision_id,tenant_id:$tenant_id,request_id:$request_id,"
@@ -132,6 +150,7 @@ async def _create_input(
             "THEN r.status ELSE $status END, r.first_received_at=coalesce(r.first_received_at,datetime($received)), "
             "r.original_exclusion_reasons=coalesce(r.original_exclusion_reasons,$reasons), "
             "r.original_exclusion_count=coalesce(r.original_exclusion_count,size($reasons)), "
+            "r.title=$title,r.preview=$preview, "
             "r.first_supported_revision=CASE WHEN $supported AND size($reasons)=0 "
             "THEN coalesce(r.first_supported_revision,$revision_id) ELSE r.first_supported_revision END, "
             "r.first_supported_at=CASE WHEN $supported AND size($reasons)=0 "
@@ -142,6 +161,8 @@ async def _create_input(
             status=status,
             received=first_received_at,
             reasons=excluded,
+            title=display_title,
+            preview=display_preview,
             supported=supported,
             revision_id=revision_id,
         )
@@ -230,9 +251,34 @@ async def list_requests(
             "SKIP $skip LIMIT $limit",
             **params,
         )
-        return [dict(row["r"]) async for row in result]
+        rows = [dict(row["r"]) async for row in result]
+        return [await _backfill_display_fields(tx, row) for row in rows]
 
-    return await read_tx(tenant_id, op)
+    return await write_tx(tenant_id, op)
+
+
+async def _backfill_display_fields(tx, request: dict[str, Any]) -> dict[str, Any]:
+    if request.get("title") is not None and request.get("preview") is not None:
+        return request
+    locked = await lock_node_in_tx(tx, request["tenant_id"], "Request", request["id"])
+    if not locked:
+        return request
+    if locked.get("title") is None or locked.get("preview") is None:
+        row = await (await tx.run(
+            "MATCH (i:InputRevision {tenant_id:$tenant,request_id:$request}) "
+            "WHERE i.id=$revision RETURN i.text AS text",
+            tenant=request["tenant_id"], request=request["id"],
+            revision=locked.get("latest_revision_id"),
+        )).single()
+        text = (row["text"] if row else "") or ""
+        title, preview = _display_fields(text)
+        updated = await (await tx.run(
+            "MATCH (r:Request {id:$id,tenant_id:$tenant}) "
+            "SET r.title=coalesce(r.title,$title),r.preview=coalesce(r.preview,$preview) RETURN r",
+            id=request["id"], tenant=request["tenant_id"], title=title, preview=preview,
+        )).single(strict=True)
+        return dict(updated["r"])
+    return locked
 
 
 async def request_detail(tenant_id: str, request_id: str) -> dict[str, Any] | None:
@@ -249,15 +295,16 @@ async def request_detail(tenant_id: str, request_id: str) -> dict[str, Any] | No
         row = await result.single()
         if not row:
             return None
+        request = await _backfill_display_fields(tx, dict(row["r"]))
         return {
-            "request": dict(row["r"]),
+            "request": request,
             "revisions": [dict(x) for x in row["revisions"] if x],
             "attachments": [dict(x) for x in row["attachments"] if x],
             "active_run": dict(row["active"]) if row["active"] else None,
             "latest_judgment_summary": None,
         }
 
-    return await read_tx(tenant_id, op)
+    return await write_tx(tenant_id, op)
 
 
 async def get_evidence(tenant_id: str, request_id: str, span_id: str) -> dict[str, Any] | None:

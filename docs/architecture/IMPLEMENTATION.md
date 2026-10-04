@@ -23,7 +23,7 @@ backend/jevtriage/
   main.py            앱 팩토리·라우터 등록 (공통; 라우터 추가만 허용)
   config.py          환경 설정 (공통)
   db/                드라이버·스키마 제약·트랜잭션 도우미 (T04)
-  domain/            공통 Pydantic 모델·상태 enum (T04, 추가만 허용)
+  domain/            공통 Pydantic 모델·상태 enum·순수 텍스트 마스킹 (T04, 추가만 허용)
   auth/              세션·역할·tenant·CSRF (T05)
   journal/           관측 journal·수집기·watchdog (T04/T18)
   ingest/            접수·revision·첨부 API, parsers/ (T06/T07)
@@ -61,6 +61,8 @@ artifacts/validation/<run-id>/   검증 증거 (비민감)
 | API의 직접 DB 접근 | `auth.router`, `review.api`, `events.router`, `graph.api`, `observe.api`, `monitoring.api` | 직접 트랜잭션·Cypher 제거, 기능별 저장소 함수 호출 |
 
 현재 `domain.runs→db.runs`는 기존 `start_run_in_tx` import 경로를 유지하기 위해 두 계약의 `ignore_imports`에 같은 한 건을 명시했다. 실제 구현과 정책 pinning은 `db.runs`·`db.pinning`이 소유한다. `domain.runs`는 함수 재수출만 담당하므로 데이터 모델과 저장 형식은 바뀌지 않았다. 새 코드에서는 domain에 DB·정책 의존을 추가하지 않고, 모듈 간 호출은 공개 함수에 한정한다.
+
+`domain.masking`은 judgment의 외부 전송 마스킹 패턴과 순수 함수를 소유하며, `judgment.masking`은 기존 import 경로를 유지하는 재수출 모듈이다. API 표시 제목·미리보기도 같은 domain 마스킹 함수를 사용해 규칙 복제를 막는다.
 
 평가 기능 작업자의 변경이 완료된 뒤 `evaluation.api → evaluation.service → evaluation.store`로 라우터, 판단 로직, Neo4j 접근을 나눴다. 기존 평가 응답·레이블 저장 형식과 `evaluation.service`의 분석 도우미 공개 경로는 유지한다.
 

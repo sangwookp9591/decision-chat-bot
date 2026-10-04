@@ -5,7 +5,7 @@ from typing import Any
 
 from jevtriage.auth.types import Principal
 
-SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text"})
+SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text", "preview"})
 
 
 def _request_scope(principal: Principal, meta: dict[str, Any]) -> bool:
@@ -24,6 +24,10 @@ def can(principal: Principal, action: str, resource_meta: dict[str, Any]) -> boo
     roles = principal.roles
     if action == "view_request":
         return _request_scope(principal, resource_meta)
+    if action == "request:read":
+        # Authors can read their own submitted source, independently of an
+        # organization-wide source-reading grant.
+        return resource_meta.get("created_by") == principal.user_id
     if action == "read_source":
         return (principal.can_read_source and
                 (_request_scope(principal, resource_meta) or can(principal, "review", resource_meta)))
