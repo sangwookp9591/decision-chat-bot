@@ -16,16 +16,16 @@ def start(name,args,cwd=ROOT):
     p=subprocess.Popen(args,cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True); children.append(p)
     return p
 try:
-    for port in (9191,6491):
+    for port in (10291,7591):
         with socket.socket() as sock:
             if sock.connect_ex(('127.0.0.1',port))==0: raise RuntimeError(f'Port {port} already in use; refusing to replace process')
-    subprocess.run([py,'scripts/demo/provision.py',env['DEMO_TENANT'],env['DEMO_TENANT']+'b'],cwd=ROOT,env=env,check=True,stdout=subprocess.DEVNULL)
-    start('api',[py,'-m','uvicorn','jevtriage.main:app','--host','127.0.0.1','--port','9191'],ROOT/'backend')
+    subprocess.run([py,'scripts/demo/provision.py',env['DEMO_TENANT']],cwd=ROOT,env=env,check=True,stdout=subprocess.DEVNULL)
+    start('api',[py,'-m','uvicorn','jevtriage.main:app','--host','127.0.0.1','--port','10291'],ROOT/'backend')
     start('worker',[py,'-m','jevtriage.jobs.worker','--tenant',env['DEMO_TENANT']],ROOT/'backend')
     start('collector',[py,'-m','jevtriage.journal.collector'],ROOT/'backend')
     start('watchdog',[py,'-m','jevtriage.journal.watchdog'],ROOT/'backend')
     start('vite',['node','scripts/demo/vite.mjs'])
-    for url in ('http://127.0.0.1:9191/api/ready','http://127.0.0.1:6491'):
+    for url in ('http://127.0.0.1:10291/api/ready','http://127.0.0.1:7591'):
         for i in range(60):
             try:
                 urllib.request.urlopen(url,timeout=2); break
@@ -45,7 +45,7 @@ finally:
         try:p.wait(timeout=15)
         except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
     for log in logs:log.close()
-    health=subprocess.run(['docker','--context','orbstack','ps','--format','{{.Names}} {{.Status}}'],capture_output=True,text=True).stdout
+    health=subprocess.run(['docker','--context','orbstack','ps','--filter','name=decision-chat-bot-','--format','{{.Names}} {{.Status}}'],capture_output=True,text=True).stdout
     (OUT/'health.txt').write_text(health)
     if (OUT/'README.md').exists():
         with (OUT/'README.md').open('a') as report:

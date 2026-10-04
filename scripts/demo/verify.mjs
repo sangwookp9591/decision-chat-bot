@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+const out=process.argv[2];
+if(!out)throw Error('Usage: node scripts/demo/verify.mjs artifacts/demo/<timestamp>');
+const m=JSON.parse(fs.readFileSync(path.join(out,'manifest.json'),'utf8'));
+assert.equal(m.scenes.length,15);
+assert.deepEqual(m.scenes.map(s=>s.n),Array.from({length:15},(_,i)=>i+1));
+assert.ok(m.scenes.every(s=>s.status==='completed'), 'All scenes must complete');
+assert.ok(m.scenes.every((s,i)=>s.duration>0&&(!i||s.start>=m.scenes[i-1].start+m.scenes[i-1].duration-0.02)));
+assert.ok(m.timing.typing>0&&m.timing.preliminary>m.timing.typing&&m.timing.final>m.timing.preliminary);
+assert.equal(m.probe.streams[0].width,1440);assert.equal(m.probe.streams[0].height,900);
+assert.equal(m.probe.streams[0].codec_name,'h264');assert.equal(m.probe.streams[0].r_frame_rate,'30/1');
+assert.ok(Number(m.probe.format.duration)>=m.scenes.at(-1).start);
+const pngs=fs.readdirSync(out).filter(f=>f.endsWith('.png'));
+assert.ok(pngs.length>=15);
+for(const name of pngs){const b=fs.readFileSync(path.join(out,name));assert.equal(b.toString('ascii',1,4),'PNG');assert.equal(b.readUInt32BE(16),1440,name);assert.equal(b.readUInt32BE(20),900,name);}
+assert.ok(pngs.includes('scene-04-cancelled.png'));
+assert.ok(pngs.includes('scene-03-provisional.png'));
+assert.equal((fs.readFileSync(path.join(out,'chapters.md'),'utf8').match(/^- /gm)||[]).length,15);
+console.log(JSON.stringify({scenes:m.scenes.length,pngs:pngs.length,duration:m.probe.format.duration,size:m.probe.format.size,consoleErrors:m.consoleErrors.length}));

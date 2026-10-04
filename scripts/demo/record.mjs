@@ -4,11 +4,10 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 const require=createRequire(new URL('../../frontend/package.json',import.meta.url));
 const {chromium,request,expect}=require('@playwright/test');
-const OUT=process.env.DEMO_OUT,T=process.env.DEMO_TENANT,BASE='http://127.0.0.1:6491';
+const OUT=process.env.DEMO_OUT,T=process.env.DEMO_TENANT,BASE='http://127.0.0.1:7591';
 const password='dev-only-change-me';
-const browser=await chromium.launch({headless:true});
-const scenes=[],ids=[],notes=[],timing={};
-let primary,chat,candidate,postRule;
+const scenes=[],ids=[],notes=[],timing={},consoleErrors=[];
+let primary,chat,candidate;
 const demoText='사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다. 데이터 존재 여부와 접근 권한, 품질을 확인해야 합니다. 현업이 수용 기준과 업무 범위를 정하고 IT팀이 데이터 연결과 화면 개발을 담당합니다. 가상 시연 자료이며 민감 정보는 없습니다.';
 fs.writeFileSync(path.join(OUT,'회의실-요구사항.md'),'# 회의실 예약 현황 자동 집계\n\n'+demoText+'\n\n## 업무 순서\n1. 예약 자료 수집\n2. 중복 예약 확인\n3. 현업 확인 후 주간 보고서 작성\n');
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -17,61 +16,137 @@ async function apiAs(role){const api=await request.newContext({baseURL:BASE});aw
 async function call(api,method,url,data){const csrf=(await api.storageState()).cookies.find(c=>c.name==='jev_csrf')?.value;const r=await api.fetch(url,{method,headers:{'X-CSRF-Token':csrf||'','Idempotency-Key':crypto.randomUUID()},...(data?{data}:{})});if(!r.ok())throw Error(`${method} ${url}: ${r.status()} ${(await r.text()).slice(0,250)}`);return r.json();}
 async function judged(api,id){for(let i=0;i<100;i++){const r=await api.get(`/api/requests/${id}/judgment`);if(r.ok()){const j=await r.json();if(j.mode!=='live')throw Error('LIVE가 아닌 판단');return j;}await wait(600);}throw Error('실제 Jev 최종 결과 대기 60초 초과');}
 async function submitAPI(api,text){const csrf=(await api.storageState()).cookies.find(c=>c.name==='jev_csrf')?.value;const r=await api.post('/api/requests',{headers:{'X-CSRF-Token':csrf||'','Idempotency-Key':crypto.randomUUID()},multipart:{text}});if(!r.ok())throw Error('요청 접수 '+r.status());const a=await r.json();ids.push(a.request_id);await judged(api,a.request_id);return a.request_id;}
-async function caption(p,text){await p.evaluate(text=>{let el=document.getElementById('demo-caption');if(!el){el=document.createElement('div');el.id='demo-caption';document.body.appendChild(el);}el.textContent=text;el.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;background:rgba(12,23,42,.93);color:#fff;padding:18px 36px;font:600 21px/1.6 "Apple SD Gothic Neo",sans-serif;border-bottom:3px solid #65d6b6;pointer-events:none';document.documentElement.style.scrollPaddingTop='100px';document.body.style.paddingTop='83px';},text);}
+async function caption(p,text){await p.evaluate(text=>{let el=document.getElementById('demo-caption');if(!el){el=document.createElement('div');el.id='demo-caption';document.body.appendChild(el);}el.textContent=text;el.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;background:rgba(12,23,42,.93);color:#fff;padding:12px 28px;font:600 19px/1.6 "Apple SD Gothic Neo",sans-serif;border-bottom:3px solid #65d6b6;pointer-events:none';document.documentElement.style.scrollPaddingTop='100px';document.body.style.paddingTop='64px';},text);}
 async function card(p,title,sub){await p.setContent(`<html lang="ko"><body style="margin:0;background:#0b162b;color:#f5f8ff;font-family:'Apple SD Gothic Neo',sans-serif;display:flex;align-items:center;justify-content:center;height:900px"><div style="width:1100px"><p style="color:#65d6b6;font-size:23px;letter-spacing:5px">JEV TRIAGE · LIVE WALKTHROUGH</p><h1 style="font-size:52px;line-height:1.4">${title}</h1><p style="font-size:26px;line-height:1.8;color:#b9c9e2">${sub}</p></div></body></html>`);}
 async function click(p,loc){await loc.scrollIntoViewIfNeeded();await wait(850);await loc.click();await wait(950);}
 async function go(p,url,text){await p.goto(url);await p.waitForLoadState('domcontentloaded');await caption(p,text);await wait(1200);}
 async function scroll(p,loc){await loc.scrollIntoViewIfNeeded();await wait(2200);}
-async function scene(n,title,role,seconds,fn){const ctx=await browser.newContext({baseURL:BASE,viewport:{width:1440,height:900},deviceScaleFactor:1,recordVideo:{dir:path.join(OUT,'raw'),size:{width:1440,height:900}}});ctx.setDefaultTimeout(12000);if(role)await login(ctx.request,role);const p=await ctx.newPage();const start=Date.now();const info={n,title,status:'completed',limitations:[]};console.log('SCENE',n,title);await card(p,String(n).padStart(2,'0')+' · '+title,'실제 화면 · 비민감 가상 업무 · 한국어 자막');await wait(2200);try{await fn(p,ctx,info);}catch(e){info.status='partial';info.error=e.message.split('\n')[0];console.log('PARTIAL',n,info.error);await caption(p,`${n} · 이 장면의 일부 작업을 완료하지 못했습니다. 실제 화면과 한계를 기록합니다.`);await wait(4500);}if(Date.now()-start<seconds*1000)await wait(seconds*1000-(Date.now()-start));await p.screenshot({path:path.join(OUT,`scene-${String(n).padStart(2,'0')}.png`)});info.screenText=(await p.locator('body').innerText()).slice(-16000);const video=p.video();await ctx.close();info.raw=await video.path();scenes.push(info);fs.writeFileSync(path.join(OUT,'raw/manifest.json'),JSON.stringify({tenant:T,ids,timing,notes,scenes},null,2));}
-try{
-await scene(1,'Jev Triage — 업무 요청이 업무가 되기까지',null,10,async p=>{await card(p,'Jev Triage<br>업무 요청이 업무가 되기까지','접수 → 근거 기반 판단 → 사람 검토 → 업무 배정<br>관찰 · 규칙 학습 · 정책 · 평가 · 접근 통제');});
-await scene(2,'요청 접수부터 원문 근거까지',null,43,async(p,ctx,info)=>{
- await go(p,'/', '02 · 요청자 로그인. 비민감 가상 요청과 Markdown 문서를 함께 접수합니다.');
- await p.getByLabel('이메일',{exact:true}).fill(`requester@${T}.dev`);await wait(900);await p.getByLabel('암호',{exact:true}).fill(password);await click(p,p.getByRole('button',{name:'로그인',exact:true}));
- await p.getByLabel('요청 내용',{exact:true}).fill(demoText);await wait(900);await p.locator('input[type=file]').setInputFiles(path.join(OUT,'회의실-요구사항.md'));await wait(1500);
- await p.evaluate(()=>{window.demoTiming={start:0};document.addEventListener('click',()=>{window.demoTiming.start=Date.now();},{capture:true,once:true});const ob=new MutationObserver(()=>{if(!window.demoTiming.start)return;const t=document.body.innerText;for(const [key,test]of [['preliminary',()=>!!document.querySelector('.provisional-badge')],['final',()=>!!document.querySelector('[data-region=summary] .environment-badge.mode-live')]])if(!window.demoTiming[key]&&test())window.demoTiming[key]=Date.now()-window.demoTiming.start;});ob.observe(document.body,{subtree:true,childList:true});});
- const accepted=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await click(p,p.getByRole('button',{name:'요청 보내기',exact:true}));primary=(await(await accepted).json()).request_id;ids.push(primary);
- await caption(p,'02 · 내 요청 말풍선과 일동이의 단계 타임라인이 먼저 표시되고, 잠정 판단·근거·업무 영역이 차례로 채워집니다.');
- await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});Object.assign(timing,await p.evaluate(()=>window.demoTiming));await wait(4000);
- await caption(p,'02 · 최종 결과는 LIVE 판단입니다. 근거를 누르면 원문과 해당 위치를 함께 확인합니다.');
- await scroll(p,p.locator('[data-region=judgment]'));const ev=p.getByRole('button',{name:/근거 열기/}).first();await click(p,ev);await wait(3000);
- if(await p.locator('.ev-unit.is-anchor').count()===0)info.limitations.push('원문 뷰어는 열렸으나 원문 강조 요소를 확인하지 못함');
-});
-await scene(3,'일동이와의 대화로 두 번째 요청 보내기','requester',20,async(p)=>{await go(p,'/','03 · 요청 접수는 일동이와의 대화입니다. 예시 요청을 고르면 입력창에 채워지고, 확인한 뒤 Ctrl/⌘+Enter로 보냅니다.');await click(p,p.getByRole('group',{name:'예시 요청'}).getByRole('button').first());await p.getByLabel('요청 내용',{exact:true}).fill('가상 사내 회의실 이용 안내를 주간 보고서로 정리하고 싶습니다. 담당자는 현업이며 자료를 먼저 확인해 주세요.');const res=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await click(p,p.getByRole('button',{name:'요청 보내기',exact:true}));chat=(await(await res).json()).request_id;ids.push(chat);await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});});
-// Prepare genuine same-direction reviewer corrections via public APIs, never insert fabricated judgments.
-const rq=await apiAs('requester'),rev=await apiAs('reviewer');
+// Prepare real, isolated correction history before the camera starts.
+const rq=await apiAs('requester'),rev=await apiAs('reviewer'),admin=await apiAs('rule_admin');
 for(let i=0;i<3;i++){
- try{const id=await submitAPI(rq,demoText+` 가상 시연 반복 사례 ${i+1}.`);const reviews=await call(rev,'GET','/api/reviews?status=pending');const row=reviews.reviews.find(r=>r.request_id===id);if(!row)throw Error('검토 대기 없음');const d=await call(rev,'GET',`/api/reviews/${row.id}`);const ai=d.final_classifications.ai_need;await call(rev,'POST',`/api/reviews/${row.id}/decision`,{action:'approve_with_changes',request_id:id,input_revision:row.revision_id,run_id:row.run_id,draft_version:row.draft_version,review_version:row.review_version,changes:{classifications:{ai_need:ai==='필요'?'불필요':'필요'}},reason:'가상 시연: 같은 방향의 판단 수정 사례를 학습 후보로 검토합니다.'});console.log('PREPARED_CORRECTION',id,ai);}catch(e){notes.push('학습 사전 준비: '+e.message);console.log('PREP_LIMIT',e.message);}
+ const id=await submitAPI(rq,demoText+` 가상 시연 반복 사례 ${i+1}.`);
+ const reviews=await call(rev,'GET','/api/reviews?status=pending');
+ const row=reviews.reviews.find(r=>r.request_id===id);if(!row)throw Error('검토 대기 없음');
+ const d=await call(rev,'GET',`/api/reviews/${row.id}`);
+ await call(rev,'POST',`/api/reviews/${row.id}/decision`,{action:'approve_with_changes',request_id:id,input_revision:row.revision_id,run_id:row.run_id,draft_version:row.draft_version,review_version:row.review_version,changes:{classifications:{ai_need:d.final_classifications.ai_need==='필요'?'불필요':'필요'}},reason:'가상 시연: 원문과 같은 방향의 판단 수정 사례를 검토합니다.'});
+ console.log('PREPARED_CORRECTION',i+1);
 }
-await rq.dispose();await rev.dispose();
-await scene(4,'검토자가 원안을 수정 승인','reviewer',32,async(p)=>{await go(p,`/review?request_id=${primary}`,'04 · 검토 대기에서 AI 원안·원문 근거를 살펴봅니다. 단건 수정은 공통 규칙 게시와 별개입니다.');await p.getByLabel('AI 필요성 수정').waitFor();await wait(2400);await scroll(p,p.getByRole('heading',{name:'신뢰 신호와 원문 근거'}));await p.getByLabel('담당 조직 수정').fill('현업');await p.getByLabel('결정 사유',{exact:true}).fill('가상 시연: 요구 기준 확정은 현업이 주관하도록 검토했습니다.');await click(p,p.getByRole('button',{name:'수정 승인',exact:true}));await p.getByText('결정을 저장했습니다.',{exact:false}).waitFor();await go(p,`/review?request_id=${primary}`,'04 · 수정 승인 이력이 남고 AI 원안과 수정 값은 함께 보존됩니다.');await scroll(p,p.getByRole('heading',{name:'결정 이력',exact:true}));});
-await scene(5,'팀 담당자의 배정 업무와 상태 전이','team_member',25,async(p,ctx,info)=>{await go(p,'/tasks','05 · 주관·협업·선행 업무를 확인합니다. 시작 가능한 업무만 대기에서 진행으로 바꿉니다.');await p.locator('.task-list > button').first().waitFor();const buttons=p.locator('.task-list > button');let moved=false;for(let i=0;i<Math.min(await buttons.count(),8);i++){await click(p,buttons.nth(i));const b=p.getByRole('button',{name:'진행으로 변경',exact:true});if(await b.count()&&await b.isEnabled()){await click(p,b);await p.getByText('업무 상태를 갱신했습니다.').waitFor();moved=true;break;}await wait(1300);await click(p,p.getByRole('dialog',{name:'업무 상세'}).getByRole('button',{name:'닫기',exact:true}));}if(!moved)throw Error('시작 가능한 대기 업무 없음');});
-await scene(6,'실행 Flow 재생과 Trace·Topology','operator',29,async(p)=>{await go(p,`/observatory?request_id=${primary}`,'06 · 저장된 실행을 2×로 재생합니다. 재생은 업무를 다시 실행하지 않습니다.');await p.getByLabel('재생 속도').selectOption('2');await click(p,p.getByRole('button',{name:'재생',exact:true}));await wait(3500);await click(p,p.getByRole('button',{name:'전체 결과',exact:true}));await click(p,p.locator('.obs-node').nth(2));await wait(3000);await click(p,p.getByRole('dialog',{name:'Trace 상세'}).getByRole('button',{name:'닫기',exact:true}));await click(p,p.getByRole('button',{name:'업무 Topology',exact:true}));});
-await scene(7,'입체 판단 맵으로 관계 탐색','operator',24,async(p)=>{await go(p,`/judgment-map?request_id=${primary}`,'07 · 크게 보기에서 노드를 선택하면 근거·판단·업무 사이의 저장된 경로가 드러납니다.');await p.locator('.jm-node:not(.is-group)').first().waitFor();await click(p,p.getByRole('button',{name:'크게 보기',exact:true}));await click(p,p.locator('.jm-node:not(.is-group)').last());await wait(3000);await click(p,p.getByRole('button',{name:'목록 보기',exact:true}));await wait(3000);});
-await scene(8,'수정 기록에서 규칙 학습·게시·중단','rule_admin',43,async(p,ctx,info)=>{
- await go(p,'/learning','08 · 실제 수정 승인 기록 3건을 후보로 집계하고 적용 범위를 확정합니다.');await click(p,p.getByRole('button',{name:'수정 기록에서 후보 집계'}));
- const cs=await call(ctx.request,'GET','/api/learning/candidates');candidate=cs.candidates.find(c=>c.field==='ai_need'&&c.support_count>=3)||cs.candidates.find(c=>c.field==='ai_need');if(!candidate)throw Error('AI 필요성 규칙 후보가 생성되지 않음');
- await go(p,`/learning?candidate_id=${candidate.id}`,'08 · 지지 사례와 불확실성을 확인합니다. 가상 데모 범위에서만 승인합니다.');await p.getByLabel('결정 사유',{exact:true}).fill('가상 시연: 동일 방향 수정 사례와 범위를 검토하여 승인합니다.');await p.getByLabel('규칙 ID',{exact:true}).fill('R-DEMO-01');if(await p.getByLabel('자료 부족 상태임을 확인').count()){await p.getByLabel('자료 부족 상태임을 확인').check();info.limitations.push('지지 3건 미달: 자료 부족 명시 승인');}
- await p.getByLabel('확정 범위',{exact:true}).fill(JSON.stringify({all:[{requester_org:`${T}-ai`}]}));await click(p,p.getByRole('button',{name:'범위 수정 후 승인',exact:true}));await p.getByRole('button',{name:'검증 실행',exact:true}).waitFor();await p.getByLabel('결정 사유',{exact:true}).fill('가상 시연: 섀도 검증 결과를 확인하고 게시합니다.');await click(p,p.getByRole('button',{name:'검증 실행',exact:true}));await p.getByRole('button',{name:'검증 완료 처리',exact:true}).waitFor();await expect(p.getByRole('button',{name:'검증 완료 처리',exact:true})).toBeEnabled({timeout:30000});await click(p,p.getByRole('button',{name:'검증 완료 처리',exact:true}));await click(p,p.getByRole('button',{name:'게시',exact:true}));await wait(1700);
- await caption(p,'08 · 섀도 검증은 저장된 판단을 재평가합니다. 게시 후 새 요청의 범위 안 사용을 확인합니다.');
- const requester=await apiAs('requester');postRule=await submitAPI(requester,demoText+' 게시 후 범위 확인 시연.');await requester.dispose();
- await click(p,p.getByRole('button',{name:'새로고침',exact:true}));await scroll(p,p.getByRole('region',{name:'게시 후 관찰'}));const used=await p.getByTestId('used-count').innerText();if(Number(used)<1)info.limitations.push('게시 후 범위 안 사용 건수 0');
- await caption(p,'08 · 효과 표본 수를 확인하고 규칙을 중단합니다. 과거 실행 기록은 유지됩니다.');await p.getByLabel('결정 사유',{exact:true}).fill('가상 시연 종료: 규칙 적용을 중단하고 과거 이력을 보존합니다.');await click(p,p.getByRole('button',{name:'중단',exact:true}));
+await call(admin,'POST','/api/learning/candidates/generate');
+candidate=(await call(admin,'GET','/api/learning/candidates')).candidates.find(c=>c.field==='ai_need');
+if(!candidate)throw Error('수정 이력 후보 없음');
+const reason='가상 시연: 제한된 표본임을 확인하고 전용 회사 범위의 초안으로만 보존합니다.';
+const decision=await call(admin,'POST',`/api/learning/candidates/${candidate.id}/decision`,{action:'approve_with_scope_change',scope:{all:[{requester_org:`${T}-ai`}]},reason,acknowledge_insufficient:true});
+await call(admin,'POST','/api/learning/rules/R-DEMO-01/versions',{decision_id:decision.decision_id,body:{},reason,acknowledge_insufficient:true});
+await rq.dispose();await rev.dispose();await admin.dispose();
+const browser=await chromium.launch({headless:true});
+const ctx=await browser.newContext({baseURL:BASE,viewport:{width:1440,height:900},deviceScaleFactor:1,reducedMotion:'no-preference',colorScheme:'light',recordVideo:{dir:path.join(OUT,'raw'),size:{width:1440,height:900}}});
+ctx.setDefaultTimeout(15000);
+const p=await ctx.newPage();
+p.on('console',m=>{if(m.type()==='error')consoleErrors.push({type:'console',scene:scenes.length+1,text:m.text(),location:m.location()});});
+p.on('pageerror',e=>consoleErrors.push({type:'pageerror',scene:scenes.length+1,text:e.message}));
+const cameraStart=Date.now();
+async function snap(name){await p.screenshot({path:path.join(OUT,name+'.png')});}
+async function scene(n,title,role,seconds,fn){
+ if(role)await login(ctx.request,role);
+ const start=Date.now(),info={n,title,start:(start-cameraStart)/1000,status:'completed',limitations:[]};
+ console.log('SCENE',n,title);
+ try{await fn(p,ctx,info);}catch(e){info.status='partial';info.error=e.message.split('\n')[0];console.log('PARTIAL',n,info.error);await caption(p,`${n} · 시연 한계: ${info.error.slice(0,90)}`);}
+ if(Date.now()-start<seconds*1000)await wait(seconds*1000-(Date.now()-start));
+ await snap(`scene-${String(n).padStart(2,'0')}`);info.duration=(Date.now()-start)/1000;scenes.push(info);
+ fs.writeFileSync(path.join(OUT,'raw/manifest.json'),JSON.stringify({tenant:T,ids,timing,notes,scenes,consoleErrors},null,2));
+}
+try{
+await scene(1,'로그인',null,8,async()=>{
+ await go(p,'/','01 · Jev Triage — 업무 요청부터 검토·실행까지, 역할에 맞게 로그인합니다.');
+ await p.getByLabel('이메일',{exact:true}).fill(`requester@${T}.dev`);await p.getByLabel('암호',{exact:true}).fill(password);await snap('scene-01-login');
+ await click(p,p.getByRole('button',{name:'로그인',exact:true}));await p.getByLabel('요청 내용',{exact:true}).waitFor();
 });
-await scene(9,'모니터링 KPI·SLO·지연·실패','operator',23,async(p,ctx,info)=>{await go(p,'/monitoring','09 · 접수·검토·배정 KPI와 지연, 실패 원인을 봅니다. 수집 상태와 관측 표본도 함께 읽습니다.');await wait(2500);await p.mouse.wheel(0,550);await wait(2200);await p.mouse.wheel(0,550);await wait(2200);const trace=p.getByRole('link',{name:/Trace/});if(await trace.count())await click(p,trace.first());else{info.status='partial';info.limitations.push('데모에 실제 실패가 없어 실패→Trace 링크 시연 불가');await caption(p,'09 · 이번 데모에는 실제 실패가 없어 실패 목록이 비어 있습니다. 실패→Trace 이동은 재현하지 않았습니다.');}});
-await scene(10,'정책 검증·게시·diff·되돌리기','policy_editor',36,async(p)=>{await go(p,'/policy','10 · 잘못된 정책은 검증 오류로 막힙니다. 올바른 변경만 사유와 함께 버전으로 게시합니다.');const f=p.getByLabel('선택형 판단 최소 확신도');const old=await f.inputValue();await f.fill('{"ai_need":1.5}');await click(p,p.getByRole('button',{name:'서버 검증',exact:true}));await p.getByText('검증 오류',{exact:true}).waitFor();await wait(1800);const cfg=JSON.parse(old);cfg.ai_need=0.72;await f.fill(JSON.stringify(cfg,null,2));await click(p,p.getByRole('button',{name:'서버 검증',exact:true}));await p.getByText('검증 통과',{exact:true}).waitFor();await p.getByLabel('게시 사유 (필수)').fill('가상 데모: AI 필요성 확신도 기준 변경 검토');await click(p,p.getByRole('button',{name:'게시',exact:true}));await p.getByText(/정책 버전 \d+을 게시했습니다/).waitFor();await click(p,p.getByRole('button',{name:'v1',exact:true}));await scroll(p,p.getByText('v1 diff',{exact:true}));await p.getByLabel('되돌리기 사유 (v1 기준)').fill('가상 데모 종료: 초기 정책으로 되돌립니다.');await click(p,p.getByRole('button',{name:'선택 버전 기준으로 되돌리기'}));await p.getByText(/기준 새 정책 버전 \d+을 만들었습니다/).waitFor();});
-await scene(11,'평가 라벨 확정·보류와 키보드','labeler',23,async(p)=>{await go(p,'/evaluation','11 · 라벨러가 제안 정답을 검토합니다. Enter로 확정하고 J로 다음 표본으로 이동합니다.');await p.getByRole('button',{name:'확정 (Enter)',exact:true}).waitFor();await p.keyboard.press('Enter');await wait(2000);await p.keyboard.press('j');await wait(1300);await p.getByLabel('보류 사유',{exact:true}).fill('가상 시연: 담당 업무 맥락을 확인한 뒤 확정하겠습니다.');await click(p,p.getByRole('button',{name:'보류',exact:true}));await p.getByRole('status').filter({hasText:'보류 사유'}).waitFor();});
-await scene(12,'다른 회사 요청 URL은 접근 차단',null,16,async(p,ctx)=>{await login(ctx.request,'requester',T+'b');await go(p,`/?request_id=${primary}`,'12 · 다른 tenant 계정으로 같은 요청 URL을 열어도 원문과 판단 결과에 접근할 수 없습니다.');await p.getByRole('alert').first().waitFor();await wait(3000);});
-await scene(13,'요청에서 실행·학습·통제까지',null,15,async p=>{const measured=timing.final?`이번 화면의 클릭 기준 최종 결과 표시: ${(timing.final/1000).toFixed(2)}초`:'이번 화면 측정값 없음';await card(p,'업무 요청이 업무가 되는 과정','접수와 근거 → 사람의 결정 → 실제 업무 → 규칙 학습<br>정책·평가·운영 관찰·접근 통제로 연결됩니다.<br><br><span style="font-size:23px">'+measured+'<br>문서 예시: 잠정 0.5–0.7초 · 최종 1.3–1.6초<br>출처: docs/architecture/ARCHITECTURE_OVERVIEW.html (측정 보장 아님)</span>');});
-}finally{await browser.close();}
+await scene(2,'일동이 인사·예시에서 요청 전송',null,0,async()=>{
+ await caption(p,'02 · 빈 대화의 인사와 예시 칩에서 시작합니다. 요청을 보내면 입력창이 아래로 이동합니다.');
+ await click(p,p.getByRole('group',{name:'예시 요청'}).getByRole('button').first());await snap('scene-02-greeting');
+ await p.getByLabel('요청 내용',{exact:true}).fill(demoText);await wait(1800);
+ await p.evaluate(()=>{window.demoTiming={start:Date.now()};const ob=new MutationObserver(()=>{for(const [key,selector]of [['typing','.typing-bubble'],['preliminary','.provisional-badge'],['final','[data-region=summary] .environment-badge.mode-live']])if(!window.demoTiming[key]&&document.querySelector(selector))window.demoTiming[key]=Date.now()-window.demoTiming.start;});ob.observe(document.body,{subtree:true,childList:true});});
+ const response=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');
+ await p.getByRole('button',{name:'요청 보내기',exact:true}).click();primary=(await(await response).json()).request_id;ids.push(primary);
+ await p.locator('.typing-bubble').waitFor({timeout:5000});await snap('scene-02-typing');
+});
+await scene(3,'잠정 판단·최종 요약·자세히 보기',null,13,async()=>{
+ await caption(p,'03 · 타이핑 점에서 잠정 판단으로, 실제 LIVE 판단이 끝나면 최종 요약 카드가 나타납니다.');
+ await p.locator('.provisional-badge').first().waitFor({timeout:70000});await snap('scene-03-provisional');
+ await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});Object.assign(timing,await p.evaluate(()=>window.demoTiming));
+ await p.locator('.result-brief .result-summary').first().evaluate(el=>el.scrollIntoView({block:'start',behavior:'smooth'}));await wait(2400);await snap('scene-03-summary');await click(p,p.getByRole('button',{name:'자세히 보기',exact:true}));await p.getByRole('dialog',{name:'판단 상세'}).waitFor();await wait(1800);
+ await p.getByRole('dialog',{name:'판단 상세'}).getByRole('button',{name:'닫기',exact:true}).click();
+});
+await scene(4,'분석 정지·취소됨·다시 분석',null,15,async()=>{
+ await click(p,p.locator('.request-list .new-chat'));
+ await caption(p,'04 · 다른 요청을 보낸 뒤 정지합니다. 취소된 요청은 다시 분석할 수 있습니다.');
+ await p.getByLabel('요청 내용',{exact:true}).fill('가상 주간 회의실 이용 보고서를 자동 작성하고 싶습니다. 현업이 요구 기준을 확인하고 IT팀이 자료를 연결합니다.');
+ const response=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await p.getByRole('button',{name:'요청 보내기',exact:true}).click();chat=(await(await response).json()).request_id;ids.push(chat);
+ await p.getByRole('button',{name:'분석 정지',exact:true}).click();await p.locator('.cancelled-notice').waitFor();await wait(2000);await snap('scene-04-cancelled');
+ p.once('dialog',dialog=>dialog.accept());await click(p,p.getByRole('button',{name:'다시 분석',exact:true}));await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});await p.locator('.result-brief .result-summary').first().evaluate(el=>el.scrollIntoView({block:'start',behavior:'smooth'}));await wait(1500);
+});
+await scene(5,'왼쪽 대화 목록·날짜·제목',null,7,async()=>{
+ await caption(p,'05 · 왼쪽 대화 목록은 날짜별로 묶이고 요청 원문에서 가져온 제목으로 다시 찾습니다.');
+ await p.locator('.request-list .list-group').first().waitFor();await click(p,p.locator('.request-list .request-row').filter({hasText:primary}));await p.locator('.result-brief').waitFor();
+});
+await scene(6,'검토 대기·원문·수정 승인','reviewer',15,async()=>{
+ await go(p,`/review?request_id=${primary}`,'06 · 검토 대기 제목과 요청 원문을 읽고, AI 원안을 수정 승인합니다.');
+ await p.getByLabel('AI 필요성 수정').waitFor();await snap('scene-06-original');
+ const field=p.getByLabel('담당 조직 수정');await field.fill((await field.inputValue())==='현업'?'IT팀':'현업');
+ await p.getByLabel('결정 사유',{exact:true}).fill('가상 시연: 원문을 검토하여 담당 조직의 책임을 확정했습니다.');
+ await click(p,p.getByRole('button',{name:'수정 승인',exact:true}));await p.getByText('결정을 저장했습니다.',{exact:false}).waitFor();
+});
+await scene(7,'업무 배정·상태 전이','team_member',14,async()=>{
+ await go(p,'/tasks','07 · 승인 후 배정된 업무와 선행 관계를 확인하고, 시작 가능한 업무를 진행으로 바꿉니다.');
+ const buttons=p.locator('.task-list > button');await buttons.first().waitFor();let moved=false;
+ for(let i=0;i<Math.min(await buttons.count(),12);i++){await click(p,buttons.nth(i));const b=p.getByRole('button',{name:'진행으로 변경',exact:true});if(await b.count()&&await b.isEnabled()){await click(p,b);await p.getByText('업무 상태를 갱신했습니다.').waitFor();moved=true;break;}await p.getByRole('dialog',{name:'업무 상세'}).getByRole('button',{name:'닫기',exact:true}).click();}
+ if(!moved)throw Error('시작 가능한 업무 없음');
+});
+await scene(8,'실행 관찰·재생·Trace','operator',16,async()=>{
+ await go(p,`/observatory?request_id=${primary}`,'08 · 실제 저장된 실행 흐름을 재생하고 단계별 Trace와 업무 관계를 살펴봅니다.');
+ await p.getByLabel('재생 속도').selectOption('2');await click(p,p.getByRole('button',{name:'재생',exact:true}));await wait(2200);
+ await click(p,p.getByRole('button',{name:'전체 결과',exact:true}));await click(p,p.locator('.obs-node').nth(2));await wait(1800);await snap('scene-08-trace');
+ await p.getByRole('dialog',{name:'Trace 상세'}).getByRole('button',{name:'닫기',exact:true}).click();await click(p,p.getByRole('button',{name:'업무 Topology',exact:true}));
+});
+await scene(9,'판단 맵·경로 글로우·버전 탭','operator',18,async()=>{
+ await go(p,`/judgment-map?request_id=${primary}`,'09 · 판단 맵의 다크 무대에서 노드를 고르면 연결된 근거와 업무 경로가 빛납니다.');
+ await p.locator('.jm-node:not(.is-group)').first().waitFor();await click(p,p.getByRole('button',{name:'크게 보기',exact:true}));await click(p,p.locator('.jm-node:not(.is-group)').last());await wait(1700);await snap('scene-09-glow');
+ await go(p,'/judgment-map?rule_id=R-DEMO-01','09 · 실제 수정 이력에서 만든 규칙 초안의 버전 탭으로 관계를 좁혀 봅니다.');
+ await p.getByRole('tab',{name:/v1/}).waitFor();await click(p,p.getByRole('tab',{name:/v1/}));await click(p,p.locator('.jm-node:not(.is-group)').first());
+});
+await scene(10,'규칙 학습 후보','rule_admin',10,async()=>{
+ await go(p,`/learning?candidate_id=${candidate.id}`,'10 · 실제 수정 승인 이력에서 모은 학습 후보와 근거를 봅니다. 초안은 운영에 게시하지 않았습니다.');
+ await p.getByRole('heading',{name:/규칙 학습/}).first().waitFor();await wait(1600);await p.mouse.wheel(0,300);
+});
+await scene(11,'평가 라벨·칩·Enter·J','labeler',13,async()=>{
+ await go(p,'/evaluation','11 · 정답 칩을 선택하고 Enter로 확정합니다. J를 누르면 다음 표본으로 이동합니다.');
+ const groups=p.getByRole('radiogroup');await groups.first().waitFor();
+ for(let i=0;i<await groups.count();i++){const group=groups.nth(i);if(!await group.locator('[aria-checked=true]').count())await group.getByRole('radio').first().click();}
+ await click(p,groups.first().getByRole('radio').first());await p.keyboard.press('Enter');await p.getByText('라벨을 확정했습니다.',{exact:true}).waitFor();await snap('scene-11-confirmed');
+ await expect(p.getByRole('button',{name:'다음 (J)',exact:true})).toBeEnabled();await p.keyboard.press('j');await wait(1500);await p.mouse.wheel(0,-1000);
+});
+await scene(12,'모니터링·숫자 애니메이션','operator',10,async()=>{
+ await go(p,'/monitoring','12 · 접수·검토·배정과 지연 지표가 채워집니다. 숫자 애니메이션과 관측 표본을 함께 확인합니다.');await wait(2600);await snap('scene-12-counts');await p.mouse.wheel(0,420);
+});
+await scene(13,'정책 폼·검증','policy_editor',10,async()=>{
+ await go(p,'/policy','13 · 정책 폼에서 기준을 확인하고 서버 검증을 실행합니다. 게시에는 별도의 사유가 필요합니다.');
+ await p.getByRole('group',{name:'선택형 판단 최소 확신도',exact:true}).waitFor();await click(p,p.getByRole('button',{name:'서버 검증',exact:true}));await p.getByText('검증 통과',{exact:true}).waitFor();await p.mouse.wheel(0,-2000);
+});
+await scene(14,'시스템 다크 모드','requester',9,async()=>{
+ await p.emulateMedia({colorScheme:'dark',reducedMotion:'no-preference'});await go(p,`/?request_id=${primary}`,'14 · 시스템의 다크 모드를 따라 대화·카드·목록이 함께 바뀝니다.');await p.locator('.result-brief').waitFor();
+});
+await scene(15,'요청에서 검토·실행·학습까지',null,7,async()=>{
+ await card(p,'업무 요청이 업무가 되기까지','일동이와 대화 → 근거 기반 판단 → 사람의 검토<br>업무 배정과 실행 → 관찰과 규칙 학습<br><br>실제 LIVE 판단 · 새 디자인 · 분석 취소와 재시작');
+});
+}finally{await ctx.close();await browser.close();}
+const raw=await p.video().path();
 console.log('ENCODING');
-let offset=0;const chapters=['# Jev Triage 화면 녹화 챕터',''];const segments=[];
-for(const s of scenes){const target=path.join(OUT,'raw',`scene-${s.n}.mp4`);execFileSync('ffmpeg',['-y','-loglevel','error','-i',s.raw,'-vf','fps=30,scale=1440:900','-c:v','libx264','-preset','fast','-crf','23','-pix_fmt','yuv420p','-an',target]);const duration=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',target],{encoding:'utf8'}));s.start=offset;s.duration=duration;chapters.push(`- ${String(Math.floor(offset/60)).padStart(2,'0')}:${String(Math.floor(offset%60)).padStart(2,'0')} — ${s.n}. ${s.title}${s.status==='partial'?' (부분 실패)':''}`);offset+=duration;segments.push(`file '${target}'`);}
-fs.writeFileSync(path.join(OUT,'raw/concat.txt'),segments.join('\n'));
-execFileSync('ffmpeg',['-y','-loglevel','error','-f','concat','-safe','0','-i',path.join(OUT,'raw/concat.txt'),'-c','copy','-movflags','+faststart',path.join(OUT,'walkthrough.mp4')]);
+execFileSync('ffmpeg',['-y','-loglevel','error','-i',raw,'-vf','fps=30,scale=1440:900','-c:v','libx264','-preset','fast','-crf','23','-pix_fmt','yuv420p','-an','-movflags','+faststart',path.join(OUT,'walkthrough.mp4')]);
 const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_entries','format=duration,size:stream=codec_name,width,height,r_frame_rate','-of','json',path.join(OUT,'walkthrough.mp4')],{encoding:'utf8'}));
-fs.writeFileSync(path.join(OUT,'chapters.md'),chapters.join('\n')+'\n');
-fs.writeFileSync(path.join(OUT,'manifest.json'),JSON.stringify({tenant:T,ids,timing,notes,scenes:scenes.map(({screenText,raw,...s})=>s),probe},null,2));
-const limits=scenes.flatMap(s=>[...(s.error?[`- [심각도 중간] 장면 ${s.n} — ${s.error} — 실제 Playwright 실행에서 작업 중단 — 스크립트/환경 원인 확인 후 해당 장면 재촬영 — 예상 규모 S/M (불확실)`]:[]),...s.limitations.map(l=>`- [심각도 낮음] 장면 ${s.n} — ${l} — 실제 화면·manifest 기록 — 해당 조건 준비 후 재촬영 — 예상 규모 S`)]);
-fs.writeFileSync(path.join(OUT,'README.md'),`# Jev Triage 한국어 화면 녹화\n\n- 재녹화: 저장소 루트에서 \`bash scripts/demo/record.sh\`\n- 녹화 기준 commit: ${process.env.DEMO_COMMIT || '실행 시 미기록'}\n- 코드 변경 없이 API 9191, Vite 6491(/api→9191), tenant 제한 worker, collector, watchdog 직접 실행. OrbStack 공유 Neo4j 7687·Redis 6379는 중단하지 않음.\n- tenant: \`${T}\`; 교차 tenant 차단: \`${T}b\`. bootstrap_dev와 같은 계정 구조의 기존 acceptance provision을 재사용하고 labeler·원문 권한을 전용 계정에 추가.\n- JEV_MODE=live. 가상 회의실 업무 및 Markdown만 외부 모델에 전송. 로그인 비밀번호는 데모 전용이며 영상에 키/터미널/env 없음.\n- Playwright Chromium recordVideo 장면별 녹화, 한국어 오버레이, ffmpeg H.264 CRF23. UI 대기·클릭 간 0.85~0.95초. 백엔드 결과는 조작하지 않음.\n- 학습 사전 준비: 실제 요청 3건을 live 처리하고 공개 review API로 수정 승인; 화면 장면과 별도로 진행.\n- 실행 종료 시 소유한 5개 프로세스만 정리. health.txt에 최종 공유 컨테이너 상태 기록.\n\n## ffprobe 확인\n\n\`\`\`json\n${JSON.stringify(probe,null,2)}\n\`\`\`\n\n## 사용한 요청 ID\n\n${ids.map(x=>'- '+x).join('\n')}\n\n## 화면 측정과 문서 인용\n\n${JSON.stringify(timing)}\n\n화면 측정은 버튼 클릭 직전부터 DOM 표시까지이며 서버 처리시간과 다릅니다. 문서 예시 수치는 docs/architecture/ARCHITECTURE_OVERVIEW.html:210,218의 잠정 0.5–0.7초, 최종 1.3–1.6초로, 이번 실행 실측값으로 주장하지 않았습니다.\n\n## 알려진 한계\n\n${limits.join('\n')||'기록된 장면 실행 오류 없음.'}\n${notes.map(x=>'- '+x).join('\n')}\n\n부수효과를 가진 장면은 실행 오류 시 무조건 전체 재실행하지 않습니다. 실패 장면은 화면에 부분 실패로 표시하고 manifest에 원인을 남깁니다. 제품 결함과 녹화 스크립트 오류는 구분하여 후속 재촬영해야 합니다.\n`);
-console.log('FINISHED',JSON.stringify(probe), 'PARTIAL',scenes.filter(s=>s.status==='partial').map(s=>s.n));
+const timecode=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+fs.writeFileSync(path.join(OUT,'chapters.md'),'# 한국어 시연 챕터\n\n'+scenes.map(s=>`- ${timecode(s.start)} — ${s.n}. ${s.title}${s.status==='partial'?' (부분 실패)':''}`).join('\n')+'\n');
+fs.writeFileSync(path.join(OUT,'manifest.json'),JSON.stringify({tenant:T,ids,timing,notes,scenes,consoleErrors,probe},null,2));
+const pngs=fs.readdirSync(OUT).filter(f=>f.endsWith('.png')).sort();
+fs.writeFileSync(path.join(OUT,'README.md'),`# Jev Triage 현재 제품 흐름 시연\n\n- 실행: \`bash scripts/demo/record.sh\`\n- 기준 commit: ${process.env.DEMO_COMMIT}\n- 전용 API 10291 · Vite 7591 · tenant \`${T}\` · tenant 제한 worker\n- JEV_MODE=live. .env는 Settings가 읽으며 키는 출력하거나 녹화하지 않습니다.\n- 1440×900 · 30 fps · H.264 · 한국어 자막 · reduced-motion 해제. 시스템 다크 모드는 장면 14에서 켭니다.\n- 로그인부터 마무리까지 하나의 연속 브라우저 녹화입니다. 실제 응답 및 애니메이션을 조작하지 않습니다.\n- 녹화 전 실제 LIVE 요청 3건을 수정 승인하고 학습 후보와 규칙 초안을 공개 API로 생성했습니다. 운영 게시하지 않았습니다.\n- 백엔드 판단 결과와 제품 코드는 변경하지 않았습니다.\n- 콘솔 오류: ${consoleErrors.length}건 · 부분 실패: ${scenes.filter(s=>s.status==='partial').length}장면\n- 재현 시험: 변경 전 REC-2 계약 시험 2건 실패(기존 포트·13개 장면), 변경 후 통과.\n\n## 영상\n\n[walkthrough.mp4](walkthrough.mp4) · ${(Number(probe.format.duration)).toFixed(2)}초 · ${(Number(probe.format.size)/1048576).toFixed(2)} MiB\n\n[타임코드](chapters.md) · [검증 manifest](manifest.json)\n\n## 장면 PNG 목록\n\n${pngs.map(f=>`- [${f}](${f})`).join('\n')}\n\n## 한계 및 오류\n\n${scenes.filter(s=>s.error).map(s=>`- 장면 ${s.n}: ${s.error}`).join('\n')||'장면 실행 오류 없음.'}\n\n${consoleErrors.map(e=>`- ${e.type}, 장면 ${e.scene}: ${e.text}`).join('\n')||'브라우저 console error 및 pageerror 없음.'}\n\n## 콘솔 응답 해석\n\n로그인 전 인증 확인 401, 저장 전 판단 조회 404, 미게시 초안의 효과 조회 404는 예상된 HTTP 응답이지만 브라우저 콘솔에 오류로 찍힙니다. 각 위치는 manifest의 consoleErrors에 보존합니다. React 경고와 pageerror가 있으면 별도 제품 결함으로 다룹니다.\n\n## 실측 표시 시간\n\n${JSON.stringify(timing)}\n\n클릭 직전 관찰자 설치부터 해당 DOM 최초 표시까지의 밀리초이며 서버 지연과 다릅니다.\n`);
+console.log('FINISHED',JSON.stringify(probe),'PARTIAL',scenes.filter(s=>s.status==='partial').map(s=>s.n),'CONSOLE_ERRORS',consoleErrors.length);
+if(scenes.some(s=>s.status==='partial'))process.exitCode=1;
