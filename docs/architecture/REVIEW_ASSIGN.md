@@ -4,7 +4,7 @@
 
 `decide`는 `Request → Review` 순서로 잠근 한 `write_tx`에서 최신 대상·권한·초안 필수 필드·tenant 조직·선행 순환을 재검증한다. `ReviewDecision`의 결정자·사유·시각·버전을 기록하고 수정 승인에서는 기존 Judgment/Draft를 그대로 두고 새 Draft 버전을 만든다. 분류와 초안 업무의 변경 항목별 `Correction`에는 원값·수정값·사유·근거 ID·수정자·시각·request/revision/run/Config 버전을 저장한다. 모델 반환값에 해당하는 분류 수정은 `CORRECTS`로 원 `ModelOutput`에 연결된다. 카탈로그가 작성한 초안 업무 필드는 대응하는 Jev `ModelOutput`이 없으므로 관계를 합성하지 않고 `RECORDED`와 원안·수정값을 보존한다. 단건 결정은 RuleCandidate·RuleVersion·ConfigVersion을 변경하지 않는다.
 
-승인 시 같은 트랜잭션의 `assign_in_tx`가 요청당 Assignment 1개와 `(assignment_id,draft_task_id)`당 Task 1개를 생성한다. Request에서 Task로 `HAS_TASK`, Task에서 Org로 `ASSIGNED_TO {role}`를 만들고 실제 선행 작업에만 `PRECEDES`를 만든다. 선행 작업·초안 사유·미정 상태 또는 미해결 개발 가능성이 있는 본업무는 `막힘`으로 시작한다. 정보 요청은 `보완 필요`와 `needed_info` 목록을, 반려는 `반려` 상태를 저장한다. 결정·배정·감사·이벤트·멱등 결과는 함께 커밋한다.
+승인 시 같은 트랜잭션의 `assign_in_tx`가 요청당 Assignment 1개와 `(assignment_id,draft_task_id)`당 Task 1개를 생성한다. Request에서 Task로 `HAS_TASK`, Task에서 Org로 `ASSIGNED_TO {role}`를 만들고 실제 선행 작업에만 `PRECEDES`를 만든다. 개발 가능성 차단은 승인 결정의 `Correction` 수정값이 있으면 그 값을, 없으면 원 `Judgment.feasibility`를 사용한다. 선행 작업·초안 사유·미정 상태 또는 최종 분류의 미해결 개발 가능성이 있는 본업무는 `막힘`으로 시작한다. 명시적으로 연결된 선행 확인 업무와 모든 선행 업무가 완료되면 본업무 시작 전이에서 가능성 차단을 해제하고 감사 기록에 전후 차단 사유를 남긴다. 다른 초안 전제는 그대로 유지한다. 정보 요청은 `보완 필요`와 `needed_info` 목록을, 반려는 `반려` 상태를 저장한다. 결정·배정·감사·이벤트·멱등 결과는 함께 커밋한다.
 
 worker 판단 저장 후 자동 배정 대상은 같은 `assign_in_tx`를 호출한다. 이는 worker 소유권과 활성 실행을 검증한 `ctx.commit` 내부다. 배정 서비스는 실행 고정 Config 버전, 최신 입력/실행, 근거 링크, 모든 Choice/Noul 신호, 위험·긴급·개발 가능성, 초안, 기존 배정을 다시 확인한다. 조건이 강화되거나 초안이 유효하지 않으면 최초 판단은 보존하고 새 검토 대상으로 전환한다. 이미 배정된 요청의 재분석은 기존 업무를 유지한다. 부트스트랩 정책은 자동 배정 off이며 안전 조건은 on 정책에서도 서버 코드로 강제한다.
 

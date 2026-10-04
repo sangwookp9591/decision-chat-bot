@@ -77,6 +77,47 @@ async def test_unresolved_task_cannot_start():
 
 
 @pytest.mark.asyncio
+async def test_completed_confirmation_predecessor_releases_feasibility_block():
+    tenant = f"write_{uuid4().hex}"
+    confirm_id, main_id = f"task_{uuid4().hex}", f"task_{uuid4().hex}"
+    org = f"{tenant}-it"
+    await apply_schema()
+    async def seed(tx):
+        await (await tx.run(
+            "CREATE (o:Org {tenant_id:$tenant,id:$org}) "
+            "CREATE (c:Task {tenant_id:$tenant,id:$confirm,status:'대기',"
+            "confirmation_task:true,block_reasons:[]}) "
+            "CREATE (m:Task {tenant_id:$tenant,id:$main,status:'막힘',"
+            "block_reasons:['predecessor_incomplete','feasibility_unresolved']}) "
+            "CREATE (c)-[:PRECEDES]->(m) "
+            "CREATE (c)-[:ASSIGNED_TO {role:'lead'}]->(o) "
+            "CREATE (m)-[:ASSIGNED_TO {role:'lead'}]->(o)",
+            tenant=tenant, org=org, confirm=confirm_id, main=main_id,
+        )).consume()
+    await write_tx(tenant, seed)
+    principal = Principal(tenant, "worker", (org,), frozenset({"team_member"}))
+    try:
+        with pytest.raises(TaskError):
+            await transition(principal, main_id, "진행", "막힘")
+        await transition(principal, confirm_id, "진행", "대기")
+        await transition(principal, confirm_id, "완료", "진행")
+        assert (await transition(principal, main_id, "진행", "막힘"))["status"] == "진행"
+        async def audit(tx):
+            return await (await tx.run(
+                "MATCH (a:Audit {tenant_id:$tenant,target_id:$task,action:'task.transition'}) "
+                "RETURN a.before_json AS before,a.after_json AS after",
+                tenant=tenant, task=main_id,
+            )).single(strict=True)
+        change = await read_tx(tenant, audit)
+        assert "feasibility_unresolved" in json.loads(change["before"])["block_reasons"]
+        assert json.loads(change["after"])["block_reasons"] == []
+    finally:
+        async def cleanup(tx):
+            await (await tx.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=tenant)).consume()
+        await write_tx(tenant, cleanup)
+
+
+@pytest.mark.asyncio
 async def test_run_start_pins_config_and_rejects_stale_pointer():
     tenant = f"write_{uuid4().hex}"
     await apply_schema()

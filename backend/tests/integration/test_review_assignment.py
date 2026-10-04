@@ -15,6 +15,7 @@ from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.ingest.store import get_request_meta
 from jevtriage.main import create_app
 from jevtriage.review.service import ReviewError, decide
+from jevtriage.tasks.service import TaskError, transition
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -123,6 +124,81 @@ async def counts(tenant: str, request_id: str):
         )).single(strict=True)
         return dict(row)
     return await read_tx(tenant, op)
+
+
+async def assigned_task(tenant: str, task_id: str):
+    async def op(tx):
+        row = await (await tx.run(
+            "MATCH (t:Task {tenant_id:$tenant,id:$id}) "
+            "RETURN t.status AS status,t.block_reasons AS reasons",
+            tenant=tenant, id=task_id,
+        )).single(strict=True)
+        return dict(row)
+    return await read_tx(tenant, op)
+
+
+@pytest.mark.parametrize("original,corrected,blocked", [
+    ("정보 부족", "가능", False),
+    ("가능", "조건부 가능", True),
+    ("조건부 가능", None, True),
+])
+async def test_assignment_uses_final_approved_feasibility(tenant, original, corrected, blocked):
+    principal, review_id, command = await sample(tenant)
+    async def update(tx):
+        await (await tx.run(
+            "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) "
+            "SET j.feasibility=$value",
+            tenant=tenant, run=command["run_id"], value=original,
+        )).consume()
+        await (await tx.run(
+            "MATCH (t:DraftTask {tenant_id:$tenant,run_id:$run,draft_task_id:'draft-1'}) "
+            "SET t.title='본업무 개발'",
+            tenant=tenant, run=command["run_id"],
+        )).consume()
+    await write_tx(tenant, update)
+    if corrected:
+        command.update(action="approve_with_changes", reason="가능성 확인",
+                       changes={"classifications": {"feasibility": corrected}})
+    result = await decide(principal, review_id, command, str(uuid4()))
+    task_id = result["assignment"]["task_ids"]["draft-1"]
+    task = await assigned_task(tenant, task_id)
+    assert ("feasibility_unresolved" in task["reasons"]) is blocked
+    if blocked:
+        assert task["status"] == "막힘"
+    else:
+        assert task["status"] == "대기"
+        worker = Principal(tenant, "worker", (f"{tenant}-it",), frozenset({"team_member"}))
+        assert (await transition(worker, task_id, "진행", "대기"))["status"] == "진행"
+
+
+async def test_predecessor_still_blocks_approved_possible_task(tenant):
+    principal, review_id, command = await sample(tenant)
+    async def update(tx):
+        await (await tx.run(
+            "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) SET j.feasibility='가능'",
+            tenant=tenant, run=command["run_id"],
+        )).consume()
+        await (await tx.run(
+            "MATCH (t:DraftTask {tenant_id:$tenant,run_id:$run,draft_task_id:'draft-1'}) "
+            "SET t.predecessors='[\"draft-2\"]' "
+            "WITH t MATCH (d:Draft {tenant_id:$tenant,run_id:$run,draft_version:1}) "
+            "CREATE (:DraftTask {id:$id,tenant_id:$tenant,request_id:$request,run_id:$run,"
+            "draft_task_id:'draft-2',draft_version:1,title:'자료 확인',method:'사람',"
+            "lead_org:'IT팀',collab_orgs:'[]',deliverable:'확인 결과',predecessors:'[]',"
+            "status:'draft'})-[:IN_DRAFT]->(d)",
+            tenant=tenant, run=command["run_id"], request=command["request_id"],
+            id=f"dt_{uuid4().hex}",
+        )).consume()
+    await write_tx(tenant, update)
+    result = await decide(principal, review_id, command, str(uuid4()))
+    task_id = result["assignment"]["task_ids"]["draft-1"]
+    task = await assigned_task(tenant, task_id)
+    assert task["status"] == "막힘"
+    assert task["reasons"] == ["predecessor_incomplete"]
+    worker = Principal(tenant, "worker", (f"{tenant}-it",), frozenset({"team_member"}))
+    with pytest.raises(TaskError) as error:
+        await transition(worker, task_id, "진행", "막힘")
+    assert error.value.status_code == 409
 
 
 @pytest.mark.parametrize("action,status,request_status", [

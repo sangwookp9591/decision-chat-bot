@@ -179,10 +179,16 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
     orgs = await validate_tasks_in_tx(tx, tenant, tasks)
     judgment_row = await (await tx.run(
         "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) "
-        "RETURN j.feasibility AS feasibility",
-        tenant=tenant, run=run_id,
+        "OPTIONAL MATCH (v:Review {tenant_id:$tenant,id:$review_id,run_id:$run})"
+        "-[:HAS_DECISION]->(h:ReviewDecision {tenant_id:$tenant})"
+        "-[:RECORDED]->(c:Correction {tenant_id:$tenant,field:'feasibility',run_id:$run}) "
+        "RETURN j.feasibility AS feasibility,c.corrected_value AS corrected",
+        tenant=tenant, run=run_id, review_id=review_id,
     )).single(strict=True)
-    unresolved_feasibility = judgment_row["feasibility"] != "가능"
+    final_feasibility = (json.loads(judgment_row["corrected"])
+                         if judgment_row["corrected"] is not None
+                         else judgment_row["feasibility"])
+    unresolved_feasibility = final_feasibility != "가능"
     assignment_id = new_id("assignment")
     await (await tx.run(
         "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
@@ -217,7 +223,8 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
             "assignment_id:$assignment,draft_task_id:$draft_task_id,run_id:$run,"
             "draft_version:$version,title:$title,method:$method,lead_org:$lead_org,"
             "collab_orgs:$collab_orgs,deliverable:$deliverable,predecessors:$predecessors,"
-            "reason:$reason,block_reasons:$block_reasons,status:$status,created_at:datetime()}) "
+            "reason:$reason,block_reasons:$block_reasons,confirmation_task:$confirmation_task,"
+            "status:$status,created_at:datetime()}) "
             "CREATE (q)-[:HAS_TASK]->(t) CREATE (a)-[:HAS_TASK]->(t)",
             tenant=tenant, request=request_id, assignment=assignment_id, id=task_id,
             draft_task_id=draft["draft_task_id"], run=run_id, version=draft_version,
@@ -225,6 +232,7 @@ async def assign_in_tx(tx, tenant: str, request_id: str, run_id: str, revision_i
             collab_orgs=_json(draft["collab_orgs"]), deliverable=draft["deliverable"],
             predecessors=_json(draft["predecessors"]), reason=draft.get("reason"),
             block_reasons=block_reasons,
+            confirmation_task=confirmation_task,
             status="막힘" if blocked else "대기",
         )).consume()
         for role, name in [("lead", draft["lead_org"]),
