@@ -18,6 +18,7 @@ from jevtriage.evaluation.api import router as evaluation_router
 from jevtriage.events.router import router as events_router
 from jevtriage.graph.api import router as graph_router
 from jevtriage.ingest.api import router as ingest_router
+from jevtriage.jobs.api import router as jobs_router
 from jevtriage.journal.reader import producer_heartbeat
 from jevtriage.journal.writer import JournalWriter, failure_count, flush_all
 from jevtriage.judgment.api import router as judgment_router
@@ -61,6 +62,7 @@ def create_app() -> FastAPI:
     app = FastAPI(title="Jev Triage API", lifespan=lifespan)
     app.include_router(auth_router)
     app.include_router(ingest_router)
+    app.include_router(jobs_router)
     app.include_router(judgment_router)
     app.include_router(progress_router)
     app.include_router(learning_rules_router)

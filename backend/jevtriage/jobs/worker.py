@@ -397,6 +397,20 @@ class Worker:
         except Exception as exc:  # noqa: BLE001 - every heartbeat failure invalidates ownership
             ctx.lost.set()
             ctx._journal("ownership_lost", status="lost", error_class=type(exc).__name__)
+            # A user cancellation must let an in-flight Jev call return naturally.
+            # Its next step/commit is fenced by the invalidated Job generation.
+            async def cancelled(tx):
+                row = await (await tx.run(
+                    "MATCH (j:Job {tenant_id:$tenant,id:$job}) RETURN j.status AS status",
+                    tenant=ctx.tenant_id, job=ctx.job_id,
+                )).single()
+                return bool(row and row["status"] == "cancelled")
+            try:
+                if await read_tx(ctx.tenant_id, cancelled):
+                    return
+            except Exception as check_error:  # noqa: BLE001 - unknown lease loss stops the handler
+                ctx._journal("cancel_check_failed", status="failed",
+                             error_class=type(check_error).__name__)
             handler_task.cancel()
 
     async def process_job(self, tenant_id, job_id, generation=None):

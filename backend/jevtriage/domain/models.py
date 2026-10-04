@@ -32,6 +32,7 @@ class StepStatus(StrEnum):
     FAILED = "failed"
     SKIPPED = "skipped"
     WAITING_HUMAN = "waiting_human"
+    CANCELLED = "cancelled"
 
 
 class ReviewStatus(StrEnum):
