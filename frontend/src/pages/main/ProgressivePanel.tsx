@@ -28,19 +28,27 @@ export function SlowNotice({ state }: { state: ProgressState }) {
   return <p className="slow-notice" role="status">평소보다 오래 걸리고 있어요{state.currentStep ? ` · 현재 단계: ${stepLabel(state.currentStep)}` : ''}. 결과가 준비되는 대로 바로 보여 드릴게요.</p>;
 }
 
-/** Cards from judgment.partial / judgment_saved payloads, shown until the saved judgment is loaded. */
-export function ProvisionalResult({ state }: { state: ProgressState }) {
+export const OPEN_LATER = '원문 열람은 최종 저장 후 가능';
+/**
+ * Cards from judgment.partial / judgment_saved payloads, shown until the saved judgment is loaded.
+ * Same areas in the same order and slots as `Result` (summary → judgment → tasks), so the final swap only replaces data:
+ * "N items prepared" is one line, "details can be opened" is a separate, explicit state.
+ */
+export function ProvisionalResult({ state, reserveAction = false }: { state: ProgressState; reserveAction?: boolean }) {
   const final = state.phase === 'final';
   const values = final ? state.finalClassifications ?? state.preliminary?.classifications : state.preliminary?.classifications;
   if (!values || !Object.keys(values).length) return null;
   const keys = Object.keys(classificationLabels).filter((key) => key in values);
   return <div className="result-stack provisional-result" aria-busy={!final}>
-    {!final && <p className="provisional-note" role="status">{PROVISIONAL_NOTE}</p>}
-    {state.evidenceReady && <p className="provisional-count">{state.evidenceCount !== undefined ? `근거 ${state.evidenceCount}건 연결됨` : '근거 연결됨'}</p>}
-    <div className="judgment-grid">{keys.map((key) => { const value = String(values[key]); const selected = value === '조건부' ? '조건부 가능' : value; const confidence = state.preliminary?.confidences[key];
-      return <article className="judgment-card" key={key}><h3>{classificationLabels[key]}{!final && <span className="provisional-badge">잠정</span>}</h3><div className="scale-options">{(classificationChoices[key] || [value]).map((choice) => <span key={choice} className={selected === choice ? 'selected' : ''}>{choice}</span>)}</div>{typeof confidence === 'number' && <div className="signal-labels"><span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span></div>}
-        <div className="evidence-list">{state.evidenceReady ? <span>근거 원문은 최종 저장 후 열 수 있어요</span> : <Skeleton rows={2} label="근거를 연결하는 중" />}</div></article>; })}</div>
-    <article className="result-summary"><h2>업무 분담</h2>{state.tasksReady ? <p>{state.taskCount !== undefined ? `업무 ${state.taskCount}건 준비됨` : '업무 분해 준비됨'}</p> : <Skeleton rows={3} label="업무를 나누는 중" />}
+    <article className="result-summary" data-region="summary"><div className="card-heading"><h2>판단 결과</h2>{final ? <StatusBadge status="progress" label="저장 확인 중" /> : <StatusBadge status="progress" label="잠정 판단" />}</div>
+      <div className="summary-text"><Skeleton rows={2} label="요약을 정리하는 중" /></div>
+      <p className="author-line provisional-note" role="status">{final ? '최종 판단을 저장했어요. 결과를 불러오는 중' : PROVISIONAL_NOTE}</p>
+      <code className="provisional-count">{state.evidenceReady ? (state.evidenceCount !== undefined ? `근거 ${state.evidenceCount}건 연결됨` : '근거 연결됨') : '\u00a0'}</code>
+      {reserveAction && <span className="result-action-slot" aria-hidden="true" />}</article>
+    <div className="judgment-grid" data-region="judgment">{keys.map((key) => { const value = String(values[key]); const selected = value === '조건부' ? '조건부 가능' : value; const confidence = state.preliminary?.confidences[key];
+      return <article className="judgment-card" key={key}><h3>{classificationLabels[key]}{!final && <span className="provisional-badge">잠정</span>}</h3><div className="scale-options">{(classificationChoices[key] || [value]).map((choice) => <span key={choice} className={selected === choice ? 'selected' : ''}>{choice}</span>)}</div><div className="signal-labels">{typeof confidence === 'number' && <span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span>}</div>
+        <div className="evidence-list">{state.evidenceReady ? <span>{OPEN_LATER}</span> : <Skeleton rows={2} label="근거를 연결하는 중" />}</div></article>; })}</div>
+    <article className="result-summary" data-region="tasks"><h2>업무 분담</h2>{state.tasksReady ? <p>{state.taskCount !== undefined ? `업무 ${state.taskCount}건 준비됨` : '업무 분해 준비됨'}</p> : <Skeleton rows={3} label="업무를 나누는 중" />}
       {!final && <button type="button" className="ui-button secondary" disabled aria-disabled="true">검토·배정은 최종 판단 저장 후 가능해요</button>}</article>
   </div>;
 }

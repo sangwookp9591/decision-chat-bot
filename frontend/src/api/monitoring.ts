@@ -19,10 +19,19 @@ export type Slo = { window_start: string; window_end: string; verified: boolean;
 export type SloMetric = { target: number; total: number; failures: number; remaining_failures: Metric; burn_rate_1h: Metric; verified: boolean };
 export type Alert = { alerts: Array<Record<string, unknown>> };
 const params = (values: Record<string, string>) => { const search = new URLSearchParams(); Object.entries(values).forEach(([k, v]) => { if (v) search.set(k, v); }); return search.toString(); };
+/** Identical GETs issued while one is still in flight (StrictMode double effects, refresh clicks) share one request. Nothing is cached after it settles. */
+const inFlight = new Map<string, Promise<unknown>>();
+function shared<T>(path: string): Promise<T> {
+  const running = inFlight.get(path);
+  if (running) return running as Promise<T>;
+  const request = apiFetch<T>(path).finally(() => { if (inFlight.get(path) === request) inFlight.delete(path); });
+  inFlight.set(path, request);
+  return request;
+}
 export const monitoringApi = {
-  summary: (filters: Record<string, string>) => apiFetch<MonitoringSummary>(`/api/monitoring/summary?${params(filters)}`),
-  slo: () => apiFetch<Slo>('/api/monitoring/slo'),
-  failures: (filters: Record<string, string>) => apiFetch<{ causes: MonitoringSummary['failures']; unscoped_events: number }>(`/api/monitoring/failures?${params(filters)}`),
-  alerts: () => apiFetch<Alert>('/api/monitoring/alerts'),
-  collection: () => apiFetch<CollectionStatus>('/api/monitoring/collection-status'),
+  summary: (filters: Record<string, string>) => shared<MonitoringSummary>(`/api/monitoring/summary?${params(filters)}`),
+  slo: () => shared<Slo>('/api/monitoring/slo'),
+  failures: (filters: Record<string, string>) => shared<{ causes: MonitoringSummary['failures']; unscoped_events: number }>(`/api/monitoring/failures?${params(filters)}`),
+  alerts: () => shared<Alert>('/api/monitoring/alerts'),
+  collection: () => shared<CollectionStatus>('/api/monitoring/collection-status'),
 };

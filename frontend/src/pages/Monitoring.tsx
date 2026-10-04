@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, LoadingState } from '../components';
-import { monitoringApi, type MonitoringSummary, type Slo, type Alert } from '../api/monitoring';
+import { Button } from '../components';
+import { useDelayedFlag } from '../state/useDelayedFlag';
+import { monitoringApi } from '../api/monitoring';
 import type { ApiError } from '../api/client';
 import { formatTime, percent } from '../lib/format';
 import { RawDetails } from '../components/RawDetails';
@@ -24,34 +25,46 @@ export function rangeProblem(range: { from: string; to: string }): string {
 }
 const traceLink = (row: { request_id?: string; run_id?: string }) => { const query = new URLSearchParams(); if (row.request_id) query.set('request_id', row.request_id); if (row.run_id) query.set('run_id', row.run_id); return query.toString() ? `/observatory?${query}` : ''; };
 
+type Area<T> = { data: T | null; error: ApiError | null; loading: boolean };
+/** One independent request per screen area: a slow or failing area never holds back the others. */
+function useArea<T>(load: () => Promise<T>, deps: unknown[]): Area<T> {
+  const [state, setState] = useState<Area<T>>({ data: null, error: null, loading: true });
+  useEffect(() => {
+    let live = true;
+    setState((current) => ({ ...current, error: null, loading: true }));
+    load().then((data) => { if (live) setState({ data, error: null, loading: false }); }, (error: ApiError) => { if (live) setState((current) => ({ data: current.data, error, loading: false })); });
+    return () => { live = false; };
+  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
+  return state;
+}
+const waiting = (area: Area<unknown>) => area.loading && !area.data;
+/** Final-shaped placeholder: a blank of the same size for the first 200ms, a gray block after that. */
+const Pending = ({ show, rows = 0 }: { show: boolean; rows?: number }) => rows ? <div className="monitor-skeleton-rows" aria-hidden="true">{show && Array.from({ length: rows }, (_, i) => <span key={i} className="skeleton" />)}</div> : <span className={show ? 'skeleton skeleton-inline' : 'skeleton-blank'} aria-hidden="true">{show ? '' : '\u00a0'}</span>;
+const areaError = (area: Area<unknown>, name: string) => area.error && !area.data ? <p className="monitor-field-error" role="alert">{name}을(를) 불러오지 못했습니다: {area.error.message || '오류'}</p> : null;
+
 export function Monitoring() {
   const [range, setRange] = useState(() => ({ from: dateInput(new Date(Date.now() - 30 * 86400000)), to: dateInput(new Date()) }));
   const [filters, setFilters] = useState({ org: '', status: '', version: '' });
   const [applied, setApplied] = useState({ range, filters });
+  const [tick, setTick] = useState(0);
   const problem = rangeProblem(range);
-  const [data, setData] = useState<MonitoringSummary | null>(null); const [slo, setSlo] = useState<Slo | null>(null); const [alerts, setAlerts] = useState<Alert['alerts']>([]);
-  const [error, setError] = useState(''); const [accessDenied, setAccessDenied] = useState(false); const [loading, setLoading] = useState(true); const [updated, setUpdated] = useState<string | null>(null);
-  const load = useCallback(async () => { setLoading(true); setError(''); const query = { from: toIso(applied.range.from)!, to: toIso(applied.range.to)!, ...applied.filters };
-    const result = await Promise.allSettled([monitoringApi.summary(query), monitoringApi.slo(), monitoringApi.failures(query), monitoringApi.alerts()]);
-    const [summaryResult, sloResult, failuresResult, alertsResult] = result;
-    const summary = summaryResult.status === 'fulfilled' ? summaryResult.value : null;
-    const failures = failuresResult.status === 'fulfilled' ? failuresResult.value : null;
-    if (summary) {
-      setAccessDenied(false);
-      setData(failures ? { ...summary, failures: failures.causes, unscoped_events: Math.max(summary.unscoped_events, failures.unscoped_events) } : summary);
-      setUpdated(new Date().toISOString());
-    } else {
-      const failure = summaryResult.status === 'rejected' ? summaryResult.reason as ApiError : undefined;
-      setAccessDenied(failure?.status === 403);
-      setError(failure?.message || '집계를 불러오지 못했습니다.');
-    }
-    if (sloResult.status === 'fulfilled') setSlo(sloResult.value);
-    if (alertsResult.status === 'fulfilled') setAlerts(alertsResult.value.alerts);
-    setLoading(false);
-  }, [applied]);
-  useEffect(() => { void load(); }, [load]);
-  if (loading && !data) return <LoadingState label="모니터링 집계 불러오는 중" />;
-  if (error && !data && accessDenied) return <section className="monitor-page"><h1>모니터링</h1><div className="monitor-banner" role="status"><strong>운영자 권한 필요</strong><p>모니터링 집계는 운영자만 조회할 수 있습니다.</p></div></section>;
+  const query = { from: toIso(applied.range.from)!, to: toIso(applied.range.to)!, ...applied.filters };
+  const summary = useArea(() => monitoringApi.summary(query), [applied, tick]);
+  const sloArea = useArea(() => monitoringApi.slo(), [tick]);
+  const failuresArea = useArea(() => monitoringApi.failures(query), [applied, tick]);
+  const alertsArea = useArea(() => monitoringApi.alerts(), [tick]);
+  const [updated, setUpdated] = useState<string | null>(null);
+  useEffect(() => { if (summary.data) setUpdated(new Date().toISOString()); }, [summary.data]);
+  const showSummary = useDelayedFlag(waiting(summary)), showSlo = useDelayedFlag(waiting(sloArea)), showFailures = useDelayedFlag(waiting(failuresArea)), showAlerts = useDelayedFlag(waiting(alertsArea));
+  const load = () => setTick((value) => value + 1);
+  const data = summary.data, slo = sloArea.data;
+  const accessDenied = summary.error?.status === 403 && !data;
+  const error = summary.error && !data && !accessDenied ? summary.error.message || '집계를 불러오지 못했습니다.' : '';
+  const alerts = alertsArea.data?.alerts ?? [];
+  const cell = (area: Area<unknown>, show: boolean, node: ReactNode) => waiting(area) ? <Pending show={show} /> : node;
+  if (accessDenied) return <section className="monitor-page"><h1>모니터링</h1><div className="monitor-banner" role="status"><strong>운영자 권한 필요</strong><p>모니터링 집계는 운영자만 조회할 수 있습니다.</p></div></section>;
+  const failureCauses = failuresArea.data?.causes ?? data?.failures;
+  const unscoped = data || failuresArea.data ? Math.max(data?.unscoped_events ?? 0, failuresArea.data?.unscoped_events ?? 0) : null;
   const collection = data?.collection || slo?.collection; const incomplete = collection && !collection.complete;
   const kpis = [
     ['요청 수', data ? data.requests.received + data.requests.failed_before_id : null], ['자동 처리', data?.business?.auto_assignment_count ?? null], ['검토 대기', data?.review_wait_ms.unresolved ?? null], ['검토 완료', data?.business?.review_completed_count ?? null],
@@ -61,18 +74,18 @@ export function Monitoring() {
     { name: '접수·조회 가용성', denominator: slo?.availability.total, target: '≥99.9%', targetValue: .999, current: slo?.availability.total ? (slo.availability.total - slo.availability.failures) / slo.availability.total : null, verified: slo?.availability.verified, metric: slo?.availability },
     { name: '최초 판단 저장 신뢰성', denominator: slo?.first_judgment.total, target: '≥99.0%', targetValue: .99, current: slo?.first_judgment.total ? (slo.first_judgment.total - slo.first_judgment.failures) / slo.first_judgment.total : null, verified: slo?.first_judgment.verified, metric: slo?.first_judgment },
   ];
-  const failureRows = Object.entries(data?.failures || {}).flatMap(([cause, rows]) => rows.map((row) => ({ cause, ...row })));
+  const failureRows = Object.entries(failureCauses || {}).flatMap(([cause, rows]) => rows.map((row) => ({ cause, ...row })));
   const statusName = (verified: boolean | undefined, current: number | null | undefined, target: number, incompleteCollection = false) => incompleteCollection ? '관측 불완전' : !verified ? '미검증' : current != null && current < target ? '미달' : '통과';
   return <section className="monitor-page"><header className="monitor-heading"><div><p className="eyebrow">JEV TRIAGE / OBSERVABILITY</p><h1>모니터링</h1><p>집계 기간 {data?.from ? formatTime(data.from, {}) : '—'} ~ {data?.to ? formatTime(data.to, {}) : '—'} · 갱신 {updated ? formatTime(updated, {}) : '미수집'}</p></div><Button variant="secondary" onClick={() => void load()}>새로고침</Button></header>
     <form className="monitor-filters" onSubmit={(e) => { e.preventDefault(); if (!problem) setApplied({ range, filters }); }}><label>시작 <input type="datetime-local" aria-invalid={!toIso(range.from)} value={range.from} onChange={(e) => setRange({ ...range, from: e.target.value })} /></label><label>종료 <input type="datetime-local" aria-invalid={!toIso(range.to)} value={range.to} onChange={(e) => setRange({ ...range, to: e.target.value })} /></label><label>조직 <input value={filters.org} onChange={(e) => setFilters({ ...filters, org: e.target.value })} placeholder="조직 ID" /></label><label>요청 상태 <input value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })} placeholder="예: review_pending" /></label><label>버전 <input value={filters.version} onChange={(e) => setFilters({ ...filters, version: e.target.value })} placeholder="Config/모델 버전" /></label><Button type="submit" disabled={Boolean(problem)}>적용</Button>{problem && <p className="monitor-field-error" role="alert">{problem}</p>}</form>
     {incomplete && <aside className="monitor-banner" role="alert"><strong>관측 불완전</strong><p>수집 누락 또는 수집기 중단이 감지됐습니다. 이 구간은 정상 0건으로 간주하지 않으며 SLO는 미검증입니다.</p><ul>{collection?.issues.map((issue) => <li key={issue}>{collectionIssueLabel(issue)}</li>)}</ul>{collection?.incomplete_intervals.map((interval, i) => <p key={`${interval.kind}-${i}`}>불완전 구간 {intervalKindLabel(interval.kind)} · {formatTime(interval.start_at, {})}</p>)}{collection && <RawDetails>{{ issues: collection.issues, incomplete_intervals: collection.incomplete_intervals }}</RawDetails>}</aside>}
     {error && <div className="monitor-banner" role="alert">집계 필터 또는 API 오류: {error}</div>}
-    <section className="monitor-panel"><h2>핵심 지표</h2><div className="monitor-kpis">{kpis.map(([label, value]) => <article key={label}><span>{label}</span><strong>{fmt(value)}</strong></article>)}</div><p className="monitor-note">자동 처리와 검토 완료는 요청 생성 기간의 영속 업무 집계입니다. 섀도 실행은 별도 집계입니다.</p></section>
-    <section className="monitor-panel"><h2>서비스 수준 목표</h2><div className="monitor-table-scroll"><table><thead><tr><th>지표</th><th>분모</th><th>목표</th><th>현재</th><th>남은 예산</th><th>1시간 소진율</th><th>상태</th></tr></thead><tbody>{sloRows.map((row) => <tr key={row.name}><th>{row.name}</th><td>{fmt(row.denominator)}</td><td>{row.target}</td><td>{pct(row.current)}</td><td>{row.metric?.verified ? fmt(row.metric.remaining_failures, '건') : '미검증'}</td><td>{row.metric?.verified ? fmt(row.metric.burn_rate_1h, '×') : '미검증'}</td><td><span className={`monitor-state ${incomplete ? 'incomplete' : !row.verified ? 'unverified' : row.current != null && row.current < row.targetValue ? 'fail' : 'pass'}`}>{statusName(row.verified, row.current, row.targetValue, !!incomplete)}</span></td></tr>)}</tbody></table></div><p className="monitor-note">오류 예산은 완전한 연속 30일 관측일 때만 검증됩니다. {sloReasonLabel(slo?.reason)}</p></section>
-    <section className="monitor-columns"><section className="monitor-panel"><h2>시스템 지연 분포</h2><p>시스템 처리 시간이며 사람 검토 대기와 분리됩니다. 목표: 접수 p95 ≤2초, 텍스트 판단 ≤15초, 첨부 판단 ≤45초.</p><div className="monitor-table-scroll"><table><thead><tr><th>구간</th><th>p50</th><th>p95</th><th>표본</th></tr></thead><tbody>{Object.entries(steps).map(([key, label]) => { const v = data?.steps[key.replace('_p95','')]; const p95 = key === 'step_p95' ? data?.latency_ms.step_p95 : data?.latency_ms[key]; return <tr key={key}><th>{label}</th><td>{duration(v?.p50_ms)}</td><td>{duration(p95 ?? v?.p95_ms)}</td><td>{fmt(v?.count)}</td></tr>; })}</tbody></table></div></section>
-      <section className="monitor-panel review-panel"><h2>사람 검토 대기</h2><p>시스템 SLO와 별도로 표시</p><div className="review-kpis">{[['p50', data?.review_wait_ms.p50], ['p95', data?.review_wait_ms.p95], ['최장', data?.review_wait_ms.longest], ['미처리', data?.review_wait_ms.unresolved]].map(([label, value]) => <article key={String(label)}><span>{label}</span><strong>{label === '미처리' ? fmt(value as number | null) : duration(value as number | null)}</strong></article>)}</div>{data?.review_wait_ms.source_status === 'unavailable' && <p role="status">업무 DB에서 검토 대기 정보를 가져오지 못했습니다.</p>}</section></section>
-    <section className="monitor-columns"><section className="monitor-panel"><h2>실패 원인과 Trace</h2>{failureRows.length ? <ul className="failure-list">{failureRows.map((row, i) => <li key={`${row.attempt_id}-${i}`}><span>{causes[row.cause] || row.cause} · {row.error_class}</span><time>{formatTime(row.ts, {})}</time><div>{traceLink(row) ? <Link to={traceLink(row)}>Trace 보기{row.request_id ? ` · 요청 ${row.request_id}` : ''}{row.run_id ? ` · 실행 ${row.run_id}` : ''}</Link> : <span>연결된 요청·실행 없음</span>}{row.attempt_id && <span className="monitor-attempt"> 시도 {row.attempt_id}</span>}</div></li>)}</ul> : <p>해당 기간 실패 원인이 수집되지 않았습니다.</p>}</section>
-      <section className="monitor-panel"><h2>알림</h2>{alerts.length ? <ul className="alert-list">{alerts.map((alert, i) => <li key={String(alert.id || alert.created_at || i)}><strong>{String(alert.title || alertKindLabel(String(alert.kind || alert.type || '')))}</strong>{Boolean(alert.message || alert.summary) && <span>{String(alert.message || alert.summary)}</span>}<time>{formatTime(alert.created_at || alert.ts, {})}</time><RawDetails>{alert}</RawDetails></li>)}</ul> : <p>표시할 알림이 없습니다.</p>}</section></section>
-    <footer className="monitor-foot">수집기 상태: {collection?.complete ? '정상' : collection ? '관측 불완전' : '미수집'} · 마지막 수집 {collection?.last_collected_at ? formatTime(collection.last_collected_at, {}) : '미수집'} · 미귀속 이벤트 {fmt(data?.unscoped_events)}</footer>
+    <section className="monitor-panel" aria-label="핵심 지표" aria-busy={waiting(summary)}><h2>핵심 지표</h2><div className="monitor-kpis">{kpis.map(([label, value]) => <article key={label}><span>{label}</span><strong>{cell(summary, showSummary, fmt(value))}</strong></article>)}</div><p className="monitor-note">자동 처리와 검토 완료는 요청 생성 기간의 영속 업무 집계입니다. 섀도 실행은 별도 집계입니다.</p></section>
+    <section className="monitor-panel" aria-label="서비스 수준 목표" aria-busy={waiting(sloArea)}><h2>서비스 수준 목표</h2>{areaError(sloArea, '서비스 수준 목표')}<div className="monitor-table-scroll"><table><thead><tr><th>지표</th><th>분모</th><th>목표</th><th>현재</th><th>남은 예산</th><th>1시간 소진율</th><th>상태</th></tr></thead><tbody>{sloRows.map((row) => <tr key={row.name}><th>{row.name}</th><td>{cell(sloArea, showSlo, fmt(row.denominator))}</td><td>{row.target}</td><td>{cell(sloArea, showSlo, pct(row.current))}</td><td>{cell(sloArea, showSlo, row.metric?.verified ? fmt(row.metric.remaining_failures, '건') : '미검증')}</td><td>{cell(sloArea, showSlo, row.metric?.verified ? fmt(row.metric.burn_rate_1h, '×') : '미검증')}</td><td>{cell(sloArea, showSlo, <span className={`monitor-state ${incomplete ? 'incomplete' : !row.verified ? 'unverified' : row.current != null && row.current < row.targetValue ? 'fail' : 'pass'}`}>{statusName(row.verified, row.current, row.targetValue, !!incomplete)}</span>)}</td></tr>)}</tbody></table></div><p className="monitor-note">오류 예산은 완전한 연속 30일 관측일 때만 검증됩니다. {sloReasonLabel(slo?.reason)}</p></section>
+    <section className="monitor-columns"><section className="monitor-panel" aria-label="시스템 지연 분포" aria-busy={waiting(summary)}><h2>시스템 지연 분포</h2><p>시스템 처리 시간이며 사람 검토 대기와 분리됩니다. 목표: 접수 p95 ≤2초, 텍스트 판단 ≤15초, 첨부 판단 ≤45초.</p><div className="monitor-table-scroll"><table><thead><tr><th>구간</th><th>p50</th><th>p95</th><th>표본</th></tr></thead><tbody>{Object.entries(steps).map(([key, label]) => { const v = data?.steps?.[key.replace('_p95','')]; const p95 = key === 'step_p95' ? data?.latency_ms.step_p95 : data?.latency_ms[key]; return <tr key={key}><th>{label}</th><td>{cell(summary, showSummary, duration(v?.p50_ms))}</td><td>{cell(summary, showSummary, duration(p95 ?? v?.p95_ms))}</td><td>{cell(summary, showSummary, fmt(v?.count))}</td></tr>; })}</tbody></table></div></section>
+      <section className="monitor-panel review-panel" aria-label="사람 검토 대기" aria-busy={waiting(summary)}><h2>사람 검토 대기</h2><p>시스템 SLO와 별도로 표시</p><div className="review-kpis">{[['p50', data?.review_wait_ms.p50], ['p95', data?.review_wait_ms.p95], ['최장', data?.review_wait_ms.longest], ['미처리', data?.review_wait_ms.unresolved]].map(([label, value]) => <article key={String(label)}><span>{label}</span><strong>{cell(summary, showSummary, label === '미처리' ? fmt(value as number | null) : duration(value as number | null))}</strong></article>)}</div>{data?.review_wait_ms.source_status === 'unavailable' && <p role="status">업무 DB에서 검토 대기 정보를 가져오지 못했습니다.</p>}</section></section>
+    <section className="monitor-columns"><section className="monitor-panel" aria-label="실패 원인과 Trace" aria-busy={!failureCauses && failuresArea.loading}><h2>실패 원인과 Trace</h2>{areaError(failuresArea, '실패 원인')}{!failureCauses && failuresArea.loading ? <Pending show={showFailures} rows={3} /> : failureRows.length ? <ul className="failure-list">{failureRows.map((row, i) => <li key={`${row.attempt_id}-${i}`}><span>{causes[row.cause] || row.cause} · {row.error_class}</span><time>{formatTime(row.ts, {})}</time><div>{traceLink(row) ? <Link to={traceLink(row)}>Trace 보기{row.request_id ? ` · 요청 ${row.request_id}` : ''}{row.run_id ? ` · 실행 ${row.run_id}` : ''}</Link> : <span>연결된 요청·실행 없음</span>}{row.attempt_id && <span className="monitor-attempt"> 시도 {row.attempt_id}</span>}</div></li>)}</ul> : failuresArea.error && !failureCauses ? null : <p>해당 기간 실패 원인이 수집되지 않았습니다.</p>}</section>
+      <section className="monitor-panel" aria-label="알림" aria-busy={waiting(alertsArea)}><h2>알림</h2>{areaError(alertsArea, '알림')}{waiting(alertsArea) ? <Pending show={showAlerts} rows={3} /> : alerts.length ? <ul className="alert-list">{alerts.map((alert, i) => <li key={String(alert.id || alert.created_at || i)}><strong>{String(alert.title || alertKindLabel(String(alert.kind || alert.type || '')))}</strong>{Boolean(alert.message || alert.summary) && <span>{String(alert.message || alert.summary)}</span>}<time>{formatTime(alert.created_at || alert.ts, {})}</time><RawDetails>{alert}</RawDetails></li>)}</ul> : alertsArea.error ? null : <p>표시할 알림이 없습니다.</p>}</section></section>
+    <footer className="monitor-foot">수집기 상태: {collection?.complete ? '정상' : collection ? '관측 불완전' : waiting(summary) && waiting(sloArea) ? '확인 중' : '미수집'} · 마지막 수집 {collection?.last_collected_at ? formatTime(collection.last_collected_at, {}) : waiting(summary) && waiting(sloArea) ? '확인 중' : '미수집'} · 미귀속 이벤트 {unscoped === null && waiting(summary) ? '확인 중' : fmt(unscoped)}</footer>
   </section>;
 }

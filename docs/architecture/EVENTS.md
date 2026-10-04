@@ -30,3 +30,10 @@ FIX-SSE 확인에서 Neo4j 5.26 `SHOW INDEXES`는 `event_tenant_seq` RANGE 색�
 - **재연결**: 브라우저 자동 재연결은 `Last-Event-ID`를 `?after=`와 함께 보내 400을 받으므로 오류가 나면 클라이언트가 소스를 닫고 지수 백오프(1→2→4…최대 30초, 연속 6회 실패 시 `disconnected`)로 직접 `?after=<마지막 seq>`만 붙여 다시 연결한다. 오류 때마다 `/api/auth/me`를 한 번 조회해 세션 만료는 로그인 화면으로 전환한다. `session-expired` 이벤트도 같은 방식으로 처리한다.
 - **복구**: `snapshot-required`이면 요청 화면은 snapshot을 읽어 커서를 맞춘 뒤 `onSnapshot`·`onResync`로 다시 조회하고 재연결한다. 요청이 없는 화면(정책)은 저장된 커서를 버리고 화면 재조회 콜백을 부른 뒤 처음부터 한 번 다시 연결한다.
 - **커서 범위**: 커서는 tenant 전역 seq이므로 sessionStorage 키를 `jevtriage:last-event-seq:<tenant>:<user>`로 둔다. 같은 탭에서 다른 tenant로 로그인해도 이전 커서가 섞이지 않는다.
+
+### 정책 화면의 재생 이벤트 처리 (UX-6, F2)
+
+- 커서가 없는 새 세션은 과거 `policy.published`를 재생한다. 정책 화면은 payload `version`이 화면의 활성 버전 이하이면 무시하고, 더 새로운 버전일 때만 반응한다(첫 조회가 끝나기 전 이벤트도 무시: 조회 결과가 이미 최신).
+- 편집 중(입력한 필드가 있음)에 새 버전이 오면 덮어쓰지 않고 '새 버전 v N이 게시되었습니다 — 새 버전 반영 / 내 편집 유지'를 묻는다. 편집이 없으면 조용히 다시 불러온다. 조회 응답은 세대 번호로 검사해 늦게 도착한 옛 응답이 새 응답을 덮지 못한다.
+- 서버 검증·게시는 렌더 시점 state가 아니라 키 입력마다 갱신하는 draft snapshot(ref)을 보낸다.
+- 요청 목록은 요청 상세 구독과 별개의 tenant 이벤트 스트림으로 갱신한다(`PROGRESSIVE_RESULTS.md` 'P7 보완').

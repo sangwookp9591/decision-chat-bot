@@ -10,8 +10,23 @@ const questionLabels: Record<string, string> = {
 };
 export const questionLabel = (id: string) => questionLabels[id] || id;
 
-const policyFieldLabels: Record<string, string> = { risk_clear_max: '위험 없음 확인 상한' };
-export const policyFieldLabel = (field: string) => policyFieldLabels[field] || fieldLabel(field);
+/** Policy editor fields: Korean name + one-line meaning; the internal key stays in the collapsed 기술 상세. */
+export const policyFieldInfo: Record<string, { label: string; hint: string }> = {
+  schema_version: { label: '정책 형식 버전', hint: '정책 문서의 형식 버전입니다. 직접 바꿀 수 없습니다.' },
+  auto_assign: { label: '승인 없는 자동 배정', hint: '허용되지 않는 설정이라 잠겨 있습니다.' },
+  choice_confidence_thresholds: { label: '선택형 판단 최소 확신도', hint: '이 값보다 확신도가 낮으면 사람 검토로 넘깁니다. 항목마다 0~1 사이로 정합니다.' },
+  noul_probability_thresholds: { label: '참여 확률 기준', hint: '팀·위험 참여 여부를 확정하는 확률 기준입니다. 0~1 사이로 정합니다.' },
+  risk_clear_max: { label: '위험 없음 확인 상한', hint: '위험 확률이 이 값 이하일 때만 “위험 없음”으로 봅니다.' },
+  reviewer_groups: { label: '검토자 그룹', hint: '검토 분류별로 담당할 검토자 그룹을 지정합니다.' },
+  limits: { label: '처리 한도', hint: '요청 한 건에 쓸 수 있는 분량·시간 등의 상한입니다.' },
+  evidence_noul_threshold: { label: '근거 연결 확률 기준', hint: '근거로 인정할 최소 확률입니다. 0~1 사이로 정합니다.' },
+  catalog_noul_threshold: { label: '업무 목록 매칭 확률 기준', hint: '업무 목록과 일치한다고 볼 최소 확률입니다. 0~1 사이로 정합니다.' },
+  feature_flags: { label: '기능 사용 여부', hint: '기능별로 켜고 끄는 스위치입니다.' },
+  rules: { label: '학습 규칙', hint: '규칙 학습 화면에서 관리합니다. 여기서는 읽기만 가능합니다.' },
+};
+export const policyFieldLabel = (field: string) => policyFieldInfo[field]?.label || fieldLabel(field);
+export const policyFieldHint = (field: string) => policyFieldInfo[field]?.hint || '';
+const policyFieldLabels = { risk_clear_max: policyFieldInfo.risk_clear_max.label };
 
 /** Translate known field/action tokens embedded in graph titles while keeping the surrounding title readable. */
 export function mapNodeTitleLabel(title: string): string {
@@ -96,3 +111,20 @@ export function outputValueLabel(output: { value?: unknown; noul?: unknown; conf
   if (output.value !== undefined && output.value !== null) return typeof output.value === 'boolean' ? (output.value ? '예' : '아니오') : pct(output.value);
   return output.confidence !== undefined && output.confidence !== null ? `확신도 ${pct(output.confidence)}` : '—';
 }
+
+/** Evaluation-label screen: fields a labeler edits, and the agreement state between labelers. */
+export const evaluationFieldInfo: Record<string, { label: string; hint: string }> = {
+  ai_need: { label: 'AI 필요성', hint: 'AI가 필요한 요청인지 (필요·불필요·혼합)' },
+  feasibility: { label: '개발 가능성', hint: '지금 개발할 수 있는지 (가능·조건부 가능·현재 불가)' },
+  urgency: { label: '긴급도', hint: '긴급 대응이 필요한지 (긴급·일반)' },
+  team_set: { label: '참여 팀 구성', hint: '일을 함께 맡아야 할 팀의 조합' },
+  risk_areas: { label: '위험 영역', hint: '검토가 필요한 위험 분야 (임상·안전·규제 등)' },
+};
+export const evaluationFieldLabel = (field: string) => evaluationFieldInfo[field]?.label || fieldLabel(field);
+const consensusLabels: Record<string, string> = {
+  consensus_required: '검토자 간 의견 불일치 — 합의가 필요합니다',
+  agreed: '검토자 의견 일치', resolved: '합의 완료', unlabeled: '아직 라벨 없음', single_label: '검토자 1명이 라벨함 — 다른 검토자 확인 대기',
+};
+export const consensusLabel = (state: string) => consensusLabels[state] || '확인 필요한 상태';
+const decisionStatusLabels: Record<string, string> = { confirmed: '확정', deferred: '보류' };
+export const decisionStatusLabel = (status: string) => decisionStatusLabels[status] || status;

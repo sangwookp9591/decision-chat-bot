@@ -92,3 +92,11 @@
 
 - vitest: `state/progress.test.ts`(이벤트 순서별 상태, 복원, 퇴행 방지), `state/useDelayedFlag.test.tsx`(200ms 미만 깜빡임 방지, 5초 안내), `pages/Main.progressive.test.tsx`(낙관적 카드 확정·실패 롤백·재시도, 잠정 카드·영역별 채움, 최종 payload 즉시 갱신, progress API 복원, 지연 안내, 실패 안내), `layout/routes.test.tsx`(prefetch).
 - playwright(live): `e2e/progressive-results.spec.ts`(제출→낙관적→잠정→최종 시점 측정, 화면 기록은 `artifacts/validation/perf2-live/`). a11y 회귀는 `A11Y_SHOT_DIR`로 PNG 출력 위치를 바꿔 t23 증거 파일을 덮어쓰지 않는다.
+
+## P7 보완 (UX-6, 2026-10-04)
+
+- **잠정→최종 자리 유지(F5)**: `ProvisionalResult`와 `Result`가 같은 영역(`data-region`: `summary` → `judgment` → `tasks`)을 같은 순서·자리 높이로 그린다. 잠정 단계에서도 요약 카드(제목·요약 슬롯 스켈레톤·한 줄 안내·근거 건수 줄)가 먼저 있고, 최종 저장 후에는 같은 슬롯의 데이터만 바뀐다. 제출한 요청 카드는 최종 후에도 유지한다(걷어내면 아래 전체가 밀린다). 슬롯 최소 높이는 `main.css` 하단에 있다.
+- **준비 건수와 열람 가능 상태 구분**: '근거 N건 연결됨'·'업무 N건 준비됨'은 건수만 뜻하고, 원문·상세 열람은 '원문 열람은 최종 저장 후 가능'·'검토·배정은 최종 판단 저장 후 가능해요'로 따로 표시한다.
+- **측정**: `e2e/p7-fixes.spec.ts`가 잠정 카드가 뜬 뒤부터 최종까지의 `layout-shift` 합(`hadRecentInput=false`)을 재고 0.005 미만을 요구한다(Chromium 전용). 이전 관측은 0.0135–0.0335였고 수정 후 0.00001이었다.
+- **모니터링 화면(F3)**: 제목·필터는 즉시 그리고 summary·slo·failures·alerts는 각각 독립 요청·독립 영역이다(`Monitoring.tsx`의 `useArea`). 영역은 최종 모양(라벨·표 행 고정, 값 자리만 스켈레톤)이며 200ms 미만이면 빈 자리만 둔다. 한 영역의 실패는 그 영역에만 표시하고 나머지는 그대로 쓴다. `api/monitoring.ts`는 같은 URL의 진행 중 GET을 하나로 합친다(완료 후 캐시 없음).
+- **요청 목록(F4)**: 요청 상세 구독과 별도로 `Main`이 필터 없는 tenant 이벤트 스트림을 하나 더 열고, 목록에 영향을 주는 이벤트(`request.received`, `judgment_saved|failed`, `review_decided`, `assignment_created`, `auto_assignment_deferred`, `task.transitioned`, `reanalysis.compared`)가 오면 400ms debounce 후 `GET /api/requests`만 다시 부른다(권한 범위는 서버가 정한다). 열려 있는 상세는 이 스트림으로 다시 불러오지 않는다.

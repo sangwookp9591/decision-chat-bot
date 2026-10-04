@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { DataTable, ErrorState, LoadingState, StatusBadge } from '../components';
 import { policyApi, type PolicyConfig, type PolicyDetail, type PolicyVersion } from '../api/policy';
-import { policyFieldLabel } from '../lib/labels';
-import { EventConnectionStatus, useEventStream } from '../state/events';
+import { policyFieldHint, policyFieldLabel } from '../lib/labels';
+import { EventConnectionStatus, useEventStream, type StreamEvent } from '../state/events';
 import type { ApiError } from '../api/client';
 import { localizeError } from '../components/statusLabels';
 import './policy/policy.css';
@@ -27,35 +27,56 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-  const refresh = useCallback(async () => { try { const [active, history] = await Promise.all([policyApi.active(), policyApi.versions()]); setActiveVersion(active.version); setConfig(active.config); setDrafts({}); setFieldErrors({}); setVersions(history.versions); setError(''); } catch (e) { setError((e as ApiError).message || '정책을 불러오지 못했습니다.'); } finally { setLoading(false); } }, []);
-  const onEvent = useCallback((event: {type:string}) => { if (event.type === 'policy.published') void refresh(); }, [refresh]);
+  const [incoming, setIncoming] = useState<number | null>(null);
+  // Synchronous mirrors of state: events and clicks can land between a keystroke and the next render.
+  const configRef = useRef(config); const dirtyRef = useRef(false); const activeRef = useRef(0); const loadedRef = useRef(false); const generation = useRef(0);
+  /** Apply the server's active policy. Unless `force`, an edit in progress is kept and only the history updates. */
+  const refresh = useCallback(async (force = false) => {
+    const mine = ++generation.current;
+    try {
+      const [active, history] = await Promise.all([policyApi.active(), policyApi.versions()]);
+      if (mine !== generation.current) return; // a newer fetch started: this answer is stale
+      const keepEdits = !force && dirtyRef.current;
+      activeRef.current = active.version; setActiveVersion(active.version); setVersions(history.versions);
+      if (keepEdits) setIncoming(active.version);
+      else { configRef.current = active.config; dirtyRef.current = false; setConfig(active.config); setDrafts({}); setFieldErrors({}); setIncoming(null); }
+      loadedRef.current = true; setError('');
+    } catch (e) { if (mine === generation.current) setError((e as ApiError).message || '정책을 불러오지 못했습니다.'); } finally { if (mine === generation.current) setLoading(false); }
+  }, []);
+  // A new session replays old policy.published events: only a version above the one on screen is news.
+  const onEvent = useCallback((event: StreamEvent) => {
+    if (event.type !== 'policy.published' || !loadedRef.current) return;
+    const version = Number(event.payload?.version);
+    if (Number.isFinite(version) && version <= activeRef.current) return;
+    if (dirtyRef.current) setIncoming(Number.isFinite(version) ? version : activeRef.current + 1); else void refresh();
+  }, [refresh]);
   const stream = useEventStream({}, undefined, onEvent);
   useEffect(() => { void refresh(); }, [refresh]);
   if (loading) return <LoadingState label="정책 불러오는 중" />;
-  if (error) return <ErrorState title="정책을 불러오지 못했습니다" onRetry={() => { setLoading(true); void refresh(); }}>{error}</ErrorState>;
+  if (error) return <ErrorState title="정책을 불러오지 못했습니다" onRetry={() => { setLoading(true); void refresh(true); }}>{error}</ErrorState>;
 
   async function chooseVersion(row: PolicyVersion) { try { setSelected(await policyApi.version(row.version)); } catch (e) { setNotice((e as ApiError).message || '버전을 불러오지 못했습니다.'); } }
   function updateField(key: keyof PolicyConfig, value: string) {
-    setDrafts((current) => ({ ...current, [key]: value }));
-    try { const parsed: unknown = JSON.parse(value); setConfig((current) => ({ ...current, [key]: parsed })); setFieldErrors(({ [key]: _gone, ...rest }) => rest); setValidation(null); }
-    catch { setFieldErrors((current) => ({ ...current, [key]: `${key}: 올바른 JSON 값이 아닙니다. 마지막으로 유효했던 값이 유지됩니다.` })); setValidation(null); }
+    dirtyRef.current = true; setDrafts((current) => ({ ...current, [key]: value }));
+    try { const parsed: unknown = JSON.parse(value); configRef.current = { ...configRef.current, [key]: parsed }; setConfig(configRef.current); setFieldErrors(({ [key]: _gone, ...rest }) => rest); setValidation(null); }
+    catch { setFieldErrors((current) => ({ ...current, [key]: `${policyFieldLabel(key)}: 올바른 JSON 값이 아닙니다. 마지막으로 유효했던 값이 유지됩니다.` })); setValidation(null); }
   }
-  async function validateDraft() { setSaving(true); try { const result = await policyApi.validate(config); setValidation(result); } catch (e) { setNotice((e as ApiError).message || '검증 요청에 실패했습니다.'); } finally { setSaving(false); } }
+  async function validateDraft() { setSaving(true); try { const result = await policyApi.validate(configRef.current); setValidation(result); } catch (e) { setNotice((e as ApiError).message || '검증 요청에 실패했습니다.'); } finally { setSaving(false); } }
   async function mutate(work: () => Promise<PolicyDetail>, fallback: string, after: (result: PolicyDetail) => void) {
     setSaving(true); setNotice('');
     try {
       const result = await work();
-      setActiveVersion(result.version); setConfig(result.config); setDrafts({}); setFieldErrors({}); setReason(''); after(result); await refresh();
+      activeRef.current = result.version; configRef.current = result.config; dirtyRef.current = false; setActiveVersion(result.version); setConfig(result.config); setDrafts({}); setFieldErrors({}); setIncoming(null); setReason(''); after(result); await refresh(true);
     } catch (e) {
       const apiError = e as ApiError;
       setNotice(apiError.status === 409 ? `활성 버전이 변경되었습니다. 최신 버전을 다시 불러왔습니다. (${apiError.message})` : apiError.message || fallback);
-      if (apiError.status === 409) await refresh();
+      if (apiError.status === 409) await refresh(true);
     } finally { setSaving(false); }
   }
   async function publishDraft() {
     if (!reason.trim()) { setNotice('게시 사유를 입력해 주세요.'); return; }
     if (fieldError) return;
-    await mutate(() => policyApi.publish(config, reason, activeVersion), '게시하지 못했습니다.', (result) => { setValidation(null); setNotice(`정책 버전 ${result.version}을 게시했습니다.`); });
+    await mutate(() => policyApi.publish(configRef.current, reason, activeVersion), '게시하지 못했습니다.', (result) => { setValidation(null); setNotice(`정책 버전 ${result.version}을 게시했습니다.`); });
   }
   async function rollback() {
     if (!selected) return;
@@ -71,7 +92,8 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
   return <section className="policy-page"><p className="eyebrow">JEV TRIAGE</p><header className="policy-heading"><div><h1>정책</h1><p>활성 버전 <strong>v{activeVersion}</strong> · 진행 중 실행은 시작 시 고정한 정책 버전을 사용합니다.</p></div><EventConnectionStatus status={stream.status} /></header>
     <div className="policy-safety"><strong>잠금 · 필수 검토</strong><span>임상·안전·규제·긴급 검토는 항상 필요하며 편집할 수 없습니다.</span><strong>잠금 · 무승인 배정 금지</strong><span>승인 없이 업무를 배정하는 설정은 허용되지 않습니다.</span></div>
     <div className="policy-grid"><section className="policy-card"><h2>정책 편집기</h2>{!canEdit && <p role="note">정책 편집자 권한이 없어 읽기 전용입니다.</p>}
-      {Object.entries(config).map(([key, value]) => <label className="policy-field" key={key}><span>{policyFieldLabel(key)}{protectedFields.has(key) && <small> · 잠금 / 읽기 전용</small>}</span><textarea aria-label={policyFieldLabel(key)} readOnly={!canEdit || protectedFields.has(key)} value={drafts[key] ?? pretty(value)} aria-invalid={Boolean(fieldErrors[key])} rows={Math.min(8, Math.max(2, (drafts[key] ?? pretty(value)).split('\n').length))} onChange={(e) => updateField(key as keyof PolicyConfig, e.target.value)} /></label>)}
+      {incoming !== null && <div className="policy-incoming" role="status"><strong>새 버전 v{incoming}이 게시되었습니다.</strong><span>편집 중인 값은 아직 그대로입니다. 새 버전을 반영하면 지금 편집한 내용은 사라집니다.</span><PolicyButton variant="secondary" onClick={() => void refresh(true)}>새 버전 반영</PolicyButton><PolicyButton variant="secondary" onClick={() => setIncoming(null)}>내 편집 유지</PolicyButton></div>}
+      {Object.entries(config).map(([key, value]) => { const text = drafts[key] ?? pretty(value); return <div className="policy-field" key={key}><label><span>{policyFieldLabel(key)}{protectedFields.has(key) && <small> · 잠금 / 읽기 전용</small>}</span>{policyFieldHint(key) && <small className="policy-hint">{policyFieldHint(key)}</small>}<textarea aria-label={policyFieldLabel(key)} readOnly={!canEdit || protectedFields.has(key)} value={text} aria-invalid={Boolean(fieldErrors[key])} rows={Math.min(8, Math.max(2, text.split('\n').length))} onChange={(e) => updateField(key as keyof PolicyConfig, e.target.value)} /></label><details><summary>기술 상세</summary><code>{key}</code></details></div>; })}
       <p>rules 필드는 규칙 학습 화면에서 관리합니다.</p>{Object.entries(fieldErrors).map(([key, message]) => <p key={key} role="alert">{message}</p>)}
       <div className="policy-actions"><PolicyButton variant="secondary" disabled={saving} onClick={() => void validateDraft()}>서버 검증</PolicyButton>{canEdit && <PolicyButton disabled={saving || !validation?.valid || !!fieldError} onClick={() => void publishDraft()}>게시</PolicyButton>}</div>
       {validation && <div role={validation.valid ? 'status' : 'alert'}><strong>{validation.valid ? '검증 통과' : '검증 오류'}</strong>{!validation.valid && <ul>{validation.errors.map((item, i) => <li key={`${item.code}-${i}`}>{localizeError(`${item.code}: ${item.reason}`)}<details><summary>기술 상세</summary><code>{item.code}: {item.reason}</code></details></li>)}</ul>}</div>}

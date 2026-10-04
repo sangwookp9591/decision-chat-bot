@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Monitoring } from './Monitoring';
 import { monitoringApi } from '../api/monitoring';
@@ -56,5 +56,40 @@ describe('Monitoring internal codes (P4-05)', () => {
     expect(visible.textContent).toContain('30일에 못 미쳐');
     expect(visible.textContent).toContain('작업자 프로세스가 멈췄습니다');
     expect(visible.textContent).not.toMatch(/collector_stopped|worker_stopped|Less than 30 days/);
+  });
+  describe('independent areas (F3)', () => {
+    const never = () => new Promise<never>(() => undefined);
+    it('renders title and filters at once and fills each area as its own request answers', async () => {
+      vi.mocked(monitoringApi.summary).mockReturnValue(never());
+      vi.mocked(monitoringApi.failures).mockReturnValue(never());
+      render(<MemoryRouter><Monitoring /></MemoryRouter>);
+      expect(screen.getByRole('heading', { name: '모니터링' })).toBeTruthy();
+      expect(screen.getByLabelText('시작')).toBeTruthy(); expect(screen.getByRole('button', { name: '적용' })).toBeTruthy();
+      // slo + alerts answered while summary/failures are still pending
+      expect(await screen.findByText('접수·조회 가용성')).toBeTruthy();
+      expect(within(screen.getByRole('region', { name: '서비스 수준 목표' })).getByText('30일 미달', { exact: false })).toBeTruthy();
+      expect(screen.getByText('표시할 알림이 없습니다.')).toBeTruthy();
+      expect(screen.getByRole('region', { name: '핵심 지표' }).getAttribute('aria-busy')).toBe('true');
+      expect(screen.getByRole('region', { name: '핵심 지표' }).textContent).toContain('요청 수'); // final-shaped: labels are already there
+    });
+    it('one failing area does not block the others', async () => {
+      vi.mocked(monitoringApi.slo).mockRejectedValue(Object.assign(new Error('slo 실패'), { status: 500 }));
+      vi.mocked(monitoringApi.alerts).mockRejectedValue(Object.assign(new Error('alerts 실패'), { status: 500 }));
+      render(<MemoryRouter><Monitoring /></MemoryRouter>);
+      expect(await screen.findByText('요청 수')).toBeTruthy();
+      expect(screen.getByText(/slo 실패/)).toBeTruthy(); expect(screen.getByText(/alerts 실패/)).toBeTruthy();
+      expect(screen.getByRole('region', { name: '핵심 지표' }).getAttribute('aria-busy')).toBe('false');
+    });
+    it('skeletons stay hidden for the first 200ms, then show in the final shape', async () => {
+      vi.useFakeTimers();
+      vi.mocked(monitoringApi.summary).mockReturnValue(never());
+      render(<MemoryRouter><Monitoring /></MemoryRouter>);
+      expect(document.querySelectorAll('.skeleton').length).toBe(0);
+      await act(async () => { vi.advanceTimersByTime(250); });
+      const kpis = screen.getByRole('region', { name: '핵심 지표' });
+      expect(kpis.querySelectorAll('.monitor-kpis article').length).toBe(8);
+      expect(kpis.querySelectorAll('.skeleton').length).toBe(8);
+      vi.useRealTimers();
+    });
   });
 });

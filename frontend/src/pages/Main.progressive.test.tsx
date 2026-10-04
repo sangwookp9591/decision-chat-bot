@@ -134,3 +134,45 @@ describe('slow and failed runs', () => {
     expect(screen.getByRole('button', { name: '다시 시도' })).toBeInTheDocument();
   });
 });
+
+// F5 (VERIFY-P7): the provisional → final swap moved what the user was reading.
+describe('provisional → final keeps the layout (F5)', () => {
+  const regions = () => Array.from(document.querySelectorAll('.main-primary [data-region]')).map((el) => el.getAttribute('data-region'));
+  async function toProvisional() {
+    vi.mocked(uploadRequest).mockResolvedValue({ request_id: 'req_1', status: 'processing', revision: 1 });
+    renderMain(); await submitText(); await screen.findByText(/req_1/);
+    act(() => emit({ type: 'judgment.partial', request_id: 'req_1', payload: { classifications: classes } }));
+  }
+  it('shows summary, judgment and task areas in the final order from the first provisional card', async () => {
+    await toProvisional();
+    expect(regions()).toEqual(['summary', 'judgment', 'tasks']);
+    const provisionalCards = document.querySelectorAll('.judgment-card').length;
+    vi.mocked(requestApi.judgment).mockResolvedValue(judgment);
+    act(() => emit({ type: 'judgment_saved', request_id: 'req_1', payload: { classifications: classes } }));
+    expect(await screen.findByText('최종 요약')).toBeInTheDocument();
+    expect(regions()).toEqual(['summary', 'judgment', 'tasks']);
+    expect(document.querySelectorAll('.judgment-card')).toHaveLength(provisionalCards);
+  });
+  it('keeps the submitted-request card above the result instead of removing it', async () => {
+    await toProvisional();
+    vi.mocked(requestApi.judgment).mockResolvedValue(judgment);
+    act(() => emit({ type: 'judgment_saved', request_id: 'req_1', payload: { classifications: classes } }));
+    await screen.findByText('최종 요약');
+    expect(screen.getByRole('region', { name: '제출한 요청' })).toBeInTheDocument();
+  });
+  it('reserves the summary slot while provisional, with no late-inserted note row', async () => {
+    await toProvisional();
+    const summary = document.querySelector('[data-region="summary"]')!;
+    expect(summary.querySelector('.summary-text')).not.toBeNull(); // same slot the final summary text fills
+    expect(summary.querySelector('.author-line')).not.toBeNull();
+  });
+  it('tells "N items prepared" apart from "details can be opened"', async () => {
+    await toProvisional();
+    act(() => emit({ type: 'judgment.evidence_ready', request_id: 'req_1', payload: { evidence_count: 5 } }));
+    act(() => emit({ type: 'judgment.tasks_ready', request_id: 'req_1', payload: { task_count: 3 } }));
+    expect(screen.getByText('근거 5건 연결됨')).toBeInTheDocument();
+    expect(screen.getByText('업무 3건 준비됨')).toBeInTheDocument();
+    expect(screen.getAllByText(/열람은 최종 저장 후/).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('button', { name: /근거 열기/ })).toBeNull();
+  });
+});

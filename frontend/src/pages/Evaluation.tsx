@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
+import { consensusLabel, decisionStatusLabel, evaluationFieldInfo, evaluationFieldLabel } from '../lib/labels';
 
 type Decision = { labels: Record<string, unknown>; status: string; reason?: string; user_id?: string };
 type Candidate = { id: string; text: string; rationale?: string; proposed_labels?: Record<string, unknown>; my_labels?: Decision; labels: Decision[]; consensus: string };
 type Progress = { total: number; confirmed: number; deferred: number; remaining: number; percent: number };
 const fields = ['ai_need', 'feasibility', 'urgency', 'team_set', 'risk_areas'];
+const show = (value: unknown) => Array.isArray(value) ? (value.length ? value.join(', ') : '없음') : value == null || value === '' ? '—' : String(value);
+const labelSummary = (labels: Record<string, unknown>) => fields.filter((key) => key in labels).map((key) => `${evaluationFieldLabel(key)} ${show(labels[key])}`).join(' · ');
 
 export function Evaluation() {
   const [split, setSplit] = useState<'tuning' | 'final'>('tuning');
@@ -54,14 +57,14 @@ export function Evaluation() {
     <label>분할 <select value={split} onChange={(e) => setSplit(e.target.value as 'tuning' | 'final')}><option value="tuning">튜닝</option><option value="final">최종</option></select></label>
     <p aria-label="진행률">{progress.confirmed} / {progress.total} 확정 · 보류 {progress.deferred} · 남음 {progress.remaining} ({progress.percent}%)</p>
     <progress max={100} value={progress.percent} aria-label="확정 진행률" />
-    {row && <article><h2>{row.id}</h2><p>{row.text}</p>{row.proposed_labels && <p>제안 라벨: {JSON.stringify(row.proposed_labels)}</p>}{row.rationale && <p>근거 메모: {row.rationale}</p>}<p>합의 상태: {row.consensus}</p>
-      {fields.map((key, i) => <label key={key} htmlFor={`label-${key}`}>{i < 4 ? `${i + 1}. ` : ''}{key} <input id={`label-${key}`} value={labels[key] ?? JSON.stringify(row.my_labels?.labels[key] ?? row.proposed_labels?.[key] ?? '')} onChange={(e) => setLabels((current) => ({ ...current, [key]: e.target.value }))} /></label>)}
+    {row && <article><h2>{row.id}</h2><p>{row.text}</p>{row.proposed_labels && <div>제안 라벨: {labelSummary(row.proposed_labels)}<details><summary>기술 상세</summary><code>{JSON.stringify(row.proposed_labels)}</code></details></div>}{row.rationale && <p>근거 메모: {row.rationale}</p>}<div>합의 상태: {consensusLabel(row.consensus)}<details><summary>기술 상세</summary><code>{row.consensus}</code></details></div>
+      {fields.map((key, i) => <label key={key} htmlFor={`label-${key}`}>{i < 4 ? `${i + 1}. ` : ''}{evaluationFieldLabel(key)} <small>{evaluationFieldInfo[key]?.hint}</small> <input id={`label-${key}`} value={labels[key] ?? JSON.stringify(row.my_labels?.labels[key] ?? row.proposed_labels?.[key] ?? '')} onChange={(e) => setLabels((current) => ({ ...current, [key]: e.target.value }))} /></label>)}
       <label>확신도 <input type="range" min="0" max="1" step="0.05" value={confidence} onChange={(e) => setConfidence(Number(e.target.value))} /></label>
       <button onClick={() => void save()}>확정 (Enter)</button>
       <label>보류 사유 <input value={deferReason} onChange={(e) => setDeferReason(e.target.value)} /></label><button disabled={!deferReason.trim()} onClick={() => void save('deferred')}>보류</button>
       {row.consensus === 'consensus_required' && <button onClick={() => void resolveConsensus()}>합의 라벨 확정</button>}
       <button onClick={() => setIndex((n) => Math.min(n + 1, rows.length - 1))}>다음 (J)</button><button onClick={() => setIndex((n) => Math.max(n - 1, 0))}>이전 (K)</button>
-      {row.labels.map((decision, i) => <details key={`${decision.user_id}-${i}`}><summary>{decision.user_id} · {decision.status}</summary><pre>{JSON.stringify(decision.labels, null, 2)}</pre>{decision.reason && <p>보류 사유: {decision.reason}</p>}</details>)}
+      {row.labels.map((decision, i) => <details key={`${decision.user_id}-${i}`}><summary>{decision.user_id} · {decisionStatusLabel(decision.status)}</summary><p>{labelSummary(decision.labels)}</p><pre>{JSON.stringify(decision.labels, null, 2)}</pre>{decision.reason && <p>보류 사유: {decision.reason}</p>}</details>)}
     </article>}{notice && <p role="status">{notice}</p>}
   </section>;
 }
