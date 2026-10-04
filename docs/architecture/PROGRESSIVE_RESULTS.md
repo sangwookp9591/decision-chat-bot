@@ -110,5 +110,21 @@
 - **자리 유지**: 잠정·최종 답변은 같은 말풍선 틀(44px 아바타 칸, `bubble-title` 한 줄)을 쓰고, 다시 분석·새 요청 시작은 결과 카드 밖 `QuickReplies` 줄(요청이 열린 순간부터 렌더, 최종 저장 전 '다시 분석' 비활성)로 옮겨 카드 높이가 변하지 않는다. 말풍선 안 카드의 위 여백을 건드리는 CSS(`p` 일괄 margin 재설정)는 쓰지 않는다 — 한 번 8px 이동을 만들었다(F5 e2e가 검출).
 - **결과 아이콘 규칙**: 긴급(`urgency`에 '긴급') → 마스코트 없이 ⚠ 표식, 검토 필요 → surprised, 그 외 → like. 문장으로도 전달한다.
 - **대화 속 상호작용**: 읽기 실패 파일(`needs_file_decision`) → '이 파일을 읽지 못했어요' + [제외하고 진행](file-decision API)·[다시 첨부](파일 선택 → 같은 입력창 전송이 revision). 서버는 새 revision에도 이전 파일을 이어 붙이므로 다시 첨부해도 읽지 못한 파일은 남아 선택이 이어진다(`currentAttachments`가 최신 revision 파일만 표시). 보완 요청(`needed_info`) → 질문 말풍선, 같은 입력창의 답은 `revisions` API(`expected_revision`). 요청이 열려 있고 보완 상태가 아니면 입력은 새 요청으로 접수된다(안내 문구 표시).
-- **입력창**: 여러 줄, Ctrl/⌘+Enter 전송, 파일 첨부 버튼·드래그 앤 드롭·칩(제거 가능, 최대 5개 안내), 예시 요청 칩 3개는 입력창을 채우기만 한다. 마스코트 매체는 `components/Mascot.tsx`(webm / Safari webp / reduced-motion png).
+- **입력창**: 여러 줄, Enter 전송·Shift+Enter 줄바꿈(한글 IME 조합 중 Enter는 전송하지 않음, Ctrl/⌘+Enter도 전송), 파일 첨부 버튼·드래그 앤 드롭·칩(제거 가능, 최대 5개 안내), 예시 요청 칩 3개는 입력창을 채우기만 한다. 마스코트 매체는 `components/Mascot.tsx`(webm / Safari webp / reduced-motion png).
 - **검증**: vitest `Main.chat.test.tsx`·`main/conversation.test.ts`(상태 전이·파일 실패 선택·정보 요청 답변→revision·복원·아이콘 규칙), e2e `e2e/chat-intake.spec.ts`(Chromium·WebKit, 375/520/960/1440px 캡처는 `artifacts/review/chat-intake/`).
+
+## 대화 화면 레이아웃 (CHAT-POLISH, ChatGPT 같은 채팅창)
+
+토스 토큰·브랜드 색은 그대로 두고 배치를 ChatGPT식으로 바꿨다. 색·글꼴·반경은 토큰만 쓴다(`main/main.css`).
+
+- **화면 높이 고정**: `main > section.chat-page`가 `100dvh - --shell-top`(상단바·좁은 화면 메뉴 줄 높이를 `Main.tsx`가 측정) 높이이고 문서 높이가 창 높이와 같다. 스크롤은 대화(`.chat-scroll`)와 왼쪽 목록(`.list-scroll`)에서만 난다. 셸의 `.app-main{min-height:100vh}`는 `.app-main:has(.chat-page)`로 풀었다. 목록 행 안의 `.sr-only`는 `.request-row{position:relative}`로 가둔다(아니면 절대 위치 요소가 문서 높이를 늘린다). 측정값: `artifacts/review/chat-polish/metrics.jsonl`.
+- **왼쪽 '내 요청 대화'**(`main/RequestList.tsx`): 위에 `새 요청` 버튼, 날짜 묶음(오늘/어제/지난 7일/지난 30일/`YYYY년 M월`, `listFormat.groupLabel`), 행 = 작은 상태 점(`.status-dot`, 이름은 상태 라벨) + 요청 첫 문장 1줄 말줄임 + 짧은 ID(앞 8자, hover·선택 때만 보임, 전체는 `title`과 보이지 않는 텍스트로 유지), 선택 행은 회색 면. 첫 문장은 첫 revision 본문을 `listFormat`이 표시용으로 마스킹(이메일·전화·주민번호·카드·긴 토큰)해 만들며, 목록 API에 제목이 없으므로 **화면에 보이는 행만**(IntersectionObserver, 동시 3건) 상세를 읽어 페이지 수명 동안 캐시한다(열린 대화는 이미 받은 상세 사용). 서버가 항목에 `title`/`preview`를 주면 그것을 쓴다. 원문 열람 권한이 없는 사용자(`can_read_source=false`)는 서버가 상세의 본문을 가려(`redact_source`) 행 제목이 '제목 없는 요청'이 되고 내 말풍선은 '내용은 원문 열람 권한이 있는 분에게만 보여요'로 보인다.
+- **960px 이하**: 목록 칸을 숨기고 머리줄의 ☰('내 요청')가 공용 `Drawer`(시트)를 연다. 고르면 닫힌다. 머리줄의 ＋('새 요청 시작')도 이때만 보인다.
+- **대화 본문**: 가운데 768px 열. 내 말은 오른쪽 회색 둥근 말풍선(최대 70%), 일동이는 말풍선 없이 작은 마스코트(32px 고정 칸) + 본문이 열 폭으로 흐른다. 같은 화자가 이어지면 아바타는 첫 줄만(결과 답변은 분위기 아이콘 유지). 읽기 실패·보완 요청·실패는 색 면(callout)으로 구분한다. 등장은 공용 `m-fade-up`, reduced-motion이면 정지.
+- **빈 대화**: 인사('무엇을 도와드릴까요?') + 큰 입력창 + 예시 요청 칩이 화면 가운데에 한 덩어리. 첫 전송 때 입력창이 아래로 내려가는 전환은 FLIP(`el.animate`, `MOTION.slow`, reduced-motion이면 생략)이고 입력창은 같은 DOM 노드다.
+- **입력창**: 둥근 큰 상자(반경 = `--radius-xl`×1.2), 글자 수에 따라 높이가 늘고 약 8줄부터 내부 스크롤, 왼쪽 ＋ 첨부(탭 순서: 첨부 → 입력 → 전송), 오른쪽 원형 전송 버튼(`button.primary`, 입력 없으면 비활성, 보내는 중에는 정지 모양 + '전송 중'), 아래 안내문(첨부 형식·Enter 전송·Shift+Enter 줄바꿈). 취소 API가 없어 정지 버튼은 동작을 만들지 않는다(모양만).
+- **진행 표시**: 일동이 자리에서 점 3개 타이핑(`TypingBubble`, '일동이가 입력 중') → 잠정 답변이 이벤트 도착 순서대로(분류 카드는 36ms 간격 등장, 근거·업무는 자기 영역에 채움 — 인위적 지연 없음) → 최종. 잠정과 최종은 **같은 답변 요소**(`일동이의 답변`/`잠정 답변` 한 노드)라 교체 때 다시 그려지거나 움직이지 않는다.
+- **답변 아래 동작 줄**(`AnswerActions`): 답변 복사 / 다시 분석 / 근거 보기 아이콘 버튼. 첫 잠정 카드부터 자리를 잡고(최종 저장 전 비활성) 최종 저장 후 활성이 된다. 새 요청은 왼쪽 목록의 `새 요청`.
+- **새 메시지 ↓**: 맨 아래(80px 이내)면 부드럽게(reduced-motion은 즉시) 따라가고, 위로 올려 읽는 중이면 이동하지 않고 하단 원형 ↓ 버튼만 띄운다(새 메시지가 있으면 강조·이름 '새 메시지 보기'). 내가 보낸 메시지는 항상 따라간다.
+- **판단 결과 = 답 안의 카드**(`ResultBrief`): 판단 결과 + 상태 배지, 요약 2줄, 핵심 4개 분류(값 + 근거 열기), '업무 N건 · IT팀 2 · AI팀 1', [자세히 보기]. 전체 결과(`Result`)는 `Drawer`('판단 상세'). 근거 원문을 열면 상세 시트는 닫히고 원문을 닫으면 돌아온다.
+- **검증**: vitest `Main.layout.test.tsx`(목록 행·날짜 묶음·시트·빈 대화 순서·요약 카드·상세 시트·동작 줄·복사·입력창 자동 높이·Enter 키·입력 중·↓ 버튼), `main/listFormat.test.ts`; e2e `chat-intake.spec.ts`의 `layout *px`(문서 높이 = 창 높이, 목록 자체 스크롤, 입력창 위치)·`reduced motion`·`새 메시지` 버튼, `p7-fixes`의 F4/F5(0px 이동) 그대로 통과. 캡처·수치: `artifacts/review/chat-polish/`.

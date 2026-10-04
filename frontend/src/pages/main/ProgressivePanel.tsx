@@ -1,4 +1,5 @@
-import { StatusBadge } from '../../components';
+import { Button, StatusBadge } from '../../components';
+import { staggerStyle } from '../../lib/motion';
 import { useDelayedFlag, useSlowNotice } from '../../state/useDelayedFlag';
 import type { ProgressState } from '../../state/progress';
 
@@ -40,10 +41,10 @@ export function ProvisionalResult({ state }: { state: ProgressState }) {
       <div className="summary-text"><Skeleton rows={2} label="요약을 정리하는 중" /></div>
       <p className="author-line provisional-note" role="status">{final ? '최종 판단을 저장했어요. 결과를 불러오는 중' : PROVISIONAL_NOTE}</p>
       <code className="provisional-count">{state.evidenceReady ? (state.evidenceCount !== undefined ? `근거 ${state.evidenceCount}건 연결됨` : '근거 연결됨') : '\u00a0'}</code></article>
-    <div className="judgment-grid" data-region="judgment">{keys.map((key) => { const value = String(values[key]); const selected = value === '조건부' ? '조건부 가능' : value; const confidence = state.preliminary?.confidences[key]; const uncertain = UNCERTAIN_VALUES.includes(value);
-      return <article className="judgment-card" key={key}><h3>{classificationLabels[key]}{!final && <span className="provisional-badge">잠정</span>}</h3><div className="scale-options">{(classificationChoices[key] || [value]).map((choice) => <span key={choice} className={!uncertain && selected === choice ? 'selected' : ''}>{choice}</span>)}</div>{uncertain && <div className="uncertain-result"><strong>정보 부족·판단 보류</strong><span>{value}</span></div>}<div className="signal-labels">{typeof confidence === 'number' && <span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span>}</div>
-        <div className="evidence-list">{state.evidenceReady ? <span>{OPEN_LATER}</span> : <Skeleton rows={2} label="근거를 연결하는 중" />}</div></article>; })}</div>
-    <article className="result-summary" data-region="tasks"><h2>업무 분담</h2>{state.tasksReady ? <p>{state.taskCount !== undefined ? `업무 ${state.taskCount}건 준비됨` : '업무 분해 준비됨'}</p> : <Skeleton rows={3} label="업무를 나누는 중" />}
-      {!final && <button type="button" className="ui-button secondary" disabled aria-disabled="true">검토·배정은 최종 판단 저장 후 가능해요</button>}</article>
+    <div className="judgment-grid m-stagger" data-region="judgment">{keys.map((key, index) => { const value = String(values[key]); const confidence = state.preliminary?.confidences[key]; const uncertain = UNCERTAIN_VALUES.includes(value);
+      return <article className="judgment-card" key={key} style={staggerStyle(index)}><h3>{classificationLabels[key]}{!final && <span className="provisional-badge">잠정</span>}</h3>{uncertain ? <div className="uncertain-result"><strong>정보 부족·판단 보류</strong><span className="judgment-value">{value}</span></div> : <strong className="judgment-value">{value === '조건부' ? '조건부 가능' : value}</strong>}<div className="signal-labels">{typeof confidence === 'number' && <span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span>}</div>
+        <div className="evidence-list">{state.evidenceReady ? <span>{OPEN_LATER}</span> : <Skeleton rows={1} label="근거를 연결하는 중" />}</div></article>; })}</div>
+    <article className="result-summary" data-region="tasks"><h2>업무 분담</h2>{state.tasksReady ? <p className="task-split">{state.taskCount !== undefined ? `업무 ${state.taskCount}건 준비됨` : '업무 분해 준비됨'}</p> : <Skeleton rows={1} label="업무를 나누는 중" />}
+      <div className="brief-actions">{!final && <Button type="button" color="primary" tone="weak" disabled aria-disabled="true">검토·배정은 최종 판단 저장 후 가능해요</Button>}</div></article>
   </div>;
 }

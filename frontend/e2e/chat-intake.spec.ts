@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { mkdirSync } from 'node:fs';
+import { appendFileSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { actor, submitApi, waitJudged, pendingReview } from './acceptance/helpers';
 
@@ -34,8 +34,9 @@ test('send → right bubble → analysis steps → result with icon → reload r
   await page.reload();
   await expect(page.getByRole('group', { name: '내가 보낸 요청' })).toContainText(text);
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 30_000 });
-  await expect(page.locator('.request-list button code', { hasText: id })).toBeVisible();
-  await page.getByRole('button', { name: '새 요청 시작' }).click();
+  await expect(page.locator(`.request-list .request-row code[title="${id}"]`)).toBeVisible(); // short id in the row, full id on hover
+  await expect(page.locator('.request-list .request-row', { hasText: text })).toBeVisible(); // titled by the request's first sentence, not the raw id
+  await page.locator('.request-list').getByRole('button', { name: '새 요청' }).click(); // the sidebar's button
   await expect(page).not.toHaveURL(/request_id/);
   await expect(page.getByRole('heading', { name: '안녕하세요, 일동이예요' })).toBeVisible();
   await a.ctx.close();
@@ -125,15 +126,109 @@ for (const width of [375, 520, 960, 1440]) {
     await page.waitForTimeout(800);
     await shot(page, `conversation-${width}`);
     m = await overflow(); expect(m.scroll, JSON.stringify(m)).toBeLessThanOrEqual(width);
-    const toggle = page.getByRole('button', { name: /대화 목록/ });
+    const toggle = page.getByRole('button', { name: '내 요청' });
     if (width <= 960) {
       await expect(toggle).toBeVisible(); await expect(toggle).toHaveAttribute('aria-expanded', 'false');
-      await expect(page.locator('.request-list .list-body')).toBeHidden();
-      await toggle.click(); await expect(page.locator('.request-list .list-body')).toBeVisible(); await shot(page, `list-open-${width}`);
+      await expect(page.locator('.request-list')).toBeHidden(); // folded: the list lives in a sheet behind the 내 요청 button
+      await toggle.click(); await expect(page.getByRole('dialog', { name: '내 요청 대화' })).toBeVisible(); await page.waitForTimeout(400); await shot(page, `list-open-${width}`);
       m = await overflow(); expect(m.scroll, JSON.stringify(m)).toBeLessThanOrEqual(width);
+      await page.keyboard.press('Escape'); await expect(page.getByRole('dialog', { name: '내 요청 대화' })).toHaveCount(0);
     } else { await expect(toggle).toBeHidden(); await expect(page.locator('.request-list .list-body')).toBeVisible(); }
     const composer = await page.getByRole('form', { name: '일동이에게 요청' }).boundingBox();
     expect(composer!.x + composer!.width).toBeLessThanOrEqual(width + 1);
     await a.ctx.close();
   });
 }
+
+// CHAT-POLISH: fixed-height conversation. The page is exactly one screen tall at every width; the chat and the request list scroll inside it.
+// Needs >= 30 requests in the tenant (seed them first, see artifacts/review/chat-polish/README.md).
+const polishDir = resolve(process.cwd(), process.env.POLISH_SHOT_DIR || '../artifacts/review/chat-polish'); mkdirSync(polishDir, { recursive: true });
+for (const size of [{ w: 1440, h: 900 }, { w: 960, h: 800 }, { w: 375, h: 812 }]) {
+  test(`layout ${size.w}px: one screen tall, request list and chat scroll inside, composer pinned`, async ({ browser }) => {
+    test.setTimeout(120_000);
+    const a = await actor(browser, baseURL, 'requester'); const page = a.page;
+    await page.setViewportSize({ width: size.w, height: size.h });
+    await page.goto('/');
+    const composerBox = async () => (await page.locator('form.composer').boundingBox())!;
+    const metrics = () => page.evaluate(() => ({ docH: document.documentElement.scrollHeight, bodyH: document.body.scrollHeight, winH: window.innerHeight, docW: document.documentElement.scrollWidth, winW: window.innerWidth }));
+    const record = async (label: string) => { const m = await metrics(); appendFileSync(join(polishDir, 'metrics.jsonl'), JSON.stringify({ browser: test.info().project.name, width: size.w, height: size.h, label, ...m }) + '\n'); return m; };
+    const narrow = size.w <= 960;
+    await expect(page.getByRole('heading', { name: '안녕하세요, 일동이예요' })).toBeVisible();
+    const greetingBox = await composerBox();
+    let first = await record('greeting');
+    expect(first.docH, 'page is one screen tall').toBe(first.winH); expect(first.bodyH).toBeLessThanOrEqual(first.winH); expect(first.docW).toBeLessThanOrEqual(first.winW);
+    expect(greetingBox.y + greetingBox.height).toBeLessThanOrEqual(first.winH);
+    const middle = greetingBox.y + greetingBox.height / 2; expect(middle, 'empty conversation: the composer sits mid-screen with the greeting').toBeGreaterThan(first.winH * 0.3); expect(middle).toBeLessThan(first.winH * 0.75);
+    await expect(page.getByRole('group', { name: '예시 요청' }).getByRole('button')).toHaveCount(3); // example chips below the composer
+    if (narrow) await page.getByRole('button', { name: '내 요청' }).click();
+    const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+    const rows = list.locator('.request-row');
+    await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+    const title = rows.first().locator('.request-title');
+    await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+    expect(await title.innerText()).not.toMatch(/^req_/);
+    await expect(rows.first().locator('.status-dot')).toBeVisible(); await expect(list.getByRole('region', { name: /오늘|어제|지난 7일|지난 30일|\d+월/ }).first()).toBeVisible(); // status dot + day groups
+    const style = await title.evaluate((el) => { const c = getComputedStyle(el); return { overflow: c.overflow, textOverflow: c.textOverflow, whiteSpace: c.whiteSpace }; });
+    expect(style).toEqual({ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' });
+    const scroller = list.locator('.list-scroll');
+    if (!narrow) {
+      const listBox = await page.locator('.request-list').boundingBox();
+      expect(listBox!.height).toBeLessThanOrEqual(first.winH); // the list never stretches the page
+      const dims = await scroller.evaluate((el) => ({ scroll: el.scrollHeight, client: el.clientHeight, overflowY: getComputedStyle(el).overflowY }));
+      expect(dims.scroll).toBeGreaterThan(dims.client); expect(dims.overflowY).toBe('auto');
+    }
+    await page.waitForTimeout(400); await page.screenshot({ path: join(polishDir, `${test.info().project.name}-list-${size.w}.png`), fullPage: true });
+    const after = await record('list-open'); expect(after.docH).toBe(after.winH); expect(after.docW).toBeLessThanOrEqual(after.winW);
+    await rows.filter({ has: page.getByRole('img', { name: '검토 대기' }) }).first().click(); // a judged request: its summary card lands in the conversation
+    await expect(page.getByRole('group', { name: '일동이의 답변' })).toBeVisible({ timeout: 30_000 });
+    await expect(page.locator('.chat-row .judgment-card')).toHaveCount(4);
+    await expect(page.getByRole('button', { name: '자세히 보기' })).toBeVisible();
+    await page.waitForTimeout(500);
+    const conv = await record('conversation'); expect(conv.docH).toBe(conv.winH); expect(conv.docW).toBeLessThanOrEqual(conv.winW);
+    const convBox = await composerBox();
+    expect(conv.winH - (convBox.y + convBox.height), 'composer pinned near the bottom edge').toBeLessThan(40);
+    expect(await page.locator('.chat-scroll').evaluate((el) => getComputedStyle(el).overflowY)).toBe('auto');
+    await page.screenshot({ path: join(polishDir, `${test.info().project.name}-conversation-${size.w}.png`), fullPage: true });
+    await page.getByRole('button', { name: '자세히 보기' }).click();
+    const drawer = page.getByRole('dialog', { name: '판단 상세' });
+    await expect(drawer).toBeVisible(); await expect(drawer.getByRole('heading', { name: '업무 분담' })).toBeVisible();
+    await page.waitForTimeout(500); await page.screenshot({ path: join(polishDir, `${test.info().project.name}-detail-${size.w}.png`), fullPage: true });
+    const detail = await record('detail'); expect(detail.docH).toBe(detail.winH); expect(detail.docW).toBeLessThanOrEqual(detail.winW);
+    await page.keyboard.press('Escape'); await expect(drawer).toHaveCount(0);
+    const closed = await composerBox(); expect(Math.abs(closed.y - convBox.y), 'composer does not move when the sheet opens and closes').toBeLessThanOrEqual(1);
+    await a.ctx.close();
+  });
+}
+
+test('reduced motion: bubbles and typing dots do not animate', async ({ browser }) => {
+  const a = await actor(browser, baseURL, 'requester'); const page = a.page;
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect.poll(() => page.locator('.request-row').count()).toBeGreaterThan(0);
+  await page.locator('.request-row').first().click();
+  const row = page.locator('.chat-row').first(); await expect(row).toBeVisible();
+  expect(await row.evaluate((el) => parseFloat(getComputedStyle(el).animationDuration))).toBeLessThan(0.01);
+  await a.ctx.close();
+});
+
+test('scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down', async ({ browser }) => {
+  test.setTimeout(240_000);
+  const a = await actor(browser, baseURL, 'requester'); const page = a.page;
+  await page.setViewportSize({ width: 390, height: 520 });
+  await page.goto('/');
+  await page.getByLabel('요청 내용').fill('사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.');
+  await page.getByLabel('요청 내용').press('Enter'); // Enter sends
+  await expect(page.getByRole('group', { name: '내가 보낸 요청' })).toBeVisible();
+  await expect(page.getByRole('group', { name: '일동이가 입력 중' })).toBeVisible({ timeout: 30_000 });
+  const scroller = page.locator('.chat-scroll');
+  const reachable = await scroller.evaluate((el) => { el.scrollTop = 0; el.dispatchEvent(new Event('scroll')); return el.scrollHeight - el.clientHeight; });
+  expect(reachable, 'conversation is taller than the chat area').toBeGreaterThan(120);
+  const pill = page.getByRole('button', { name: /새 메시지/ });
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeAttached({ timeout: 200_000 });
+  await expect(pill).toBeVisible();
+  expect(await scroller.evaluate((el) => el.scrollTop), 'reading position is kept').toBeLessThan(120);
+  await pill.click();
+  await expect.poll(() => scroller.evaluate((el) => el.scrollHeight - el.scrollTop - el.clientHeight), { timeout: 5000 }).toBeLessThan(80);
+  await expect(pill).toHaveCount(0);
+  await a.ctx.close();
+});

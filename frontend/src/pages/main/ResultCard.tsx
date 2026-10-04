@@ -1,9 +1,47 @@
-import { StatusBadge, type StatusKind } from '../../components';
+import { Button, StatusBadge, type StatusKind } from '../../components';
 import type { Judgment, requestApi } from '../../api/requests';
 import { RawDetails } from '../../components/RawDetails';
 import { locationLabel, reviewReasonLabel } from '../../lib/labels';
 import { DraftVersionCompare, sourceLabel } from './DraftVersions';
 import { classificationChoices as classifications, classificationLabels as labels, UNCERTAIN_VALUES } from './ProgressivePanel';
+
+type Onevidence = (output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) => void;
+export const BRIEF_KEYS = Object.keys(labels);
+
+/** "업무 3건 · IT팀 2 · AI팀 1": how many tasks and who leads them, in one line. */
+export function taskSplit(tasks: Array<Record<string, unknown>>): string {
+  if (!tasks.length) return '분해된 업무가 없어요';
+  const counts = new Map<string, number>();
+  tasks.forEach((task) => { const org = String(task.lead_org || '미정'); counts.set(org, (counts.get(org) || 0) + 1); });
+  const parts = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([org, count]) => `${org} ${count}`);
+  return `업무 ${tasks.length}건 · ${parts.slice(0, 3).join(' · ')}${parts.length > 3 ? ` 외 ${parts.length - 3}` : ''}`;
+}
+
+/** Plain-text version of the answer for the copy button. */
+export function answerText(judgment: Judgment): string {
+  const summary = typeof judgment.summary === 'string' ? JSON.parse(judgment.summary) : judgment.summary;
+  const lines = BRIEF_KEYS.filter((key) => key in judgment.classifications).map((key) => `${labels[key]}: ${String(judgment.classifications[key])}`);
+  return [summary.text || '', ...lines, taskSplit(judgment.draft_tasks)].filter(Boolean).join('\n');
+}
+
+/**
+ * The result as it appears in the conversation: summary, the four core classifications, a task split line and "자세히 보기".
+ * Same regions, slots and heights as the provisional card (ProvisionalResult), so the final swap only replaces data.
+ * Everything else (scales, all evidence, task rows, run comparison) is in `Result`, shown in the detail drawer.
+ */
+export function ResultBrief({ judgment, state, onEvidence, onDetail }: { judgment: Judgment; state?: { status: StatusKind; label: string }; onEvidence: Onevidence; onDetail: () => void }) {
+  const summary = typeof judgment.summary === 'string' ? JSON.parse(judgment.summary) : judgment.summary;
+  const keys = BRIEF_KEYS.filter((key) => key in judgment.classifications);
+  return <div className="result-stack result-brief"><article className="result-summary" data-region="summary"><div className="card-heading"><h2>판단 결과</h2><StatusBadge {...(state ?? { status: judgment.review ? 'review' : 'success', label: judgment.review ? '검토 대기' : '자동 처리 가능' })} /><span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()}</span></div>
+    <p className="summary-text">{summary.text || '요약 정보가 없습니다.'}</p><p className="author-line">원문 발췌 · 작성 주체: {summary.author || judgment.author || 'Jev'}</p><code>{judgment.run_id} · revision {judgment.revision_id}</code></article>
+    <div className="judgment-grid" data-region="judgment">{keys.map((key) => { const value = String(judgment.classifications[key]); const uncertain = UNCERTAIN_VALUES.includes(value); const related = judgment.outputs.filter((output) => output.question_id.includes(key)); const output = related[0]; const evidence = output?.evidence[0]; const confidence = output?.confidence;
+      return <article className="judgment-card" key={key}><h3>{labels[key]}</h3>{uncertain ? <div className="uncertain-result"><strong>정보 부족·판단 보류</strong><span className="judgment-value">{value}</span></div> : <strong className="judgment-value">{value === '조건부' ? '조건부 가능' : value}</strong>}
+        <div className="signal-labels">{typeof confidence === 'number' && <span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span>}</div>
+        <div className="evidence-list">{output ? <button type="button" onClick={() => onEvidence(output, evidence)}>{evidence ? '근거 열기' : '근거 패널 열기'}</button> : <span>저장된 근거 위치 없음</span>}</div></article>; })}</div>
+    <article className="result-summary" data-region="tasks"><h2>업무 분담</h2><p className="task-split">{taskSplit(judgment.draft_tasks)}</p>
+      <div className="brief-actions"><Button type="button" color="primary" tone="weak" onClick={onDetail}>자세히 보기</Button></div></article>
+  </div>;
+}
 
 export function Result({ judgment, previousJudgment, runs, onEvidence, state }: { judgment: Judgment; state?: { status: StatusKind; label: string }; previousJudgment?: Judgment | null; runs: Awaited<ReturnType<typeof requestApi.runs>> | null; onEvidence: (output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) => void }) {
   const summary = typeof judgment.summary === 'string' ? JSON.parse(judgment.summary) : judgment.summary;

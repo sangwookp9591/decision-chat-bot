@@ -4,11 +4,13 @@ import { Mascot, type MascotKind } from '../../components/Mascot';
 import { attachmentReasonLabel } from '../../components/statusLabels';
 import type { RequestAttachment } from '../../api/requests';
 import { EXAMPLE_REQUESTS, type ResultMood, type UserMessage } from './conversation';
+import { shortId } from './listFormat';
+import { CheckIcon, CopyIcon, EvidenceIcon, RefreshIcon } from './icons';
 
-/** Left bubble from 일동이: a fixed 44px avatar column so swapping the avatar (thinking → result icon) never moves the content. */
+/** 일동이's turn: a small mascot in a fixed column so swapping it (thinking → result icon) never moves the text, which flows full width without a bubble. */
 export function AssistantBubble({ avatar, label, children, className = '' }: { avatar: MascotKind | 'urgent' | 'none'; label: string; children: ReactNode; className?: string }) {
   return <div className={`chat-row assistant ${className}`} role="group" aria-label={label}>
-    <span className="chat-avatar">{avatar === 'urgent' ? <span className="avatar-warning" aria-hidden="true">⚠</span> : avatar === 'none' ? null : <Mascot kind={avatar} size={44} />}</span>
+    <span className="chat-avatar">{avatar === 'urgent' ? <span className="avatar-warning" aria-hidden="true">⚠</span> : avatar === 'none' ? null : <Mascot kind={avatar} size={32} />}</span>
     <div className="bubble">{children}</div>
   </div>;
 }
@@ -17,22 +19,30 @@ export const moodAvatar = (mood: ResultMood): MascotKind | 'urgent' => (mood ===
 export function UserBubble({ message }: { message: UserMessage }) {
   return <div className="chat-row user" role="group" aria-label={message.revision > 1 ? `내 보완 답변 (revision ${message.revision})` : '내가 보낸 요청'} data-pending={message.pending || undefined}>
     <div className="bubble">
-      {message.text && <p className="bubble-text">{message.text}</p>}
+      {message.text ? <p className="bubble-text">{message.text}</p> : !message.pending && message.files.length === 0 && <p className="bubble-text bubble-redacted">내용은 원문 열람 권한이 있는 분에게만 보여요</p>}
       {message.files.length > 0 && <ul className="chip-list" aria-label="첨부 파일">{message.files.map((file) => <li key={file.id} className="file-chip">{file.name}</li>)}</ul>}
-      <span className="bubble-meta" role={message.pending ? 'status' : undefined}>{message.pending && !message.requestId ? '보내는 중…' : <>{message.revision > 1 ? `revision ${message.revision} 접수됨` : '접수됨'}{message.requestId && <> · <code>{message.requestId}</code></>}</>}</span>
+      <span className="bubble-meta" role={message.pending ? 'status' : undefined}>{message.pending && !message.requestId ? '보내는 중…' : <>{message.revision > 1 ? `revision ${message.revision} 접수됨` : '접수됨'}{message.requestId && <> · <code title={message.requestId}>{shortId(message.requestId)}</code></>}</>}</span>
     </div>
   </div>;
 }
 
-export function Greeting({ onPick }: { onPick: (text: string) => void }) {
+/** Empty conversation: who 일동이 is and what to ask. The composer sits right below it (centered) until the first message is sent. */
+export function GreetingHead() {
   return <section className="chat-greeting" aria-label="일동이 인사">
-    <Mascot kind="wave" size={140} />
+    <Mascot kind="wave" size={96} />
     <h2>안녕하세요, 일동이예요</h2>
-    <p>업무 요청을 적거나 문서를 올려 주세요.<br />AI·일반 개발·사람이 맡을 일을 나눠 드려요.</p>
-    <div className="example-chips" role="group" aria-label="예시 요청"><span>이렇게 요청해 보세요</span>
-      {EXAMPLE_REQUESTS.map((example) => <button key={example} type="button" className="example-chip" onClick={() => onPick(example)}>{example}</button>)}
-    </div>
+    <p>무엇을 도와드릴까요? 업무 요청을 적거나 문서를 올려 주세요.<br />AI·일반 개발·사람이 맡을 일을 나눠 드려요.</p>
   </section>;
+}
+export function ExampleChips({ onPick }: { onPick: (text: string) => void }) {
+  return <div className="example-chips" role="group" aria-label="예시 요청"><span>이렇게 요청해 보세요</span>
+    {EXAMPLE_REQUESTS.map((example) => <button key={example} type="button" className="example-chip" onClick={() => onPick(example)}>{example}</button>)}
+  </div>;
+}
+
+/** Three bouncing dots while 일동이 is working; the label carries the meaning, the dots are decoration. */
+export function TypingBubble() {
+  return <AssistantBubble avatar="none" label="일동이가 입력 중" className="typing-bubble"><span className="typing-dots" aria-hidden="true"><i className="typing-dot" /><i className="typing-dot" /><i className="typing-dot" /></span></AssistantBubble>;
 }
 
 export function UploadBubble({ percent }: { percent: number }) {
@@ -73,9 +83,17 @@ export function FailureBubble({ message, busy, onRetry }: { message: string; bus
   </AssistantBubble>;
 }
 
-export function QuickReplies({ canReanalyze, finalSaved, busy, onReanalyze, onNew }: { canReanalyze: boolean; finalSaved: boolean; busy: boolean; onReanalyze: () => void; onNew: () => void }) {
-  return <div className="quick-replies" role="group" aria-label="다음 동작">
-    {canReanalyze && <Button type="button" variant="secondary" disabled={!finalSaved || busy} onClick={onReanalyze}>다시 분석</Button>}
-    <Button type="button" variant="plain" onClick={onNew}>새 요청 시작</Button>
+const IconButton = ({ label, onClick, disabled, children }: { label: string; onClick: () => void; disabled?: boolean; children: ReactNode }) =>
+  <button type="button" className="icon-button" aria-label={label} title={label} disabled={disabled} onClick={onClick}>{children}</button>;
+
+/**
+ * Small action row under 일동이's answer: copy, re-analyze, source. Rendered from the first provisional card on (disabled until the final judgment
+ * is saved) so the row's slot never appears late and moves nothing.
+ */
+export function AnswerActions({ canReanalyze, finalSaved, busy, copied, onCopy, onReanalyze, onEvidence }: { canReanalyze: boolean; finalSaved: boolean; busy: boolean; copied: boolean; onCopy: () => void; onReanalyze: () => void; onEvidence: () => void }) {
+  return <div className="answer-actions" role="group" aria-label="답변 동작">
+    <IconButton label={copied ? '복사됨' : '답변 복사'} disabled={!finalSaved} onClick={onCopy}>{copied ? <CheckIcon /> : <CopyIcon />}</IconButton>
+    {canReanalyze && <IconButton label="다시 분석" disabled={!finalSaved || busy} onClick={onReanalyze}><RefreshIcon /></IconButton>}
+    <IconButton label="근거 보기" disabled={!finalSaved} onClick={onEvidence}><EvidenceIcon /></IconButton>
   </div>;
 }

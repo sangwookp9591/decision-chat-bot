@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { Main } from './Main';
 import { Result } from './main/ResultCard';
@@ -102,7 +102,8 @@ describe('evidence viewer from the result card', () => {
       units: [{ unit_id: 'esp_1', order: 0, location: { page: 1 }, char_start: 0, char_end: 3, text: '1쪽 본문' }, { unit_id: 'esp_9', order: 1, location: { page: 2 }, char_start: 3, char_end: 6, text: '2쪽 본문' }] });
     Element.prototype.scrollTo = vi.fn() as never;
     open('/?request_id=req_1');
-    fireEvent.click(await screen.findByRole('button', { name: /첨부 · .*근거 열기/ }));
+    fireEvent.click(await screen.findByRole('button', { name: '자세히 보기' }));
+    fireEvent.click(await within(await screen.findByRole('dialog', { name: '판단 상세' })).findByRole('button', { name: /첨부 · .*근거 열기/ }));
     expect(await screen.findByText('2쪽 본문')).toBeInTheDocument();
     expect(requestApi.document).toHaveBeenCalledWith('req_1', 'rev_1', 'att_1');
     expect(document.querySelector('[data-unit-id="esp_9"]')).toHaveAttribute('aria-current', 'location');

@@ -67,12 +67,12 @@ describe('first screen', () => {
 });
 
 describe('composer', () => {
-  it('Ctrl/⌘+Enter sends, plain Enter only adds a line', async () => {
+  it('Enter sends, Shift+Enter only adds a line, Ctrl/⌘+Enter still sends', async () => {
     open();
     fireEvent.change(field(), { target: { value: '회의실 예약 화면이 필요해요' } });
-    fireEvent.keyDown(field(), { key: 'Enter' });
+    fireEvent.keyDown(field(), { key: 'Enter', shiftKey: true });
     expect(uploadRequest).not.toHaveBeenCalled();
-    fireEvent.keyDown(field(), { key: 'Enter', ctrlKey: true });
+    fireEvent.keyDown(field(), { key: 'Enter' });
     await waitFor(() => expect(uploadRequest).toHaveBeenCalledTimes(1));
     expect((vi.mocked(uploadRequest).mock.calls[0][0] as FormData).get('text')).toBe('회의실 예약 화면이 필요해요');
     expect(vi.mocked(uploadRequest).mock.calls[0][2]).toBe('/api/requests');
@@ -231,15 +231,15 @@ describe('restoring a conversation', () => {
     expect(await screen.findByText('최종 요약')).toBeInTheDocument();
     expect(requestApi.detail).toHaveBeenCalledWith('req_1'); expect(requestApi.judgment).toHaveBeenCalledWith('req_1');
   });
-  it('restores an in-flight run from the progress API and the list becomes a collapsible conversation panel', async () => {
+  it('restores an in-flight run from the progress API and the list becomes a sheet behind the 내 요청 button', async () => {
     vi.mocked(requestApi.list).mockResolvedValue({ items: [{ id: 'req_1', status: 'processing' }] });
     vi.mocked(requestApi.progress).mockResolvedValue({ request_id: 'req_1', status: 'processing', steps: [{ name: '근거 연결', status: 'running' }], preliminary: { classifications: classes } });
     open('/?request_id=req_1');
     expect(await screen.findByRole('group', { name: '일동이의 잠정 답변' })).toBeInTheDocument();
-    const toggle = screen.getByRole('button', { name: /대화 목록/ });
+    const toggle = screen.getByRole('button', { name: '내 요청' });
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(toggle); expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    fireEvent.click(await screen.findByRole('button', { name: /req_1/ }));
+    fireEvent.click(await within(await screen.findByRole('dialog', { name: '내 요청 대화' })).findByRole('button', { name: /req_1/ }));
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
   });
 });

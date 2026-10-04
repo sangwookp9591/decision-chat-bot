@@ -1,18 +1,20 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { apiFetch, idempotencyKey, type ApiError } from '../api/client';
 import { requestApi, type Judgment, type RequestDetail, type RequestItem } from '../api/requests';
 import { useSession } from '../state/session';
-import { Button, StatusBadge } from '../components';
-import { getStatusPresentation } from '../components/statusLabels';
+import { Drawer } from '../components';
 import { infoRequest, resultBadge } from './main/requestState';
 import { useEventStream, type StreamEvent } from '../state/events';
 import { EvidenceViewer, type ViewerTarget } from '../components/EvidenceViewer';
 import { questionLabel } from '../lib/labels';
 import { uploadRequest } from './main/uploadRequest';
 import { ProvisionalResult, SlowNotice, stepLabel } from './main/ProgressivePanel';
-import { Result } from './main/ResultCard';
-import { AnalysisBubble, AssistantBubble, FailureBubble, FileDecisionBubble, Greeting, InfoRequestBubble, QuickReplies, UploadBubble, UserBubble, moodAvatar } from './main/Bubbles';
+import { Result, ResultBrief, answerText } from './main/ResultCard';
+import { RequestList, useRequestTitles } from './main/RequestList';
+import { MOTION, prefersReducedMotion } from '../lib/motion';
+import { AnalysisBubble, AnswerActions, AssistantBubble, ExampleChips, FailureBubble, FileDecisionBubble, GreetingHead, InfoRequestBubble, TypingBubble, UploadBubble, UserBubble, moodAvatar } from './main/Bubbles';
+import { ArrowDownIcon, MenuIcon, PlusIcon } from './main/icons';
 import { Composer } from './main/Composer';
 import { MAX_FILES, MOOD_TEXT, composerMode, currentAttachments, judgmentMood, resultMood, userMessages, type PendingSend } from './main/conversation';
 import { initialProgress, progressReducer } from '../state/progress';
@@ -32,9 +34,12 @@ export function Main() {
   const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null);
   const [progress, dispatch] = useReducer(progressReducer, initialProgress); const progressRef = useRef(progress); progressRef.current = progress;
   const [error, setError] = useState(''); const [retry, setRetry] = useState<'' | 'submit' | 'reanalyze'>(''); const [busy, setBusy] = useState(false); const [notice, setNotice] = useState('');
-  const [pending, setPending] = useState<PendingSend | null>(null); const [listOpen, setListOpen] = useState(false);
+  const [pending, setPending] = useState<PendingSend | null>(null); const [listOpen, setListOpen] = useState(false); const [detailOpen, setDetailOpen] = useState(false);
   const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState(''); const [viewer, setViewer] = useState<ViewerTarget | null>(null);
-  const textRef = useRef<HTMLTextAreaElement>(null); const attachRef = useRef<HTMLInputElement>(null); const endRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null); const attachRef = useRef<HTMLInputElement>(null); const pageRef = useRef<HTMLElement>(null); const scrollRef = useRef<HTMLDivElement>(null);
+  const atBottom = useRef(true); const openedAt = useRef(Date.now()); const returnToDetail = useRef(false); const [unread, setUnread] = useState(false); const [away, setAway] = useState(false); const [copied, setCopied] = useState(false);
+  const dockRef = useRef<HTMLDivElement>(null); const dockTop = useRef<number | null>(null); const wasEmpty = useRef(true);
+  const { titles, want } = useRequestTitles(detail);
   const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); };
   const canReanalyze = Boolean(user?.roles.some((role) => ['requester', 'reviewer', 'operator'].includes(role)));
   const stage = stepLabel(progress.currentStep);
@@ -98,9 +103,31 @@ export function Main() {
     const timer = window.setInterval(() => refreshIfPending(requestId), 10000);
     return () => window.clearInterval(timer);
   }, [requestId, judgment, error, refreshIfPending]);
+  // The page is exactly one screen tall: the chat scrolls inside it. Height = viewport minus whatever the shell puts above this section.
+  useLayoutEffect(() => {
+    const fit = () => { const page = pageRef.current; if (page) page.style.setProperty('--shell-top', `${Math.max(0, Math.round(page.getBoundingClientRect().top + window.scrollY))}px`); };
+    fit(); const frame = window.requestAnimationFrame?.(fit); window.addEventListener('resize', fit);
+    return () => { window.removeEventListener('resize', fit); if (frame) window.cancelAnimationFrame(frame); };
+  }, []);
+  const scrollToEnd = useCallback((smooth: boolean) => {
+    const el = scrollRef.current; if (!el) return;
+    const behavior = smooth && !prefersReducedMotion() ? 'smooth' : 'auto';
+    if (typeof el.scrollTo === 'function') el.scrollTo({ top: el.scrollHeight, behavior }); else el.scrollTop = el.scrollHeight;
+  }, []);
+  const onScrollLog = useCallback(() => {
+    const el = scrollRef.current; if (!el) return;
+    atBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+    setAway(!atBottom.current);
+    if (atBottom.current) setUnread(false);
+  }, []);
   // Follow the newest message — only when one is added, never when a card fills in place (that would move what is being read).
+  // Someone reading above the bottom is not pulled down: they get a "새 메시지" pill instead.
+  useEffect(() => { openedAt.current = Date.now(); atBottom.current = true; setUnread(false); setAway(false); }, [requestId]);
   const tail = [messages.length, upload !== null, Boolean(detail), Boolean(judgment), Boolean(error), mode, progress.phase === 'preliminary'].join('|');
-  useEffect(() => { if (tail !== '0|false|false|false|false|new|false') endRef.current?.scrollIntoView?.({ block: 'end' }); }, [tail]);
+  useEffect(() => {
+    if (tail === '0|false|false|false|false|new|false') return;
+    if (atBottom.current) scrollToEnd(Date.now() - openedAt.current > 800); else setUnread(true);
+  }, [tail, scrollToEnd]);
 
   function addFiles(added: File[]) {
     if (!added.length) return;
@@ -111,7 +138,7 @@ export function Main() {
   async function submit() {
     const revising = Boolean(requestId) && mode !== 'new';
     const sent = { text, files };
-    setBusy(true); setError(''); setRetry(''); setNotice(''); resetRun(); setUpload(0);
+    setBusy(true); setError(''); setRetry(''); setNotice(''); resetRun(); setUpload(0); atBottom.current = true; // your own message always follows
     setPending({ text: text.trim(), files: files.map((file) => file.name), baseRevision: revising ? revisionNumber : 0, requestId: revising ? requestId : '' });
     dispatch({ type: 'optimistic', text: text.trim() || files.map((file) => file.name).join(', '), at: Date.now() });
     setText(''); setFiles([]);
@@ -142,9 +169,9 @@ export function Main() {
       resetRun(); await refresh(requestId);
     } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
   }
-  function openRequest(id: string) { setListOpen(false); setPending(null); if (id !== requestId) setParams({ request_id: id }); }
+  function openRequest(id: string) { setListOpen(false); setDetailOpen(false); setPending(null); if (id !== requestId) setParams({ request_id: id }); }
   function startNew() {
-    setListOpen(false); setPending(null); setText(''); setFiles([]); setNotice('');
+    setListOpen(false); setDetailOpen(false); setPending(null); setText(''); setFiles([]); setNotice('');
     if (requestId) setParams({}); else { resetRun(); setError(''); dispatch({ type: 'reset' }); }
     window.setTimeout(() => textRef.current?.focus(), 0);
   }
@@ -160,38 +187,74 @@ export function Main() {
     } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
   }
   function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) {
+    returnToDetail.current = detailOpen; setDetailOpen(false); // the viewer takes the drawer's place and hands it back on close
     if (!evidence || !requestId || !judgment) { setSourceTitle(`${questionLabel(output.question_id)} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; }
     setSource(''); setViewer({ requestId, revision: judgment.revision_id, source: evidence.attachment_id || 'chat', unitId: evidence.id, title: `${questionLabel(output.question_id)} · 근거 원문` });
   }
+  const closeEvidence = useCallback(() => { setViewer(null); setSource(''); if (returnToDetail.current) { returnToDetail.current = false; setDetailOpen(true); } }, []);
+  const closeDetail = useCallback(() => setDetailOpen(false), []);
+  const closeList = useCallback(() => setListOpen(false), []);
+  const typing = Boolean(requestId) && !judgment && !error && mode === 'new' && !info && !progress.preliminary;
+  const answering = Boolean(judgment) || Boolean(requestId && progress.preliminary);
+  async function copyAnswer() {
+    if (!judgment) return;
+    try { await navigator.clipboard.writeText(answerText(judgment)); setCopied(true); window.setTimeout(() => setCopied(false), 1600); } catch { setNotice('복사하지 못했어요. 브라우저의 클립보드 권한을 확인해 주세요.'); }
+  }
+  function openFirstEvidence() {
+    if (!judgment) return;
+    const output = judgment.outputs.find((item) => item.evidence.length) ?? judgment.outputs[0];
+    if (output) openEvidence(output, output.evidence[0]); else setDetailOpen(true);
+  }
+  const listProps = { items: requests, currentId: requestId, titles, want, onOpen: openRequest, onNew: startNew };
 
   const conversing = Boolean(requestId || pending);
+  const empty = !conversing;
+  // First message: the centered composer glides to the bottom (FLIP) instead of jumping.
+  useLayoutEffect(() => {
+    const el = dockRef.current; if (!el) return;
+    if (empty) { dockTop.current = el.getBoundingClientRect().top; wasEmpty.current = true; return; }
+    if (wasEmpty.current && dockTop.current !== null && typeof el.animate === 'function' && !prefersReducedMotion()) {
+      const dy = dockTop.current - el.getBoundingClientRect().top;
+      if (Math.abs(dy) > 4) el.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: MOTION.slow, easing: MOTION.easeSpring });
+    }
+    wasEmpty.current = false;
+  });
   const provisionalMood = resultMood(progress.preliminary?.classifications, false);
-  return <section className="main-page chat-page"><div className="main-heading"><div><p className="eyebrow">요청자</p><h1>일동이와 요청 접수</h1></div>{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}</div>
-    <div className="main-columns">
-      <div className="main-primary chat-main">
-        <div className="chat-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="일동이와의 대화">
-          {!conversing && <Greeting onPick={pickExample} />}
-          {messages.map((message) => <UserBubble key={message.key} message={message} />)}
-          {upload !== null && <UploadBubble percent={upload} />}
-          {requestId && <AnalysisBubble stages={stageNames} current={stage} done={stepDone} badge={detail ? resultBadge(detail, judgment, Boolean(error)) : undefined} />}
-          {requestId && !judgment && progress.preliminary && <AssistantBubble avatar="thinking" label="일동이의 잠정 답변" className="result-bubble"><p className="bubble-title">잠정 판단을 먼저 보여 드려요{provisionalMood === 'urgent' ? ' · 긴급 신호가 있어요' : ''}</p><ProvisionalResult state={progress} /></AssistantBubble>}
-          {judgment && <AssistantBubble avatar={moodAvatar(judgmentMood(judgment))} label="일동이의 답변" className="result-bubble"><p className="bubble-title">{MOOD_TEXT[judgmentMood(judgment)]}</p>
-            <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} /></AssistantBubble>}
-          {mode === 'file' && detail && <FileDecisionBubble attachments={currentAttachments(detail)} busy={busy} onExclude={() => void excludeUnread()} onReattach={() => attachRef.current?.click()} />}
-          {info && <InfoRequestBubble info={info} onAnswer={() => textRef.current?.focus()} />}
-          {error && <FailureBubble message={error} busy={busy} onRetry={retry ? () => { if (retry === 'submit') void submit(); else void reanalyze(); } : undefined} />}
-          {requestId && !judgment && !error && <SlowNotice state={progress} />}
-          <div ref={endRef} aria-hidden="true" />
+  return <section ref={pageRef} className="main-page chat-page">
+    <aside className="request-list" aria-label="대화 목록"><RequestList {...listProps} /></aside>
+    <div className="chat-surface">
+      <div className="main-heading"><button type="button" className="icon-button menu-button" aria-label="내 요청" aria-haspopup="dialog" aria-expanded={listOpen} onClick={() => setListOpen(true)}><MenuIcon /></button>
+        <h1>일동이와 요청 접수</h1>
+        <div className="heading-actions">{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}
+          <button type="button" className="icon-button new-button" aria-label="새 요청 시작" onClick={startNew}><PlusIcon /></button></div></div>
+      <div className="main-primary chat-main" data-empty={empty || undefined}>
+        <div className="chat-viewport"><div className="chat-scroll" ref={scrollRef} onScroll={onScrollLog}>
+          <div className="chat-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="일동이와의 대화">
+            {empty && <GreetingHead />}
+            {messages.map((message) => <UserBubble key={message.key} message={message} />)}
+            {upload !== null && <UploadBubble percent={upload} />}
+            {requestId && <AnalysisBubble stages={stageNames} current={stage} done={stepDone} badge={detail ? resultBadge(detail, judgment, Boolean(error)) : undefined} />}
+            {answering && <AssistantBubble avatar={judgment ? moodAvatar(judgmentMood(judgment)) : 'thinking'} label={judgment ? '일동이의 답변' : '일동이의 잠정 답변'} className="result-bubble">
+              <p className="bubble-title">{judgment ? MOOD_TEXT[judgmentMood(judgment)] : `잠정 판단을 먼저 보여 드려요${provisionalMood === 'urgent' ? ' · 긴급 신호가 있어요' : ''}`}</p>
+              {judgment ? <ResultBrief judgment={judgment} onEvidence={openEvidence} onDetail={() => setDetailOpen(true)} state={resultBadge(detail, judgment, false)} /> : <ProvisionalResult state={progress} />}
+              <AnswerActions canReanalyze={canReanalyze} finalSaved={Boolean(judgment)} busy={busy} copied={copied} onCopy={() => void copyAnswer()} onReanalyze={() => void reanalyze()} onEvidence={openFirstEvidence} /></AssistantBubble>}
+            {mode === 'file' && detail && <FileDecisionBubble attachments={currentAttachments(detail)} busy={busy} onExclude={() => void excludeUnread()} onReattach={() => attachRef.current?.click()} />}
+            {info && <InfoRequestBubble info={info} onAnswer={() => textRef.current?.focus()} />}
+            {error && <FailureBubble message={error} busy={busy} onRetry={retry ? () => { if (retry === 'submit') void submit(); else void reanalyze(); } : undefined} />}
+            {requestId && !judgment && !error && <SlowNotice state={progress} />}
+            {typing && <TypingBubble />}
+          </div>
         </div>
+        {away && <button type="button" className="scroll-down" aria-label={unread ? '새 메시지 보기' : '맨 아래로'} data-unread={unread || undefined} onClick={() => { atBottom.current = true; setUnread(false); setAway(false); scrollToEnd(true); }}><ArrowDownIcon /></button>}</div>
         {notice && <p className="chat-handoff" role="status">{notice}</p>}
-        <div className="composer-dock">{requestId && <QuickReplies canReanalyze={canReanalyze} finalSaved={Boolean(judgment)} busy={busy} onReanalyze={() => void reanalyze()} onNew={startNew} />}
+        <div className="composer-dock" ref={dockRef}>
           <Composer mode={mode} text={text} files={files} busy={busy} openRequest={Boolean(requestId)} textRef={textRef} attachRef={attachRef} onText={setText} onAddFiles={addFiles} onRemoveFile={(index) => setFiles(files.filter((_, at) => at !== index))} onSubmit={() => void submit()} /></div>
-        <EvidenceViewer target={viewer} onClose={() => setViewer(null)} />{source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
+        {empty && <ExampleChips onPick={pickExample} />}
       </div>
-      <aside className="request-list" aria-label="대화 목록"><button type="button" className="list-toggle" aria-expanded={listOpen} aria-controls="conversation-list" onClick={() => setListOpen(!listOpen)}>대화 목록 {listOpen ? '접기' : '펼치기'}<span aria-hidden="true">{listOpen ? '▴' : '▾'}</span></button>
-        <div id="conversation-list" className="list-body" data-open={listOpen}><h2>내 요청 대화</h2><Button type="button" variant="plain" className="new-chat" onClick={startNew}>새 대화 열기</Button>
-          {requests.length ? requests.map((item) => { const state = getStatusPresentation(item.status); return <button type="button" key={item.id} onClick={() => openRequest(item.id)} aria-current={item.id === requestId ? 'true' : undefined}><code>{item.id}</code><StatusBadge status={state.status} label={state.label} /></button>; }) : <p>접수한 요청이 여기에 표시됩니다.</p>}</div>
-      </aside>
     </div>
+    <Drawer open={listOpen} title="내 요청 대화" onClose={closeList}><RequestList {...listProps} hideTitle /></Drawer>
+    <Drawer open={detailOpen && Boolean(judgment)} title="판단 상세" onClose={closeDetail}>{judgment && <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} />}</Drawer>
+    <EvidenceViewer target={viewer} onClose={closeEvidence} />
+    <Drawer open={Boolean(source)} title="근거 원문" onClose={closeEvidence}><p>{sourceTitle}</p><blockquote className="source-quote">{source}</blockquote></Drawer>
   </section>;
 }
