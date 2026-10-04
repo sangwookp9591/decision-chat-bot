@@ -13,7 +13,7 @@ export type StreamStatus = 'connected' | 'reconnecting' | 'disconnected';
  * Tenant-wide kinds (`policy.*`, `rule.*`) carry no request id and bypass the request filter.
  */
 export const EVENT_KINDS = [
-  'request.received', 'run.step', 'judgment.partial', 'judgment.evidence_ready', 'judgment.tasks_ready', 'judgment_saved', 'judgment_failed', 'reanalysis.compared',
+  'request.received', 'run.step', 'judgment.partial', 'judgment.evidence_ready', 'judgment.tasks_ready', 'judgment_saved', 'judgment_failed', 'judgment.cancelled', 'reanalysis.compared',
   'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned',
   'policy.published',
   'rule.decision', 'rule.version_created', 'rule.validated', 'rule.publish', 'rule.stop', 'rule.revert',

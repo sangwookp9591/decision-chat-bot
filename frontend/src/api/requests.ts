@@ -17,6 +17,7 @@ export const requestApi = {
   judgment: (id: string, runId?: string) => apiFetch<Judgment>(`/api/requests/${encodeURIComponent(id)}/judgment${runId ? `?run_id=${encodeURIComponent(runId)}` : ''}`),
   runs: (id: string) => apiFetch<RunHistory>(`/api/requests/${encodeURIComponent(id)}/runs`),
   reanalyze: (id: string, expectedRevision: number, reason?: string) => apiFetch<{ request_id: string; run_id: string; job_id: string; revision_id: string; status: string }>(`/api/requests/${encodeURIComponent(id)}/reanalyze`, { method: 'POST', headers: idempotencyKey(), body: JSON.stringify({ expected_revision: expectedRevision, ...(reason ? { reason } : {}) }) }),
+  cancel: (id: string, runId: string) => apiFetch<{ request_id: string; run_id: string; status: string }>(`/api/requests/${encodeURIComponent(id)}/runs/${encodeURIComponent(runId)}/cancel`, { method: 'POST' }),
   document: (id: string, revision: string | number, source: string) => apiFetch<SourceDocument>(`/api/requests/${encodeURIComponent(id)}/revisions/${encodeURIComponent(String(revision))}/document?source=${encodeURIComponent(source)}`),
   evidence: (id: string, spanId: string) => apiFetch<Evidence & { source_text?: string }>(`/api/requests/${encodeURIComponent(id)}/evidence/${encodeURIComponent(spanId)}`),
 };

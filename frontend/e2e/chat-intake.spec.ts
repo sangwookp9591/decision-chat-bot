@@ -10,6 +10,32 @@ mkdirSync(shotDir, { recursive: true });
 const shot = (page: Page, name: string) => page.screenshot({ path: join(shotDir, `${test.info().project.name}-${name}.png`), fullPage: true });
 const resultIcon = (page: Page) => page.locator('[aria-label="일동이의 답변"]').locator('[data-mascot="like"], [data-mascot="surprised"], .avatar-warning');
 
+test('send → stop → cancelled state → reanalyze the same request', async ({ browser }) => {
+  test.setTimeout(300_000);
+  const a = await actor(browser, baseURL, 'requester'); const page = a.page;
+  await page.goto('/');
+  await page.getByLabel('요청 내용').fill('회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.');
+  await page.getByRole('button', { name: '요청 보내기' }).click();
+  await expect(page.getByRole('button', { name: '분석 정지' })).toBeEnabled({ timeout: 30_000 });
+  const requestId = new URL(page.url()).searchParams.get('request_id')!;
+  await page.getByRole('button', { name: '분석 정지' }).click();
+  await expect(page.locator('.cancelled-notice')).toContainText('취소됨', { timeout: 30_000 });
+  await shot(page, 'cancelled');
+  const before = await (await a.api.get(`/api/requests/${requestId}/runs`)).json();
+  expect(before.runs.find((run: { id: string }) => run.id === before.active_run_id).status).toBe('cancelled');
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: '다시 분석' }).click();
+  await expect(page.locator('.cancelled-notice')).toHaveCount(0, { timeout: 30_000 });
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 240_000 });
+  await shot(page, 'reanalyzed');
+  const after = await (await a.api.get(`/api/requests/${requestId}/runs`)).json();
+  expect(after.runs.length).toBeGreaterThan(before.runs.length);
+  expect(after.active_run_id).not.toBe(before.active_run_id);
+  const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();
+  expect(savedJudgment.mode).toBe('live');
+  await a.ctx.close();
+});
+
 test('send → right bubble → analysis steps → result with icon → reload restores → new request', async ({ browser }) => {
   test.setTimeout(240_000);
   const a = await actor(browser, baseURL, 'requester'); const page = a.page;

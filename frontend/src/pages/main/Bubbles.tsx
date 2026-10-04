@@ -49,11 +49,11 @@ export function UploadBubble({ percent }: { percent: number }) {
   return <AssistantBubble avatar="hello" label="업로드 진행"><strong>요청을 올리고 있어요</strong><div className="upload-row"><progress max="100" value={percent} aria-label="업로드 진행률" /><span>{percent}%</span></div></AssistantBubble>;
 }
 
-export function AnalysisBubble({ stages, current, done, badge }: { stages: readonly string[]; current: string; done: (name: string, index: number) => boolean; badge?: { status: StatusKind; label: string } }) {
+export function AnalysisBubble({ stages, current, done, badge, cancelled = false }: { stages: readonly string[]; current: string; done: (name: string, index: number) => boolean; badge?: { status: StatusKind; label: string }; cancelled?: boolean }) {
   const finished = stages.every(done);
   return <AssistantBubble avatar={finished ? 'hello' : 'thinking'} label="분석 진행" className="analysis-bubble">
     <div className="card-heading"><h2>분석 진행</h2>{badge && <StatusBadge {...badge} />}</div>
-    <p className="thinking-line">{finished ? '분석을 마쳤어요' : '요청을 살펴보고 있어요'}</p>
+    <p className="thinking-line">{cancelled ? '분석을 중단했어요' : finished ? '분석을 마쳤어요' : '요청을 살펴보고 있어요'}</p>
     <ol className="stage-list">{stages.map((name, index) => <li key={name} className={done(name, index) ? 'done' : name === current ? 'current' : 'waiting'}><span aria-hidden="true">{done(name, index) ? '✓' : index + 1}</span>{name}<span className="sr-only">{done(name, index) ? ' 완료' : name === current ? ' 진행 중' : ' 대기'}</span></li>)}</ol>
   </AssistantBubble>;
 }

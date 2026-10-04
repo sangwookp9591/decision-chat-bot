@@ -43,6 +43,14 @@
 
 화면은 새로고침·재연결 시 이 API로 현재 단계를 복원하고, 이후는 SSE 이벤트로 갱신한다.
 
+## 진행 중 분석 취소 (REM-CANCEL)
+
+`POST /api/requests/{request_id}/runs/{run_id}/cancel`은 요청 작성자와 같은 tenant의 운영자에게 허용한다. CSRF를 요구하며, 다른 tenant의 요청·실행은 404, 같은 tenant의 권한 없는 호출은 403이다. 대기·실행 중인 Run은 `cancelled`로 바꾸고 `{request_id,run_id,status}`를 200으로 반환한다. 이미 끝난 Run은 변경 없이 현재 `cancelled|failed|judgment_saved` 상태를 200으로 반환한다. 이 계약은 재전송에도 동일하다.
+
+취소 트랜잭션은 Request→Run→Job 순서로 잠그고 Job을 `cancelled`로 바꾸며 lease generation을 올린다. 그래서 대기 작업은 claim 대상에서 즉시 빠지고, 기존 워커의 단계 시작·종료·결과 저장 `ctx.commit`은 소유권 검증에서 막힌다. 진행 중인 외부 Jev 호출은 반환될 때까지 기다리되 결과는 저장하지 않는다. 최종 Judgment가 먼저 커밋된 경우에는 취소보다 완료를 우선해 Run·Job 상태를 `judgment_saved`·`completed`로 수렴시킨다. 취소가 먼저 커밋되면 이후 완료 시도는 lease 검증에 실패한다.
+
+Run은 `cancelled_by`, `cancelled_at`, `cancelled_step`과 종료 시각을 남기고, 진행 중 RunStep도 `cancelled`로 닫는다. 요청 상태도 `cancelled`가 된다. 같은 트랜잭션에서 `judgment.cancelled` 이벤트를 한 번 발행한다. 커밋 후에는 `worker_run(status_code=cancelled)` journal 기록을 한 번 남겨 모니터링 취소 집계와 맞춘다. SSE와 progress 조회의 `cancelled`는 화면에서 '취소됨'으로 나타난다. 잠정 분류가 이미 있었다면 결과를 흐리게 남기고 로딩 표시를 끝낸다. 같은 요청의 '다시 분석'은 현재 revision으로 새 Run·Job을 만든다.
+
 ## 지표
 
 - `time_to_preliminary_ms`(수신→잠정 판단)와 기존 최초 판단 지연을 함께 journal에 기록하고 모니터링에 별도 지표로 표시한다. 기존 SLO 수치·분모는 바꾸지 않는다.

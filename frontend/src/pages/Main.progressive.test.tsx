@@ -7,7 +7,7 @@ import { requestApi, type Judgment } from '../api/requests';
 import { uploadRequest } from './main/uploadRequest';
 import type { StreamEvent } from '../state/events';
 
-vi.mock('../api/requests', () => ({ requestApi: { detail: vi.fn(), list: vi.fn(), judgment: vi.fn(), runs: vi.fn(), reanalyze: vi.fn(), evidence: vi.fn(), document: vi.fn(), progress: vi.fn() } }));
+vi.mock('../api/requests', () => ({ requestApi: { detail: vi.fn(), list: vi.fn(), judgment: vi.fn(), runs: vi.fn(), reanalyze: vi.fn(), cancel: vi.fn(), evidence: vi.fn(), document: vi.fn(), progress: vi.fn() } }));
 vi.mock('./main/uploadRequest', () => ({ uploadRequest: vi.fn() }));
 let emit: (event: Partial<StreamEvent> & { type: string }) => void = () => undefined;
 vi.mock('../state/events', () => ({
@@ -18,7 +18,7 @@ vi.mock('../state/session', () => ({ useSession: () => ({ user: { id: 'u1', name
 const classes = { ai_need: '필요', feasibility: '가능', urgency: '일반', lead_org: 'AI팀' };
 const judgment = { id: 'j1', request_id: 'req_1', revision_id: 'rev_1', run_id: 'run_1', classifications: { ...classes, feasibility: '조건부 가능' }, risk_confirmed: false, risks: [], summary: { text: '최종 요약', author: 'x' }, author: 'x', versions: {}, mode: 'live', outputs: [], draft_tasks: [], review_reasons: [], review: null } as unknown as Judgment;
 const notFound = Object.assign(new Error('not found'), { status: 404 });
-const detail = (status = 'processing') => ({ request: { id: 'req_1', status, revision_number: 1 }, revisions: [{ id: 'rev_1', number: 1 }], attachments: [] });
+const detail = (status = 'processing') => ({ request: { id: 'req_1', status, revision_number: 1, active_run_id: 'run_1' }, revisions: [{ id: 'rev_1', number: 1 }], attachments: [] });
 const renderMain = (url = '/') => render(<MemoryRouter initialEntries={[url]}><Main /></MemoryRouter>);
 
 beforeEach(() => {
@@ -122,6 +122,19 @@ describe('reload restores from the progress API', () => {
     expect(requestApi.progress).toHaveBeenCalledWith('req_1');
     expect(document.querySelector('.stage-list .current')).toHaveTextContent('근거 연결');
   });
+});
+
+it('stop cancels the active run and keeps a dimmed provisional result with reanalysis available', async () => {
+  vi.mocked(requestApi.progress).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', status: 'processing', preliminary: { classifications: classes }, final: false });
+  vi.mocked(requestApi.cancel).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', status: 'cancelled' });
+  renderMain('/?request_id=req_1');
+  expect(await screen.findByRole('button', { name: '분석 정지' })).toBeEnabled();
+  fireEvent.click(screen.getByRole('button', { name: '분석 정지' }));
+  await waitFor(() => expect(requestApi.cancel).toHaveBeenCalledWith('req_1', 'run_1'));
+  expect(await screen.findAllByText('취소됨')).not.toHaveLength(0);
+  expect(screen.getByRole('button', { name: '다시 분석' })).toBeEnabled();
+  expect(document.querySelector('.cancelled-result')).not.toBeNull();
+  expect(document.querySelector('.cancelled-result [aria-busy="true"]')).toBeNull();
 });
 
 describe('slow and failed runs', () => {

@@ -13,9 +13,9 @@ export type ProgressSnapshot = {
   timings_ms?: { received_to_preliminary?: number; received_to_final?: number };
 };
 export type ProgressEvent = { type: string; request_id?: string; run_id?: string; step_name?: string; payload?: Record<string, unknown> };
-export type ProgressPhase = 'idle' | 'submitting' | 'received' | 'preliminary' | 'final' | 'failed';
+export type ProgressPhase = 'idle' | 'submitting' | 'received' | 'preliminary' | 'final' | 'failed' | 'cancelled';
 export type ProgressState = {
-  phase: ProgressPhase; requestId: string; optimisticText: string; startedAt: number;
+  phase: ProgressPhase; requestId: string; runId: string; optimisticText: string; startedAt: number;
   steps: ProgressStep[]; currentStep: string;
   preliminary: { classifications: Classifications; confidences: Record<string, unknown>; risk_flags: Record<string, unknown> } | null;
   finalClassifications: Classifications | null;
@@ -31,15 +31,15 @@ export type ProgressAction =
   | { type: 'reset' };
 
 export const initialProgress: ProgressState = {
-  phase: 'idle', requestId: '', optimisticText: '', startedAt: 0, steps: [], currentStep: '',
+  phase: 'idle', requestId: '', runId: '', optimisticText: '', startedAt: 0, steps: [], currentStep: '',
   preliminary: null, finalClassifications: null, evidenceReady: false, tasksReady: false, failure: '',
 };
-const rank: Record<ProgressPhase, number> = { idle: 0, submitting: 1, received: 2, preliminary: 3, final: 4, failed: 4 };
+const rank: Record<ProgressPhase, number> = { idle: 0, submitting: 1, received: 2, preliminary: 3, final: 4, failed: 4, cancelled: 4 };
 /** A phase only moves forward; `failed` and `final` are terminal. */
-const advance = (current: ProgressPhase, next: ProgressPhase): ProgressPhase => (current === 'final' || current === 'failed' ? current : rank[next] >= rank[current] ? next : current);
+const advance = (current: ProgressPhase, next: ProgressPhase): ProgressPhase => (current === 'final' || current === 'failed' || current === 'cancelled' ? current : rank[next] >= rank[current] ? next : current);
 const asRecord = (value: unknown): Record<string, unknown> => (value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {});
 const upsertStep = (steps: ProgressStep[], step: ProgressStep): ProgressStep[] => steps.some((item) => item.name === step.name) ? steps.map((item) => item.name === step.name ? { ...item, ...step } : item) : [...steps, step];
-const FAILED_STATUSES = ['failed', 'cancelled', '실패'];
+const FAILED_STATUSES = ['failed', '실패'];
 
 export function progressReducer(state: ProgressState, action: ProgressAction): ProgressState {
   switch (action.type) {
@@ -54,9 +54,9 @@ export function progressReducer(state: ProgressState, action: ProgressAction): P
       const running = [...steps].reverse().find((step) => step.status === 'running') || [...steps].reverse().find((step) => step.status !== 'succeeded');
       const classes = progress.preliminary?.classifications;
       const hasPreliminary = Boolean(classes && Object.keys(classes).length);
-      const target: ProgressPhase = FAILED_STATUSES.includes(progress.status) ? 'failed' : progress.final ? 'final' : hasPreliminary ? 'preliminary' : 'received';
+      const target: ProgressPhase = progress.status === 'cancelled' ? 'cancelled' : FAILED_STATUSES.includes(progress.status) ? 'failed' : progress.final ? 'final' : hasPreliminary ? 'preliminary' : 'received';
       return {
-        ...state, requestId: progress.request_id, phase: advance(state.phase === 'idle' ? 'received' : state.phase, target),
+        ...state, requestId: progress.request_id, runId: progress.run_id || state.runId, phase: advance(state.phase === 'idle' ? 'received' : state.phase, target),
         steps: steps.length > state.steps.length ? steps : state.steps, currentStep: running?.name || state.currentStep,
         preliminary: state.preliminary ?? (hasPreliminary ? { classifications: classes!, confidences: progress.preliminary?.confidences || {}, risk_flags: progress.preliminary?.risk_flags || {} } : null),
         evidenceReady: state.evidenceReady || Boolean(progress.evidence_ready || progress.final), tasksReady: state.tasksReady || Boolean(progress.tasks_ready || progress.final),
@@ -65,6 +65,7 @@ export function progressReducer(state: ProgressState, action: ProgressAction): P
     case 'event': {
       const { event } = action; const payload = asRecord(event.payload);
       if (state.requestId && event.request_id && event.request_id !== state.requestId) return state;
+      if (state.runId && event.run_id && event.run_id !== state.runId) return state;
       switch (event.type) {
         case 'request.received': return { ...state, requestId: state.requestId || event.request_id || '', phase: advance(state.phase === 'idle' ? 'received' : state.phase, 'received') };
         case 'run.step': {
@@ -73,7 +74,7 @@ export function progressReducer(state: ProgressState, action: ProgressAction): P
           return { ...state, steps: upsertStep(state.steps, { name: event.step_name, status }), currentStep: status === 'running' ? event.step_name : state.currentStep || event.step_name };
         }
         case 'judgment.partial': {
-          if (state.phase === 'final' || state.phase === 'failed' || state.preliminary) return state;
+          if (state.phase === 'final' || state.phase === 'failed' || state.phase === 'cancelled' || state.preliminary) return state;
           return { ...state, phase: advance(state.phase, 'preliminary'), preliminary: { classifications: asRecord(payload.classifications), confidences: asRecord(payload.confidences), risk_flags: asRecord(payload.risk_flags) } };
         }
         case 'judgment.evidence_ready': return { ...state, evidenceReady: true, evidenceCount: typeof payload.evidence_count === 'number' ? payload.evidence_count : state.evidenceCount };
@@ -83,6 +84,7 @@ export function progressReducer(state: ProgressState, action: ProgressAction): P
           return { ...state, phase: 'final', evidenceReady: true, tasksReady: true, finalClassifications: Object.keys(classes).length ? classes : state.finalClassifications };
         }
         case 'judgment_failed': return { ...state, phase: advance(state.phase, 'failed') };
+        case 'judgment.cancelled': return { ...state, phase: advance(state.phase, 'cancelled') };
         default: return state;
       }
     }

@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { apiFetch, idempotencyKey, type ApiError } from '../api/client';
 import { requestApi, type Judgment, type RequestDetail, type RequestItem } from '../api/requests';
 import { useSession } from '../state/session';
-import { Drawer } from '../components';
+import { Button, Drawer } from '../components';
 import { infoRequest, resultBadge } from './main/requestState';
 import { useEventStream, type StreamEvent } from '../state/events';
 import { EvidenceViewer, type ViewerTarget } from '../components/EvidenceViewer';
@@ -21,7 +21,7 @@ import { initialProgress, progressReducer } from '../state/progress';
 import './main/main.css';
 
 export { Result } from './main/ResultCard';
-const LIST_EVENTS = ['request.received', 'judgment_saved', 'judgment_failed', 'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned', 'reanalysis.compared'];
+const LIST_EVENTS = ['request.received', 'judgment_saved', 'judgment_failed', 'judgment.cancelled', 'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned', 'reanalysis.compared'];
 const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
 function errorMessage(error: unknown) { return (error as ApiError)?.message || '요청 처리 중 문제가 발생했습니다.'; }
 
@@ -64,7 +64,7 @@ export function Main() {
       setRuns(history.value); const previous = history.value.runs.find((run) => run.id !== activeRunId);
       try { setPreviousJudgment(previous ? await requestApi.judgment(id, previous.id) : null); } catch { setPreviousJudgment(null); }
     } else { setRuns(null); setPreviousJudgment(null); }
-    if (['failed', 'cancelled', '실패'].includes(current.request.status)) setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.');
+    if (['failed', '실패'].includes(current.request.status)) setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.');
   }, [restoreProgress]);
   const reloadList = useCallback(() => { requestApi.list().then((value) => setRequests(value.items)).catch(() => undefined); }, []);
   useEffect(() => { reloadList(); }, [requestId, detail?.request.status, reloadList]);
@@ -86,10 +86,11 @@ export function Main() {
   const refreshIfPending = useCallback((id: string) => { if (!judgment && !error) load(id); }, [judgment, error, load]);
   // A saved judgment is not final: review decisions, info requests and assignments keep changing the request status.
   const onStreamEvent = useCallback((event: StreamEvent) => {
+    if (event.run_id && detail?.request.active_run_id && event.run_id !== detail.request.active_run_id) return;
     dispatch({ type: 'event', event });
     if (['review_decided', 'assignment_created', 'auto_assignment_deferred', 'reanalysis.compared'].includes(event.type)) load(requestId);
-    else if (['request.received', 'judgment_saved', 'judgment_failed'].includes(event.type)) refreshIfPending(requestId);
-  }, [refreshIfPending, load, requestId]);
+    else if (['request.received', 'judgment_saved', 'judgment_failed', 'judgment.cancelled'].includes(event.type)) refreshIfPending(requestId);
+  }, [refreshIfPending, load, requestId, detail?.request.active_run_id]);
   useEventStream({ requestId: requestId || undefined, enabled: Boolean(requestId) }, undefined, onStreamEvent, () => load(requestId));
   useEffect(() => {
     // The open conversation lives in the URL (?request_id=), so reload / back / shared links restore it.
@@ -186,6 +187,18 @@ export function Main() {
       await refresh(requestId);
     } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
   }
+  async function cancel() {
+    const runId = detail?.request.active_run_id;
+    if (!requestId || !runId || busy) return;
+    setBusy(true); setNotice('');
+    try {
+      const result = await requestApi.cancel(requestId, runId);
+      if (result.status === 'cancelled') {
+        dispatch({ type: 'event', event: { type: 'judgment.cancelled', request_id: requestId, run_id: runId } });
+        setDetail((current) => current ? { ...current, request: { ...current.request, status: 'cancelled' } } : current);
+      } else await refresh(requestId);
+    } catch (problem) { setNotice(errorMessage(problem)); } finally { setBusy(false); }
+  }
   function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) {
     returnToDetail.current = detailOpen; setDetailOpen(false); // the viewer takes the drawer's place and hands it back on close
     if (!evidence || !requestId || !judgment) { setSourceTitle(`${questionLabel(output.question_id)} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; }
@@ -194,7 +207,9 @@ export function Main() {
   const closeEvidence = useCallback(() => { setViewer(null); setSource(''); if (returnToDetail.current) { returnToDetail.current = false; setDetailOpen(true); } }, []);
   const closeDetail = useCallback(() => setDetailOpen(false), []);
   const closeList = useCallback(() => setListOpen(false), []);
-  const typing = Boolean(requestId) && !judgment && !error && mode === 'new' && !info && !progress.preliminary;
+  const cancelled = progress.phase === 'cancelled' || detail?.request.status === 'cancelled';
+  const canCancel = Boolean(requestId && detail?.request.active_run_id && !judgment && !cancelled && !error && !['failed', 'final'].includes(progress.phase) && ['judgment_pending', 'processing', 'received'].includes(detail.request.status));
+  const typing = Boolean(requestId) && !judgment && !error && !cancelled && mode === 'new' && !info && !progress.preliminary;
   const answering = Boolean(judgment) || Boolean(requestId && progress.preliminary);
   async function copyAnswer() {
     if (!judgment) return;
@@ -233,11 +248,12 @@ export function Main() {
             {empty && <GreetingHead />}
             {messages.map((message) => <UserBubble key={message.key} message={message} />)}
             {upload !== null && <UploadBubble percent={upload} />}
-            {requestId && <AnalysisBubble stages={stageNames} current={stage} done={stepDone} badge={detail ? resultBadge(detail, judgment, Boolean(error)) : undefined} />}
+            {requestId && <AnalysisBubble stages={stageNames} current={stage} done={stepDone} cancelled={cancelled} badge={detail ? resultBadge(detail, judgment, Boolean(error)) : undefined} />}
+            {cancelled && <div className="cancelled-notice" role="status"><strong>취소됨</strong><span>분석을 중단했어요.</span>{canReanalyze && <Button type="button" variant="plain" color="primary" tone="weak" disabled={busy} onClick={() => void reanalyze()}>다시 분석</Button>}</div>}
             {answering && <AssistantBubble avatar={judgment ? moodAvatar(judgmentMood(judgment)) : 'thinking'} label={judgment ? '일동이의 답변' : '일동이의 잠정 답변'} className="result-bubble">
               <p className="bubble-title">{judgment ? MOOD_TEXT[judgmentMood(judgment)] : `잠정 판단을 먼저 보여 드려요${provisionalMood === 'urgent' ? ' · 긴급 신호가 있어요' : ''}`}</p>
-              {judgment ? <ResultBrief judgment={judgment} onEvidence={openEvidence} onDetail={() => setDetailOpen(true)} state={resultBadge(detail, judgment, false)} /> : <ProvisionalResult state={progress} />}
-              <AnswerActions canReanalyze={canReanalyze} finalSaved={Boolean(judgment)} busy={busy} copied={copied} onCopy={() => void copyAnswer()} onReanalyze={() => void reanalyze()} onEvidence={openFirstEvidence} /></AssistantBubble>}
+              <div className={cancelled ? 'cancelled-result' : undefined}>{judgment ? <ResultBrief judgment={judgment} onEvidence={openEvidence} onDetail={() => setDetailOpen(true)} state={resultBadge(detail, judgment, false)} /> : <ProvisionalResult state={progress} cancelled={cancelled} />}</div>
+              {!cancelled && <AnswerActions canReanalyze={canReanalyze} finalSaved={Boolean(judgment)} busy={busy} copied={copied} onCopy={() => void copyAnswer()} onReanalyze={() => void reanalyze()} onEvidence={openFirstEvidence} />}</AssistantBubble>}
             {mode === 'file' && detail && <FileDecisionBubble attachments={currentAttachments(detail)} busy={busy} onExclude={() => void excludeUnread()} onReattach={() => attachRef.current?.click()} />}
             {info && <InfoRequestBubble info={info} onAnswer={() => textRef.current?.focus()} />}
             {error && <FailureBubble message={error} busy={busy} onRetry={retry ? () => { if (retry === 'submit') void submit(); else void reanalyze(); } : undefined} />}
@@ -248,7 +264,7 @@ export function Main() {
         {away && <button type="button" className="scroll-down" aria-label={unread ? '새 메시지 보기' : '맨 아래로'} data-unread={unread || undefined} onClick={() => { atBottom.current = true; setUnread(false); setAway(false); scrollToEnd(true); }}><ArrowDownIcon /></button>}</div>
         {notice && <p className="chat-handoff" role="status">{notice}</p>}
         <div className="composer-dock" ref={dockRef}>
-          <Composer mode={mode} text={text} files={files} busy={busy} openRequest={Boolean(requestId)} textRef={textRef} attachRef={attachRef} onText={setText} onAddFiles={addFiles} onRemoveFile={(index) => setFiles(files.filter((_, at) => at !== index))} onSubmit={() => void submit()} /></div>
+          <Composer mode={mode} text={text} files={files} busy={busy} openRequest={Boolean(requestId)} canCancel={canCancel} textRef={textRef} attachRef={attachRef} onText={setText} onAddFiles={addFiles} onRemoveFile={(index) => setFiles(files.filter((_, at) => at !== index))} onSubmit={() => void submit()} onCancel={() => void cancel()} /></div>
         {empty && <ExampleChips onPick={pickExample} />}
       </div>
     </div>

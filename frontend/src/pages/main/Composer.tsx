@@ -11,10 +11,10 @@ const COPY: Record<ComposerMode, { send: string; placeholder: string; hint: stri
 };
 const size = (bytes: number) => (bytes >= 1048576 ? `${(bytes / 1048576).toFixed(1)} MiB` : `${Math.max(1, Math.ceil(bytes / 1024))} KiB`);
 
-export function Composer({ mode, text, files, busy, openRequest, textRef, attachRef, onText, onAddFiles, onRemoveFile, onSubmit }: {
-  mode: ComposerMode; text: string; files: File[]; busy: boolean; openRequest: boolean;
+export function Composer({ mode, text, files, busy, openRequest, canCancel = false, textRef, attachRef, onText, onAddFiles, onRemoveFile, onSubmit, onCancel }: {
+  mode: ComposerMode; text: string; files: File[]; busy: boolean; openRequest: boolean; canCancel?: boolean;
   textRef: RefObject<HTMLTextAreaElement>; attachRef: RefObject<HTMLInputElement>;
-  onText: (value: string) => void; onAddFiles: (files: File[]) => void; onRemoveFile: (index: number) => void; onSubmit: () => void;
+  onText: (value: string) => void; onAddFiles: (files: File[]) => void; onRemoveFile: (index: number) => void; onSubmit: () => void; onCancel?: () => void;
 }) {
   const [dragging, setDragging] = useState(false);
   // The box grows with the text, up to ~8 lines; beyond that the textarea scrolls inside.
@@ -40,7 +40,8 @@ export function Composer({ mode, text, files, busy, openRequest, textRef, attach
       <label className="icon-button attach-button" title="파일 첨부"><PlusIcon /><input ref={attachRef} aria-label="파일 첨부" type="file" accept=".pdf,.docx,.md" multiple onChange={(event) => { onAddFiles(Array.from(event.target.files || [])); event.target.value = ''; }} /></label>
       <label className="sr-only" htmlFor="request-text">요청 내용</label>
       <textarea id="request-text" ref={textRef} value={text} rows={1} placeholder={copy.placeholder} onChange={(event) => onText(event.target.value)} onKeyDown={key} aria-describedby="composer-hint" />
-      <button className="ui-button primary send-button" type="submit" disabled={!ready} aria-label={busy ? '전송 중' : copy.send} title={copy.send}>{busy ? <StopIcon /> : <ArrowUpIcon />}</button>
+      {canCancel ? <button className="ui-button primary send-button" type="button" disabled={busy} aria-label="분석 정지" title="분석 정지" onClick={onCancel}><StopIcon /></button>
+        : <button className="ui-button primary send-button" type="submit" disabled={!ready} aria-label={busy ? '전송 중' : copy.send} title={copy.send}><ArrowUpIcon /></button>}
     </div>
     <p id="composer-hint" className="composer-hint">{copy.hint} · Enter로 보내기 · Shift + Enter로 줄바꿈{mode === 'new' && openRequest ? ' · 보내면 새 요청으로 접수돼요' : ''}</p>
   </form>;
