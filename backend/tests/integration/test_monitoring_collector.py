@@ -29,6 +29,7 @@ from jevtriage.monitoring.slo import error_budget
 def _record(writer, when, event, attempt, kind, **fields):
     writer.append({"event_id": event, "attempt_id": attempt, "kind": kind,
                    "ts": when.isoformat(), "tenant_id": "t-alpha", **fields})
+    writer.flush()
 
 
 def test_collector_deduplicates_and_keeps_db_failure_in_availability(tmp_path):

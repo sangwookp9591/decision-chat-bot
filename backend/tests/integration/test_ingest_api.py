@@ -407,6 +407,7 @@ async def test_http_db_failure_returns_503_and_journals_attempt(ingest_tenant, m
     try:
         response = await client.post("/api/requests", data={"text": "valid"}, headers={"Idempotency-Key": "dbfail"})
         assert response.status_code == 503
+        writer.flush_all()
         records = [__import__("json").loads(line) for line in (tmp_path / "journal" / "current.jsonl").read_text().splitlines()]
         received = next(record for record in records if record["kind"] == "request_received")
         failed = next(record for record in records if record["kind"] == "request_failed")

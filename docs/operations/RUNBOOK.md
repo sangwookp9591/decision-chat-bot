@@ -15,6 +15,7 @@
 | Neo4j 중단 | `docker compose ps`, `/api/ready`, Neo4j 컨테이너 로그와 포트, 디스크 | 원인 확인 뒤 `make up`, `/api/ready`와 DB 조회 확인. 장애 중 HTTP 실패는 journal과 metrics에서 attempt를 대조. 미커밋 입력은 성공으로 가정하지 않음 |
 | 파서 실패/부분 첨부 | 요청 ID, revision, 첨부 상태·파서 오류, 크기/형식 한도 | 확인 가능한 파일만 재첨부하거나 사용자가 제외하도록 안내. 제외/재첨부는 새 revision 경로로 처리하고 이전 실행 기록 유지. OCR은 지원되지 않음 |
 | SSE 정지/누락 | 로그인 세션, 브라우저 연결, `Last-Event-ID`, tenant 이벤트 seq와 snapshot 응답 | 재연결 후 영속 상태/snapshot을 기준으로 화면 복구. 네트워크/서버 복구 뒤 이벤트 순서와 상태를 대조. 이벤트를 수동으로 재생해 업무를 실행하지 않음 |
+| Redis 중단 | `docker compose ps redis`, Redis 로그, API의 Redis publish/subscriber 오류와 `after_commit_failures`·`publish_failures` | API는 짧은 Neo4j 폴링과 로컬 연결 상한으로 자동 폴백한다. Redis 복구 후 구독이 재연결되면 Neo4j seq 조회로 누락을 보정한다. Redis 메시지만으로 업무 성공을 판단하지 않음 |
 | worker 정지 또는 lease 인계 | worker heartbeat, 프로세스, pending/running Job의 owner·generation·expiry, run trace | worker를 재시작. 만료 lease는 정상 claim/takeover에 맡기고 과거 owner의 결과를 수동 커밋하지 않음. 시험 worker는 `--tenant <전용 tenant>`로 제한 |
 | collector/watchdog 알림 | collector heartbeat/ticks, offsets/issues/gaps, watchdog JSON/stdout, disk free, webhook 수신 실패 | 먼저 journal/metrics 볼륨 공간과 권한을 확보하고 collector/watchdog를 재시작. 누락 구간은 `관측 불완전`으로 남김; 정상 0건으로 덮지 않음. webhook은 별도 수신 경로이며 실패 기록 확인 |
 | journal 디스크 부족/쓰기 실패 | `DATA_DIR` 여유 공간, `disk_low`, producer heartbeat의 write failure count, journal 파일 크기 | 백업/보존 책임자 승인 절차에 따라 공간 확장 또는 보관 파일 이관. 현재 journal을 임의 삭제하지 않음. 쓰기 복구 후 writer와 collector를 확인하고 metrics 재수집/DB commit 대조 |
@@ -32,3 +33,7 @@
 운영 dump는 기본 `decision-chat-bot` 컨테이너를 대상으로 하지 않는다. writer와 기본 `make up` 프로젝트를 멈춘 뒤 `jevtriage-backup` 프로젝트, `jevtriage-backup-neo4j-1` 컨테이너, 7689 포트를 사용한다. 백업 스크립트는 컨테이너의 Compose project/포트/data mount를 확인하고, default 공유 DB가 같은 데이터 디렉터리를 사용하는 중이면 즉시 거절한다. 오프라인 dump 중에는 전용 Neo4j만 정지되며 완료 후 별도 명령으로 다시 시작한다. 운영에서는 정지 시간을 정하고 모든 애플리케이션 writer/collector가 멈춘 것을 확인한다.
 
 이 Runbook은 개발 구성에 대한 절차다. 알림 수신자·보존·RPO/RTO·운영 인증은 [배포 전 검토](DEPLOYMENT.md)에 따라 결정되지 않았다.
+
+## journal 그룹 커밋 복구
+
+정상 종료에서는 API lifespan과 worker 종료가 journal 큐를 flush한다. 접수·조회·revision·실행·판단의 핵심 레코드는 append가 fsync 완료를 기다리고, SSE·단계 진행 등 진단 레코드는 그룹 큐에 비동기로 남긴다(등급 표: `docs/architecture/MONITORING.md`). 강제 종료나 전원 손실 시 비동기 대기 배치가 사라질 수 있다. DB 커밋 직후 핵심 journal append 전에 종료된 경우도 원자성이 없어 누락 가능하다. `metrics/journal-writer-failure.json`의 시각·실패 카운터와 API·worker heartbeat를 확인하고, 수집기 오프셋 및 Neo4j 커밋을 대조한다. writer 실패 후 append는 동기로 복구를 재시도하며, 실패하면 예외를 전파한다. 디스크 공간·권한을 복구하고 필요하면 프로세스를 재시작한 뒤 미확정 SLO 구간을 표시한다.

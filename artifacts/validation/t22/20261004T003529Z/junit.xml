@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="11" time="209.260" timestamp="2026-10-04T09:35:41.507747+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.fault.scenarios" name="test_jev_faults[timeout]" time="7.027" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[429]" time="0.919" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[529]" time="0.798" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[schema]" time="0.776" /><testcase classname="tests.fault.scenarios" name="test_parser_and_db_outage" time="9.080" /><testcase classname="tests.fault.scenarios" name="test_worker_handoff_and_kill_recovery" time="37.633"><failure message="AssertionError: condition not met within 35s">tests/fault/scenarios.py:261: in test_worker_handoff_and_kill_recovery
+    completed = await h.terminal(first["request_id"], timeout=35)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:142: in terminal
+    return await wait_until(done, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:53: in wait_until
+    raise AssertionError(f"condition not met within {timeout}s")
+E   AssertionError: condition not met within 35s</failure></testcase><testcase classname="tests.fault.scenarios" name="test_api_restart_and_sse_recovery" time="12.375" /><testcase classname="tests.fault.scenarios" name="test_policy_version_pinned_and_rollback" time="7.991" /><testcase classname="tests.fault.scenarios" name="test_parallel_review_and_idempotent_retry" time="2.406" /><testcase classname="tests.fault.scenarios" name="test_observation_outages_and_reconciliation" time="4.802" /><testcase classname="tests.fault.scenarios" name="test_information_wait_and_late_recovery" time="125.009" /></testsuite></testsuites>

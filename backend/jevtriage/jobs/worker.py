@@ -6,10 +6,13 @@ import json
 import os
 import signal
 import time
+import weakref
 from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager, suppress
 from datetime import UTC, datetime
 from uuid import uuid4
+
+from neo4j.exceptions import Neo4jError
 
 from jevtriage.config import get_settings
 from jevtriage.db.events import append_event_in_tx
@@ -177,6 +180,16 @@ class JobContext:
 
 
 class Worker:
+    _instances: weakref.WeakSet = weakref.WeakSet()
+
+    @classmethod
+    def notify_new_job(cls):
+        for worker in tuple(cls._instances):
+            if worker._loop and worker._loop.is_running():
+                worker._loop.call_soon_threadsafe(worker._wake.set)
+            else:
+                worker._wake.set()
+
     def __init__(self, *, concurrency=2, lease_seconds=15.0, poll_seconds=0.5,
                  deadline_seconds=120.0, max_attempts=3, owner_id=None, journal=None,
                  handlers=None, tenants=None, max_poll_seconds=8.0):
@@ -194,6 +207,10 @@ class Worker:
         self.handlers = handlers if handlers is not None else HANDLERS
         self.tenants = frozenset(tenants or ())
         self.stopping = asyncio.Event()
+        self._wake = asyncio.Event()
+        self._loop = None
+        self._redis_connected = False
+        self._instances.add(self)
         self.tasks: set[asyncio.Task] = set()
         self.active_jobs: set[str] = set()
         self._last_producer_heartbeat = 0.0
@@ -236,7 +253,7 @@ class Worker:
             )
             row = await result.single()
             return dict(row) if row else None
-        return await write_tx("worker-discovery", op)
+        return await write_tx("worker-discovery", op, timeout_seconds=1.0)
 
     async def _load(self, tenant_id, job_id):
         async def op(tx):
@@ -433,7 +450,44 @@ class Worker:
                 await beat
 
     async def run(self):
+        self._loop = asyncio.get_running_loop()
         delay = self.poll_seconds
+        redis_task = None
+        if get_settings().redis_url:
+            redis_task = asyncio.create_task(self._listen_jobs())
+        try:
+            await self._run_loop(redis_task is not None, delay)
+        finally:
+            self._loop = None
+            if redis_task:
+                redis_task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await redis_task
+
+    async def _listen_jobs(self):
+        from redis.asyncio import Redis
+        while not self.stopping.is_set():
+            client = Redis.from_url(get_settings().redis_url,
+                                    socket_connect_timeout=0.25, socket_timeout=1)
+            subscriber = client.pubsub()
+            try:
+                await subscriber.subscribe("jobs")
+                self._redis_connected = True
+                self._wake.set()
+                async for message in subscriber.listen():
+                    if message["type"] == "message":
+                        self._wake.set()
+            except asyncio.CancelledError:
+                raise
+            except Exception:  # noqa: BLE001 - bounded polling remains authoritative
+                self._wake.set()
+            finally:
+                self._redis_connected = False
+                await subscriber.aclose()
+                await client.aclose()
+            await asyncio.sleep(1)
+
+    async def _run_loop(self, redis_enabled, delay):
         while not self.stopping.is_set():
             if time.monotonic() - self._last_producer_heartbeat >= 5:
                 try:
@@ -443,7 +497,17 @@ class Worker:
                 self._last_producer_heartbeat = time.monotonic()
             found = False
             while len(self.tasks) < self.concurrency and not self.stopping.is_set():
-                row = await self.claim_next()
+                try:
+                    row = await self.claim_next()
+                except Neo4jError as exc:
+                    # A suspended owner may hold the selected Job lock. Keep the
+                    # loop alive until its bounded transaction is terminated.
+                    code = exc.code or ""
+                    if not any(marker in code for marker in (
+                        "TransactionTimedOut", "LockAcquisitionTimeout", "LockClientStopped",
+                    )):
+                        raise
+                    break
                 if row is None:
                     break
                 found = True
@@ -458,17 +522,20 @@ class Worker:
                     with suppress(OwnershipLost, asyncio.CancelledError):
                         future.result()
                 task.add_done_callback(done)
-            delay = self.poll_seconds if found or self.tasks else min(
-                self.max_poll_seconds, delay * 2)
+            ceiling = self.max_poll_seconds if redis_enabled and self._redis_connected else 0.25
+            delay = min(ceiling, self.poll_seconds if found or self.tasks else delay * 2)
             try:
-                await asyncio.wait_for(self.stopping.wait(), timeout=delay)
+                await asyncio.wait_for(self._wake.wait(), timeout=delay)
             except TimeoutError:
                 pass
+            self._wake.clear()
         if self.tasks:
             await asyncio.gather(*self.tasks, return_exceptions=True)
+        self.journal.flush()
 
     def stop(self):
         self.stopping.set()
+        self._wake.set()
 
 
 async def main():

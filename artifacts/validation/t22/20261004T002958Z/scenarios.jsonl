@@ -1,0 +1,4 @@
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_d302463a26e3443b8e53ff9dc746c44e", "generations": [1, 2], "judgments": 1}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_e3b92ffe4cd64faab9b03c11ff6f1a0a"}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_ffa4367aa1af4f5fb95d591a4b338dcd", "run_4f5b7cb588594d308ad4e141be5e8436", "run_5dc5f0231f724b27a367ee5c8e45c273"]}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="11" time="212.517" timestamp="2026-10-04T09:25:33.437273+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.fault.scenarios" name="test_jev_faults[timeout]" time="7.735" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[429]" time="1.051" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[529]" time="0.905" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[schema]" time="0.988" /><testcase classname="tests.fault.scenarios" name="test_parser_and_db_outage" time="9.184" /><testcase classname="tests.fault.scenarios" name="test_worker_handoff_and_kill_recovery" time="37.604"><failure message="AssertionError: condition not met within 35s">tests/fault/scenarios.py:261: in test_worker_handoff_and_kill_recovery
+    completed = await h.terminal(first["request_id"], timeout=35)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:142: in terminal
+    return await wait_until(done, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:53: in wait_until
+    raise AssertionError(f"condition not met within {timeout}s")
+E   AssertionError: condition not met within 35s</failure></testcase><testcase classname="tests.fault.scenarios" name="test_api_restart_and_sse_recovery" time="12.726" /><testcase classname="tests.fault.scenarios" name="test_policy_version_pinned_and_rollback" time="8.634"><failure message="KeyError: 'config'">tests/fault/scenarios.py:386: in test_policy_version_pinned_and_rollback
+    versions = [json.loads(s["versions"])["config"] for s in
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'config'</failure></testcase><testcase classname="tests.fault.scenarios" name="test_parallel_review_and_idempotent_retry" time="3.413" /><testcase classname="tests.fault.scenarios" name="test_observation_outages_and_reconciliation" time="4.759" /><testcase classname="tests.fault.scenarios" name="test_information_wait_and_late_recovery" time="124.991" /></testsuite></testsuites>

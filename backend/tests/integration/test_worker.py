@@ -186,6 +186,7 @@ async def test_restart_recovery_and_deadline_journal(tenant, tmp_path):
     expired = await get_trace(tenant, expired_run)
     assert expired["run"]["status"] == "failed"
     assert expired["run"]["error_class"] == "DeadlineExceeded"
+    c.journal.flush()
     assert '"kind":"worker_run"' in (tmp_path / "journal" / "current.jsonl").read_text()
 
 

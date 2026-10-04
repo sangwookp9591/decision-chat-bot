@@ -1,13 +1,14 @@
 """Process-safe append-only JSONL writer independent of Neo4j."""
 
-import fcntl
+import atexit
 import json
+import multiprocessing.util
 import os
 from pathlib import Path
 from threading import Lock
-from uuid import uuid4
 
 from jevtriage.config import get_settings
+from jevtriage.journal.group_commit import GroupCommit
 
 ALLOWED_FIELDS = frozenset({
     "event_id", "attempt_id", "request_id", "run_id", "kind", "ts", "status_code",
@@ -17,9 +18,17 @@ ALLOWED_FIELDS = frozenset({
     "model_version", "qset_version", "run_kind", "review_id", "input_type",
     "complete_judgment", "received_at", "step_name", "journal_write_failures",
     "judgment_committed_at",
-    "org_ids", "request_status",
+    "org_ids", "request_status", "time_to_preliminary_ms", "time_to_evidence_ms", "time_to_tasks_ms",
 })
 REQUIRED_FIELDS = frozenset({"event_id", "attempt_id", "kind", "ts"})
+DURABLE_KINDS = frozenset({
+    "request_received", "request_completed", "request_failed",
+    "lookup_received", "lookup_completed", "lookup_failed",
+    "eligibility_received", "eligibility_completed", "eligibility_failed",
+    "revision_received", "revision_completed", "revision_failed",
+    "worker_attempt_start", "worker_attempt_failure", "worker_run", "ownership_lost",
+    "judgment_preliminary", "judgment_committed", "retention_cleanup",
+})
 _failure_count = 0
 _count_lock = Lock()
 
@@ -29,45 +38,77 @@ def failure_count() -> int:
         return _failure_count
 
 
+_groups: dict[tuple, GroupCommit] = {}
+_groups_lock = Lock()
+
+
+def _record_failure(directory: Path, exc: OSError) -> None:
+    global _failure_count
+    with _count_lock:
+        _failure_count += 1
+        count = _failure_count
+    try:
+        from datetime import UTC, datetime
+        signal_dir = directory.parent / "metrics"
+        signal_dir.mkdir(parents=True, exist_ok=True)
+        path = signal_dir / "journal-writer-failure.json"
+        path.write_text(json.dumps({"ts": datetime.now(UTC).isoformat(),
+                                    "journal_write_failures": count,
+                                    "error_class": type(exc).__name__}), encoding="utf-8")
+    except OSError:
+        pass
+
+
+def _reset_after_fork() -> None:
+    global _groups, _groups_lock
+    _groups = {}
+    _groups_lock = Lock()
+
+
+os.register_at_fork(after_in_child=_reset_after_fork)
+atexit.register(lambda: flush_all())
+
+
 class JournalWriter:
-    def __init__(self, data_dir: Path | None = None, max_bytes: int = 16 * 1024 * 1024):
-        if max_bytes < 1:
-            raise ValueError("max_bytes must be positive")
+    def __init__(self, data_dir: Path | None = None, max_bytes: int = 16 * 1024 * 1024,
+                 *, queue_size: int = 1024, batch_size: int = 64,
+                 flush_interval: float = 0.005,
+                 raise_on_background_error: bool = False):
+        if max_bytes < 1 or queue_size < 1 or batch_size < 1 or flush_interval <= 0:
+            raise ValueError("journal limits must be positive")
         self.directory = Path(data_dir or get_settings().data_dir) / "journal"
         self.max_bytes = max_bytes
+        self.raise_on_background_error = raise_on_background_error
+        key = (str(self.directory.resolve()), max_bytes, queue_size, batch_size, flush_interval)
+        with _groups_lock:
+            if key not in _groups:
+                _groups[key] = GroupCommit(self.directory, max_bytes, queue_size=queue_size,
+                                           batch_size=batch_size, flush_interval=flush_interval)
+                multiprocessing.util.Finalize(_groups[key], flush_all, exitpriority=10)
+            self._group = _groups[key]
 
     def append(self, record: dict) -> None:
-        global _failure_count
         if not isinstance(record, dict) or not REQUIRED_FIELDS <= record.keys() or not record.keys() <= ALLOWED_FIELDS:
             raise ValueError("journal record has missing or forbidden fields")
         line = (json.dumps(record, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n").encode("utf-8")
         if len(line) > self.max_bytes:
             raise ValueError("journal record exceeds max_bytes")
+        if self.raise_on_background_error and self._group.error is not None:
+            raise self._group.error
+        self._group.append(line, durable=record["kind"] in DURABLE_KINDS)
+
+    def flush(self) -> None:
+        self._group.flush()
+
+    def close(self) -> None:
+        self.flush()
+
+
+def flush_all() -> None:
+    with _groups_lock:
+        groups = list(_groups.values())
+    for group in groups:
         try:
-            self.directory.mkdir(parents=True, exist_ok=True)
-            lock_fd = os.open(self.directory / ".append.lock", os.O_CREAT | os.O_RDWR, 0o600)
-            try:
-                fcntl.flock(lock_fd, fcntl.LOCK_EX)
-                path = self.directory / "current.jsonl"
-                if path.exists() and path.stat().st_size + len(line) > self.max_bytes:
-                    os.replace(path, self.directory / f"archive-{uuid4().hex}.jsonl")
-                    dir_fd = os.open(self.directory, os.O_RDONLY)
-                    try:
-                        os.fsync(dir_fd)
-                    finally:
-                        os.close(dir_fd)
-                fd = os.open(path, os.O_CREAT | os.O_WRONLY | os.O_APPEND, 0o600)
-                try:
-                    written = os.write(fd, line)
-                    if written != len(line):
-                        raise OSError("short journal write")
-                    os.fsync(fd)
-                finally:
-                    os.close(fd)
-            finally:
-                fcntl.flock(lock_fd, fcntl.LOCK_UN)
-                os.close(lock_fd)
+            group.flush()
         except OSError:
-            with _count_lock:
-                _failure_count += 1
-            raise
+            pass  # Failure was already counted and signaled by the writer.

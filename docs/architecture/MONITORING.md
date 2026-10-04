@@ -35,3 +35,17 @@ T22의 API 경계 journal(`api_boundary_received`/`api_boundary_completed`)은 �
 `GET /api/monitoring/summary` accepts `org` and `status` alongside its time and version filters. These filters select requests from tenant scoped `Request` records by current status and `org_id`/`org_ids`; journal rows are then restricted to those exact request IDs, so events with missing historical attribution do not inflate a filtered denominator. Business counts use the request creation cohort and remain separate from SLO calculations: `business.request_denominator`, `business.org_unconfirmed`, `business.auto_assignment_count` (Assignment pathway `auto`), and `business.review_completed_count` (persisted ReviewDecision records). Legacy requests with neither organization field are counted as `org_unconfirmed` when they fall in the selected scope.
 
 The same summary includes review queue wait percentiles based on the request's organization and current status. These are operational workload measures, not SLO samples.
+
+## 그룹 커밋 관측
+
+API·worker의 `append()`는 아래 등급에 따라 반환한다. 내구 등급은 같은 그룹 커밋 큐에서 해당 레코드를 포함한 배치의 fsync가 끝나야 반환한다. 비동기 등급은 큐 등록 후 반환하며 정상적으로도 수집기가 최대 약 5ms 동안 디스크에 없는 레코드를 볼 수 있다. writer 실패는 `metrics/journal-writer-failure.json`과 생산자 heartbeat의 `journal_write_failures`로 확인한다. 비정상 종료에서 비동기 대기 배치가 유실되면 해당 진단 구간은 미확정으로 취급하고 DB 커밋 대조를 확인한다.
+
+| 등급 | journal kind | 반환 조건 |
+| --- | --- | --- |
+| 내구 | `request_received/completed/failed`, `lookup_received/completed/failed`, `eligibility_received/completed/failed`, `revision_received/completed/failed` | fsync 완료. 가용성 분모·결과와 최초 판단 시작 시각을 보존 |
+| 내구 | `worker_attempt_start/failure`, `worker_run`, `ownership_lost`, `judgment_preliminary`, `judgment_committed`, `retention_cleanup` | fsync 완료. 실행·시도 종료와 최초 판단의 대조 근거를 보존 |
+| 비동기 | `sse_deliver`, `worker_step`, `external_model`, `external_masking`, `api_boundary_received/completed`, 기타 진단 kind | 큐 등록. 대량 진행·전달 기록은 그룹으로 기록 |
+
+Neo4j 업무 커밋과 로컬 journal fsync는 하나의 원자적 트랜잭션이 아니다. 커밋 직후 journal append 전에 프로세스가 강제 종료되면 여전히 누락 가능성이 있으므로 `reconcile_commits` 결과를 운영자가 확인한다. 동기 등급은 append가 반환한 뒤의 버퍼 유실을 막는다.
+
+로컬 경계 요청 100회 측정(2026-10-04, `POST /api/requests`, 인증 전 401, 동일 프로세스 TestClient, 각 단계 별도 DATA_DIR)에서 기존 동기 writer의 p50/p95는 3.068/4.588ms, 그룹 커밋 writer는 1.949/3.151ms였다. 이는 접수 경계의 journal 비용을 포함하지만 인증된 202 접수와 DB·외부 모델 경로의 지연 개선값은 아니다.

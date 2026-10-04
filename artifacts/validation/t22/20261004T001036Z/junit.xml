@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="11" time="84.772" timestamp="2026-10-04T09:10:49.218597+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="tests.fault.scenarios" name="test_jev_faults[timeout]" time="7.835" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[429]" time="1.106" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[529]" time="0.877" /><testcase classname="tests.fault.scenarios" name="test_jev_faults[schema]" time="0.776" /><testcase classname="tests.fault.scenarios" name="test_parser_and_db_outage" time="9.708" /><testcase classname="tests.fault.scenarios" name="test_worker_handoff_and_kill_recovery" time="37.710"><failure message="AssertionError: condition not met within 35s">tests/fault/scenarios.py:261: in test_worker_handoff_and_kill_recovery
+    completed = await h.terminal(first["request_id"], timeout=35)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:142: in terminal
+    return await wait_until(done, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:53: in wait_until
+    raise AssertionError(f"condition not met within {timeout}s")
+E   AssertionError: condition not met within 35s</failure></testcase><testcase classname="tests.fault.scenarios" name="test_api_restart_and_sse_recovery" time="12.729" /><testcase classname="tests.fault.scenarios" name="test_policy_version_pinned_and_rollback" time="8.068"><failure message="KeyError: 'config'">tests/fault/scenarios.py:386: in test_policy_version_pinned_and_rollback
+    versions = [json.loads(s["versions"])["config"] for s in
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'config'</failure></testcase><testcase classname="tests.fault.scenarios" name="test_parallel_review_and_idempotent_retry" time="2.731" /><testcase classname="tests.fault.scenarios" name="test_observation_outages_and_reconciliation" time="2.795"><failure message="AssertionError: (500, 'Internal Server Error')&#10;assert 500 == 202&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">tests/fault/scenarios.py:484: in test_observation_outages_and_reconciliation
+    recovered = await h.submit(requester, "Journal recovered")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:118: in submit
+    assert response.status_code == 202, (response.status_code, response.text)
+E   AssertionError: (500, 'Internal Server Error')
+E   assert 500 == 202
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="tests.fault.scenarios" name="test_information_wait_and_late_recovery" time="0.020"><failure message="AssertionError: ('requester', 500, 'Internal Server Error')&#10;assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">tests/fault/scenarios.py:528: in test_information_wait_and_late_recovery
+    requester = await h.login("requester")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fault/scenarios.py:110: in login
+    assert response.status_code == 200, (role, response.status_code, response.text)
+E   AssertionError: ('requester', 500, 'Internal Server Error')
+E   assert 500 == 200
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase></testsuite></testsuites>

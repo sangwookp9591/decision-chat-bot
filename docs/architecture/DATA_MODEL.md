@@ -61,7 +61,7 @@ await write_tx(tenant_id, save_step)
 
 ## 독립 journal
 
-경로는 `DATA_DIR/journal/current.jsonl`, 회전 파일은 `archive-<uuid>.jsonl`이다. 허용 필드는 `event_id`, `attempt_id`, `request_id?`, `run_id?`, `kind`, `ts`, `status_code?`, `error_class?`, `duration_ms?`, `validity?`뿐이고 필수 필드는 앞의 두 ID·kind·ts다. 키·쿠키·원문·모델 전송본문은 거절한다. 프로세스 간 `flock`으로 회전과 append를 직렬화하고 한 번의 `O_APPEND` write 후 `fsync`한다. 회전은 설정된 `max_bytes` 기준이며 쓰기 실패는 예외와 프로세스 내 실패 카운터로 드러난다. journal은 업무 재생이나 배정 실행에 사용하지 않는다. 수집기·watchdog은 T18 담당이다.
+경로는 `DATA_DIR/journal/current.jsonl`, 회전 파일은 `archive-<uuid>.jsonl`이다. 필수 필드는 `event_id`, `attempt_id`, `kind`, `ts`이며 writer의 `ALLOWED_FIELDS`만 기록한다. `time_to_preliminary_ms`, `time_to_evidence_ms`, `time_to_tasks_ms` 같은 비민감 정수 지표는 허용하되 키·쿠키·원문·모델 전송본문은 거절한다. 프로세스별 bounded 큐와 전용 스레드가 최대 64건 또는 5ms마다 한 번의 `O_APPEND` write와 `fsync`로 묶는다. 큐가 가득 차면 호출자 스레드가 동기 기록한다. 프로세스 간 `flock`으로 배치와 회전을 직렬화한다. API lifespan·worker 정상 종료·프로세스 종료 훅에서 대기 기록을 flush한다. 비정상 프로세스 종료나 전원 장애 시 마지막 최대 5ms의 대기 기록은 유실될 수 있으며, 디스크 쓰기 실패도 해당 배치의 기록을 잃을 수 있다. 실패는 프로세스 내 카운터와 `metrics/journal-writer-failure.json` 신호에 남는다. 다음 append는 동기 재시도로 회복을 확인하며 재시도도 실패하면 예외를 전파한다. `raise_on_background_error=True` 모드는 다음 append에서 즉시 예외를 전파한다. journal은 업무 재생이나 배정 실행에 사용하지 않는다.
 
 로컬 Docker 기본 DB 비밀번호를 쓰는 경우 실행 명령에 `NEO4J_PASSWORD=development-only`를 제공해야 한다. 설정이 다른 배포에서는 해당 환경의 비밀번호를 제공한다.
 
