@@ -1,15 +1,39 @@
-"""Export the latest labels per sample and refresh the candidate manifest."""
+"""Export the latest confirmed evaluation decisions and refresh the manifest."""
 from __future__ import annotations
 
 import asyncio
 import hashlib
 import json
-import sys
 from pathlib import Path
+from typing import Any
+
+from jevtriage.db.driver import close_driver, get_driver
+from jevtriage.evaluation.service import consensus_state
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ROOT / "backend"))
-from jevtriage.db.driver import close_driver, get_driver
+
+
+def confirmed_row(row: dict[str, Any], labels: list[dict[str, Any]]) -> dict[str, Any]:
+    parsed = [{**item, "labels": json.loads(item["labels"])} for item in labels]
+    latest_by_user: dict[str, dict[str, Any]] = {}
+    for item in parsed:
+        latest_by_user[item["user_id"]] = item
+    latest = list(latest_by_user.values())
+    confirmed = [item for item in latest if item.get("status", "confirmed") in {"confirmed", "consensus_confirmed"}]
+    resolution = next((item for item in reversed(latest) if item.get("status") == "consensus_confirmed"), None)
+    if resolution and all(str(resolution["created_at"]) >= str(item["created_at"]) for item in confirmed):
+        chosen = resolution
+        agreement = "consensus_resolved"
+    elif not confirmed:
+        return {}
+    else:
+        chosen = confirmed[-1]
+        agreement = consensus_state([item["labels"] for item in confirmed])
+        if agreement == "consensus_required":
+            return {}
+    return {**row, "proposed_labels": chosen["labels"], "label_status": "confirmed",
+            "confirmed_by": chosen["user_id"], "confirmed_at": str(chosen["created_at"]),
+            "agreement": agreement, "label_count": len(confirmed), "confidence": chosen.get("confidence")}
 
 
 async def export() -> Path:
@@ -18,25 +42,20 @@ async def export() -> Path:
     driver = await get_driver()
     async with driver.session() as session:
         result = await session.run(
-            "MATCH (l:EvalLabel {status:'confirmed'}) RETURN l.split AS split,l.sample_id AS id,"
-            "l.labels AS labels,l.user_id AS user_id,l.confidence AS confidence,l.created_at AS confirmed_at "
-            "ORDER BY l.created_at")
-        latest = {}
+            "MATCH (l:EvalLabel) WHERE l.status IN ['confirmed','deferred','consensus_confirmed'] "
+            "RETURN l.split AS split,l.sample_id AS id,l.labels AS labels,l.status AS status,"
+            "l.user_id AS user_id,l.confidence AS confidence,l.created_at AS created_at ORDER BY created_at")
+        by_sample: dict[tuple[str, str], list[dict[str, Any]]] = {}
         async for item in result:
-            latest[(item["split"], item["id"])] = dict(item)
+            by_sample.setdefault((item["split"], item["id"]), []).append(dict(item))
     final = []
     for split in ("tuning", "final"):
-        info = manifest["splits"][split]
-        source = ROOT / "eval/candidates" / info["path"]
+        source = ROOT / "eval/candidates" / manifest["splits"][split]["path"]
         for line in source.read_text(encoding="utf-8").splitlines():
             row = json.loads(line)
-            label = latest.get((split, row["id"]))
-            if label:
-                row.update(proposed_labels=json.loads(label["labels"]), label_status="confirmed",
-                           confirmed_by=label["user_id"], confirmed_at=str(label["confirmed_at"]),
-                           agreement="multiple_labels" if False else "single_label",
-                           confidence=label["confidence"])
-                final.append(row)
+            exported = confirmed_row(row, by_sample.get((split, row["id"]), []))
+            if exported:
+                final.append(exported)
     output = ROOT / "eval/candidates/confirmed.jsonl"
     output.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in final), encoding="utf-8")
     manifest["confirmed"] = {"path": "confirmed.jsonl", "count": len(final),
