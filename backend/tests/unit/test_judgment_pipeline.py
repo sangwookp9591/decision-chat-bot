@@ -2,6 +2,7 @@ import pytest
 
 from jevtriage.judgment import decompose
 from jevtriage.judgment.eligibility import evaluate_auto_assign
+from jevtriage.judgment.evidence import link_evidence
 from jevtriage.judgment.exceptions import DependencyCycleError
 from jevtriage.judgment.jev_client import JevClient, JevInvalidResponse, validate_response
 from jevtriage.judgment.pipeline import run_judgment
@@ -106,3 +107,37 @@ def test_collaborators_limited_to_involved_teams():
     result = run_judgment([], "x", {}, FakeClient(noul))
     task = next(t for t in result["draft_tasks"] if t["title"] == "데이터 연결·ETL")
     assert task["collab_org"] == [] and result["teams"] == ["IT팀"]
+
+
+def test_evidence_questions_run_concurrently_and_keep_source_order():
+    from threading import Barrier, BrokenBarrierError, Lock
+
+    rendezvous = Barrier(2)
+    lock = Lock()
+
+    class RecordingClient(FakeClient):
+        def __init__(self):
+            super().__init__({"is_evidence": 0.9})
+            self.calls = []
+            self.concurrent = False
+
+        def ask(self, state, question_map):
+            with lock:
+                self.calls.append((state, question_map))
+                index = len(self.calls)
+            if index <= 2:
+                try:
+                    rendezvous.wait(timeout=0.3)
+                    self.concurrent = True
+                except BrokenBarrierError:
+                    pass
+            return super().ask(state, question_map)
+
+    c = RecordingClient()
+    decisions = {"ai_need": "필요", "feasibility": "가능", "urgency": "긴급", "lead_org": "AI팀"}
+    result = link_evidence([("u1", "AI 예측이 필요합니다"), ("u2", "금요일까지")], decisions, c)
+    assert len(c.calls) == 8
+    assert all(len(question_map) == 1 for _, question_map in c.calls)
+    assert c.concurrent
+    assert [e.unit_id for e in result["ai_need"]] == ["u1", "u2"]
+    assert [e.unit_id for e in result["feasibility"]] == ["u1", "u2"]
