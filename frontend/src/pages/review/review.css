@@ -11,8 +11,11 @@
 .review-layout nav button{display:grid;gap:6px;width:100%;min-width:0;padding:14px var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;text-align:left;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
 .review-layout nav button:active{transform:scale(0.99)}
 @media(hover:hover){.review-layout nav button:hover{background:var(--color-fill)}}
-.review-row-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
-.review-row-title{font:var(--t5)}
+.review-row-sub{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);color:var(--color-caption);font:var(--t7)}
+.review-row-title{font:var(--t5);overflow-wrap:anywhere}
+.review-masked{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2);color:var(--color-ink-2)}
+.review-masked p{margin:0}
+.review-masked p+p{margin-top:var(--space-2);color:var(--color-ink)}
 .review-layout nav button>.status-badge{justify-self:start}
 .review-reasons,.review-layout nav small{color:var(--color-caption);font:var(--t7)}
 .review-ids{color:var(--color-caption);font:var(--t7)}

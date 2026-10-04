@@ -6,11 +6,40 @@ import {Review} from './Review';
 import {reviewApi} from '../api/reviews';
 import {requestApi} from '../api/requests';
 const row=(over:Record<string,unknown>={})=>({id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족'],...over});
-const detail=(over:Record<string,unknown>={})=>({review:row(over),request:{title:'요청'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1});
+const detail=(over:Record<string,unknown>={})=>({review:row(over),request:{title:'요청',request_text:'원문 내용'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1});
 vi.mock('../api/reviews',()=>({reviewApi:{list:vi.fn(),detail:vi.fn(),decide:vi.fn()}}));
 vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]}),judgment:vi.fn(),document:vi.fn()}}));
 const renderAt=(url='/review')=>render(<MemoryRouter initialEntries={[url]}><Review/></MemoryRouter>);
-beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any)});
+beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any);vi.mocked(requestApi.detail).mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]} as any)});
+describe('review list title and source permission',()=>{
+ it('titles each list row with the masked request title, id chip as the secondary line',async()=>{
+  vi.mocked(reviewApi.list).mockResolvedValue({reviews:[row({title:'회의실 예약 자동화'}) as any,row({id:'rvw_2',request_id:'req_2',title:''}) as any]});
+  const {container}=renderAt();await screen.findByText('회의실 예약 자동화');
+  const titles=[...container.querySelectorAll('.review-row-title')].map(e=>e.textContent);
+  expect(titles).toEqual(['회의실 예약 자동화','제목 없는 요청']);
+  expect(container.querySelector('.review-row-sub')?.textContent).toContain('req_1');
+ });
+ it('says honestly when the reviewer may not read the raw text, and shows the masked title',async()=>{
+  vi.mocked(requestApi.detail).mockResolvedValue({revisions:[{id:'rev_1'}]} as any);
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),request:{title:'마스킹된 제목'}} as any);
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));
+  expect(await screen.findByText(/원문 열람 권한이 없습니다/)).toBeTruthy();
+  expect(screen.getAllByText('마스킹된 제목').length).toBeGreaterThan(0);
+  expect(screen.queryByText('요청 원문을 불러오지 못했습니다.')).toBeNull();
+ });
+ it('still opens the review when the request detail itself is not readable',async()=>{
+  vi.mocked(requestApi.detail).mockRejectedValue({status:404,message:'Request not found'});
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),request:{title:'요청'}} as any);
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));
+  expect(await screen.findByLabelText('AI 필요성 수정')).toBeTruthy();
+  expect(screen.getByText(/원문 열람 권한이 없습니다/)).toBeTruthy();
+ });
+ it('shows the raw text when the reviewer may read it',async()=>{
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));
+  expect(await screen.findByText('원문 내용')).toBeTruthy();
+  expect(screen.queryByText(/원문 열람 권한이 없습니다/)).toBeNull();
+ });
+});
 describe('review comparison',()=>{
  it('lists each task once from the current draft and separates the AI original (P6-01)',async()=>{
   const t=(v:number,lead:string)=>({id:`d${v}`,draft_task_id:'draft-1',draft_version:v,title:'화면 개발',method:'일반 기술',lead_org:lead,collab_orgs:[],predecessors:[],deliverable:'결과'});
@@ -114,8 +143,21 @@ describe('review list row title (TOSS-SCREENS)',()=>{
  it('does not put the raw request id in the title slot; a short id chip carries it and the full id stays reachable',async()=>{
   vi.mocked(reviewApi.list).mockImplementation(async()=>({reviews:[row({request_id:long,urgency:'일반'}) as any]}));
   const {container}=renderAt();const item=await screen.findByRole('button',{name:new RegExp(long)});
-  expect(container.querySelector('.review-row-title')?.textContent).toBe('일반');
+  expect(container.querySelector('.review-row-title')?.textContent).toBe('제목 없는 요청');expect(container.querySelector('.review-urgency')?.textContent).toBe('일반');
   expect(item.querySelector('strong')?.textContent??'').not.toContain(long);
   const chip=item.querySelector('.short-id');expect(chip?.querySelector('[aria-hidden]')?.textContent).toBe('req_…bc8acd');expect(chip?.getAttribute('title')).toBe(long);
  });
+});
+
+it('shows the stored title in the review queue and a masked summary in detail when source access is denied',async()=>{
+ const title='회의실 예약 자동화';
+ vi.mocked(reviewApi.list).mockResolvedValue({reviews:[row({title,preview:'회의실 예약 자동화를 요청합니다. 상세…'}) as any]} as any);
+ vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),request:{title,preview:'회의실 예약 자동화를 요청합니다. 상세…'}} as any);
+ vi.mocked(requestApi.detail).mockRejectedValue({status:404,code:'HTTP_404',message:'Request not found'});
+ renderAt();
+ const item=await screen.findByRole('button',{name:/회의실 예약 자동화/});
+ fireEvent.click(item);
+ expect(await screen.findByRole('heading',{name:title})).toBeInTheDocument();
+ expect(screen.getByText('회의실 예약 자동화를 요청합니다. 상세…')).toBeInTheDocument();
+ expect(screen.getByText(/원문 열람 권한이 없습니다/)).toBeInTheDocument();
 });

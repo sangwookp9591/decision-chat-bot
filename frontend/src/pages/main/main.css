@@ -219,3 +219,5 @@ main > section.chat-page {
   .typing-dot { animation: none; opacity: 0.7; }
   .chat-avatar .mascot { animation: none; }
 }
+.result-ids { margin: 0; color: var(--color-caption); font: var(--t7); }
+.result-ids p { margin: var(--space-2) 0 0; }

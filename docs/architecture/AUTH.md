@@ -23,6 +23,8 @@
 
 원문(`InputRevision.text`, 근거 `source_text`, 추출 텍스트)은 `can_read_source=true`인 계정에게만 응답한다. 요청 상세를 포함한 API 응답은 공통 `redact_source(principal, payload)`에서 원문 필드를 제거한다. 운영자는 tenant 안의 메타데이터를 볼 수 있어도 이 플래그가 없으면 원문을 볼 수 없다. 근거 단건 API는 원문 권한이 없으면 404를 반환한다.
 
+검토 대기 목록은 검토 권한을 통과한 항목에 저장된 마스킹 `title`을 포함한다. `preview`는 `can_read_source` 또는 작성자 요청 읽기 권한이 있을 때만 포함한다. 검토 상세는 검토 권한으로 열 수 있지만, 일반 요청 상세 API는 요청자·공유·조직 범위(`can_view_request`)가 별도이므로 404일 수 있다. 검토 상세의 `request.request_text`는 검토자가 `can_read_source=true`일 때만 포함하고, 그렇지 않으면 화면은 제목·허용된 마스킹 미리보기와 원문 권한 안내를 표시한다.
+
 ## API와 세션
 
 - `POST /api/auth/login`은 `{ "email": "...", "password": "..." }`를 받고 일반화된 실패 응답을 반환한다.

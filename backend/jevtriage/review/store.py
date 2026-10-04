@@ -30,11 +30,13 @@ async def get_review(tenant_id: str, review_id: str) -> dict | None:
         row = await (await tx.run(
             "MATCH (v:Review {tenant_id:$tenant,id:$id}) "
             "MATCH (q:Request {tenant_id:$tenant,id:v.request_id}) "
-            "RETURN v,q", tenant=tenant_id, id=review_id,
+            "OPTIONAL MATCH (i:InputRevision {tenant_id:$tenant,id:v.revision_id}) "
+            "RETURN v,q,i", tenant=tenant_id, id=review_id,
         )).single()
         if row is None:
             return None
         review, request = dict(row["v"]), dict(row["q"])
+        request_text = row["i"]["text"] if row["i"] else None
         result = await (await tx.run(
             "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) "
             "RETURN j ORDER BY j.created_at DESC LIMIT 1",
@@ -60,7 +62,7 @@ async def get_review(tenant_id: str, review_id: str) -> dict | None:
             "RETURN h,collect(c) AS corrections ORDER BY h.created_at",
             tenant=tenant_id, id=review_id,
         )).data()
-        return {"review": review, "request": request, "judgment": judgment,
+        return {"review": review, "request": request, "request_text": request_text, "judgment": judgment,
                 "outputs": outputs, "drafts": drafts, "history": history}
     return await read_tx(tenant_id, op)
 

@@ -112,13 +112,21 @@ describe('evidence viewer from the result card', () => {
 });
 
 describe('internal codes on the result card (P4-05)', () => {
+  it('shortens run and revision identifiers in the result and keeps full values in copy chips', () => {
+    const fullRun='run_1234567890abcdef1234567890abcdef', fullRevision='rev_abcdef1234567890abcdef1234567890';
+    const {container}=render(<Result judgment={{...judgment,run_id:fullRun,revision_id:fullRevision}} runs={null} onEvidence={()=>undefined}/>);
+    const visible=container.cloneNode(true) as HTMLElement; visible.querySelectorAll('.short-id-full,details').forEach(node=>node.remove());
+    expect(visible.textContent).not.toContain(fullRun); expect(visible.textContent).not.toContain(fullRevision);
+    expect(container.querySelectorAll('.result-ids .short-id')).toHaveLength(2);
+    expect(container.querySelector('.result-ids')?.textContent).toContain(fullRun);
+  });
   it('shows Korean review reasons and keeps raw codes out of the regular view', () => {
     const { container } = render(<Result judgment={{ ...judgment, review_reasons: ['Choice confidence 미충족: ai_need/feasibility/lead_org', '필수 검토: urgent'] }} runs={null} onEvidence={() => undefined} />);
     expect(container.textContent).toContain('선택 확신도 미충족: AI 필요성 · 개발 가능성 · 담당 조직 · 주관');
     expect(container.textContent).toContain('필수 검토: 긴급 요청');
     const visible = container.cloneNode(true) as HTMLElement; visible.querySelectorAll('details').forEach((node) => node.remove());
     expect(visible.textContent).not.toMatch(/ai_need|feasibility|lead_org|urgent/);
-    expect(container.querySelector('details')?.textContent).toContain('ai_need/feasibility/lead_org');
+    expect([...container.querySelectorAll('details')].map(node=>node.textContent).join(' ')).toContain('ai_need/feasibility/lead_org');
   });
 
   it('shows each task once from the current draft and keeps the original in the comparison (P6-01)', () => {

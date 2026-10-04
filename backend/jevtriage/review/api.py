@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, can_review, get_principal
-from jevtriage.auth.policy import redact_source
+from jevtriage.auth.policy import can, redact_source
 from jevtriage.domain.drafts import draft_created_by, draft_source
 from jevtriage.review.service import ReviewError, decide, required_reviewer_org
 from jevtriage.review.store import decode, get_review, judgment_urgencies, list_reviews
@@ -34,6 +34,24 @@ def _allowed(principal: Principal, review: dict, request: dict) -> bool:
     required = required_reviewer_org(
         principal.tenant_id, review.get("required_reviewer_org") or "", principal.org_ids)
     return can_review(principal, {**dict(request), "required_reviewer_org": required})
+
+
+def _list_item(principal: Principal, v: dict, request: dict, urgencies: dict, now: datetime) -> dict:
+    """List entry: the stored masked title always; the masked preview only for source readers or the author."""
+    created = v.get("created_at")
+    item = {"id":v["id"], "request_id":v["request_id"],
+            "title":request.get("title") or "",
+            "run_id":v["run_id"], "revision_id":v["revision_id"],
+            "draft_version":v["draft_version"],
+            "review_version":v["review_version"], "status":v["status"],
+            "reasons":decode(v.get("reasons"), []),
+            "reasons_summary":", ".join(map(str, decode(v.get("reasons"), []))),
+            "urgency":v.get("urgency", urgencies.get(v["run_id"])),
+            "waiting_seconds":max(0, int((now - (created.to_native() if hasattr(created, "to_native") else created.replace(tzinfo=UTC))).total_seconds())) if created else None,
+            "required_reviewer_org":v.get("required_reviewer_org")}
+    if request.get("preview") and (principal.can_read_source or can(principal, "request:read", request)):
+        item["preview"] = request["preview"]
+    return item
 
 
 def _output(row: dict, can_read_source: bool) -> dict:
@@ -79,15 +97,7 @@ async def reviews(status: str = Query("pending"),
     run_ids = list({row["v"]["run_id"] for row in rows})
     urgencies = await judgment_urgencies(principal.tenant_id, run_ids)
     now = datetime.now(UTC)
-    return {"reviews":[{"id":v["id"], "request_id":v["request_id"],
-                        "run_id":v["run_id"], "revision_id":v["revision_id"],
-                        "draft_version":v["draft_version"],
-                        "review_version":v["review_version"], "status":v["status"],
-                        "reasons":decode(v.get("reasons"), []),
-                        "reasons_summary":", ".join(map(str, decode(v.get("reasons"), []))),
-                        "urgency":v.get("urgency", urgencies.get(v["run_id"])),
-                        "waiting_seconds":max(0, int((now - (v["created_at"].to_native() if hasattr(v["created_at"], "to_native") else v["created_at"].replace(tzinfo=UTC))).total_seconds())) if v.get("created_at") else None,
-                        "required_reviewer_org":v.get("required_reviewer_org")}
+    return {"reviews":[_list_item(principal, v, dict(row["q"]), urgencies, now)
                        for row in rows if (v := dict(row["v"])) and
                        _allowed(principal, v, dict(row["q"]))]}
 
@@ -102,6 +112,8 @@ async def review_detail(review_id: str,
     v["created_at"] = str(v["created_at"])
     v["reasons"] = decode(v.get("reasons"), [])
     request = dict(data["request"])
+    if principal.can_read_source and data.get("request_text") is not None:
+        request["request_text"] = data["request_text"]
     for key in ("created_at", "first_received_at"):
         if request.get(key) is not None:
             request[key] = str(request[key])
