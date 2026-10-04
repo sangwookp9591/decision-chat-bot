@@ -15,6 +15,10 @@
 
 관리형 DB transaction은 인증된 tenant를 `TenantTx`에 고정한다. 질의가 전달한 `tenant_id` 또는 `tenant` 값이 다르면 실행 전에 거부한다. 시험은 tenant 매개변수가 없는 질의를 거부하며, worker 발견 등 운영상 교차 tenant 작업은 사유가 필요한 `cross_tenant_tx`를 사용한다. 이 DB 경계는 역할·조직 권한을 대신하지 않으며 위 정책 판정을 함께 적용한다.
 
+로그인 이메일 조회(`auth.login_tenant`, `auth.authenticate`), 세션 token 조회(`auth.session_lookup`)와 token hash 기반 폐기(`auth.revoke_session`)는 tenant가 정해지기 전이므로 이유를 기록한 `cross_tenant_tx`를 사용한다. 로그인 실패 카운터와 세션 생성은 `write_tx`, 표시 이름 조회는 `read_tx`로 확정된 tenant에 고정한다. AST 회귀 시험은 `db/driver.py`와 `db/tx.py` 밖에서 직접 `get_driver` 또는 `.session()`을 사용하는 코드를 금지한다.
+
+로그인 이메일 조회(`auth.login_tenant`, `auth.authenticate`), 세션 token 조회(`auth.session_lookup`)와 token hash 기반 폐기(`auth.revoke_session`)는 tenant가 정해지기 전이므로 이유를 기록한 `cross_tenant_tx`를 사용한다. 로그인 실패 카운터, 세션 생성, 표시 이름 조회는 확정된 tenant를 사용해 각각 `write_tx` 또는 `read_tx`로 실행한다. AST 회귀 시험은 `db/driver.py`와 `db/tx.py` 밖에서 직접 `get_driver` 또는 `.session()`을 사용하는 코드를 금지한다.
+
 검토 결정은 같은 tenant의 **reviewer** 역할과 검토의 `required_reviewer_org` 소속을 모두 요구한다. 판단의 `lead_org`가 정해지지 않아 저장된 `"검토자"` 값은 tenant의 AI 조직(`<tenant>-ai`)으로 해석한다. 호출자 자신의 조직으로 해석하거나 요청 메타에 담당 조직을 삽입하지 않는다. `team_member`는 검토 결정을 할 수 없다.
 
 원문(`InputRevision.text`, 근거 `source_text`, 추출 텍스트)은 `can_read_source=true`인 계정에게만 응답한다. 요청 상세를 포함한 API 응답은 공통 `redact_source(principal, payload)`에서 원문 필드를 제거한다. 운영자는 tenant 안의 메타데이터를 볼 수 있어도 이 플래그가 없으면 원문을 볼 수 없다. 근거 단건 API는 원문 권한이 없으면 404를 반환한다.

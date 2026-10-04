@@ -16,7 +16,7 @@ from jevtriage.auth.policy import can
 from jevtriage.auth.policy import scope_filter_cypher as policy_scope_filter_cypher
 from jevtriage.auth.store import delete_session, display_name, tenant_for_email
 from jevtriage.auth.types import Principal
-from jevtriage.db.driver import get_driver
+from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
 
 _hasher = PasswordHasher()
 _DUMMY_PASSWORD_HASH = "$argon2id$v=19$m=65536,t=3,p=4$LkzPCpGAGkB5SROqN9l+6A$bVKong4Ml+CFR/rV6mhd+DaNvDW79BaFRYXeEHZkVOE"
@@ -27,30 +27,26 @@ LOGIN_WINDOW_SECONDS = int(os.getenv("LOGIN_WINDOW_SECONDS", "900"))
 
 
 async def login_attempt_count(tenant_id: str, email: str) -> int:
-    """Read the live window and clear an expired failure count atomically."""
-    driver = await get_driver()
-    async with driver.session() as session:
-        row = await (await session.run(
-            "MERGE (l:LoginAttempt {tenant_id:$tenant,email:$email}) "
-            "ON CREATE SET l.count=0,l.window_start=datetime() "
-            "WITH l, datetime() AS now "
-            "SET l.count=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
-            "THEN 0 ELSE l.count END, "
-            "l.window_start=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
-            "THEN now ELSE l.window_start END "
-            "RETURN l.count AS count",
+    """Read the live failure count; expired windows read as zero."""
+    async def query(tx):
+        row = await (await tx.run(
+            "MATCH (l:LoginAttempt {tenant_id:$tenant,email:$email}) "
+            "RETURN CASE WHEN l.window_start + duration({seconds:$window}) <= datetime() "
+            "THEN 0 ELSE l.count END AS count",
             tenant=tenant_id, email=email.lower(), window=LOGIN_WINDOW_SECONDS,
-        )).single(strict=True)
-    return row["count"]
+        )).single()
+        return row["count"] if row else 0
+    count = await read_tx(tenant_id, query)
+    return count
 
 
 async def increment_login_attempt(tenant_id: str, email: str) -> int:
     """Atomically create/increment the tenant/email failure counter."""
-    driver = await get_driver()
-    async with driver.session() as session:
-        row = await (await session.run(
+    async def query(tx):
+        row = await (await tx.run(
             "MERGE (l:LoginAttempt {tenant_id:$tenant,email:$email}) "
             "ON CREATE SET l.count=0,l.window_start=datetime() "
+            "SET l._lock=randomUUID() "
             "WITH l, datetime() AS now "
             "SET l.count=CASE WHEN l.window_start + duration({seconds:$window}) <= now "
             "THEN 1 ELSE l.count+1 END, "
@@ -59,16 +55,17 @@ async def increment_login_attempt(tenant_id: str, email: str) -> int:
             "RETURN l.count AS count",
             tenant=tenant_id, email=email.lower(), window=LOGIN_WINDOW_SECONDS,
         )).single(strict=True)
-    return row["count"]
+        return row["count"]
+    return await write_tx(tenant_id, query)
 
 
 async def reset_login_attempt(tenant_id: str, email: str) -> None:
-    driver = await get_driver()
-    async with driver.session() as session:
-        await (await session.run(
+    async def query(tx):
+        await (await tx.run(
             "MATCH (l:LoginAttempt {tenant_id:$tenant,email:$email}) SET l.count=0",
             tenant=tenant_id, email=email.lower(),
         )).consume()
+    await write_tx(tenant_id, query)
 
 
 def hash_password(password: str) -> str:
@@ -92,9 +89,8 @@ async def principal_display_name(principal: Principal) -> str | None:
 
 
 async def authenticate(email: str, password: str) -> dict[str, Any] | None:
-    driver = await get_driver()
-    async with driver.session() as session:
-        result = await session.run(
+    async def query(tx):
+        result = await tx.run(
             "MATCH (u:User {email: $email}) WHERE u.disabled = false "
             "MATCH (u)-[:MEMBER_OF]->(o:Org)<-[:HAS_ORG]-(t:Tenant) "
             "OPTIONAL MATCH (u)-[m:MEMBER_OF]->(o) "
@@ -103,7 +99,8 @@ async def authenticate(email: str, password: str) -> dict[str, Any] | None:
             "collect(DISTINCT m.role) AS roles LIMIT 1",
             email=email,
         )
-        row = await result.single()
+        return await result.single()
+    row = await cross_tenant_tx("auth.authenticate", query)
     if not row:
         # Keep the failure path computationally similar without revealing account existence.
         try:
@@ -122,9 +119,8 @@ async def authenticate(email: str, password: str) -> dict[str, Any] | None:
 async def create_session(tenant_id: str, user_id: str) -> str:
     token = secrets.token_urlsafe(32)
     expires = datetime.now(UTC) + timedelta(hours=SESSION_HOURS)
-    driver = await get_driver()
-    async with driver.session() as session:
-        await (await session.run(
+    async def query(tx):
+        await (await tx.run(
             "MATCH (u:User {id:$user_id, tenant_id:$tenant_id}) "
             "CREATE (s:Session {id:$id, tenant_id:$tenant_id, user_id:$user_id, "
             "token_hash:$token_hash, csrf_token:$csrf, expires_at:datetime($expires), created_at:datetime()}) "
@@ -132,15 +128,15 @@ async def create_session(tenant_id: str, user_id: str) -> str:
             id="ses_" + secrets.token_hex(16), tenant_id=tenant_id, user_id=user_id,
             token_hash=_token_hash(token), csrf=secrets.token_urlsafe(24), expires=expires.isoformat(),
         )).single(strict=True)
+    await write_tx(tenant_id, query)
     return token
 
 
 async def session_principal(token: str | None) -> tuple[Principal, str] | None:
     if not token:
         return None
-    driver = await get_driver()
-    async with driver.session() as session:
-        result = await session.run(
+    async def query(tx):
+        result = await tx.run(
             "MATCH (s:Session {token_hash:$token_hash})-[:FOR_USER]->(u:User) "
             "WHERE s.expires_at > datetime() AND u.disabled = false "
             "MATCH (u)-[m:MEMBER_OF]->(o:Org) "
@@ -148,7 +144,8 @@ async def session_principal(token: str | None) -> tuple[Principal, str] | None:
             "collect(DISTINCT m.role) AS roles, u.can_read_source AS can_read_source, s.csrf_token AS csrf",
             token_hash=_token_hash(token),
         )
-        row = await result.single()
+        return await result.single()
+    row = await cross_tenant_tx("auth.session_lookup", query)
     if not row:
         return None
     return Principal(row["tenant_id"], row["user_id"], tuple(row["org_ids"]), frozenset(row["roles"]), bool(row["can_read_source"])), row["csrf"]

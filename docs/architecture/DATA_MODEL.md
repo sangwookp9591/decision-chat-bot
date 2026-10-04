@@ -23,7 +23,7 @@ T04 구현 기준, 2026-10-03. Neo4j가 업무 상태의 기준 저장소이고 
 
 Worker는 tenant 허용 목록이 있으면 그 목록으로 후보를 제한한다. 허용 목록이 비어 있으면 모든 tenant의 Job을 처리하되 `Job.status` range 색인에서 후보를 찾는다. 대기 Job 또는 lease가 만료된 실행 Job 한 개를 생성 시각 순으로 선택하고 같은 쓰기 트랜잭션에서 잠금·조건 재검사·generation 증가·lease 부여를 수행한다. 빈 폴링 간격은 기본 0.5초에서 지수적으로 증가하며 `--max-poll-seconds` 기본 8초를 넘지 않는다. 그래프 조회는 간선 양 끝의 tenant를 검사하고, ID로 관계 속성을 찾을 때 이미 알고 있는 노드 라벨을 사용한다. `elementId` 기반 직접 조회는 tenant 필터를 추가로 유지한다.
 
-`write_tx`와 `read_tx`는 callback에 `TenantTx`를 전달한다. `tx.run`은 `$tenant_id`를 자동 주입하고 등록된 별칭 `$tenant`도 같은 값으로 주입한다. 호출자가 다른 tenant 값을 넘기면 예외를 낸다. `JEVTRIAGE_STRICT_TENANT=1`인 테스트에서는 두 매개변수 중 하나도 참조하지 않는 질의를 거부한다. 운영에서는 `tenant_scope_warnings` 지표를 증가시키고 경고 로그를 남긴다. worker 후보 발견·선점과 전체 tenant 보존 정리는 사유를 기록하는 `cross_tenant_tx(reason, ...)`로 실행한다. 스키마 마이그레이션과 인증 전 email 조회처럼 관리형 transaction 밖의 직접 드라이버 경로는 이 래퍼가 적용되지 않으므로 별도 검토가 필요하다.
+`write_tx`와 `read_tx`는 callback에 `TenantTx`를 전달한다. `tx.run`은 `$tenant_id`를 자동 주입하고 등록된 별칭 `$tenant`도 같은 값으로 주입한다. 호출자가 다른 tenant 값을 넘기면 예외를 낸다. `JEVTRIAGE_STRICT_TENANT=1`인 테스트에서는 두 매개변수 중 하나도 참조하지 않는 질의를 거부한다. 운영에서는 `tenant_scope_warnings` 지표를 증가시키고 경고 로그를 남긴다. worker 후보 발견·선점과 전체 tenant 보존 정리는 사유를 기록하는 `cross_tenant_tx(reason, ...)`로 실행한다. DB driver와 transaction 경계 모듈 외의 애플리케이션 코드는 직접 driver/session을 사용하지 않는다.
 
 엄격 모드 전수 시험에서 tenant 별칭을 정규화한 질의는 `graph/query.py`의 `$t` 사용처이며, worker의 `worker-discovery`와 보존 정리의 전체 tenant 발견을 명시적 교차 tenant 경로로 옮겼다. 통합 시험의 `test_judgment_graph.py`, `test_source_document.py`에 있던 `$t` 별칭 및 `test_retention.py`의 tenant 없는 검증 질의도 갱신했다. 문자열 검사는 매개변수 참조를 확인하며 Cypher의 모든 경로와 관계 확장을 증명하는 정적 분석은 아니다. 각 질의는 여전히 실제 노드의 tenant 속성을 검사해야 한다.
 
@@ -44,7 +44,9 @@ R2에서 확인한 인증·검토·이벤트·그래프·관측·모니터링·�
 | 모듈 | 함수 | 사용 조건 |
 | --- | --- | --- |
 | `db.driver` | `get_driver`, `close_driver`, `create_driver` | 실행 루프별 async 드라이버; 앱 종료 시 close |
-| `db.tx` | `write_tx(tenant_id, fn)`, `read_tx(tenant_id, fn)`, `db_now`, `db_now_in_tx` | callback은 async. 드라이버 관리형 재시도 때문에 callback 안에는 DB 동작만 넣고 외부 호출·파일 쓰기를 넣지 않는다 |
+| `db.tx` | `write_tx(tenant_id, fn)`, `read_tx(tenant_id, fn)`, `cross_tenant_tx(reason, fn)`, `db_now`, `db_now_in_tx` | callback은 async. 드라이버 관리형 재시도 때문에 callback 안에는 DB 동작만 넣고 외부 호출·파일 쓰기를 넣지 않는다. 스키마 관리와 인증 전 email/token 조회처럼 tenant 미확정 경로는 구체적인 사유를 기록하는 `cross_tenant_tx`를 사용한다 |
+
+평가 라벨 export는 `JEVTRIAGE_TENANT_ID`로 tenant를 지정하고 `read_tx`로 해당 tenant의 라벨만 읽는다.
 | `db.locks` | `lock_node_in_tx`, `lock_nodes_in_tx` | 변경 대상 잠금은 같은 트랜잭션에서 획득 |
 | `db.jobs` | `create_job`, `claim_or_takeover`, `heartbeat`, `verify_owner_in_tx` | 결과·단계·이벤트 커밋 전에 마지막 함수를 **같은 쓰기 트랜잭션**에서 호출. 실패하면 `OwnershipLost` |
 | `db.requests` | `create_request`, `add_input_revision`, `set_active_run`, `assert_active_run_in_tx` | 활성 결과·검토 대상·배정 포인터 변경 전에 활성 실행 확인. 불일치하면 `StaleRun` |

@@ -4,10 +4,12 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any
 
-from jevtriage.db.driver import close_driver, get_driver
+from jevtriage.db.driver import close_driver
+from jevtriage.db.tx import read_tx
 from jevtriage.evaluation.service import consensus_state
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -39,15 +41,23 @@ def confirmed_row(row: dict[str, Any], labels: list[dict[str, Any]]) -> dict[str
 async def export() -> Path:
     manifest_path = ROOT / "eval/candidates/manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    driver = await get_driver()
-    async with driver.session() as session:
-        result = await session.run(
-            "MATCH (l:EvalLabel) WHERE l.status IN ['confirmed','deferred','consensus_confirmed'] "
+    async def query(tx):
+        result = await tx.run(
+            "MATCH (l:EvalLabel {tenant_id:$tenant_id}) "
+            "WHERE l.status IN ['confirmed','deferred','consensus_confirmed'] "
             "RETURN l.split AS split,l.sample_id AS id,l.labels AS labels,l.status AS status,"
             "l.user_id AS user_id,l.confidence AS confidence,l.created_at AS created_at ORDER BY created_at")
-        by_sample: dict[tuple[str, str], list[dict[str, Any]]] = {}
+        rows = []
         async for item in result:
-            by_sample.setdefault((item["split"], item["id"]), []).append(dict(item))
+            rows.append(dict(item))
+        return rows
+    # Evaluation labels are tenant scoped; export tenant is supplied by the environment.
+    tenant_id = os.getenv("JEVTRIAGE_TENANT_ID")
+    if not tenant_id:
+        raise RuntimeError("JEVTRIAGE_TENANT_ID is required for tenant-scoped evaluation export")
+    by_sample: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for item in await read_tx(tenant_id, query):
+        by_sample.setdefault((item["split"], item["id"]), []).append(item)
     final = []
     for split in ("tuning", "final"):
         source = ROOT / "eval/candidates" / manifest["splits"][split]["path"]

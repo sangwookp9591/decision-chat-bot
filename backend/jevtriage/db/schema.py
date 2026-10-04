@@ -2,7 +2,8 @@
 
 import asyncio
 
-from jevtriage.db.driver import close_driver, get_driver
+from jevtriage.db.driver import close_driver
+from jevtriage.db.tx import cross_tenant_tx
 
 LABELS = (
     "Request", "InputRevision", "Run", "RunStep", "Job", "Review", "ReviewDecision",
@@ -19,26 +20,25 @@ TENANT_SCOPED_IDS = frozenset({
 
 
 async def apply_schema() -> None:
-    driver = await get_driver()
-    async with driver.session() as session:
+    async def migrate(tx):
         # Public learning IDs can repeat across tenants. Migrate earlier global
         # uniqueness constraints before installing tenant scoped replacements.
         for label in TENANT_SCOPED_IDS:
-            await (await session.run(
+            await (await tx.run(
                 f"DROP CONSTRAINT {label.lower()}_id_unique IF EXISTS"
             )).consume()
-            await (await session.run(
+            await (await tx.run(
                 f"CREATE CONSTRAINT {label.lower()}_tenant_id_unique IF NOT EXISTS "
                 f"FOR (n:{label}) REQUIRE (n.tenant_id, n.id) IS UNIQUE"
             )).consume()
         # A uniqueness constraint owns its backing range index; migrate older
         # nonunique indexes on the same properties before installing it.
         for name in ("event_tenant_seq", "judgment_tenant_run"):
-            await (await session.run(f"DROP INDEX {name} IF EXISTS")).consume()
+            await (await tx.run(f"DROP INDEX {name} IF EXISTS")).consume()
         for label in LABELS:
             if label in TENANT_SCOPED_IDS:
                 continue
-            await (await session.run(
+            await (await tx.run(
                 f"CREATE CONSTRAINT {label.lower()}_id_unique IF NOT EXISTS "
                 f"FOR (n:{label}) REQUIRE n.id IS UNIQUE"
             )).consume()
@@ -55,7 +55,7 @@ async def apply_schema() -> None:
             ("judgment_tenant_run_unique", "Judgment", "tenant_id, run_id"),
         ):
             properties = ", ".join(f"n.{field.strip()}" for field in fields.split(","))
-            await (await session.run(
+            await (await tx.run(
                 f"CREATE CONSTRAINT {name} IF NOT EXISTS FOR (n:{label}) "
                 f"REQUIRE ({properties}) IS UNIQUE"
             )).consume()
@@ -79,9 +79,10 @@ async def apply_schema() -> None:
             ("task_tenant_request", "Task", "tenant_id, request_id"),
         ):
             properties = ", ".join(f"n.{field.strip()}" for field in fields.split(","))
-            await (await session.run(
+            await (await tx.run(
                 f"CREATE INDEX {name} IF NOT EXISTS FOR (n:{label}) ON ({properties})"
             )).consume()
+    await cross_tenant_tx("schema.migration", migrate, write=True)
 
 
 async def main() -> None:
