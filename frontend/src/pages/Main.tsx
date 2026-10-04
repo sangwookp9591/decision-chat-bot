@@ -1,47 +1,49 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { DraftVersionCompare, sourceLabel } from './main/DraftVersions';
 import { useSearchParams } from 'react-router-dom';
 import { apiFetch, idempotencyKey, type ApiError } from '../api/client';
 import { requestApi, type Judgment, type RequestDetail, type RequestItem } from '../api/requests';
 import { useSession } from '../state/session';
-import { Button, StatusBadge, type StatusKind } from '../components';
-import { attachmentReasonLabel, getStatusPresentation } from '../components/statusLabels';
-import { infoRequest, needsInfo, resultBadge } from './main/requestState';
+import { Button, StatusBadge } from '../components';
+import { getStatusPresentation } from '../components/statusLabels';
+import { infoRequest, resultBadge } from './main/requestState';
 import { useEventStream, type StreamEvent } from '../state/events';
 import { EvidenceViewer, type ViewerTarget } from '../components/EvidenceViewer';
-import { RawDetails } from '../components/RawDetails';
-import { locationLabel, questionLabel, reviewReasonLabel } from '../lib/labels';
+import { questionLabel } from '../lib/labels';
 import { uploadRequest } from './main/uploadRequest';
-import { OptimisticRequestCard, ProvisionalResult, SlowNotice, classificationChoices as classifications, classificationLabels as labels, stepLabel, UNCERTAIN_VALUES } from './main/ProgressivePanel';
+import { ProvisionalResult, SlowNotice, stepLabel } from './main/ProgressivePanel';
+import { Result } from './main/ResultCard';
+import { AnalysisBubble, AssistantBubble, FailureBubble, FileDecisionBubble, Greeting, InfoRequestBubble, QuickReplies, UploadBubble, UserBubble, moodAvatar } from './main/Bubbles';
+import { Composer } from './main/Composer';
+import { MAX_FILES, MOOD_TEXT, composerMode, currentAttachments, judgmentMood, resultMood, userMessages, type PendingSend } from './main/conversation';
 import { initialProgress, progressReducer } from '../state/progress';
 import './main/main.css';
 
+export { Result } from './main/ResultCard';
 const LIST_EVENTS = ['request.received', 'judgment_saved', 'judgment_failed', 'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned', 'reanalysis.compared'];
 const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
 function errorMessage(error: unknown) { return (error as ApiError)?.message || '요청 처리 중 문제가 발생했습니다.'; }
+
+/** 요청 접수 = 일동이와의 대화. Everything the user sees is a message derived from server state, so a reload (?request_id=) restores it. */
 export function Main() {
   const { user } = useSession();
   const [text, setText] = useState(''); const [files, setFiles] = useState<File[]>([]); const [upload, setUpload] = useState<number | null>(null);
-  const [params, setParams] = useSearchParams(); const requestId = params.get('request_id') || ''; const [notice, setNotice] = useState('');
+  const [params, setParams] = useSearchParams(); const requestId = params.get('request_id') || '';
   const [detail, setDetail] = useState<RequestDetail | null>(null); const [judgment, setJudgment] = useState<Judgment | null>(null);
-  const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null); const [progress, dispatch] = useReducer(progressReducer, initialProgress); const progressRef = useRef(progress); progressRef.current = progress;
-  const [error, setError] = useState(''); const [retry, setRetry] = useState<'' | 'submit' | 'reanalyze'>(''); const [busy, setBusy] = useState(false);
+  const [runs, setRuns] = useState<Awaited<ReturnType<typeof requestApi.runs>> | null>(null); const [previousJudgment, setPreviousJudgment] = useState<Judgment | null>(null);
+  const [progress, dispatch] = useReducer(progressReducer, initialProgress); const progressRef = useRef(progress); progressRef.current = progress;
+  const [error, setError] = useState(''); const [retry, setRetry] = useState<'' | 'submit' | 'reanalyze'>(''); const [busy, setBusy] = useState(false); const [notice, setNotice] = useState('');
+  const [pending, setPending] = useState<PendingSend | null>(null); const [listOpen, setListOpen] = useState(false);
   const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState(''); const [viewer, setViewer] = useState<ViewerTarget | null>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null); const attachRef = useRef<HTMLInputElement>(null); const endRef = useRef<HTMLDivElement>(null);
   const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); };
   const canReanalyze = Boolean(user?.roles.some((role) => ['requester', 'reviewer', 'operator'].includes(role)));
   const stage = stepLabel(progress.currentStep);
   const info = infoRequest(detail);
+  const mode = composerMode(detail);
   const stepDone = (name: string, index: number) => Boolean(judgment) || progress.phase === 'final' || stageNames.indexOf(stage) > index || progress.steps.some((step) => stepLabel(step.name) === name && step.status === 'succeeded');
   const revisionNumber = detail?.request.revision_number || detail?.revisions.length || 0;
-  useEffect(() => {
-    // Text from the chat widget lands in the intake form right away (also when it was sent from another page).
-    const receive = (message: string) => { if (!message.trim()) return; setText((current) => current.trim() ? `${current.trim()}\n${message}` : message); setNotice('채팅 내용을 요청 입력에 옮겼습니다. 내용을 확인한 뒤 "요청 보내기"를 눌러 주세요.'); window.setTimeout(() => { const field = document.getElementById('request-text') as HTMLTextAreaElement | null; field?.scrollIntoView?.({ behavior: 'smooth', block: 'center' }); field?.focus(); }, 0); };
-    const queued = sessionStorage.getItem('chat:request'); if (queued) { sessionStorage.removeItem('chat:request'); receive(queued); }
-    const listener = (event: Event) => receive(String((event as CustomEvent<string>).detail || ''));
-    window.addEventListener('chat:request', listener); return () => window.removeEventListener('chat:request', listener);
-  }, []);
-  useEffect(() => { if (!judgment) return; window.dispatchEvent(new CustomEvent('chat:result', { detail: { urgency: judgment.classifications.urgency, review: Boolean(judgment.review), summary: typeof judgment.summary === 'string' ? judgment.summary : judgment.summary.text } })); }, [judgment]);
-  useEffect(() => { window.dispatchEvent(new CustomEvent('chat:progress', { detail: progress.phase === 'submitting' || progress.phase === 'received' || progress.phase === 'preliminary' ? { phase: progress.phase, step: stage } : null })); }, [progress.phase, stage]);
+  const messages = userMessages(detail, pending);
+
   const restoreProgress = useCallback((id: string) => { void Promise.resolve().then(() => requestApi.progress(id)).then((snapshot) => dispatch({ type: 'restore', progress: snapshot })).catch(() => undefined); }, []);
   const refresh = useCallback(async (id: string) => {
     const [current, judgmentResult, history] = await Promise.all([
@@ -61,7 +63,7 @@ export function Main() {
   }, [restoreProgress]);
   const reloadList = useCallback(() => { requestApi.list().then((value) => setRequests(value.items)).catch(() => undefined); }, []);
   useEffect(() => { reloadList(); }, [requestId, detail?.request.status, reloadList]);
-  // The list follows tenant-wide events on its own stream (the detail stream below only exists once a request is open):
+  // The conversation list follows tenant-wide events on its own stream (the detail stream below only exists once a request is open):
   // requests created in another tab show up without a reload. The server scopes the list, so events only say "refetch".
   const listTimer = useRef<number>();
   const onListEvent = useCallback((event: StreamEvent) => {
@@ -85,9 +87,9 @@ export function Main() {
   }, [refreshIfPending, load, requestId]);
   useEventStream({ requestId: requestId || undefined, enabled: Boolean(requestId) }, undefined, onStreamEvent, () => load(requestId));
   useEffect(() => {
-    // The selected request lives in the URL (?request_id=), so reload / back / shared links restore it.
-    resetRun(); setDetail(null); setError(''); setRetry('');
-    if (progressRef.current.requestId !== requestId) dispatch({ type: 'reset' }); // an optimistic card just confirmed with this id keeps its state
+    // The open conversation lives in the URL (?request_id=), so reload / back / shared links restore it.
+    resetRun(); setDetail(null); setError(''); setRetry(''); setNotice('');
+    if (progressRef.current.requestId !== requestId) dispatch({ type: 'reset' }); // an optimistic send just confirmed with this id keeps its state
     if (requestId) load(requestId);
   }, [requestId]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (progress.phase === 'failed' && !judgment) { setError('분석 실행이 실패했습니다. 결과가 저장되지 않았습니다.'); setRetry('reanalyze'); } }, [progress.phase, judgment]);
@@ -96,45 +98,57 @@ export function Main() {
     const timer = window.setInterval(() => refreshIfPending(requestId), 10000);
     return () => window.clearInterval(timer);
   }, [requestId, judgment, error, refreshIfPending]);
-  async function submit(event?: React.FormEvent) {
-    event?.preventDefault();
+  // Follow the newest message — only when one is added, never when a card fills in place (that would move what is being read).
+  const tail = [messages.length, upload !== null, Boolean(detail), Boolean(judgment), Boolean(error), mode, progress.phase === 'preliminary'].join('|');
+  useEffect(() => { if (tail !== '0|false|false|false|false|new|false') endRef.current?.scrollIntoView?.({ block: 'end' }); }, [tail]);
+
+  function addFiles(added: File[]) {
+    if (!added.length) return;
+    const next = [...files, ...added.filter((file) => !files.some((old) => old.name === file.name && old.size === file.size))];
+    setFiles(next.slice(0, MAX_FILES));
+    setNotice(next.length > MAX_FILES ? `파일은 최대 ${MAX_FILES}개까지 첨부할 수 있어요. 앞에서부터 ${MAX_FILES}개만 담았어요.` : '');
+  }
+  async function submit() {
+    const revising = Boolean(requestId) && mode !== 'new';
+    const sent = { text, files };
     setBusy(true); setError(''); setRetry(''); setNotice(''); resetRun(); setUpload(0);
+    setPending({ text: text.trim(), files: files.map((file) => file.name), baseRevision: revising ? revisionNumber : 0, requestId: revising ? requestId : '' });
     dispatch({ type: 'optimistic', text: text.trim() || files.map((file) => file.name).join(', '), at: Date.now() });
+    setText(''); setFiles([]);
     try {
       const form = new FormData();
-      form.append('text', text);
-      files.forEach((file) => form.append('files', file));
-      const revising = Boolean(requestId) && (detail?.request.status === 'needs_file_decision' || needsInfo(detail?.request.status));
+      form.append('text', sent.text);
+      sent.files.forEach((file) => form.append('files', file));
       if (revising) form.append('expected_revision', String(revisionNumber));
-      const path = revising ? `/api/requests/${requestId}/revisions` : '/api/requests';
-      const accepted = await uploadRequest(form, setUpload, path);
+      const accepted = await uploadRequest(form, setUpload, revising ? `/api/requests/${requestId}/revisions` : '/api/requests');
       const id = revising ? requestId : accepted.request_id;
       dispatch({ type: 'accepted', requestId: id });
-      setText(''); setFiles([]);
+      setPending((current) => (current ? { ...current, requestId: id } : current));
       if (id === requestId) await refresh(id); else { setDetail(null); setParams({ request_id: id }); }
     } catch (problem) {
-      dispatch({ type: 'rejected', message: errorMessage(problem) }); setError(errorMessage(problem)); setRetry('submit');
+      // Roll back: the bubble goes away and the draft returns to the composer, with the cause and a retry.
+      dispatch({ type: 'rejected', message: errorMessage(problem) }); setPending(null); setText(sent.text); setFiles(sent.files);
+      setError(errorMessage(problem)); setRetry('submit');
     } finally {
       setBusy(false); setUpload(null);
     }
   }
   async function excludeUnread() {
     if (!detail || !requestId) return;
-    const failed = detail.attachments.filter((file) => file.status !== 'ok').map((file) => file.id);
+    const failed = currentAttachments(detail).filter((file) => file.status !== 'ok').map((file) => file.id);
     setBusy(true); setError('');
     try {
-      const body = { exclude: failed, expected_revision: revisionNumber };
-      await apiFetch(`/api/requests/${requestId}/file-decision`, {
-        method: 'POST', headers: idempotencyKey(), body: JSON.stringify(body),
-      });
+      await apiFetch(`/api/requests/${requestId}/file-decision`, { method: 'POST', headers: idempotencyKey(), body: JSON.stringify({ exclude: failed, expected_revision: revisionNumber }) });
       resetRun(); await refresh(requestId);
-    } catch (problem) {
-      setError(errorMessage(problem));
-    } finally {
-      setBusy(false);
-    }
+    } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
   }
-  function openRequest(id: string) { if (id !== requestId) setParams({ request_id: id }); }
+  function openRequest(id: string) { setListOpen(false); setPending(null); if (id !== requestId) setParams({ request_id: id }); }
+  function startNew() {
+    setListOpen(false); setPending(null); setText(''); setFiles([]); setNotice('');
+    if (requestId) setParams({}); else { resetRun(); setError(''); dispatch({ type: 'reset' }); }
+    window.setTimeout(() => textRef.current?.focus(), 0);
+  }
+  function pickExample(example: string) { setText(example); window.setTimeout(() => textRef.current?.focus(), 0); }
   async function reanalyze() {
     if (!requestId || !detail) return;
     if (!window.confirm('현재 revision으로 새 분석 실행을 시작할까요? 기존 판단과 검토 기록은 보존됩니다.')) return;
@@ -143,40 +157,41 @@ export function Main() {
       await requestApi.reanalyze(requestId, revisionNumber);
       resetRun(); dispatch({ type: 'reset' }); setRuns(await requestApi.runs(requestId));
       await refresh(requestId);
-    } catch (problem) {
-      setError(errorMessage(problem));
-    } finally {
-      setBusy(false);
-    }
+    } catch (problem) { setError(errorMessage(problem)); } finally { setBusy(false); }
   }
   function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) {
     if (!evidence || !requestId || !judgment) { setSourceTitle(`${questionLabel(output.question_id)} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; }
     setSource(''); setViewer({ requestId, revision: judgment.revision_id, source: evidence.attachment_id || 'chat', unitId: evidence.id, title: `${questionLabel(output.question_id)} · 근거 원문` });
   }
-  return <section className="main-page"><div className="main-heading"><div><p className="eyebrow">요청자</p><h1>요청 접수와 판단 결과</h1></div>{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}</div>
-    <div className="main-columns"><div className="main-primary">
-      <form className="intake-card" onSubmit={submit}><label htmlFor="request-text">요청 내용</label><textarea id="request-text" value={text} onChange={(event) => setText(event.target.value)} placeholder="필요한 업무와 해결하려는 문제를 적어 주세요" rows={5} />
-        {files.length > 0 && <ul className="selected-files">{files.map((file, index) => <li key={`${file.name}-${index}`}>{file.name} · {Math.ceil(file.size / 1024)} KiB</li>)}</ul>}
-        <div className="intake-actions"><label className="ui-button secondary attach-button">{detail?.request.status === 'needs_file_decision' ? '읽기 실패 파일 재첨부' : '파일 첨부'}<input aria-label="파일 첨부" type="file" accept=".pdf,.docx,.md" multiple onChange={(event) => setFiles(Array.from(event.target.files || []).slice(0, 5))} /></label><span>PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB</span><button className="ui-button primary" type="submit" disabled={busy || (!text.trim() && files.length === 0)}>{detail?.request.status === 'needs_file_decision' ? '재첨부 후 새 revision' : needsInfo(detail?.request.status) ? '보완 내용 제출 (새 revision)' : '요청 보내기'}</button></div>
-      </form>
-      {notice && <p className="chat-handoff" role="status">{notice}</p>}
-      <OptimisticRequestCard state={progress} />
-      {upload !== null && <div className="progress-card" aria-live="polite"><strong>업로드 진행</strong><progress max="100" value={upload} /> <span>{upload}%</span></div>}
-      {requestId && <article className="progress-card analysis-card"><div className="card-heading"><h2>분석 진행</h2>{detail && <StatusBadge {...resultBadge(detail, judgment, Boolean(error))} />}</div><ol className="stage-list">{stageNames.map((name, index) => <li key={name} className={stepDone(name, index) ? 'done' : name === stage ? 'current' : 'waiting'}><span>{stepDone(name, index) ? '✓' : index + 1}</span>{name}</li>)}</ol>{detail?.request.status === 'needs_file_decision' && <div className="file-decision"><p>읽지 못한 첨부가 있습니다. 제외하거나 다시 첨부한 뒤 분석을 진행해 주세요.</p><ul>{detail.attachments.filter((file) => file.status !== 'ok').map((file) => <li key={file.id}>{file.filename} — {attachmentReasonLabel(file.reason)}</li>)}</ul><button className="ui-button primary" type="button" disabled={busy} onClick={excludeUnread}>실패 파일 제외 후 분석</button><span>재첨부는 아래 입력에서 새 revision으로 제출할 수 있습니다.</span></div>}{info && <div className="info-request" role="region" aria-label="보완 요청"><h3>검토자가 보완을 요청했습니다</h3><p>{info.reason || '보완이 필요한 내용을 확인해 주세요.'}</p>{info.needed.length > 0 && <ul>{info.needed.map((item) => <li key={item}>{item}</li>)}</ul>}<button type="button" className="ui-button primary" onClick={() => document.getElementById('request-text')?.focus()}>보완 내용 입력하기</button><span>아래 입력에 내용을 보완해 &quot;보완 내용 제출&quot;을 누르면 같은 요청의 새 revision으로 접수되어 다시 분석합니다.</span></div>}</article>}
-      {!judgment && !error && <SlowNotice state={progress} />}
-      {!judgment && <ProvisionalResult state={progress} reserveAction={canReanalyze} />}
-      {error && <div className="failure-card" role="alert"><StatusBadge status="failure" label="시스템 실패" /><p>{error}</p>{retry && <Button type="button" variant="secondary" disabled={busy} onClick={() => { if (retry === 'submit') void submit(); else void reanalyze(); }}>다시 시도</Button>}</div>}
-      {judgment && <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} canReanalyze={canReanalyze} onReanalyze={() => void reanalyze()} />}
-      <EvidenceViewer target={viewer} onClose={() => setViewer(null)} />{source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
-    </div><aside className="request-list"><h2>내 요청</h2>{requests.length ? requests.map((item) => { const state = getStatusPresentation(item.status); return <button type="button" key={item.id} onClick={() => openRequest(item.id)} aria-current={item.id === requestId ? 'true' : undefined}><code>{item.id}</code><StatusBadge status={state.status} label={state.label} /></button>; }) : <p>접수한 요청이 여기에 표시됩니다.</p>}</aside></div>
+
+  const conversing = Boolean(requestId || pending);
+  const provisionalMood = resultMood(progress.preliminary?.classifications, false);
+  return <section className="main-page chat-page"><div className="main-heading"><div><p className="eyebrow">요청자</p><h1>일동이와 요청 접수</h1></div>{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}</div>
+    <div className="main-columns">
+      <div className="main-primary chat-main">
+        <div className="chat-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="일동이와의 대화">
+          {!conversing && <Greeting onPick={pickExample} />}
+          {messages.map((message) => <UserBubble key={message.key} message={message} />)}
+          {upload !== null && <UploadBubble percent={upload} />}
+          {requestId && <AnalysisBubble stages={stageNames} current={stage} done={stepDone} badge={detail ? resultBadge(detail, judgment, Boolean(error)) : undefined} />}
+          {requestId && !judgment && progress.preliminary && <AssistantBubble avatar="thinking" label="일동이의 잠정 답변" className="result-bubble"><p className="bubble-title">잠정 판단을 먼저 보여 드려요{provisionalMood === 'urgent' ? ' · 긴급 신호가 있어요' : ''}</p><ProvisionalResult state={progress} /></AssistantBubble>}
+          {judgment && <AssistantBubble avatar={moodAvatar(judgmentMood(judgment))} label="일동이의 답변" className="result-bubble"><p className="bubble-title">{MOOD_TEXT[judgmentMood(judgment)]}</p>
+            <Result judgment={judgment} previousJudgment={previousJudgment} runs={runs} onEvidence={openEvidence} state={resultBadge(detail, judgment, false)} /></AssistantBubble>}
+          {mode === 'file' && detail && <FileDecisionBubble attachments={currentAttachments(detail)} busy={busy} onExclude={() => void excludeUnread()} onReattach={() => attachRef.current?.click()} />}
+          {info && <InfoRequestBubble info={info} onAnswer={() => textRef.current?.focus()} />}
+          {error && <FailureBubble message={error} busy={busy} onRetry={retry ? () => { if (retry === 'submit') void submit(); else void reanalyze(); } : undefined} />}
+          {requestId && !judgment && !error && <SlowNotice state={progress} />}
+          <div ref={endRef} aria-hidden="true" />
+        </div>
+        {notice && <p className="chat-handoff" role="status">{notice}</p>}
+        <div className="composer-dock">{requestId && <QuickReplies canReanalyze={canReanalyze} finalSaved={Boolean(judgment)} busy={busy} onReanalyze={() => void reanalyze()} onNew={startNew} />}
+          <Composer mode={mode} text={text} files={files} busy={busy} openRequest={Boolean(requestId)} textRef={textRef} attachRef={attachRef} onText={setText} onAddFiles={addFiles} onRemoveFile={(index) => setFiles(files.filter((_, at) => at !== index))} onSubmit={() => void submit()} /></div>
+        <EvidenceViewer target={viewer} onClose={() => setViewer(null)} />{source && <aside className="source-panel"><div className="card-heading"><h2>근거 원문</h2><Button type="button" variant="plain" onClick={() => setSource('')}>닫기</Button></div><p>{sourceTitle}</p><blockquote>{source}</blockquote></aside>}
+      </div>
+      <aside className="request-list" aria-label="대화 목록"><button type="button" className="list-toggle" aria-expanded={listOpen} aria-controls="conversation-list" onClick={() => setListOpen(!listOpen)}>대화 목록 {listOpen ? '접기' : '펼치기'}<span aria-hidden="true">{listOpen ? '▴' : '▾'}</span></button>
+        <div id="conversation-list" className="list-body" data-open={listOpen}><h2>내 요청 대화</h2><Button type="button" variant="plain" className="new-chat" onClick={startNew}>새 대화 열기</Button>
+          {requests.length ? requests.map((item) => { const state = getStatusPresentation(item.status); return <button type="button" key={item.id} onClick={() => openRequest(item.id)} aria-current={item.id === requestId ? 'true' : undefined}><code>{item.id}</code><StatusBadge status={state.status} label={state.label} /></button>; }) : <p>접수한 요청이 여기에 표시됩니다.</p>}</div>
+      </aside>
+    </div>
   </section>;
-}
-export function Result({ judgment, previousJudgment, runs, onEvidence, state, canReanalyze = false, onReanalyze = () => undefined }: { judgment: Judgment; state?: { status: StatusKind; label: string }; previousJudgment?: Judgment | null; runs: Awaited<ReturnType<typeof requestApi.runs>> | null; onEvidence: (output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) => void; canReanalyze?: boolean; onReanalyze?: () => void }) {
-  const summary = typeof judgment.summary === 'string' ? JSON.parse(judgment.summary) : judgment.summary;
-  const selectedRun = runs?.runs.find((run) => run.id === judgment.run_id); const oldRun = runs?.runs.find((run) => run.id !== judgment.run_id);
-  return <div className="result-stack"><article className="result-summary" data-region="summary"><div className="card-heading"><h2>판단 결과</h2><StatusBadge {...(state ?? { status: judgment.review ? 'review' : 'success', label: judgment.review ? '검토 대기' : '자동 처리 가능' })} /><span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()}</span></div><p className="summary-text">{summary.text || '요약 정보가 없습니다.'}</p><p className="author-line">원문 발췌 · 작성 주체: {summary.author || judgment.author || 'Jev'}</p><code>{judgment.run_id} · revision {judgment.revision_id}</code>{canReanalyze&&<button type="button" className="ui-button secondary" onClick={onReanalyze}>새 실행으로 다시 분석</button>}</article>
-    <div className="judgment-grid" data-region="judgment">{Object.entries(judgment.classifications).map(([key, value]) => { const uncertain = UNCERTAIN_VALUES.includes(String(value)); const selected = String(value) === '조건부' ? '조건부 가능' : String(value); const related = judgment.outputs.filter((output) => output.question_id.includes(key)); return <article className="judgment-card" key={key}><h3>{labels[key] || key}</h3><div className="scale-options">{(classifications[key] || [String(value)]).map((choice) => <span key={choice} className={!uncertain && selected === choice ? 'selected' : ''}>{choice}</span>)}</div>{uncertain && <div className="uncertain-result"><strong>정보 부족·판단 보류</strong><span>{String(value)}</span></div>}<div className="signal-labels">{related.map((output) => <span key={output.id}>{output.confidence !== undefined && `선택 신뢰도 ${(output.confidence * 100).toFixed(0)}%`}{output.noul !== undefined && `Noul 확률 ${JSON.stringify(output.noul)}`}</span>)}</div><div className="evidence-list">{related.length ? related.flatMap((output) => output.evidence.length ? output.evidence.map((evidence) => <button key={evidence.id} type="button" onClick={() => onEvidence(output, evidence)}>{evidence.source === 'chat' ? '채팅' : '첨부'} · {locationLabel(evidence.location)} 근거 열기</button>) : [<button key={`${output.id}-none`} type="button" onClick={() => onEvidence(output)}>저장된 근거 위치 없음 · 근거 패널 열기</button>]) : <span>저장된 근거 위치 없음</span>}</div></article>; })}</div>
-    <article className="result-summary" data-region="tasks"><h2>업무 분담{judgment.current_draft_version && (judgment.draft_versions?.length ?? 0) > 1 ? ` (v${judgment.current_draft_version} ${sourceLabel(judgment.draft_versions?.find((v) => v.draft_version === judgment.current_draft_version)?.source)})` : ''}</h2>{judgment.draft_tasks.map((task, index) => <div className="task-row" key={String(task.id || index)}><strong>{String(task.title || '업무 미정')}</strong><span>{String(task.method || '방식 미정')} · 주관 {String(task.lead_org || '미정')}</span><span>협업 {Array.isArray(task.collab_orgs) ? task.collab_orgs.join(', ') || '없음' : '미정'} · 선행 {Array.isArray(task.predecessors) ? task.predecessors.join(', ') || '없음' : '미정'}</span></div>)}<DraftVersionCompare versions={judgment.draft_versions ?? []} currentVersion={judgment.current_draft_version} /><p>검토 사유: {judgment.review_reasons.length ? judgment.review_reasons.map((reason) => reviewReasonLabel(String(reason))).join(' · ') : '추가 검토 사유 없음'}</p>{judgment.review_reasons.length > 0 && <RawDetails>{judgment.review_reasons.map(String).join('\n')}</RawDetails>}</article>
-    {oldRun && <article className="result-summary"><h2>이전 실행 비교</h2><p>현재 실행 {selectedRun?.id} · 이전 실행 {oldRun.id}</p><RawDetails label="버전 정보 자세히">{{ current: selectedRun?.versions || {}, previous: oldRun.versions }}</RawDetails>{previousJudgment ? <ul>{Object.entries(judgment.classifications).map(([key, current]) => <li key={key}>{labels[key] || key}: {String(previousJudgment.classifications[key] ?? '—')} → {String(current)}{String(previousJudgment.classifications[key]) === String(current) ? ' (변경 없음)' : ' (변경)'}</li>)}</ul> : <p>이전 실행의 저장 결과가 없어 버전 정보만 표시합니다.</p>}</article>}
-  </div>;
 }

@@ -28,6 +28,9 @@ test.beforeAll(async ({ browser }, info) => {
   failedId = await submitApi(failedActor, '월별 판매 현황을 조회하는 화면이 필요합니다.');
 });
 
+// The provisional card also has a 판단 결과 heading; only the saved result (not .provisional-result) proves the judgment is stored.
+const finalResult = (page: import('@playwright/test').Page) => page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true });
+
 const CLASS_LABELS: Record<string, string> = { ai_need: 'AI 필요성', feasibility: '개발 가능성', urgency: '긴급도', lead_org: '주관 조직' };
 
 async function uiClassifications(page: import('@playwright/test').Page) {
@@ -59,7 +62,7 @@ function recall(key: string): string {
 
 test('S1 general technical request: UI result equals stored judgment', async () => {
   s1 = await submitViaUi(rq, 'SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.');
-  await expect(rq.page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 200_000 });
+  await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
   await expect(rq.page.locator('.environment-badge.mode-live').last()).toBeVisible();
   const api = await (await rq.api.get(`/api/requests/${s1}/judgment`)).json();
   const ui = await uiClassifications(rq.page);
@@ -128,7 +131,7 @@ test('S4 insufficient information: reasons shown, request-info keeps everything 
   await pendingReview(rv, s4);
   await rq.page.goto('/');
   await rq.page.getByText(s4).first().click();
-  await expect(rq.page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
+  await expect(finalResult(rq.page)).toBeVisible();
   await expect(rq.page.locator('main')).toContainText('검토 사유');
   for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.locator('main')).toContainText(reason);
   await shot(rq.page, 's4-insufficient-information');
@@ -155,14 +158,14 @@ test('S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-fil
     { name: 'broken.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.7 this is not a valid pdf') },
   ];
   const id = await submitViaUi(rq, '세 문서의 요청 내용을 함께 검토해 주세요.', files);
-  const exclude = rq.page.getByRole('button', { name: /실패 파일 제외/ });
+  const exclude = rq.page.getByRole('button', { name: '제외하고 진행' });
   await expect(exclude).toBeVisible({ timeout: 30_000 });
   await expect(rq.page.locator('main')).toContainText('broken.pdf');
   await shot(rq.page, 's5-damaged-file-needs-decision');
   const before = await (await rq.api.get(`/api/requests/${id}`)).json();
   expect(before.request.status).toBe('needs_file_decision');
   await exclude.click();
-  await expect(rq.page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 200_000 });
+  await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
   const d = await (await rq.api.get(`/api/requests/${id}`)).json();
   expect(d.attachments.filter((a: any) => a.excluded).map((a: any) => a.filename)).toEqual(['broken.pdf']);
   await expect(rq.page.getByText(/revision/).first()).toBeVisible();
@@ -215,8 +218,8 @@ test('S7 re-analysis from the UI: previous/new runs distinguished, no duplicate 
   rq.page.once('dialog', (d) => void d.accept());
   await rq.page.goto('/');
   await rq.page.getByText(s2).first().click();
-  await expect(rq.page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
-  await rq.page.getByRole('button', { name: '새 실행으로 다시 분석' }).click();
+  await expect(finalResult(rq.page)).toBeVisible();
+  await rq.page.getByRole('button', { name: '다시 분석', exact: true }).click();
   await expect.poll(async () => (await (await rq.api.get(`/api/requests/${s2}/runs`)).json()).runs.length, { timeout: 60_000 }).toBe(2);
   await expect.poll(async () => {
     const runs = (await (await rq.api.get(`/api/requests/${s2}/runs`)).json()).runs as any[];
@@ -268,7 +271,7 @@ test('S9 script/HTML in a document is shown as inert text (no dialog, no executi
   const dialogs: string[] = [];
   for (const a of [rq, rv]) a.page.on('dialog', (d) => { dialogs.push(d.message()); void d.dismiss(); });
   const id = await submitViaUi(rq, payload, [{ name: 'script.md', mimeType: 'text/markdown', buffer: Buffer.from(payload) }]);
-  await expect(rq.page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 200_000 });
+  await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
   await expect(rq.page.locator('main')).toContainText('<script>');
   await pendingReview(rv, id);
   await rv.page.goto('/review');
@@ -316,7 +319,7 @@ test('G10 WebMCP product tools: unauthorised IDs return API 404 through the tool
   // browsers without WebMCP: the page is usable (no tools, no crash)
   const plain = await actor(browser, base, 'requester');
   await plain.page.goto('/');
-  await expect(plain.page.getByRole('heading', { name: '요청 접수와 판단 결과' })).toBeVisible();
+  await expect(plain.page.getByRole('heading', { name: '일동이와 요청 접수' })).toBeVisible();
   expect(await plain.page.evaluate(() => 'modelContext' in document)).toBe(false);
   keep('g10_handlers', { foreign_request: foreignRequest, get_request: (gotRequest as { message: string }).message.slice(0, 80), get_trace: (gotTrace as { message: string }).message.slice(0, 80), own_request_ok: ownId, real_browser_agent_invocation: 'not performed (blocked)' });
 });

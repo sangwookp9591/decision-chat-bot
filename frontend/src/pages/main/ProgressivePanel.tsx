@@ -15,17 +15,11 @@ export function Skeleton({ rows = 2, label }: { rows?: number; label: string }) 
   return <div className="skeleton-area" role="status" aria-busy="true" aria-label={label}>{visible && Array.from({ length: rows }, (_, index) => <span key={index} className="skeleton" aria-hidden="true" />)}</div>;
 }
 
-export function OptimisticRequestCard({ state }: { state: ProgressState }) {
-  if (!state.optimisticText) return null;
-  const excerpt = state.optimisticText.length > 160 ? `${state.optimisticText.slice(0, 160)}…` : state.optimisticText;
-  return <section className="progress-card optimistic-card" aria-label="제출한 요청"><div className="card-heading"><h2>제출한 요청</h2>{state.phase === 'submitting' ? <StatusBadge status="progress" label="접수하는 중…" /> : <StatusBadge status="success" label="접수됨" />}</div><p className="optimistic-text">{excerpt}</p>{state.requestId && <code>{state.requestId}</code>}</section>;
-}
-
 /** Shown while the run is still working; tells the user it is not stuck once it passes 5 seconds. */
 export function SlowNotice({ state }: { state: ProgressState }) {
   const slow = useSlowNotice(isWorking(state.phase), 5000);
   if (!slow) return null;
-  return <p className="slow-notice" role="status">평소보다 오래 걸리고 있어요{state.currentStep ? ` · 현재 단계: ${stepLabel(state.currentStep)}` : ''}. 결과가 준비되는 대로 바로 보여 드릴게요.</p>;
+  return <p className="slow-notice" role="status">조금 더 걸리고 있어요{state.currentStep ? ` · 현재 단계: ${stepLabel(state.currentStep)}` : ''}. 결과가 준비되는 대로 바로 보여 드릴게요.</p>;
 }
 
 /** Same set the final `Result` treats as an uncertain classification, so its guidance can occupy its slot from the provisional stage. */
@@ -36,7 +30,7 @@ export const OPEN_LATER = '원문 열람은 최종 저장 후 가능';
  * Same areas in the same order and slots as `Result` (summary → judgment → tasks), so the final swap only replaces data:
  * "N items prepared" is one line, "details can be opened" is a separate, explicit state.
  */
-export function ProvisionalResult({ state, reserveAction = false }: { state: ProgressState; reserveAction?: boolean }) {
+export function ProvisionalResult({ state }: { state: ProgressState }) {
   const final = state.phase === 'final';
   const values = final ? state.finalClassifications ?? state.preliminary?.classifications : state.preliminary?.classifications;
   if (!values || !Object.keys(values).length) return null;
@@ -45,8 +39,7 @@ export function ProvisionalResult({ state, reserveAction = false }: { state: Pro
     <article className="result-summary" data-region="summary"><div className="card-heading"><h2>판단 결과</h2>{final ? <StatusBadge status="progress" label="저장 확인 중" /> : <StatusBadge status="progress" label="잠정 판단" />}</div>
       <div className="summary-text"><Skeleton rows={2} label="요약을 정리하는 중" /></div>
       <p className="author-line provisional-note" role="status">{final ? '최종 판단을 저장했어요. 결과를 불러오는 중' : PROVISIONAL_NOTE}</p>
-      <code className="provisional-count">{state.evidenceReady ? (state.evidenceCount !== undefined ? `근거 ${state.evidenceCount}건 연결됨` : '근거 연결됨') : '\u00a0'}</code>
-      {reserveAction && <span className="result-action-slot" aria-hidden="true" />}</article>
+      <code className="provisional-count">{state.evidenceReady ? (state.evidenceCount !== undefined ? `근거 ${state.evidenceCount}건 연결됨` : '근거 연결됨') : '\u00a0'}</code></article>
     <div className="judgment-grid" data-region="judgment">{keys.map((key) => { const value = String(values[key]); const selected = value === '조건부' ? '조건부 가능' : value; const confidence = state.preliminary?.confidences[key]; const uncertain = UNCERTAIN_VALUES.includes(value);
       return <article className="judgment-card" key={key}><h3>{classificationLabels[key]}{!final && <span className="provisional-badge">잠정</span>}</h3><div className="scale-options">{(classificationChoices[key] || [value]).map((choice) => <span key={choice} className={!uncertain && selected === choice ? 'selected' : ''}>{choice}</span>)}</div>{uncertain && <div className="uncertain-result"><strong>정보 부족·판단 보류</strong><span>{value}</span></div>}<div className="signal-labels">{typeof confidence === 'number' && <span>선택 신뢰도 {(confidence * 100).toFixed(0)}%</span>}</div>
         <div className="evidence-list">{state.evidenceReady ? <span>{OPEN_LATER}</span> : <Skeleton rows={2} label="근거를 연결하는 중" />}</div></article>; })}</div>

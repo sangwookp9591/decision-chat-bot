@@ -1,8 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 
+const tenant = process.env.E2E_TENANT || 't-alpha';
 const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
 async function login(page: Page) {
-  const response = await page.request.post('/api/auth/login', { data: { email: 'requester@t-alpha.dev', password } });
+  const response = await page.request.post('/api/auth/login', { data: { email: `requester@${tenant}.dev`, password } });
   expect(response.ok(), `login failed: ${response.status()}`).toBeTruthy();
 }
 
@@ -17,7 +18,7 @@ test('live request shows processing stages, saved judgment and evidence panel', 
   await expect(page.locator('.stage-list')).toContainText('내용 정리');
   await expect(page.locator('.stage-list')).toContainText('Jev 판단');
   await expect(page.locator('.stage-list')).toContainText('근거 연결');
-  await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
   await expect(page.locator('.environment-badge.mode-live').last()).toBeVisible();
   const evidence = page.getByRole('button', { name: /근거 열기|근거 패널 열기/ }).first();
   await expect(evidence).toBeVisible();
@@ -33,8 +34,9 @@ test('live damaged attachment can be excluded before a new revision judgment', a
   await page.getByLabel('파일 첨부').setInputFiles({ name: 'damaged.pdf', mimeType: 'application/pdf', buffer: Buffer.from('not a valid pdf') });
   await page.getByRole('button', { name: '요청 보내기' }).click();
   await expect(page.getByRole('button', { name: /보완 필요|파일 선택 필요|파일 결정 필요/ })).toBeVisible({ timeout: 30_000 });
-  await page.getByRole('button', { name: '실패 파일 제외 후 분석' }).click();
-  await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
+  await expect(page.getByRole('group', { name: '읽기 실패 파일' })).toContainText('damaged.pdf');
+  await page.getByRole('button', { name: '제외하고 진행' }).click();
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
   await expect(page.locator('.environment-badge.mode-live').last()).toBeVisible();
-  await expect(page.getByText(/revision/)).toBeVisible();
+  await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();
 });

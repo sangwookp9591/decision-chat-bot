@@ -28,16 +28,16 @@ await scene(1,'Jev Triage — 업무 요청이 업무가 되기까지',null,10,a
 await scene(2,'요청 접수부터 원문 근거까지',null,43,async(p,ctx,info)=>{
  await go(p,'/', '02 · 요청자 로그인. 비민감 가상 요청과 Markdown 문서를 함께 접수합니다.');
  await p.getByLabel('이메일',{exact:true}).fill(`requester@${T}.dev`);await wait(900);await p.getByLabel('암호',{exact:true}).fill(password);await click(p,p.getByRole('button',{name:'로그인',exact:true}));
- await p.locator('#request-text').fill(demoText);await wait(900);await p.locator('input[type=file]').setInputFiles(path.join(OUT,'회의실-요구사항.md'));await wait(1500);
+ await p.getByLabel('요청 내용',{exact:true}).fill(demoText);await wait(900);await p.locator('input[type=file]').setInputFiles(path.join(OUT,'회의실-요구사항.md'));await wait(1500);
  await p.evaluate(()=>{window.demoTiming={start:0};document.addEventListener('click',()=>{window.demoTiming.start=Date.now();},{capture:true,once:true});const ob=new MutationObserver(()=>{if(!window.demoTiming.start)return;const t=document.body.innerText;for(const [key,test]of [['preliminary',()=>!!document.querySelector('.provisional-badge')],['final',()=>!!document.querySelector('[data-region=summary] .environment-badge.mode-live')]])if(!window.demoTiming[key]&&test())window.demoTiming[key]=Date.now()-window.demoTiming.start;});ob.observe(document.body,{subtree:true,childList:true});});
  const accepted=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await click(p,p.getByRole('button',{name:'요청 보내기',exact:true}));primary=(await(await accepted).json()).request_id;ids.push(primary);
- await caption(p,'02 · 요청 카드와 단계 타임라인이 먼저 표시되고, 잠정 판단·근거·업무 영역이 차례로 채워집니다.');
+ await caption(p,'02 · 내 요청 말풍선과 일동이의 단계 타임라인이 먼저 표시되고, 잠정 판단·근거·업무 영역이 차례로 채워집니다.');
  await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});Object.assign(timing,await p.evaluate(()=>window.demoTiming));await wait(4000);
  await caption(p,'02 · 최종 결과는 LIVE 판단입니다. 근거를 누르면 원문과 해당 위치를 함께 확인합니다.');
  await scroll(p,p.locator('[data-region=judgment]'));const ev=p.getByRole('button',{name:/근거 열기/}).first();await click(p,ev);await wait(3000);
  if(await p.locator('.ev-unit.is-anchor').count()===0)info.limitations.push('원문 뷰어는 열렸으나 원문 강조 요소를 확인하지 못함');
 });
-await scene(3,'일동이 ChatWidget으로 요청 보내기','requester',20,async(p)=>{await go(p,'/','03 · 일동이 채팅에 업무를 말하면 입력창으로 옮겨집니다. 내용을 확인하고 접수합니다.');await click(p,p.getByRole('button',{name:'일동이와 채팅 열기'}));await p.getByLabel('메시지',{exact:true}).fill('가상 사내 회의실 이용 안내를 주간 보고서로 정리하고 싶습니다. 담당자는 현업이며 자료를 먼저 확인해 주세요.');await click(p,p.getByRole('button',{name:'보내기',exact:true}));const res=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await click(p,p.getByRole('button',{name:'요청 보내기',exact:true}));chat=(await(await res).json()).request_id;ids.push(chat);await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});});
+await scene(3,'일동이와의 대화로 두 번째 요청 보내기','requester',20,async(p)=>{await go(p,'/','03 · 요청 접수는 일동이와의 대화입니다. 예시 요청을 고르면 입력창에 채워지고, 확인한 뒤 Ctrl/⌘+Enter로 보냅니다.');await click(p,p.getByRole('group',{name:'예시 요청'}).getByRole('button').first());await p.getByLabel('요청 내용',{exact:true}).fill('가상 사내 회의실 이용 안내를 주간 보고서로 정리하고 싶습니다. 담당자는 현업이며 자료를 먼저 확인해 주세요.');const res=p.waitForResponse(r=>r.url().endsWith('/api/requests')&&r.request().method()==='POST');await click(p,p.getByRole('button',{name:'요청 보내기',exact:true}));chat=(await(await res).json()).request_id;ids.push(chat);await p.locator('[data-region=summary] .environment-badge.mode-live').waitFor({timeout:70000});});
 // Prepare genuine same-direction reviewer corrections via public APIs, never insert fabricated judgments.
 const rq=await apiAs('requester'),rev=await apiAs('reviewer');
 for(let i=0;i<3;i++){

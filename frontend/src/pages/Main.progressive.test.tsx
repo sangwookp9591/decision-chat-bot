@@ -36,28 +36,29 @@ async function submitText(text = '챗봇을 도입하고 싶습니다') {
 }
 
 describe('optimistic request card', () => {
-  it('shows the submitted request immediately, before the server answers', async () => {
+  it('shows the sent request as a right-hand bubble immediately, before the server answers', async () => {
     vi.mocked(uploadRequest).mockReturnValue(new Promise(() => undefined));
     renderMain(); await submitText();
-    const card = await screen.findByRole('region', { name: '제출한 요청' });
-    expect(card).toHaveTextContent('챗봇을 도입하고 싶습니다');
-    expect(card).toHaveTextContent('접수하는 중');
+    const bubble = await screen.findByRole('group', { name: '내가 보낸 요청' });
+    expect(bubble).toHaveTextContent('챗봇을 도입하고 싶습니다');
+    expect(bubble).toHaveTextContent('보내는 중');
+    expect(screen.getByRole('progressbar', { name: '업로드 진행률' })).toBeInTheDocument();
   });
-  it('confirms the card with the server request id', async () => {
+  it('confirms the bubble with the server request id', async () => {
     vi.mocked(uploadRequest).mockResolvedValue({ request_id: 'req_1', status: 'processing', revision: 1 });
     renderMain(); await submitText();
-    expect(await screen.findByRole('region', { name: '제출한 요청' })).toHaveTextContent('req_1');
-    expect(screen.getByRole('region', { name: '제출한 요청' })).toHaveTextContent('접수됨');
+    expect(await screen.findByRole('group', { name: '내가 보낸 요청' })).toHaveTextContent('req_1');
+    expect(screen.getByRole('group', { name: '내가 보낸 요청' })).toHaveTextContent('접수됨');
   });
-  it('rolls back on failure: card removed, text kept, reason and retry shown', async () => {
+  it('rolls back on failure: bubble removed, text kept, reason and retry shown', async () => {
     vi.mocked(uploadRequest).mockRejectedValueOnce(new Error('서버에 연결할 수 없습니다.'));
     renderMain(); await submitText();
     expect(await screen.findByRole('alert')).toHaveTextContent('서버에 연결할 수 없습니다.');
-    expect(screen.queryByRole('region', { name: '제출한 요청' })).toBeNull();
+    expect(screen.queryByRole('group', { name: '내가 보낸 요청' })).toBeNull();
     expect(screen.getByLabelText('요청 내용')).toHaveValue('챗봇을 도입하고 싶습니다');
     vi.mocked(uploadRequest).mockResolvedValue({ request_id: 'req_1', status: 'processing', revision: 1 });
     fireEvent.click(screen.getByRole('button', { name: '다시 시도' }));
-    expect(await screen.findByRole('region', { name: '제출한 요청' })).toHaveTextContent('req_1');
+    expect(await screen.findByRole('group', { name: '내가 보낸 요청' })).toHaveTextContent('req_1');
   });
 });
 
@@ -129,9 +130,9 @@ describe('slow and failed runs', () => {
     vi.mocked(requestApi.progress).mockResolvedValue({ request_id: 'req_1', status: 'processing', steps: [{ name: '근거 연결', status: 'running' }] });
     renderMain('/?request_id=req_1');
     await screen.findByRole('heading', { name: '분석 진행' });
-    expect(screen.queryByText(/평소보다 오래 걸리고 있어요/)).toBeNull();
+    expect(screen.queryByText(/조금 더 걸리고 있어요/)).toBeNull();
     await act(async () => { vi.advanceTimersByTime(5100); });
-    expect(screen.getByText(/평소보다 오래 걸리고 있어요/)).toHaveTextContent('근거 연결');
+    expect(screen.getByText(/조금 더 걸리고 있어요/)).toHaveTextContent('근거 연결');
   });
   it('judgment_failed shows the cause at once with a retry button', async () => {
     vi.mocked(uploadRequest).mockResolvedValue({ request_id: 'req_1', status: 'processing', revision: 1 });
@@ -161,12 +162,12 @@ describe('provisional → final keeps the layout (F5)', () => {
     expect(regions()).toEqual(['summary', 'judgment', 'tasks']);
     expect(document.querySelectorAll('.judgment-card')).toHaveLength(provisionalCards);
   });
-  it('keeps the submitted-request card above the result instead of removing it', async () => {
+  it('keeps the sent-request bubble above the result instead of removing it', async () => {
     await toProvisional();
     vi.mocked(requestApi.judgment).mockResolvedValue(judgment);
     act(() => emit({ type: 'judgment_saved', request_id: 'req_1', payload: { classifications: classes } }));
     await screen.findByText('최종 요약');
-    expect(screen.getByRole('region', { name: '제출한 요청' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: '내가 보낸 요청' })).toBeInTheDocument();
   });
   it('reserves the summary slot while provisional, with no late-inserted note row', async () => {
     await toProvisional();

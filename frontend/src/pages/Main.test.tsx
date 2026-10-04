@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
-import { Main, Result } from './Main';
+import { Main } from './Main';
+import { Result } from './main/ResultCard';
 import { requestApi } from '../api/requests';
 
 vi.mock('../api/requests', () => ({ requestApi: { detail: vi.fn(), list: vi.fn(), judgment: vi.fn(), runs: vi.fn(), reanalyze: vi.fn(), evidence: vi.fn(), document: vi.fn() } }));
@@ -58,9 +59,9 @@ describe('Main page UX (P3-02/05/11/13)', () => {
   it('shows the info request and a supplement submit for a request that needs more information (P3-02)', async () => {
     mockRequest('보완 필요', { info_requested: '사용 부서와 완료 희망일을 보완해 주세요', needed_info: JSON.stringify(['사용 부서와 완료 희망일을 보완해 주세요']) });
     open('/?request_id=req_1');
-    const region = await screen.findByRole('region', { name: '보완 요청' });
+    const region = await screen.findByRole('group', { name: '보완 요청' });
     expect(region.textContent).toContain('사용 부서와 완료 희망일을 보완해 주세요');
-    expect(screen.getByRole('button', { name: '보완 내용 제출 (새 revision)' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '답변 보내기' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '요청 보내기' })).toBeNull();
     expect(screen.getAllByText('보완 필요 · 정보 요청').length).toBeGreaterThan(0);
     expect(screen.queryByText('검토 대기')).toBeNull();
@@ -70,14 +71,13 @@ describe('Main page UX (P3-02/05/11/13)', () => {
     open('/?request_id=req_1');
     expect((await screen.findAllByText('반려됨')).length).toBeGreaterThan(0);
   });
-  it('hands chat widget text to the intake form immediately and focuses it (P3-05)', async () => {
+  it('has no floating chat launcher: intake itself is the conversation with 일동이 (CHAT-1)', async () => {
     mockRequest('judgment_saved');
     open('/');
-    const field = await screen.findByLabelText('요청 내용');
-    act(() => { window.dispatchEvent(new CustomEvent('chat:request', { detail: '채팅으로 추가한 회의실 검색 요청입니다' })); });
-    await waitFor(() => expect(field).toHaveValue('채팅으로 추가한 회의실 검색 요청입니다'));
-    await waitFor(() => expect(document.activeElement).toBe(field));
-    expect(screen.getByRole('status').textContent).toContain('요청 입력에 옮겼습니다');
+    expect(await screen.findByRole('log', { name: '일동이와의 대화' })).toHaveAttribute('aria-live', 'polite');
+    expect(screen.queryByRole('button', { name: /일동이와 채팅 열기/ })).toBeNull();
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(screen.getByLabelText('요청 내용')).toBeInTheDocument();
   });
   it('shows attachment failures with a recovery action in Korean (P3-13)', async () => {
     vi.mocked(requestApi.list).mockResolvedValue({ items: [] });
@@ -87,6 +87,9 @@ describe('Main page UX (P3-02/05/11/13)', () => {
     open('/?request_id=req_1');
     expect((await screen.findByText(/a\.pdf — /)).textContent).toContain('다시 저장해 첨부하거나 제외');
     expect(screen.queryByText(/unsupported_type/)).toBeNull();
+    expect(screen.getByText('이 파일을 읽지 못했어요')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '제외하고 진행' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: '다시 첨부' })).toBeEnabled();
   });
 });
 

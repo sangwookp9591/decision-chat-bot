@@ -68,7 +68,7 @@
 
 - **영역별 로딩**: 전체 화면 스피너 대신 근거·업무 영역만 스켈레톤으로 둔다. 라우트 전환 폴백도 본문 영역 스켈레톤이다.
 - **200ms 지연**: `useDelayedFlag`(`state/useDelayedFlag.tsx`)로 로딩 표시를 200ms 늦춘다. `LoadingState`·`Skeleton`·라우트 폴백이 모두 사용한다. **Suspensive `<Delay/>`를 직접 쓰지 않고 작은 훅을 둔 이유**: 필요한 것이 지연 하나뿐이고, Suspensive는 Suspense·ErrorBoundary 묶음까지 들어오는 새 의존성이라 번들·검증 비용이 이득보다 크다. 동작은 같다(활성 상태가 지연 시간 이상 지속될 때만 true, 끝나면 즉시 false).
-- **경과 시간**: 5초 이상 결과가 없으면 `useSlowNotice`가 '평소보다 오래 걸리고 있어요 · 현재 단계: …'를 보여 준다. 실패(`judgment_failed`·접수 오류)는 즉시 원인과 '다시 시도' 버튼(접수 실패 → 같은 입력 재제출, 분석 실패 → 새 실행)을 보인다.
+- **경과 시간**: 5초 이상 결과가 없으면 `useSlowNotice`가 '조금 더 걸리고 있어요 · 현재 단계: …'를 보여 준다. 실패(`judgment_failed`·접수 오류)는 즉시 원인과 '다시 시도' 버튼(접수 실패 → 같은 입력 재제출, 분석 실패 → 새 실행)을 보인다.
 
 ### 첫 로딩
 
@@ -101,3 +101,14 @@
 - **측정**: `e2e/p7-fixes.spec.ts`가 잠정 카드가 뜬 뒤부터 최종까지의 `layout-shift` 합(`hadRecentInput=false`)을 재고 0.005 미만을 요구한다(Chromium 전용). 이전 관측은 0.0135–0.0335였고 수정 후 0.00001이었다.
 - **모니터링 화면(F3)**: 제목·필터는 즉시 그리고 summary·slo·failures·alerts는 각각 독립 요청·독립 영역이다(`Monitoring.tsx`의 `useArea`). 영역은 최종 모양(라벨·표 행 고정, 값 자리만 스켈레톤)이며 200ms 미만이면 빈 자리만 둔다. 한 영역의 실패는 그 영역에만 표시하고 나머지는 그대로 쓴다. `api/monitoring.ts`는 같은 URL의 진행 중 GET을 하나로 합친다(완료 후 캐시 없음).
 - **요청 목록(F4)**: 요청 상세 구독과 별도로 `Main`이 필터 없는 tenant 이벤트 스트림을 하나 더 열고, 목록에 영향을 주는 이벤트(`request.received`, `judgment_saved|failed`, `review_decided`, `assignment_created`, `auto_assignment_deferred`, `task.transitioned`, `reanalysis.compared`)가 오면 400ms debounce 후 `GET /api/requests`만 다시 부른다(권한 범위는 서버가 정한다). 열려 있는 상세는 이 스트림으로 다시 불러오지 않는다.
+
+## 대화형 접수 (CHAT-1)
+
+요청 접수 화면(`pages/Main.tsx`)은 일동이와의 대화다. 떠 있는 채팅 위젯·런처는 `AppShell`에서 제거했고 다른 화면의 요청 동선은 사이드바 '요청 접수'로 일원화했다. 위 점진 표시 계약은 그대로이고 표시 단위만 말풍선이 되었다.
+
+- **메시지는 서버 상태에서 파생**한다(별도 대화 저장소 없음): 사용자 말풍선은 `detail.revisions`(보완 revision은 서버가 '이전 문장+새 문장'으로 저장하므로 `conversation.userMessages`가 이번 턴에 더한 문장·새 첨부만 보여 준다)와 낙관적 전송, 일동이 말풍선은 업로드 %(`uploadRequest`) → 분석 진행(`run.step`, thinking 아이콘) → 잠정 답변(`ProvisionalResult`) → 최종 답변(`Result`) 순이다. 새로고침은 `?request_id=` + detail·judgment·runs·progress로 같은 대화를 복원하므로 백엔드 추가 API는 없다.
+- **자리 유지**: 잠정·최종 답변은 같은 말풍선 틀(44px 아바타 칸, `bubble-title` 한 줄)을 쓰고, 다시 분석·새 요청 시작은 결과 카드 밖 `QuickReplies` 줄(요청이 열린 순간부터 렌더, 최종 저장 전 '다시 분석' 비활성)로 옮겨 카드 높이가 변하지 않는다. 말풍선 안 카드의 위 여백을 건드리는 CSS(`p` 일괄 margin 재설정)는 쓰지 않는다 — 한 번 8px 이동을 만들었다(F5 e2e가 검출).
+- **결과 아이콘 규칙**: 긴급(`urgency`에 '긴급') → 마스코트 없이 ⚠ 표식, 검토 필요 → surprised, 그 외 → like. 문장으로도 전달한다.
+- **대화 속 상호작용**: 읽기 실패 파일(`needs_file_decision`) → '이 파일을 읽지 못했어요' + [제외하고 진행](file-decision API)·[다시 첨부](파일 선택 → 같은 입력창 전송이 revision). 서버는 새 revision에도 이전 파일을 이어 붙이므로 다시 첨부해도 읽지 못한 파일은 남아 선택이 이어진다(`currentAttachments`가 최신 revision 파일만 표시). 보완 요청(`needed_info`) → 질문 말풍선, 같은 입력창의 답은 `revisions` API(`expected_revision`). 요청이 열려 있고 보완 상태가 아니면 입력은 새 요청으로 접수된다(안내 문구 표시).
+- **입력창**: 여러 줄, Ctrl/⌘+Enter 전송, 파일 첨부 버튼·드래그 앤 드롭·칩(제거 가능, 최대 5개 안내), 예시 요청 칩 3개는 입력창을 채우기만 한다. 마스코트 매체는 `components/Mascot.tsx`(webm / Safari webp / reduced-motion png).
+- **검증**: vitest `Main.chat.test.tsx`·`main/conversation.test.ts`(상태 전이·파일 실패 선택·정보 요청 답변→revision·복원·아이콘 규칙), e2e `e2e/chat-intake.spec.ts`(Chromium·WebKit, 375/520/960/1440px 캡처는 `artifacts/review/chat-intake/`).
