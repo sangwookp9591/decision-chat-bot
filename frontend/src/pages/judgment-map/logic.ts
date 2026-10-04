@@ -69,7 +69,7 @@ export function buildDisplay(nodes: GraphNode[], expanded: Set<string>, keep: Se
       const shown = members.filter((node) => keep.has(node.id));
       shown.forEach((node) => out.push(single(node)));
       const hidden = members.filter((node) => !keep.has(node.id));
-      if (hidden.length) out.push({ id: groupId, layer, kind, label: `${KIND_LABEL[kind] || kind} 외 ${hidden.length}개`, nodes: hidden, group: true });
+      if (hidden.length) out.push({ id: groupId, layer, kind, label: `+${hidden.length}개`, nodes: hidden, group: true });
     }
   }
   return out;
@@ -118,40 +118,89 @@ export const RELATION_LABEL: Record<string, string> = {
   PUBLISHED_IN: '게시', VALIDATES: '검증', APPLIED: '적용', USED_OUTPUT: '반환값 사용',
 };
 
-export const SCENE = { width: 1160, nodeW: 150, nodeH: 48, gap: 12, pad: 20, head: 44, planeGap: 64 };
+export const SCENE = { width: 960, nodeW: 164, nodeH: 58, gap: 14, pad: 24, label: 56, emptyH: 76, planeGap: 52, skew: -22 };
+/** Slab widths narrow from evidence (top) to work step (bottom): the funnel. */
+export const PLANE_WIDTHS = [920, 820, 720, 620, 520];
+export const SKEW_T = Math.tan((SCENE.skew * Math.PI) / 180);
 export type Box = { x: number; y: number; w: number; h: number };
 export type Plane = Box & { layer: number };
 
-/** Row-wrapped grid layout per layer; every layer gets a plane even when it is empty. */
+/** Short tile title: the kind is shown as a chip, so a repeated kind label / "Jev ·" prefix is dropped (never to an empty title). */
+export function tileTitle(kind: string, title: string): string {
+  const full = mapNodeTitleLabel(title);
+  const kindLabel = KIND_LABEL[kind] || '';
+  let text = full.replace(/^Jev\s*[·:]\s*/, '');
+  if (kindLabel && text.startsWith(kindLabel)) text = text.slice(kindLabel.length).replace(/^\s*[·:]?\s*/, '');
+  return text.trim() || full;
+}
+
+const VERSION_KEY: Record<string, string> = { config_version: 'config', config: 'config', model: 'model', model_version: 'model', question_set_version: 'qset', qset_version: 'qset', rule_version: 'rule' };
+const shortId = (value: string) => (value.length > 12 && /^[a-z]+_[0-9a-f]{8,}/i.test(value) ? `${value.slice(0, 8)}…` : value);
+
+/** Version strings come as plain text or as the run step's raw JSON; show them as short chips. */
+export function versionChips(version: string | null | undefined): string[] {
+  const text = String(version ?? '').trim();
+  if (!text || /^[—–-]$/.test(text) || text === '{}') return [];
+  if (text.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(text) as Record<string, unknown>;
+      return Object.entries(parsed).filter(([, value]) => value !== null && value !== undefined && typeof value !== 'object').map(([key, value]) => {
+        const label = VERSION_KEY[key] || key.replace(/_version$/, '');
+        const raw = String(value);
+        return `${label} ${/^\d+$/.test(raw) ? `v${raw}` : raw}`;
+      });
+    } catch { return [text]; }
+  }
+  return [shortId(text)];
+}
+
+/** One-sentence change summary of the shown version, from stored node data only. */
+export function versionSummary(tabs: VersionTab[], active: VersionTab | null, nodeCount: number, edgeCount: number, nodeSummary = ''): string {
+  if (active) return `v${active.version} · ${active.label} — ${nodeSummary || `연결된 노드 ${nodeCount}개 · 연결 ${edgeCount}개`}`;
+  if (!tabs.length) return '';
+  const live = tabs.find((tab) => tab.status === 'published' || tab.status === 'active'), testing = tabs.find((tab) => tab.status === 'validating' || tab.status === 'validated');
+  return [`규칙 v${tabs[0].version}–v${tabs[tabs.length - 1].version}`, live && `v${live.version} 운영 중`, testing && `v${testing.version} 검증 중`].filter(Boolean).join(' · ');
+}
+
+/** Slab layout: one thin or tall slab per layer, tiles centred per row; x already includes the slab skew so SVG links meet the tiles. */
 export function layoutScene(items: DisplayItem[]) {
-  const { width, nodeW, nodeH, gap, pad, head, planeGap } = SCENE;
-  const columns = Math.max(1, Math.floor((width - 2 * pad + gap) / (nodeW + gap)));
+  const { width, nodeW, nodeH, gap, pad, label, emptyH, planeGap } = SCENE;
   const boxes = new Map<string, Box>();
   const planes: Plane[] = [];
   let y = 0;
-  for (const layer of [1, 2, 3, 4, 5]) {
+  [1, 2, 3, 4, 5].forEach((layer, index) => {
+    const pw = PLANE_WIDTHS[index], px = (width - pw) / 2;
     const list = items.filter((item) => item.layer === layer);
-    const rows = Math.max(1, Math.ceil(list.length / columns));
-    const height = head + pad + rows * nodeH + (rows - 1) * gap + (list.length ? 0 : 8);
-    planes.push({ layer, x: 0, y, w: width, h: height });
-    list.forEach((item, index) => {
-      boxes.set(item.id, { x: pad + (index % columns) * (nodeW + gap), y: y + head + Math.floor(index / columns) * (nodeH + gap), w: nodeW, h: nodeH });
+    const columns = Math.max(1, Math.floor((pw - 2 * pad + gap) / (nodeW + gap)));
+    const rows = Math.ceil(list.length / columns);
+    const height = list.length ? pad + rows * nodeH + (rows - 1) * gap + label : emptyH;
+    planes.push({ layer, x: px, y, w: pw, h: height });
+    const cy = y + height / 2;
+    list.forEach((item, i) => {
+      const row = Math.floor(i / columns), inRow = Math.min(columns, list.length - row * columns), col = i % columns;
+      const rowW = inRow * nodeW + (inRow - 1) * gap;
+      const ty = y + pad + row * (nodeH + gap);
+      boxes.set(item.id, { x: px + (pw - rowW) / 2 + col * (nodeW + gap) + SKEW_T * (ty + nodeH / 2 - cy), y: ty, w: nodeW, h: nodeH });
     });
     y += height + planeGap;
-  }
+  });
   return { boxes, planes, width, height: y - planeGap };
 }
 
-/** Bezier path between two boxes from the facing sides; same-row links bow downward. */
+/** Top / bottom edge midpoint of a skewed tile (the parallelogram edge, not the unskewed box). */
+export function edgeAnchors(box: Box, side: 'top' | 'bottom') {
+  return side === 'bottom' ? { x: Math.round(box.x + box.w / 2 + (SKEW_T * box.h) / 2), y: box.y + box.h } : { x: Math.round(box.x + box.w / 2 - (SKEW_T * box.h) / 2), y: box.y };
+}
+
+/** Thin curve between the facing tile edges; same-row links bow downward. */
 export function edgePath(from: Box, to: Box): string {
-  const fx = from.x + from.w / 2, tx = to.x + to.w / 2;
   if (Math.abs(from.y - to.y) < 1) {
-    const y = from.y + from.h, bow = 26;
-    return `M${fx} ${y} C${fx} ${y + bow},${tx} ${y + bow},${tx} ${y}`;
+    const a = edgeAnchors(from, 'bottom'), b = edgeAnchors(to, 'bottom'), bow = 22;
+    return `M${a.x} ${a.y} C${a.x} ${a.y + bow},${b.x} ${b.y + bow},${b.x} ${b.y}`;
   }
   const down = from.y < to.y;
-  const y1 = down ? from.y + from.h : from.y, y2 = down ? to.y : to.y + to.h, mid = (y1 + y2) / 2;
-  return `M${fx} ${y1} C${fx} ${mid},${tx} ${mid},${tx} ${y2}`;
+  const a = edgeAnchors(from, down ? 'bottom' : 'top'), b = edgeAnchors(to, down ? 'top' : 'bottom'), mid = (a.y + b.y) / 2;
+  return `M${a.x} ${a.y} C${a.x} ${mid},${b.x} ${mid},${b.x} ${b.y}`;
 }
 
 /** Map every underlying edge onto the (possibly bundled) display items and de-duplicate. */

@@ -6,7 +6,7 @@ import { graphApi, type GraphCriteria, type GraphEdge, type GraphNode, type Judg
 import { MapView } from './judgment-map/MapView';
 import { ListView } from './judgment-map/ListView';
 import { Detail } from './judgment-map/Detail';
-import { buildDisplay, computeHighlight, mergeGraph, neighborId, ruleVersionTabs, tabRuleId, versionScope, type DisplayItem } from './judgment-map/logic';
+import { buildDisplay, computeHighlight, mergeGraph, neighborId, ruleVersionTabs, tabRuleId, versionScope, versionSummary, type DisplayItem } from './judgment-map/logic';
 import './judgment-map/judgment-map.css';
 import { statusText } from '../components/statusLabels';
 
@@ -116,6 +116,16 @@ export function JudgmentMap() {
   const active = CRITERIA_FIELDS.filter(([key]) => criteria[key]);
   const firstStop = tabStop ?? displayItems[0]?.id ?? null;
 
+  const bigButton = <button type="button" ref={bigToggle} className="jm-big" aria-pressed={big} onClick={() => setBig((value) => !value)}>크게 보기</button>;
+  const tabBar = versionTabs.length === 0 ? null : <div role="tablist" aria-label="규칙 버전" className="jm-tabs">
+    <button type="button" role="tab" aria-selected={!activeTab} onClick={() => pickVersion(null)}>전체</button>
+    {versionTabs.map((tab) => <button key={tab.id} type="button" role="tab" aria-selected={activeTab?.id === tab.id} title={`${tab.ruleId}@${tab.version}`} onClick={() => pickVersion(tab.id)}>v{tab.version}<span className={`jm-vstatus s-${tab.status}`}>{tab.label}</span></button>)}
+  </div>;
+  const activeNode = activeTab ? allNodes.find((n) => n.id === activeTab.id) : null;
+  const summaryLine = versionSummary(versionTabs, activeTab, nodes.length, edges.length, activeNode?.summary || '');
+  const inStage = view === 'map' && !loading && Boolean(graph) && nodes.length > 0 && tabBar;
+  const stageTop = inStage ? <>{tabBar}<p className="jm-vsummary" data-testid="jm-version-summary">{summaryLine}</p></> : undefined;
+
   return <section className={`jm-page ${big ? 'is-expanded' : ''}`} onKeyDown={onPageKeyDown}>
     <header className="jm-heading">
       <div><p className="eyebrow">근거 → 가설 → 판단 → 적용 → 업무 단계</p><h1>입체 판단 맵</h1></div>
@@ -123,7 +133,7 @@ export function JudgmentMap() {
         <button type="button" aria-pressed={view === 'map'} onClick={() => setView('map')}>입체 맵</button>
         <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')}>목록 보기</button>
       </div>
-      <button type="button" ref={bigToggle} className="jm-big" aria-pressed={big} onClick={() => setBig((value) => !value)}>크게 보기</button>
+      {view === 'list' && bigButton}
     </header>
     <form className="jm-filters" onSubmit={apply} aria-label="탐색 기준">
       <strong>탐색 기준</strong>
@@ -136,21 +146,18 @@ export function JudgmentMap() {
     </form>
     {active.length > 0 && <div className="jm-active" aria-label="적용된 기준">{active.map(([key, label]) => <button key={key} type="button" onClick={() => clear(key)} aria-label={`${label} 기준 해제`}>{label}: {criteria[key]} ×</button>)}</div>}
     {error && <ErrorState title="판단 관계를 불러오지 못했습니다" onRetry={() => void load()}>{error.message}</ErrorState>}
-    <div className="jm-versions" data-testid="jm-versions">
+    {!inStage && <div className="jm-versions" data-testid="jm-versions">
       {versionTabs.length === 0
         ? <p className="jm-version-empty" data-testid="jm-version-empty">규칙 버전 데이터가 없습니다. 규칙 ID를 기준으로 탐색하면 버전 탭이 나타납니다.</p>
-        : <div role="tablist" aria-label="규칙 버전" className="jm-tabs">
-          <button type="button" role="tab" aria-selected={!activeTab} onClick={() => pickVersion(null)}>전체</button>
-          {versionTabs.map((tab) => <button key={tab.id} type="button" role="tab" aria-selected={activeTab?.id === tab.id} title={`${tab.ruleId}@${tab.version}`} onClick={() => pickVersion(tab.id)}>v{tab.version}<span className={`jm-vstatus s-${tab.status}`}>{tab.label}</span></button>)}
-        </div>}
-    </div>
+        : tabBar}
+    </div>}
     {loading ? <LoadingState label="판단 관계를 불러오는 중" /> : graph && <div className="jm-layout">
       <div className="jm-board" ref={body} onKeyDown={onKeyDown} data-testid="jm-board" data-node-count={nodes.length} data-edge-count={edges.length}>
         <p className="jm-summary" role="status" data-testid="jm-summary">노드 {nodes.length}개 · 연결 {edges.length}개{graph.truncated && ' · 상한에 도달해 일부만 표시합니다'}</p>
         <ul className="jm-layer-counts" aria-label="계층별 개수">{layers.map((l) => <li key={l.layer} data-testid={`jm-layer-count-${l.layer}`}><span className="mono">{l.count}</span> {l.name}</li>)}</ul>
         {nodes.length === 0 ? <EmptyState title="표시할 판단 관계가 없습니다">선택한 기준에 해당하는 저장된 노드가 없습니다. 기준을 바꾸거나 초기화하세요.</EmptyState> :
           view === 'map'
-            ? <MapView expanded={big} items={displayItems} edges={edges} layers={layers} highlight={highlight} tabStop={firstStop} onTabStop={setTabStop} onPick={pick} />
+            ? <MapView expanded={big} items={displayItems} edges={edges} layers={layers} highlight={highlight} tabStop={firstStop} onTabStop={setTabStop} onPick={pick} topLeft={stageTop} extraControls={bigButton} />
             : <ListView nodes={nodes} edges={edges} layers={layers} highlight={highlight} tabStop={firstStop} onTabStop={setTabStop} onPick={(id) => void select(id)} />}
       </div>
       <Detail node={selectedNode} detail={detail} loading={detailLoading} onPick={(id) => void select(id)} layerName={layerName} />

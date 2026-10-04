@@ -1,0 +1,17 @@
+import { chromium } from '/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/index.mjs';
+const B='http://127.0.0.1:6791'; const b=await chromium.launch(); const page=await (await b.newContext({viewport:{width:1440,height:1000}})).newPage();
+await page.request.post(`${B}/api/auth/login`,{data:{email:'reviewer@t-ux3.dev',password:'dev-only-change-me'}});
+const g=await (await page.request.get(`${B}/api/graph/judgment?rule_id=R-UX-03`)).json();
+await page.goto(`${B}/judgment-map?rule_id=R-UX-03`); await page.waitForSelector('.jm-node');
+const board=page.getByTestId('jm-board');
+console.log('counts', await board.getAttribute('data-node-count'), g.node_count, await board.getAttribute('data-edge-count'), g.edge_count);
+const ids=await page.locator('.jm-node:not(.is-group)').evaluateAll(e=>e.map(x=>x.dataset.nodeId)); console.log('ids subset', ids.every(i=>g.nodes.some(n=>n.id===i)), ids.length);
+await page.locator('.jm-node[data-kind="RunStep"]').first().click(); await page.waitForTimeout(800);
+console.log('trace to evidence/rule path nodes', await page.locator('.jm-node.is-path').count(), 'path lines', await page.locator('.jm-line.is-path').count());
+const lines=await page.locator('.jm-line').evaluateAll(es=>es.map(e=>e.getAttribute('d')));
+console.log('lines', lines.length, 'all finite', lines.every(d=>!/NaN|Infinity/.test(d)));
+await page.keyboard.press('Escape'); await page.waitForTimeout(300); console.log('esc cleared', await page.locator('.jm-node.is-selected').count()===0);
+await page.getByRole('button',{name:'목록 보기'}).click();
+const first=page.locator('.jm-item').first(); await first.focus(); await page.keyboard.press('ArrowDown'); await page.keyboard.press('Enter');
+console.log('list enter detail', await page.getByTestId('jm-detail').getByRole('heading',{level:2}).isVisible());
+await b.close();
