@@ -71,6 +71,45 @@ test('F5 result: provisional → final does not move the content (layout-shift a
   expect(shift).toBeLessThan(0.005);
 });
 
+// UX-7: F5 residue (VERIFY-P8) — layout-shift sums miss movement below the first viewport, so measure document tops of each region while scrolled.
+const f5Sentences = [
+  { name: 'uncertain', text: '회의실 예약 조회 기능을 만들고 싶습니다.' },
+  { name: 'possible', text: '고객 문의 분류에 챗봇을 도입하고 싶습니다. 긴급하지 않고 AI팀이 주관하면 좋겠습니다.' },
+];
+for (const sentence of f5Sentences) {
+  test(`F5 residue (${sentence.name}): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final`, async ({ page }) => {
+    test.setTimeout(180_000);
+    await page.setViewportSize({ width: 1440, height: 700 });
+    await login(page, 'requester');
+    await page.goto('/');
+    await page.evaluate(() => {
+      const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null };
+      w.__prov = null; w.__final = null;
+      const snap = () => {
+        const out: Record<string, number> = {};
+        for (const region of ['summary', 'judgment', 'tasks']) { const node = document.querySelector(`[data-region="${region}"]`); if (!node) return null; out[region] = node.getBoundingClientRect().top + window.scrollY; if (region === 'judgment') out.judgmentHeight = node.getBoundingClientRect().height; if (region === 'summary') [...node.children].forEach((child, index) => { out[`summary.${index}`] = child.getBoundingClientRect().height; }); if (region === 'judgment') [...node.querySelector('.judgment-card')!.children].forEach((child, index) => { out[`card0.${index}`] = child.getBoundingClientRect().height; }); }
+        return out;
+      };
+      const tick = () => {
+        const provisional = document.querySelector('.provisional-result'); const final = document.querySelector('.result-stack:not(.provisional-result) .summary-text');
+        if (provisional) { const now = snap(); if (now) w.__prov = now; } else if (final && w.__prov && !w.__final && (final.textContent || '').trim()) w.__final = snap();
+      };
+      new MutationObserver(tick).observe(document.body, { childList: true, subtree: true, characterData: true });
+      window.addEventListener('scroll', () => undefined);
+    });
+    await page.getByLabel('요청 내용').fill(sentence.text);
+    await page.getByRole('button', { name: '요청 보내기' }).click();
+    await page.evaluate(() => window.scrollTo(0, 200)); // scrolled state: regions are measured in document coordinates
+    await expect(page.locator('.provisional-result')).toBeVisible({ timeout: 120_000 });
+    await expect(page.locator('.result-stack:not(.provisional-result) .summary-text')).toHaveText(/\S/, { timeout: 120_000 });
+    await page.waitForTimeout(500);
+    const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });
+    console.log('UX7_F5', sentence.name, JSON.stringify({ prov, final, uncertain }));
+    expect(prov, 'provisional layout captured').not.toBeNull(); expect(final, 'final layout captured').not.toBeNull();
+    for (const key of ['summary', 'judgment', 'tasks', 'judgmentHeight']) expect(Math.abs(final![key] - prov![key]), `${key}: ${prov![key]} → ${final![key]}`).toBeLessThanOrEqual(4);
+  });
+}
+
 test('F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세', async ({ page }) => {
   const visibleKeys = async () => page.evaluate(() => {
     const clone = document.querySelector('main, #root')!.cloneNode(true) as HTMLElement;

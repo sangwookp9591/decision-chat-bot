@@ -77,6 +77,14 @@ describe('partial events render by area', () => {
     expect(screen.getByRole('button', { name: /검토·배정은 최종 판단 저장 후/ })).toBeDisabled();
     await waitFor(() => expect(document.querySelectorAll('.skeleton').length).toBeGreaterThan(0)); // after the 200ms delay
   });
+  it('UX-7: an uncertain provisional classification shows the final guidance slot (no selected choice) from the provisional stage', async () => {
+    await accepted();
+    act(() => emit({ type: 'judgment.partial', request_id: 'req_1', payload: { classifications: { ...classes, feasibility: '정보 부족' }, preliminary: true } }));
+    const card = screen.getAllByRole('article').filter((el) => el.classList.contains('judgment-card'))[1];
+    expect(card.querySelector('.uncertain-result')).toHaveTextContent('정보 부족·판단 보류');
+    expect(card.querySelector('.scale-options .selected')).toBeNull();
+    expect(card.querySelector('.signal-labels')).not.toBeNull(); expect(card.querySelector('.evidence-list')).not.toBeNull(); // reserved slots
+  });
   it('evidence_ready and tasks_ready fill their own areas (any order)', async () => {
     await accepted();
     act(() => emit({ type: 'judgment.tasks_ready', request_id: 'req_1', payload: { task_count: 3 } }));
