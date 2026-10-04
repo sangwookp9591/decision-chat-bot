@@ -1,2 +1,132 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');
-:root{--color-primary:#F15921;--color-primary-ink:#B33F0E;--color-primary-tint:#FDF3EE;--color-secondary:#0E7C86;--color-ink:#1B1712;--color-ink-2:#4A433B;--color-caption:#6B6259;--color-line:#E6E1DA;--color-line-strong:#D3CCC2;--color-ground:#F6F4F1;--color-surface:#FFFFFF;--color-surface-2:#FBFAF8;--status-success:#1F7A4D;--status-success-text:#1F5E3B;--status-fail:#B42318;--status-fail-bg:#FDF0EE;--status-active:#F15921;--status-active-bg:#FFF7F2;--status-review:#6941C6;--status-review-text:#4A2A9A;--status-review-bg:#F4F0FD;--status-pending-border:#B5ACA1;--font-sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;--font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;--text-title:700 20px/1.4 var(--font-sans);--text-section:700 15px/1.4 var(--font-sans);--text-body:400 14px/1.6 var(--font-sans);--text-caption:400 12px/1.5 var(--font-sans);--radius-card:14px;--radius-control:8px;--hit-min:44px}
+/*
+ * Design tokens — Toss Design System (TDS) foundation, brand colors kept.
+ * Rationale, sources and usage: docs/architecture/DESIGN_SYSTEM.md
+ *
+ * Rule: screens read tokens by NAME. Names from the previous palette (--color-ink, --color-line, …) are kept;
+ * only their values moved to the TDS grey scale. Brand orange/teal and the #1B1712-on-orange text rule are unchanged.
+ */
+:root {
+  /* ── TDS grey scale (@toss/tds-colors 0.1.0, light) ── */
+  --grey-50: #f9fafb; --grey-100: #f2f4f6; --grey-200: #e5e8eb; --grey-300: #d1d6db; --grey-400: #b0b8c1;
+  --grey-500: #8b95a1; --grey-600: #6b7684; --grey-700: #4e5968; --grey-800: #333d4b; --grey-900: #191f28;
+  --grey-opacity-100: rgba(2, 32, 71, 0.05); --grey-opacity-200: rgba(0, 27, 55, 0.1);
+
+  /* ── Brand (unchanged) ── */
+  --color-primary: #F15921;          /* actions, emphasis */
+  --color-primary-ink: #B33F0E;      /* orange as TEXT/links on light surfaces (AA ≥ 5.2:1) */
+  --color-primary-tint: #FDF3EE;     /* weak fill for selected/hover */
+  --color-primary-weak: rgba(241, 89, 33, 0.12); /* TDS "weak" button fill */
+  --color-on-primary: #1B1712;       /* text ON orange — contrast rule (5.26:1), never white */
+  --color-secondary: #0E7C86;        /* teal, supporting */
+
+  /* ── Neutral roles (names kept, values from TDS greys) ── */
+  --color-ink: var(--grey-900);          /* titles */
+  --color-ink-2: var(--grey-700);        /* body */
+  --color-caption: #626D7B;              /* secondary text: grey600 darkened to keep AA (4.77:1) on greyBackground */
+  --color-disabled: var(--grey-400);     /* decorative / disabled only — below AA, never for required text */
+  --color-line: var(--grey-200);         /* hairlineBorder */
+  --color-line-strong: var(--grey-300);
+  --color-ground: var(--grey-100);       /* greyBackground — page */
+  --color-surface: #ffffff;              /* card */
+  --color-surface-2: var(--grey-50);     /* quiet zone inside a card */
+  --color-fill: var(--grey-100);         /* input / chip / weak-button fill */
+  --color-fill-strong: var(--grey-200);
+  --color-overlay: rgba(25, 31, 40, 0.5);
+
+  /* ── Status (TDS red/green/orange families; text variants darkened to AA) ── */
+  --status-success: #067A4B;             /* text/icon (5.39:1); TDS green500 #03b26c is 2.8:1 on white */
+  --status-success-fill: #03B26C;        /* TDS green500 — fills only (switch, bars) */
+  --status-success-text: #067A4B;
+  --status-success-bg: #E8F7F0;
+  --status-fail: #D01F2C;                /* text/icon (5.36:1); TDS red500 #f04452 is 3.7:1 */
+  --status-fail-fill: #F04452;           /* TDS red500 — fills only */
+  --status-fail-bg: #FEF0EF;
+  --status-warn: #9A5200;                /* text (5.86:1) — TDS orange500 family; always icon+name, never confused with brand orange */
+  --status-warn-fill: #FE9800;           /* TDS orange500 — fills only */
+  --status-warn-bg: #FFF4E0;
+  --status-active: #F15921;
+  --status-active-bg: #FFF1EB;
+  --status-review: #6941C6;
+  --status-review-text: #4A2A9A;
+  --status-review-bg: #F4F0FD;
+  --status-pending-border: #B0B8C1;
+
+  /* ── Typography ── */
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; /* code and IDs only */
+  /* TDS Typography t1–t7: APPROXIMATE (the official preview is not public). size/line-height in px. */
+  --t1: 700 30px/40px var(--font-sans);
+  --t2: 700 26px/35px var(--font-sans);
+  --t3: 700 22px/31px var(--font-sans);
+  --t4: 700 20px/29px var(--font-sans);
+  --t5: 600 17px/25.5px var(--font-sans);
+  --t6: 400 15px/22.5px var(--font-sans);
+  --t7: 400 13px/19.5px var(--font-sans);
+  --weight-title: 700; --weight-subtitle: 600; --weight-body: 400; --weight-emphasis: 500;
+  /* previous names → TDS tiers */
+  --text-title: var(--t4);
+  --text-section: 700 15px/22.5px var(--font-sans);
+  --text-body: var(--t6);
+  --text-caption: var(--t7);
+
+  /* ── Shape ── */
+  --radius-xs: 6px; --radius-md: 12px; --radius-card: 16px; --radius-xl: 20px; --radius-pill: 999px;
+  --radius-control: 12px;
+  --hit-min: 44px;
+
+  /* ── Space (4px grid) ── */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --section-gap: 28px;
+
+  /* ── Elevation: faces over borders; shadows barely there ── */
+  --shadow-card: 0 2px 8px rgba(2, 32, 71, 0.04);
+  --shadow-pop: 0 8px 28px rgba(2, 32, 71, 0.12);
+  --shadow-toast: 0 8px 24px rgba(2, 32, 71, 0.2);
+
+  /* ── Motion ── fast, springy, short */
+  --dur-press: 120ms; --dur-fast: 160ms; --dur-base: 240ms; --dur-slow: 320ms; --dur-shimmer: 1400ms;
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --press-scale: 0.97;
+  --enter-distance: 10px;
+  --stagger-step: 36ms;
+
+  color-scheme: light;
+}
+
+/*
+ * Dark (TDS dark values). OPT-IN for now: `<html data-theme="dark">`, or `data-theme="auto"` to follow the OS.
+ * It is not automatic yet because screens still carry hard-coded light colors (see DESIGN_SYSTEM.md §화면 하드코딩 목록);
+ * auto-following the OS before those are tokenized would put dark ink on white cards.
+ */
+:root[data-theme='dark'] {
+  --grey-50: #202027; --grey-100: #2c2c35; --grey-200: #3c3c47; --grey-300: #4d4d59; --grey-400: #62626d;
+  --grey-500: #7e7e87; --grey-600: #9e9ea4; --grey-700: #c3c3c6; --grey-800: #e4e4e5; --grey-900: #ffffff;
+  --grey-opacity-100: rgba(217, 217, 255, 0.11); --grey-opacity-200: rgba(222, 222, 255, 0.19);
+  --color-primary-ink: #FF8A5C; --color-primary-tint: #3B2620; --color-primary-weak: rgba(241, 89, 33, 0.2);
+  --color-caption: #9e9ea4; --color-ground: #101013; --color-surface: #202027; --color-surface-2: #2c2c35;
+  --color-fill: #2c2c35; --color-fill-strong: #3c3c47; --color-overlay: rgba(0, 0, 0, 0.6);
+  --status-success: #3DD68C; --status-success-text: #3DD68C; --status-success-bg: #12301f;
+  --status-fail: #FF6B6B; --status-fail-bg: #3a1c20; --status-warn: #FFB84D; --status-warn-bg: #3a2c14;
+  --status-active-bg: #3B2620; --status-review: #B79CF2; --status-review-text: #CDBEF3; --status-review-bg: #2b2342;
+  --status-pending-border: #62626d;
+  --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='auto'] {
+    --grey-50: #202027; --grey-100: #2c2c35; --grey-200: #3c3c47; --grey-300: #4d4d59; --grey-400: #62626d;
+    --grey-500: #7e7e87; --grey-600: #9e9ea4; --grey-700: #c3c3c6; --grey-800: #e4e4e5; --grey-900: #ffffff;
+    --grey-opacity-100: rgba(217, 217, 255, 0.11); --grey-opacity-200: rgba(222, 222, 255, 0.19);
+    --color-primary-ink: #FF8A5C; --color-primary-tint: #3B2620; --color-primary-weak: rgba(241, 89, 33, 0.2);
+    --color-caption: #9e9ea4; --color-ground: #101013; --color-surface: #202027; --color-surface-2: #2c2c35;
+    --color-fill: #2c2c35; --color-fill-strong: #3c3c47; --color-overlay: rgba(0, 0, 0, 0.6);
+    --status-success: #3DD68C; --status-success-text: #3DD68C; --status-success-bg: #12301f;
+    --status-fail: #FF6B6B; --status-fail-bg: #3a1c20; --status-warn: #FFB84D; --status-warn-bg: #3a2c14;
+    --status-active-bg: #3B2620; --status-review: #B79CF2; --status-review-text: #CDBEF3; --status-review-bg: #2b2342;
+    --status-pending-border: #62626d;
+    --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}

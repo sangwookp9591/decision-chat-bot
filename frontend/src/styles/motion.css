@@ -1,0 +1,40 @@
+/*
+ * Motion — TDS-like: quick, springy, short. Tokens live in tokens.css (--dur-*, --ease-*).
+ * Everything here collapses to the final state under prefers-reduced-motion (see the block at the end).
+ * Usage and classes: docs/architecture/DESIGN_SYSTEM.md §모션; JS helpers in src/lib/motion.ts.
+ */
+@keyframes m-fade-up { from { opacity: 0; transform: translateY(var(--enter-distance)); } to { opacity: 1; transform: none; } }
+@keyframes m-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes m-pop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes m-sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes m-slide-in-right { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes m-toast-up { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes m-grow { from { width: 0; } }
+@keyframes m-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* Screen / block entrance: fade + rise. `m-enter` on any element. Route changes get it via `main > section`, but only after the
+ * first in-app navigation (armRouteMotion sets data-motion="route"): a full page load paints immediately with no half-transparent
+ * frames, which keeps first paint, screenshots and axe contrast checks deterministic. */
+.m-enter { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; }
+:root[data-motion='route'] main > section { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; }
+/* Lists: set --i on children (useStaggerIn does it) — 36ms steps, capped so long lists never feel slow. */
+.m-stagger > * { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; animation-delay: calc(min(var(--i, 0), 10) * var(--stagger-step)); }
+
+/* Press feedback: pointer-down shrinks to 0.97 in 120ms and springs back. */
+:where(.ui-button, .fld-chip, .id-chip, .evidence-link, .ui-tabs button, [data-press]):not(:disabled) {
+  transition: transform var(--dur-press) var(--ease-spring), background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+:where(.ui-button, .fld-chip, .id-chip, .evidence-link, .ui-tabs button, [data-press]):not(:disabled):active { transform: scale(var(--press-scale)); }
+.m-press-card { transition: transform var(--dur-press) var(--ease-spring), background-color var(--dur-fast) var(--ease-out); }
+.m-press-card:active { transform: scale(0.98); }
+
+/* Skeleton: final-shape placeholder + soft shimmer. */
+.ui-skeleton { display: block; height: 16px; border-radius: var(--radius-xs); background: linear-gradient(90deg, var(--grey-100) 25%, var(--grey-50) 50%, var(--grey-100) 75%); background-size: 200% 100%; animation: m-shimmer var(--dur-shimmer) linear infinite; }
+.ui-skeleton.circle { border-radius: 50%; }
+/* Bridge: screens still ship their own warm-grey `.skeleton`/`.sk`; unify their look until each screen drops its copy. */
+main :is(.skeleton, .sk) { background-image: linear-gradient(90deg, var(--grey-100) 25%, var(--grey-50) 50%, var(--grey-100) 75%) !important; background-size: 200% 100%; animation-duration: var(--dur-shimmer) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .ui-skeleton, main :is(.skeleton, .sk) { animation: none !important; }
+}

@@ -1,6 +1,9 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useDelayedFlag } from '../state/useDelayedFlag';
+import { armRouteMotion } from '../lib/motion';
 import './ui.css';
+
+armRouteMotion();
 
 export type StatusKind = 'success' | 'failure' | 'progress' | 'review' | 'pending' | 'skipped';
 const statusLabels: Record<StatusKind, string> = { success: '성공', failure: '실패', progress: '진행 중', review: '검토 대기', pending: '대기', skipped: '건너뜀' };
@@ -17,8 +20,33 @@ export function EmptyState({ title, children }: { title: string; children?: Reac
 export function ErrorState({ title = '문제가 발생했습니다', children, onRetry }: { title?: string; children?: ReactNode; onRetry?: () => void }) { return <div className="state-panel error-state" role="alert"><span aria-hidden="true">!</span><h2>{title}</h2>{children && <p>{children}</p>}{onRetry && <Button onClick={onRetry}>다시 시도</Button>}</div>; }
 /** `delayMs` withholds the spinner for short loads (default 200ms, same as Suspensive's Delay) so quick fetches never flash. */
 export function LoadingState({ label = '불러오는 중', delayMs = 200 }: { label?: string; delayMs?: number }) { const visible = useDelayedFlag(true, delayMs); return <div className="loading-state" role="status" aria-busy="true">{visible && <><span className="spinner" aria-hidden="true" />{label}</>}</div>; }
-export function Button({ children, variant = 'primary', ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'plain' }) { return <button {...props} className={`ui-button ${variant} ${props.className || ''}`}>{children}</button>; }
-export function Tabs({ tabs, value, onChange }: { tabs: { id: string; label: string }[]; value: string; onChange: (id: string) => void }) { return <div className="ui-tabs" role="tablist">{tabs.map((tab) => <button key={tab.id} type="button" role="tab" aria-selected={value === tab.id} className={value === tab.id ? 'active' : ''} onClick={() => onChange(tab.id)}>{tab.label}</button>)}</div>; }
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  /** Legacy mapping: primary = fill/primary, secondary = fill/teal, plain = weak/light. */
+  variant?: 'primary' | 'secondary' | 'plain';
+  /** TDS size. `medium` (default) keeps the 44px touch target; `small` is for dense toolbars only. */
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  /** TDS variant: `fill` (solid) or `weak` (translucent). Needs `color`. */
+  tone?: 'fill' | 'weak';
+  /** TDS color. Overrides the legacy `variant` palette. */
+  color?: 'primary' | 'dark' | 'danger' | 'light';
+  loading?: boolean;
+  block?: boolean;
+};
+export function Button({ children, variant = 'primary', size = 'medium', tone, color, loading, block, className, disabled, ...props }: ButtonProps) {
+  const classes = ['ui-button', variant, size !== 'medium' && `size-${size}`, color && `c-${color}`, color && tone === 'weak' && 't-weak', block && 'block', className].filter(Boolean).join(' ');
+  return <button {...props} className={classes} disabled={disabled || loading} aria-busy={loading || undefined}>{loading && <span className="btn-spin" aria-hidden="true" />}{children}</button>;
+}
+/** Final-shape placeholder with the shared shimmer (TDS Skeleton). Size it with `width`/`height` or a class. */
+export function SkeletonBlock({ width, height = 16, circle, className = '' }: { width?: number | string; height?: number | string; circle?: boolean; className?: string }) { return <span className={`ui-skeleton${circle ? ' circle' : ''} ${className}`.trim()} style={{ width, height }} aria-hidden="true" />; }
+export function Tabs({ tabs, value, onChange }: { tabs: { id: string; label: string }[]; value: string; onChange: (id: string) => void }) {
+  const list = useRef<HTMLDivElement>(null);
+  const [ind, setInd] = useState<{ x: number; w: number } | null>(null);
+  useLayoutEffect(() => {
+    const measure = () => { const el = list.current?.querySelector<HTMLElement>('button.active'); setInd(el && el.offsetWidth ? { x: el.offsetLeft, w: el.offsetWidth } : null); };
+    measure(); window.addEventListener('resize', measure); return () => window.removeEventListener('resize', measure);
+  }, [value, tabs]);
+  return <div ref={list} className="ui-tabs" role="tablist" data-slide={ind ? 'on' : undefined}>{tabs.map((tab) => <button key={tab.id} type="button" role="tab" aria-selected={value === tab.id} className={value === tab.id ? 'active' : ''} onClick={() => onChange(tab.id)}>{tab.label}</button>)}{ind && <span className="ui-tabs-ind" aria-hidden="true" style={{ width: ind.w, transform: `translateX(${ind.x}px)` }} />}</div>;
+}
 export function Modal({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) { return <Overlay open={open} title={title} onClose={onClose} className="modal-panel">{children}</Overlay>; }
 export function Drawer({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) { return <Overlay open={open} title={title} onClose={onClose} className="drawer-panel">{children}</Overlay>; }
 function Overlay({ open, title, onClose, children, className }: { open: boolean; title: string; onClose: () => void; children: ReactNode; className: string }) { const ref = useRef<HTMLDivElement>(null); useEffect(() => { if (!open) return; const previous = document.activeElement as HTMLElement | null; const panel = ref.current; const focusables = () => panel?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])'); focusables()?.[0]?.focus(); const keydown = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); if (event.key === 'Tab') { const nodes = Array.from(focusables() || []); if (!nodes.length) { event.preventDefault(); return; } const first = nodes[0]; const last = nodes[nodes.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } }; document.addEventListener('keydown', keydown); return () => { document.removeEventListener('keydown', keydown); previous?.focus(); }; }, [open, onClose]); if (!open) return null; return <div className="overlay-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><section ref={ref} className={`overlay-panel ${className}`} role="dialog" aria-modal="true" aria-label={title} tabIndex={-1}><header><h2>{title}</h2><Button variant="plain" aria-label="닫기" onClick={onClose}>×</Button></header><div className="overlay-content">{children}</div></section></div>; }

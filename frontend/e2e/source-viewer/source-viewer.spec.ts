@@ -40,7 +40,7 @@ test.beforeAll(async ({ browser }, info) => {
     await page.getByLabel('요청 내용').fill(`사내 회의실 예약 도구를 도입하려고 합니다. 중복 예약을 줄이고 예약 전 알림을 보내야 합니다. 첨부 문서를 근거로 판단해 주세요.`);
     await page.getByLabel('파일 첨부').setInputFiles(['booking-spec.pdf', 'booking-notes.docx', 'booking-memo.md'].map((name) => join(fixtures, name)));
     await page.getByRole('button', { name: '요청 보내기' }).click();
-    await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 240_000 });
+    await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 240_000 });
     const id = new URL(page.url()).searchParams.get('request_id') || '';
     expect(id).toBeTruthy();
     // live Jev decides what it cites; retry with a new request when nothing was cited
@@ -53,7 +53,7 @@ test.afterAll(async () => { await owner?.context.close(); });
 test('result card evidence opens the source viewer on the cited unit and highlights it', async () => {
   const { page } = owner;
   await page.goto(`/?request_id=${requestId}`);
-  await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
   const buttons = page.getByRole('button', { name: /근거 열기/ });
   const count = Math.min(await buttons.count(), 6);
   expect(count).toBeGreaterThan(0);
@@ -101,7 +101,7 @@ test('PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighte
     await route.fulfill({ json: body });
   });
   await page.goto(`/?request_id=${requestId}`);
-  await expect(page.getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
+  await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
   for (const kind of ['pdf', 'docx', 'md', 'chat']) {
     await page.getByRole('button', { name: /근거 열기/ }).filter({ hasText: kind === 'chat' ? '채팅' : '첨부' }).nth(kind === 'chat' ? 0 : ['pdf', 'docx', 'md'].indexOf(kind)).click();
     const dialog = page.getByRole('dialog');
