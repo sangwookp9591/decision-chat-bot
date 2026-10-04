@@ -1,8 +1,20 @@
 services:
+  redis:
+    image: redis:7.4.2-alpine
+    command: ["redis-server", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
   neo4j:
     image: neo4j:5.26.0-community
     environment:
       NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-development-only}
+      NEO4J_db_transaction_timeout: 7s
+      NEO4J_db_lock_acquisition_timeout: 6s
     ports:
       - "7474:7474"
       - "7687:7687"

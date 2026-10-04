@@ -14,17 +14,31 @@ from jevtriage.auth.core import Principal, can_view_request, get_principal, sess
 from jevtriage.db.events import list_events
 from jevtriage.db.tx import read_tx
 from jevtriage.journal.writer import JournalWriter
+from jevtriage.judgment.questions import OPTIONS
+from jevtriage.realtime.notifier import ConnectionSlots
+from jevtriage.realtime.subscriber import TenantSubscriber
 
 router = APIRouter(prefix="/api/events", tags=["events"])
 POLL_SECONDS = float(os.getenv("SSE_POLL_SECONDS", "0.2"))
 MAX_CONNECTIONS = int(os.getenv("SSE_MAX_CONNECTIONS", "100"))
 MAX_AFTER_AGE_SECONDS = int(os.getenv("SSE_MAX_AFTER_AGE_SECONDS", "604800"))
 SESSION_RECHECK_SECONDS = float(os.getenv("SSE_SESSION_RECHECK_SECONDS", "15"))
-_connections = 0
-_connection_lock = asyncio.Lock()
+_slots = ConnectionSlots(limit=MAX_CONNECTIONS)
 _journal = JournalWriter()
 _hubs: dict[str, "_TenantHub"] = {}
 _hubs_lock = asyncio.Lock()
+
+
+class _SlotStreamingResponse(StreamingResponse):
+    def __init__(self, *args, slot: str, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.slot = slot
+
+    async def __call__(self, scope, receive, send):
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            await _slots.release(self.slot)
 
 
 async def _request_metas(tenant_id: str, request_ids: list[str]) -> dict[str, dict]:
@@ -50,6 +64,35 @@ async def _request_meta(tenant_id: str, request_id: str) -> dict | None:
 TENANT_WIDE_KINDS = ("policy.", "rule.")
 # Only these payload fields leave the server; payloads never carry source text.
 SAFE_PAYLOAD_FIELDS = ("status", "version", "config_version", "rule_id", "rule_version", "candidate_id", "step_name", "kind")
+CLASSIFICATION_KEYS = frozenset(OPTIONS)
+RISK_KEYS = frozenset({"clinical_safety", "pharmacovigilance", "regulatory"})
+
+
+def _safe_progress_fields(payload: dict) -> dict:
+    safe = {}
+    classes = payload.get("classifications")
+    if isinstance(classes, dict) and all(
+        key in CLASSIFICATION_KEYS and isinstance(value, str) and value in OPTIONS[key]
+        for key, value in classes.items()
+    ):
+        safe["classifications"] = classes
+    confidences = payload.get("confidences")
+    if isinstance(confidences, dict) and all(
+        key in CLASSIFICATION_KEYS and type(value) in (int, float) and 0 <= value <= 1
+        for key, value in confidences.items()
+    ):
+        safe["confidences"] = confidences
+    flags = payload.get("risk_flags")
+    if isinstance(flags, dict) and all(
+        key in RISK_KEYS and isinstance(value, bool) for key, value in flags.items()
+    ):
+        safe["risk_flags"] = flags
+    if isinstance(payload.get("preliminary"), bool):
+        safe["preliminary"] = payload["preliminary"]
+    for key in ("evidence_count", "task_count"):
+        if type(payload.get(key)) is int and payload[key] >= 0:
+            safe[key] = payload[key]
+    return safe
 
 
 class _TenantHub:
@@ -61,6 +104,7 @@ class _TenantHub:
         self.generation = 0
         self.subscribers: dict[asyncio.Queue, int] = {}
         self.task: asyncio.Task | None = None
+        self.listener = TenantSubscriber(tenant_id)
 
     def subscribe(self, cursor: int) -> asyncio.Queue:
         queue: asyncio.Queue = asyncio.Queue(maxsize=32)
@@ -74,6 +118,7 @@ class _TenantHub:
 
     async def run(self) -> None:
         try:
+            await self.listener.start()
             while self.subscribers:
                 start = self.cursor
                 generation = self.generation
@@ -96,7 +141,10 @@ class _TenantHub:
                         self.cursor = scanned
                     await asyncio.sleep(0)
                 else:
-                    await asyncio.sleep(POLL_SECONDS)
+                    try:
+                        await self.listener.wait(5.0 if self.listener.connected else POLL_SECONDS)
+                    except TimeoutError:
+                        pass  # Backup scan also covers missed Redis notifications.
         except asyncio.CancelledError:
             raise
         except Exception as exc:  # noqa: BLE001 - propagate poller failure to each stream
@@ -104,6 +152,8 @@ class _TenantHub:
                 while not queue.empty():
                     queue.get_nowait()
                 queue.put_nowait(exc)
+        finally:
+            await self.listener.close()
 
 
 async def _subscribe(tenant_id: str, cursor: int) -> tuple[_TenantHub, asyncio.Queue]:
@@ -141,7 +191,6 @@ async def stream_events(
     max_events: int | None = Query(default=None, ge=1, le=1000),
     principal: Principal = Depends(get_principal),  # noqa: B008
 ):
-    global _connections
     header_id = request.headers.get("last-event-id")
     try:
         # EventSource keeps the URL on automatic reconnect and adds this header.
@@ -152,19 +201,18 @@ async def stream_events(
     except ValueError as exc:
         raise HTTPException(400, "Invalid Last-Event-ID") from exc
 
-    async with _connection_lock:
-        if _connections >= MAX_CONNECTIONS:
-            raise HTTPException(503, "SSE connection limit reached")
-        _connections += 1
+    slot = await _slots.acquire()
+    if slot is None:
+        raise HTTPException(503, "SSE connection limit reached")
 
     async def body():
-        global _connections
         nonlocal cursor
         last_heartbeat = time.monotonic()
         last_session_check = last_heartbeat - SESSION_RECHECK_SECONDS
         current_principal = principal
         delivered = 0
         subscription = None
+        last_slot_refresh = time.monotonic()
         token = getattr(getattr(request, "state", None), "session_token", None) or request.cookies.get("jev_session")
         try:
             # A cursor ahead of the committed head, or older than the configured recovery
@@ -196,6 +244,9 @@ async def stream_events(
             hub, queue = await _subscribe(principal.tenant_id, cursor)
             subscription = (hub, queue)
             while True:
+                if time.monotonic() - last_slot_refresh >= 10:
+                    await _slots.refresh(slot)
+                    last_slot_refresh = time.monotonic()
                 if await request.is_disconnected():
                     return
                 if token and time.monotonic() - last_session_check >= SESSION_RECHECK_SECONDS:
@@ -235,6 +286,7 @@ async def stream_events(
                         payload = item["payload"]
                         data = {"request_id": request_id, "run_id": item["run_id"]}
                         data.update({k: payload[k] for k in SAFE_PAYLOAD_FIELDS if k in payload})
+                        data.update(_safe_progress_fields(payload))
                         yield _sse(item["kind"], data, item["seq"])
                         now = datetime.now(UTC)
                         created = item["created_at"]
@@ -250,10 +302,8 @@ async def stream_events(
         finally:
             if subscription:
                 await _unsubscribe(*subscription)
-            async with _connection_lock:
-                _connections -= 1
 
-    return StreamingResponse(body(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+    return _SlotStreamingResponse(body(), slot=slot, media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
 @router.get("/snapshot")

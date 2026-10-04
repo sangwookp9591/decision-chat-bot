@@ -2,7 +2,7 @@
 
 import json
 
-from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.db.tx import on_commit, read_tx, write_tx
 from jevtriage.domain.ids import new_id
 from jevtriage.domain.serialize import json_value, to_native
 
@@ -23,6 +23,8 @@ async def append_event_in_tx(tx, tenant_id: str, kind: str, payload: dict, *, re
         request_id=request_id, run_id=run_id, audience=audience,
     )
     record = await result.single(strict=True)
+    from jevtriage.realtime.notifier import publish_event
+    on_commit(lambda: publish_event(tenant_id, record["seq"]))
     return {"id": record["id"], "seq": record["seq"], "created_at": json_value(record["created_at"])}
 
 

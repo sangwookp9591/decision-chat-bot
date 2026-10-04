@@ -8,6 +8,7 @@
 | --- | --- |
 | 백엔드 | Python 3.14(로컬 확인 버전) + FastAPI + Pydantic v2, `uvicorn`; 패키지 `jevtriage`, 프로젝트 `backend/pyproject.toml`, 가상환경 `backend/.venv` |
 | 저장소 | Neo4j 5 (Docker Compose `neo4j` 서비스, bolt 7687, 데이터 `./.data/neo4j`), 공식 `neo4j` Python async 드라이버 |
+| 실시간 알림 | Redis 7.4.2 pub/sub(`tenant:{id}`, `jobs`); Neo4j Event/Job이 진실의 원천이며 Redis는 깨우기 전용 |
 | 작업 실행 | 별도 worker 프로세스(`python -m jevtriage.jobs.worker`), Neo4j의 Job 노드 lease/generation |
 | 관측 journal | `./.data/journal/*.jsonl` append+fsync, 수집기 `python -m jevtriage.journal.collector`, watchdog `python -m jevtriage.journal.watchdog` |
 | 원본 파일 | `./.data/files/<tenant>/<sha256>` + Neo4j 메타데이터 |

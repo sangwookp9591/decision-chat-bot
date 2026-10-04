@@ -18,7 +18,10 @@ class Settings(BaseSettings):
     neo4j_connection_timeout_seconds: float = 3.0
     neo4j_connection_acquisition_timeout_seconds: float = 5.0
     neo4j_transaction_retry_seconds: float = 3.0
+    neo4j_write_timeout_seconds: float = 5.0
+    neo4j_read_timeout_seconds: float = 30.0
     auth_db_timeout_seconds: float = 8.0
+    redis_url: str | None = None
 
 
 @lru_cache

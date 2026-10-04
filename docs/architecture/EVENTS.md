@@ -1,14 +1,17 @@
 # 이벤트 스트림과 복구
 
-T14-B 백엔드 계약. 사용자 이벤트의 기준 저장소는 Neo4j `Event`이며, tenant별 `EventCounter.seq`가 트랜잭션 안에서 단조 증가한다. stream 전송은 이 저장 기록을 짧은 간격으로 다시 읽어 프로세스 재시작 후에도 재개할 수 있다.
+T14-B 백엔드 계약. 사용자 이벤트의 기준 저장소는 Neo4j `Event`이며, tenant별 `EventCounter.seq`가 트랜잭션 안에서 단조 증가한다. Redis가 설정되면 커밋 후 `tenant:{tenant_id}` 채널에 seq를 알리고 각 API 인스턴스가 Neo4j에서 재생한다. Redis 메시지는 영속 기록이 아니므로 재연결과 누락 보정은 항상 Neo4j seq를 기준으로 한다.
+
+`realtime.notifier.publish_job(job_id)`와 `realtime.subscriber.JobSubscriber`는 `jobs` 채널을 제공한다. worker는 새 Job 커밋 후 알림을 받아 발견 질의를 앞당길 수 있으며, 주기적 Job 발견은 계속 필요하다.
 
 ## API
 
 - `GET /api/events/stream`: 로그인 세션 필수. 첫 연결은 `?after=`를 사용하고 EventSource 자동 재연결이 `Last-Event-ID`를 붙이면 헤더가 우선한다. 둘 다 있어도 400을 반환하지 않는다. SSE `id`는 tenant 이벤트 seq, `event`는 kind다. JSON은 request/run 식별자와 허용된 상태 필드만 포함하며 저장 payload의 임의 필드는 노출하지 않는다.
 - 요청 연결 이벤트는 매번 Request 메타데이터를 확인하고 `can_view_request` 정책을 적용한다. 접근 불가 이벤트는 전달하지 않는다. tenant가 다른 요청은 tenant 조건에서 조회되지 않는다.
 - cursor가 저장 head보다 앞서 있거나 보존 기한보다 오래되면 `snapshot-required`를 보내고 스트림을 닫는다. 클라이언트는 권한 확인 후 아래 snapshot을 읽고 새 cursor로 연결한다.
-- 프로세스의 tenant별 단일 폴러가 0.2초 간격으로 새 이벤트를 조회해 연결들에 전달한다. 각 연결은 독립 cursor와 `can_view_request` 권한 필터를 유지한다. 폴러는 최대 1,000건씩 순서대로 읽고, 배치의 request ID를 한 번의 Cypher로 조회한다. 느린 연결의 배치 대기열이 넘치면 `snapshot-required`를 보내며 연결을 닫는다. 빈 대기에는 SSE comment를 보내고 15초마다 heartbeat comment를 보낸다. 연결 상한은 프로세스당 100개다. `SSE_POLL_SECONDS`, `SSE_MAX_CONNECTIONS`, `SSE_MAX_AFTER_AGE_SECONDS` 환경변수로 조정한다. 세션은 15초마다 다시 확인하며 폐기·만료 시 `session-expired` 이벤트와 함께 닫는다.
+- 프로세스의 tenant별 단일 폴러가 Redis 알림이 오면 즉시 새 seq 범위를 조회하고 연결들에 전달한다. 알림 누락에 대비해 5초마다 백업 조회하며 Redis 미설정·장애 시 0.2초 폴링으로 전환한다. 각 연결은 독립 cursor와 `can_view_request` 권한 필터를 유지한다. 폴러는 최대 1,000건씩 순서대로 읽고, 배치의 request ID를 한 번의 Cypher로 조회한다. 느린 연결의 배치 대기열이 넘치면 `snapshot-required`를 보내며 연결을 닫는다. 빈 대기에는 SSE comment를 보내고 15초마다 heartbeat comment를 보낸다. Redis 연결 시 연결 상한은 모든 API 인스턴스 합산 100개이며 TTL 슬롯으로 누수를 제한한다. Redis 미설정·장애 시 프로세스 로컬 상한을 사용한다. `REDIS_URL`, `SSE_POLL_SECONDS`, `SSE_MAX_CONNECTIONS`, `SSE_MAX_AFTER_AGE_SECONDS` 환경변수로 조정한다. 세션은 15초마다 다시 확인하며 폐기·만료 시 `session-expired` 이벤트와 함께 닫는다.
 - 현재 제품 코드가 발행하는 저장 이벤트 kind: `run.step`, `judgment_saved`, `judgment_failed`, `reanalysis.compared`, `review_decided`, `auto_assignment_deferred`, `assignment_created`, `task.transitioned`, `policy.published`, `rule.decision`, `rule.version_created`, `rule.validated`, `rule.publish`, `rule.stop`, `rule.revert`. 정책 되돌리기도 새 Config를 게시하므로 `policy.published`를 발행한다. 저장 이벤트 외 스트림 제어 이벤트는 `snapshot-required`, `session-expired`다.
+- 진행 이벤트 `request.received`, `judgment.partial`, `judgment.evidence_ready`, `judgment.tasks_ready`도 요청 단위 권한 필터를 거친다. `classifications`·`confidences`·`risk_flags`는 허용된 분류 키와 단순 분류값·수치·불리언만, `preliminary`는 불리언만, `evidence_count`·`task_count`는 0 이상의 정수만 SSE에 포함한다. 원문 필드는 전달하지 않는다.
 - `GET /api/events/snapshot?request_id=…`: 요청 상태, active run, 해당 요청의 최신 영속 이벤트 seq를 반환한다. 접근 불가/존재하지 않는 요청은 동일한 404다.
 
 ## 전달 지연
@@ -19,7 +22,7 @@ FIX-SSE 확인에서 Neo4j 5.26 `SHOW INDEXES`는 `event_tenant_seq` RANGE 색�
 
 ## 한계와 클라이언트 동작
 
-이벤트 seq는 tenant 전역이므로 권한 필터를 통과하지 않은 요청의 seq에는 공백이 생길 수 있다. 이는 누락이 아니라 권한 경계다. 클라이언트는 중복 ID를 무시하고 최종 업무 상태를 snapshot으로 대조해야 한다. 연결 제한은 단일 프로세스 기준이며 다중 worker 전체의 통합 상한은 배포 계층에서 설정해야 한다.
+이벤트 seq는 tenant 전역이므로 권한 필터를 통과하지 않은 요청의 seq에는 공백이 생길 수 있다. 이는 누락이 아니라 권한 경계다. 클라이언트는 중복 ID를 무시하고 최종 업무 상태를 snapshot으로 대조해야 한다. Redis 연결 슬롯은 TTL 30초이며 활성 SSE 연결은 10초마다 갱신한다. Redis 장애 시 로컬 상한으로 폴백하므로 그 동안 전체 인스턴스 합산 상한은 보장되지 않는다.
 
 ## 프런트 구독 계약 (UX-1)
 
