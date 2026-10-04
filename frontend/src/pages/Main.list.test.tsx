@@ -40,6 +40,11 @@ describe('request list follows tenant events (F4)', () => {
   it('debounces an event burst into one refetch and keeps the selected detail untouched', async () => {
     render(<MemoryRouter initialEntries={['/?request_id=req_old']}><Main /></MemoryRouter>);
     await screen.findByRole('heading', { name: '분석 진행' });
+    // Let the initial list fetch and any pending debounce settle before taking the baseline,
+    // otherwise a late initial fetch is counted as part of the burst.
+    await act(async () => { vi.advanceTimersByTime(1500); });
+    await act(async () => { await Promise.resolve(); });
+    expect(vi.mocked(requestApi.list)).toHaveBeenCalled();
     const listCalls = vi.mocked(requestApi.list).mock.calls.length; const detailCalls = vi.mocked(requestApi.detail).mock.calls.length;
     for (const type of ['request.received', 'judgment_saved', 'review_decided', 'task.transitioned']) emitList({ type, request_id: 'req_other' });
     await act(async () => { vi.advanceTimersByTime(1500); });
