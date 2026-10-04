@@ -4,15 +4,14 @@ import json
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import HTTPException
 from pydantic import BaseModel, Field
 
-from jevtriage.auth.core import Principal, get_principal
+from jevtriage.auth.core import Principal
 from jevtriage.auth.policy import can
-from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.evaluation.store import labels_for_split, record_label
 
 ROOT = Path(__file__).resolve().parents[3]
-router = APIRouter(prefix="/api/evaluation", tags=["evaluation"])
 LABEL_FIELDS = {"ai_need", "feasibility", "urgency", "team_set", "risk_areas"}
 
 
@@ -57,14 +56,7 @@ async def _allowed(principal: Principal) -> bool:
 
 
 async def _labels(tenant: str, split: str) -> list[dict[str, Any]]:
-    async def op(tx):
-        result = await tx.run(
-            "MATCH (l:EvalLabel {tenant_id:$tenant,split:$split}) "
-            "RETURN l.sample_id AS id,l.labels AS labels,l.status AS status,l.user_id AS user_id,"
-            "l.reason AS reason,l.confidence AS confidence,l.created_at AS created_at "
-            "ORDER BY l.created_at", tenant=tenant, split=split)
-        return await result.data()
-    return await read_tx(tenant, op)
+    return await labels_for_split(tenant, split)
 
 
 def _latest_by_user(labels: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -74,8 +66,7 @@ def _latest_by_user(labels: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return list(latest.values())
 
 
-@router.get("/candidates")
-async def candidates(split: str = "tuning", principal: Principal = Depends(get_principal)):  # noqa: B008
+async def candidates(split: str, principal: Principal):
     if not await _allowed(principal):
         raise HTTPException(403, "Insufficient role")
     rows = _rows(split)
@@ -105,16 +96,11 @@ class LabelBody(BaseModel):
 
 
 async def _record(principal: Principal, split: str, sample_id: str, body: LabelBody, action: str) -> None:
-    async def store(tx):
-        await (await tx.run(
-            "CREATE (l:EvalLabel {tenant_id:$tenant,split:$split,sample_id:$id,user_id:$user,"
-            "labels:$labels,status:$status,reason:$reason,confidence:$confidence,created_at:datetime()}) "
-            "CREATE (a:AuditEvent {tenant_id:$tenant,kind:'evaluation_label',actor:$user,"
-            "subject:$id,action:$action,reason:$reason,created_at:datetime()})",
-            tenant=principal.tenant_id, split=split, id=sample_id, user=principal.user_id,
-            labels=json.dumps(body.labels, ensure_ascii=False), status=("consensus_confirmed" if action == "evaluation_consensus_confirmed" else body.status),
-            reason=body.reason, confidence=body.confidence, action=action)).consume()
-    await write_tx(principal.tenant_id, store)
+    await record_label(
+        principal.tenant_id, split, sample_id, principal.user_id, body.labels,
+        "consensus_confirmed" if action == "evaluation_consensus_confirmed" else body.status,
+        body.reason, body.confidence, action,
+    )
 
 
 def _validate_labels(split: str, sample_id: str, body: LabelBody) -> None:
@@ -126,9 +112,8 @@ def _validate_labels(split: str, sample_id: str, body: LabelBody) -> None:
         raise HTTPException(422, "All evaluation label fields are required")
 
 
-@router.put("/candidates/{split}/{sample_id}")
 async def save_label(split: str, sample_id: str, body: LabelBody,
-                     principal: Principal = Depends(get_principal)):  # noqa: B008
+                     principal: Principal):
     if not await _allowed(principal):
         raise HTTPException(403, "Insufficient role")
     _validate_labels(split, sample_id, body)
@@ -136,9 +121,8 @@ async def save_label(split: str, sample_id: str, body: LabelBody,
     return {"id": sample_id, "status": body.status}
 
 
-@router.post("/candidates/{split}/{sample_id}/consensus")
 async def confirm_consensus(split: str, sample_id: str, body: LabelBody,
-                            principal: Principal = Depends(get_principal)):  # noqa: B008
+                            principal: Principal):
     if not await _allowed(principal):
         raise HTTPException(403, "Insufficient role")
     _validate_labels(split, sample_id, body)

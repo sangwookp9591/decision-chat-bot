@@ -12,9 +12,9 @@ from jevtriage.db.idempotency import IdempotencyConflict, get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.requests import assert_active_run_in_tx
 from jevtriage.db.tx import write_tx
+from jevtriage.domain.eligibility import evaluate_auto_assign
 from jevtriage.domain.ids import new_id
-from jevtriage.judgment.eligibility import evaluate_auto_assign
-from jevtriage.judgment.questions import CLASS_KEYS, OPTIONS
+from jevtriage.domain.questions import CLASS_KEYS, OPTIONS
 from jevtriage.policy.service import DEFAULT_CONFIG
 
 

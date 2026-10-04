@@ -12,6 +12,8 @@ from jevtriage.db.audit import append_audit_in_tx
 from jevtriage.db.events import append_event_in_tx
 from jevtriage.db.idempotency import IdempotencyConflict, get_or_create_in_tx
 from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.domain.masking import CATEGORIES
+from jevtriage.domain.rules import RuleInvariantError, validate_rule
 
 POLICY_SCHEMA_VERSION = "policy-schema-v1"
 LIMIT_MAXIMA = {"text_chars": 20000, "attachments": 5, "file_bytes": 10485760, "total_bytes": 26214400, "pdf_pages": 50}
@@ -32,7 +34,6 @@ class RuleReference(BaseModel):
 
     @model_validator(mode="after")
     def valid_effect(self):
-        from jevtriage.learning.apply import RuleInvariantError, validate_rule
         try:
             validate_rule({"schema": "rule-v1", **self.model_dump(), "rule_id": self.rule_id, "version": self.version})
         except RuleInvariantError as exc:
@@ -58,7 +59,6 @@ class MaskingConfig(BaseModel):
 
     @model_validator(mode="after")
     def valid_categories(self):
-        from jevtriage.judgment.masking import CATEGORIES
         if len(set(self.categories)) != len(self.categories) or set(self.categories) - set(CATEGORIES):
             raise ValueError("unknown or duplicate masking category")
         return self

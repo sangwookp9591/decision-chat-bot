@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.8,<1", "mypy>=1.13,<2", "reportlab>=4,<5"]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.8,<1", "mypy>=1.13,<2", "reportlab>=4,<5", "import-linter>=2,<3"]
 
 [build-system]
 requires = ["hatchling>=1.26"]
@@ -32,3 +32,46 @@ asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 100
+
+[tool.importlinter]
+root_package = "jevtriage"
+
+[[tool.importlinter.contracts]]
+name = "Feature API to service to store"
+type = "layers"
+containers = ["jevtriage.auth", "jevtriage.review", "jevtriage.judgment", "jevtriage.ingest", "jevtriage.tasks", "jevtriage.observe", "jevtriage.graph", "jevtriage.monitoring", "jevtriage.learning", "jevtriage.evaluation"]
+layers = ["(api)", "(service)", "(store)"]
+
+[[tool.importlinter.contracts]]
+name = "Policy and persistence to domain"
+type = "layers"
+layers = ["jevtriage.policy", "jevtriage.db", "jevtriage.domain"]
+ignore_imports = [
+  # Legacy start_run_in_tx import is public to integration callers; migrate with API versioning.
+  "jevtriage.domain.runs -> jevtriage.db.runs",
+]
+
+[[tool.importlinter.contracts]]
+name = "Graph and monitoring are independent"
+type = "independence"
+modules = ["jevtriage.graph", "jevtriage.monitoring"]
+
+[[tool.importlinter.contracts]]
+name = "Judgment may call review but review is independent"
+type = "layers"
+layers = ["jevtriage.judgment", "jevtriage.review"]
+
+[[tool.importlinter.contracts]]
+name = "Learning may use judgment and policy"
+type = "layers"
+layers = ["jevtriage.learning", "jevtriage.judgment", "jevtriage.policy"]
+
+[[tool.importlinter.contracts]]
+name = "Top-level feature imports are acyclic"
+type = "acyclic_siblings"
+ancestors = ["jevtriage"]
+depth = 10
+ignore_imports = [
+  # Compatibility path for existing callers of domain.runs.start_run_in_tx.
+  "jevtriage.domain.runs -> jevtriage.db.runs",
+]

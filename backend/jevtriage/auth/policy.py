@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from jevtriage.auth.core import Principal
+from jevtriage.auth.types import Principal
 
 SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text"})
 

@@ -49,6 +49,9 @@ def _decode(value: Any) -> Any:
     return value
 
 
+decode_value = _decode
+
+
 def _text(value: Any) -> str:
     value = _decode(value)
     if value is None:

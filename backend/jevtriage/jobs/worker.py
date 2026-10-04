@@ -6,7 +6,6 @@ import json
 import os
 import signal
 import time
-import weakref
 from collections.abc import Awaitable, Callable
 from contextlib import asynccontextmanager, suppress
 from datetime import UTC, datetime
@@ -24,7 +23,8 @@ from jevtriage.domain.ids import new_id
 from jevtriage.domain.serialize import to_native
 from jevtriage.journal.reader import producer_heartbeat
 from jevtriage.journal.writer import JournalWriter, failure_count
-from jevtriage.observe.trace_store import finish_step_in_tx, start_step_in_tx
+from jevtriage.observe.service import finish_step_in_tx, start_step_in_tx
+from jevtriage.worker_wakeup import notify_new_job, register_worker
 
 Handler = Callable[["JobContext"], Awaitable[None]]
 HANDLERS: dict[str, Handler] = {}
@@ -180,15 +180,15 @@ class JobContext:
 
 
 class Worker:
-    _instances: weakref.WeakSet = weakref.WeakSet()
-
     @classmethod
     def notify_new_job(cls):
-        for worker in tuple(cls._instances):
-            if worker._loop and worker._loop.is_running():
-                worker._loop.call_soon_threadsafe(worker._wake.set)
-            else:
-                worker._wake.set()
+        notify_new_job()
+
+    def wake(self):
+        if self._loop and self._loop.is_running():
+            self._loop.call_soon_threadsafe(self._wake.set)
+        else:
+            self._wake.set()
 
     def __init__(self, *, concurrency=2, lease_seconds=15.0, poll_seconds=0.5,
                  deadline_seconds=120.0, max_attempts=3, owner_id=None, journal=None,
@@ -210,7 +210,7 @@ class Worker:
         self._wake = asyncio.Event()
         self._loop = None
         self._redis_connected = False
-        self._instances.add(self)
+        register_worker(self)
         self.tasks: set[asyncio.Task] = set()
         self.active_jobs: set[str] = set()
         self._last_producer_heartbeat = 0.0

@@ -1,4 +1,4 @@
-.PHONY: up down api worker collector watchdog retention web test lint typecheck build backup restore
+.PHONY: up down api worker collector watchdog retention web test lint lint-imports typecheck build backup restore
 up:
 	docker compose up -d neo4j
 down:
@@ -18,8 +18,11 @@ web:
 test:
 	cd backend && .venv/bin/pytest
 	cd frontend && npm run test
-lint:
+lint: lint-imports
 	cd backend && .venv/bin/ruff check jevtriage tests
+	cd backend && .venv/bin/ruff check --isolated --preview --select PLC2701 jevtriage
+lint-imports:
+	cd backend && .venv/bin/lint-imports
 typecheck:
 	cd frontend && npm run typecheck
 build:

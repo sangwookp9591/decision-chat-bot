@@ -4,7 +4,6 @@ import asyncio
 import hashlib
 import os
 import secrets
-from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
@@ -13,6 +12,10 @@ from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatc
 from fastapi import Depends, HTTPException, Request
 from fastapi.security import APIKeyCookie
 
+from jevtriage.auth.policy import can
+from jevtriage.auth.policy import scope_filter_cypher as policy_scope_filter_cypher
+from jevtriage.auth.store import delete_session, display_name, tenant_for_email
+from jevtriage.auth.types import Principal
 from jevtriage.db.driver import get_driver
 
 _hasher = PasswordHasher()
@@ -68,21 +71,24 @@ async def reset_login_attempt(tenant_id: str, email: str) -> None:
         )).consume()
 
 
-@dataclass(frozen=True)
-class Principal:
-    tenant_id: str
-    user_id: str
-    org_ids: tuple[str, ...]
-    roles: frozenset[str]
-    can_read_source: bool = False
-
-
 def hash_password(password: str) -> str:
     return _hasher.hash(password)
 
 
 def _token_hash(token: str) -> str:
     return hashlib.sha256(token.encode()).hexdigest()
+
+
+async def login_tenant(email: str) -> str:
+    return await tenant_for_email(email)
+
+
+async def revoke_session(token: str) -> None:
+    await delete_session(_token_hash(token))
+
+
+async def principal_display_name(principal: Principal) -> str | None:
+    return await display_name(principal.tenant_id, principal.user_id)
 
 
 async def authenticate(email: str, password: str) -> dict[str, Any] | None:
@@ -171,23 +177,19 @@ def require_roles(*roles: str):
 
 
 def can_view_request(principal: Principal, meta: dict[str, Any]) -> bool:
-    from jevtriage.auth.policy import can
     return can(principal, "view_request", meta)
 
 
 def can_review(principal: Principal, meta: dict[str, Any]) -> bool:
-    from jevtriage.auth.policy import can
     return can(principal, "review", meta)
 
 
 def can_read_learning_request(principal: Principal, meta: dict[str, Any]) -> bool:
-    from jevtriage.auth.policy import can
     return can(principal, "learn_read", meta)
 
 
 def scope_filter_cypher(principal: Principal) -> str:
-    from jevtriage.auth.policy import scope_filter_cypher as predicate
-    return predicate(principal)
+    return policy_scope_filter_cypher(principal)
 
 
 async def enforce_csrf(request: Request) -> None:

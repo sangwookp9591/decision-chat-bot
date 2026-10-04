@@ -47,6 +47,37 @@ artifacts/validation/<run-id>/   검증 증거 (비민감)
 
 ## 3. 공통 규칙
 
+### 레이어 의존 계약 (2026-10-04)
+
+`make lint`는 Ruff와 `lint-imports`를 실행한다. `backend/pyproject.toml`의 여섯 계약은 기능 패키지 안의 `api → service → store`, policy→db→domain, judgment→review, learning→judgment→policy 방향과 기능 패키지 사이의 비순환성을 강제한다. API·router의 `db.tx`/`db.driver` import와 직접 `tx.run` 호출, 모듈 간 `_private` import는 `tests/unit/test_architecture_contracts.py`가 검사한다. Ruff의 `PLC2701`도 제품 코드의 private import를 금지하며 테스트의 기존 직접 점검 경로만 제외한다. 인증·검토·이벤트·그래프·관측·모니터링 API의 인라인 Cypher는 각 기능의 store 또는 query 모듈로 옮겼다. `metrics_store.py`는 journal 수집기와 monitoring 집계가 함께 쓰는 SQLite 연결을 소유한다.
+
+기능 패키지 사이에서는 상대 기능의 `store`·`trace_store`를 직접 import하지 않는다. 요청 메타 조회는 `ingest.service.request_meta`, 학습 검증 입력은 `judgment.service.load_input_for_shadow`, worker의 단계 기록은 `observe.service`의 공개 함수로 호출한다. 이 규칙도 정적 계약 시험이 새 import를 거절한다.
+
+| 최초 정적 조사 항목 | 확인한 경로 | 현재 상태 |
+| --- | --- | --- |
+| 상호 의존 | `db↔domain`, `journal↔monitoring`, `judgment↔learning`, `judgment↔policy`, `judgment↔review`, `learning↔policy`; 간접 순환 `ingest→jobs→judgment→ingest`; `journal.writer↔group_commit` | 공용 `domain` 정의, `metrics_store`, `journal.failure`, `db.runs`·`db.pinning`, `worker_wakeup`으로 해소. `domain.runs→db.runs` 호환 import 한 건만 예외 |
+| 함수 내부 지연 import | `auth.core` 4, `judgment.service` 2, `ingest.service` 8, `ingest.api` 1, `db.events` 1 (총 16개; 조사 시점 AST 기준) | 공용 Principal 타입 분리와 import 방향 정리 후 모두 모듈 상단으로 이동 |
+| 모듈 간 private import | `journal.group_commit→writer._record_failure`, `learning.candidates_api→candidates._json`, `graph.query→model._decode`, `monitoring.slo→aggregates._time` | 공개 이름으로 전환하고 기존 private 함수는 내부 호환성을 위해 유지 |
+| API의 직접 DB 접근 | `auth.router`, `review.api`, `events.router`, `graph.api`, `observe.api`, `monitoring.api` | 직접 트랜잭션·Cypher 제거, 기능별 저장소 함수 호출 |
+
+현재 `domain.runs→db.runs`는 기존 `start_run_in_tx` import 경로를 유지하기 위해 두 계약의 `ignore_imports`에 같은 한 건을 명시했다. 실제 구현과 정책 pinning은 `db.runs`·`db.pinning`이 소유한다. `domain.runs`는 함수 재수출만 담당하므로 데이터 모델과 저장 형식은 바뀌지 않았다. 새 코드에서는 domain에 DB·정책 의존을 추가하지 않고, 모듈 간 호출은 공개 함수에 한정한다.
+
+평가 기능 작업자의 변경이 완료된 뒤 `evaluation.api → evaluation.service → evaluation.store`로 라우터, 판단 로직, Neo4j 접근을 나눴다. 기존 평가 응답·레이블 저장 형식과 `evaluation.service`의 분석 도우미 공개 경로는 유지한다.
+
+### 구조 재현과 회귀 시험
+
+| 재현 시험 (수정 전 실패 확인) | 수정 | 완료 검증 |
+| --- | --- | --- |
+| API의 `db.tx`/`db.driver` import·인라인 `tx.run`, 인증 라우터의 `session.run` | auth·review·events·graph·observe·monitoring·learning·judgment 진행·evaluation 질의를 소유 store/query로 이동 | `test_api_modules_do_not_import_database_access`, `test_auth_router_uses_public_auth_boundary`, 평가 API 통합 시험 |
+| 모듈 간 private import 4건 | 공개 이름으로 전환하고 Ruff `PLC2701`을 `make lint`에서 실행 | `test_modules_do_not_import_other_modules_private_functions`, `make lint` |
+| 정책→학습 검증, 정책→판단 마스킹, 검토→판단 정의, DB→정책 pinning | 순수 정의를 domain으로, pinning과 Run 생성은 db로 이동 | 해당 `test_architecture_contracts.py` 시험과 여섯 import-linter 계약 |
+| 접수→worker 순환과 journal writer→batcher 순환 | 공용 `worker_wakeup`·`journal.failure`로 의존 역전 | `test_ingest_does_not_import_worker_runtime`, `test_journal_batcher_does_not_import_writer`, 비순환 계약 |
+| 기능 간 store 직접 import, 평가 라우터·service·store 혼재 | 상대 기능 공개 service로 위임, 평가 경계 분리 | `test_feature_modules_use_other_features_public_services`, `test_evaluation_router_service_store_boundary` |
+
+호환성 예외는 `domain.runs→db.runs` 한 건이며 계약에 이유를 기록했다. 그 외 재현 시험은 수정 후 통과했다.
+
+최종 확인: `backend/.venv/bin/pytest -q` 439 통과·1 건너뜀, `make lint` 여섯 import 계약 위반 0건·Ruff 0건, `make test-fault` 전용 7688에서 11건 통과. 구조 변경에는 프런트 파일 수정이 없다.
+
 - 모든 Neo4j 쓰기는 `db.tx` 도우미의 쓰기 트랜잭션을 사용하고 `tenant_id`를 항상 조건에 포함한다.
 - ID 형식: `req_`, `rev_`, `run_`, `step_`, `job_`, `rvw_`, `task_`, `cfg_`(Config 버전은 정수 `version`), `cor_`, `cand_`, `rdec_`, `rule_`(규칙 버전은 `rule_id@version`), `val_`, `att_`(attempt), `evt_` + ULID/uuid 기반.
 - 시각은 UTC ISO 8601, 비교는 DB 시각(`datetime()`) 기준.

@@ -33,6 +33,12 @@ R8 질의 점검: `graph/query.py`의 관계 속성 조회 시작점과 `learnin
 
 ## 공개 함수와 경계
 
+R2에서 확인한 인증·검토·이벤트·그래프·관측·모니터링·학습 후보·판단 진행·평가 API의 직접 Cypher는 저장소 또는 query 모듈로 이동했다. 인증은 `auth.store`, 검토 목록의 긴급도는 `review.store`, SSE 커서·스냅샷은 `events.store`, 그래프 범위 조회는 `graph.query`, 실행 관측 상세는 `observe.trace_store`, 운영 대조는 `monitoring.aggregates`, 학습 후보는 `learning.candidates_store`, 판단 진행은 `judgment.progress_store`, 평가 레이블은 `evaluation.store`가 읽고 쓴다. SQLite 관측 스키마와 연결은 `metrics_store`가 소유하며 `journal.collector`의 이전 `connect`·`metrics_path` 이름은 호환성을 위해 재수출한다. 이 이동은 질의문, tenant 조건, 반환 형식을 바꾸지 않는다.
+
+활성 Run·Job 생성 구현은 `db.runs.start_run_in_tx`가 소유한다. 이전 `domain.runs.start_run_in_tx` 경로는 통합 호출자의 호환 import로만 남았다. 검토와 판단이 함께 쓰는 질문 선택지·자동 배정 조건·초안 표시 메타데이터는 순수 `domain` 모듈에서 읽는다.
+
+정책 버전 고정의 Cypher 구현은 `db.pinning.pin_config_for_run_in_tx`가 소유한다. `policy.pinning`은 이전 import 경로를 재수출한다. 접수 후 worker 깨우기는 `worker_wakeup`의 프로세스 로컬 등록소를 사용하고 Redis 알림은 기존대로 발행한다. 이 변경은 Job lease, 이벤트 순서, 응답 JSON에 영향을 주지 않는다.
+
 | 모듈 | 함수 | 사용 조건 |
 | --- | --- | --- |
 | `db.driver` | `get_driver`, `close_driver`, `create_driver` | 실행 루프별 async 드라이버; 앱 종료 시 close |

@@ -14,7 +14,7 @@ from jevtriage.auth.router import router as auth_router
 from jevtriage.config import get_settings
 from jevtriage.db.driver import create_driver
 from jevtriage.domain.ids import new_id
-from jevtriage.evaluation.service import router as evaluation_router
+from jevtriage.evaluation.api import router as evaluation_router
 from jevtriage.events.router import router as events_router
 from jevtriage.graph.api import router as graph_router
 from jevtriage.ingest.api import router as ingest_router

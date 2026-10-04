@@ -23,19 +23,18 @@ from jevtriage.config import get_settings
 from jevtriage.db.idempotency import IdempotencyConflict
 from jevtriage.domain.ids import new_id
 from jevtriage.ingest import service
+from jevtriage.ingest.parsers.api import (
+    MAX_ATTACHMENTS,
+    MAX_FILE_BYTES,
+    MAX_TEXT_CHARS,
+    MAX_TOTAL_BYTES,
+)
 
 router = APIRouter(prefix="/api", tags=["ingest"])
 
 
 @router.get("/meta")
 async def meta():
-    from jevtriage.ingest.parsers.api import (
-        MAX_ATTACHMENTS,
-        MAX_FILE_BYTES,
-        MAX_TEXT_CHARS,
-        MAX_TOTAL_BYTES,
-    )
-
     return {
         "mode": get_settings().jev_mode,
         "limits": {

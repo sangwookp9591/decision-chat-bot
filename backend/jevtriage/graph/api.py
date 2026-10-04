@@ -5,10 +5,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 from jevtriage.auth.core import Principal, get_principal
 from jevtriage.auth.policy import can, redact_source
-from jevtriage.db.tx import read_tx
 from jevtriage.graph import query
 from jevtriage.graph.model import KINDS, MAX_DEPTH
-from jevtriage.ingest.store import get_request_meta
+from jevtriage.ingest.service import request_meta as get_request_meta
 
 router = APIRouter(prefix="/api/graph", tags=["graph"])
 
@@ -36,13 +35,7 @@ class Scope:
         ids = list({request_id for request_id in request_ids if request_id is not None and request_id not in self.cache})
         if not ids:
             return
-        async def op(tx):
-            return await (await tx.run(
-                "UNWIND $ids AS id OPTIONAL MATCH (r:Request {tenant_id:$tenant,id:id}) "
-                "RETURN id,properties(r) AS meta",
-                tenant=self.principal.tenant_id, ids=ids,
-            )).data()
-        for row in await read_tx(self.principal.tenant_id, op):
+        for row in await query.request_metas(self.principal.tenant_id, ids):
             self.cache[row["id"]] = bool(row["meta"] and can(self.principal, "view_graph", row["meta"]))
 
 

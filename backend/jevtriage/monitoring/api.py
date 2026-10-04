@@ -9,10 +9,10 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 from jevtriage.auth.core import Principal, require_roles
 from jevtriage.config import get_settings
-from jevtriage.db.tx import read_tx
 from jevtriage.monitoring.aggregates import (
     business_counts,
     collection_status,
+    committed_entities,
     events_between,
     review_wait,
     summarize,
@@ -135,12 +135,7 @@ async def status(principal: Principal = Depends(require_roles("operator"))):  # 
 
 async def reconcile_commits(tenant_id: str, rows: list[dict]) -> dict:
     """Compare journal IDs with Neo4j; never replay business operations."""
-    async def query(tx):
-        requests = await tx.run("MATCH (r:Request {tenant_id:$tenant}) RETURN r.id AS id", tenant=tenant_id)
-        runs = await tx.run("MATCH (r:Run {tenant_id:$tenant}) RETURN r.id AS id,r.status AS status", tenant=tenant_id)
-        return ({r["id"] async for r in requests}, {r["id"]: r["status"] async for r in runs})
-
-    db_requests, db_runs = await read_tx(tenant_id, query)
+    db_requests, db_runs = await committed_entities(tenant_id)
     journal_requests = {r["request_id"] for r in rows if r.get("tenant_id") == tenant_id
                         and r["kind"] == "request_completed" and r.get("request_id")}
     journal_runs = {r["run_id"]: r.get("status_code") for r in rows

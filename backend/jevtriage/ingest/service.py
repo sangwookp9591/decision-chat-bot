@@ -10,13 +10,15 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
+from jevtriage.auth.core import can_view_request, scope_filter_cypher
+from jevtriage.auth.policy import can
 from jevtriage.config import get_settings
 from jevtriage.db.events import append_event_in_tx
 from jevtriage.db.idempotency import get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
+from jevtriage.db.runs import start_run_in_tx
 from jevtriage.db.tx import write_tx
 from jevtriage.domain.ids import new_id
-from jevtriage.domain.runs import start_run_in_tx
 from jevtriage.ingest.files import store_upload
 from jevtriage.ingest.parsers import parse_file
 from jevtriage.ingest.store import (
@@ -31,6 +33,13 @@ from jevtriage.ingest.store import (
 )
 from jevtriage.journal.reader import producer_heartbeat
 from jevtriage.journal.writer import JournalWriter, failure_count
+from jevtriage.realtime.notifier import publish_job
+from jevtriage.worker_wakeup import notify_new_job
+
+
+async def request_meta(tenant_id: str, request_id: str) -> dict | None:
+    """Public read boundary for other features that authorize a request."""
+    return await get_request_meta(tenant_id, request_id)
 
 
 def _journal(attempt: str, kind: str, **fields) -> None:
@@ -75,8 +84,6 @@ async def reanalyze(principal, request_id: str, expected_revision: int,
     ).encode()).hexdigest()
 
     async def op(tx):
-        from jevtriage.auth.core import can_view_request
-
         request = await lock_node_in_tx(tx, tenant_id, "Request", request_id)
         if not can_view_request(principal, dict(request)):
             raise ValueError("request_not_visible")
@@ -111,9 +118,7 @@ async def reanalyze(principal, request_id: str, expected_revision: int,
                                          digest, create)
 
     result = await write_tx(tenant_id, op)
-    from jevtriage.jobs.worker import Worker
-    from jevtriage.realtime.notifier import publish_job
-    Worker.notify_new_job()
+    notify_new_job()
     await publish_job(result["job_id"])
     return result
 
@@ -219,9 +224,7 @@ async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
             return row["job_id"] if row else None
         job_id = await write_tx(tenant_id, received_event)
         if job_id:
-            from jevtriage.jobs.worker import Worker
-            from jevtriage.realtime.notifier import publish_job
-            Worker.notify_new_job()
+            notify_new_job()
             await publish_job(job_id)
         _journal(
             attempt,
@@ -264,8 +267,6 @@ async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
 
 
 async def visible_meta(principal, request_id: str):
-    from jevtriage.auth.core import can_view_request
-
     meta = await get_request_meta(principal.tenant_id, request_id)
     if not meta or not can_view_request(principal, meta):
         return None
@@ -273,8 +274,6 @@ async def visible_meta(principal, request_id: str):
 
 
 async def visible_list(principal, status=None, start=None, end=None, skip=0, limit=50):
-    from jevtriage.auth.core import scope_filter_cypher
-
     predicate = scope_filter_cypher(principal)
     params = {
         "tenant_id": principal.tenant_id,
@@ -320,8 +319,6 @@ async def visible_evidence(principal, request_id: str, span_id: str):
 
 async def visible_document(principal, request_id: str, revision: str, source: str):
     """Unit list for the source viewer; raw text only when read_source is granted."""
-    from jevtriage.auth.policy import can
-
     meta = await visible_meta(principal, request_id)
     if not meta:
         return None

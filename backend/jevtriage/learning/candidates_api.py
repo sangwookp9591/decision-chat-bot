@@ -10,11 +10,18 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, get_principal, require_roles
 from jevtriage.auth.policy import can, redact_source
-from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.serialize import json_value
-from jevtriage.ingest.store import get_request_meta
+from jevtriage.ingest.service import request_meta as get_request_meta
 from jevtriage.learning.apply import RuleInvariantError, validate_rule_or_raise
-from jevtriage.learning.candidates import FIELDS, _json, generate_candidates
+from jevtriage.learning.candidates import FIELDS, generate_candidates
+from jevtriage.learning.candidates_store import (
+    candidate_with_links,
+    create_human_candidate,
+    decision_marker,
+    list_candidates,
+    request_metas,
+    supporting_corrections,
+)
 from jevtriage.learning.corrections import get_request_corrections, list_corrections
 
 router = APIRouter(prefix="/api/learning", tags=["learning"])
@@ -39,13 +46,7 @@ async def _readable_requests(principal: Principal, request_ids) -> dict[str, boo
     ids = list(set(request_ids))
     if not ids:
         return {}
-    async def op(tx):
-        return await (await tx.run(
-            "UNWIND $ids AS id OPTIONAL MATCH (r:Request {tenant_id:$tenant,id:id}) "
-            "RETURN id,properties(r) AS meta",
-            tenant=principal.tenant_id, ids=ids,
-        )).data()
-    rows = await read_tx(principal.tenant_id, op)
+    rows = await request_metas(principal.tenant_id, ids)
     return {row["id"]: bool(row["meta"] and can(principal, "learn_read", row["meta"])) for row in rows}
 
 
@@ -69,15 +70,8 @@ async def corrections(field: str | None = None, request_id: str | None = None,
 @router.get("/candidates")
 async def candidates(status: str | None = None, field: str | None = None,
                      principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
-    async def op(tx):
-        rows = await (await tx.run(
-            "MATCH (c:RuleCandidate {tenant_id:$tenant}) "
-            "WHERE ($status IS NULL OR c.status=$status) AND ($field IS NULL OR c.field=$field) "
-            "RETURN c ORDER BY c.created_at DESC LIMIT 500",
-            tenant=principal.tenant_id, status=status, field=field,
-        )).data()
-        return [dict(row["c"]) for row in rows]
-    return json_value(redact_source(principal, {"candidates": await read_tx(principal.tenant_id, op)}))
+    rows = await list_candidates(principal.tenant_id, status, field)
+    return json_value(redact_source(principal, {"candidates": rows}))
 
 
 @router.post("/candidates/generate")
@@ -117,13 +111,9 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
             raise HTTPException(422, "Invalid classification predicate")
         if "signal" in predicate and predicate.get("op") not in {"gte", "lte"}:
             raise HTTPException(422, "Invalid signal predicate")
-    async def correction_op(tx):
-        return await (await tx.run(
-            "UNWIND $ids AS id MATCH (h:ReviewDecision {tenant_id:$tenant})-[:RECORDED]->"
-            "(c:Correction {tenant_id:$tenant,id:id,field:$field}) RETURN c.id AS id,c.request_id AS request_id",
-            tenant=principal.tenant_id, ids=list(set(body.supporting_correction_ids)), field=body.field,
-        )).data()
-    valid_corrections = await read_tx(principal.tenant_id, correction_op) if body.supporting_correction_ids else []
+    valid_corrections = await supporting_corrections(
+        principal.tenant_id, list(set(body.supporting_correction_ids)), body.field,
+    )
     by_id = {row["id"]: row for row in valid_corrections}
     if any(cid not in by_id for cid in body.supporting_correction_ids):
         raise HTTPException(404, "Correction not found")
@@ -134,36 +124,16 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
     uncertainty = {"support_count": len(set(body.supporting_correction_ids)), "counter_count": 0,
                    "minimum_support": 3, "rationale": body.rationale}
     status = "제안" if len(set(body.supporting_correction_ids)) >= 3 else "자료 부족"
-    async def store(tx):
-        await (await tx.run(
-            "CREATE (n:RuleCandidate {id:$id,tenant_id:$tenant,field:$field,proposed_body:$body,"
-            "status:$status,source:'human',author:$author,support_count:$support,counter_count:0,"
-            "uncertainty:$uncertainty,rationale:$rationale,created_at:datetime()})",
-            id=candidate_id,tenant=principal.tenant_id,field=body.field,body=_json(proposed),
-            status=status,author=principal.user_id,support=len(set(body.supporting_correction_ids)),
-            uncertainty=_json(uncertainty),rationale=body.rationale,
-        )).consume()
-        for cid in set(body.supporting_correction_ids):
-            await (await tx.run(
-                "MATCH (n:RuleCandidate {tenant_id:$tenant,id:$id}) "
-                "MATCH (c:Correction {tenant_id:$tenant,id:$correction}) "
-                "MERGE (n)-[:SUPPORTED_BY {role:'support'}]->(c)",
-                tenant=principal.tenant_id,id=candidate_id,correction=cid,
-            )).consume()
-    await write_tx(principal.tenant_id, store)
+    await create_human_candidate(
+        principal.tenant_id, candidate_id, body.field, proposed, status, principal.user_id,
+        body.supporting_correction_ids, uncertainty, body.rationale,
+    )
     return {"id": candidate_id, "status": status, "source": "human", "proposed_body": proposed}
 
 
 @router.get("/candidates/{candidate_id}")
 async def candidate_detail(candidate_id: str, principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
-    async def op(tx):
-        return await (await tx.run(
-            "MATCH (n:RuleCandidate {tenant_id:$tenant,id:$id}) "
-            "OPTIONAL MATCH (n)-[r:SUPPORTED_BY]->(s) "
-            "RETURN n,collect(CASE WHEN s IS NULL THEN null ELSE {node:s,role:r.role} END) AS links",
-            tenant=principal.tenant_id,id=candidate_id,
-        )).single()
-    row = await read_tx(principal.tenant_id, op)
+    row = await candidate_with_links(principal.tenant_id, candidate_id)
     if not row:
         raise HTTPException(404, "Candidate not found")
     result = dict(row["n"])
@@ -187,13 +157,7 @@ async def candidate_detail(candidate_id: str, principal: Principal = Depends(req
             if node.get(key) is not None: node[key] = str(node[key])
         examples.append({"role":link["role"],"case":node})
     result["examples"] = examples
-    async def decision_marker(tx):
-        return await (await tx.run(
-            "MATCH (d:RuleDecision {tenant_id:$tenant})-[:DECIDES]->(c:RuleCandidate {tenant_id:$tenant,id:$id}) "
-            "RETURN d.insufficient_approved AS approved,d.reason AS reason LIMIT 1",
-            tenant=principal.tenant_id, id=candidate_id,
-        )).single()
-    marker = await read_tx(principal.tenant_id, decision_marker)
+    marker = await decision_marker(principal.tenant_id, candidate_id)
     result["insufficient_approved"] = bool(marker and marker["approved"])
     result["insufficient_approval_label"] = "자료 부족 상태로 승인됨" if result["insufficient_approved"] else None
     return json_value(redact_source(principal, result))

@@ -4,18 +4,19 @@ from pydantic import BaseModel
 from jevtriage.auth.core import (
     LOGIN_FAILURE_LIMIT,
     Principal,
-    _token_hash,
     authenticate,
     create_session,
     enforce_csrf,
     get_principal,
     increment_login_attempt,
     login_attempt_count,
+    login_tenant,
+    principal_display_name,
     reset_login_attempt,
+    revoke_session,
     session_principal,
 )
 from jevtriage.config import get_settings
-from jevtriage.db.driver import get_driver
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
@@ -28,13 +29,7 @@ class LoginBody(BaseModel):
 @router.post("/login")
 async def login(body: LoginBody, request: Request, response: Response):
     # Resolve the counter namespace before password work for both known and unknown users.
-    driver = await get_driver()
-    async with driver.session() as session:
-        user = await (await session.run(
-            "MATCH (u:User {email:$email}) RETURN u.tenant_id AS tenant_id LIMIT 1",
-            email=body.email.lower(),
-        )).single()
-    tenant_id = user["tenant_id"] if user else "unknown"
+    tenant_id = await login_tenant(body.email)
     if await login_attempt_count(tenant_id, body.email) >= LOGIN_FAILURE_LIMIT:
         raise HTTPException(status_code=429, detail="Login temporarily unavailable")
     account = await authenticate(body.email.lower(), body.password)
@@ -72,14 +67,7 @@ async def login(body: LoginBody, request: Request, response: Response):
 async def logout(request: Request, response: Response):
     token = request.cookies.get("jev_session")
     if token:
-        driver = await get_driver()
-        async with driver.session() as session:
-            await (
-                await session.run(
-                    "MATCH (s:Session {token_hash:$hash}) DETACH DELETE s",
-                    hash=_token_hash(token),
-                )
-            ).consume()
+        await revoke_session(token)
     response.delete_cookie("jev_session", path="/")
     response.delete_cookie("jev_csrf", path="/")
     return {"ok": True}
@@ -88,19 +76,10 @@ async def logout(request: Request, response: Response):
 @router.get("/me")
 async def me(request: Request, principal: Principal = Depends(get_principal)):  # noqa: B008
     csrf_token = getattr(request.state, "csrf_token", None)
-    driver = await get_driver()
-    async with driver.session() as session:
-        record = await (
-            await session.run(
-                "MATCH (u:User {id:$user_id,tenant_id:$tenant_id}) RETURN u.display_name AS display_name",
-                user_id=principal.user_id,
-                tenant_id=principal.tenant_id,
-            )
-        ).single()
     return {
         "tenant_id": principal.tenant_id,
         "user_id": principal.user_id,
-        "display_name": record["display_name"] if record else None,
+        "display_name": await principal_display_name(principal),
         "mode": get_settings().jev_mode,
         "org_ids": principal.org_ids,
         "roles": sorted(principal.roles),

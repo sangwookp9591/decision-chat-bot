@@ -14,7 +14,7 @@ from jevtriage.domain.serialize import json_value, loads_or
 from jevtriage.journal.writer import JournalWriter
 from jevtriage.judgment.jev_client import JevClient
 from jevtriage.judgment.pipeline import run_judgment
-from jevtriage.judgment.store import load_input
+from jevtriage.judgment.service import load_input_for_shadow as load_input
 from jevtriage.learning.apply import apply_rules
 from jevtriage.policy.service import get_active_snapshot
 

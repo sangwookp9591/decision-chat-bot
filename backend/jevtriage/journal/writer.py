@@ -8,6 +8,7 @@ from pathlib import Path
 from threading import Lock
 
 from jevtriage.config import get_settings
+from jevtriage.journal.failure import failure_count as _failure_count_value
 from jevtriage.journal.group_commit import GroupCommit
 
 ALLOWED_FIELDS = frozenset({
@@ -29,34 +30,12 @@ DURABLE_KINDS = frozenset({
     "worker_attempt_start", "worker_attempt_failure", "worker_run", "ownership_lost",
     "judgment_preliminary", "judgment_committed", "retention_cleanup",
 })
-_failure_count = 0
-_count_lock = Lock()
-
-
-def failure_count() -> int:
-    with _count_lock:
-        return _failure_count
-
-
 _groups: dict[tuple, GroupCommit] = {}
 _groups_lock = Lock()
 
 
-def _record_failure(directory: Path, exc: OSError) -> None:
-    global _failure_count
-    with _count_lock:
-        _failure_count += 1
-        count = _failure_count
-    try:
-        from datetime import UTC, datetime
-        signal_dir = directory.parent / "metrics"
-        signal_dir.mkdir(parents=True, exist_ok=True)
-        path = signal_dir / "journal-writer-failure.json"
-        path.write_text(json.dumps({"ts": datetime.now(UTC).isoformat(),
-                                    "journal_write_failures": count,
-                                    "error_class": type(exc).__name__}), encoding="utf-8")
-    except OSError:
-        pass
+def failure_count() -> int:
+    return _failure_count_value()
 
 
 def _reset_after_fork() -> None:

@@ -4,7 +4,7 @@ from __future__ import annotations
 import re
 from urllib.parse import urlsplit
 
-CATEGORIES = ("registration", "business", "card", "email", "phone", "account", "ip", "url_query", "api_key")
+from jevtriage.domain.masking import CATEGORIES
 
 _PATTERNS = {
     "registration": re.compile(r"(?<!\d)\d{6}[- ]?[1-8]\d{6}(?!\d)"),

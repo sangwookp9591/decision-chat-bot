@@ -20,6 +20,9 @@ def _json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+candidate_json = _json
+
+
 async def _feature_cache(tenant: str, pairs: set[tuple[str, str]]) -> dict[tuple[str, str], tuple[dict, list[dict]]]:
     if not pairs:
         return {}

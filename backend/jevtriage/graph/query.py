@@ -20,7 +20,7 @@ from jevtriage.graph.model import (
     MAX_DEPTH,
     NODE_CAP,
     UP_TYPE_PATTERN,
-    _decode,
+    decode_value,
     describe,
     edge_id,
 )
@@ -211,7 +211,7 @@ async def _induced_edges(tenant: str, nodes: dict[str, dict]) -> list[dict]:
     edges = []
     for row in rows:
         source, target = nodes[row["a"]], nodes[row["b"]]
-        props = {k: _decode(_iso(v)) for k, v in dict(row["p"]).items()}
+        props = {k: decode_value(_iso(v)) for k, v in dict(row["p"]).items()}
         up, down = (source, target) if row["type"] in FORWARD_UP_TYPES else (target, source)
         edges.append({"id": edge_id(row["type"], source["id"], target["id"]), "type": row["type"],
                       "source": source["id"], "target": target["id"],
@@ -325,7 +325,7 @@ async def edge_props(tenant: str, edges: dict[str, dict], nodes: dict[tuple[str,
                 "RETURN e.type AS type,e.source AS source,e.target AS target,properties(r) AS p",
                 t=tenant, edges=pair_edges)).data())
         out = {edge_id(row["type"], row["source"], row["target"]):
-               {k: _decode(_iso(v)) for k, v in dict(row["p"]).items()} for row in rows}
+               {k: decode_value(_iso(v)) for k, v in dict(row["p"]).items()} for row in rows}
         for type_, source, target, *_ in ids:
             out.setdefault(edge_id(type_, source, target), {})
         return out
@@ -339,3 +339,12 @@ def reachable(paths: list[tuple[str, list, list]]) -> dict[str, set[str]]:
     for d, nodes, _ in paths:
         result[d].update(n[1] for n in nodes[1:])
     return result
+async def request_metas(tenant: str, ids: list[str]) -> list[dict]:
+    async def op(tx):
+        return await (await tx.run(
+            "UNWIND $ids AS id OPTIONAL MATCH (r:Request {tenant_id:$tenant,id:id}) "
+            "RETURN id,properties(r) AS meta",
+            tenant=tenant, ids=ids,
+        )).data()
+
+    return await read_tx(tenant, op)

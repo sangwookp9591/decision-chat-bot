@@ -9,6 +9,9 @@ from uuid import uuid4
 
 from jevtriage.config import get_settings
 from jevtriage.db.events import append_event_in_tx
+from jevtriage.db.pinning import pin_config_for_run_in_tx
+from jevtriage.db.tx import read_tx
+from jevtriage.domain.rules import apply_rules
 from jevtriage.judgment.catalog import CATALOG_VERSION
 from jevtriage.judgment.eligibility import evaluate_auto_assign
 from jevtriage.judgment.jev_client import MODEL_VERSION, JevClient
@@ -22,9 +25,13 @@ from jevtriage.judgment.pipeline import (
 )
 from jevtriage.judgment.questions import QSET_VERSION
 from jevtriage.judgment.store import load_input, save_judgment_in_tx
-from jevtriage.learning.apply import apply_rules
-from jevtriage.policy.pinning import pin_config_for_run_in_tx
 from jevtriage.policy.service import DEFAULT_CONFIG, get_version
+from jevtriage.review.service import auto_assign_after_judgment_in_tx
+
+
+async def load_input_for_shadow(tenant_id: str, request_id: str, revision_id: str):
+    """Public read boundary for learning validation runs."""
+    return await load_input(tenant_id, request_id, revision_id)
 
 
 async def _fixed_policy(ctx) -> tuple[int, dict]:
@@ -72,7 +79,6 @@ async def execute_judgment(ctx, client=None) -> str:
             tenant=ctx.tenant_id, request=ctx.request_id,
         )).single()
         return row["org_ids"] if row and row["org_ids"] else []
-    from jevtriage.db.tx import read_tx
     org_ids = await read_tx(ctx.tenant_id, requester_orgs)
     guidance = [r["context_text"] for r in rules_snapshot
                 if r.get("effect") == "context" and r.get("context_text")
@@ -240,8 +246,6 @@ async def execute_judgment(ctx, client=None) -> str:
             result["review_reasons"] = reasons
             result["eligibility"] = {"allowed": allowed, "reasons": reasons}
         async with ctx.step("결과 저장", kind="code"):
-            from jevtriage.review.service import auto_assign_after_judgment_in_tx
-
             async def save_and_assign(tx):
                 assignment = await (await tx.run(
                     "MATCH (q:Request {tenant_id:$tenant,id:$request}) "

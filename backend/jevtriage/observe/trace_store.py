@@ -6,6 +6,65 @@ Writes are transaction helpers: callers must establish worker ownership first.
 import json
 
 from jevtriage.db.tx import read_tx
+
+
+async def run_request_id(tenant_id: str, run_id: str) -> str | None:
+    async def op(tx):
+        row = await (await tx.run(
+            "MATCH (r:Run {tenant_id:$tenant_id,id:$run_id}) RETURN r.request_id AS request_id",
+            tenant_id=tenant_id, run_id=run_id,
+        )).single()
+        return row["request_id"] if row else None
+
+    return await read_tx(tenant_id, op)
+
+
+async def step_with_run(tenant_id: str, step_id: str) -> dict | None:
+    async def op(tx):
+        row = await (await tx.run(
+            "MATCH (s:RunStep {tenant_id:$tenant_id,id:$step_id}) "
+            "MATCH (r:Run {tenant_id:$tenant_id,id:s.run_id}) "
+            "RETURN s,r.request_id AS request_id,r.config_version AS config_version",
+            tenant_id=tenant_id, step_id=step_id,
+        )).single()
+        return (dict(row["s"]) | {"request_id": row["request_id"],
+                                  "config_version": row["config_version"]}) if row else None
+
+    return await read_tx(tenant_id, op)
+
+
+async def step_details(tenant_id: str, run_id: str):
+    async def op(tx):
+        judgment = await (await tx.run(
+            "MATCH (j:Judgment {tenant_id:$tenant_id,run_id:$run_id}) "
+            "OPTIONAL MATCH (o:ModelOutput {tenant_id:$tenant_id,run_id:$run_id})-[:OF_JUDGMENT]->(j) "
+            "OPTIONAL MATCH (o)-[c:CITES]->(e:EvidenceSpan {tenant_id:$tenant_id}) "
+            "RETURN j,collect(DISTINCT {question_id:o.question_id,value:o.value,confidence:o.confidence,probabilities:o.probabilities,noul:o.noul,evidence:CASE WHEN e IS NULL THEN null ELSE {id:e.id,location_json:e.location_json,probability:c.prob} END}) AS outputs",
+            tenant_id=tenant_id, run_id=run_id,
+        )).single()
+        reviews = await (await tx.run(
+            "MATCH (v:Review {tenant_id:$tenant_id,run_id:$run_id}) "
+            "OPTIONAL MATCH (v)-[:HAS_DECISION]->(h:ReviewDecision) "
+            "OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction) "
+            "RETURN v,collect(DISTINCT h) AS history,collect(DISTINCT c) AS corrections ORDER BY v.created_at",
+            tenant_id=tenant_id, run_id=run_id,
+        )).data()
+        return judgment, reviews
+
+    return await read_tx(tenant_id, op)
+
+
+async def step_rule_applications(tenant_id: str, step_id: str):
+    async def op(tx):
+        return await (await tx.run(
+            "MATCH (s:RunStep {tenant_id:$tenant_id,id:$step_id})-[a:APPLIED]->"
+            "(v:RuleVersion {tenant_id:$tenant_id}) "
+            "RETURN v.rule_id AS rule_id,v.version AS version,v.body AS body,a.outcome AS outcome,"
+            "a.before AS before,a.after AS after,s.config_version AS step_config_version",
+            tenant_id=tenant_id, step_id=step_id,
+        )).data()
+
+    return await read_tx(tenant_id, op)
 from jevtriage.domain.ids import new_id
 
 

@@ -10,6 +10,21 @@ def decode(value, default):
     return json.loads(value) if value else default
 
 
+async def judgment_urgencies(tenant_id: str, run_ids: list[str]) -> dict[str, str]:
+    if not run_ids:
+        return {}
+
+    async def op(tx):
+        result = await tx.run(
+            "MATCH (j:Judgment {tenant_id:$tenant}) WHERE j.run_id IN $runs "
+            "RETURN j.run_id AS run_id,j.urgency AS urgency",
+            tenant=tenant_id, runs=run_ids,
+        )
+        return {row["run_id"]: row["urgency"] async for row in result}
+
+    return await read_tx(tenant_id, op)
+
+
 async def get_review(tenant_id: str, review_id: str) -> dict | None:
     async def op(tx):
         row = await (await tx.run(

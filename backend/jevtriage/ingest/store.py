@@ -9,9 +9,9 @@ from typing import Any
 
 from jevtriage.db.idempotency import get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
+from jevtriage.db.runs import start_run_in_tx
 from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.ids import new_id
-from jevtriage.domain.runs import start_run_in_tx
 
 
 async def _create_input(

@@ -10,6 +10,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from uuid import uuid4
 
+from jevtriage.journal.failure import record_failure
+
 
 @dataclass
 class DurableLine:
@@ -96,8 +98,7 @@ class GroupCommit:
                 barrier.set()
 
     def _signal_failure(self, exc: OSError) -> None:
-        from jevtriage.journal.writer import _record_failure
-        _record_failure(self.directory, exc)
+        record_failure(self.directory, exc)
 
     def _write_batch(self, batch: list[bytes]) -> None:
         with self.file_lock:

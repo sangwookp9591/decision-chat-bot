@@ -10,10 +10,9 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, can_review, get_principal
 from jevtriage.auth.policy import redact_source
-from jevtriage.db.tx import read_tx
-from jevtriage.judgment.store import draft_created_by, draft_source
+from jevtriage.domain.drafts import draft_created_by, draft_source
 from jevtriage.review.service import ReviewError, decide, required_reviewer_org
-from jevtriage.review.store import decode, get_review, list_reviews
+from jevtriage.review.store import decode, get_review, judgment_urgencies, list_reviews
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
 
@@ -78,12 +77,7 @@ async def reviews(status: str = Query("pending"),
         raise HTTPException(422, "Invalid status")
     rows = await list_reviews(principal.tenant_id, status)
     run_ids = list({row["v"]["run_id"] for row in rows})
-    async def load_urgencies(tx):
-        result = await tx.run("MATCH (j:Judgment {tenant_id:$tenant}) WHERE j.run_id IN $runs "
-                              "RETURN j.run_id AS run_id,j.urgency AS urgency",
-                              tenant=principal.tenant_id, runs=run_ids)
-        return {row["run_id"]: row["urgency"] async for row in result}
-    urgencies = await read_tx(principal.tenant_id, load_urgencies) if run_ids else {}
+    urgencies = await judgment_urgencies(principal.tenant_id, run_ids)
     now = datetime.now(UTC)
     return {"reviews":[{"id":v["id"], "request_id":v["request_id"],
                         "run_id":v["run_id"], "revision_id":v["revision_id"],

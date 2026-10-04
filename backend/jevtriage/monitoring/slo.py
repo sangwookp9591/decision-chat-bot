@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 
-from jevtriage.monitoring.aggregates import _time, summarize
+from jevtriage.monitoring.aggregates import parse_time, summarize
 
 
 def error_budget(rows: list[dict], *, now: datetime | None = None,
                  collection_complete: bool = False) -> dict:
     now = now or datetime.now(UTC)
     window_start = now - timedelta(days=30)
-    window = [r for r in rows if window_start <= _time(r["ts"]) <= now]
+    window = [r for r in rows if window_start <= parse_time(r["ts"]) <= now]
     coverage = collection_complete
     summary = summarize(window, now=now)
     availability = summary["availability"]
@@ -21,7 +21,7 @@ def error_budget(rows: list[dict], *, now: datetime | None = None,
     remaining = (max(0.0, allowed - failures) if coverage and count > 0 and not availability["pending_calls"]
                  and not availability["unknown_validity"] else None)
     # 1-hour burn compared with the thirty-day per-hour allowance.
-    recent = summarize([r for r in window if _time(r["ts"]) >= now - timedelta(hours=1)], now=now)
+    recent = summarize([r for r in window if parse_time(r["ts"]) >= now - timedelta(hours=1)], now=now)
     recent_calls = recent["availability"]["valid_calls"]
     burn = (recent["availability"]["failed_calls"] / recent_calls / .001
             if recent_calls and not recent["availability"]["pending_calls"] else None)

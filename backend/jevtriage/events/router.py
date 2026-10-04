@@ -12,7 +12,7 @@ from fastapi.responses import StreamingResponse
 
 from jevtriage.auth.core import Principal, can_view_request, get_principal, session_principal
 from jevtriage.db.events import list_events
-from jevtriage.db.tx import read_tx
+from jevtriage.events.store import cursor_bounds, read_tx, request_metas, request_snapshot
 from jevtriage.journal.writer import JournalWriter
 from jevtriage.judgment.questions import OPTIONS
 from jevtriage.realtime.notifier import ConnectionSlots
@@ -42,19 +42,7 @@ class _SlotStreamingResponse(StreamingResponse):
 
 
 async def _request_metas(tenant_id: str, request_ids: list[str]) -> dict[str, dict]:
-    if not request_ids:
-        return {}
-    async def op(tx):
-        result = await tx.run(
-            "UNWIND $request_ids AS request_id "
-            "MATCH (r:Request {tenant_id:$tenant_id, id:request_id}) "
-            "RETURN r.id AS id, r.tenant_id AS tenant_id, r.created_by AS created_by, "
-            "r.org_ids AS org_ids, r.shared_org_ids AS shared_org_ids, "
-            "r.status AS status, r.active_run_id AS active_run_id",
-            tenant_id=tenant_id, request_ids=request_ids,
-        )
-        return {record["id"]: dict(record) for record in await result.data()}
-    return await read_tx(tenant_id, op)
+    return await request_metas(tenant_id, request_ids)
 
 
 async def _request_meta(tenant_id: str, request_id: str) -> dict | None:
@@ -217,19 +205,9 @@ async def stream_events(
         try:
             # A cursor ahead of the committed head, or older than the configured recovery
             # window, cannot be trusted to represent a complete client view.
-            async def bounds(tx):
-                result = await tx.run(
-                    "OPTIONAL MATCH (c:EventCounter {tenant_id:$tenant_id}) "
-                    "OPTIONAL MATCH (e:Event {tenant_id:$tenant_id}) "
-                    "WITH coalesce(c.seq,0) AS head, c.retained_from_seq AS retained_from, "
-                    "min(e.created_at) AS oldest "
-                    "OPTIONAL MATCH (at_cursor:Event {tenant_id:$tenant_id, seq:$cursor}) "
-                    "RETURN head, retained_from, oldest, at_cursor.created_at AS cursor_created",
-                    tenant_id=principal.tenant_id, cursor=cursor,
-                )
-                row = await result.single()
-                return row["head"], row["retained_from"], row["oldest"], row["cursor_created"]
-            head, retained_from, oldest, cursor_created = await read_tx(principal.tenant_id, bounds)
+            head, retained_from, oldest, cursor_created = await cursor_bounds(
+                principal.tenant_id, cursor, runner=read_tx,
+            )
             reference_time = cursor_created if cursor else oldest
             reference_native = reference_time.to_native() if reference_time else None
             if reference_native and reference_native.tzinfo is None:
@@ -311,13 +289,4 @@ async def event_snapshot(request_id: str, principal: Principal = Depends(get_pri
     meta = await _request_meta(principal.tenant_id, request_id)
     if not meta or not can_view_request(principal, meta):
         raise HTTPException(404, "Request not found")
-    async def query(tx):
-        result = await tx.run(
-            "MATCH (r:Request {tenant_id:$tenant_id, id:$request_id}) "
-            "OPTIONAL MATCH (e:Event {tenant_id:$tenant_id, request_id:$request_id}) "
-            "RETURN r.status AS status, r.active_run_id AS active_run_id, coalesce(max(e.seq),0) AS latest_seq",
-            tenant_id=principal.tenant_id, request_id=request_id,
-        )
-        row = await result.single(strict=True)
-        return dict(row)
-    return {"request_id": request_id, **(await read_tx(principal.tenant_id, query))}
+    return {"request_id": request_id, **(await request_snapshot(principal.tenant_id, request_id))}

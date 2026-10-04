@@ -11,11 +11,28 @@ from math import ceil
 from pathlib import Path
 
 from jevtriage.db.tx import read_tx
-from jevtriage.journal.collector import connect, metrics_path
+from jevtriage.metrics_store import connect, metrics_path
+
+
+async def committed_entities(tenant_id: str) -> tuple[set[str], dict[str, str]]:
+    async def query(tx):
+        requests = await tx.run(
+            "MATCH (r:Request {tenant_id:$tenant}) RETURN r.id AS id", tenant=tenant_id,
+        )
+        runs = await tx.run(
+            "MATCH (r:Run {tenant_id:$tenant}) RETURN r.id AS id,r.status AS status",
+            tenant=tenant_id,
+        )
+        return ({r["id"] async for r in requests}, {r["id"]: r["status"] async for r in runs})
+
+    return await read_tx(tenant_id, query)
 
 
 def _time(value: str) -> datetime:
     return datetime.fromisoformat(value).astimezone(UTC)
+
+
+parse_time = _time
 
 
 def percentile(values: list[float], rank: float) -> float | None:
