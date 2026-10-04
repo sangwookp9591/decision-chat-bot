@@ -109,3 +109,13 @@ describe('review list controls',()=>{
  });
 });
 
+describe('review list row title (TOSS-SCREENS)',()=>{
+ const long='req_1b6d959edffd4e4e807ea8bc08bc8acd';
+ it('does not put the raw request id in the title slot; a short id chip carries it and the full id stays reachable',async()=>{
+  vi.mocked(reviewApi.list).mockImplementation(async()=>({reviews:[row({request_id:long,urgency:'일반'}) as any]}));
+  const {container}=renderAt();const item=await screen.findByRole('button',{name:new RegExp(long)});
+  expect(container.querySelector('.review-row-title')?.textContent).toBe('일반');
+  expect(item.querySelector('strong')?.textContent??'').not.toContain(long);
+  const chip=item.querySelector('.short-id');expect(chip?.querySelector('[aria-hidden]')?.textContent).toBe('req_…bc8acd');expect(chip?.getAttribute('title')).toBe(long);
+ });
+});

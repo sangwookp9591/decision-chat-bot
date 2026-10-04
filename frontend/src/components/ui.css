@@ -14,7 +14,7 @@
 .classification-label{font:var(--t7);font-weight:600;color:var(--color-ink-2)}
 .classification-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;border-radius:var(--radius-md);background:var(--color-fill)}
 .classification-options span,.classification-hold{display:grid;place-items:center;min-height:36px;padding:4px;border-radius:var(--radius-xs);color:var(--color-ink-2);font:var(--t7);transition:background-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
-.classification-options .selected{background:var(--color-secondary);color:#fff;font-weight:700}
+.classification-options .selected{background:var(--color-secondary);color:var(--color-on-secondary);font-weight:700}
 .classification-options .uncertain:not(.selected){box-shadow:inset 0 0 0 1px var(--status-pending-border)}
 .classification-hold{max-width:180px;background:var(--status-review-bg);color:var(--status-review-text);box-shadow:inset 0 0 0 1px var(--status-review)}
 
@@ -48,20 +48,20 @@
  * Legacy `variant` maps: primary = fill primary, secondary = fill teal, plain = weak light. */
 .ui-button{--btn-bg:var(--color-primary);--btn-fg:var(--color-on-primary);position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:var(--radius-control);background:var(--btn-bg);color:var(--btn-fg);font:600 15px/1.2 var(--font-sans);white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .ui-button.primary{font-weight:700}
-.ui-button.secondary{--btn-bg:var(--color-secondary);--btn-fg:#fff}
+.ui-button.secondary{--btn-bg:var(--color-secondary);--btn-fg:var(--color-on-secondary)}
 .ui-button.plain{--btn-bg:var(--color-fill);--btn-fg:var(--color-ink)}
 .ui-button.c-primary{--btn-bg:var(--color-primary);--btn-fg:var(--color-on-primary)}
 .ui-button.c-dark{--btn-bg:var(--grey-900);--btn-fg:var(--color-surface)}
-.ui-button.c-danger{--btn-bg:var(--status-fail);--btn-fg:#fff}
+.ui-button.c-danger{--btn-bg:var(--status-fail);--btn-fg:var(--color-on-danger)}
 .ui-button.c-light{--btn-bg:var(--color-fill-strong);--btn-fg:var(--color-ink-2)}
 .ui-button.t-weak.c-primary{--btn-bg:var(--color-primary-weak);--btn-fg:var(--color-primary-ink)}
 .ui-button.t-weak.c-dark{--btn-bg:var(--grey-opacity-100);--btn-fg:var(--color-ink)}
 .ui-button.t-weak.c-danger{--btn-bg:var(--status-fail-bg);--btn-fg:var(--status-fail)}
 .ui-button.t-weak.c-light{--btn-bg:var(--color-fill);--btn-fg:var(--color-ink-2)}
 @media(hover:hover){.ui-button:not(:disabled):hover{filter:brightness(.95)}}
-.ui-button.size-small{min-height:36px;padding:0 12px;border-radius:10px;font-size:13px}
-.ui-button.size-large{min-height:52px;padding:0 22px;border-radius:14px;font-size:16px}
-.ui-button.size-xlarge{min-height:56px;padding:0 24px;border-radius:16px;font-size:17px}
+.ui-button.size-small{min-height:36px;padding:0 12px;border-radius:var(--radius-md);font-size:13px}
+.ui-button.size-large{min-height:52px;padding:0 22px;border-radius:var(--radius-card);font-size:16px}
+.ui-button.size-xlarge{min-height:56px;padding:0 24px;border-radius:var(--radius-card);font-size:17px}
 .ui-button.block{display:flex;width:100%}
 .ui-button:disabled{opacity:.5;cursor:not-allowed}
 .ui-button[aria-busy=true]{cursor:progress}
@@ -71,7 +71,7 @@
 .ui-tabs{position:relative;display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--color-line)}
 .ui-tabs button{min-height:44px;padding:0 14px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--color-caption);font:var(--t6);font-weight:500;white-space:nowrap;cursor:pointer}
 .ui-tabs button.active{border-color:var(--color-primary);color:var(--color-ink);font-weight:700}
-.ui-tabs-ind{position:absolute;left:0;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--color-primary);pointer-events:none;transition:transform var(--dur-base) var(--ease-spring),width var(--dur-base) var(--ease-spring)}
+.ui-tabs-ind{position:absolute;left:0;bottom:0;height:3px;border-radius:var(--radius-xs) var(--radius-xs) 0 0;background:var(--color-primary);pointer-events:none;transition:transform var(--dur-base) var(--ease-spring),width var(--dur-base) var(--ease-spring)}
 .ui-tabs[data-slide=on] button.active{border-color:transparent}
 
 /* ── Overlays: dialog pops in (bottom sheet on phones), drawer slides from the right ── */

@@ -2,7 +2,7 @@ import { act, cleanup, render, renderHook, screen } from '@testing-library/react
 import '@testing-library/jest-dom/vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Button, Tabs } from '../components';
-import { CountUp, MOTION, PressScale, armRouteMotion, prefersReducedMotion, staggerStyle, useCountUp, useStaggerIn } from './motion';
+import { CountNumber, CountUp, MOTION, PressScale, armRouteMotion, prefersReducedMotion, staggerStyle, useCountUp, useSlideIndicator, useStaggerIn } from './motion';
 
 function mockReduced(reduced: boolean) {
   vi.stubGlobal('matchMedia', (q: string) => ({ matches: reduced && q.includes('reduce'), media: q, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, dispatchEvent: () => false, onchange: null }));
@@ -62,5 +62,44 @@ describe('Tabs', () => {
     const onChange = vi.fn(); render(<Tabs tabs={[{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }]} value="b" onChange={onChange} />);
     expect(screen.getByRole('tab', { name: 'B' })).toHaveAttribute('aria-selected', 'true');
     act(() => screen.getByRole('tab', { name: 'A' }).click()); expect(onChange).toHaveBeenCalledWith('a');
+  });
+});
+
+describe('count-up entrance (screens)', () => {
+  const frames = () => {
+    let now = 0; vi.spyOn(performance, 'now').mockImplementation(() => now);
+    vi.stubGlobal('requestAnimationFrame', (cb: FrameRequestCallback) => setTimeout(() => { now += 16; cb(now); }, 16) as unknown as number);
+    vi.stubGlobal('cancelAnimationFrame', (id: number) => clearTimeout(id));
+  };
+  afterEach(() => { delete document.documentElement.dataset.motion; });
+  it('CountNumber is one plain text node showing the final value on a fresh page load (no half-counted frames for first paint, screenshots, axe)', () => {
+    mockReduced(false); frames(); vi.useFakeTimers(); delete document.documentElement.dataset.motion;
+    const { container } = render(<CountNumber value={42} format={(n) => `${Math.round(n)}건`} />);
+    expect(container.textContent).toBe('42건'); expect(container.querySelectorAll('span')).toHaveLength(1);
+  });
+  it('after the first in-app navigation it counts up from 0 and lands on the value', () => {
+    mockReduced(false); frames(); vi.useFakeTimers(); document.documentElement.dataset.motion = 'route';
+    const { container } = render(<CountNumber value={100} duration={200} />);
+    expect(Number(container.textContent)).toBeLessThan(100);
+    act(() => { vi.advanceTimersByTime(500); });
+    expect(container.textContent).toBe('100');
+  });
+  it('reduced motion shows the value at once even after navigation', () => {
+    mockReduced(true); document.documentElement.dataset.motion = 'route';
+    const { container } = render(<CountNumber value={9} />); expect(container.textContent).toBe('9');
+  });
+});
+
+describe('useSlideIndicator', () => {
+  it('publishes the pressed/selected child geometry as CSS variables on the container', () => {
+    function Seg({ on }: { on: 'a' | 'b' }) { const ref = useSlideIndicator<HTMLDivElement>([on]); return <div ref={ref} data-testid="seg"><button aria-pressed={on === 'a'}>A</button><button aria-pressed={on === 'b'}>B</button></div>; }
+    const proto = HTMLElement.prototype; const w = Object.getOwnPropertyDescriptor(proto, 'offsetWidth'), l = Object.getOwnPropertyDescriptor(proto, 'offsetLeft');
+    Object.defineProperty(proto, 'offsetWidth', { configurable: true, get() { return 80; } });
+    Object.defineProperty(proto, 'offsetLeft', { configurable: true, get() { return this.textContent === 'B' ? 80 : 0; } });
+    try {
+      const { rerender } = render(<Seg on="a" />); const seg = screen.getByTestId('seg');
+      expect(seg.dataset.slide).toBe('on'); expect(seg.style.getPropertyValue('--ind-x')).toBe('0px'); expect(seg.style.getPropertyValue('--ind-w')).toBe('80px');
+      rerender(<Seg on="b" />); expect(seg.style.getPropertyValue('--ind-x')).toBe('80px');
+    } finally { if (w) Object.defineProperty(proto, 'offsetWidth', w); if (l) Object.defineProperty(proto, 'offsetLeft', l); }
   });
 });

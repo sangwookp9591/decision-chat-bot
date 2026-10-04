@@ -8,6 +8,7 @@ import { statusText } from '../components/statusLabels';
 import { Actions, type ActionHandlers } from './learning/Actions';
 import { Observation, CycleStrip, EvidenceTable, RuleSummary, ThreePanels, Timeline, ValidationCard, type TimelineItem } from './learning/sections';
 import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, ruleDecisionDetail, sourceLabel, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
+import { ShortId } from '../components/ShortId';
 import './learning/learning.css';
 
 type Pending = { candidateId: string; decisionId: string } | null;
@@ -175,7 +176,7 @@ export function Learning({ roles }: { roles: string[] }) {
   if (!perms.canView) return <section className="learning-page"><h1>규칙 학습</h1><ErrorState title="조회 권한이 없습니다">검토자·운영자·규칙 관리자만 볼 수 있습니다.</ErrorState></section>;
   const body = version?.body || detail?.proposed_body;
   return <section className="learning-page">
-    <header className="learning-head"><div><p className="eyebrow">JEV TRIAGE</p><h1>규칙 학습</h1></div><button type="button" className="ui-button secondary" onClick={() => void load()}>새로고침</button></header>
+    <header className="learning-head"><div><h1>규칙 학습</h1></div><button type="button" className="ui-button secondary" onClick={() => void load()}>새로고침</button></header>
     <CycleStrip />
     <ThreePanels corrections={corrections} candidates={candidates.length} rules={publishedRules} />
     {error && <p role="alert" className="learning-error">{error}</p>}
@@ -187,7 +188,7 @@ export function Learning({ roles }: { roles: string[] }) {
           <button type="button" className="ui-button plain" disabled={busy || !perms.canPropose} title={perms.canPropose ? undefined : '검토자 이상만 후보를 집계할 수 있습니다.'} onClick={() => void generate()}>수정 기록에서 후보 집계</button>
         </header>
         {shown.length === 0 ? <p className="learning-empty">표시할 후보가 없습니다.</p> : <ul>{shown.map((c) => <li key={c.id}><button type="button" aria-current={c.id === selectedId} onClick={() => choose(c.id)}>
-          <span className="mono">{c.id} · {fieldLabel(c.field)}</span><b>{candidateStatusLabel(c.status)}</b>
+          <span className="learning-row-title"><strong>{fieldLabel(c.field)}</strong><ShortId id={c.id} /></span><b>{candidateStatusLabel(c.status)}</b>
           <span>{sourceLabel(c.source)} · 지지 {c.support_count ?? 0} · 반례 {c.counter_count ?? 0}{c.status === '자료 부족' ? ` · ${c.uncertainty.minimum_support ?? ''}건 필요` : ''}</span>
         </button></li>)}</ul>}
       </section>

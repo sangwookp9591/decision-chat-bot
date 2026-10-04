@@ -28,7 +28,10 @@ test('실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다
   await page.goto('/observatory');
   const request = page.getByRole('combobox', { name: '요청 선택' });
   await expect(request).toBeVisible();
-  if (await request.isDisabled()) { await expect(page.getByText('관찰 가능한 요청이 없습니다')).toBeVisible(); return; }
+  // The select is disabled only while the request list loads (or when it is empty): wait for that to settle before deciding which case this is.
+  const empty = page.getByText('관찰 가능한 요청이 없습니다');
+  await expect.poll(async () => !(await request.isDisabled()) || await empty.isVisible()).toBe(true);
+  if (await request.isDisabled()) { await expect(empty).toBeVisible(); return; }
   await expect.poll(async () => (await request.inputValue()).length).toBeGreaterThan(0);
   await request.click();
   await page.getByRole('option').first().click();

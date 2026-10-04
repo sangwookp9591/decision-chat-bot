@@ -60,3 +60,12 @@ describe('Tasks empty state and filters', () => {
   });
 });
 
+describe('task row ids (TOSS-SCREENS)',()=>{
+ it('shows ids as short chips in the row while keeping the full ids reachable',async()=>{
+  const longReq='req_1b6d959edffd4e4e807ea8bc08bc8acd',longTask='tsk_9a8b7c6d5e4f30211234567890abcdef';
+  vi.mocked(taskApi.list).mockResolvedValue({tasks:[{id:longTask,request_id:longReq,title:'화면 개발',method:'일반 기술',lead_org:'IT팀',collab_orgs:[],status:'대기',predecessors:[],deliverable:'결과'} as any]} as any);
+  const {container}=render(<Tasks/>);const row=await screen.findByRole('button',{name:/화면 개발/});
+  expect([...row.querySelectorAll('.short-id [aria-hidden]')].map(x=>x.textContent)).toEqual(['req_…bc8acd','tsk_…abcdef']);
+  expect([...container.querySelectorAll('.short-id')].map(x=>x.getAttribute('title'))).toEqual([longReq,longTask]);
+ });
+});

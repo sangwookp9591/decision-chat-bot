@@ -1,0 +1,2 @@
+.short-id{display:inline-block;max-width:100%;padding:2px 8px;border-radius:var(--radius-xs);background:var(--color-fill);color:var(--color-caption);font:var(--t7);font-family:var(--font-mono);vertical-align:baseline;white-space:nowrap}
+.short-id-full{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

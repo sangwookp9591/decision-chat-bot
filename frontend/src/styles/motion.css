@@ -17,8 +17,9 @@
  * frames, which keeps first paint, screenshots and axe contrast checks deterministic. */
 .m-enter { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; }
 :root[data-motion='route'] main > section { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; }
-/* Lists: set --i on children (useStaggerIn does it) — 36ms steps, capped so long lists never feel slow. */
-.m-stagger > * { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; animation-delay: calc(min(var(--i, 0), 10) * var(--stagger-step)); }
+/* Lists: set --i on children (useStaggerIn does it) — 36ms steps, capped so long lists never feel slow. Gated like the screen entrance: only after the
+ * first in-app navigation, so first paint, screenshots and axe never catch half-transparent rows. */
+:root[data-motion='route'] .m-stagger > * { animation: m-fade-up var(--dur-base) var(--ease-spring) backwards; animation-delay: calc(min(var(--i, 0), 10) * var(--stagger-step)); }
 
 /* Press feedback: pointer-down shrinks to 0.97 in 120ms and springs back. */
 :where(.ui-button, .fld-chip, .id-chip, .evidence-link, .ui-tabs button, [data-press]):not(:disabled) {
@@ -38,3 +39,9 @@ main :is(.skeleton, .sk) { background-image: linear-gradient(90deg, var(--grey-1
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
   .ui-skeleton, main :is(.skeleton, .sk) { animation: none !important; }
 }
+
+/* Segmented control with a sliding highlight (lib/motion.ts useSlideIndicator). Without measurements the buttons keep their own selected style. */
+.m-seg { position: relative; }
+.m-seg[data-slide='on']::before { content: ''; position: absolute; z-index: 0; left: 0; top: 0; width: var(--ind-w); height: var(--ind-h); transform: translate(var(--ind-x), var(--ind-y)); border-radius: var(--seg-ind-radius, var(--radius-sm)); background: var(--seg-ind, var(--color-surface)); box-shadow: var(--seg-ind-shadow, var(--shadow-card)); pointer-events: none; transition: transform var(--dur-base) var(--ease-spring), width var(--dur-base) var(--ease-spring), height var(--dur-base) var(--ease-spring); }
+.m-seg[data-slide='on'] > * { position: relative; z-index: 1; }
+.count-number { font-variant-numeric: tabular-nums; }

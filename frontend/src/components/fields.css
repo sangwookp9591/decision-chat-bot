@@ -23,8 +23,8 @@
 
 .fld-switch-row{display:flex;align-items:center;gap:12px;min-height:var(--hit-min);font:var(--t6);font-weight:600}
 .fld-switch-text{display:grid;gap:2px;flex:1;min-width:0}
-.fld-switch{flex:none;position:relative;width:48px;height:28px;padding:0;border:0;border-radius:99px;background:var(--color-line-strong);cursor:pointer;transition:background-color var(--dur-base) var(--ease-out)}
-.fld-switch span{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:transform var(--dur-base) var(--ease-spring)}
+.fld-switch{flex:none;position:relative;width:48px;height:28px;padding:0;border:0;border-radius:var(--radius-pill);background:var(--color-line-strong);cursor:pointer;transition:background-color var(--dur-base) var(--ease-out)}
+.fld-switch span{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--color-on-secondary);box-shadow:var(--shadow-card);transition:transform var(--dur-base) var(--ease-spring)}
 .fld-switch:active span{width:26px}
 .fld-switch[aria-checked=true]{background:var(--status-success-fill)}
 .fld-switch[aria-checked=true] span{transform:translateX(20px)}

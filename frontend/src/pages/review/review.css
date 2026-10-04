@@ -1,6 +1,39 @@
-.review-page{max-width:1400px;margin:auto;padding:30px}.review-page header{display:flex;justify-content:space-between;align-items:start}.review-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px}.review-layout nav,.review-layout article{background:#fff;border:1px solid var(--color-line);border-radius:12px;padding:18px;min-width:0}.review-layout nav button{display:grid;width:100%;text-align:left;gap:6px;padding:12px 4px;border:0;border-top:1px solid var(--color-line);background:transparent;cursor:pointer}.review-layout nav span,.review-layout nav small{color:var(--color-caption)}.review-field{display:grid;gap:8px;margin:12px 0}.review-field span{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.review-field input,.review-page textarea{padding:10px;border:1px solid var(--color-line);border-radius:8px}.review-page textarea{display:block;width:100%;min-height:70px}.review-page blockquote{margin:8px 0;padding:12px;background:#f8f6f3;border-left:3px solid #0e7c86}.review-page blockquote small{display:block}.learning-note{padding:12px;background:#f4f0fd}.review-actions{display:flex;gap:8px;flex-wrap:wrap}.review-actions button,.review-page header>button{min-height:44px;padding:8px 14px}.review-page section{margin:18px 0}@media(max-width:760px){.review-page{padding:20px 14px}.review-layout{grid-template-columns:minmax(0,1fr)}.review-field span{grid-template-columns:minmax(0,1fr)}}
-
-.review-field input,.review-task input{width:100%;min-width:0}.review-error{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;border:1px solid #B42318;border-radius:10px;background:#FDF0EE}.review-error p{margin:0;flex:1 1 200px}.review-layout nav button{min-width:0}
-
-.review-page header{gap:16px}.review-page header>.review-refresh{flex:none}.review-layout nav{display:grid;gap:12px;align-content:start}.review-layout nav h2{margin:0;font-size:16px}.review-count{color:var(--color-caption);font-weight:600;font-size:14px}.review-layout nav .fld-empty{padding:20px 12px}.review-source{min-height:36px;padding:0 12px;margin-top:6px;font-size:13px}.review-why{flex-basis:100%;color:var(--color-caption)}.review-actions{align-items:center}
-.review-page .empty{color:var(--color-ink-2)}
+/* Review queue — Toss feel: a white list card and a white detail card on the grey ground, rows with a hover face, no outlines. */
+.review-page{max-width:1400px}
+.review-page header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.review-page header>.review-refresh{flex:none}
+.review-layout{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:var(--space-4);align-items:start}
+.review-layout nav,.review-layout article{min-width:0;padding:var(--space-5);border-radius:var(--radius-xl);background:var(--color-surface);box-shadow:var(--shadow-card)}
+.review-layout nav{display:grid;gap:var(--space-3);align-content:start}
+.review-layout nav h2{margin:0;font:var(--t5)}
+.review-count{color:var(--color-caption);font:var(--t7);font-weight:600}
+.review-layout nav .fld-empty{padding:20px 12px}
+.review-layout nav button{display:grid;gap:6px;width:100%;min-width:0;padding:14px var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;text-align:left;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
+.review-layout nav button:active{transform:scale(0.99)}
+@media(hover:hover){.review-layout nav button:hover{background:var(--color-fill)}}
+.review-row-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.review-row-title{font:var(--t5)}
+.review-layout nav button>.status-badge{justify-self:start}
+.review-reasons,.review-layout nav small{color:var(--color-caption);font:var(--t7)}
+.review-ids{color:var(--color-caption);font:var(--t7)}
+.review-layout article h2{margin:0 0 var(--space-2);font:var(--t4)}
+.review-layout article h3{margin:0 0 var(--space-2);font:var(--t5)}
+.review-page section{margin:var(--space-5) 0}
+.review-field{display:grid;gap:var(--space-2);margin:var(--space-3) 0;font:var(--t7);font-weight:600;color:var(--color-ink-2)}
+.review-field span{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center;font:var(--t6);font-weight:400;color:var(--color-ink)}
+.review-field input,.review-task input,.review-page textarea{width:100%;min-width:0;padding:10px var(--space-3);border:1px solid transparent;border-radius:var(--radius-control);background:var(--color-fill);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out)}
+.review-field input:focus,.review-task input:focus,.review-page textarea:focus{border-color:var(--color-primary);background:var(--color-surface)}
+.review-page textarea{display:block;min-height:76px;resize:vertical}
+.review-task{display:grid;gap:var(--space-2);padding:var(--space-3) var(--space-4);margin-bottom:var(--space-2);border-radius:var(--radius-md);background:var(--color-surface-2)}
+.review-page blockquote{margin:var(--space-2) 0;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2)}
+.review-page blockquote small{display:block;margin-top:var(--space-1);color:var(--color-caption)}
+.learning-note{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--status-review-bg);color:var(--status-review-text)}
+.learning-note a{color:inherit}
+.review-error{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-4);margin-bottom:var(--space-3);border-radius:var(--radius-md);background:var(--status-fail-bg);color:var(--status-fail)}
+.review-error p{margin:0;flex:1 1 200px}
+.review-source{min-height:36px;padding:0 var(--space-3);margin-top:6px;font-size:13px}
+.review-why{flex-basis:100%;color:var(--color-caption)}
+.review-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.review-actions button,.review-page header>button{min-height:44px;padding:var(--space-2) 14px}
+.review-page .empty{min-height:240px;color:var(--color-ink-2);box-shadow:none;background:var(--color-surface-2)}
+@media(max-width:760px){.review-layout{grid-template-columns:minmax(0,1fr)}.review-field span{grid-template-columns:minmax(0,1fr)}}

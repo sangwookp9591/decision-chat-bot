@@ -1,6 +1,6 @@
 # 디자인 시스템 — 토스(TDS) 기반, 브랜드 컬러 유지
 
-앱 전체의 회색 체계·배경·글꼴·타이포 위계·모서리·간격·버튼/입력/카드/리스트/토스트/스켈레톤·모션을 토스 디자인 시스템(TDS) 방식으로 맞춘 기반이다. **브랜드 컬러(주황 `#F15921`, 틸 `#0E7C86`)와 주황 위 글자색 `#1B1712` 규칙은 그대로**다. 화면(`pages/**`)은 수정하지 않았고, **토큰 이름은 유지한 채 값과 공용 스타일만** 바꿔 화면들이 자동으로 따라오게 했다.
+앱 전체의 회색 체계·배경·글꼴·타이포 위계·모서리·간격·버튼/입력/카드/리스트/토스트/스켈레톤·모션을 토스 디자인 시스템(TDS) 방식으로 맞춘 기반이다. **브랜드 컬러(주황 `#F15921`, 틸 `#0E7C86`)와 주황 위 글자색 `#1B1712` 규칙은 그대로**다. 기반 단계에서는 **토큰 이름은 유지한 채 값과 공용 스타일만** 바꿨고, 화면 단계(TOSS-SCREENS)에서 화면별 하드코딩을 토큰으로 바꿔 마감했다(아래 §화면 단계).
 
 | 파일 | 역할 |
 |---|---|
@@ -10,6 +10,9 @@
 | `frontend/src/components/{index.tsx,ui.css,fields.css}` | 공용 구성요소(Button·Tabs·Modal·Drawer·Toast·표·배지·필드) 스타일과 모션 |
 | `frontend/src/lib/motion.ts` | 모션 유틸·훅(`useStaggerIn`, `useCountUp`, `CountUp`, `PressScale`, `useReducedMotion`, `armRouteMotion`) |
 | `frontend/src/styles/tokens.test.ts` | 토큰 대비(AA)·브랜드 고정값을 시험으로 고정 |
+| `frontend/src/styles/screens-tokens.test.ts` | 화면 CSS에 하드코딩(색·반경·글꼴)이 없음, eyebrow가 영문 대문자가 아님, 다크 자동 추종, stagger 게이트를 고정 |
+| `frontend/src/styles/pretendard-subset.css` + `scripts/build-fonts-css.mjs` | 줄인 Pretendard `@font-face`(생성 파일)와 생성 스크립트. `fonts.test.ts`가 검증 |
+| `frontend/src/components/ShortId.tsx` | 원시 ID를 짧은 칩으로 보이는 `ShortId`/`shortId()` |
 
 ## 근거 (공식, 2026-10-04 확인)
 
@@ -40,6 +43,10 @@
 | `--color-primary-ink` | `#B33F0E` (유지) | 밝은 면 위 주황 글자·링크 |
 | `--color-primary-tint` / `--color-primary-weak` | `#FDF3EE` / 주황 12% | 선택·hover / weak 버튼 |
 | `--color-secondary` | `#0E7C86` (유지) | 보조(틸) |
+| `--color-on-secondary` | `#fff` | 틸 위 글자(4.95:1), 스위치 손잡이 |
+| `--color-secondary-ink` | `#0B5E66` (다크 `#5CC8D0`) | 틸을 **글자·hover**로 쓸 때(AA). 틸 원색을 글자로 쓰지 않는다 |
+| `--color-secondary-tint` | `#E7F3F4` (다크 `#12363a`) | 약한 틸 채움(선택된 필터·AI/가설 면) |
+| `--color-on-danger` | `#fff` (다크 `#1B1712`) | 위험 채움 위 글자 |
 
 **상태색**은 TDS green·red·orange 계열이다. TDS 원색은 흰 바탕에서 글자 대비가 모자라(green500 2.8:1, red500 3.7:1) **글자·아이콘용은 AA(≥4.5:1)가 되게 어둡게, 채움용은 TDS 원색**으로 나눴다.
 
@@ -59,8 +66,8 @@
 
 ### 모서리·간격·그림자
 
-- 반경: `--radius-xs` 6, `--radius-md`·`--radius-control` 12, `--radius-card` 16, `--radius-xl` 20(큰 카드·시트), `--radius-pill`. 간격은 4px 격자 `--space-1…10`, 섹션 `--section-gap` 28px.
-- 카드는 **테두리 대신 면 대비**(회색 바탕 위 흰 카드) + `--shadow-card`(거의 없는 옅은 그림자). 팝업은 `--shadow-pop`, 토스트는 `--shadow-toast`.
+- 반경: `--radius-xs` 6, `--radius-sm` 8, `--radius-md`·`--radius-control` 12, `--radius-card` 16, `--radius-xl` 20(큰 카드·시트), `--radius-pill`. 간격은 4px 격자 `--space-1…10`, 섹션 `--section-gap` 28px.
+- 카드는 **테두리 대신 면 대비**(회색 바탕 위 흰 카드) + `--shadow-card`(거의 없는 옅은 그림자). 팝업은 `--shadow-pop`, 토스트는 `--shadow-toast`, 떠 있는 동작 막대·호버 카드는 `--shadow-lift`, 실행 중 단계의 후광은 `--shadow-glow`.
 
 ### 모션 토큰
 
@@ -105,12 +112,14 @@ JS 쪽 같은 값은 `MOTION`(`lib/motion.ts`). 두 곳을 같이 바꾼다.
 
 ## 다크 테마
 
-TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바탕·카드·상태색·브랜드 글자색). **지금은 선택 적용**이다.
+TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바탕·카드·상태색·브랜드·틸 글자색). **이제 OS 설정(`prefers-color-scheme: dark`)을 자동으로 따른다.**
 
-- `<html data-theme="dark">`: 강제 다크. `<html data-theme="auto">`: OS 설정(`prefers-color-scheme`)을 따른다.
-- 기본(속성 없음)은 라이트다. **OS 설정을 자동으로 따르지 않게 한 이유**: 화면 CSS에 `#fff` 같은 라이트 고정 색이 아래 목록만큼 남아 있어, 지금 자동으로 켜면 흰 카드 위에 흰 글자가 놓이는 화면이 생긴다. 화면별 하드코딩이 토큰으로 바뀐 뒤 `index.html`의 `<html>`에 `data-theme="auto"`만 추가하면 켜진다.
-- 판단 맵의 고정 다크 무대는 예외(UX-MAP 담당).
-- 다크 값의 대비도 `tokens.test.ts`가 AA로 검사한다. 브랜드 틸은 바꾸지 않았으므로 다크 면 위 틸 글자는 약 3:1 — 틸을 글자로 쓰는 곳이 생기면 별도 밝은 틸 토큰이 필요하다.
+- 속성이 없거나 `<html data-theme="auto">`: OS를 따른다. `data-theme="dark"`: 강제 다크. `data-theme="light"`: 강제 라이트(수동 선택 유지). 구현은 `@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) {…} }`이고 값은 `[data-theme='dark']` 블록과 같다(두 블록을 같이 바꾼다).
+- `index.html`의 `<meta name="color-scheme" content="light dark">`로 브라우저 기본 위젯(스크롤바·입력)도 따라간다.
+- 자동 추종을 켤 수 있었던 이유: 화면 CSS의 하드코딩 색을 모두 토큰으로 바꿨기 때문이다(아래 §화면 단계). `screens-tokens.test.ts`가 화면 CSS에 리터럴 색이 다시 들어오면 실패시킨다.
+- **예외: 판단 맵의 고정 다크 무대**(`pages/judgment-map/judgment-map-stage.css`)는 앱 테마와 무관하게 항상 어둡다. 리터럴 색은 이 파일에서만 허용한다.
+- 다크 값의 대비도 `tokens.test.ts`가 AA로 검사한다. 브랜드 틸은 바꾸지 않았으므로 다크 면 위 틸 **글자**는 `--color-secondary-ink`(`#5CC8D0`)를 쓴다. 주황 위 글자는 두 테마 모두 `#1B1712`.
+- 확인: `artifacts/review/toss-screens/<화면>-{1440,375}-{light,dark}.png`, axe `color-contrast`를 라이트·다크 × Chromium·WebKit × 전 화면으로 돌려 위반 0건.
 
 ## 접근성 대비 (시험으로 고정)
 
@@ -118,56 +127,82 @@ TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바�
 
 ## 번들 크기 (전후)
 
+### 기반 단계(fdf275c)
+
 `vite build`, 같은 화면 코드 기준(전: 이 단계 파일을 HEAD 값으로 되돌린 사본).
 
 | | 전 | 후 |
 |---|---|---|
 | 초기 JS `index-*.js` | 229,739 B (gzip 75,150) | 230,254 B (gzip 75,317) |
 | 초기 CSS `index-*.css` | 25,368 B (gzip 6,080) | 82,414 B (gzip 23,080) |
-| 글꼴 | IBM Plex를 Google Fonts CDN에서 | Pretendard Variable dynamic-subset 92조각(woff2, 합 3.0MB)을 번들. 화면에 쓰인 글자의 조각만 내려받음 |
+| 글꼴 | IBM Plex를 Google Fonts CDN에서 | Pretendard Variable dynamic-subset 92조각(woff2, 합 3.0MB)을 번들 |
 
-CSS 증가분(+~17KB gzip)은 거의 전부 Pretendard의 `@font-face` 92개(unicode-range)다. 가장 자주 쓰는 3조각(91·90·89, 약 38+21+22KB)은 `index.html`에서 `preload`(빌드 때 해시 경로로 치환)해 첫 글자 그리기를 앞당긴다. 줄이고 싶으면 드문 한글 조각(번호가 낮은 쪽)의 `@font-face`를 빼면 되지만, 그 글자는 시스템 한글 글꼴로 대체된다.
+### 글꼴 줄이기(TOSS-SCREENS)
 
-## 화면 하드코딩 목록 (다음 단계에서 화면별 정리)
+원인: CSS 증가분(+~17KB gzip)은 거의 전부 Pretendard의 `@font-face` 92개(unicode-range 목록)였다. 92개는 **굵기가 아니라 글자 범위 조각**이다(가변 글꼴 하나가 굵기 45–920을 모두 담는다). 그래서 굵기 400·500·600·700만 쓴다는 사실은 `font-weight` 선언 범위를 `400 700`으로 좁히는 데만 쓰이고, 크기는 **조각 수**를 줄여 얻었다.
 
-화면 파일에 남은 직접 색·글꼴·반경. 따뜻한 회색 계열(`#E6E1DA` `#D3CCC2` `#F1ECE6` `#4A433B` `#625B52` `#6B6259` `#FBFAF8` `#EFECE7` …)은 새 차가운 회색과 어울리지 않으니 우선 바꾼다.
+방법: `node scripts/build-fonts-css.mjs`가 업스트림 CSS에서 (1) 가장 자주 쓰는 한글·영문 단계 72–91번 20조각, (2) `src/` 안의 모든 비ASCII 글자(기호·화살표·드문 음절)가 들어 있는 조각을 골라 `src/styles/pretendard-subset.css`로 쓴다. **unicode-range 분할은 그대로**라 화면에 쓰인 글자의 조각만 내려받는다. 선택에서 빠진 드문 한글·한자는 시스템 한글 글꼴(Apple SD Gothic Neo 등)로 대체된다. `fonts.test.ts`가 (a) 면 수 ≤ 30, (b) 모든 면이 `font-weight:400 700`, (c) 앱이 줄인 파일을 import, (d) 소스에 나오는 모든 한글 음절이 선택된 조각에 들어 있음, (e) CSS가 400–700 밖 굵기를 쓰지 않음을 고정한다.
 
-| 파일 | 하드코딩 색(건) | 고유 색 | 글꼴 직접 지정 | 상위 색 | 고정 반경 |
-|---|---:|---:|---:|---|---|
-| `pages/learning/learning.css` | 58 | 20 | 0 | #0E7C86×8, #FFF×7, #4A433B×7, #E6E1DA×6, #0B5E66×4, #6B6259×4 | 4px, 7px, 8px, 10px, 12px, 14px, 999px |
-| `pages/main/main.css` | 52 | 27 | 0 | #FFF×8, #0E7C86×4, #F7F3FC×3, #4A2A9A×3, #0A5A62×3, #FFF7E6×3 | 4px, 6px, 7px, 8px, 10px, 12px, 14px, 999px |
-| `pages/judgment-map/judgment-map.css` | 51 | 24 | 0 | #FFF×13, #F1ECE6×5, #E7F3F4×3, #0B5E66×3, #14161C×2, #FF7A7A×2 | 4px, 6px, 7px, 8px, 10px, 12px, 14px, 999px |
-| `pages/observatory/observatory.css` | 27 | 15 | 0 | #FFF×6, #625950×4, #D3CCC2×3, #0E7C86×2, #DDD5CB×2, #28231F×1 | 8px, 12px, 14px |
-| `pages/monitoring/monitoring.css` | 26 | 17 | 0 | #625B52×5, #E6E1DA×4, #FFF×2, #EFECE7×2, #1B1712×1, #D3CCC2×1 | 6px, 7px, 8px, 9px, 10px, 12px, 99px |
-| `pages/policy/policy.css` | 20 | 12 | 0 | #625B52×3, #D3CCC2×2, #FBFAF8×2, #E6E1DA×2, #F0D9A8×2, #FFF7E6×2 | 7px, 8px, 10px, 12px |
-| `pages/review/review.css` | 6 | 6 | 0 | #FFF×1, #F8F6F3×1, #0E7C86×1, #F4F0FD×1, #B42318×1, #FDF0EE×1 | 8px, 10px, 12px |
-| `pages/tasks/tasks.css` | 3 | 3 | 0 | #FFF×1, #F0D9A8×1, #FFF7E6×1 | 10px, 12px, 14px |
-| `components/EvidenceViewer.css` | 1 | 1 | 0 | #F1ECE6×1 | 8px, 10px |
-| `pages/evaluation/evaluation.css` | 1 | 1 | 0 | #FFF×1 | 5px, 6px, 8px, 10px, 12px, 999px |
+| | 전 | 후 |
+|---|---|---|
+| `@font-face` 개수 | 92 | 25 |
+| 글꼴 CSS만 (주석 제외) | 54,561 B (gzip 12,858) | 23,341 B (gzip 6,456) |
+| 초기 CSS `index-*.css` 전체 (같은 빌드의 화면 CSS 포함) | 82,467 B (gzip 23,017) | 61,687 B (gzip 16,136) |
+| 빌드 산출 woff2 | 92개 (3.0MB) | 25개 (704KB) |
 
-전체 상위 색: `#FFF`×39, `#0E7C86`×15, `#E6E1DA`×13, `#D3CCC2`×9, `#F1ECE6`×8, `#4A433B`×8, `#B42318`×8, `#625B52`×8, `#0B5E66`×7, `#FFF7E6`×7, `#4A2A9A`×5, `#6B6259`×5, `#F0D9A8`×5, `#F4F0FD`×4
-합계 245 건 / 75 종
+전체 CSS gzip의 남은 차이(6.1→16.1KB)는 글꼴 CSS 6.5KB와 기반 단계에서 추가된 공용 스타일·모션·다크 토큰이다. 가장 자주 쓰는 3조각(91·90·89)은 `index.html`에서 `preload`(빌드 때 해시 경로로 치환).
 
-### 변환 안내 (화면 정리 시)
+## 화면 단계 (TOSS-SCREENS)
 
-| 하드코딩 | 토큰 |
+### 하드코딩 제거 결과
+
+기반 단계 목록(245건/75색)을 화면별로 모두 토큰으로 바꿨다. `main.css`(요청 접수)는 CHAT-POLISH가 같은 방식으로 정리했다.
+
+| 파일 | 전(색 건수) | 후 | 비고 |
+|---|---:|---:|---|
+| `pages/learning/learning.css` | 58 | 0 | |
+| `pages/judgment-map/judgment-map.css` | 51 | 0 | 고정 다크 무대와 계층 팔레트는 `judgment-map-stage.css`로 분리 |
+| `pages/observatory/observatory.css` | 27 | 0 | |
+| `pages/monitoring/monitoring.css` | 26 | 0 | |
+| `pages/policy/policy.css` | 20 | 0 | |
+| `pages/review/review.css` | 6 | 0 | |
+| `pages/tasks/tasks.css` | 3 | 0 | |
+| `components/EvidenceViewer.css` | 1 | 0 | |
+| `pages/evaluation/evaluation.css` | 1 | 0 | `#ffffff59` 등 알파 리터럴 4건 추가 정리 |
+| `components/ui.css`, `fields.css` | 5 (흰 글자·손잡이·그림자) | 0 | `--color-on-secondary`·`--color-on-danger`·`--shadow-card` (기반 단계 목록 밖 추가 정리) |
+| **합계(요청 접수 제외, 무대 제외)** | 목록 193 + 5 | **0** | |
+
+남은 리터럴 색: **`judgment-map-stage.css` 64건(47색)** — 판단 맵의 고정 다크 무대(앱 테마와 무관해야 함). 고정 반경도 화면·공용 CSS에서 0건(`border-radius:Npx` → `--radius-*`), 글꼴 직접 지정 0건(`font-family`는 토큰·`@font-face`만). 간격(`gap`·`padding` px)은 4px 격자 값이라 토큰(`--space-*`)으로 바꾼 곳과 px 그대로인 곳이 섞여 있다 — 값이 격자를 벗어난 곳이 없어 이번에는 강제하지 않았다.
+
+변환 기준(이번 정리에서 쓴 것): 흰 면 → `--color-surface`, 카드 안 조용한 면 → `--color-surface-2`, 채움·칩 → `--color-fill`, 구분선 → `--color-line`, 진한 틸 글자·hover → `--color-secondary-ink`, 약한 틸 → `--color-secondary-tint`, 경고 배너 → `--status-warn-bg`(+ 왼쪽 막대는 `--status-warn-fill`), 검토(보라) → `--status-review-*`, 실패 → `--status-fail*`.
+
+### 마감 규칙(앱 셸·페이지·카드·리스트)
+
+- **앱 셸**: 사이드바는 페이지 바탕과 같은 회색 면(구분선 없음), 활성 항목은 흰 pill(`--color-surface` + `--shadow-card`, 글자 `--color-primary-ink`). 상단바는 48px로 얇게, 테두리·면 없음. 회색 바탕 위 `plain` 버튼은 `--btn-bg: surface` 면을 따로 준다(`style.css`).
+- **페이지 머리**: `h1`은 t2(375px 이하 t3), 설명은 `--color-ink-2`. `main > section > header`가 간격·설명 색을 한곳에서 준다.
+- **eyebrow**: 영문 대문자(`JEV TRIAGE`, `TRACE / PLAYBACK` …)를 없애고 짧은 한국어 라벨(`사람 검토`, `배정 업무`, `운영 지표`, `실행 기록`, `정답 라벨`, `판단 관계`) 또는 제거. 스타일은 caption 색 t7 600(대비 AA). `screens-tokens.test.ts`가 영문 대문자 3자 이상을 막는다.
+- **카드**: 큰 반경(`--radius-xl`)·테두리 없음, 회색 바탕 위 흰 면 + `--shadow-card`. 안쪽 조용한 영역은 `--color-surface-2`. 상태 강조는 외곽선 대신 면 색(`--status-*-bg`) + 필요하면 inset 링.
+- **리스트 행**: 넉넉한 세로 간격(14px), 호버 시 `--color-fill` 면, 누르면 0.99 scale. 선택된 행은 `--color-primary-tint` + inset 링.
+- **원시 ID**: 제목 자리에 `req_…`/`run_…`/`task_…` 전체 길이를 쓰지 않는다. `<ShortId id=… />`는 `req_…bc8acd`처럼 짧게 보이고, **전체 ID는 `title`(호버)과 시각적으로 숨긴 텍스트(`short-id-full`)로 남아** 복사·검색·보조기술·텍스트 비교(`toContainText`)에서 그대로 찾힌다. 검토 대기 목록 행은 `긴급도(제목) + 짧은 ID 칩 + 상태 + 사유`로 바뀌었다. (목록 API에 요청 첫 문장이 없어 제목은 긴급도로 했다 — 첫 문장 마스킹 값은 백엔드가 목록에 담아주면 같은 자리에 넣으면 된다.)
+
+### 모션(화면)
+
+| 목적 | 쓰는 곳 |
 |---|---|
-| `#fff` | `var(--color-surface)` |
-| `#E6E1DA` `#DDD5CB` | `var(--color-line)` |
-| `#D3CCC2` `#B5ACA1` | `var(--color-line-strong)` |
-| `#F1ECE6` `#EFECE7` `#F8F6F3` | `var(--color-fill)` |
-| `#FBFAF8` | `var(--color-surface-2)` |
-| `#1B1712` `#14161C`(고정 다크 무대 제외) | `var(--color-ink)` |
-| `#4A433B` `#625B52` `#625950` | `var(--color-ink-2)` 또는 `var(--color-caption)` |
-| `#6B6259` | `var(--color-caption)` |
-| `#B42318` `#FDF0EE` | `var(--status-fail)` `var(--status-fail-bg)` |
-| `#FFF7E6` `#F0D9A8` | `var(--status-warn-bg)` · 경계는 `var(--color-line)` |
-| `#F4F0FD` `#4A2A9A` | `var(--status-review-bg)` `var(--status-review-text)` |
-| `#0E7C86` `#0B5E66` | `var(--color-secondary)` (진한 틸은 hover 전용 토큰 추가 검토) |
-| `border-radius: 7/8/10/14px` | `var(--radius-xs|md|card|xl)` |
+| 목록 stagger (`useStaggerIn`) | 검토 대기 목록, 업무 목록, 모니터링 핵심 지표. **앱 안에서 처음 이동한 뒤부터만** 돈다(`:root[data-motion='route'] .m-stagger > *`) — 첫 로드·스크린샷·axe는 반투명 프레임 없음 |
+| 카드·행 누름 scale | 목록 행·지표 타일·실행 단계 카드·필터 칩에 `:active` scale(0.97~0.99, `--press-scale`) |
+| 숫자 count-up (`CountNumber`) | 모니터링 핵심 지표 8개. 화면 진입 뒤(첫 앱 내 이동 후) 0에서 올라가고, 첫 로드·reduced-motion은 최종 값을 바로 그린다. `CountUp`과 달리 숨은 복제 없이 **텍스트 노드 하나**라 시험·보조기술에서 값이 한 번만 읽힌다 |
+| 탭·세그먼트 슬라이드 (`useSlideIndicator` + `.m-seg`) | 실행 관찰 탭, 판단 맵 보기 전환, 평가 라벨 분할 전환. 선택된 자식의 위치·크기를 `--ind-x/y/w/h`로 컨테이너에 알려 하이라이트가 미끄러진다. 측정이 안 되면 각 버튼의 선택 스타일로 폴백 |
+| 시트·서랍 | 업무 상세·실행 관찰 상세는 오른쪽 슬라이드(`m-slide-in-right`) |
+| 토스트 | 공용 `Toast`(평가 라벨 확정 등). 검토·업무의 알림 문구는 화면 안 `role=status`로 그대로 둔다(시험·접근성 계약) |
+
+### 시각 확인
+
+`artifacts/review/toss-screens/<화면>-{1440,375}-{light,dark}.png` (로그인·검토 대기·검토 상세·업무·업무 상세·실행 관찰·판단 맵(입체·목록)·규칙 학습·모니터링·정책·평가 라벨). 요청 접수(Main)는 CHAT-POLISH 담당이라 제외.
 
 ## 검증
 
 - `npm run typecheck`, `npm run test`(3회 연속), `npm run build`: 보고서 참조.
 - 접근성: `npx playwright test --config=playwright.a11y.config.ts --workers=1`(`A11Y_SHOT_DIR`로 t23 PNG 보호), Chromium·WebKit 모두 통과.
 - 전후 화면: `artifacts/review/toss-design/{before,after}/<화면>-{1440,375}.png`(로그인·요청 접수·검토·업무·실행 관찰·판단 맵·규칙 학습·모니터링·정책). 전은 이 단계 파일만 HEAD 값으로 되돌린 사본(화면 코드는 동일)이다.
+- 화면 단계 검증: `npm run typecheck && npm run test && npm run build`, Chromium·WebKit e2e(검토·업무·정책·모니터링·실행 관찰·판단 맵·평가 라벨·screens-ui·responsive-overflow·a11y `--workers=1`), 라이트·다크 axe `color-contrast` 0건.

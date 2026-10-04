@@ -61,7 +61,7 @@ export function Evaluation() {
   const next = useCallback(() => setIndex((n) => Math.min(n + 1, Math.max(rows.length - 1, 0))), [rows.length]);
 
   return <section className="eval-page">
-    <p className="eyebrow">EVALUATION LABELS</p><h1>평가 정답 확정</h1>
+    <p className="eyebrow">정답 라벨</p><h1>평가 정답 확정</h1>
     <EvalHeader split={split} onSplit={(value) => { if (value !== split) { setSplit(value); setState('loading'); } }} progress={progress} position={index + 1} total={rows.length} onPrev={prev} onNext={next} />
     {state === 'loading' && (showSkeleton ? <EvalSkeleton /> : <div className="eval-body-reserve" aria-hidden="true" />)}
     {state === 'forbidden' && <EmptyState title="평가 라벨 권한이 없습니다">평가 정답은 라벨러 또는 검토자 역할만 입력할 수 있습니다. 필요하면 관리자에게 역할을 요청하세요.</EmptyState>}

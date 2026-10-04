@@ -8,7 +8,9 @@ import { ListView } from './judgment-map/ListView';
 import { Detail } from './judgment-map/Detail';
 import { buildDisplay, computeHighlight, mergeGraph, neighborId, ruleVersionTabs, tabRuleId, versionScope, versionSummary, type DisplayItem } from './judgment-map/logic';
 import './judgment-map/judgment-map.css';
+import './judgment-map/judgment-map-stage.css';
 import { statusText } from '../components/statusLabels';
+import { useSlideIndicator } from '../lib/motion';
 
 const CRITERIA_FIELDS: Array<[keyof GraphCriteria, string]> = [['request_id', '요청 ID'], ['run_id', '실행 ID'], ['rule_id', '규칙 ID'], ['config_version', 'Config 버전'], ['status', '상태']];
 const STATUSES = ['published', 'validated', 'validating', 'stopped', 'reverted', '제안', '자료 부족', 'approved', 'rejected', 'completed', 'active'];
@@ -26,6 +28,7 @@ export function JudgmentMap() {
   const [error, setError] = useState<ApiError | null>(null);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<'map' | 'list'>(narrow() ? 'list' : 'map');
+  const toggleRef = useSlideIndicator<HTMLDivElement>([view]);
   const [selected, setSelected] = useState<string | null>(null);
   const [detail, setDetail] = useState<NodeDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -128,8 +131,8 @@ export function JudgmentMap() {
 
   return <section className={`jm-page ${big ? 'is-expanded' : ''}`} onKeyDown={onPageKeyDown}>
     <header className="jm-heading">
-      <div><p className="eyebrow">근거 → 가설 → 판단 → 적용 → 업무 단계</p><h1>입체 판단 맵</h1></div>
-      <div role="group" aria-label="보기 방식" className="jm-toggle">
+      <div><p className="eyebrow">판단 관계</p><h1>입체 판단 맵</h1></div>
+      <div ref={toggleRef} role="group" aria-label="보기 방식" className="jm-toggle m-seg">
         <button type="button" aria-pressed={view === 'map'} onClick={() => setView('map')}>입체 맵</button>
         <button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')}>목록 보기</button>
       </div>

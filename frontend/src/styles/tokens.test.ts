@@ -24,6 +24,7 @@ describe('design tokens — AA contrast (4.5:1 for text)', () => {
     ['--color-primary-ink', '--color-surface'], ['--color-primary-ink', '--color-ground'], ['--color-primary-ink', '--color-primary-tint'], ['--color-primary-ink', '--status-active-bg'],
     ['--status-success-text', '--status-success-bg'], ['--status-fail', '--status-fail-bg'], ['--status-fail', '--color-surface'], ['--status-warn', '--status-warn-bg'], ['--status-review-text', '--status-review-bg'],
     ['--color-ink-2', '--color-fill'],
+    ['--color-on-secondary', '--color-secondary'], ['--color-on-danger', '--status-fail'], ['--color-secondary-ink', '--color-secondary-tint'], ['--color-secondary-ink', '--color-surface'], ['--color-secondary-ink', '--color-ground'],
   ];
   it.each(pairs)('light %s on %s', (fg, bg) => expect(ratio(light(fg), light(bg))).toBeGreaterThanOrEqual(4.5));
   it.each(pairs.filter(([fg]) => fg !== '--color-on-primary'))('dark %s on %s', (fg, bg) => expect(ratio(dark(fg), dark(bg))).toBeGreaterThanOrEqual(4.5));

@@ -52,11 +52,19 @@ export function useStaggerIn<T extends HTMLElement = HTMLElement>(deps: Dependen
   return ref;
 }
 
-/** Eased count-up toward `target` (ease-out cubic). Returns the target immediately when motion is reduced or rAF is missing. */
-export function useCountUp(target: number, duration: number = 600): number {
+/** True once the first in-app navigation happened (see armRouteMotion). Entrance animations that start from a "before" state wait for it. */
+export function routeMotionArmed(): boolean { return typeof document !== 'undefined' && document.documentElement.dataset.motion === 'route'; }
+
+/**
+ * Eased count-up toward `target` (ease-out cubic). Returns the target immediately when motion is reduced or rAF is missing.
+ * `entrance: true` also counts up from 0 on mount, but only after the first in-app navigation, so a fresh page load,
+ * screenshots and axe always see the final value.
+ */
+export function useCountUp(target: number, duration: number = 600, options: { entrance?: boolean } = {}): number {
   const reduced = useReducedMotion();
-  const [value, setValue] = useState(target);
-  const from = useRef(target);
+  const [initial] = useState(() => (options.entrance && !prefersReducedMotion() && routeMotionArmed() ? 0 : target));
+  const [value, setValue] = useState(initial);
+  const from = useRef(initial);
   useEffect(() => {
     if (reduced || typeof requestAnimationFrame !== 'function' || from.current === target) { from.current = target; setValue(target); return; }
     const start = performance.now(); const origin = from.current; let raf = 0;
@@ -74,6 +82,36 @@ export function useCountUp(target: number, duration: number = 600): number {
 export function CountUp({ value, duration, format = (n) => String(Math.round(n)) }: { value: number; duration?: number; format?: (n: number) => string }) {
   const shown = useCountUp(value, duration);
   return createElement('span', null, createElement('span', { 'aria-hidden': 'true' }, format(shown)), createElement('span', { className: 'sr-only' }, format(value)));
+}
+
+/**
+ * Metric number: a single text node that counts up from 0 on screen entry (after the first in-app navigation) and on later changes.
+ * Unlike `CountUp` it adds no hidden duplicate, so the value is one element for tests and assistive tech.
+ */
+export function CountNumber({ value, duration, format = (n) => String(Math.round(n)) }: { value: number; duration?: number; format?: (n: number) => string }) {
+  return createElement('span', { className: 'count-number' }, format(useCountUp(value, duration, { entrance: true })));
+}
+
+/**
+ * Sliding highlight for segmented controls: publishes the geometry of the child that is `aria-pressed`/`aria-selected`/`.active`
+ * as `--ind-x/--ind-y/--ind-w/--ind-h` on the container and sets `data-slide="on"` (styles: `.m-seg` in motion.css).
+ * Falls back to each button's own selected style when it cannot measure (no layout, hidden container).
+ */
+export function useSlideIndicator<T extends HTMLElement = HTMLElement>(deps: DependencyList = []): RefObject<T> {
+  const ref = useRef<T>(null);
+  useLayoutEffect(() => {
+    const root = ref.current; if (!root) return;
+    const measure = () => {
+      const el = root.querySelector<HTMLElement>('[aria-pressed="true"],[aria-selected="true"],.active');
+      if (!el || !el.offsetWidth) { delete root.dataset.slide; return; }
+      root.style.setProperty('--ind-x', `${el.offsetLeft}px`); root.style.setProperty('--ind-y', `${el.offsetTop}px`);
+      root.style.setProperty('--ind-w', `${el.offsetWidth}px`); root.style.setProperty('--ind-h', `${el.offsetHeight}px`);
+      root.dataset.slide = 'on';
+    };
+    measure(); window.addEventListener('resize', measure); return () => window.removeEventListener('resize', measure);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+  return ref;
 }
 
 /** Pressable wrapper: scales to 0.97 on pointer-down (CSS `[data-press]`). `card` uses the softer 0.98 card press. */

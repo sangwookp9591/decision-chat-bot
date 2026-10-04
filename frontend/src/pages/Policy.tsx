@@ -116,7 +116,7 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
   const publishBlock = !canEdit ? '' : fieldError || hasFormError ? '입력 오류를 고친 뒤 다시 검증해 주세요.' : !validation ? '값을 바꾸거나 처음 열었다면 먼저 ‘서버 검증’을 통과해야 게시할 수 있습니다.' : !validation.valid ? '검증 오류를 해결하고 다시 검증해 주세요.' : '';
   const globalErrors = Object.entries(fieldErrors).filter(([key]) => !key.startsWith('form:'));
   const full = config as FullPolicyConfig;
-  return <section className="policy-page"><p className="eyebrow">JEV TRIAGE</p><header className="policy-heading"><div><h1>정책</h1><p>활성 버전 <strong>v{activeVersion}</strong> · 진행 중 실행은 시작 시 고정한 정책 버전을 사용합니다.</p></div><EventConnectionStatus status={stream.status} /></header>
+  return <section className="policy-page"><header className="policy-heading"><div><h1>정책</h1><p>활성 버전 <strong>v{activeVersion}</strong> · 진행 중 실행은 시작 시 고정한 정책 버전을 사용합니다.</p></div><EventConnectionStatus status={stream.status} /></header>
     <div className="policy-safety"><strong>잠금 · 필수 검토</strong><span>임상·안전·규제·긴급 검토는 항상 필요하며 편집할 수 없습니다.</span><strong>잠금 · 무승인 배정 금지</strong><span>승인 없이 업무를 배정하는 설정은 허용되지 않습니다.</span></div>
     <div className="policy-grid"><section className="policy-card"><h2>정책 편집기</h2>{!canEdit && <p role="note">정책 편집자 권한이 없어 읽기 전용입니다.</p>}
       {incoming !== null && <div className="policy-incoming" role="status"><strong>새 버전 v{incoming}이 게시되었습니다.</strong><span>편집 중인 값은 아직 그대로입니다. 새 버전을 반영하면 지금 편집한 내용은 사라집니다.</span><PolicyButton variant="secondary" onClick={() => void refresh(true)}>새 버전 반영</PolicyButton><PolicyButton variant="plain" onClick={() => setIncoming(null)}>내 편집 유지</PolicyButton></div>}

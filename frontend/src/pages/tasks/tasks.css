@@ -1,3 +1,26 @@
-.tasks-page{max-width:1400px;margin:auto;padding:30px}.tasks-page header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.tasks-page header>.tasks-refresh{flex:none;align-self:flex-start}.task-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px}.task-panels article,.task-list{background:#fff;border:1px solid var(--color-line);border-radius:12px;padding:16px}.tasks-page .fld-filterbar{margin:16px 0}.tasks-page .task-list .fld-empty{margin-top:12px}.tasks-page [role=status],.tasks-page [role=alert]{margin:8px 0}.task-list>button{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:8px;width:100%;padding:14px 4px;text-align:left;border:0;border-top:1px solid var(--color-line);background:transparent;cursor:pointer}.task-list small{grid-column:1/-1;color:var(--color-caption)}.task-detail{position:fixed;right:24px;top:80px;bottom:20px;width:min(480px,calc(100% - 32px));overflow:auto;padding:22px;background:white;border:1px solid var(--color-line);border-radius:14px;box-shadow:0 10px 40px #0002}.task-detail button{min-height:44px}.task-detail>.ui-button{margin:4px 8px 4px 0}@media(max-width:760px){.tasks-page{padding:20px 14px}.task-panels{grid-template-columns:minmax(0,1fr)}.task-list>button{grid-template-columns:minmax(0,1fr)}.task-list small{grid-column:auto}}
-
-.task-blockers{padding:10px 14px;border:1px solid #F0D9A8;border-radius:10px;background:#FFF7E6}.task-blockers h3{margin:0 0 6px;font-size:14px}.task-blockers ul{margin:0;padding-left:18px}.task-detail button:disabled{cursor:not-allowed}
+/* Tasks — list rows on a white card with a hover face; the detail panel is a floating sheet. */
+.tasks-page{max-width:1400px}
+.tasks-page header{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-4)}
+.tasks-page header>.tasks-refresh{flex:none;align-self:flex-start}
+.task-panels{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.task-panels article,.task-list{padding:var(--space-5);border-radius:var(--radius-xl);background:var(--color-surface);box-shadow:var(--shadow-card)}
+.task-panels h2,.task-list>h2{margin:0 0 var(--space-2);font:var(--t5)}
+.task-panels p{margin:0 0 var(--space-2);color:var(--color-ink-2)}
+.tasks-page .fld-filterbar{margin:var(--space-4) 0}
+.tasks-page .task-list .fld-empty{margin-top:var(--space-3)}
+.tasks-page [role=status],.tasks-page [role=alert]{margin:var(--space-2) 0}
+.task-list>button{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:var(--space-2);align-items:center;width:100%;padding:var(--space-4) var(--space-3);text-align:left;border:0;border-radius:var(--radius-md);background:transparent;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
+.task-list>button:active{transform:scale(0.995)}
+@media(hover:hover){.task-list>button:hover{background:var(--color-fill)}}
+.task-list>button strong{font:var(--t5)}
+.task-list>button>span{color:var(--color-ink-2)}
+.task-list small{grid-column:1/-1;color:var(--color-caption)}
+.task-detail{position:fixed;right:var(--space-6);top:80px;bottom:var(--space-5);z-index:20;width:min(480px,calc(100% - 32px));overflow:auto;padding:var(--space-6);border-radius:var(--radius-xl);background:var(--color-surface);box-shadow:var(--shadow-pop);animation:m-slide-in-right var(--dur-slow) var(--ease-spring)}
+.task-detail h2{margin:var(--space-2) 0;font:var(--t4)}
+.task-detail button{min-height:44px}
+.task-detail>.ui-button{margin:4px var(--space-2) 4px 0}
+.task-blockers{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--status-warn-bg);color:var(--color-ink)}
+.task-blockers h3{margin:0 0 6px;font:var(--t6);font-weight:700;color:var(--status-warn)}
+.task-blockers ul{margin:0;padding-left:18px}
+.task-detail button:disabled{cursor:not-allowed}
+@media(max-width:760px){.task-panels{grid-template-columns:minmax(0,1fr)}.task-list>button{grid-template-columns:minmax(0,1fr)}.task-list small{grid-column:auto}.task-detail{right:var(--space-3);left:var(--space-3);width:auto;top:64px}}

@@ -130,7 +130,8 @@ test('keyboard submits a real request and opens its saved evidence', async ({ pa
   await evidence.focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: '근거 원문' })).toBeVisible();
-  const requestId = await page.locator('.request-list button code').first().innerText();
+  // The list shows a short id chip; its title carries the full id.
+  const requestId = (await page.locator('.request-list button code').first().getAttribute('title')) ?? '';
   await page.request.post('/api/auth/login', { data: { email: `reviewer@${tenant}.dev`, password } });
   await page.goto('/review');
   const reviewRow = page.getByRole('button', { name: new RegExp(requestId) });

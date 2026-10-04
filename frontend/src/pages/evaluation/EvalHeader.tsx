@@ -1,4 +1,5 @@
 import { StatusBadge } from '../../components';
+import { useSlideIndicator } from '../../lib/motion';
 
 export type Progress = { total: number; confirmed: number; deferred: number; remaining: number; percent: number };
 export type Split = 'tuning' | 'final';
@@ -8,10 +9,11 @@ type Props = { split: Split; onSplit: (split: Split) => void; progress: Progress
 
 /** Split switch, progress and sample stepper: always visible above the two-column body. */
 export function EvalHeader({ split, onSplit, progress, position, total, onPrev, onNext }: Props) {
+  const segRef = useSlideIndicator<HTMLDivElement>([split]);
   const share = (n: number) => progress.total ? `${Math.min(100, (n * 100) / progress.total)}%` : '0%';
   return <div className="eval-top">
     <div className="eval-top-row">
-      <div className="eval-seg" role="tablist" aria-label="분할 선택">
+      <div ref={segRef} className="eval-seg m-seg" role="tablist" aria-label="분할 선택">
         {SPLITS.map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={split === id} className={split === id ? 'active' : ''} onClick={() => onSplit(id)}>{label}</button>)}
       </div>
       {split === 'final' && <StatusBadge status="review" label="모델 예측 숨김" />}

@@ -18,6 +18,10 @@
   --color-primary-weak: rgba(241, 89, 33, 0.12); /* TDS "weak" button fill */
   --color-on-primary: #1B1712;       /* text ON orange — contrast rule (5.26:1), never white */
   --color-secondary: #0E7C86;        /* teal, supporting */
+  --color-on-secondary: #ffffff;     /* text ON teal (4.95:1); also the switch thumb */
+  --color-on-danger: #ffffff;        /* text ON a danger fill (--status-fail on light is 5.36:1; dark theme uses the lighter red, see dark block) */
+  --color-secondary-ink: #0B5E66;    /* teal as TEXT / hover on light surfaces (AA) */
+  --color-secondary-tint: #E7F3F4;   /* weak teal fill (selected chips, active filters) */
 
   /* ── Neutral roles (names kept, values from TDS greys) ── */
   --color-ink: var(--grey-900);          /* titles */
@@ -70,7 +74,7 @@
   --text-caption: var(--t7);
 
   /* ── Shape ── */
-  --radius-xs: 6px; --radius-md: 12px; --radius-card: 16px; --radius-xl: 20px; --radius-pill: 999px;
+  --radius-xs: 6px; --radius-sm: 8px; --radius-md: 12px; --radius-card: 16px; --radius-xl: 20px; --radius-pill: 999px;
   --radius-control: 12px;
   --hit-min: 44px;
 
@@ -82,6 +86,8 @@
   --shadow-card: 0 2px 8px rgba(2, 32, 71, 0.04);
   --shadow-pop: 0 8px 28px rgba(2, 32, 71, 0.12);
   --shadow-toast: 0 8px 24px rgba(2, 32, 71, 0.2);
+  --shadow-lift: 0 4px 16px rgba(2, 32, 71, 0.1);   /* sticky bars, hovered cards */
+  --shadow-glow: 0 0 0 4px color-mix(in srgb, var(--status-warn-fill) 33%, transparent); /* running-step halo */
 
   /* ── Motion ── fast, springy, short */
   --dur-press: 120ms; --dur-fast: 160ms; --dur-base: 240ms; --dur-slow: 320ms; --dur-shimmer: 1400ms;
@@ -96,37 +102,38 @@
 }
 
 /*
- * Dark (TDS dark values). OPT-IN for now: `<html data-theme="dark">`, or `data-theme="auto"` to follow the OS.
- * It is not automatic yet because screens still carry hard-coded light colors (see DESIGN_SYSTEM.md §화면 하드코딩 목록);
- * auto-following the OS before those are tokenized would put dark ink on white cards.
+ * Dark (TDS dark values). Follows the OS (`prefers-color-scheme`) unless the user picked light; `<html data-theme="dark">` forces it.
+ * `data-theme="light"` pins light, `data-theme="auto"` (and no attribute) follow the OS. Both blocks below carry the same values.
  */
 :root[data-theme='dark'] {
   --grey-50: #202027; --grey-100: #2c2c35; --grey-200: #3c3c47; --grey-300: #4d4d59; --grey-400: #62626d;
   --grey-500: #7e7e87; --grey-600: #9e9ea4; --grey-700: #c3c3c6; --grey-800: #e4e4e5; --grey-900: #ffffff;
   --grey-opacity-100: rgba(217, 217, 255, 0.11); --grey-opacity-200: rgba(222, 222, 255, 0.19);
   --color-primary-ink: #FF8A5C; --color-primary-tint: #3B2620; --color-primary-weak: rgba(241, 89, 33, 0.2);
+  --color-secondary-ink: #5CC8D0; --color-secondary-tint: #12363a; --color-on-danger: #1B1712;
   --color-caption: #9e9ea4; --color-ground: #101013; --color-surface: #202027; --color-surface-2: #2c2c35;
   --color-fill: #2c2c35; --color-fill-strong: #3c3c47; --color-overlay: rgba(0, 0, 0, 0.6);
   --status-success: #3DD68C; --status-success-text: #3DD68C; --status-success-bg: #12301f;
   --status-fail: #FF6B6B; --status-fail-bg: #3a1c20; --status-warn: #FFB84D; --status-warn-bg: #3a2c14;
   --status-active-bg: #3B2620; --status-review: #B79CF2; --status-review-text: #CDBEF3; --status-review-bg: #2b2342;
   --status-pending-border: #62626d;
-  --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5); --shadow-lift: 0 4px 16px rgba(0, 0, 0, 0.4);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
-  :root[data-theme='auto'] {
+  :root:not([data-theme='light']) {
     --grey-50: #202027; --grey-100: #2c2c35; --grey-200: #3c3c47; --grey-300: #4d4d59; --grey-400: #62626d;
     --grey-500: #7e7e87; --grey-600: #9e9ea4; --grey-700: #c3c3c6; --grey-800: #e4e4e5; --grey-900: #ffffff;
     --grey-opacity-100: rgba(217, 217, 255, 0.11); --grey-opacity-200: rgba(222, 222, 255, 0.19);
     --color-primary-ink: #FF8A5C; --color-primary-tint: #3B2620; --color-primary-weak: rgba(241, 89, 33, 0.2);
+    --color-secondary-ink: #5CC8D0; --color-secondary-tint: #12363a; --color-on-danger: #1B1712;
     --color-caption: #9e9ea4; --color-ground: #101013; --color-surface: #202027; --color-surface-2: #2c2c35;
     --color-fill: #2c2c35; --color-fill-strong: #3c3c47; --color-overlay: rgba(0, 0, 0, 0.6);
     --status-success: #3DD68C; --status-success-text: #3DD68C; --status-success-bg: #12301f;
     --status-fail: #FF6B6B; --status-fail-bg: #3a1c20; --status-warn: #FFB84D; --status-warn-bg: #3a2c14;
     --status-active-bg: #3B2620; --status-review: #B79CF2; --status-review-text: #CDBEF3; --status-review-bg: #2b2342;
     --status-pending-border: #62626d;
-    --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: none; --shadow-pop: 0 8px 28px rgba(0, 0, 0, 0.5); --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.5); --shadow-lift: 0 4px 16px rgba(0, 0, 0, 0.4);
     color-scheme: dark;
   }
 }

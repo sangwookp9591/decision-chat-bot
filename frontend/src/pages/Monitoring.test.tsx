@@ -93,3 +93,14 @@ describe('Monitoring internal codes (P4-05)', () => {
     });
   });
 });
+
+describe('Monitoring KPI count-up (TOSS-SCREENS)', () => {
+  it('renders each numeric KPI through CountNumber and shows the final value on a fresh load', async () => {
+    vi.mocked(monitoringApi.summary).mockResolvedValue({ ...summary, business: { request_denominator: 7, org_unconfirmed: 0, auto_assignment_count: 3, review_completed_count: 2 } });
+    const { container } = render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findAllByText('자동 처리');
+    const tile = [...container.querySelectorAll('.monitor-kpis article')].find((a) => a.textContent?.startsWith('자동 처리'))!;
+    expect(tile.querySelector('.count-number')?.textContent).toBe('3');
+    expect(container.querySelectorAll('.monitor-kpis .count-number').length).toBeGreaterThan(0);
+  });
+});
