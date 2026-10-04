@@ -26,3 +26,7 @@
 ## 초안 버전 표시 (UX-5 / P6-01)
 
 `GET /api/requests/{id}/judgment`의 `draft_tasks`는 **현재 초안 버전**의 업무만 담는다(같은 `draft_task_id`가 버전마다 반복되지 않는다). 현재 버전은 요청의 최신 Review가 `approved`이면 승인된 `draft_version`, 그 외에는 최신 `draft_version`이다. 추가 필드: `current_draft_version`, `draft_versions: [{draft_version, source('ai'|'reviewer'), created_by, created_at, tasks}]`. `source`는 v1이면 `ai`, 이후 버전은 검토자 수정 승인으로 만들어진 `reviewer`다. 원본 Draft·DraftTask는 수정하지 않고 보존한다. `draft_tasks`를 읽는 곳은 프런트 Main·Review뿐이며(WebMCP 도구·eval 러너는 이 API 필드를 사용하지 않는다) 필드 이름은 유지했다. Main은 현재 버전만 업무 분담에 표시하고 “원안과 비교” 펼침에 버전별 목록과 원안 대비 변경 항목을 보여 준다. 시험: `test_review_assignment.py::test_judgment_api_shows_only_current_draft_version`.
+
+## 잠정 Run 상태 (PERF-1)
+
+`Run.preliminary_json`은 분류·confidence·위험 플래그만 담으며 `preliminary_at`과 함께 잠정 판단 커밋에 기록된다. `evidence_json`은 원문 없이 unit ID·확률·작성 주체를 저장하고, `tasks_json`은 카탈로그 초안을 임시 저장한다. `evidence_count`/`evidence_ready_at`, `task_count`/`tasks_ready_at`은 각 비동기 단계의 완료 표시다. 이 속성은 `Judgment`나 `Review` 관계를 만들지 않고, 기존 최초 판단 완료 시각 `first_judgment_committed_at`도 바꾸지 않는다. 재시도와 재분석은 Run별로 분리되며 active run 확인이 잠정 쓰기에도 적용된다. 이벤트 payload에는 입력 원문이나 근거 텍스트를 넣지 않는다.

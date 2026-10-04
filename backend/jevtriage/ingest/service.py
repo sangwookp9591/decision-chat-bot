@@ -11,6 +11,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from jevtriage.config import get_settings
+from jevtriage.db.events import append_event_in_tx
 from jevtriage.db.idempotency import get_or_create_in_tx
 from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.tx import write_tx
@@ -109,7 +110,12 @@ async def reanalyze(principal, request_id: str, expected_revision: int,
         return await get_or_create_in_tx(tx, tenant_id, f"reanalyze:{request_id}", key,
                                          digest, create)
 
-    return await write_tx(tenant_id, op)
+    result = await write_tx(tenant_id, op)
+    from jevtriage.jobs.worker import Worker
+    from jevtriage.realtime.notifier import publish_job
+    Worker.notify_new_job()
+    await publish_job(result["job_id"])
+    return result
 
 
 async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
@@ -196,6 +202,27 @@ async def submit(tenant_id: str, user_id: str, text: str, files, key: str,
             tenant_id, user_id, text, attachments, key, payload_hash, received,
             org_ids=org_ids,
         )
+        async def received_event(tx):
+            await lock_node_in_tx(tx, tenant_id, "Request", result["request_id"])
+            row = await (await tx.run(
+                "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
+                "OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) "
+                "OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) "
+                "RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior",
+                tenant=tenant_id, request=result["request_id"],
+            )).single()
+            if row and not row["prior"]:
+                await append_event_in_tx(tx, tenant_id, "request.received",
+                    {"request_id": result["request_id"], "run_id": row["run_id"],
+                     "status": result["status"]},
+                    request_id=result["request_id"], run_id=row["run_id"])
+            return row["job_id"] if row else None
+        job_id = await write_tx(tenant_id, received_event)
+        if job_id:
+            from jevtriage.jobs.worker import Worker
+            from jevtriage.realtime.notifier import publish_job
+            Worker.notify_new_job()
+            await publish_job(job_id)
         _journal(
             attempt,
             "request_completed",

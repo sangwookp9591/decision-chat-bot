@@ -165,7 +165,8 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
             status=status, judgment_id=judgment_id,
         )).consume()
         await append_event_in_tx(tx, tenant_id, "judgment_saved",
-            {"judgment_id": judgment_id, "status": status, "mode": result["usage"]["mode"]},
+            {"judgment_id": judgment_id, "status": status, "mode": result["usage"]["mode"],
+             "classifications": classes},
             request_id=request_id, run_id=run_id)
     return judgment_id
 

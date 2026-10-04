@@ -21,8 +21,11 @@ async def pin_config_for_run_in_tx(tx, tenant: str, run_id: str) -> int:
         )).single()
         version = active["version"] if active else 0
     version = int(version)
-    if versions.get("config_version") != version or row["config_version"] != version:
+    # "config" is the key existing API clients read; "config_version" is the internal name.
+    if (versions.get("config_version") != version or versions.get("config") != version
+            or row["config_version"] != version):
         versions["config_version"] = version
+        versions["config"] = version
         await (await tx.run(
             "MATCH (r:Run {tenant_id:$tenant,id:$run}) "
             "SET r.versions_json=$versions,r.config_version=$version,r.policy_version=$version",

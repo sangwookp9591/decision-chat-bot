@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import threading
 from datetime import UTC, datetime
 from uuid import uuid4
 
@@ -12,7 +13,13 @@ from jevtriage.judgment.catalog import CATALOG_VERSION
 from jevtriage.judgment.eligibility import evaluate_auto_assign
 from jevtriage.judgment.jev_client import MODEL_VERSION, JevClient
 from jevtriage.judgment.masking import MaskingSession, mask_for_external
-from jevtriage.judgment.pipeline import SCHEMA_VERSION, run_judgment
+from jevtriage.judgment.pipeline import (
+    SCHEMA_VERSION,
+    assemble,
+    build_evidence,
+    build_tasks,
+    classify,
+)
 from jevtriage.judgment.questions import QSET_VERSION
 from jevtriage.judgment.store import load_input, save_judgment_in_tx
 from jevtriage.learning.apply import apply_rules
@@ -73,27 +80,29 @@ async def execute_judgment(ctx, client=None) -> str:
                         for clause in r["scope"]["all"])]
     mask_session = MaskingSession()
     mask_policy = {**policy, "_masking_session": mask_session}
+    mask_lock = threading.Lock()
 
     class ExternalClient:
         def __init__(self, inner):
             self.inner = inner
 
         def ask(self, state, question_map):
-            external = {**state}
-            if guidance:
-                external["operating_guidance"] = guidance
-            for key in ("chat_text", "source_unit"):
-                if key in external:
-                    external[key] = mask_for_external(external[key], mask_policy)
-            if "units" in external:
-                external["units"] = [
-                    {**unit, "text": mask_for_external(unit["text"], mask_policy)}
-                    for unit in external["units"]
-                ]
-            if "operating_guidance" in external:
-                external["operating_guidance"] = [
-                    mask_for_external(item, mask_policy) for item in external["operating_guidance"]
-                ]
+            with mask_lock:
+                external = {**state}
+                if guidance:
+                    external["operating_guidance"] = guidance
+                for key in ("chat_text", "source_unit"):
+                    if key in external:
+                        external[key] = mask_for_external(external[key], mask_policy)
+                if "units" in external:
+                    external["units"] = [
+                        {**unit, "text": mask_for_external(unit["text"], mask_policy)}
+                        for unit in external["units"]
+                    ]
+                if "operating_guidance" in external:
+                    external["operating_guidance"] = [
+                        mask_for_external(item, mask_policy) for item in external["operating_guidance"]
+                    ]
             return self.inner.ask(external, question_map)
 
         def __getattr__(self, name):
@@ -105,35 +114,100 @@ async def execute_judgment(ctx, client=None) -> str:
         async with ctx.step("Jev 판단", kind="ai", output_summary=mask_summary) as jev_step_id:
             # Chat text is already represented by persisted EvidenceSpan units. Passing it
             # separately would create ephemeral chat:n citations with no resolvable span.
-            try:
-                result = await asyncio.to_thread(run_judgment, units, "", policy, client,
-                                                 chat_context_text=chat_text)
-            finally:
-                mask_summary.update({"mask_input_chars": mask_session.input_chars,
-                                     "mask_output_chars": mask_session.output_chars,
-                                     "mask_count": mask_session.count,
-                                     "mask_calls": mask_session.calls})
-                ctx.journal.append({
-                    "event_id": f"event_{uuid4().hex}", "attempt_id": ctx.attempt_id,
-                    "request_id": ctx.request_id, "run_id": ctx.run_id,
-                    "kind": "external_masking", "ts": datetime.now(UTC).isoformat(),
-                    "status_code": "recorded", "tenant_id": ctx.tenant_id,
-                    "validity": json.dumps(mask_summary, separators=(",", ":")),
-                })
-        ctx.record_usage(**result["usage"])
-        async with ctx.step("근거 연결", kind="ai"):
-            # Jev calls occur inside run_judgment; check their returned links here.
+            selected, state, model_output, classifications = await asyncio.to_thread(
+                classify, units, "", policy, client, chat_context_text=chat_text)
+            mask_summary.update({"mask_input_chars": mask_session.input_chars,
+                                 "mask_output_chars": mask_session.output_chars,
+                                 "mask_count": mask_session.count,
+                                 "mask_calls": mask_session.calls})
+        confidences = {key: model_output.answers[key]["confidence"] for key in classifications}
+        risk_flags = {key: model_output.answers[key]["noul"] >= 0.5 for key in
+                      ("clinical_safety", "pharmacovigilance", "regulatory")}
+
+        async def save_partial(tx):
+            row = await (await tx.run(
+                "MATCH (q:Request {tenant_id:$tenant,id:$request}) "
+                "MATCH (r:Run {tenant_id:$tenant,id:$run}) "
+                "SET r.preliminary_json=$preliminary,r.preliminary_at=datetime() "
+                "RETURN q.first_received_at AS received,r.preliminary_at AS saved",
+                tenant=ctx.tenant_id, request=ctx.request_id, run=ctx.run_id,
+                preliminary=json.dumps({"classifications": classifications,
+                                        "confidences": confidences, "risk_flags": risk_flags},
+                                       ensure_ascii=False),
+            )).single(strict=True)
+            await append_event_in_tx(tx, ctx.tenant_id, "judgment.partial",
+                {"request_id": ctx.request_id, "run_id": ctx.run_id,
+                 "classifications": classifications, "confidences": confidences,
+                 "risk_flags": risk_flags, "preliminary": True},
+                request_id=ctx.request_id, run_id=ctx.run_id)
+            return max(0, row["saved"].to_native().timestamp() * 1000 -
+                       row["received"].to_native().timestamp() * 1000)
+
+        preliminary_ms = round(await ctx.commit(save_partial, affects_request=True))
+        ctx.journal.append({"event_id": f"event_{uuid4().hex}",
+                            "attempt_id": ctx.attempt_id, "request_id": ctx.request_id,
+                            "run_id": ctx.run_id, "tenant_id": ctx.tenant_id,
+                            "kind": "judgment_preliminary", "ts": datetime.now(UTC).isoformat(),
+                            "time_to_preliminary_ms": preliminary_ms})
+        ctx.record_usage(input_tokens=model_output.usage["input_tokens"],
+                         output_tokens=model_output.usage["output_tokens"],
+                         latency_ms=model_output.latency_ms,
+                         attempts=model_output.attempts, mode=model_output.mode)
+
+        async def evidence_phase():
+            async with ctx.step("근거 연결", kind="ai"):
+                evidence = await asyncio.to_thread(
+                    build_evidence, selected, classifications, client, policy)
             valid_units = {unit["unit_id"] for unit in units}
-            for citations in result["evidence"].values():
+            for citations in evidence.values():
                 for citation in citations:
                     if citation["unit_id"] not in valid_units or not 0 <= citation["probability"] <= 1:
                         raise ValueError("invalid evidence link")
-        async with ctx.step("업무 분해", kind="ai"):
-            # The catalog and Jev calls occur inside run_judgment.
-            for task in result["draft_tasks"]:
+            async def save(tx):
+                await (await tx.run(
+                    "MATCH (r:Run {tenant_id:$tenant,id:$run}) "
+                    "SET r.evidence_count=$count,r.evidence_json=$evidence,"
+                    "r.evidence_ready_at=datetime()",
+                    tenant=ctx.tenant_id, run=ctx.run_id,
+                    count=sum(map(len, evidence.values())),
+                    evidence=json.dumps({key: [
+                        {field: citation[field] for field in ("unit_id", "probability", "author")}
+                        for citation in citations] for key, citations in evidence.items()},
+                        ensure_ascii=False),
+                )).consume()
+                await append_event_in_tx(tx, ctx.tenant_id, "judgment.evidence_ready",
+                    {"request_id": ctx.request_id, "run_id": ctx.run_id,
+                     "evidence_count": sum(map(len, evidence.values()))},
+                    request_id=ctx.request_id, run_id=ctx.run_id)
+            await ctx.commit(save, affects_request=True)
+            return evidence
+
+        async def tasks_phase():
+            async with ctx.step("업무 분해", kind="ai"):
+                tasks, decomposition = await asyncio.to_thread(
+                    build_tasks, state, model_output, client, policy)
+            for task in tasks:
                 if not all(key in task for key in ("draft_task_id", "title", "method",
                                                   "lead_org", "deliverable", "predecessors")):
                     raise ValueError("invalid draft task")
+            async def save(tx):
+                await (await tx.run(
+                    "MATCH (r:Run {tenant_id:$tenant,id:$run}) "
+                    "SET r.task_count=$count,r.tasks_json=$tasks,r.tasks_ready_at=datetime()",
+                    tenant=ctx.tenant_id, run=ctx.run_id, count=len(tasks),
+                    tasks=json.dumps(tasks, ensure_ascii=False),
+                )).consume()
+                await append_event_in_tx(tx, ctx.tenant_id, "judgment.tasks_ready",
+                    {"request_id": ctx.request_id, "run_id": ctx.run_id,
+                     "task_count": len(tasks)},
+                    request_id=ctx.request_id, run_id=ctx.run_id)
+            await ctx.commit(save, affects_request=True)
+            return tasks, decomposition
+
+        evidence, (tasks, decomposition) = await asyncio.gather(
+            evidence_phase(), tasks_phase())
+        result = assemble(selected, model_output, classifications, evidence,
+                          tasks, decomposition, policy)
         async with ctx.step("규칙 적용", kind="rule") as rule_step_id:
             answers = result["raw_model_output"]["answers"]
             result, applications = apply_rules(result, rules_snapshot, features={
@@ -222,3 +296,15 @@ async def execute_judgment(ctx, client=None) -> str:
                 run_id=ctx.run_id)
         await ctx.commit(fail_request, affects_request=True)
         raise
+    finally:
+        mask_summary.update({"mask_input_chars": mask_session.input_chars,
+                             "mask_output_chars": mask_session.output_chars,
+                             "mask_count": mask_session.count,
+                             "mask_calls": mask_session.calls})
+        ctx.journal.append({
+            "event_id": f"event_{uuid4().hex}", "attempt_id": ctx.attempt_id,
+            "request_id": ctx.request_id, "run_id": ctx.run_id,
+            "kind": "external_masking", "ts": datetime.now(UTC).isoformat(),
+            "status_code": "recorded", "tenant_id": ctx.tenant_id,
+            "validity": json.dumps(mask_summary, separators=(",", ":")),
+        })
