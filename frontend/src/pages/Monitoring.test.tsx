@@ -26,12 +26,12 @@ describe('Monitoring', () => {
     const errors: unknown[] = []; const onError = (event: ErrorEvent) => errors.push(event.error); window.addEventListener('error', onError);
     render(<MemoryRouter><Monitoring /></MemoryRouter>); await screen.findByText('요청 수');
     const calls = vi.mocked(monitoringApi.summary).mock.calls.length;
-    fireEvent.change(screen.getByLabelText('시작'), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText('시작 년'), { target: { value: '' } });
     expect((await screen.findAllByRole('alert'))[0].textContent).toContain('시작과 종료 시각');
     expect((screen.getByRole('button', { name: '적용' }) as HTMLButtonElement).disabled).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: '새로고침' }));
     expect(vi.mocked(monitoringApi.summary).mock.calls.length).toBe(calls + 1);
-    fireEvent.change(screen.getByLabelText('시작'), { target: { value: '2999-01-01T00:00' } });
+    fireEvent.change(screen.getByLabelText('시작 년'), { target: { value: '2999' } });
     expect(screen.getAllByRole('alert')[0].textContent).toContain('앞서야');
     window.removeEventListener('error', onError); expect(errors).toEqual([]);
   });
@@ -64,7 +64,7 @@ describe('Monitoring internal codes (P4-05)', () => {
       vi.mocked(monitoringApi.failures).mockReturnValue(never());
       render(<MemoryRouter><Monitoring /></MemoryRouter>);
       expect(screen.getByRole('heading', { name: '모니터링' })).toBeTruthy();
-      expect(screen.getByLabelText('시작')).toBeTruthy(); expect(screen.getByRole('button', { name: '적용' })).toBeTruthy();
+      expect(screen.getByRole('group', { name: '시작' })).toBeTruthy(); expect(screen.getByRole('button', { name: '적용' })).toBeTruthy();
       // slo + alerts answered while summary/failures are still pending
       expect(await screen.findByText('접수·조회 가용성')).toBeTruthy();
       expect(within(screen.getByRole('region', { name: '서비스 수준 목표' })).getByText('30일 미달', { exact: false })).toBeTruthy();

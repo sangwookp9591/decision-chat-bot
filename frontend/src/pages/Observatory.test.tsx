@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Observatory } from './Observatory';
 import { observeApi } from '../api/observe';
@@ -20,7 +20,7 @@ describe('Observatory deep links and flow (P3-03/P3-04)', () => {
   it('resolves the request from ?run_id= alone and does not fall back to the first request', async () => {
     render(<MemoryRouter initialEntries={['/observatory?run_id=run_1']}><Observatory /></MemoryRouter>);
     await screen.findByRole('list', { name: '실행 순서' });
-    await waitFor(() => expect((screen.getByLabelText('요청 선택') as HTMLSelectElement).value).toBe('req_1'));
+    await waitFor(() => expect((screen.getByRole('combobox', { name: '요청 선택' }) as HTMLInputElement).value).toBe('req_1'));
     expect(observeApi.runs).not.toHaveBeenCalledWith('req_other');
   });
   it('renders steps in the given order with predecessor labels and the edge list', async () => {
@@ -33,3 +33,23 @@ describe('Observatory deep links and flow (P3-03/P3-04)', () => {
     expect(Array.from(edges.querySelectorAll('li')).map((li) => li.textContent)).toEqual(['입력 정리 → Jev 판단', 'Jev 판단 → 사람 검토']);
   });
 });
+
+describe('Observatory empty states and selectors', () => {
+  it('shows an empty-state card when there is no request to observe', async () => {
+    vi.mocked(observeApi.requests).mockResolvedValue({ items: [] });
+    render(<MemoryRouter><Observatory /></MemoryRouter>);
+    expect(await screen.findByText('관찰 가능한 요청이 없습니다')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '요청 접수로 이동' })).toHaveAttribute('href', '/');
+    expect(screen.getByRole('combobox', { name: '실행 선택' })).toBeDisabled();
+  });
+  it('lets the request be found by typing part of its id', async () => {
+    vi.mocked(observeApi.requests).mockResolvedValue({ items: [{ id: 'req_alpha', status: 'received' }, { id: 'req_beta', status: 'received' }] });
+    render(<MemoryRouter><Observatory /></MemoryRouter>);
+    const box = await screen.findByRole('combobox', { name: '요청 선택' });
+    await waitFor(() => expect((box as HTMLInputElement).value).toContain('req_alpha'));
+    fireEvent.focus(box); fireEvent.change(box, { target: { value: 'beta' } });
+    fireEvent.mouseDown(screen.getByRole('option', { name: /req_beta/ }));
+    await waitFor(() => expect(observeApi.runs).toHaveBeenCalledWith('req_beta'));
+  });
+});
+

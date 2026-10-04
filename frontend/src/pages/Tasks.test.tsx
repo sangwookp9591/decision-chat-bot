@@ -47,3 +47,16 @@ describe('Tasks block reasons (P4-01)', () => {
     expect(await screen.findByRole('button', { name: '진행으로 변경' })).toBeEnabled();
   });
 });
+
+describe('Tasks empty state and filters', () => {
+  it('explains what will appear and what to do next, differently when a filter is active', async () => {
+    vi.mocked(taskApi.list).mockResolvedValue({ tasks: [] } as never);
+    render(<MemoryRouter><Tasks /></MemoryRouter>);
+    expect(await screen.findByText('표시할 배정 업무가 없습니다')).toBeInTheDocument();
+    expect(screen.getByText(/팀별 업무가 이곳에 배정됩니다/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('상태'), { target: { value: '막힘' } });
+    expect(await screen.findByText(/필터를 풀어/)).toBeInTheDocument();
+    expect(taskApi.list).toHaveBeenLastCalledWith(expect.objectContaining({ status: '막힘' }));
+  });
+});
+

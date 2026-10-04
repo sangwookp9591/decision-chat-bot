@@ -14,3 +14,15 @@ Choice confidence 기본 임계값은 `ai_need`·`feasibility`·`urgency`·`lead
 필수 검토 대상의 무승인 배정 금지는 서버 불변 조건이다. `auto_assign=true`는 게시할 수 있지만 실행 시 고정 정책과 입력·판단·근거·초안·위험 신호·중복 여부를 모두 재검증한 요청에만 적용된다. `risk_clear_max > 0.5`, 필수 검토 해제, 조건부/현재 불가/정보 부족/미정 자동 배정을 허용하는 위험 완화 규칙 참조는 거절한다. 일반 policy_editor 게시/rollback은 `rules`를 변경할 수 없다. 규칙 게시·중단·되돌리기용 권한 경로는 T32가 담당한다.
 
 한계: 이번 버전은 정책 데이터와 고정 지점 API를 제공한다. T09 worker가 실제 Run에 snapshot을 기록하는 연동은 별도 선행 작업이다. 개발 bootstrap 외 운영 tenant 초기 버전 프로비저닝은 배포 절차에서 호출해야 한다.
+
+## 정책 편집 화면 (UX-SCREENS)
+
+- 편집기는 항목별 입력 폼이다. 수치는 숫자 입력(허용 범위 표시), `noul_uncertain_band`는 하한·상한 두 값, 불리언(`feature_flags`, `masking.enabled`)은 스위치, `masking.categories`는 칩이다. 영문 키는 각 묶음의 ‘기술 상세’ 안에만 보인다.
+- 원본 JSON은 ‘고급: JSON 보기’(접힌 영역)에서 항목별 textarea(`<이름> (JSON)`)로 편집한다. 잘못된 JSON은 마지막 유효값을 유지한다. 폼과 JSON은 같은 `configRef`를 갱신한다.
+- 숫자 칸이 비어 있거나 숫자가 아니면 게시가 막히고, 게시 버튼이 비활성인 동안 이유 문구(`게시할 수 없는 이유: …`)를 보여 준다.
+- 버전 이력은 카드 안 가로 스크롤 표(>520px)와 카드형 목록(≤520px)이다.
+- 서버 `PolicyConfig`의 `noul_uncertain_band`·`learning`·`masking`·`retention`은 화면에서 `FullPolicyConfig`(pages/policy/PolicyForm.tsx)로 다룬다. API 계약은 바뀌지 않았다.
+
+## 공용 입력 구성요소
+
+`frontend/src/components/fields.tsx`(+`fields.css`): `Field`, `TextField`, `Select`, `Checkbox`, `Switch`, `ChipGroup`, `NumberField`, `SearchSelect`(검색 가능한 combobox), `DateTimeField`/`DateRange`(년·월·일·시·분 입력, 브라우저 로케일과 무관한 한국어 형식), `EmptyCard`, `FilterBar`. 정책·업무·검토 대기·실행 관찰·모니터링이 사용하며 모든 컨트롤은 44px 터치 높이와 같은 포커스 링을 쓴다.

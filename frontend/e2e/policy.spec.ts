@@ -1,15 +1,17 @@
 import { expect, test } from '@playwright/test';
 
 test('validate, publish, inspect history, and rollback policy on live API', async ({ page }) => {
-  const login = await page.request.post('/api/auth/login', { data: { email: 'policy_editor@t-alpha.dev', password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } });
+  const login = await page.request.post('/api/auth/login', { data: { email: `policy_editor@${process.env.E2E_TENANT || 't-alpha'}.dev`, password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } });
   expect(login.ok(), `login failed: ${login.status()}`).toBeTruthy();
   await page.goto('/policy');
   await expect(page.getByRole('heading', { name: '정책', exact: true })).toBeVisible();
-  const configField = page.getByLabel('선택형 판단 최소 확신도');
+  const configField = page.getByRole('group', { name: '선택형 판단 최소 확신도' }).getByLabel('AI 필요성');
   const original = await configField.inputValue();
-  await configField.fill('{"ai_need": 1.5}');
+  await configField.fill('1.5');
   await page.getByRole('button', { name: '서버 검증' }).click();
-  await expect(page.getByRole('alert')).toContainText('검증 오류');
+  await expect(page.getByText('검증 오류', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: '게시' })).toBeDisabled();
+  await expect(page.getByText(/게시할 수 없는 이유/)).toBeVisible();
   await configField.fill(original);
   await page.getByRole('button', { name: '서버 검증' }).click();
   await expect(page.getByText('검증 통과')).toBeVisible();

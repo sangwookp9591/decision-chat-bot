@@ -3,3 +3,6 @@
 
 .monitor-page .skeleton{display:block;height:16px;border-radius:6px;background:linear-gradient(90deg,#EFECE7 25%,#F8F6F3 50%,#EFECE7 75%);background-size:200% 100%;animation:monitor-shimmer 1.4s ease-in-out infinite}.monitor-page .skeleton.skeleton-inline{display:inline-block}
 @keyframes monitor-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}@media(prefers-reduced-motion:reduce){.monitor-page .skeleton{animation:none}}
+
+.monitor-page .fld-filterbar{align-items:flex-end}.monitor-page .fld-filterbar>.fld{flex:1 1 150px;max-width:200px}.monitor-page .fld-filterbar>.ui-button{min-width:88px}
+@media(max-width:520px){.monitor-page .fld-filterbar>.fld{max-width:none}}

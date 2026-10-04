@@ -15,10 +15,11 @@ test('F2 policy: a value typed right after entering the page is the value that g
     const bodies: string[] = [];
     await page.route('**/api/policy/validate', (route) => { bodies.push(route.request().postData() || ''); return route.continue(); });
     await page.goto('/policy');
-    const field = page.getByLabel('선택형 판단 최소 확신도');
+    await page.getByText('고급: JSON 보기', { exact: true }).click();
+    const field = page.getByLabel('선택형 판단 최소 확신도 (JSON)');
     await field.fill('{"ai_need": 1.5}');
     await page.getByRole('button', { name: '서버 검증' }).click();
-    await expect(page.getByText('검증 오류')).toBeVisible();
+    await expect(page.getByText('검증 오류', { exact: true })).toBeVisible();
     expect(bodies).toHaveLength(1);
     expect(JSON.parse(bodies[0]).config?.choice_confidence_thresholds ?? JSON.parse(bodies[0]).choice_confidence_thresholds).toEqual({ ai_need: 1.5 });
     await expect(field).toHaveValue(/1\.5/);
@@ -31,7 +32,7 @@ test('F3 monitoring: title, filters and finished areas show while the slowest ag
   await page.route('**/api/monitoring/summary**', async (route) => { await new Promise((resolve) => setTimeout(resolve, 4000)); await route.continue(); });
   await page.goto('/monitoring');
   await expect(page.getByRole('heading', { name: '모니터링' })).toBeVisible({ timeout: 1000 });
-  await expect(page.getByLabel('시작')).toBeVisible({ timeout: 1000 });
+  await expect(page.getByRole('group', { name: '시작' })).toBeVisible({ timeout: 1000 });
   await expect(page.getByRole('region', { name: '서비스 수준 목표' }).getByText('접수·조회 가용성')).toBeVisible({ timeout: 3000 });
   await expect(page.getByRole('region', { name: '핵심 지표' })).toHaveAttribute('aria-busy', 'true');
   await expect(page.getByRole('region', { name: '핵심 지표' })).toHaveAttribute('aria-busy', 'false', { timeout: 10_000 });
@@ -118,7 +119,7 @@ test('F6 Korean: evaluation and policy screens show names, not snake_case keys, 
     return keys.filter((key) => (clone.textContent || '').includes(key));
   });
   await login(page, 'policy_editor');
-  await page.goto('/policy'); await expect(page.getByLabel('선택형 판단 최소 확신도')).toBeVisible();
+  await page.goto('/policy'); await expect(page.getByRole('group', { name: '선택형 판단 최소 확신도' })).toBeVisible();
   expect(await visibleKeys()).toEqual([]);
   await expect(page.getByText('기술 상세').first()).toBeVisible();
   await login(page, 'labeler');

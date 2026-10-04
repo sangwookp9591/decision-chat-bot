@@ -91,3 +91,21 @@ it('translates comma-joined reason summaries in the review list (P4-05)',async()
  renderAt();const item=await screen.findByRole('button',{name:/req_1/});
  expect(item.textContent).toContain('선택 확신도 미충족: AI 필요성');expect(item.textContent).toContain('분류 미확정: 담당 조직 · 주관');expect(item.textContent).not.toMatch(/ai_need|lead_org/);
 });
+describe('review list controls',()=>{
+ it('shows an empty-state card with guidance and switches status through the shared select',async()=>{
+  vi.mocked(reviewApi.list).mockResolvedValue({reviews:[]} as any);
+  renderAt();
+  expect(await screen.findByText('대기 중인 검토가 없습니다')).toBeTruthy();
+  expect(screen.getByText(/긴급도·사유·대기 시간/)).toBeTruthy();
+  fireEvent.change(screen.getByLabelText('검토 상태 필터'),{target:{value:'approved'}});
+  await waitFor(()=>expect(reviewApi.list).toHaveBeenLastCalledWith('approved'));
+  expect(await screen.findByText('승인 상태의 검토가 없습니다')).toBeTruthy();
+  expect(screen.getByRole('checkbox',{name:'긴급 우선 정렬'})).toBeTruthy();
+ });
+ it('says why the reason-gated decisions are disabled',async()=>{
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
+  expect(screen.getByRole('button',{name:'반려'})).toBeDisabled();
+  expect(screen.getByText(/결정 사유를 입력해야 합니다/)).toBeTruthy();
+ });
+});
+
