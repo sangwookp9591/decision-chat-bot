@@ -144,11 +144,12 @@ export function versionChips(version: string | null | undefined): string[] {
   if (text.startsWith('{')) {
     try {
       const parsed = JSON.parse(text) as Record<string, unknown>;
-      return Object.entries(parsed).filter(([, value]) => value !== null && value !== undefined && typeof value !== 'object').map(([key, value]) => {
+      // Aliases (config / config_version) can carry the same value; one chip per label+value.
+      return [...new Set(Object.entries(parsed).filter(([, value]) => value !== null && value !== undefined && typeof value !== 'object').map(([key, value]) => {
         const label = VERSION_KEY[key] || key.replace(/_version$/, '');
         const raw = String(value);
         return `${label} ${/^\d+$/.test(raw) ? `v${raw}` : raw}`;
-      });
+      }))];
     } catch { return [text]; }
   }
   return [shortId(text)];

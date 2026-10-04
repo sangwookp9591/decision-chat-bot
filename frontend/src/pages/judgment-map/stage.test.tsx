@@ -24,6 +24,7 @@ describe('tile titles', () => {
 describe('version chips and summary', () => {
   it('splits the run-step versions JSON into labelled chips instead of raw JSON', () => {
     expect(versionChips('{"config_version":1,"model":"jev-1.13.0","question_set_version":2}')).toEqual(['config v1', 'model jev-1.13.0', 'qset v2']);
+    expect(versionChips('{"config_version":1,"config":1,"model":"jev-1.13.0"}')).toEqual(['config v1', 'model jev-1.13.0']);
     expect(versionChips('config v3')).toEqual(['config v3']);
     expect(versionChips('rev_84081695e36c440f86babf41a20e619d')).toEqual(['rev_8408…']);
     expect(versionChips(null)).toEqual([]);
