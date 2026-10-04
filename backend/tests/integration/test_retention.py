@@ -55,11 +55,11 @@ async def test_cleanup_preserves_work_records_and_updates_event_cursor(tenant, t
 
     async def unchanged(tx):
         return await (await tx.run(
-            "MATCH (e:Event {id:$event}) WITH count(e) AS events "
-            "MATCH (i:Idempotency {id:$idem}) WITH events,count(i) AS idem "
-            "MATCH (s:Session {id:$session}) WITH events,idem,count(s) AS sessions "
-            "MATCH (r:Request {id:$request}) WITH events,idem,sessions,count(r) AS requests "
-            "MATCH (a:Audit {id:$audit}) RETURN events,idem,sessions,requests,count(a) AS audits",
+            "MATCH (e:Event {tenant_id:$tenant,id:$event}) WITH count(e) AS events "
+            "MATCH (i:Idempotency {tenant_id:$tenant,id:$idem}) WITH events,count(i) AS idem "
+            "MATCH (s:Session {tenant_id:$tenant,id:$session}) WITH events,idem,count(s) AS sessions "
+            "MATCH (r:Request {tenant_id:$tenant,id:$request}) WITH events,idem,sessions,count(r) AS requests "
+            "MATCH (a:Audit {tenant_id:$tenant,id:$audit}) RETURN events,idem,sessions,requests,count(a) AS audits",
             event=event_id, idem=idem_id, session=session_id, request=request_id, audit=audit_id,
         )).single(strict=True)
     assert dict(await read_tx(tenant, unchanged)) == {"events": 1, "idem": 1, "sessions": 1, "requests": 1, "audits": 1}
@@ -68,8 +68,8 @@ async def test_cleanup_preserves_work_records_and_updates_event_cursor(tenant, t
     assert result["deleted"] == preview["deleted"]
     async def retained(tx):
         row = await (await tx.run(
-            "OPTIONAL MATCH (e:Event {id:$event}) WITH count(e) AS recent_event "
-            "OPTIONAL MATCH (i:Idempotency {id:$idem}) RETURN recent_event,count(i) AS recent_idem",
+            "OPTIONAL MATCH (e:Event {tenant_id:$tenant,id:$event}) WITH count(e) AS recent_event "
+            "OPTIONAL MATCH (i:Idempotency {tenant_id:$tenant,id:$idem}) RETURN recent_event,count(i) AS recent_idem",
             event=recent_event_id, idem=recent_idem_id,
         )).single(strict=True)
         return dict(row)

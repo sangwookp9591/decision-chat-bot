@@ -63,11 +63,11 @@ async def resolve_node(tenant: str, node_id: str, kind: str | None = None):
     async def op(tx):
         for label in kinds:
             rows = await (await tx.run(
-                f"MATCH (n:{label} {{tenant_id:$t,id:$id}}) "
-                "OPTIONAL MATCH (r:Run {tenant_id:$t,id:n.run_id}) "
+                f"MATCH (n:{label} {{tenant_id:$tenant,id:$id}}) "
+                "OPTIONAL MATCH (r:Run {tenant_id:$tenant,id:n.run_id}) "
                 "RETURN labels(n) AS labels,properties(n) AS p,"
                 "coalesce(n.request_id,r.request_id) AS request_id",
-                t=tenant, id=node_id)).data()
+                tenant=tenant, id=node_id)).data()
             for row in rows:
                 if label in row["labels"]:
                     return label, dict(row["p"]), row["request_id"]
@@ -79,7 +79,7 @@ async def _seed_rows(tx, tenant: str, *, request_id, run_id, rule_id, config_ver
     ids: set[str] = set()
 
     async def add(cypher: str, **params):
-        for row in await (await tx.run(cypher, t=tenant, **params)).data():
+        for row in await (await tx.run(cypher, tenant=tenant, **params)).data():
             ids.add(row["e"])
 
     selected = False
@@ -87,28 +87,28 @@ async def _seed_rows(tx, tenant: str, *, request_id, run_id, rule_id, config_ver
         selected = True
         params = {"req": request_id, "run": run_id}
         scope = "($req IS NULL OR r.request_id=$req) AND ($run IS NULL OR r.id=$run)"
-        await add("MATCH (r:Run {tenant_id:$t}) WHERE " + scope +
+        await add("MATCH (r:Run {tenant_id:$tenant}) WHERE " + scope +
                   " MATCH (r)-[:PRODUCED]->(:Judgment)<-[:OF_JUDGMENT]-(n:ModelOutput) RETURN elementId(n) AS e", **params)
-        await add("MATCH (r:Run {tenant_id:$t}) WHERE " + scope +
+        await add("MATCH (r:Run {tenant_id:$tenant}) WHERE " + scope +
                   " MATCH (r)-[:HAS_STEP]->(n:RunStep) WHERE (n)-[:USED_OUTPUT|APPLIED]->() RETURN elementId(n) AS e", **params)
         for label in ("Correction", "ReviewDecision"):
-            await add(f"MATCH (n:{label} {{tenant_id:$t}}) WHERE ($req IS NULL OR n.request_id=$req) "
+            await add(f"MATCH (n:{label} {{tenant_id:$tenant}}) WHERE ($req IS NULL OR n.request_id=$req) "
                       "AND ($run IS NULL OR n.run_id=$run) RETURN elementId(n) AS e", **params)
     if rule_id:
         selected = True
         match = "n.id=$rule" if "@" in rule_id else "n.rule_id=$rule"
-        await add(f"MATCH (n:RuleVersion {{tenant_id:$t}}) WHERE {match} RETURN elementId(n) AS e", rule=rule_id)
+        await add(f"MATCH (n:RuleVersion {{tenant_id:$tenant}}) WHERE {match} RETURN elementId(n) AS e", rule=rule_id)
     if config_version is not None:
         selected = True
-        await add("MATCH (n:ConfigVersion {tenant_id:$t,version:$v}) RETURN elementId(n) AS e", v=config_version)
+        await add("MATCH (n:ConfigVersion {tenant_id:$tenant,version:$v}) RETURN elementId(n) AS e", v=config_version)
     if not selected and status:
         selected = True
         for label in STATEFUL:
-            await add(f"MATCH (n:{label} {{tenant_id:$t}}) WHERE n.status=$s RETURN elementId(n) AS e LIMIT $n",
+            await add(f"MATCH (n:{label} {{tenant_id:$tenant}}) WHERE n.status=$s RETURN elementId(n) AS e LIMIT $n",
                       s=status, n=limit)
     if not selected:  # overview: most recent stored records only
         for label in ("Correction", "RuleCandidate", "RuleVersion", "ReviewDecision"):
-            await add(f"MATCH (n:{label} {{tenant_id:$t}}) RETURN elementId(n) AS e "
+            await add(f"MATCH (n:{label} {{tenant_id:$tenant}}) RETURN elementId(n) AS e "
                       "ORDER BY coalesce(n.created_at,n.decided_at) DESC LIMIT $n", n=limit)
     return ids
 
@@ -117,16 +117,16 @@ _NEIGHBOR = {
     "up": (f"MATCH (a)-[r:{UP_TYPE_PATTERN}]->(b)", f"MATCH (a)<-[r:{'|'.join(FORWARD_UP_TYPES)}]-(b)"),
     "down": (f"MATCH (a)<-[r:{UP_TYPE_PATTERN}]-(b)", f"MATCH (a)-[r:{'|'.join(FORWARD_UP_TYPES)}]->(b)"),
 }
-_KIND_FILTER = " WHERE elementId(a) IN $ids AND a.tenant_id=$t AND b.tenant_id=$t AND any(l IN labels(b) WHERE l IN $kinds)"
-_NODE_RETURN = (" OPTIONAL MATCH (run:Run {tenant_id:$t,id:b.run_id}) "
+_KIND_FILTER = " WHERE elementId(a) IN $ids AND a.tenant_id=$tenant AND b.tenant_id=$tenant AND any(l IN labels(b) WHERE l IN $kinds)"
+_NODE_RETURN = (" OPTIONAL MATCH (run:Run {tenant_id:$tenant,id:b.run_id}) "
                 "RETURN DISTINCT elementId(b) AS e, labels(b) AS labels, properties(b) AS p, "
                 "coalesce(b.request_id,run.request_id) AS request_id")
 
 
 async def _nodes_by_eid(tx, tenant: str, eids: list[str]) -> dict[str, dict]:
     rows = await (await tx.run(
-        "MATCH (b) WHERE elementId(b) IN $ids AND b.tenant_id=$t AND any(l IN labels(b) WHERE l IN $kinds)" + _NODE_RETURN,
-        t=tenant, ids=eids, kinds=list(KINDS))).data()
+        "MATCH (b) WHERE elementId(b) IN $ids AND b.tenant_id=$tenant AND any(l IN labels(b) WHERE l IN $kinds)" + _NODE_RETURN,
+        tenant=tenant, ids=eids, kinds=list(KINDS))).data()
     return {r["e"]: _row_node(r) for r in rows}
 
 
@@ -177,7 +177,7 @@ async def collect(tenant: str, visible: Visible, *, request_id=None, run_id=None
             async def expand(tx, frontier=frontier, found=found, direction=direction):
                 for pattern in _NEIGHBOR[direction]:
                     rows = await (await tx.run(pattern + _KIND_FILTER + _NODE_RETURN,
-                                               t=tenant, ids=frontier, kinds=list(KINDS))).data()
+                                               tenant=tenant, ids=frontier, kinds=list(KINDS))).data()
                     for row in rows:
                         found[row["e"]] = _row_node(row)
             await read_tx(tenant, expand)
@@ -204,9 +204,9 @@ async def _induced_edges(tenant: str, nodes: dict[str, dict]) -> list[dict]:
     async def op(tx):
         return await (await tx.run(
             f"MATCH (a)-[r:{ALL_TYPES}]->(b) WHERE elementId(a) IN $ids AND elementId(b) IN $ids "
-            "AND a.tenant_id=$t AND b.tenant_id=$t "
+            "AND a.tenant_id=$tenant AND b.tenant_id=$tenant "
             "RETURN elementId(a) AS a, elementId(b) AS b, type(r) AS type, properties(r) AS p",
-            ids=eids, t=tenant)).data()
+            ids=eids, tenant=tenant)).data()
     rows = await read_tx(tenant, op)
     edges = []
     for row in rows:
@@ -237,9 +237,9 @@ def assemble(nodes: dict[str, dict], edges: list[dict], truncated: bool) -> dict
 async def trace(tenant: str, kind: str, node_id: str, direction: str, depth: int, limit: int):
     """Quantified path pattern traversal along stored relationships only."""
     depth = max(1, min(depth, MAX_DEPTH))
-    up = f"((a {{tenant_id:$t}})-[:{UP_TYPE_PATTERN}]->(b {{tenant_id:$t}}))"
-    down = f"((a {{tenant_id:$t}})<-[:{UP_TYPE_PATTERN}]-(b {{tenant_id:$t}}))"
-    origin = f"(n:{kind} {{tenant_id:$t,id:$id}})"
+    up = f"((a {{tenant_id:$tenant}})-[:{UP_TYPE_PATTERN}]->(b {{tenant_id:$tenant}}))"
+    down = f"((a {{tenant_id:$tenant}})<-[:{UP_TYPE_PATTERN}]-(b {{tenant_id:$tenant}}))"
+    origin = f"(n:{kind} {{tenant_id:$tenant,id:$id}})"
     tail = ("RETURN [x IN nodes(p) | [labels(x)[0], x.id]] AS nodes, "
             "[r IN relationships(p) | [type(r), startNode(r).id, endNode(r).id]] AS rels LIMIT $limit")
     queries: dict[str, list[str]] = {"up": [], "down": []}
@@ -247,17 +247,17 @@ async def trace(tenant: str, kind: str, node_id: str, direction: str, depth: int
     queries["down"].append(f"MATCH p = {origin} {down}{{1,{depth}}} (m) {tail}")
     if kind == "ConfigVersion":
         queries["up"].append(
-            f"MATCH p = {origin}<-[:PUBLISHED_IN]-(rv:RuleVersion {{tenant_id:$t}}) {up}{{0,{depth - 1}}} (m) {tail}")
+            f"MATCH p = {origin}<-[:PUBLISHED_IN]-(rv:RuleVersion {{tenant_id:$tenant}}) {up}{{0,{depth - 1}}} (m) {tail}")
     queries["down"].append(
-        f"MATCH p = {origin} {down}{{0,{depth - 1}}} (rv:RuleVersion {{tenant_id:$t}})"
-        f"-[:PUBLISHED_IN]->(cv:ConfigVersion {{tenant_id:$t}}) {tail}")
+        f"MATCH p = {origin} {down}{{0,{depth - 1}}} (rv:RuleVersion {{tenant_id:$tenant}})"
+        f"-[:PUBLISHED_IN]->(cv:ConfigVersion {{tenant_id:$tenant}}) {tail}")
     wanted = ("up", "down") if direction == "both" else (direction,)
     raw: list[tuple[str, list, list]] = []
 
     async def op(tx):
         for d in wanted:
             for cypher in queries[d]:
-                for row in await (await tx.run(cypher, t=tenant, id=node_id, limit=limit * 5)).data():
+                for row in await (await tx.run(cypher, tenant=tenant, id=node_id, limit=limit * 5)).data():
                     raw.append((d, row["nodes"], row["rels"]))
     await read_tx(tenant, op)
     return raw
@@ -287,10 +287,10 @@ async def hydrate(tenant: str, pairs: set[tuple[str, str]]) -> dict[tuple[str, s
         out = {}
         for kind, ids in by_kind.items():
             rows = await (await tx.run(
-                f"MATCH (b:{kind} {{tenant_id:$t}}) WHERE b.id IN $ids "
-                "OPTIONAL MATCH (run:Run {tenant_id:$t,id:b.run_id}) "
+                f"MATCH (b:{kind} {{tenant_id:$tenant}}) WHERE b.id IN $ids "
+                "OPTIONAL MATCH (run:Run {tenant_id:$tenant,id:b.run_id}) "
                 "RETURN labels(b) AS labels, properties(b) AS p, coalesce(b.request_id,run.request_id) AS request_id",
-                t=tenant, ids=ids)).data()
+                tenant=tenant, ids=ids)).data()
             for row in rows:
                 record = _row_node(row)
                 out[(record["kind"], record["id"])] = record
@@ -319,11 +319,11 @@ async def edge_props(tenant: str, edges: dict[str, dict], nodes: dict[tuple[str,
                           for typ, source, target, sk, tk in ids
                           if (sk, tk) == (source_kind, target_kind)]
             rows.extend(await (await tx.run(
-                f"UNWIND $edges AS e MATCH (a:{source_kind} {{tenant_id:$t,id:e.source}})"
-                f"-[r]->(b:{target_kind} {{tenant_id:$t,id:e.target}}) "
+                f"UNWIND $edges AS e MATCH (a:{source_kind} {{tenant_id:$tenant,id:e.source}})"
+                f"-[r]->(b:{target_kind} {{tenant_id:$tenant,id:e.target}}) "
                 "WHERE type(r)=e.type "
                 "RETURN e.type AS type,e.source AS source,e.target AS target,properties(r) AS p",
-                t=tenant, edges=pair_edges)).data())
+                tenant=tenant, edges=pair_edges)).data())
         out = {edge_id(row["type"], row["source"], row["target"]):
                {k: decode_value(_iso(v)) for k, v in dict(row["p"]).items()} for row in rows}
         for type_, source, target, *_ in ids:

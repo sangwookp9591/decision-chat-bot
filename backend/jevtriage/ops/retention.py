@@ -12,8 +12,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from jevtriage.config import get_settings
-from jevtriage.db.driver import get_driver
-from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
 from jevtriage.journal.collector import metrics_path
 from jevtriage.journal.writer import JournalWriter
 from jevtriage.policy.service import get_active_snapshot
@@ -144,9 +143,10 @@ async def cleanup(*, data_dir: Path | None = None, tenant_id: str | None = None,
         else:
             config = RetentionConfig()
     if tenant_id is None:
-        driver = await get_driver()
-        async with driver.session() as session:
-            tenant_rows = await (await session.run("MATCH (t:Tenant) RETURN t.id AS id")).data()
+        async def discover(tx):
+            return await (await tx.run("MATCH (t:Tenant) RETURN t.id AS id")).data()
+
+        tenant_rows = await cross_tenant_tx("retention-discovery", discover)
         tenant_ids = [r["id"] for r in tenant_rows]
     else:
         tenant_ids = [tenant_id]

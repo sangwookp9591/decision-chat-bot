@@ -18,7 +18,7 @@ from jevtriage.db.events import append_event_in_tx
 from jevtriage.db.jobs import OwnershipLost, claim_or_takeover, heartbeat, verify_owner_in_tx
 from jevtriage.db.locks import lock_node_in_tx
 from jevtriage.db.requests import StaleRun, assert_active_run_in_tx
-from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
 from jevtriage.domain.ids import new_id
 from jevtriage.domain.serialize import to_native
 from jevtriage.journal.reader import producer_heartbeat
@@ -228,7 +228,7 @@ class Worker:
                 limit=max(10, self.concurrency * 4), tenants=list(self.tenants),
             )
             return [dict(row) async for row in rows]
-        return await read_tx("worker-discovery", op)
+        return await cross_tenant_tx("worker-discovery", op)
 
     async def claim_next(self):
         """Select and claim one eligible job in a managed write transaction."""
@@ -253,7 +253,7 @@ class Worker:
             )
             row = await result.single()
             return dict(row) if row else None
-        return await write_tx("worker-discovery", op, timeout_seconds=1.0)
+        return await cross_tenant_tx("worker-discovery", op, write=True, timeout_seconds=1.0)
 
     async def _load(self, tenant_id, job_id):
         async def op(tx):

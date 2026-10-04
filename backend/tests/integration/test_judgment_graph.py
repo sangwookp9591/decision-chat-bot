@@ -9,7 +9,7 @@ import pytest_asyncio
 
 from jevtriage.auth.core import Principal, get_principal
 from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
+from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
 from jevtriage.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
@@ -29,47 +29,47 @@ async def world():
 
     async def seed(tx):
         await (await tx.run(
-            "CREATE (rq1:Request {id:$req1,tenant_id:$t,created_by:'u1',org_ids:['org_a'],created_at:datetime()}) "
-            "CREATE (rq2:Request {id:$req2,tenant_id:$t,created_by:'u2',org_ids:['org_b'],created_at:datetime()}) "
-            "CREATE (r1:Run {id:$run1,tenant_id:$t,request_id:$req1}) "
-            "CREATE (r2:Run {id:$run2,tenant_id:$t,request_id:$req2}) "
-            "CREATE (r3:Run {id:$run3,tenant_id:$t,request_id:$req2}) "
-            "CREATE (j:Judgment {id:$j1,tenant_id:$t,request_id:$req1,run_id:$run1}) "
+            "CREATE (rq1:Request {id:$req1,tenant_id:$tenant,created_by:'u1',org_ids:['org_a'],created_at:datetime()}) "
+            "CREATE (rq2:Request {id:$req2,tenant_id:$tenant,created_by:'u2',org_ids:['org_b'],created_at:datetime()}) "
+            "CREATE (r1:Run {id:$run1,tenant_id:$tenant,request_id:$req1}) "
+            "CREATE (r2:Run {id:$run2,tenant_id:$tenant,request_id:$req2}) "
+            "CREATE (r3:Run {id:$run3,tenant_id:$tenant,request_id:$req2}) "
+            "CREATE (j:Judgment {id:$j1,tenant_id:$tenant,request_id:$req1,run_id:$run1}) "
             "CREATE (r1)-[:PRODUCED]->(j) "
-            "CREATE (mo1:ModelOutput {id:$mo1,tenant_id:$t,question_id:'lead_org',type:'Choice',value:'AI팀',confidence:0.72,model:'jev-test',run_id:$run1}) "
-            "CREATE (mo2:ModelOutput {id:$mo2,tenant_id:$t,question_id:'feasibility',type:'Choice',value:'조건부 가능',confidence:0.67,model:'jev-test',run_id:$run1}) "
+            "CREATE (mo1:ModelOutput {id:$mo1,tenant_id:$tenant,question_id:'lead_org',type:'Choice',value:'AI팀',confidence:0.72,model:'jev-test',run_id:$run1}) "
+            "CREATE (mo2:ModelOutput {id:$mo2,tenant_id:$tenant,question_id:'feasibility',type:'Choice',value:'조건부 가능',confidence:0.67,model:'jev-test',run_id:$run1}) "
             "CREATE (mo1)-[:OF_JUDGMENT]->(j) CREATE (mo2)-[:OF_JUDGMENT]->(j) "
-            "CREATE (es:EvidenceSpan {id:$es1,tenant_id:$t,request_id:$req1,revision_id:'rev_1',attachment_id:'att_1',location_json:'{\"page\":3}',source_text:'원문 비공개 텍스트'}) "
+            "CREATE (es:EvidenceSpan {id:$es1,tenant_id:$tenant,request_id:$req1,revision_id:'rev_1',attachment_id:'att_1',location_json:'{\"page\":3}',source_text:'원문 비공개 텍스트'}) "
             "CREATE (mo1)-[:CITES {prob:0.9}]->(es) "
-            "CREATE (rd:ReviewDecision {id:$rd1,tenant_id:$t,request_id:$req1,run_id:$run1,action:'approve_with_changes',actor_id:'rev1',review_version:1,created_at:datetime()}) "
-            "CREATE (c1:Correction {id:$c1,tenant_id:$t,request_id:$req1,run_id:$run1,field:'lead_org',ai_value:'\"AI팀\"',corrected_value:'\"IT팀\"',corrected_by:'rev1',corrected_at:datetime(),config_version:1}) "
+            "CREATE (rd:ReviewDecision {id:$rd1,tenant_id:$tenant,request_id:$req1,run_id:$run1,action:'approve_with_changes',actor_id:'rev1',review_version:1,created_at:datetime()}) "
+            "CREATE (c1:Correction {id:$c1,tenant_id:$tenant,request_id:$req1,run_id:$run1,field:'lead_org',ai_value:'\"AI팀\"',corrected_value:'\"IT팀\"',corrected_by:'rev1',corrected_at:datetime(),config_version:1}) "
             "CREATE (rd)-[:RECORDED]->(c1) CREATE (c1)-[:CORRECTS]->(mo1) "
-            "CREATE (c9:Correction {id:$c9,tenant_id:$t,request_id:$req2,run_id:$run2,field:'urgency',ai_value:'\"일반\"',corrected_value:'\"긴급\"',corrected_by:'rev2',corrected_at:datetime(),config_version:1}) "
-            "CREATE (cand:RuleCandidate {id:$cand1,tenant_id:$t,field:'lead_org',status:'제안',source:'ai',author:'code:candidate@v1',proposed_body:'{\"action\":{\"set\":\"IT팀\"}}',created_at:datetime()}) "
+            "CREATE (c9:Correction {id:$c9,tenant_id:$tenant,request_id:$req2,run_id:$run2,field:'urgency',ai_value:'\"일반\"',corrected_value:'\"긴급\"',corrected_by:'rev2',corrected_at:datetime(),config_version:1}) "
+            "CREATE (cand:RuleCandidate {id:$cand1,tenant_id:$tenant,field:'lead_org',status:'제안',source:'ai',author:'code:candidate@v1',proposed_body:'{\"action\":{\"set\":\"IT팀\"}}',created_at:datetime()}) "
             "CREATE (cand)-[:SUPPORTED_BY {role:'support'}]->(c1) "
-            "CREATE (dec:RuleDecision {id:$dec1,tenant_id:$t,action:'approve',decided_by:'admin',reason:'검토',confirmed_scope:'{\"all\":[]}',decided_at:datetime()}) "
+            "CREATE (dec:RuleDecision {id:$dec1,tenant_id:$tenant,action:'approve',decided_by:'admin',reason:'검토',confirmed_scope:'{\"all\":[]}',decided_at:datetime()}) "
             "CREATE (dec)-[:DECIDES]->(cand) "
-            "CREATE (rv:RuleVersion {id:$rv,tenant_id:$t,rule_id:$rule,version:1,status:'published',body:'{\"effect\":\"rule\",\"target\":\"lead_org\",\"scope\":{\"all\":[]},\"action\":{\"set\":\"IT팀\"}}',created_at:datetime()}) "
+            "CREATE (rv:RuleVersion {id:$rv,tenant_id:$tenant,rule_id:$rule,version:1,status:'published',body:'{\"effect\":\"rule\",\"target\":\"lead_org\",\"scope\":{\"all\":[]},\"action\":{\"set\":\"IT팀\"}}',created_at:datetime()}) "
             "CREATE (rv)-[:DERIVED_FROM]->(dec) "
-            "CREATE (val:ValidationRun {id:$val1,tenant_id:$t,status:'completed',side_effects:0,created_at:datetime()}) "
+            "CREATE (val:ValidationRun {id:$val1,tenant_id:$tenant,status:'completed',side_effects:0,created_at:datetime()}) "
             "CREATE (val)-[:VALIDATES]->(rv) "
-            "CREATE (cfg:ConfigVersion {id:$cfg,tenant_id:$t,version:2,status:'active',created_by:'admin',reason:'게시',created_at:datetime()}) "
+            "CREATE (cfg:ConfigVersion {id:$cfg,tenant_id:$tenant,version:2,status:'active',created_by:'admin',reason:'게시',created_at:datetime()}) "
             "CREATE (rv)-[:PUBLISHED_IN]->(cfg) "
-            "CREATE (s1:RunStep {id:$step_jev,tenant_id:$t,run_id:$run1,name:'Jev 판단',kind:'jev',status:'succeeded',started_at:datetime(),actor:'worker'}) "
+            "CREATE (s1:RunStep {id:$step_jev,tenant_id:$tenant,run_id:$run1,name:'Jev 판단',kind:'jev',status:'succeeded',started_at:datetime(),actor:'worker'}) "
             "CREATE (r1)-[:HAS_STEP]->(s1) CREATE (s1)-[:USED_OUTPUT]->(mo1) CREATE (s1)-[:USED_OUTPUT]->(mo2) "
-            "CREATE (s2:RunStep {id:$step_rule,tenant_id:$t,run_id:$run2,name:'규칙 적용',kind:'rule',status:'succeeded',started_at:datetime(),actor:'worker'}) "
+            "CREATE (s2:RunStep {id:$step_rule,tenant_id:$tenant,run_id:$run2,name:'규칙 적용',kind:'rule',status:'succeeded',started_at:datetime(),actor:'worker'}) "
             "CREATE (r2)-[:HAS_STEP]->(s2) CREATE (s2)-[:APPLIED {outcome:'used',before:'\"AI팀\"',after:'\"IT팀\"',rule_version:$rv}]->(rv) "
-            "CREATE (s3:RunStep {id:$step_oos,tenant_id:$t,run_id:$run3,name:'규칙 적용',kind:'rule',status:'succeeded',started_at:datetime(),actor:'worker'}) "
+            "CREATE (s3:RunStep {id:$step_oos,tenant_id:$tenant,run_id:$run3,name:'규칙 적용',kind:'rule',status:'succeeded',started_at:datetime(),actor:'worker'}) "
             "CREATE (r3)-[:HAS_STEP]->(s3) CREATE (s3)-[:APPLIED {outcome:'out_of_scope',before:'\"AI팀\"',after:'\"AI팀\"',rule_version:$rv}]->(rv)",
-            t=tenant, **ids)).consume()
+            tenant=tenant, **ids)).consume()
         await (await tx.run(
             "CREATE (:Request {id:'req_other',tenant_id:$o,created_by:'z',org_ids:[],created_at:datetime()}) "
             "CREATE (:Correction {id:$id,tenant_id:$o,request_id:'req_other',run_id:'run_other',field:'x',corrected_by:'z',corrected_at:datetime()})",
             id=f"cor_other_{key}", o=other)).consume()
-    await write_tx(tenant, seed)
+    await cross_tenant_tx("integration-fixture-seed", seed, write=True)
     yield {"tenant": tenant, "other": other, "ids": ids, "key": key}
     for value in (tenant, other):
-        await write_tx(value, lambda tx, value=value: tx.run("MATCH (n {tenant_id:$t}) DETACH DELETE n", t=value))
+        await write_tx(value, lambda tx, value=value: tx.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=value))
 
 
 def client_for(principal: Principal):
@@ -85,8 +85,8 @@ def operator(world, **extra):
 async def db_edge_count(world, id_list):
     async def op(tx):
         row = await (await tx.run(
-            "MATCH (a {tenant_id:$t})-[r:CITES|CORRECTS|RECORDED|SUPPORTED_BY|DECIDES|DERIVED_FROM|PUBLISHED_IN|VALIDATES|APPLIED|USED_OUTPUT]->(b {tenant_id:$t}) "
-            "WHERE a.id IN $ids AND b.id IN $ids RETURN count(r) AS n", t=world["tenant"], ids=id_list)).single()
+            "MATCH (a {tenant_id:$tenant})-[r:CITES|CORRECTS|RECORDED|SUPPORTED_BY|DECIDES|DERIVED_FROM|PUBLISHED_IN|VALIDATES|APPLIED|USED_OUTPUT]->(b {tenant_id:$tenant}) "
+            "WHERE a.id IN $ids AND b.id IN $ids RETURN count(r) AS n", tenant=world["tenant"], ids=id_list)).single()
         return row["n"]
     return await read_tx(world["tenant"], op)
 

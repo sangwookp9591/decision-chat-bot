@@ -23,7 +23,9 @@ T04 구현 기준, 2026-10-03. Neo4j가 업무 상태의 기준 저장소이고 
 
 Worker는 tenant 허용 목록이 있으면 그 목록으로 후보를 제한한다. 허용 목록이 비어 있으면 모든 tenant의 Job을 처리하되 `Job.status` range 색인에서 후보를 찾는다. 대기 Job 또는 lease가 만료된 실행 Job 한 개를 생성 시각 순으로 선택하고 같은 쓰기 트랜잭션에서 잠금·조건 재검사·generation 증가·lease 부여를 수행한다. 빈 폴링 간격은 기본 0.5초에서 지수적으로 증가하며 `--max-poll-seconds` 기본 8초를 넘지 않는다. 그래프 조회는 간선 양 끝의 tenant를 검사하고, ID로 관계 속성을 찾을 때 이미 알고 있는 노드 라벨을 사용한다. `elementId` 기반 직접 조회는 tenant 필터를 추가로 유지한다.
 
-`TenantTx`는 아직 도입하지 않았다. 도입하려면 모든 callback의 `tx.run` 호출과 하위 helper를 감싸 `$tenant_id`를 자동 주입하고, `worker-discovery`처럼 운영상 tenant를 가로지르는 경로를 명시적으로 분리해야 한다. 테스트 모드의 정적 문자열 검사만으로는 별칭·관계 확장·`elementId` 조회를 올바르게 판정하기 어려워 별도 설계 및 회귀 시험이 필요하다.
+`write_tx`와 `read_tx`는 callback에 `TenantTx`를 전달한다. `tx.run`은 `$tenant_id`를 자동 주입하고 등록된 별칭 `$tenant`도 같은 값으로 주입한다. 호출자가 다른 tenant 값을 넘기면 예외를 낸다. `JEVTRIAGE_STRICT_TENANT=1`인 테스트에서는 두 매개변수 중 하나도 참조하지 않는 질의를 거부한다. 운영에서는 `tenant_scope_warnings` 지표를 증가시키고 경고 로그를 남긴다. worker 후보 발견·선점과 전체 tenant 보존 정리는 사유를 기록하는 `cross_tenant_tx(reason, ...)`로 실행한다. 스키마 마이그레이션과 인증 전 email 조회처럼 관리형 transaction 밖의 직접 드라이버 경로는 이 래퍼가 적용되지 않으므로 별도 검토가 필요하다.
+
+엄격 모드 전수 시험에서 tenant 별칭을 정규화한 질의는 `graph/query.py`의 `$t` 사용처이며, worker의 `worker-discovery`와 보존 정리의 전체 tenant 발견을 명시적 교차 tenant 경로로 옮겼다. 통합 시험의 `test_judgment_graph.py`, `test_source_document.py`에 있던 `$t` 별칭 및 `test_retention.py`의 tenant 없는 검증 질의도 갱신했다. 문자열 검사는 매개변수 참조를 확인하며 Cypher의 모든 경로와 관계 확장을 증명하는 정적 분석은 아니다. 각 질의는 여전히 실제 노드의 tenant 속성을 검사해야 한다.
 
 R8 질의 점검: `graph/query.py`의 관계 속성 조회 시작점과 `learning/shadow.py`의 보호 상태 스냅샷은 라벨별 조회로 바꿨다. `graph/query.py`의 `elementId` 기반 조회·경로 확장은 tenant를 양 끝에서 확인하며, `elementId` 직접 조회라서 라벨 색인 대신 ID 조회를 사용한다. `review/store.py`의 `Correction` 선택 조회와 `review/service.py`의 첨부 조회는 대상 노드에도 tenant 조건을 추가했다. `auth/core.py`의 로그인 email 조회는 인증 전에 tenant를 알 수 없는 경로이며, `ingest/api.py`에는 라벨 없는 `MATCH`가 없다. `MEMBER_OF`는 별도 `Membership` 노드가 아닌 관계라서 노드 유일 제약을 만들지 않았다.
 

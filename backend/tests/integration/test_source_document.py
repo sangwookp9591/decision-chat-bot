@@ -35,7 +35,7 @@ async def _seed(tenant):
 
     async def attachment(tx):
         row = await (await tx.run(
-            "MATCH (a:Attachment {request_id:$id,tenant_id:$t}) RETURN a.id AS id", id=rid, t=tenant)).single()
+            "MATCH (a:Attachment {request_id:$id,tenant_id:$tenant}) RETURN a.id AS id", id=rid, tenant=tenant)).single()
         return row["id"]
     return requester, rid, await read_tx(tenant, attachment)
 
@@ -100,9 +100,9 @@ async def test_document_reviewer_matrix(tenant):
     driver = await get_driver()
     async with driver.session() as session:  # share the request with each reviewer's org
         await (await session.run(
-            "MATCH (u:User {tenant_id:$t})-[:MEMBER_OF]->(o:Org) WHERE u.id IN $users "
-            "WITH collect(o.id) AS orgs MATCH (r:Request {id:$rid,tenant_id:$t}) SET r.shared_org_ids=orgs",
-            t=tenant, users=[with_source_user, no_flag_user], rid=rid)).consume()
+            "MATCH (u:User {tenant_id:$tenant})-[:MEMBER_OF]->(o:Org) WHERE u.id IN $users "
+            "WITH collect(o.id) AS orgs MATCH (r:Request {id:$rid,tenant_id:$tenant}) SET r.shared_org_ids=orgs",
+            tenant=tenant, users=[with_source_user, no_flag_user], rid=rid)).consume()
     try:
         ok = await with_source.get(f"/api/requests/{rid}/revisions/1/document", params={"source": att})
         assert ok.status_code == 200 and SECRET in ok.text

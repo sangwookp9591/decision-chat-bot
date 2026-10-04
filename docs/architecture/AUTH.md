@@ -13,6 +13,8 @@
 
 역할은 Neo4j Membership 관계에서만 읽고, 요청 본문·헤더의 tenant나 role은 권한 근거가 아니다. `get_principal`은 세션 tenant/user와 조직·역할을 제공한다. `auth/policy.py`의 `can(principal, action, resource_meta)`가 요청·검토·업무·Trace·그래프·학습·정책·모니터링 권한을 판정한다. 기존 `can_view_request`, `can_review` 등은 이 정책을 호출하는 호환 래퍼다. 목록의 `scope_filter_cypher`는 단건 조회와 동일하게 `org_ids`와 `shared_org_ids`의 합집합을 사용한다.
 
+관리형 DB transaction은 인증된 tenant를 `TenantTx`에 고정한다. 질의가 전달한 `tenant_id` 또는 `tenant` 값이 다르면 실행 전에 거부한다. 시험은 tenant 매개변수가 없는 질의를 거부하며, worker 발견 등 운영상 교차 tenant 작업은 사유가 필요한 `cross_tenant_tx`를 사용한다. 이 DB 경계는 역할·조직 권한을 대신하지 않으며 위 정책 판정을 함께 적용한다.
+
 검토 결정은 같은 tenant의 **reviewer** 역할과 검토의 `required_reviewer_org` 소속을 모두 요구한다. 판단의 `lead_org`가 정해지지 않아 저장된 `"검토자"` 값은 tenant의 AI 조직(`<tenant>-ai`)으로 해석한다. 호출자 자신의 조직으로 해석하거나 요청 메타에 담당 조직을 삽입하지 않는다. `team_member`는 검토 결정을 할 수 없다.
 
 원문(`InputRevision.text`, 근거 `source_text`, 추출 텍스트)은 `can_read_source=true`인 계정에게만 응답한다. 요청 상세를 포함한 API 응답은 공통 `redact_source(principal, payload)`에서 원문 필드를 제거한다. 운영자는 tenant 안의 메타데이터를 볼 수 있어도 이 플래그가 없으면 원문을 볼 수 없다. 근거 단건 API는 원문 권한이 없으면 404를 반환한다.
