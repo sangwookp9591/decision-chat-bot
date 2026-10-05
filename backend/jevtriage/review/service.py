@@ -19,8 +19,10 @@ from jevtriage.policy.service import DEFAULT_CONFIG
 
 
 class ReviewError(Exception):
-    def __init__(self, message: str, status_code: int = 422, latest: dict | None = None):
+    def __init__(self, message: str, status_code: int = 422, latest: dict | None = None,
+                 field_errors: list[dict] | None = None):
         self.status_code, self.latest = status_code, latest
+        self.field_errors = field_errors
         super().__init__(message)
 
 
@@ -70,16 +72,28 @@ async def validate_tasks_in_tx(tx, tenant: str, tasks: list[dict]) -> dict[str, 
         "MATCH (o:Org {tenant_id:$tenant}) RETURN o.id AS id", tenant=tenant,
     )).data()}
     resolved = {}
+    errors = []
     for task in tasks:
-        for value in [task.get("lead_org"), *(task.get("collab_orgs") or [])]:
-            if not value or org_key(tenant, value) not in orgs:
-                raise ReviewError("담당 조직이 tenant 범위에 없습니다")
-            resolved[value] = org_key(tenant, value)
-        if (not task.get("title") or task.get("method") not in {"AI", "일반 기술", "사람"}
-                or not task.get("deliverable")):
-            raise ReviewError("업무 필수 필드가 없습니다")
+        def problem(field, message, task_id=task["draft_task_id"]):
+            errors.append({"draft_task_id": task_id,
+                           "field": field, "message": message})
+        for field, values in (("lead_org", [task.get("lead_org")]),
+                              ("collab_orgs", task.get("collab_orgs") or [])):
+            for value in values:
+                if not isinstance(value, str) or org_key(tenant, value) not in orgs:
+                    problem(field, "이 tenant에 등록된 조직을 선택해 주세요.")
+                else:
+                    resolved[value] = org_key(tenant, value)
+        for field, label in (("title", "업무 제목"), ("deliverable", "산출물")):
+            value = task.get(field)
+            if not isinstance(value, str) or not value.strip() or value.strip() == "미정":
+                problem(field, f"{label}을 입력해 주세요.")
+        if task.get("method") not in {"AI", "일반 기술", "사람"}:
+            problem("method", "업무 방식을 선택해 주세요.")
         if any(p not in ids for p in task["predecessors"]):
-            raise ReviewError("존재하지 않는 선행 업무")
+            problem("predecessors", "존재하는 선행 업무를 선택해 주세요.")
+    if errors:
+        raise ReviewError("업무 초안의 필드를 확인해 주세요", field_errors=errors)
     visiting, visited = set(), set()
     by_id = {t["draft_task_id"]: t for t in tasks}
     def visit(task_id: str):
@@ -314,7 +328,7 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
             if any(not isinstance(item, str) or not item.strip() for item in needed_info):
                 raise ReviewError("필요 정보 목록을 확인해 주세요")
             tasks = await draft_tasks_in_tx(tx, tenant, command["run_id"], command["draft_version"])
-            if action.startswith("approve"):
+            if action == "approve":
                 await validate_tasks_in_tx(tx, tenant, tasks)
             judgment_row = await (await tx.run(
                 "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) RETURN j",

@@ -157,7 +157,7 @@ async def review_detail(review_id: str,
             "history":history,
             "review_version":v["review_version"],
             "final_classifications":final_classifications,
-            "final_draft_version":v["draft_version"]})
+            "final_draft_version":v["draft_version"], "orgs":data.get("orgs", [])})
 
 
 @router.post("/{review_id}/decision")
@@ -171,6 +171,8 @@ async def review_decision(review_id: str, command: DecisionCommand,
                             idempotency_key)
     except ReviewError as exc:
         detail = {"message":str(exc)}
+        if exc.field_errors:
+            detail["details"] = {"field_errors": exc.field_errors}
         if exc.latest is not None:
             detail["latest"] = exc.latest
         raise HTTPException(exc.status_code, detail) from exc

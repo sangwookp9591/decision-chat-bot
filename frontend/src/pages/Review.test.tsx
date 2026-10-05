@@ -48,7 +48,7 @@ describe('review comparison',()=>{
   const {container}=renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
   expect(container.querySelectorAll('.review-task')).toHaveLength(1);
   expect(screen.getByRole('heading',{name:/업무 분담 \(v2 검토자 수정안\)/})).toBeTruthy();
-  expect(container.querySelector('.review-task small')?.textContent).toContain('AI 원안: IT팀');
+  expect(container.querySelector('.review-task > small')?.textContent).toContain('AI 원안: IT팀');
   expect(container.querySelectorAll('[data-draft-version]')).toHaveLength(2);
  });
  it('renders the preserved AI original alongside the reviewer value',async()=>{renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');expect(screen.getByText('원안: 정보 부족')).toBeTruthy();expect(screen.getByLabelText('AI 필요성 수정')).toHaveProperty('value','정보 부족')});
@@ -160,4 +160,27 @@ it('shows the stored title in the review queue and a masked summary in detail wh
  expect(await screen.findByRole('heading',{name:title})).toBeInTheDocument();
  expect(screen.getByText('회의실 예약 자동화를 요청합니다. 상세…')).toBeInTheDocument();
  expect(screen.getByText(/원문 열람 권한이 없습니다/)).toBeInTheDocument();
+});
+
+describe('undetermined draft repair (P1-01)',()=>{
+ const task={id:'d1',draft_task_id:'draft-1',title:'',method:'미정',lead_org:'미정',collab_orgs:[],predecessors:[],deliverable:''};
+ beforeEach(()=>vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),drafts:[{draft_version:1,tasks:[task]}]} as any));
+ it('edits all required draft fields and submits the repaired task',async()=>{
+  renderAt('/review?review_id=rvw_1');
+  fireEvent.change(await screen.findByLabelText('업무 방식'),{target:{value:'일반 기술'}});
+  fireEvent.change(screen.getByLabelText('주관 조직'),{target:{value:'IT팀'}});
+  fireEvent.change(screen.getByLabelText('업무 제목'),{target:{value:'검토 업무'}});
+  fireEvent.change(screen.getByLabelText('산출물'),{target:{value:'검토 결과'}});
+  fireEvent.change(screen.getByLabelText('결정 사유'),{target:{value:'미정 필드 보완'}});
+  fireEvent.click(screen.getByRole('button',{name:/^수정 승인$/}));
+  await waitFor(()=>expect(reviewApi.decide).toHaveBeenCalled());
+  expect(vi.mocked(reviewApi.decide).mock.calls[0][1].changes).toMatchObject({draft_tasks:[{draft_task_id:'draft-1',method:'일반 기술',lead_org:'IT팀',title:'검토 업무',deliverable:'검토 결과'}]});
+ });
+ it('places server validation guidance at the unresolved field',async()=>{
+  vi.mocked(reviewApi.decide).mockRejectedValue({status:422,message:'업무 초안의 필드를 확인해 주세요',details:{field_errors:[{draft_task_id:'draft-1',field:'method',message:'업무 방식을 선택해 주세요.'}]}});
+  renderAt('/review?review_id=rvw_1');await screen.findByText('원안: 정보 부족');
+  fireEvent.click(screen.getByRole('button',{name:/^승인$/}));
+  expect(await screen.findByText('업무 방식을 선택해 주세요.')).toBeTruthy();
+  expect(screen.getByLabelText('업무 방식')).toHaveAttribute('aria-invalid','true');
+ });
 });

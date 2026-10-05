@@ -534,3 +534,43 @@ async def test_judgment_api_shows_only_current_draft_version(tenant, changes, re
     assert review["current_draft"]["draft_version"] == 2
     assert review["current_draft"]["source"] == "reviewer"
     assert [d["source"] for d in review["drafts"]] == ["ai", "reviewer"]
+
+
+async def make_undetermined(tenant, run_id):
+    async def op(tx):
+        await (await tx.run(
+            "MATCH (t:DraftTask {tenant_id:$tenant,run_id:$run}) "
+            "SET t.lead_org='미정',t.method='미정',t.deliverable='',t.title=''",
+            tenant=tenant, run=run_id,
+        )).consume()
+    await write_tx(tenant, op)
+
+
+async def test_repair_undetermined_draft_before_validation(tenant):
+    principal, review_id, command = await sample(tenant)
+    await make_undetermined(tenant, command['run_id'])
+    command.update(action='approve_with_changes', reason='미정 필드를 검토하여 보완', changes={
+        'classifications': {'feasibility': '가능'},
+        'draft_tasks': [{'draft_task_id': 'draft-1', 'lead_org': 'IT팀',
+                         'method': '일반 기술', 'title': '검토 업무', 'deliverable': '검토 결과'}],
+    })
+    result = await decide(principal, review_id, command, 'repair-undetermined')
+    assert result['status'] == 'approved'
+    assert result['draft_version'] == 2
+    assert len(result['correction_ids']) == 5
+    assert await counts(tenant, command['request_id']) == {'assignments': 1, 'tasks': 1}
+
+
+async def test_unresolved_draft_returns_field_errors_without_writes(tenant):
+    principal, review_id, command = await sample(tenant)
+    await make_undetermined(tenant, command['run_id'])
+    app = create_app()
+    app.dependency_overrides[get_principal] = lambda: principal
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url='http://test') as client:
+        response = await client.post(f'/api/reviews/{review_id}/decision', json=command,
+                                     headers={'Idempotency-Key': 'unresolved-draft'})
+    assert response.status_code == 422
+    errors = response.json()['detail']['details']['field_errors']
+    assert {e['field'] for e in errors} == {'lead_org', 'method', 'title', 'deliverable'}
+    assert all(e['draft_task_id'] == 'draft-1' and e['message'] for e in errors)
+    assert await counts(tenant, command['request_id']) == {'assignments': 0, 'tasks': 0}

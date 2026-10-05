@@ -62,7 +62,11 @@ async def get_review(tenant_id: str, review_id: str) -> dict | None:
             "RETURN h,collect(c) AS corrections ORDER BY h.created_at",
             tenant=tenant_id, id=review_id,
         )).data()
-        return {"review": review, "request": request, "request_text": request_text, "judgment": judgment,
+        orgs = await (await tx.run(
+            "MATCH (o:Org {tenant_id:$tenant}) RETURN o.id AS id,o.name AS name ORDER BY o.name",
+            tenant=tenant_id,
+        )).data()
+        return {"orgs": orgs, "review": review, "request": request, "request_text": request_text, "judgment": judgment,
                 "outputs": outputs, "drafts": drafts, "history": history}
     return await read_tx(tenant_id, op)
 
