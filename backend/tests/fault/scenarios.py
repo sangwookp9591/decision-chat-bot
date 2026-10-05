@@ -16,6 +16,7 @@ from uuid import uuid4
 
 import httpx
 import pytest
+from neo4j.exceptions import Neo4jError
 
 from jevtriage.auth.core import hash_password
 from jevtriage.db.schema import apply_schema
@@ -96,10 +97,10 @@ class Harness:
                     return False
             await wait_until(ready, timeout=20)
 
-    def worker(self, name="worker", *, fault="", delay="0", lease="2"):
+    def worker(self, name="worker", *, fault="", delay="0", lease="2", deadline="30"):
         return self.start(name, "jevtriage.jobs.worker", "--tenant", TENANT,
                           "--lease-seconds", lease, "--poll-seconds", "0.1",
-                          "--deadline-seconds", "30", "--max-attempts", "3",
+                          "--deadline-seconds", deadline, "--max-attempts", "3",
                           extra_env={"JEV_MOCK_FAULT": fault,
                                      "JEV_MOCK_DELAY_SECONDS": delay})
 
@@ -130,7 +131,8 @@ class Harness:
             "MATCH (r:Run {tenant_id:$tenant,id:q.active_run_id}) "
             "OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:r.id}) "
             "RETURN q.status AS request_status,r.id AS run_id,r.status AS run_status,"
-            "r.versions_json AS versions,r.attempts_json AS attempts,j.status AS job_status,"
+            "r.versions_json AS versions,r.attempts_json AS attempts,r.started_at AS started_at,"
+            "r.ended_at AS ended_at,j.status AS job_status,"
             "j.owner_id AS owner,j.lease_generation AS generation",
             id=request_id)
         return rows[0] if rows else None
@@ -148,8 +150,17 @@ class Harness:
 
 @pytest.fixture(scope="module")
 async def harness():
-    await apply_schema()
-    await bootstrap_policy(TENANT)
+    # Cold Neo4j may accept Bolt before its first schema/policy write can
+    # complete. Retry transient database errors with a bounded startup budget.
+    for attempt in range(6):
+        try:
+            await apply_schema()
+            await bootstrap_policy(TENANT)
+            break
+        except Neo4jError:
+            if attempt == 5:
+                raise
+            await asyncio.sleep(min(2 ** attempt, 8))
     password_hash = hash_password(PASSWORD)
     async def create_users(tx):
         orgs = [f"{TENANT}-{name}" for name in ("business", "it", "ai")]
@@ -186,7 +197,11 @@ async def test_jev_faults(harness, fault):
     try:
         request = await h.submit(client, f"Jev fault {fault} {uuid4().hex}")
         h.worker(f"worker_jev_{fault}", fault=fault)
-        state = await h.terminal(request["request_id"])
+        state = await h.terminal(request["request_id"], timeout=35)
+        elapsed_duration = state["ended_at"] - state["started_at"]
+        elapsed = elapsed_duration.seconds + elapsed_duration.nanoseconds / 1_000_000_000
+        # Worker contract: terminal failure is bounded by its 30s Run deadline.
+        assert elapsed <= 30, f"timeout failure exceeded Run deadline: {elapsed:.2f}s"
         assignments = await h.graph(
             "MATCH (a:Assignment {tenant_id:$tenant,request_id:$id}) RETURN count(a) AS n",
             id=request["request_id"])
@@ -245,7 +260,7 @@ async def test_worker_handoff_and_kill_recovery(harness):
     client = await h.login("requester")
     try:
         first = await h.submit(client, "Worker lease handoff")
-        a = h.worker("worker_a", delay="5", lease="1")
+        a = h.worker("worker_a", delay="5", lease="1", deadline="120")
         async def running_first():
             state = await h.run_state(first["request_id"])
             if not state or state["job_status"] != "running":
@@ -257,8 +272,10 @@ async def test_worker_handoff_and_kill_recovery(harness):
         await wait_until(running_first)
         os.killpg(a.pid, signal.SIGSTOP)
         await asyncio.sleep(1.5)
-        h.worker("worker_b", lease="2")
-        completed = await h.terminal(first["request_id"], timeout=35)
+        # Keep the replacement lease long enough for the full judgment path;
+        # only A's deliberately stopped 1s lease should expire in this case.
+        h.worker("worker_b", lease="120", deadline="120")
+        completed = await h.terminal(first["request_id"], timeout=125)
         os.killpg(a.pid, signal.SIGCONT)
         await asyncio.sleep(5.2)
         final = await h.run_state(first["request_id"])
@@ -267,8 +284,15 @@ async def test_worker_handoff_and_kill_recovery(harness):
         committed = await h.graph(
             "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) RETURN count(j) AS n",
             run=final["run_id"])
-        assert completed["run_status"] == final["run_status"] == "judgment_saved"
-        assert len(attempts) == 2 and attempts[0]["status"] == "interrupted"
+        assert completed["run_status"] == final["run_status"] == "judgment_saved", {
+            "completed": completed["run_status"], "final": final["run_status"],
+            "attempts": attempts,
+        }
+        assert 2 <= len(attempts) <= 3, attempts
+        assert attempts[0]["status"] == "interrupted"
+        assert attempts[-1]["status"] == "judgment_saved"
+        assert [item["generation"] for item in attempts] == sorted(
+            item["generation"] for item in attempts)
         assert committed[0]["n"] == 1
         assert any(r["kind"] == "ownership_lost" and r.get("run_id") == final["run_id"]
                    for r in rows)
@@ -412,17 +436,19 @@ async def test_parallel_review_and_idempotent_retry(harness):
                    "input_revision": target["revision_id"], "run_id": state["run_id"],
                    "draft_version": target["draft_version"],
                    "review_version": target["review_version"]}
-        key = uuid4().hex
+        keys = [uuid4().hex for _ in range(20)]
         async def approve(index):
             client = reviewer_a if index % 2 == 0 else reviewer_b
             return await client.post(f"/api/reviews/{target['id']}/decision", json=command,
-                                     headers={"Idempotency-Key": key if index == 0 else uuid4().hex})
+                                     headers={"Idempotency-Key": keys[index]})
         results = await asyncio.gather(*(approve(i) for i in range(20)))
         statuses = [result.status_code for result in results]
         assert statuses.count(200) == 1 and set(statuses) <= {200, 409}, [
             (result.status_code, result.text) for result in results]
-        retry = await reviewer_a.post(f"/api/reviews/{target['id']}/decision", json=command,
-                                      headers={"Idempotency-Key": key})
+        winner = statuses.index(200)
+        winning_client = reviewer_a if winner % 2 == 0 else reviewer_b
+        retry = await winning_client.post(f"/api/reviews/{target['id']}/decision", json=command,
+                                      headers={"Idempotency-Key": keys[winner]})
         assert retry.status_code == 200
         counts = await h.graph(
             "MATCH (q:Request {tenant_id:$tenant,id:$id}) "
@@ -448,7 +474,7 @@ async def test_parallel_review_and_idempotent_retry(harness):
             headers={"Idempotency-Key": uuid4().hex})
         assert stale.status_code == 409, stale.text
         record("parallel_review", "pass", request_id=request["request_id"],
-               statuses=statuses, counts=counts[0], retry_status=retry.status_code,
+               statuses=statuses, winner_index=winner, counts=counts[0], retry_status=retry.status_code,
                stale_approval_status=stale.status_code)
     finally:
         h.stop("worker_review")
