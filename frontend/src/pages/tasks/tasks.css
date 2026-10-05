@@ -16,6 +16,7 @@
 .task-list>button>span{color:var(--color-ink-2)}
 .task-list small{grid-column:1/-1;color:var(--color-caption)}
 .task-detail{position:fixed;right:var(--space-6);top:80px;bottom:var(--space-5);z-index:20;width:min(480px,calc(100% - 32px));overflow:auto;padding:var(--space-6);border-radius:var(--radius-xl);background:var(--color-surface);box-shadow:var(--shadow-pop);animation:m-slide-in-right var(--dur-slow) var(--ease-spring)}
+.overlay-content .task-detail{position:static;width:auto;max-height:none;overflow:visible;padding:0;border-radius:0;background:transparent;box-shadow:none;animation:none}
 .task-detail h2{margin:var(--space-2) 0;font:var(--t4)}
 .task-detail button{min-height:44px}
 .task-detail>.ui-button{margin:4px var(--space-2) 4px 0}

@@ -14,6 +14,7 @@ import {ShortId} from '../components/ShortId';
 import {useStaggerIn} from '../lib/motion';
 import {locationLabel,outputTypeLabel,outputValueLabel,questionLabel,reviewReasonLabel} from '../lib/labels';
 import { EvidenceViewer,type ViewerTarget } from '../components/EvidenceViewer';
+import { useEventStream } from '../state/events';
 import './review/review.css';
 type TaskEdit={title:string;method:string;lead_org:string;collab_orgs:string;deliverable:string;predecessors:string};
 type FieldError={draft_task_id:string;field:string;message:string};
@@ -28,6 +29,7 @@ async function open(id:string,keepNotice=false){try{setError('');setFieldErrors(
 // Review evidence rows carry no attachment id; the request judgment (same run) names the source of each span.
 async function openSource(sel:ReviewDetail,question:string,ev:any){let source:string|undefined=ev.attachment_id??undefined;if(source===undefined){try{const j=await requestApi.judgment(sel.review.request_id,sel.review.run_id);source=j.outputs.flatMap(x=>x.evidence).find(x=>x.id===ev.id)?.attachment_id||'chat'}catch{setError('원문 위치를 확인하지 못했습니다.');return}}setViewer({requestId:sel.review.request_id,revision:sel.review.revision_id,source,unitId:ev.id,title:`${question} · 근거 원문`})}
 const deepLinked=useRef(false);const navRef=useStaggerIn<HTMLElement>([rows,listStatus,urgentFirst]);
+useEventStream({},undefined,(event)=>{if(event.type==='judgment_saved'||event.type==='auto_assignment_deferred'||event.type==='review_decided')void refresh(listStatus)});
 useEffect(()=>{void refresh(listStatus)},[listStatus]);
 // Deep links (/review?request_id=… or ?review_id=…) open the target, also after it left the pending list.
 useEffect(()=>{if(deepLinked.current)return;deepLinked.current=true;const reviewId=params.get('review_id'),requestId=params.get('request_id');if(reviewId){void open(reviewId);return}if(!requestId)return;void(async()=>{try{for(const [status] of listStatuses){const found=(await reviewApi.list(status)).reviews.filter(r=>r.request_id===requestId).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')))[0];if(found){if(status!==listStatus)setListStatus(status);await open(found.id);return}}setError('이 요청에 연결된 검토가 없습니다. 아직 검토 대상이 아니거나 권한이 없을 수 있습니다.')}catch(e){setError((e as ApiError).message)}})()},[]);

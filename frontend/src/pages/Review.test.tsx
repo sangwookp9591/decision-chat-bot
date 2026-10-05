@@ -5,6 +5,9 @@ import {MemoryRouter} from 'react-router-dom';
 import {Review} from './Review';
 import {reviewApi} from '../api/reviews';
 import {requestApi} from '../api/requests';
+import type {StreamEvent} from '../state/events';
+let emitReviewEvent:(event:StreamEvent)=>void=()=>undefined;
+vi.mock('../state/events',()=>({useEventStream:(_f:unknown,_s:unknown,onEvent:(event:StreamEvent)=>void)=>{emitReviewEvent=onEvent;return{status:'connected',lastSeq:0}}}));
 const row=(over:Record<string,unknown>={})=>({id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족'],...over});
 const detail=(over:Record<string,unknown>={})=>({review:row(over),request:{title:'요청',request_text:'원문 내용'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1});
 vi.mock('../api/reviews',()=>({reviewApi:{list:vi.fn(),detail:vi.fn(),decide:vi.fn()}}));
@@ -12,6 +15,12 @@ vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({re
 const renderAt=(url='/review')=>render(<MemoryRouter initialEntries={[url]}><Review/></MemoryRouter>);
 beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any);vi.mocked(requestApi.detail).mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]} as any)});
 describe('review list title and source permission',()=>{
+ it('refreshes the queue after a review is created elsewhere',async()=>{
+  vi.mocked(reviewApi.list).mockResolvedValue({reviews:[]} as any);renderAt();await waitFor(()=>expect(reviewApi.list).toHaveBeenCalled());
+  vi.mocked(reviewApi.list).mockResolvedValue({reviews:[row({id:'rvw_new',title:'새 검토 요청'}) as any]});
+  emitReviewEvent({seq:1,type:'auto_assignment_deferred',request_id:'req_new',payload:{review_id:'rvw_new'}});
+  expect(await screen.findByText('새 검토 요청')).toBeInTheDocument();
+ });
  it('titles each list row with the masked request title, id chip as the secondary line',async()=>{
   vi.mocked(reviewApi.list).mockResolvedValue({reviews:[row({title:'회의실 예약 자동화'}) as any,row({id:'rvw_2',request_id:'req_2',title:''}) as any]});
   const {container}=renderAt();await screen.findByText('회의실 예약 자동화');

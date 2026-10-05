@@ -4,6 +4,9 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter } from 'react-router-dom';
 import { Tasks } from './Tasks';
 import { taskApi } from '../api/tasks';
+import type { StreamEvent } from '../state/events';
+let emitTaskEvent: (event: StreamEvent) => void = () => undefined;
+vi.mock('../state/events', () => ({ useEventStream: (_f: unknown, _s: unknown, onEvent: (event: StreamEvent) => void) => { emitTaskEvent = onEvent; return { status: 'connected', lastSeq: 0 }; } }));
 
 vi.mock('../api/tasks', () => ({ taskApi: { list: vi.fn(), detail: vi.fn(), transition: vi.fn() } }));
 const task = (over: Record<string, unknown> = {}) => ({ id: 'task_1', request_id: 'req_1', title: '데이터 확보', method: 'AI', lead_org: 'AI팀', collab_orgs: [], deliverable: '데이터셋', predecessors: [], predecessor_tasks: [], successors: [], reason: null, block_reasons: [], can_start: true, start_blockers: [], status: '대기', ...over });
@@ -12,6 +15,24 @@ beforeEach(() => { vi.clearAllMocks(); });
 const setup = (t: ReturnType<typeof task>) => { vi.mocked(taskApi.list).mockResolvedValue({ tasks: [t] } as never); vi.mocked(taskApi.detail).mockResolvedValue({ task: t } as never); render(<MemoryRouter><Tasks /></MemoryRouter>); };
 
 describe('Tasks block reasons (P4-01)', () => {
+  it('closes task detail on Escape and restores focus to its opener', async () => {
+    setup(task()); const opener=await screen.findByRole('button',{name:/데이터 확보/}); opener.focus(); fireEvent.click(opener);
+    await screen.findByRole('dialog',{name:'업무 상세'}); fireEvent.keyDown(document,{key:'Escape'});
+    await waitFor(()=>expect(screen.queryByRole('dialog',{name:'업무 상세'})).not.toBeInTheDocument());
+    expect(opener).toHaveFocus();
+  });
+  it('refreshes list and selected task when another tab transitions a task', async () => {
+    const oldTask = task(); const newTask = task({status:'진행'});
+    vi.mocked(taskApi.list).mockResolvedValue({tasks:[oldTask]} as never);
+    vi.mocked(taskApi.detail).mockResolvedValue({task:oldTask} as never);
+    render(<MemoryRouter><Tasks/></MemoryRouter>);
+    fireEvent.click(await screen.findByRole('button',{name:/데이터 확보/}));
+    await screen.findByRole('dialog',{name:'업무 상세'});
+    vi.mocked(taskApi.list).mockResolvedValue({tasks:[newTask]} as never);
+    vi.mocked(taskApi.detail).mockResolvedValue({task:newTask} as never);
+    emitTaskEvent({seq:1,type:'task.transitioned',request_id:'req_1',payload:{task_id:'task_1',to:'진행'}});
+    await waitFor(()=>expect(screen.getByRole('button',{name:'완료로 변경'})).toBeInTheDocument());
+  });
   it('shows Korean block reasons in list and detail and disables the start button', async () => {
     setup(task({ status: '막힘', block_reasons: ['feasibility_unresolved'], can_start: false, start_blockers: ['feasibility_unresolved'] }));
     const row = await screen.findByRole('button', { name: /데이터 확보/ });
