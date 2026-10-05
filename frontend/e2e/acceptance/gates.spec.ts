@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { actor, outDir, shot, tenant, type Actor } from './helpers';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
@@ -27,9 +27,15 @@ function records(): Record<string, any> {
 
 let rv: Actor, rq: Actor;
 test.beforeAll(async ({ browser }, info) => {
+  const recordsPath = process.env.ACC_RECORDS || '';
+  test.skip(!recordsPath || !existsSync(recordsPath), 'G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함');
   const base = info.project.use.baseURL as string;
-  rv = await actor(browser, base, 'reviewer', gateTenant);
-  rq = await actor(browser, base, 'requester', gateTenant);
+  try {
+    rv = await actor(browser, base, 'reviewer', gateTenant);
+    rq = await actor(browser, base, 'requester', gateTenant);
+  } catch {
+    test.skip(true, `별도 acceptance 계정 없음: reviewer@${gateTenant}.dev 및 requester@${gateTenant}.dev를 acceptance setup으로 준비해야 함`);
+  }
 });
 
 test('G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen', async () => {

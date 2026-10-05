@@ -1,5 +1,7 @@
 # 요구사항 대비 미비·약한 부분 감사 (P2)
 
+> **2026-10-05 후속 상태:** 이 문서는 과거 읽기 전용 감사의 판정 기록을 보존한다. 다음 항목은 현재 worktree에서 해소/정정된 과거 주장으로 읽는다: EvidenceViewer 원문 위치 anchor, 판단 맵 확대/버전 탭, 외부 모델 입력의 패턴 마스킹. 마스킹은 구현·단위시험이 확인됐으나 모든 실송신 경로/민감 유형 실측은 별도 제한이다. CORS는 아직 명시적 미들웨어 정책이 없고 same-origin/Vite proxy 계약을 `docs/operations/DEPENDENCIES.md`에 기록했다. 이번 FIX-DOCS에서 추가한 HTTP 취소 시험 및 기타 갱신은 `artifacts/validation/final/GATE_REPORT.md`의 2026-10-05 부록과 운영/제품 계약 문서를 참조한다.
+
 - 대상: `/Users/psw/Projects/decision-chat-bot`, 커밋 `0da8b1e`, 읽기 전용 감사. 코드·문서·설정은 수정하지 않았다.
 - 판정 기준: **(a)** 구현+검증, **(b)** 구현됐으나 해당 동작 검증 증거 없음, **(c)** 부분 구현, **(d)** 미구현. 게이트 보고서에 증거가 명시되면 검증으로 간주하고, 화면 코드 존재만으로 end-to-end 검증이라 간주하지 않았다. GATE_REPORT에 명시된 외부 G10 브라우저 에이전트, G12 현업 정답/품질, G13 30일 운영 요건은 상세 결함으로 반복 기재하지 않았다.
 - 근거 기준 문서: `PRD.md` R01–R26 및 화면 표, `docs/spec/01_GOALS_REQUIREMENTS.md`, `02_USER_EXPERIENCE.md`, `04_OBSERVATORY.md`, `08_LEARNING_LOOP.md`, `06_ACCEPTANCE.md`, `docs/architecture/EXECUTION_CONTRACT.md`, `docs/design-handoff/HANDOFF.md`, `docs/design-handoff/source/*.dc.html`, `artifacts/validation/final/GATE_REPORT.md`.
@@ -156,3 +158,16 @@
 
 - 감사는 읽기 전용 코드·문서 grep/열람으로 수행했고 시험을 새로 실행하지 않았다. 보고서 파일 `artifacts/review/requirements-gap.md`만 생성했다.
 - `GATE_REPORT.md`는 판정 기준 커밋 `e55b42d`와 미커밋 작업 트리를 가리키고, 이번 감사 worktree는 `0da8b1e`다. 따라서 문서의 최신 증거는 현재 커밋과 완전히 같은 스냅샷이라고 보장되지 않는다. 코드 인용은 현 worktree에서 직접 확인했고 이 시점 차이를 불확실성으로 남긴다.
+
+## 2026-10-05 항목 상태 정정
+
+| 과거 P2 잔여 주장 | 최신 상태 |
+| --- | --- |
+| R02 원문 anchor 기능 부재 | **해소된 과거 주장** — EvidenceViewer의 unit anchor·스크롤 구현 및 UI 시험이 있다. 권한은 API 경계와 별도 시험으로 확인한다. |
+| 판단 맵 확대/버전별 보기 미구현 | **해소된 과거 주장** — 확대/목록 및 버전 탭 구현과 UI 시험이 있다. |
+| 외부 모델 송신 마스킹 미구현 | **해소된 과거 주장** — 패턴 마스킹과 단위 시험이 있다. 모든 민감 유형/실제 송신 경로 실측은 별도 미완료다. |
+| 취소 API HTTP 경계 검증 부재 | **해소** — `backend/tests/integration/test_cancel_http.py` 추가, 2 passed; session/CSRF/role/tenant 응답 경계를 확인했다. |
+| 전체 e2e 데이터 fixture 고정 | **부분** — 30건 chat 목록, rem-ui 제목/결과, acceptance 별도 계정, X38 db_truth 사전조건에 명확한 skip을 추가했다. 스크린샷 기반 전용 fixture를 자동 생성하는 대신 표본이 없으면 skip한다. |
+| CORS 경계 문서 부재 | **문서화** — 현재 same-origin/Vite proxy 계약과 별도 origin 배치 시 필요한 allowlist 정책은 `docs/operations/DEPENDENCIES.md`에 기재. CORS middleware는 미구현이며 지금 API는 cross-origin 허용을 보내지 않는다. |
+
+Trace drawer 상세, 지정 조건 browser 성능 측정, 현업 final 평가, live G10, G13 운영 SLO 등은 잔여이며 최신 판정 부록에 미해결로 남겼다.

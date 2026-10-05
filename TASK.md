@@ -1,5 +1,7 @@
 # Jev Triage TASK
 
+> **2026-10-05 검토 정정:** 표의 완료 기록과 당시 시험 수치는 작업 당시 스냅샷이다. 취소 API는 현재 HTTP 인증·CSRF·역할·tenant 경계 시험이 `backend/tests/integration/test_cancel_http.py`에 추가됐고, 구현 외 기능 계약은 `docs/architecture/PRODUCT_BEHAVIOR_CONTRACTS.md`에 정리했다. SPEC_TRACE가 지적한 GATE 수치/범위와 해소된 과거 잔여 주장은 `artifacts/validation/final/GATE_REPORT.md`의 최신 판정 부록 및 `artifacts/review/requirements-gap.md`의 후속 상태를 참고한다. 미정 Trace drawer 항목 등 미해결 요구는 완료로 승격하지 않는다.
+
 작성일: 2026-10-03 (Asia/Seoul) · 버전: 0.3 · 상태: 구현·검증 수행, 최종 판정은 [GATE_REPORT](artifacts/validation/final/GATE_REPORT.md)(개발 완료 미선언 — G10 차단·G12 품질 미검증·G13 운영 미검증)
 
 제품 계약은 [PRD](PRD.md), 원본 완료 조건은 [06_ACCEPTANCE](docs/spec/06_ACCEPTANCE.md)다. 이 목록은 실행 순서·의존성·완료 증거를 정하며 제품 구현 완료를 표시하지 않는다. 담당은 구현 책임 영역이며 사람/에이전트의 실제 배정이나 외부 조직에 대한 요청 발송을 뜻하지 않는다.
@@ -197,3 +199,9 @@ T01에서 `artifacts/validation/<run-id>/` 구조를 만든다. 확장 증거는
 - 2026-10-03 기준 PRD/TASK v0.3에 08 확장 설계, R19–R26·X01–X10·T29–T38 추적을 반영했다. 이는 문서 변경이며 확장 기능 구현·시험은 미수행이다.
 
 T03 증거: `docs/architecture/JUDGMENT_DESIGN.md`, `backend/jevtriage/judgment/`, 단위 시험 7건 통과 및 Jev live 2건 업무 초안 차이 확인; 결과 `artifacts/validation/t03/live-smoke.json`. 429/529·timeout 장애 재현 시험은 미수행.
+
+## 2026-10-05 후속 문서 상태
+
+- **정정:** 당시 `136` backend / `37` Vitest는 이전 실행 스냅샷 수치다. 최신 기준선 수치는 SPEC_TRACE에 적힌 466/1 skip, 358이며, 브라우저 전체 통과를 뜻하지 않는다.
+- **해소된 과거 잔여 주장:** 외부 모델 전송 마스킹은 `domain/masking.py` 구현 및 단위 시험이 확인됐다. EvidenceViewer 원문 anchor 및 맵 확대/버전 탭도 현재 구현 증거가 있다. 실송신 전 경로 전수 실측 및 운영 민감 데이터 평가는 계속 제한이다.
+- **부분/미해결:** Trace drawer의 오류·duration·실행 model/schema 표시, 검토 수정 승인 결함, 선행 완료 이후 업무 시작 UI 결함, 지정 browser 성능 경계, 현업 평가 및 운영/외부 의존 게이트는 해결로 표시하지 않는다. 최신 상태는 `artifacts/validation/final/GATE_REPORT.md` 2026-10-05 부록 참조.

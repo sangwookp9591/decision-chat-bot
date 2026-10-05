@@ -1,4 +1,4 @@
-import { appendFileSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { expect, test, type APIRequestContext, type Browser, type Page } from '@playwright/test';
 
 /**
@@ -12,8 +12,10 @@ const OUT = process.env.X38_OUT as string;
 const tenant = process.env.X38_TENANT as string;
 const phase = process.env.X38_PHASE || 'ui1';
 const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
-const state = JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8'));
-const truth = JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8'));
+const hasFixture = Boolean(OUT && tenant && existsSync(`${OUT}/state.json`) && existsSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`));
+test.skip(!hasFixture, 'X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함');
+const state = hasFixture ? JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8')) : { cand_y: '', cand_z: '', seed: { plan: { same_direction: [] } } };
+const truth = hasFixture ? JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8')) : { candidates: [], corrections: [] };
 const shot = (page: Page, name: string) => page.screenshot({ path: `${OUT}/screenshots/${phase}-${name}.png`, fullPage: false });
 
 function note(data: unknown) { test.info().annotations.push({ type: 'evidence', description: JSON.stringify(data) }); }

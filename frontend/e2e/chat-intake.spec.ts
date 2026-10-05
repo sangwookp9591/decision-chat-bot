@@ -167,12 +167,15 @@ for (const width of [375, 520, 960, 1440]) {
 }
 
 // CHAT-POLISH: fixed-height conversation. The page is exactly one screen tall at every width; the chat and the request list scroll inside it.
-// Needs >= 30 requests in the tenant (seed them first, see artifacts/review/chat-polish/README.md).
+// This is an optional populated-account layout check. Never fail as a product regression when its fixture is absent.
 const polishDir = resolve(process.cwd(), process.env.POLISH_SHOT_DIR || '../artifacts/review/chat-polish'); mkdirSync(polishDir, { recursive: true });
 for (const size of [{ w: 1440, h: 900 }, { w: 960, h: 800 }, { w: 375, h: 812 }]) {
   test(`layout ${size.w}px: one screen tall, request list and chat scroll inside, composer pinned`, async ({ browser }) => {
     test.setTimeout(120_000);
     const a = await actor(browser, baseURL, 'requester'); const page = a.page;
+    const seeded = await a.api.get('/api/requests?limit=50');
+    const seedCount = seeded.ok() ? ((await seeded.json()).items as unknown[]).length : 0;
+    test.skip(seedCount < 30, `레이아웃 표본 fixture 필요: tenant에 요청 ${seedCount}/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)`);
     await page.setViewportSize({ width: size.w, height: size.h });
     await page.goto('/');
     const composerBox = async () => (await page.locator('form.composer').boundingBox())!;

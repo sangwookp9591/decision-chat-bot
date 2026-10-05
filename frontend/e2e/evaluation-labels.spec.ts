@@ -35,6 +35,7 @@ test('labeler confirms three, defers one, and sees a reviewer disagreement', asy
   // 1) confirm by button (creates the disagreement), 2) change a chip and confirm with Enter after the 1-4 shortcut, 3) confirm again.
   await confirm.click();
   await expect(toast).toContainText('라벨을 확정했습니다.');
+  await expect(confirm).toBeEnabled();
   await expect(page.getByText('불일치 · 합의 필요')).toBeVisible();
   await expect(page.getByRole('button', { name: '합의 라벨 확정' })).toBeVisible();
   await page.keyboard.press('j');
@@ -46,10 +47,12 @@ test('labeler confirms three, defers one, and sees a reviewer disagreement', asy
   await expect(feasibility.getByRole('radio', { checked: true })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(toast).toContainText('라벨을 확정했습니다.');
+  await expect(confirm).toBeEnabled();
   await page.keyboard.press('j');
   await expect(sample(candidates[2].id).first()).toBeVisible();
   await page.keyboard.press('Enter');
   await expect(toast).toContainText('라벨을 확정했습니다.');
+  await expect(confirm).toBeEnabled();
   // 4) defer needs a reason.
   await page.keyboard.press('j');
   await expect(sample(candidates[3].id).first()).toBeVisible();

@@ -66,3 +66,16 @@
 ## 저장소 보관 범위
 
 부하 시험의 대용량 원시 표본(`artifacts/validation/t25*/**/sse.csv`, `runs.json`, 최대 52MB)과 실행 데이터 디렉터리·DB·로그는 Git에 포함하지 않고 생성한 로컬 환경에만 보존했다. 저장소에는 각 실행의 REPORT.md·results.json·manifest·client.csv 등 요약 증거가 있다.
+
+## 2026-10-05 최신 판정 부록
+
+위 2026-10-03 판정과 그 당시 수치는 보존한다. 아래는 2026-10-05 worktree의 SPEC_TRACE, E2E_AUDIT, OPS_AUDIT 대조 결과이며, 과거 통과 기록을 현재 전 구간 통과로 확대 해석하지 않는다.
+
+| 과거 주장 | 최신 정정 |
+| --- | --- |
+| G11 안전 항목에서 외부 모델 마스킹 미구현 | 코드는 `backend/jevtriage/domain/masking.py`와 `judgment/service.py`에서 패턴 기반 마스킹을 구현하고 `backend/tests/unit/test_masking.py`로 검증한다. 미구현이라는 과거 문구는 낡았다. 다만 모든 민감정보 유형과 모든 실제 송신 경로를 현업 데이터로 검증했다는 뜻은 아니다. |
+| GATE X10 백엔드 136·Vitest 37 통과 | 이는 과거 스냅샷 수치다. SPEC_TRACE의 최신 기준 실행은 backend 466 passed/1 skipped, Vitest 358 passed로 별도 기록되어 있다. 브라우저 감사도 78 passed/14 failed/2 skipped를 기록했고 실패 중 제품 결함이 있어 전체 E2E 통과로 볼 수 없다. |
+| G04 검토, G05 업무, G07 Trace, G08 SSE, G12 성능 통과 | 당시 통과 증거의 범위를 유지하되 현재 제약을 추가한다. 검토 수정 승인 경로는 미정 초안에서 422 재현이 있어 부분, 완료된 선행 업무의 시작 버튼도 UI/API 판정 불일치가 있어 부분이다. Playback 무부작용과 Trace API 저장은 확인됐지만 Trace drawer의 오류·소요시간·실행 model/schema 표시 요구는 미충족이다. SSE 354.9ms는 저장·HTTP 복구 경계 측정이며 브라우저 DOM 반영 p95가 아니다. 30분 부하의 기존 결과도 현재 요구된 browser 종료점과 동시 접수 20건+목록 1천 건 조건을 입증하지 않는다. |
+| 팀 F1 0.556 | `GATE_REPORT`의 0.556은 당시 별도 실행 요약값이다. `eval/README.md`의 qset-v2 tuning 표본은 AI 필요성 0.807, 팀 F1 0.570이며 final 60건은 미실행·현업 정답 미확정이다. `SPEC_TRACE.md`가 지적한 과거 qset-v1의 0.217 등과 혼합하지 말고, 각 수치는 실행 ID·모델·질문 세트·팀 집합 계산 정의를 붙여 비교한다. |
+
+최신 실행에 포함되지 않은 장애 재실행, 지정 부하, live 브라우저 에이전트 호출, 운영 30일 SLO는 미검증/외부 대기다. 상세 근거는 `artifacts/review/completeness/SPEC_TRACE.md`, `E2E_AUDIT.md`, `OPS_AUDIT.md`에 있다.
