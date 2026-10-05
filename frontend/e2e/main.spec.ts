@@ -13,11 +13,28 @@ test('live request shows processing stages, saved judgment and evidence panel', 
   await page.goto('/');
   await page.getByLabel('요청 내용').fill('사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.');
   await page.getByLabel('파일 첨부').setInputFiles({ name: 'meeting-room-notes.md', mimeType: 'text/markdown', buffer: Buffer.from('회의실 예약 현황을 부서별로 조회합니다. 예약 가능 시간과 담당 부서를 확인할 수 있어야 합니다.') });
-  await page.getByRole('button', { name: '요청 보내기' }).click();
-  await expect(page.getByRole('heading', { name: '분석 진행' })).toBeVisible();
-  await expect(page.locator('.stage-list')).toContainText('내용 정리');
-  await expect(page.locator('.stage-list')).toContainText('Jev 판단');
-  await expect(page.locator('.stage-list')).toContainText('근거 연결');
+  // Record the transient progress UI before clicking: a slow browser driver may
+  // return from click only after the mock worker has already saved the result.
+  await page.evaluate(() => {
+    const state = { observed: false };
+    Object.assign(window, { __mainProgress: state });
+    const observer = new MutationObserver(() => {
+      const heading = [...document.querySelectorAll('h1,h2,h3')].find((node) => node.textContent === '분석 진행');
+      const stages = document.querySelector('.stage-list');
+      if (heading instanceof HTMLElement && heading.offsetHeight > 0 && stages instanceof HTMLElement && stages.offsetHeight > 0
+        && ['내용 정리', 'Jev 판단', '근거 연결'].every((label) => stages.textContent?.includes(label))) {
+        state.observed = true;
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+  });
+  const [accepted] = await Promise.all([
+    page.waitForResponse((response) => response.url().endsWith('/api/requests') && response.request().method() === 'POST', { timeout: 30_000 }),
+    page.getByRole('button', { name: '요청 보내기' }).click(),
+  ]);
+  expect(accepted.status()).toBe(202);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __mainProgress: { observed: boolean } }).__mainProgress.observed), { timeout: 30_000 }).toBe(true);
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
   await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
   const evidence = page.getByRole('button', { name: /근거 열기|근거 패널 열기/ }).first();

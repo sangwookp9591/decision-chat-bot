@@ -1,0 +1,10 @@
+{
+  "tenant": "qa_c_original_fbdbad5c697d4a44933d94d91be56367",
+  "target": "starve_5c15f8ac_v_0",
+  "seeded": 101,
+  "direct_status": 200,
+  "queue_ids": [
+    "starve_5c15f8ac_v_0",
+    "rvw_e56f03cc3dae4e0aa3919aadb3311c23"
+  ]
+}

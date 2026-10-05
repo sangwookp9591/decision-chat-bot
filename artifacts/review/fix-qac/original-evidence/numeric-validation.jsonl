@@ -1,0 +1,4 @@
+{"json_number": "1e1000", "status": 400, "body": "{\"detail\":\"Invalid JSON number\"}"}
+{"json_number": "NaN", "status": 400, "body": "{\"detail\":\"Invalid JSON number\"}"}
+{"json_number": "Infinity", "status": 400, "body": "{\"detail\":\"Invalid JSON number\"}"}
+{"json_number": "-Infinity", "status": 400, "body": "{\"detail\":\"Invalid JSON number\"}"}

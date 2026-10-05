@@ -1,0 +1,26 @@
+
+╔══╗─────────▶╔╗ ╔╗      ╔╗◀───┐
+╚╣╠╝◀─────┐  ╔╝╚╗║║────▶╔╝╚╗   │
+ ║║   ╔══╦══╦╩╗╔╝║║  ╔╦═╩╗╔╝╔═╦══╗
+ ║║╔══╣╔╗║╔╗║╔╣║ ║║ ╔╬╣╔╗║║ ║│║╔═╝
+╔╣╠╣║║║╚╝║╚╝║║║╚╗║╚═╝║║║║║╚╗║═╣║
+╚══╩╩╩╣╔═╩══╩╝╚═╝╚═══╩╩╝╚╩═╩╩═╩╝
+  └──▶║║                    ▲ 
+      ╚╝────────────────────┘
+
+
+---------
+Contracts
+---------
+
+Analyzed 123 files, 306 dependencies.
+-------------------------------------
+
+Feature API to service to store KEPT
+Policy and persistence to domain KEPT (1 ignored import)
+Graph and monitoring are independent KEPT
+Judgment may call review but review is independent KEPT
+Learning may use judgment and policy KEPT
+Top-level feature imports are acyclic KEPT (1 ignored import)
+
+Contracts: 6 kept, 0 broken.

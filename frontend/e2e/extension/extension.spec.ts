@@ -257,6 +257,7 @@ test.describe(`[${phase}] before stop`, () => {
 test.describe(`[${phase}] map filters and zoom`, () => {
   test.skip(phase !== 'ui2', 'run once with ui2');
   test('[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API', async ({ browser, baseURL }) => {
+    test.setTimeout(60_000); // Four independent graph filters, API comparisons, zoom and screenshot.
     const ctx = await as(browser, baseURL as string, 'rule_admin');
     const page = await ctx.newPage();
     const form = page.getByRole('form', { name: '탐색 기준' });

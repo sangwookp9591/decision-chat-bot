@@ -1,0 +1,28 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_nonfinite_numbers_rejected_inside_arbitrary_config[1e1000] ________
+tests/unit/test_qac_api_boundaries.py:90: in test_nonfinite_numbers_rejected_inside_arbitrary_config
+    assert 400 <= response.status_code < 500
+E   assert 400 <= 200
+E    +  where 200 = <Response [200 OK]>.status_code
+_________ test_nonfinite_numbers_rejected_inside_arbitrary_config[NaN] _________
+tests/unit/test_qac_api_boundaries.py:90: in test_nonfinite_numbers_rejected_inside_arbitrary_config
+    assert 400 <= response.status_code < 500
+E   assert 400 <= 200
+E    +  where 200 = <Response [200 OK]>.status_code
+______ test_nonfinite_numbers_rejected_inside_arbitrary_config[Infinity] _______
+tests/unit/test_qac_api_boundaries.py:90: in test_nonfinite_numbers_rejected_inside_arbitrary_config
+    assert 400 <= response.status_code < 500
+E   assert 400 <= 200
+E    +  where 200 = <Response [200 OK]>.status_code
+______ test_nonfinite_numbers_rejected_inside_arbitrary_config[-Infinity] ______
+tests/unit/test_qac_api_boundaries.py:90: in test_nonfinite_numbers_rejected_inside_arbitrary_config
+    assert 400 <= response.status_code < 500
+E   assert 400 <= 200
+E    +  where 200 = <Response [200 OK]>.status_code
+=========================== short test summary info ============================
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_numbers_rejected_inside_arbitrary_config[1e1000]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_numbers_rejected_inside_arbitrary_config[NaN]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_numbers_rejected_inside_arbitrary_config[Infinity]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_numbers_rejected_inside_arbitrary_config[-Infinity]
+4 failed, 16 deselected in 0.80s

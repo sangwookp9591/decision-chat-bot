@@ -1,0 +1,205 @@
+FFFFFFFFFFFFFFFFF.FFFFFFFF...F                                           [100%]
+=================================== FAILURES ===================================
+_______ test_validation_errors_do_not_echo_input[/api/auth/login-body0] ________
+tests/unit/test_qac_api_boundaries.py:52: in test_validation_errors_do_not_echo_input
+    assert SAMPLE not in response.text
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "source":"qa-canary@example.invalid"}}]}
+_____ test_validation_errors_do_not_echo_input[/api/policy/validate-body1] _____
+tests/unit/test_qac_api_boundaries.py:52: in test_validation_errors_do_not_echo_input
+    assert SAMPLE not in response.text
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_ test_validation_errors_do_not_echo_input[/api/requests/missing/reanalyze-body2] _
+tests/unit/test_qac_api_boundaries.py:51: in test_validation_errors_do_not_echo_input
+    assert response.status_code == 422
+E   assert 403 == 422
+E    +  where 403 = <Response [403 Forbidden]>.status_code
+_ test_validation_errors_do_not_echo_input[/api/reviews/missing/decision-body3] _
+tests/unit/test_qac_api_boundaries.py:52: in test_validation_errors_do_not_echo_input
+    assert SAMPLE not in response.text
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E     ?           ^^^^^ ^^^^^
+E       ,"input":"qa-canary@example.invalid","ctx":{"expected":"'approve', 'approve_with_changes', 'reject' or 'request_info'"}},{"type":"missing","loc":["body","request_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","input_revision"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","run_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","d...
+E     
+E     ...Full output truncated (2 lines hidden), use '-vv' to show
+_ test_validation_errors_do_not_echo_input[/api/tasks/missing/transition-body4] _
+tests/unit/test_qac_api_boundaries.py:52: in test_validation_errors_do_not_echo_input
+    assert SAMPLE not in response.text
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_________________ test_validation_context_does_not_echo_input __________________
+tests/unit/test_qac_api_boundaries.py:59: in test_validation_context_does_not_echo_input
+    assert SAMPLE not in response.text
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...rror":{}}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       ue error, qa-canary@example.invalid","input":"qa-canary@example.invalid","ctx":{"error":{}}}]}
+E     ?           +++++++++++++++++++++++++
+___________________ test_nonfinite_validation_is_4xx[1e1000] ___________________
+tests/unit/test_qac_api_boundaries.py:68: in test_nonfinite_validation_is_4xx
+    assert 400 <= response.status_code < 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+____________________ test_nonfinite_validation_is_4xx[NaN] _____________________
+tests/unit/test_qac_api_boundaries.py:68: in test_nonfinite_validation_is_4xx
+    assert 400 <= response.status_code < 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+__________________ test_nonfinite_validation_is_4xx[Infinity] __________________
+tests/unit/test_qac_api_boundaries.py:68: in test_nonfinite_validation_is_4xx
+    assert 400 <= response.status_code < 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_________________ test_nonfinite_validation_is_4xx[-Infinity] __________________
+tests/unit/test_qac_api_boundaries.py:68: in test_nonfinite_validation_is_4xx
+    assert 400 <= response.status_code < 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_ test_db_integer_range_rejected_before_storage[/api/policy/versions/{}-9223372036854775808] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/policy/versions/9223372036854775808')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f209150>.get
+E    +      and   '/api/policy/versions/9223372036854775808' = <built-in method format of str object at 0x10ba24370>(9223372036854775808)
+E    +        where <built-in method format of str object at 0x10ba24370> = '/api/policy/versions/{}'.format
+_ test_db_integer_range_rejected_before_storage[/api/policy/versions/{}--9223372036854775809] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/policy/versions/-9223372036854775809')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f266140>.get
+E    +      and   '/api/policy/versions/-9223372036854775809' = <built-in method format of str object at 0x10ba24370>(-9223372036854775809)
+E    +        where <built-in method format of str object at 0x10ba24370> = '/api/policy/versions/{}'.format
+_ test_db_integer_range_rejected_before_storage[/api/policy/versions/{}-1208925819614629174706176] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/policy/versions/1208925819614629174706176')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f3adf20>.get
+E    +      and   '/api/policy/versions/1208925819614629174706176' = <built-in method format of str object at 0x10ba24370>(1208925819614629174706176)
+E    +        where <built-in method format of str object at 0x10ba24370> = '/api/policy/versions/{}'.format
+_ test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}-9223372036854775808] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/graph/judgment?config_version=9223372036854775808')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f42fce0>.get
+E    +      and   '/api/graph/judgment?config_version=9223372036854775808' = <built-in method format of str object at 0x10b9df960>(9223372036854775808)
+E    +        where <built-in method format of str object at 0x10b9df960> = '/api/graph/judgment?config_version={}'.format
+_ test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}--9223372036854775809] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/graph/judgment?config_version=-9223372036854775809')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f507790>.get
+E    +      and   '/api/graph/judgment?config_version=-9223372036854775809' = <built-in method format of str object at 0x10b9df960>(-9223372036854775809)
+E    +        where <built-in method format of str object at 0x10b9df960> = '/api/graph/judgment?config_version={}'.format
+_ test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}-1208925819614629174706176] _
+tests/unit/test_qac_api_boundaries.py:75: in test_db_integer_range_rejected_before_storage
+    assert client.get(path.format(number)).status_code == 422
+E   AssertionError: assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+E    +    where <Response [500 Internal Server Error]> = get('/api/graph/judgment?config_version=1208925819614629174706176')
+E    +      where get = <starlette.testclient.TestClient object at 0x10f6387c0>.get
+E    +      and   '/api/graph/judgment?config_version=1208925819614629174706176' = <built-in method format of str object at 0x10b9df960>(1208925819614629174706176)
+E    +        where <built-in method format of str object at 0x10b9df960> = '/api/graph/judgment?config_version={}'.format
+_____________ test_direct_transport_masks_state_and_question_text ______________
+tests/unit/test_qac_external_boundary.py:22: in test_direct_transport_masks_state_and_question_text
+    assert all(value not in payload for payload in sent for value in values)
+E   assert False
+E    +  where False = all(<generator object test_direct_transport_masks_state_and_question_text.<locals>.<genexpr> at 0x10f309a80>)
+____________ test_every_model_payload_masks_five_categories[shadow] ____________
+tests/integration/test_qac_regressions.py:83: in test_every_model_payload_masks_five_categories
+    assert all(value not in payload for payload in client.payloads for value in samples())
+E   assert False
+E    +  where False = all(<generator object test_every_model_payload_masks_five_categories.<locals>.<genexpr> at 0x10f629e00>)
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (j:Judgment {tenant_id:$tenant}) WHERE j.created_at >= datetime($start) AND j.created_at < datetime($end) AND ($scope IS NULL OR j.request_id=$scope) OPTIONAL MATCH (o:ModelOutput {tenant_id:$tenant,run_id:j.run_id}) OPTIONAL MATCH (t:DraftTask {tenant_id:$tenant,run_id:j.run_id,draft_version:1}) OPTIONAL MATCH (h:ReviewDecision {tenant_id:$tenant,run_id:j.run_id}) WHERE h.action IN ['approve','approve_with_changes'] OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction {tenant_id:$tenant}) RETURN j,collect(DISTINCT o) AS outputs,collect(DISTINCT t) AS tasks,collect(DISTINCT h) AS decisions,collect(DISTINCT c) AS corrections ORDER BY j.created_at,j.id"
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (i:InputRevision {tenant_id:$tenant_id,id:$revision_id,request_id:$request_id}) OPTIONAL MATCH (i)-[:HAS_EVIDENCE]->(e:EvidenceSpan) OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) RETURN i.text AS text,collect(DISTINCT e) AS spans,collect(DISTINCT a) AS attachments'
+____ test_authorized_review_survives_100_newer_other_org_reviews[IT\ud300] _____
+tests/integration/test_qac_regressions.py:109: in test_authorized_review_survives_100_newer_other_org_reviews
+    assert 'v_0' in [row['id'] for row in response.json()['reviews']]
+E   AssertionError: assert 'v_0' in []
+_ test_authorized_review_survives_100_newer_other_org_reviews[\uac80\ud1a0\uc790] _
+tests/integration/test_qac_regressions.py:109: in test_authorized_review_survives_100_newer_other_org_reviews
+    assert 'v_0' in [row['id'] for row in response.json()['reviews']]
+E   AssertionError: assert 'v_0' in []
+____ test_authorized_review_survives_100_newer_other_org_reviews[AI\ud300] _____
+tests/integration/test_qac_regressions.py:109: in test_authorized_review_survives_100_newer_other_org_reviews
+    assert 'v_0' in [row['id'] for row in response.json()['reviews']]
+E   AssertionError: assert 'v_0' in []
+__ test_authorized_review_survives_100_newer_other_org_reviews[\ud604\uc5c5] ___
+tests/integration/test_qac_regressions.py:109: in test_authorized_review_survives_100_newer_other_org_reviews
+    assert 'v_0' in [row['id'] for row in response.json()['reviews']]
+E   AssertionError: assert 'v_0' in []
+_______ test_authorized_review_survives_100_newer_other_org_reviews[id] ________
+tests/integration/test_qac_regressions.py:109: in test_authorized_review_survives_100_newer_other_org_reviews
+    assert 'v_0' in [row['id'] for row in response.json()['reviews']]
+E   AssertionError: assert 'v_0' in []
+_________ test_invalid_nested_review_changes_preserve_review[changes0] _________
+tests/integration/test_qac_regressions.py:133: in test_invalid_nested_review_changes_preserve_review
+    assert response.status_code == 422, response.text
+E   AssertionError: Internal Server Error
+E   assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (o:ModelOutput {tenant_id:$tenant,run_id:$run}) OPTIONAL MATCH (o)-[c:CITES]->(e:EvidenceSpan {tenant_id:$tenant}) RETURN o,collect(CASE WHEN e IS NULL THEN null ELSE {id:e.id,location_json:e.location_json,probability:c.prob,source_text:e.source_text} END) AS evidence'
+_________ test_invalid_nested_review_changes_preserve_review[changes1] _________
+tests/integration/test_qac_regressions.py:133: in test_invalid_nested_review_changes_preserve_review
+    assert response.status_code == 422, response.text
+E   AssertionError: Internal Server Error
+E   assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (o:ModelOutput {tenant_id:$tenant,run_id:$run}) OPTIONAL MATCH (o)-[c:CITES]->(e:EvidenceSpan {tenant_id:$tenant}) RETURN o,collect(CASE WHEN e IS NULL THEN null ELSE {id:e.id,location_json:e.location_json,probability:c.prob,source_text:e.source_text} END) AS evidence'
+_________ test_invalid_nested_review_changes_preserve_review[changes5] _________
+tests/integration/test_qac_regressions.py:133: in test_invalid_nested_review_changes_preserve_review
+    assert response.status_code == 422, response.text
+E   AssertionError: Internal Server Error
+E   assert 500 == 422
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (o:ModelOutput {tenant_id:$tenant,run_id:$run}) OPTIONAL MATCH (o)-[c:CITES]->(e:EvidenceSpan {tenant_id:$tenant}) RETURN o,collect(CASE WHEN e IS NULL THEN null ELSE {id:e.id,location_json:e.location_json,probability:c.prob,source_text:e.source_text} END) AS evidence'
+=========================== short test summary info ============================
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_errors_do_not_echo_input[/api/auth/login-body0]
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_errors_do_not_echo_input[/api/policy/validate-body1]
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_errors_do_not_echo_input[/api/requests/missing/reanalyze-body2]
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_errors_do_not_echo_input[/api/reviews/missing/decision-body3]
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_errors_do_not_echo_input[/api/tasks/missing/transition-body4]
+FAILED tests/unit/test_qac_api_boundaries.py::test_validation_context_does_not_echo_input
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_validation_is_4xx[1e1000]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_validation_is_4xx[NaN]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_validation_is_4xx[Infinity]
+FAILED tests/unit/test_qac_api_boundaries.py::test_nonfinite_validation_is_4xx[-Infinity]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/policy/versions/{}-9223372036854775808]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/policy/versions/{}--9223372036854775809]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/policy/versions/{}-1208925819614629174706176]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}-9223372036854775808]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}--9223372036854775809]
+FAILED tests/unit/test_qac_api_boundaries.py::test_db_integer_range_rejected_before_storage[/api/graph/judgment?config_version={}-1208925819614629174706176]
+FAILED tests/unit/test_qac_external_boundary.py::test_direct_transport_masks_state_and_question_text
+FAILED tests/integration/test_qac_regressions.py::test_every_model_payload_masks_five_categories[shadow]
+FAILED tests/integration/test_qac_regressions.py::test_authorized_review_survives_100_newer_other_org_reviews[IT\ud300]
+FAILED tests/integration/test_qac_regressions.py::test_authorized_review_survives_100_newer_other_org_reviews[\uac80\ud1a0\uc790]
+FAILED tests/integration/test_qac_regressions.py::test_authorized_review_survives_100_newer_other_org_reviews[AI\ud300]
+FAILED tests/integration/test_qac_regressions.py::test_authorized_review_survives_100_newer_other_org_reviews[\ud604\uc5c5]
+FAILED tests/integration/test_qac_regressions.py::test_authorized_review_survives_100_newer_other_org_reviews[id]
+FAILED tests/integration/test_qac_regressions.py::test_invalid_nested_review_changes_preserve_review[changes0]
+FAILED tests/integration/test_qac_regressions.py::test_invalid_nested_review_changes_preserve_review[changes1]
+FAILED tests/integration/test_qac_regressions.py::test_invalid_nested_review_changes_preserve_review[changes5]
+26 failed, 4 passed in 7.17s

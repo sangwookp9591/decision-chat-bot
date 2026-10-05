@@ -41,3 +41,7 @@ artifacts/review/qa-full/*/runtime/
 artifacts/review/qa-full/**/trace.zip
 artifacts/review/qa-full/**/data/
 artifacts/review/qa-full/**/*.webm
+
+# Final regression raw browser/runtime evidence stays local.
+artifacts/review/final-regression/**
+!artifacts/review/final-regression/*.md

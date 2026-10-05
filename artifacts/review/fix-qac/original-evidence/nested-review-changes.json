@@ -1,0 +1,43 @@
+[
+  {
+    "changes": {
+      "classifications": [
+        "qa-invalid"
+      ]
+    },
+    "status": 422,
+    "body": "{\"detail\":[{\"loc\":[\"body\",\"changes\",\"classifications\"],\"type\":\"model_attributes_type\",\"msg\":\"Input should be a valid dictionary or object to extract fields from\"}]}"
+  },
+  {
+    "changes": {
+      "draft_tasks": [
+        "qa-invalid"
+      ]
+    },
+    "status": 422,
+    "body": "{\"detail\":[{\"loc\":[\"body\",\"changes\",\"draft_tasks\",0],\"type\":\"model_attributes_type\",\"msg\":\"Input should be a valid dictionary or object to extract fields from\"}]}"
+  },
+  {
+    "changes": {
+      "draft_tasks": [
+        {
+          "draft_task_id": "draft-1",
+          "lead_org": [
+            "qa-invalid"
+          ]
+        }
+      ]
+    },
+    "status": 422,
+    "body": "{\"detail\":[{\"loc\":[\"body\",\"changes\",\"draft_tasks\",0,\"lead_org\"],\"type\":\"string_type\",\"msg\":\"Input should be a valid string\"}]}"
+  },
+  {
+    "changes": {
+      "classifications": {
+        "ai_need": "qa-invalid"
+      }
+    },
+    "status": 422,
+    "body": "{\"detail\":[{\"loc\":[\"body\",\"changes\",\"classifications\",\"ai_need\"],\"type\":\"literal_error\",\"msg\":\"Input should be '필요', '불필요', '혼합' or '정보 부족'\"}]}"
+  }
+]

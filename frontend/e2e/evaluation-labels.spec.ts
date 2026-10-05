@@ -10,6 +10,7 @@ async function login(api: import('@playwright/test').APIRequestContext, role: st
 }
 
 test('labeler confirms three, defers one, and sees a reviewer disagreement', async ({ page }) => {
+  test.setTimeout(60_000); // Four persisted decisions plus progress/API checks on both browser engines.
   await login(page.request, 'labeler');
   const reviewer = await request.newContext();
   const reviewerCsrf = await login(reviewer, 'reviewer');
