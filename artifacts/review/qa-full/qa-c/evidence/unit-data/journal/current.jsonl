@@ -1,0 +1,4 @@
+{"event_id":"evt_78d78f902d67437f8a7dc4188e3c053f","attempt_id":"att_9ae5b6ea67514d109ec53dadc7cea781","kind":"api_boundary_received","ts":"2026-10-05T09:29:44.649771+00:00","validity":"undetermined"}
+{"event_id":"evt_c1d8c97a47374f5ba0523af6ddda7e84","attempt_id":"att_9ae5b6ea67514d109ec53dadc7cea781","kind":"api_boundary_completed","ts":"2026-10-05T09:29:45.013986+00:00","status_code":200,"error_class":null,"duration_ms":366,"validity":"undetermined"}
+{"event_id":"evt_9aaa217b8d6b45b0bc6fe0a236ca5bc9","attempt_id":"att_07d13d7f75564827ae19c2436da47ca5","kind":"api_boundary_received","ts":"2026-10-05T09:29:45.123155+00:00","validity":"undetermined"}
+{"event_id":"evt_bf847f209c0f45baac63c6b8475d40d9","attempt_id":"att_07d13d7f75564827ae19c2436da47ca5","kind":"api_boundary_completed","ts":"2026-10-05T09:29:45.876195+00:00","status_code":503,"error_class":null,"duration_ms":753,"validity":"undetermined"}

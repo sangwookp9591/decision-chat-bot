@@ -1,0 +1,152 @@
+F..F.F.                                                                  [100%]
+=================================== FAILURES ===================================
+_________________________ test_role_matrix[requester] __________________________
+
+role = 'requester'
+
+    @pytest.mark.parametrize('role', ROLES)
+    def test_role_matrix(role):
+        with client(role) as api:
+            for path, allowed in READS.items():
+                response = api.get(path)
+>               assert response.status_code == (200 if role in allowed else 403), (role, path, response.status_code, response.text[:250])
+E               AssertionError: ('requester', '/api/requests', 500, 'Internal Server Error')
+E               assert 500 == 200
+E                +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+artifacts/review/qa-full/qa-b/repro/test_access.py:28: AssertionError
+__________________________ test_role_matrix[operator] __________________________
+
+    @contextlib.contextmanager
+    def map_httpcore_exceptions() -> typing.Iterator[None]:
+        global HTTPCORE_EXC_MAP
+        if len(HTTPCORE_EXC_MAP) == 0:
+            HTTPCORE_EXC_MAP = _load_httpcore_exceptions()
+        try:
+>           yield
+
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:250: in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py:256: in handle_request
+    raise exc from None
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/connection_pool.py:236: in handle_request
+    response = connection.handle_request(
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/connection.py:103: in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/http11.py:136: in handle_request
+    raise exc
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/http11.py:106: in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/http11.py:177: in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_sync/http11.py:217: in _receive_event
+    data = self._network_stream.read(
+backend/.venv/lib/python3.14/site-packages/httpcore/_backends/sync.py:126: in read
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+map = {<class 'TimeoutError'>: <class 'httpcore.ReadTimeout'>, <class 'OSError'>: <class 'httpcore.ReadError'>}
+
+    @contextlib.contextmanager
+    def map_exceptions(map: ExceptionMapping) -> typing.Iterator[None]:
+        try:
+            yield
+        except Exception as exc:  # noqa: PIE786
+            for from_exc, to_exc in map.items():
+                if isinstance(exc, from_exc):
+>                   raise to_exc(exc) from exc
+E                   httpcore.ReadTimeout: timed out
+
+backend/.venv/lib/python3.14/site-packages/httpcore/_exceptions.py:14: ReadTimeout
+
+The above exception was the direct cause of the following exception:
+
+role = 'operator'
+
+    @pytest.mark.parametrize('role', ROLES)
+    def test_role_matrix(role):
+        with client(role) as api:
+            for path, allowed in READS.items():
+>               response = api.get(path)
+                           ^^^^^^^^^^^^^
+
+artifacts/review/qa-full/qa-b/repro/test_access.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:249: in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    @contextlib.contextmanager
+    def map_httpcore_exceptions() -> typing.Iterator[None]:
+        global HTTPCORE_EXC_MAP
+        if len(HTTPCORE_EXC_MAP) == 0:
+            HTTPCORE_EXC_MAP = _load_httpcore_exceptions()
+        try:
+            yield
+        except Exception as exc:
+            mapped_exc = None
+    
+            for from_exc, to_exc in HTTPCORE_EXC_MAP.items():
+                if not isinstance(exc, from_exc):
+                    continue
+                # We want to map to the most specific exception we can find.
+                # Eg if `exc` is an `httpcore.ReadTimeout`, we want to map to
+                # `httpx.ReadTimeout`, not just `httpx.TimeoutException`.
+                if mapped_exc is None or issubclass(to_exc, mapped_exc):
+                    mapped_exc = to_exc
+    
+            if mapped_exc is None:  # pragma: no cover
+                raise
+    
+            message = str(exc)
+>           raise mapped_exc(message) from exc
+E           httpx.ReadTimeout: timed out
+
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:118: ReadTimeout
+_________________________ test_role_matrix[rule_admin] _________________________
+
+role = 'rule_admin'
+
+    @pytest.mark.parametrize('role', ROLES)
+    def test_role_matrix(role):
+        with client(role) as api:
+            for path, allowed in READS.items():
+                response = api.get(path)
+>               assert response.status_code == (200 if role in allowed else 403), (role, path, response.status_code, response.text[:250])
+E               AssertionError: ('rule_admin', '/api/requests', 500, 'Internal Server Error')
+E               assert 500 == 200
+E                +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+artifacts/review/qa-full/qa-b/repro/test_access.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-b/repro/test_access.py::test_role_matrix[requester]
+FAILED artifacts/review/qa-full/qa-b/repro/test_access.py::test_role_matrix[operator]
+FAILED artifacts/review/qa-full/qa-b/repro/test_access.py::test_role_matrix[rule_admin]
+3 failed, 4 passed in 302.20s (0:05:02)

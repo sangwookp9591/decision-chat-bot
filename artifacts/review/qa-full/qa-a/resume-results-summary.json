@@ -1,0 +1,81 @@
+{
+  "20261005T194718": {
+    "stats": {
+      "startTime": "2026-10-05T10:47:30.567Z",
+      "duration": 34380.724,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tenant": "t-qa-a-1005194718",
+    "telemetry": {
+      "http": 1,
+      "console": 1
+    }
+  },
+  "20261005T194815": {
+    "stats": {
+      "startTime": "2026-10-05T10:48:24.927Z",
+      "duration": 8912.771999999999,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tenant": "t-qa-a-1005194815",
+    "telemetry": {
+      "http": 3,
+      "console": 3
+    }
+  },
+  "20261005T194843": {
+    "stats": {
+      "startTime": "2026-10-05T10:48:51.773Z",
+      "duration": 360611.18200000003,
+      "expected": 56,
+      "skipped": 0,
+      "unexpected": 5,
+      "flaky": 0
+    },
+    "tenant": "t-qa-a-1005194843",
+    "telemetry": {
+      "http": 28,
+      "console": 28,
+      "requestfailed": 1
+    }
+  },
+  "20261005T195514": {
+    "stats": {
+      "startTime": "2026-10-05T10:55:28.836Z",
+      "duration": 162090.241,
+      "expected": 9,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tenant": "t-qa-a-1005195514",
+    "telemetry": {
+      "http": 7,
+      "console": 7,
+      "requestfailed": 2,
+      "pageerror": 2
+    }
+  },
+  "20261005T195820": {
+    "stats": {
+      "startTime": "2026-10-05T10:58:29.857Z",
+      "duration": 108069.257,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tenant": "t-qa-a-1005195820",
+    "telemetry": {
+      "http": 2,
+      "console": 2,
+      "requestfailed": 1
+    }
+  }
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "changes": {
+      "classifications": [
+        "qa-invalid"
+      ]
+    },
+    "status": 500,
+    "body": "Internal Server Error"
+  },
+  {
+    "changes": {
+      "draft_tasks": [
+        "qa-invalid"
+      ]
+    },
+    "status": 500,
+    "body": "Internal Server Error"
+  },
+  {
+    "changes": {
+      "draft_tasks": [
+        {
+          "draft_task_id": "draft-1",
+          "lead_org": [
+            "qa-invalid"
+          ]
+        }
+      ]
+    },
+    "status": 422,
+    "body": "{\"detail\":{\"message\":\"업무 초안의 필드를 확인해 주세요\",\"details\":{\"field_errors\":[{\"draft_task_id\":\"draft-1\",\"field\":\"lead_org\",\"message\":\"이 tenant에 등록된 조직을 선택해 주세요.\"}]}}}"
+  },
+  {
+    "changes": {
+      "classifications": {
+        "ai_need": "qa-invalid"
+      }
+    },
+    "status": 422,
+    "body": "{\"detail\":{\"message\":\"허용되지 않은 분류값\"}}"
+  }
+]

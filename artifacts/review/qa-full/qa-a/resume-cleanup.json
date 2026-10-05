@@ -1,0 +1,11 @@
+{
+  "owned_services": {
+    "31351": "exited",
+    "31352": "exited",
+    "31353": "exited",
+    "31354": "exited"
+  },
+  "listeners": "",
+  "lsof_exit": 1,
+  "actual_jev_calls": 0
+}

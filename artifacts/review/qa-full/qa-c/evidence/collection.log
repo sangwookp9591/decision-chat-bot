@@ -1,0 +1,486 @@
+tests/integration/test_api_preview.py::test_request_preview_masking_and_owner_permissions
+tests/integration/test_api_preview.py::test_legacy_preview_backfill_runs_once
+tests/integration/test_auth.py::test_login_me_csrf_logout_and_expiry
+tests/integration/test_auth.py::test_scope_and_operator_source_policy
+tests/integration/test_auth.py::test_parallel_first_failed_logins_create_one_counter_and_count_every_attempt
+tests/integration/test_authz_matrix.py::test_review_requires_assigned_org_and_reviewer_role[reviewer-tenant-ai-True]
+tests/integration/test_authz_matrix.py::test_review_requires_assigned_org_and_reviewer_role[reviewer-tenant-it-False]
+tests/integration/test_authz_matrix.py::test_review_requires_assigned_org_and_reviewer_role[team_member-tenant-ai-False]
+tests/integration/test_authz_matrix.py::test_review_requires_assigned_org_and_reviewer_role[team_member-tenant-it-False]
+tests/integration/test_authz_matrix.py::test_review_fallback_has_stable_org
+tests/integration/test_authz_matrix.py::test_review_decision_denies_wrong_org_or_role[reviewer-it]
+tests/integration/test_authz_matrix.py::test_review_decision_denies_wrong_org_or_role[team_member-ai]
+tests/integration/test_authz_matrix.py::test_request_detail_redacts_revision_text
+tests/integration/test_authz_matrix.py::test_request_access_matrix[requester-tenant-ai-False-200]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[reviewer-tenant-ai-False-200]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[reviewer-tenant-it-False-404]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[team_member-tenant-ai-False-200]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[operator-tenant-it-False-200]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[policy_editor-tenant-it-False-404]
+tests/integration/test_authz_matrix.py::test_request_access_matrix[rule_admin-tenant-it-False-404]
+tests/integration/test_authz_matrix.py::test_source_redaction_nested_payload
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_request-requester-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[read_source-requester-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[read_source-reviewer-ai-True-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[review-reviewer-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[review-reviewer-it-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[review-team_member-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_task-team_member-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_task-team_member-it-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[transition_task-team_member-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[transition_task-reviewer-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_trace-operator-it-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_graph-reviewer-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[view_graph-requester-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[policy_edit-policy_editor-ai-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[policy_edit-operator-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[learn_admin-rule_admin-it-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[learn_admin-reviewer-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[learn_admin-team_member-ai-False-403]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[monitoring_read-operator-it-False-200]
+tests/integration/test_authz_matrix.py::test_action_status_matrix[monitoring_read-rule_admin-ai-False-403]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-requester-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_match-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-reviewer_other-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-team_member-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_no_source-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-operator_source-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-policy_editor-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[same-tenant-rule_admin-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-requester-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_match-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-reviewer_other-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-team_member-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_no_source-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-operator_source-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-policy_editor-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/requests/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/requests/{id}/evidence/{span}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/requests/{id}/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-POST /api/reviews/{id}/decision]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/tasks/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-POST /api/tasks/{id}/transition]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/steps/{id}]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/graph/judgment]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-POST /api/policy/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-POST /api/learning/rules/{id}/versions/{version}/publish]
+tests/integration/test_authz_matrix.py::test_endpoint_authorization_contract[other-tenant-rule_admin-GET /api/monitoring/summary]
+tests/integration/test_authz_matrix.py::test_list_cypher_matches_single_request_policy[requester]
+tests/integration/test_authz_matrix.py::test_list_cypher_matches_single_request_policy[operator]
+tests/integration/test_authz_matrix.py::test_unknown_account_uses_same_login_counter_shape
+tests/integration/test_authz_matrix.py::test_login_limit_blocks_correct_password_until_window_expires
+tests/integration/test_authz_matrix.py::test_sse_rechecks_revoked_session
+tests/integration/test_authz_matrix.py::test_sse_reconnect_header_overrides_url_cursor_without_duplicates
+tests/integration/test_cancel_http.py::test_cancel_requires_session_and_csrf
+tests/integration/test_cancel_http.py::test_cancel_http_maps_role_and_tenant_denials
+tests/integration/test_cancel_run.py::test_pending_cancel_is_immediate_idempotent_and_audited
+tests/integration/test_cancel_run.py::test_running_cancel_fences_late_result
+tests/integration/test_cancel_run.py::test_cancel_authorization_and_tenant_isolation
+tests/integration/test_cancel_run.py::test_completed_cancel_is_idempotent_and_completion_race_converges
+tests/integration/test_candidates.py::test_three_support_cases_generate_idempotent_candidate_without_config_write
+tests/integration/test_candidates.py::test_two_support_cases_are_marked_insufficient
+tests/integration/test_candidates.py::test_unchanged_approval_in_matching_scope_is_counterexample
+tests/integration/test_candidates_human_proposal.py::test_human_proposal_with_and_without_support_and_valid_rule_id
+tests/integration/test_db_foundation.py::test_schema_twice_and_assignment_contention
+tests/integration/test_db_foundation.py::test_idempotency_and_event_sequence
+tests/integration/test_db_foundation.py::test_expired_job_cannot_revive
+tests/integration/test_db_foundation.py::test_old_run_cannot_change_pointer
+tests/integration/test_db_tx_timeout.py::test_claim_loop_retries_terminated_lock_transaction
+tests/integration/test_db_tx_timeout.py::test_write_timeout_ends_lock_wait_without_a_false_commit
+tests/integration/test_db_tx_timeout.py::test_expired_running_job_is_found_within_poll_ceiling
+tests/integration/test_effects_api.py::test_effects_requires_rule_admin
+tests/integration/test_effects_api.py::test_effects_known_windows_and_application_groups
+tests/integration/test_evaluation_api.py::test_label_edit_defer_resume_disagreement_and_consensus
+tests/integration/test_evidence_creation_metadata.py::test_ingested_evidence_creation_time_and_creator_reach_graph_detail
+tests/integration/test_ingest_api.py::test_text_ingest_persists_revision_run_and_job
+tests/integration/test_ingest_api.py::test_http_rejects_attachment_count_and_total_bytes
+tests/integration/test_ingest_api.py::test_same_idempotency_key_returns_same_request
+tests/integration/test_ingest_api.py::test_rejected_file_waits_until_excluded_revision
+tests/integration/test_ingest_api.py::test_revision_conflict_is_rejected
+tests/integration/test_ingest_api.py::test_http_csrf_role_tenant_scope_and_source_gate
+tests/integration/test_ingest_api.py::test_http_idempotency_payload_conflict_and_stale_revision
+tests/integration/test_ingest_api.py::test_reanalyze_creates_idempotent_run_and_preserves_assignment_counts
+tests/integration/test_ingest_api.py::test_http_multipart_file_decision_creates_supported_revision_and_job
+tests/integration/test_ingest_api.py::test_http_db_failure_returns_503_and_journals_attempt
+tests/integration/test_ingest_api.py::test_slo_first_received_and_supported_revision_are_immutable_after_revision
+tests/integration/test_judgment_graph.py::test_rule_graph_matches_stored_nodes_and_edges_exactly
+tests/integration/test_judgment_graph.py::test_request_graph_has_isolated_nodes_and_no_synthesized_edges
+tests/integration/test_judgment_graph.py::test_path_both_directions_with_depth_and_limits
+tests/integration/test_judgment_graph.py::test_node_detail_counts_and_source_link_permission
+tests/integration/test_judgment_graph.py::test_authorization_and_tenant_boundaries
+tests/integration/test_judgment_service.py::test_mock_worker_persists_information_gap_and_review
+tests/integration/test_judgment_service.py::test_jev_failure_marks_run_and_request_failed[JevAuthError]
+tests/integration/test_judgment_service.py::test_jev_failure_marks_run_and_request_failed[JevSchemaError]
+tests/integration/test_judgment_service.py::test_jev_failure_marks_run_and_request_failed[JevRateLimited]
+tests/integration/test_judgment_service.py::test_fixed_policy_survives_new_active_version
+tests/integration/test_judgment_service.py::test_reanalysis_preserves_previous_judgment
+tests/integration/test_judgment_service.py::test_judgment_api_scopes_runs_and_omits_source_without_permission
+tests/integration/test_judgment_service.py::test_deadline_before_handler_marks_active_request_failed
+tests/integration/test_judgment_service.py::test_expired_old_run_does_not_change_active_request
+tests/integration/test_judgment_service.py::test_real_span_citation_is_persisted_with_probability
+tests/integration/test_judgment_service.py::test_chat_text_is_persisted_and_cited_at_judgment_location
+tests/integration/test_judgment_service.py::test_external_state_masked_but_saved_citation_uses_original_span
+tests/integration/test_learning_read_contract.py::test_rule_effect_comparisons_expose_human_labeled_sample_counts
+tests/integration/test_learning_read_contract.py::test_rule_read_allowed_for_scoped_reviewer_and_operator[reviewer]
+tests/integration/test_learning_read_contract.py::test_rule_read_allowed_for_scoped_reviewer_and_operator[operator]
+tests/integration/test_learning_read_contract.py::test_rule_read_scope_and_write_matrix[reviewer-IT\ud300-200]
+tests/integration/test_learning_read_contract.py::test_rule_read_scope_and_write_matrix[reviewer-\ud604\uc5c5-404]
+tests/integration/test_learning_read_contract.py::test_rule_read_scope_and_write_matrix[operator-\ud604\uc5c5-200]
+tests/integration/test_learning_read_contract.py::test_rule_read_scope_and_write_matrix[rule_admin-\ud604\uc5c5-200]
+tests/integration/test_learning_read_contract.py::test_rule_read_scope_and_write_matrix[requester-IT\ud300-403]
+tests/integration/test_learning_read_contract.py::test_labels_count_approved_runs_once_and_exclude_pending_rejected_and_shadow
+tests/integration/test_monitoring_collector.py::test_monitoring_rows_share_one_snapshot_for_concurrent_windows
+tests/integration/test_monitoring_collector.py::test_monitoring_snapshot_expires_and_stays_tenant_scoped
+tests/integration/test_monitoring_collector.py::test_monitoring_snapshot_keeps_windowed_legacy_sse_attribution
+tests/integration/test_monitoring_collector.py::test_metrics_store_has_tenant_time_index
+tests/integration/test_monitoring_collector.py::test_summary_reports_supplement_answer_wait_separately_from_first_judgment
+tests/integration/test_monitoring_collector.py::test_collector_deduplicates_and_keeps_db_failure_in_availability
+tests/integration/test_monitoring_collector.py::test_watchdog_alerts_without_journal_or_neo4j
+tests/integration/test_monitoring_collector.py::test_error_budget_is_unverified_before_30_days
+tests/integration/test_monitoring_collector.py::test_first_eligible_after_file_exclusion_and_retry_keep_one_sample
+tests/integration/test_monitoring_collector.py::test_monitoring_api_requires_operator
+tests/integration/test_monitoring_collector.py::test_actual_journal_write_failure_reaches_watchdog
+tests/integration/test_monitoring_collector.py::test_collector_waits_for_complete_line
+tests/integration/test_monitoring_collector.py::test_watchdog_reports_corrupt_metrics_store
+tests/integration/test_monitoring_collector.py::test_collection_gap_is_exposed
+tests/integration/test_monitoring_collector.py::test_error_budget_uses_distinct_availability_and_judgment_denominators
+tests/integration/test_monitoring_collector.py::test_watchdog_alerts_fast_burn_and_repeated_failures
+tests/integration/test_monitoring_collector.py::test_summary_filters_org_and_current_status
+tests/integration/test_monitoring_collector.py::test_request_org_scope_is_persisted_in_intake_transaction
+tests/integration/test_observe_api.py::test_observe_reads_saved_steps_reviews_and_real_topology
+tests/integration/test_policy_versions.py::test_learning_config_defaults_and_bounds
+tests/integration/test_policy_versions.py::test_publish_diff_audit_snapshot_and_rollback
+tests/integration/test_policy_versions.py::test_reject_unsafe_publish_and_rollback
+tests/integration/test_policy_versions.py::test_safe_auto_assign_policy_can_be_published_and_reverted
+tests/integration/test_policy_versions.py::test_concurrent_publish_expected_version_conflict
+tests/integration/test_policy_versions.py::test_publish_without_policy_editor_is_forbidden
+tests/integration/test_progressive_judgment.py::test_partial_result_precedes_evidence_and_final_commit
+tests/integration/test_progressive_judgment.py::test_submit_emits_one_received_event_for_idempotent_request
+tests/integration/test_progressive_judgment.py::test_worker_wakes_from_idle_backoff_without_redis
+tests/integration/test_readiness.py::test_ready_with_running_neo4j
+tests/integration/test_realtime_distribution.py::test_progress_payload_rejects_unrecognized_nested_values
+tests/integration/test_realtime_distribution.py::test_progress_event_safe_fields_obey_request_scope
+tests/integration/test_realtime_distribution.py::test_two_api_processes_deliver_committed_event
+tests/integration/test_realtime_distribution.py::test_committed_event_wakes_another_subscriber
+tests/integration/test_realtime_distribution.py::test_publish_failure_does_not_undo_committed_event
+tests/integration/test_realtime_distribution.py::test_job_channel_and_global_connection_limit
+tests/integration/test_realtime_distribution.py::test_tenant_hub_replays_missed_notification
+tests/integration/test_realtime_distribution.py::test_unavailable_redis_uses_local_connection_slots
+tests/integration/test_realtime_distribution.py::test_redis_outage_fallback_and_recovery
+tests/integration/test_reanalysis_boundary.py::test_assigned_reanalysis_is_comparison_only
+tests/integration/test_reanalysis_boundary.py::test_assigned_request_keeps_status_after_supplement_revision
+tests/integration/test_reanalysis_boundary.py::test_pending_review_superseded_and_old_approval_conflicts
+tests/integration/test_reanalysis_boundary.py::test_repeated_and_concurrent_reanalysis_keeps_one_pending_review
+tests/integration/test_retention.py::test_cleanup_preserves_work_records_and_updates_event_cursor
+tests/integration/test_retention.py::test_cleanup_uses_configured_retention_and_rotated_journal_and_metrics
+tests/integration/test_retention.py::test_sse_requires_snapshot_for_cursor_before_retained_from_seq
+tests/integration/test_review_assignment.py::test_assignment_uses_final_approved_feasibility[\uc815\ubcf4 \ubd80\uc871-\uac00\ub2a5-False]
+tests/integration/test_review_assignment.py::test_assignment_uses_final_approved_feasibility[\uac00\ub2a5-\uc870\uac74\ubd80 \uac00\ub2a5-True]
+tests/integration/test_review_assignment.py::test_assignment_uses_final_approved_feasibility[\uc870\uac74\ubd80 \uac00\ub2a5-None-True]
+tests/integration/test_review_assignment.py::test_predecessor_still_blocks_approved_possible_task
+tests/integration/test_review_assignment.py::test_four_decisions_history_audit_and_assignment[approve-approved-\ubc30\uc815 \uc644\ub8cc]
+tests/integration/test_review_assignment.py::test_four_decisions_history_audit_and_assignment[approve_with_changes-approved-\ubc30\uc815 \uc644\ub8cc]
+tests/integration/test_review_assignment.py::test_four_decisions_history_audit_and_assignment[reject-rejected-\ubc18\ub824]
+tests/integration/test_review_assignment.py::test_four_decisions_history_audit_and_assignment[request_info-info_requested-\ubcf4\uc644 \ud544\uc694]
+tests/integration/test_review_assignment.py::test_correction_preserves_original_and_relationships
+tests/integration/test_review_assignment.py::test_stale_version_and_revision_rejected_with_latest
+tests/integration/test_review_assignment.py::test_concurrent_approvals_one_assignment_and_idempotency
+tests/integration/test_review_assignment.py::test_permission_tenant_and_cycle
+tests/integration/test_review_assignment.py::test_api_scope_and_detail
+tests/integration/test_review_assignment.py::test_decision_api_requires_csrf_and_reviewer_session
+tests/integration/test_review_assignment.py::test_auto_path_rechecks_mandatory_review_and_infeasibility
+tests/integration/test_review_assignment.py::test_auto_path_assigns_only_after_full_recheck
+tests/integration/test_review_assignment.py::test_reanalysis_keeps_assigned_tasks_unchanged
+tests/integration/test_review_assignment.py::test_judgment_api_shows_only_current_draft_version[changes0-False]
+tests/integration/test_review_assignment.py::test_judgment_api_shows_only_current_draft_version[changes1-True]
+tests/integration/test_review_assignment.py::test_repair_undetermined_draft_before_validation
+tests/integration/test_review_assignment.py::test_unresolved_draft_returns_field_errors_without_writes
+tests/integration/test_review_display.py::test_review_list_carries_title_and_gates_preview
+tests/integration/test_review_display.py::test_review_detail_keeps_title_without_source_permission
+tests/integration/test_review_display.py::test_review_detail_includes_original_for_source_reader
+tests/integration/test_rule_invariants.py::test_target_action_allowlist_and_config_code
+tests/integration/test_rule_invariants.py::test_legacy_unsafe_rule_is_recorded_and_not_applied
+tests/integration/test_rule_invariants.py::test_legacy_rule_in_active_config_is_blocked
+tests/integration/test_rule_invariants.py::test_insufficient_candidate_requires_explicit_ack_at_both_steps
+tests/integration/test_rules_integration.py::test_role_matrix_and_state_transitions
+tests/integration/test_rules_integration.py::test_safety_validation_and_conflict
+tests/integration/test_rules_integration.py::test_publication_application_stop_revert_and_restart
+tests/integration/test_rules_integration.py::test_out_of_scope_recorded
+tests/integration/test_rules_integration.py::test_learning_ids_are_tenant_scoped_and_schema_idempotent
+tests/integration/test_rules_integration.py::test_context_guidance_is_data_and_scope_bound
+tests/integration/test_rules_integration.py::test_unsafe_rule_rejected_at_create_publish_and_revert
+tests/integration/test_schema_indexes.py::test_schema_indexes_are_idempotent_and_seekable
+tests/integration/test_schema_indexes.py::test_worker_claims_one_eligible_job_and_increments_generation
+tests/integration/test_schema_indexes.py::test_parallel_workers_claim_one_job_once
+tests/integration/test_shadow_api.py::test_shadow_stores_validation_without_business_mutation
+tests/integration/test_shadow_api.py::test_human_truth_and_validation_gate
+tests/integration/test_shadow_api.py::test_context_call_limit_records_failure
+tests/integration/test_shadow_api.py::test_protected_snapshot_detects_in_place_changes_and_blocks_validation
+tests/integration/test_source_document.py::test_document_returns_ordered_units_with_text_for_source_reader
+tests/integration/test_source_document.py::test_document_hides_text_without_source_permission_and_other_tenant_404
+tests/integration/test_source_document.py::test_document_requires_view_scope_for_requester_role
+tests/integration/test_source_document.py::test_document_reviewer_matrix
+tests/integration/test_sse_events.py::test_stream_order_resume_scope_and_snapshot
+tests/integration/test_sse_events.py::test_stream_requires_authentication
+tests/integration/test_sse_events.py::test_multiple_connections_share_order_without_leaking_requests
+tests/integration/test_sse_events.py::test_new_events_fan_out_to_waiting_connections
+tests/integration/test_tasks_api.py::test_task_filters_permissions_and_transitions
+tests/integration/test_tasks_api.py::test_task_start_readiness_is_projected_by_server
+tests/integration/test_tenant_tx.py::test_same_node_id_is_scoped_to_transaction_tenant
+tests/integration/test_ux_projections.py::test_flow_nodes_follow_execution_order_with_edges
+tests/integration/test_ux_projections.py::test_flow_predecessor_dag_and_review_node_label
+tests/integration/test_ux_projections.py::test_validation_get_and_list_match_post_dto
+tests/integration/test_worker.py::test_candidate_discovery_respects_worker_tenant_allowlist
+tests/integration/test_worker.py::test_takeover_rejects_old_steps_results_events_and_heartbeat
+tests/integration/test_worker.py::test_old_run_cannot_change_request_pointer
+tests/integration/test_worker.py::test_restart_recovery_and_deadline_journal
+tests/integration/test_worker.py::test_poll_loop_records_non_successful_branch
+tests/integration/test_write_invariants.py::test_product_run_writes_use_one_helper
+tests/integration/test_write_invariants.py::test_unresolved_task_cannot_start
+tests/integration/test_write_invariants.py::test_completed_confirmation_predecessor_releases_feasibility_block
+tests/integration/test_write_invariants.py::test_run_start_pins_config_and_rejects_stale_pointer
+tests/integration/test_write_invariants.py::test_judgment_keeps_evaluated_eligibility
+tests/integration/test_write_invariants.py::test_review_history_does_not_follow_cross_tenant_correction
+tests/live/test_judgment_live.py::test_two_live_request_shapes
+tests/test_health.py::test_health
+tests/test_readiness.py::test_ready_returns_503_when_database_is_unavailable
+tests/unit/test_architecture_contracts.py::test_api_modules_do_not_import_database_access
+tests/unit/test_architecture_contracts.py::test_auth_router_uses_public_auth_boundary
+tests/unit/test_architecture_contracts.py::test_modules_do_not_import_other_modules_private_functions
+tests/unit/test_architecture_contracts.py::test_rule_validation_is_shared_domain_logic
+tests/unit/test_architecture_contracts.py::test_policy_mask_categories_are_shared_domain_data
+tests/unit/test_architecture_contracts.py::test_review_does_not_depend_on_judgment_package
+tests/unit/test_architecture_contracts.py::test_domain_run_compatibility_module_has_no_policy_logic
+tests/unit/test_architecture_contracts.py::test_database_layer_does_not_import_policy_package
+tests/unit/test_architecture_contracts.py::test_ingest_does_not_import_worker_runtime
+tests/unit/test_architecture_contracts.py::test_auth_policy_uses_shared_principal_type
+tests/unit/test_architecture_contracts.py::test_runtime_modules_have_no_local_jevtriage_imports
+tests/unit/test_architecture_contracts.py::test_feature_modules_use_other_features_public_services
+tests/unit/test_architecture_contracts.py::test_journal_batcher_does_not_import_writer
+tests/unit/test_architecture_contracts.py::test_evaluation_router_service_store_boundary
+tests/unit/test_domain_journal.py::test_transitions
+tests/unit/test_domain_journal.py::test_multiprocess_journal_and_forbidden_fields
+tests/unit/test_effect_labels.py::test_effect_requires_human_labels_even_with_many_runs
+tests/unit/test_eligibility_t09.py::test_each_choice_threshold_and_infeasible
+tests/unit/test_eligibility_t09.py::test_risk_and_noul_boundaries
+tests/unit/test_eligibility_t09.py::test_missing_policy_disallows_auto_assignment
+tests/unit/test_eligibility_t09.py::test_policy_band_validation_and_lead_org_default
+tests/unit/test_eval_metrics.py::test_classification_macro_f1_and_urgency_recall
+tests/unit/test_eval_metrics.py::test_team_set_mean_f1_review_rates_and_confidence_accuracy
+tests/unit/test_evaluation_labels.py::test_eval_label_action_is_limited_to_labelers_and_reviewers
+tests/unit/test_evaluation_labels.py::test_disagreement_requires_consensus
+tests/unit/test_evaluation_labels.py::test_final_candidate_hides_proposed_prediction_until_confirmed
+tests/unit/test_evaluation_labels.py::test_final_candidate_hides_all_prediction_fields
+tests/unit/test_evaluation_labels.py::test_progress_counts_unique_confirmed_samples_and_deferred_separately
+tests/unit/test_evaluation_labels.py::test_confirmed_export_row_includes_consensus_metadata
+tests/unit/test_evaluation_labels.py::test_export_ignores_prior_confirmation_after_latest_defer
+tests/unit/test_journal_group_commit.py::test_group_commit_batches_fsync_and_flushes
+tests/unit/test_journal_group_commit.py::test_full_queue_falls_back_to_caller
+tests/unit/test_journal_group_commit.py::test_background_failure_increments_counter_and_signals
+tests/unit/test_journal_group_commit.py::test_close_flushes_pending_records
+tests/unit/test_journal_group_commit.py::test_business_outcome_is_durable_when_append_returns
+tests/unit/test_journal_group_commit.py::test_business_outcome_reports_write_failure_before_return
+tests/unit/test_journal_group_commit.py::test_business_outcome_waits_for_fsync
+tests/unit/test_judgment_pipeline.py::test_mock_pipeline_marks_mock_and_no_evidence
+tests/unit/test_judgment_pipeline.py::test_high_confidence_infeasible_never_auto_assigns
+tests/unit/test_judgment_pipeline.py::test_unresolved_risk_forces_review
+tests/unit/test_judgment_pipeline.py::test_schema_rejects_missing_answer
+tests/unit/test_judgment_pipeline.py::test_catalog_cycle_rejected
+tests/unit/test_judgment_pipeline.py::test_document_injection_is_state_data
+tests/unit/test_judgment_pipeline.py::test_api_errors_are_typed_and_auth_not_retried
+tests/unit/test_judgment_pipeline.py::test_qset_v2_choice_criteria_have_descriptions
+tests/unit/test_judgment_pipeline.py::test_risk_confirmed_only_when_all_at_or_below_clear_max[0.0-True]
+tests/unit/test_judgment_pipeline.py::test_risk_confirmed_only_when_all_at_or_below_clear_max[0.2-True]
+tests/unit/test_judgment_pipeline.py::test_risk_confirmed_only_when_all_at_or_below_clear_max[0.21-False]
+tests/unit/test_judgment_pipeline.py::test_risk_confirmed_only_when_all_at_or_below_clear_max[0.4-False]
+tests/unit/test_judgment_pipeline.py::test_risk_confirmed_only_when_all_at_or_below_clear_max[0.9-False]
+tests/unit/test_judgment_pipeline.py::test_open_risk_forces_review_task_and_clear_risk_does_not
+tests/unit/test_judgment_pipeline.py::test_risk_clear_max_is_policy_value
+tests/unit/test_judgment_pipeline.py::test_collaborators_limited_to_involved_teams
+tests/unit/test_judgment_pipeline.py::test_evidence_questions_run_concurrently_and_keep_source_order
+tests/unit/test_learning_serialization.py::test_neo4j_temporal_values_are_iso8601_strings_in_nested_payloads
+tests/unit/test_learning_serialization.py::test_shared_native_and_json_helpers_preserve_native_values_and_handle_bad_json
+tests/unit/test_learning_serialization.py::test_payload_hash_uses_sorted_json_keys
+tests/unit/test_masking.py::test_sensitive_patterns_masked[name@example.com]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[010-1234-5678]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[02-123-4567]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[900101-1234567]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[123-45-67890]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[4111 1111 1111 1111]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[123-456-789012]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[192.168.1.1]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[https://example.com/path?token=abc123secret&ok=1]
+tests/unit/test_masking.py::test_sensitive_patterns_masked[sk_test_REDACTED]
+tests/unit/test_masking.py::test_non_sensitive_values_preserved[2026-10-04]
+tests/unit/test_masking.py::test_non_sensitive_values_preserved[1,234,567\uc6d0]
+tests/unit/test_masking.py::test_non_sensitive_values_preserved[v1.2.3]
+tests/unit/test_masking.py::test_non_sensitive_values_preserved[127.0.0.999]
+tests/unit/test_masking.py::test_same_value_same_token_within_request_and_disabled_policy
+tests/unit/test_masking.py::test_policy_defaults_masking_and_rejects_unknown_category
+tests/unit/test_masking.py::test_split_email_fragment_and_generic_long_token_are_masked
+tests/unit/test_no_direct_driver.py::test_no_direct_driver_access_outside_database_boundary
+tests/unit/test_parsers.py::test_markdown_location_and_injection_is_plain_text
+tests/unit/test_parsers.py::test_pdf_text_and_scanned_detection
+tests/unit/test_parsers.py::test_pdf_page_and_encryption_limits
+tests/unit/test_parsers.py::test_docx_paragraph_and_zip_bomb_detection
+tests/unit/test_parsers.py::test_corruption_spoof_and_size_rejection
+tests/unit/test_parsers.py::test_request_limit_and_timeout
+tests/unit/test_parsers.py::test_upload_atomic_hash_and_cleanup
+tests/unit/test_tenant_tx.py::test_tenant_parameter_is_injected
+tests/unit/test_tenant_tx.py::test_conflicting_tenant_parameter_fails
+tests/unit/test_tenant_tx.py::test_registered_alias_is_injected_and_checked
+tests/unit/test_tenant_tx.py::test_unscoped_query_fails_in_strict_mode
+tests/unit/test_tenant_tx.py::test_unscoped_query_warns_in_operating_mode
+tests/unit/test_tenant_tx.py::test_cross_tenant_requires_reason
+
+484 tests collected in 3.14s

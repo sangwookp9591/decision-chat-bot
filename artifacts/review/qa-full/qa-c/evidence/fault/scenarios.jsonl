@@ -1,0 +1,10 @@
+{"scenario": "jev_429", "status": "pass", "request_id": "req_7d5c7fa07e394201813122c10cd8d61c", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_529", "status": "pass", "request_id": "req_9dd05c534d07483b81bb286a63257832", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "jev_schema", "status": "pass", "request_id": "req_2079bd90103d497682af167ecb14cd48", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "parser_db_outage", "status": "pass", "damaged_request": "req_f6d6c34105534f0699404e035890fd00", "recovered_request": "req_1ffd9bb244134ea7bf2c6333480a4236", "http_status": 503, "unknown_validity": 1}
+{"scenario": "api_restart_sse", "status": "pass", "run_id": "run_023ff612da424e88bc13e8a97eab17d3", "cursor_before": 1, "cursor_after": 2, "recovery_ms": 2982, "startup_ms": 2496, "terminal_ms": 9742, "sample_size": 1, "slo_threshold_ms": 5000}
+{"scenario": "policy_during_run", "status": "pass", "versions": [1, 2, 3], "run_ids": ["run_e6ab075c6bb5428d82b7e82d5218bfe2", "run_f3de474c5b9e453f82f8efc301fc12bd", "run_c6313fe648bb4b59bb5228cdb4f13732"]}
+{"scenario": "observation_outages", "status": "pass", "collector_alert": true, "journal_write_alert": true, "duplicate_ids": 0, "collected_before": 304, "collected_after": 304, "reconciliation": {"request_commits_missing_journal": [], "journal_success_missing_db": [], "run_commits_missing_journal": [], "run_status_mismatch": []}}
+{"scenario": "information_wait", "status": "pass", "request_id": "req_8f606b8d1c844e308c9de6b6b6b46b8f", "judgment_id": "jdg_dc355e28706645cd9c87092819098d4b", "outputs": 11}
+{"scenario": "late_recovery", "status": "pass", "request_id": "req_711e04da90d841dea2fd7ccbe9f64f3f", "first_run": "run_ecd67ace5124455cbcf2e97261c76280", "recovery_run": "run_8133c2b561b548e681aed5fc606265a2", "failed_120s": 5, "late_recoveries": 1, "request_metrics": {"eligible_requests": 1, "within_120s": 0, "failed_120s": 1, "pending_120s": 0, "ratio": 0.0, "candidate_commits": 1, "failed_runs": 1, "late_recoveries": 1, "unconfirmed_samples": 0}, "wait_seconds": 121}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

@@ -1,0 +1,4 @@
+{"scenario": "jev_timeout", "status": "pass", "request_id": "req_3f94120380b0459cbbc0f262240bcf71", "state": "failed", "assignments": 0, "mode": "mock"}
+{"scenario": "worker_sigstop_handoff", "status": "pass", "run_id": "run_4fdcbeaa7cf449d7acc4fafb85bf2a5b", "generations": [1, 2], "judgments": 1}
+{"scenario": "worker_sigkill_recovery", "status": "pass", "run_id": "run_5b63e543ead642b5924814f47694452c"}
+{"scenario": "process_cleanup", "status": "pass", "remaining": {}}

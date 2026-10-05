@@ -1,0 +1,379 @@
+........................................................................ [ 14%]
+........................................................................ [ 29%]
+........................................................................ [ 44%]
+...............................FEFEFE
+==================================== ERRORS ====================================
+____ ERROR at teardown of test_rejected_file_waits_until_excluded_revision _____
+
+    @pytest_asyncio.fixture(loop_scope="session")
+    async def ingest_tenant():
+        tenant = f"t06_{uuid4().hex}"
+        await apply_schema()
+        yield tenant
+        driver = await get_driver()
+        async with driver.session() as session:
+            await (
+>               await session.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=tenant)
+            ).consume()
+
+tests/integration/test_ingest_api.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:340: in run
+    await auto_result._run(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x1102fa0b0>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (i:InputRevision {id:$revision,tenant_id:$tenant_id}) OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) OPTIONAL MATCH (i)-[:HAS_EVIDENCE]->(e:EvidenceSpan {attachment_id:a.id}) RETURN i,collect(DISTINCT a) AS attachments,collect(DISTINCT e) AS spans'
+___________ ERROR at teardown of test_revision_conflict_is_rejected ____________
+
+    @pytest_asyncio.fixture(loop_scope="session")
+    async def ingest_tenant():
+        tenant = f"t06_{uuid4().hex}"
+        await apply_schema()
+        yield tenant
+        driver = await get_driver()
+        async with driver.session() as session:
+            await (
+>               await session.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=tenant)
+            ).consume()
+
+tests/integration/test_ingest_api.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:340: in run
+    await auto_result._run(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x1107a7930>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+____ ERROR at teardown of test_http_csrf_role_tenant_scope_and_source_gate _____
+
+    @pytest_asyncio.fixture(loop_scope="session")
+    async def ingest_tenant():
+        tenant = f"t06_{uuid4().hex}"
+        await apply_schema()
+        yield tenant
+        driver = await get_driver()
+        async with driver.session() as session:
+            await (
+>               await session.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=tenant)
+            ).consume()
+
+tests/integration/test_ingest_api.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:340: in run
+    await auto_result._run(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x1103b9ef0>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+=================================== FAILURES ===================================
+_______________ test_rejected_file_waits_until_excluded_revision _______________
+
+ingest_tenant = 't06_cec2acb56a454e64967692e63fd6b770'
+
+    async def test_rejected_file_waits_until_excluded_revision(ingest_tenant):
+        attachments = [
+            {"id": "att_good", "filename": "good.md", "sha256": "a", "status": "ok", "units": []},
+            {
+                "id": "att_bad",
+                "filename": "bad.pdf",
+                "sha256": "b",
+                "status": "rejected",
+                "reason": "corrupted",
+                "units": [],
+            },
+        ]
+        first = await create_request(
+            ingest_tenant,
+            "user-1",
+            "Please assess",
+            attachments,
+            "key-c",
+            "hash-c",
+            datetime.now(UTC).isoformat(),
+        )
+        assert first["status"] == "needs_file_decision"
+    
+        async def count(tx):
+            row = await (
+                await tx.run(
+                    "MATCH (j:Job {tenant_id:$tenant}) RETURN count(j) AS n", tenant=ingest_tenant
+                )
+            ).single(strict=True)
+            return row["n"]
+    
+        assert await read_tx(ingest_tenant, count) == 0
+>       second = await resolve_files(
+            ingest_tenant,
+            first["request_id"],
+            "user-1",
+            1,
+            ["att_bad"],
+            "decision-key",
+            "decision-hash",
+        )
+
+tests/integration/test_ingest_api.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+jevtriage/ingest/store.py:437: in resolve_files
+    return await write_tx(tenant_id, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/ingest/store.py:428: in op
+    return await get_or_create_in_tx(
+jevtriage/db/idempotency.py:35: in get_or_create_in_tx
+    value = await create_result(tx)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/ingest/store.py:411: in create
+    await _create_input(
+jevtriage/ingest/store.py:147: in _create_input
+    await tx.run(
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x110729160>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (i:InputRevision {id:$revision,tenant_id:$tenant_id}) OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) OPTIONAL MATCH (i)-[:HAS_EVIDENCE]->(e:EvidenceSpan {attachment_id:a.id}) RETURN i,collect(DISTINCT a) AS attachments,collect(DISTINCT e) AS spans'
+______________________ test_revision_conflict_is_rejected ______________________
+
+ingest_tenant = 't06_4b54f0a77951406ab9a3b9e424301627'
+
+    async def test_revision_conflict_is_rejected(ingest_tenant):
+>       first = await create_request(
+            ingest_tenant, "user-1", "text", [], "key-d", "hash-d", datetime.now(UTC).isoformat()
+        )
+
+tests/integration/test_ingest_api.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+jevtriage/ingest/store.py:230: in create_request
+    return await write_tx(tenant_id, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/ingest/store.py:226: in op
+    return await get_or_create_in_tx(
+jevtriage/db/idempotency.py:35: in get_or_create_in_tx
+    value = await create_result(tx)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/ingest/store.py:210: in create
+    result = await _create_input(
+jevtriage/ingest/store.py:177: in _create_input
+    await start_run_in_tx(tx, tenant_id, request_id, revision_id, "normal",
+jevtriage/db/runs.py:34: in start_run_in_tx
+    await pin_config_for_run_in_tx(tx, tenant, run_id)
+jevtriage/db/pinning.py:6: in pin_config_for_run_in_tx
+    row = await (await tx.run(
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x1107a72a0>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+_______________ test_http_csrf_role_tenant_scope_and_source_gate _______________
+
+ingest_tenant = 't06_b26a8cb5469f4c82ace366e4cd5cf898'
+
+    async def test_http_csrf_role_tenant_scope_and_source_gate(ingest_tenant):
+        client, _ = await _http_client(ingest_tenant, "requester")
+        other, _ = await _http_client(f"other_{uuid4().hex}", "operator")
+>       no_role, _ = await _http_client(ingest_tenant, "policy_editor")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_ingest_api.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_ingest_api.py:171: in _http_client
+    await (await session.run(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:340: in run
+    await auto_result._run(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <neo4j._async.io._common.Response object at 0x110790130>
+metadata = {'description': 'error: general processing exception - unexpected error. Unexpected error has occurred. See debug log ...completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. ', ...}
+
+    async def on_failure(self, metadata):
+        """Handle a FAILURE message been received."""
+        with suppress(SessionExpired, ServiceUnavailable):
+            await self.connection.reset()
+        handler = self.handlers.get("on_failure")
+        await AsyncUtil.callback(handler, metadata)
+        handler = self.handlers.get("on_summary")
+        await AsyncUtil.callback(handler)
+>       raise self._hydrate_error(metadata)
+E       neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: ClientError
+=========================== short test summary info ============================
+FAILED tests/integration/test_ingest_api.py::test_rejected_file_waits_until_excluded_revision
+FAILED tests/integration/test_ingest_api.py::test_revision_conflict_is_rejected
+FAILED tests/integration/test_ingest_api.py::test_http_csrf_role_tenant_scope_and_source_gate
+ERROR tests/integration/test_ingest_api.py::test_rejected_file_waits_until_excluded_revision
+ERROR tests/integration/test_ingest_api.py::test_revision_conflict_is_rejected
+ERROR tests/integration/test_ingest_api.py::test_http_csrf_role_tenant_scope_and_source_gate
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py:133: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+3 failed, 247 passed, 3 errors in 275.32s (0:04:35)

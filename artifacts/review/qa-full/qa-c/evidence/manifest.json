@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-05T09:54:20.384053+00:00",
+  "head": "b3ca7ab549e47871f0365be1aca517acafb91d55",
+  "scope": "QA-C artifacts only",
+  "jev_mode": "mock",
+  "live_jev_calls": 0,
+  "neo4j_port": 7688,
+  "api_ports": [
+    11491,
+    11492
+  ],
+  "redis_port": 11493,
+  "neo4j_write_timeout_seconds": 30,
+  "heap_max_mib": 512,
+  "pagecache_mib": 256,
+  "product_files_modified_by_qa_c": []
+}

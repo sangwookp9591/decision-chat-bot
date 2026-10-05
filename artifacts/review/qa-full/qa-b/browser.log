@@ -1,0 +1,225 @@
+
+Running 15 tests using 1 worker
+
+(node:81860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:81860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens requester (46.6s)
+(node:83249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens reviewer (16.8s)
+(node:83785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens team_member (16.3s)
+(node:84218) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84218) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   4 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens operator (53.3s)
+(node:86084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens policy_editor (28.1s)
+  ✓   6 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens rule_admin (16.9s)
+  ✓   7 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens labeler (17.6s)
+  ✓   8 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /observatory (5.6s)
+  ✓   9 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /judgment-map (5.4s)
+  ✓  10 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /learning (6.0s)
+  ✓  11 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /monitoring (4.0s)
+  ✓  12 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /policy (4.3s)
+  ✓  13 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:20:6 › mobile dark /evaluation (3.5s)
+  ✘  14 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow (14.5s)
+(node:89849) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:89849) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  15 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:37:5 › playback is read only and trace opens (7.4s)
+
+
+  1) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens requester ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('main h1')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('main h1') with timeout 15000ms
+      - waiting for locator('main h1')
+
+
+      11 |   test.setTimeout(240000);await login(page,role);const rows:any[]=[];const errors:string[]=[];
+      12 |   page.on('pageerror',e=>errors.push(e.message));
+    > 13 |   for(const path of routes){await page.goto(path);await expect(page.locator('main h1')).toBeVisible();await page.waitForTimeout(500);
+         |                                                                                         ^
+      14 |    rows.push({path,text:await page.locator('main').innerText(),overflow:await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)});
+      15 |   }
+      16 |   writeFileSync(out+`/screens-${role}.json`,JSON.stringify({role,rows,errors},null,2));expect(errors).toEqual([]);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:13:89
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-requester-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-requester-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-requester-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-requester-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens reviewer ──
+
+    TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.
+    Call log:
+      - → POST http://127.0.0.1:8791/api/auth/login
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - content-type: application/json
+        - content-length: 74
+
+
+       5 | const tenant=readFileSync(out+'/runtime/tenant.txt','utf8').trim();
+       6 | mkdirSync(out+'/captures',{recursive:true});
+    >  7 | async function login(page:any,role:string){const r=await page.request.post('/api/auth/login',{data:{email:`${role}@${tenant}.dev`,password:'dev-only-change-me'}});expect(r.status()).toBe(200);}
+         |                                                                       ^
+       8 | const routes=['/','/review','/tasks','/observatory','/judgment-map','/learning','/monitoring','/policy','/evaluation'];
+       9 | for(const role of ['requester','reviewer','team_member','operator','policy_editor','rule_admin','labeler']){
+      10 |  test(`screens ${role}`,async({page})=>{
+        at login (/Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:7:71)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:11:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-reviewer-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-reviewer-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-reviewer-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-reviewer-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens team_member 
+
+    TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.
+    Call log:
+      - → POST http://127.0.0.1:8791/api/auth/login
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - content-type: application/json
+        - content-length: 77
+
+
+       5 | const tenant=readFileSync(out+'/runtime/tenant.txt','utf8').trim();
+       6 | mkdirSync(out+'/captures',{recursive:true});
+    >  7 | async function login(page:any,role:string){const r=await page.request.post('/api/auth/login',{data:{email:`${role}@${tenant}.dev`,password:'dev-only-change-me'}});expect(r.status()).toBe(200);}
+         |                                                                       ^
+       8 | const routes=['/','/review','/tasks','/observatory','/judgment-map','/learning','/monitoring','/policy','/evaluation'];
+       9 | for(const role of ['requester','reviewer','team_member','operator','policy_editor','rule_admin','labeler']){
+      10 |  test(`screens ${role}`,async({page})=>{
+        at login (/Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:7:71)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:11:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-team-member-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-team-member-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-team-member-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-team-member-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens operator ──
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('main h1')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('main h1') with timeout 15000ms
+      - waiting for locator('main h1')
+
+
+      11 |   test.setTimeout(240000);await login(page,role);const rows:any[]=[];const errors:string[]=[];
+      12 |   page.on('pageerror',e=>errors.push(e.message));
+    > 13 |   for(const path of routes){await page.goto(path);await expect(page.locator('main h1')).toBeVisible();await page.waitForTimeout(500);
+         |                                                                                         ^
+      14 |    rows.push({path,text:await page.locator('main').innerText(),overflow:await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)});
+      15 |   }
+      16 |   writeFileSync(out+`/screens-${role}.json`,JSON.stringify({role,rows,errors},null,2));expect(errors).toEqual([]);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:13:89
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-operator-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-operator-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-operator-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-results/journeys-screens-operator-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+
+    Error: fixture must have a real run
+
+      24 |  });
+      25 | }
+    > 26 | async function activeRun(page:any){const items=(await(await page.request.get('/api/requests')).json()).items;for(const item of items){const r=await(await page.request.get(`/api/requests/${item.id}/runs`)).json();if(r.runs?.length)return {id:item.id,run:r.runs[0].id,items};}throw Error('fixture must have a real run');}
+         |                                                                                                                                                                                                                                                                                         ^
+      27 | test('observatory selecting an empty request clears previous Flow',async({page})=>{
+      28 |  await login(page,'operator');const active=await activeRun(page);
+      29 |  await page.goto(`/observatory?request_id=${active.id}&run_id=${active.run}`);await expect(page.locator('.obs-node').first()).toBeVisible();
+        at activeRun (/Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:26:281)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:28:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens requester ──
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens reviewer ───
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens team_member 
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens operator ───
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+  10 passed (4.7m)

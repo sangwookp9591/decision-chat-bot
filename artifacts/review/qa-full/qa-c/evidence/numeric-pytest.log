@@ -1,0 +1,32 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________ test_invalid_login_numeric_value_does_not_produce_500[1e1000] _________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+__________ test_invalid_login_numeric_value_does_not_produce_500[NaN] __________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_______ test_invalid_login_numeric_value_does_not_produce_500[Infinity] ________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_______ test_invalid_login_numeric_value_does_not_produce_500[-Infinity] _______
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+=========================== short test summary info ============================
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[1e1000]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[NaN]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[Infinity]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[-Infinity]
+4 failed in 2.31s

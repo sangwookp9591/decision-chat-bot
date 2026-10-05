@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="15" time="38.236" timestamp="2026-10-05T18:42:19.936770+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_public_api_inventory_invalid_inputs" time="3.836" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176]" time="0.085"><failure message="AssertionError: oversized client integer returned 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:80: in test_oversized_integer_never_causes_500
+    assert r.status_code&lt;500, f'oversized client integer returned {r.status_code}'
+E   AssertionError: oversized client integer returned 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176]" time="0.084"><failure message="AssertionError: oversized client integer returned 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:80: in test_oversized_integer_never_causes_500
+    assert r.status_code&lt;500, f'oversized client integer returned {r.status_code}'
+E   AssertionError: oversized client integer returned 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/learning/rules/qa-missing/versions/1208925819614629174706176/validations]" time="0.081" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_input_limits_and_foreign_tenant" time="0.162" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_nested_review_changes_are_validated_before_service" time="5.166"><failure message="httpx.ReadError">backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:101: in map_httpcore_exceptions
+    yield
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:394: in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py:256: in handle_async_request
+    raise exc from None
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py:236: in handle_async_request
+    response = await connection.handle_async_request(
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection.py:103: in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:136: in handle_async_request
+    raise exc
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:106: in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:177: in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:217: in _receive_event
+    data = await self._network_stream.read(
+backend/.venv/lib/python3.14/site-packages/httpcore/_backends/anyio.py:32: in read
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+backend/.venv/lib/python3.14/site-packages/httpcore/_exceptions.py:14: in map_exceptions
+    raise to_exc(exc) from exc
+E   httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:126: in test_nested_review_changes_are_validated_before_service
+    r=await c.post('/api/reviews/'+review['id']+'/decision',
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1859: in post
+    return await self.request(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:393: in handle_async_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:118: in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+E   httpx.ReadError</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_two_workers_claim_once" time="1.479" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_regular_external_masking_all_fields" time="0.825" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_simultaneous_changed_approvals" time="5.089" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_load_20_intakes_1000_reviews" time="15.389" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_cancel_completion_race_20_times" time="1.588" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_two_api_sse_resume_and_redis_restart" time="1.551" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_retention_dry_run_and_execution_preserve_business" time="0.611" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_review_queue_starvation" name="test_authorized_review_survives_newer_other_org_reviews" time="1.540"><failure message="AssertionError: authorized review hidden behind newer reviews from another organization&#10;assert 'starve_51270887_v_0' in []">artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py:36: in test_authorized_review_survives_newer_other_org_reviews
+    assert target in ids, 'authorized review hidden behind newer reviews from another organization'
+E   AssertionError: authorized review hidden behind newer reviews from another organization
+E   assert 'starve_51270887_v_0' in []</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_shadow_masking" name="test_context_shadow_masks_every_outgoing_field" time="0.134"><failure message="AssertionError: shadow external payload leaked fabricated samples: {'email': 22, 'phone': 22, 'registration': 22, 'card': 22, 'api_key': 22}&#10;assert not True&#10; +  where True = any(dict_values([22, 22, 22, 22, 22]))&#10; +    where dict_values([22, 22, 22, 22, 22]) = &lt;built-in method values of dict object at 0x1114f8440&gt;()&#10; +      where &lt;built-in method values of dict object at 0x1114f8440&gt; = {'api_key': 22, 'card': 22, 'email': 22, 'phone': 22, ...}.values">artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py:75: in test_context_shadow_masks_every_outgoing_field
+    assert not any(leaked.values()), f'shadow external payload leaked fabricated samples: {leaked}'
+E   AssertionError: shadow external payload leaked fabricated samples: {'email': 22, 'phone': 22, 'registration': 22, 'card': 22, 'api_key': 22}
+E   assert not True
+E    +  where True = any(dict_values([22, 22, 22, 22, 22]))
+E    +    where dict_values([22, 22, 22, 22, 22]) = &lt;built-in method values of dict object at 0x1114f8440&gt;()
+E    +      where &lt;built-in method values of dict object at 0x1114f8440&gt; = {'api_key': 22, 'card': 22, 'email': 22, 'phone': 22, ...}.values</failure></testcase></testsuite></testsuites>

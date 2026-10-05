@@ -1,0 +1,151 @@
+INFO:     Started server process [26168]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26168]
+INFO:     Started server process [26281]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26281]
+INFO:     Started server process [26379]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26379]
+INFO:     Started server process [29338]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29338]
+INFO:     Started server process [29545]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+Redis connection limit unavailable; using local limit
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 305, in connect_check_health
+    await self.retry.call_with_retry(
+        lambda: self._connect(), lambda error: self.disconnect()
+    )
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/retry.py", line 50, in call_with_retry
+    return await do()
+           ^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 760, in _connect
+    reader, writer = await asyncio.open_connection(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        **self._connection_arguments()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: protocol, host, port, **kwds)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 2040, in create_connection
+  File "uvloop/loop.pyx", line 2017, in uvloop.loop.Loop.create_connection
+    await waiter
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/realtime/notifier.py", line 70, in acquire
+    accepted = await client.eval(_ACQUIRE, 1, "sse:connections", now, self.limit,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 now + self.ttl, token, self.ttl * 2)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/client.py", line 672, in execute_command
+    conn = self.connection or await pool.get_connection()
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 1149, in get_connection
+    await self.ensure_connection(connection)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 1182, in ensure_connection
+    await connection.connect()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 296, in connect
+    await self.connect_check_health(check_health=True)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 315, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 61 connecting to 127.0.0.1:11493. Connection refused.
+Redis subscriber disconnected for tenant qa_c_7ed15d5d0aed
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 305, in connect_check_health
+    await self.retry.call_with_retry(
+        lambda: self._connect(), lambda error: self.disconnect()
+    )
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/retry.py", line 50, in call_with_retry
+    return await do()
+           ^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 760, in _connect
+    reader, writer = await asyncio.open_connection(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        **self._connection_arguments()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: protocol, host, port, **kwds)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 2040, in create_connection
+    raise exceptions[0]
+  File "uvloop/loop.pyx", line 2017, in uvloop.loop.Loop.create_connection
+    await waiter
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/realtime/subscriber.py", line 31, in _listen
+    await pubsub.subscribe(self.channel)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/client.py", line 1071, in subscribe
+    ret_val = await self.execute_command("SUBSCRIBE", *new_channels.keys())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/client.py", line 924, in execute_command
+    await self.connect()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/client.py", line 934, in connect
+    self.connection = await self.connection_pool.get_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 1149, in get_connection
+    await self.ensure_connection(connection)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 1182, in ensure_connection
+    await connection.connect()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 296, in connect
+    await self.connect_check_health(check_health=True)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/redis/asyncio/connection.py", line 315, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 61 connecting to 127.0.0.1:11493. Connection refused.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29545]
+INFO:     Started server process [30652]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30652]
+INFO:     Started server process [33006]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11492 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33006]

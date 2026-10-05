@@ -1,0 +1,164 @@
+{
+  "progress": {
+    "total": 60,
+    "confirmed": 5,
+    "deferred": 1,
+    "remaining": 54,
+    "percent": 8
+  },
+  "candidates": [
+    {
+      "id": "pharma-058",
+      "labels": [
+        {
+          "id": "pharma-058",
+          "labels": {
+            "ai_need": "불필요",
+            "feasibility": "현재 불가",
+            "urgency": "긴급",
+            "team_set": [
+              "AI팀",
+              "IT팀"
+            ],
+            "risk_areas": []
+          },
+          "status": "confirmed",
+          "user_id": "usr_t-qa-b-1005181417_labeler",
+          "reason": null,
+          "confidence": 0.8,
+          "created_at": "2026-10-05T09:27:54.294000000+00:00"
+        },
+        {
+          "id": "pharma-058",
+          "labels": {
+            "ai_need": "불필요",
+            "feasibility": "현재 불가",
+            "urgency": "긴급",
+            "team_set": [
+              "IT팀",
+              "AI팀"
+            ],
+            "risk_areas": []
+          },
+          "status": "confirmed",
+          "user_id": "usr_t-qa-b-1005181417_reviewer",
+          "reason": null,
+          "confidence": 0.8,
+          "created_at": "2026-10-05T09:27:54.775000000+00:00"
+        }
+      ],
+      "my_labels": {
+        "id": "pharma-058",
+        "labels": {
+          "ai_need": "불필요",
+          "feasibility": "현재 불가",
+          "urgency": "긴급",
+          "team_set": [
+            "AI팀",
+            "IT팀"
+          ],
+          "risk_areas": []
+        },
+        "status": "confirmed",
+        "user_id": "usr_t-qa-b-1005181417_labeler",
+        "reason": null,
+        "confidence": 0.8,
+        "created_at": "2026-10-05T09:27:54.294000000+00:00"
+      },
+      "consensus": "consensus_required"
+    },
+    {
+      "id": "pharma-059",
+      "labels": [
+        {
+          "id": "pharma-059",
+          "labels": {
+            "ai_need": "혼합",
+            "feasibility": "현재 불가",
+            "urgency": "긴급",
+            "team_set": [
+              "AI팀"
+            ],
+            "risk_areas": []
+          },
+          "status": "consensus_confirmed",
+          "user_id": "usr_t-qa-b-1005181417_labeler",
+          "reason": null,
+          "confidence": 0.9,
+          "created_at": "2026-10-05T09:17:21.486000000+00:00"
+        },
+        {
+          "id": "pharma-059",
+          "labels": {
+            "ai_need": "필요",
+            "feasibility": "현재 불가",
+            "urgency": "긴급",
+            "team_set": [
+              "AI팀"
+            ],
+            "risk_areas": []
+          },
+          "status": "confirmed",
+          "user_id": "usr_t-qa-b-1005181417_reviewer",
+          "reason": null,
+          "confidence": 0.8,
+          "created_at": "2026-10-05T09:17:21.333000000+00:00"
+        }
+      ],
+      "my_labels": {
+        "id": "pharma-059",
+        "labels": {
+          "ai_need": "혼합",
+          "feasibility": "현재 불가",
+          "urgency": "긴급",
+          "team_set": [
+            "AI팀"
+          ],
+          "risk_areas": []
+        },
+        "status": "consensus_confirmed",
+        "user_id": "usr_t-qa-b-1005181417_labeler",
+        "reason": null,
+        "confidence": 0.9,
+        "created_at": "2026-10-05T09:17:21.486000000+00:00"
+      },
+      "consensus": "resolved"
+    },
+    {
+      "id": "pharma-060",
+      "labels": [
+        {
+          "id": "pharma-060",
+          "labels": {
+            "ai_need": null,
+            "feasibility": null,
+            "urgency": null,
+            "team_set": [],
+            "risk_areas": []
+          },
+          "status": "confirmed",
+          "user_id": "usr_t-qa-b-1005181417_labeler",
+          "reason": null,
+          "confidence": 0.8,
+          "created_at": "2026-10-05T09:17:20.100000000+00:00"
+        }
+      ],
+      "my_labels": {
+        "id": "pharma-060",
+        "labels": {
+          "ai_need": null,
+          "feasibility": null,
+          "urgency": null,
+          "team_set": [],
+          "risk_areas": []
+        },
+        "status": "confirmed",
+        "user_id": "usr_t-qa-b-1005181417_labeler",
+        "reason": null,
+        "confidence": 0.8,
+        "created_at": "2026-10-05T09:17:20.100000000+00:00"
+      },
+      "consensus": "single_label"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+stderr | src/pages/Main.layout.test.tsx > request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/Main.layout.test.tsx (18 tests) 9015ms
+   ✓ request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading 1000ms
+   ✓ request list rows > the list scrolls on its own: the rows live in one scroll container 1017ms
+   ✓ request list rows > below 960px the list opens as a sheet from a top "내 요청" button and closes on pick 1255ms
+   ✓ result summary card in the conversation > shows the four classifications and a task split summary, not the full detail 973ms
+   ✓ result summary card in the conversation > 자세히 보기 opens the full result in a drawer; the evidence viewer stacks on top and leaves it open 578ms
+   ✓ result summary card in the conversation > the summary card itself offers evidence so the original text stays one click away 859ms
+   ✓ composer keys > Enter sends, Shift+Enter keeps a newline, Enter during IME composition does not send 407ms
+   ✓ typing indicator and scrolling > while reading above the bottom a new message shows a "새 메시지" pill instead of jumping; the pill scrolls down 345ms
+   ✓ ChatGPT-style conversation > an action row sits under the answer: copy, re-analyze, source — disabled while provisional, enabled at the final result, same slot 461ms
+   ✓ ChatGPT-style conversation > copy puts the summary, the four classifications and the task split on the clipboard 455ms
+ ✓ src/pages/Policy.test.tsx (13 tests) 6121ms
+   ✓ Policy page > renders selected-version diff 553ms
+   ✓ Policy page > explains a 409 publish conflict and reloads current policy 783ms
+   ✓ Policy page > lets the editor clear and retype a JSON value without snapping back (P3-08) 349ms
+   ✓ Policy page > policy.published events (F2) > does not overwrite an edit in progress with a newer version: asks first, then applies or keeps 802ms
+   ✓ Policy page > names every editor field in Korean with a short hint and keeps the internal key under 기술 상세 (F6) 353ms
+   ✓ Policy page > field form > edits a number, a band, a switch and a chip and validates exactly those values 788ms
+   ✓ Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number 989ms
+   ✓ Policy page > field form > is read-only without the editor role 417ms
+
+ Test Files  2 passed (2)
+      Tests  31 passed (31)
+   Start at  18:30:35
+   Duration  28.89s (transform 2.07s, setup 0ms, collect 5.12s, tests 15.14s, environment 5.46s, prepare 921ms)
+

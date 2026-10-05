@@ -1,0 +1,15 @@
+
+> jevtriage-frontend@0.1.0 test
+> vitest run --run src/pages/Policy.test.tsx --testNamePattern=explains why --testTimeout=30000
+
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+ ✓ src/pages/Policy.test.tsx (13 tests | 12 skipped) 1828ms
+   ✓ Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number 1826ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 12 skipped (13)
+   Start at  18:30:01
+   Duration  8.39s (transform 1.10s, setup 0ms, collect 2.09s, tests 1.83s, environment 2.32s, prepare 709ms)
+

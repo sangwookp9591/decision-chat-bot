@@ -1,0 +1,86 @@
+
+Running 2 tests using 1 worker
+
+(node:77429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (18.7s)
+(node:80648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:80648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (12.0s)
+
+
+  1) [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px 
+
+    TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.
+    Call log:
+      - → POST http://127.0.0.1:8791/api/auth/login
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - content-type: application/json
+        - content-length: 73
+
+
+       5 |
+       6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {
+    >  7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
+         |                              ^
+       8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();
+       9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+      10 | }
+        at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:7:30)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:75:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/retry-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/retry-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 
+
+    Error: submit failed: 503
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      24 |       },
+      25 |     });
+    > 26 |     expect(submitted.ok(), `submit failed: ${submitted.status()}`).toBeTruthy();
+         |                                                                    ^
+      27 |     const created = await submitted.json() as { request_id?: string; id?: string };
+      28 |     const requestId = (created.request_id || created.id) as string;
+      29 |     expect(requestId).toBeTruthy();
+        at seedJudgmentWithCorrection (/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:26:68)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:57:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/retry-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/retry-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px 
+    [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 

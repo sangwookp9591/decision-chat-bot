@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-05T09:54:20.383170+00:00",
+  "dedicated_ports_listening": {
+    "11491": false,
+    "11492": false,
+    "11493": false
+  },
+  "owned_containers_remaining": [],
+  "dedicated_runtime_paths_exist": {
+    "/Users/psw/Projects/decision-chat-bot/.data/neo4j-fault": false,
+    "/Users/psw/Projects/decision-chat-bot/.data/qa-c-backup": false,
+    "/Users/psw/Projects/decision-chat-bot/.data/qa-c-restore": false,
+    "/Users/psw/Projects/decision-chat-bot/.data/qa-c-restore-app": false
+  },
+  "shared_neo4j_running": true
+}

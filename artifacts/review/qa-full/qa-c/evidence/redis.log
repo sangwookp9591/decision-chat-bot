@@ -1,0 +1,77 @@
+26165:C 05 Oct 2026 18:40:27.155 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26165:C 05 Oct 2026 18:40:27.156 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=26165, just started
+26165:C 05 Oct 2026 18:40:27.156 * Configuration loaded
+26165:M 05 Oct 2026 18:40:27.156 * monotonic clock: POSIX clock_gettime
+26165:M 05 Oct 2026 18:40:27.158 * Running mode=standalone, port=11493.
+26165:M 05 Oct 2026 18:40:27.158 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+26165:M 05 Oct 2026 18:40:27.160 * Server initialized
+26165:M 05 Oct 2026 18:40:27.160 * Ready to accept connections tcp
+26165:signal-handler (1791193228) Received SIGTERM scheduling shutdown...
+26165:M 05 Oct 2026 18:40:28.478 * User requested shutdown...
+26165:M 05 Oct 2026 18:40:28.478 # Redis is now ready to exit, bye bye...
+26279:C 05 Oct 2026 18:40:29.105 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26279:C 05 Oct 2026 18:40:29.105 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=26279, just started
+26279:C 05 Oct 2026 18:40:29.105 * Configuration loaded
+26279:M 05 Oct 2026 18:40:29.105 * monotonic clock: POSIX clock_gettime
+26279:M 05 Oct 2026 18:40:29.106 * Running mode=standalone, port=11493.
+26279:M 05 Oct 2026 18:40:29.106 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+26279:M 05 Oct 2026 18:40:29.106 * Server initialized
+26279:M 05 Oct 2026 18:40:29.106 * Ready to accept connections tcp
+26279:signal-handler (1791193231) Received SIGTERM scheduling shutdown...
+26279:M 05 Oct 2026 18:40:31.850 * User requested shutdown...
+26279:M 05 Oct 2026 18:40:31.850 # Redis is now ready to exit, bye bye...
+26377:C 05 Oct 2026 18:40:32.400 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26377:C 05 Oct 2026 18:40:32.400 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=26377, just started
+26377:C 05 Oct 2026 18:40:32.400 * Configuration loaded
+26377:M 05 Oct 2026 18:40:32.401 * monotonic clock: POSIX clock_gettime
+26377:M 05 Oct 2026 18:40:32.401 * Running mode=standalone, port=11493.
+26377:M 05 Oct 2026 18:40:32.401 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+26377:M 05 Oct 2026 18:40:32.402 * Server initialized
+26377:M 05 Oct 2026 18:40:32.402 * Ready to accept connections tcp
+26377:signal-handler (1791193233) Received SIGTERM scheduling shutdown...
+26377:M 05 Oct 2026 18:40:33.412 * User requested shutdown...
+26377:M 05 Oct 2026 18:40:33.413 # Redis is now ready to exit, bye bye...
+29335:C 05 Oct 2026 18:42:20.680 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+29335:C 05 Oct 2026 18:42:20.681 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=29335, just started
+29335:C 05 Oct 2026 18:42:20.681 * Configuration loaded
+29335:M 05 Oct 2026 18:42:20.681 * monotonic clock: POSIX clock_gettime
+29335:M 05 Oct 2026 18:42:20.683 * Running mode=standalone, port=11493.
+29335:M 05 Oct 2026 18:42:20.683 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+29335:M 05 Oct 2026 18:42:20.684 * Server initialized
+29335:M 05 Oct 2026 18:42:20.684 * Ready to accept connections tcp
+29335:signal-handler (1791193349) Received SIGTERM scheduling shutdown...
+29335:M 05 Oct 2026 18:42:29.513 * User requested shutdown...
+29335:M 05 Oct 2026 18:42:29.513 # Redis is now ready to exit, bye bye...
+29543:C 05 Oct 2026 18:42:30.100 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+29543:C 05 Oct 2026 18:42:30.100 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=29543, just started
+29543:C 05 Oct 2026 18:42:30.100 * Configuration loaded
+29543:M 05 Oct 2026 18:42:30.101 * monotonic clock: POSIX clock_gettime
+29543:M 05 Oct 2026 18:42:30.101 * Running mode=standalone, port=11493.
+29543:M 05 Oct 2026 18:42:30.101 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+29543:M 05 Oct 2026 18:42:30.102 * Server initialized
+29543:M 05 Oct 2026 18:42:30.102 * Ready to accept connections tcp
+29543:signal-handler (1791193374) Received SIGTERM scheduling shutdown...
+29543:M 05 Oct 2026 18:42:55.010 * User requested shutdown...
+29543:M 05 Oct 2026 18:42:55.011 # Redis is now ready to exit, bye bye...
+30650:C 05 Oct 2026 18:42:56.644 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+30650:C 05 Oct 2026 18:42:56.644 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=30650, just started
+30650:C 05 Oct 2026 18:42:56.644 * Configuration loaded
+30650:M 05 Oct 2026 18:42:56.645 * monotonic clock: POSIX clock_gettime
+30650:M 05 Oct 2026 18:42:56.645 * Running mode=standalone, port=11493.
+30650:M 05 Oct 2026 18:42:56.645 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+30650:M 05 Oct 2026 18:42:56.646 * Server initialized
+30650:M 05 Oct 2026 18:42:56.646 * Ready to accept connections tcp
+30650:signal-handler (1791193377) Received SIGTERM scheduling shutdown...
+30650:M 05 Oct 2026 18:42:57.663 * User requested shutdown...
+30650:M 05 Oct 2026 18:42:57.663 # Redis is now ready to exit, bye bye...
+33004:C 05 Oct 2026 18:44:16.632 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+33004:C 05 Oct 2026 18:44:16.632 * Redis version=8.0.3, bits=64, commit=00000000, modified=1, pid=33004, just started
+33004:C 05 Oct 2026 18:44:16.632 * Configuration loaded
+33004:M 05 Oct 2026 18:44:16.634 * monotonic clock: POSIX clock_gettime
+33004:M 05 Oct 2026 18:44:16.638 * Running mode=standalone, port=11493.
+33004:M 05 Oct 2026 18:44:16.641 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+33004:M 05 Oct 2026 18:44:16.643 * Server initialized
+33004:M 05 Oct 2026 18:44:16.644 * Ready to accept connections tcp
+33004:signal-handler (1791193466) Received SIGTERM scheduling shutdown...
+33004:M 05 Oct 2026 18:44:26.229 * User requested shutdown...
+33004:M 05 Oct 2026 18:44:26.229 # Redis is now ready to exit, bye bye...

@@ -1,0 +1,11 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_nested_review_changes_are_validated_before_service ____________
+artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:131: in test_nested_review_changes_are_validated_before_service
+    assert all(400<=r['status']<500 for r in rows), f'unvalidated nested review payload: {rows}'
+E   AssertionError: unvalidated nested review payload: [{'changes': {'classifications': ['qa-invalid']}, 'status': 500, 'body': 'Internal Server Error'}, {'changes': {'draft_tasks': ['qa-invalid']}, 'status': 500, 'body': 'Internal Server Error'}, {'changes': {'draft_tasks': [{'draft_task_id': 'draft-1', 'lead_org': ['qa-invalid']}]}, 'status': 422, 'body': '{"detail":{"message":"업무 초안의 필드를 확인해 주세요","details":{"field_errors":[{"draft_task_id":"draft-1","field":"lead_org","message":"이 tenant에 등록된 조직을 선택해 주세요."}]}}}'}, {'changes': {'classifications': {'ai_need': 'qa-invalid'}}, 'status': 422, 'body': '{"detail":{"message":"허용되지 않은 분류값"}}'}]
+E   assert False
+E    +  where False = all(<generator object test_nested_review_changes_are_validated_before_service.<locals>.<genexpr> at 0x109f0be60>)
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_nested_review_changes_are_validated_before_service
+1 failed in 11.46s

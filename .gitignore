@@ -35,3 +35,9 @@ artifacts/review/e2e-all/**
 !artifacts/review/e2e-all/20261005T152719/extension/*.json
 !artifacts/review/e2e-all/20261005T160522/
 !artifacts/review/e2e-all/20261005T160522/results.*
+# QA run outputs (traces, run data) stay local; reports, repro tests, logs and key captures are committed
+artifacts/review/qa-full/*/runs/
+artifacts/review/qa-full/*/runtime/
+artifacts/review/qa-full/**/trace.zip
+artifacts/review/qa-full/**/data/
+artifacts/review/qa-full/**/*.webm

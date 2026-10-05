@@ -1,0 +1,52 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________ test_error_response_does_not_echo_input[/api/auth/login-body0] ________
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:47: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "source":"qa-canary@example.invalid"}}]}
+_____ test_error_response_does_not_echo_input[/api/policy/validate-body1] ______
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:47: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_ test_error_response_does_not_echo_input[/api/requests/missing/reanalyze-body2] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:47: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_ test_error_response_does_not_echo_input[/api/reviews/missing/decision-body3] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:47: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E     ?           ^^^^^ ^^^^^
+E       ,"input":"qa-canary@example.invalid","ctx":{"expected":"'approve', 'approve_with_changes', 'reject' or 'request_info'"}},{"type":"missing","loc":["body","request_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","input_revision"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","run_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","d...
+E     
+E     ...Full output truncated (2 lines hidden), use '-vv' to show
+_ test_error_response_does_not_echo_input[/api/tasks/missing/transition-body4] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:47: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+=========================== short test summary info ============================
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/auth/login-body0]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/policy/validate-body1]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/requests/missing/reanalyze-body2]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/reviews/missing/decision-body3]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/tasks/missing/transition-body4]
+5 failed in 7.10s

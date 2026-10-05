@@ -1,0 +1,68 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_context_shadow_masks_every_outgoing_field ________________
+backend/.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py:43: in test_context_shadow_masks_every_outgoing_field
+    await apply_schema()
+backend/jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+backend/jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+------------------------------ Captured log call -------------------------------
+ERROR    neo4j.io:_bolt.py:907 [#F4D0]  _: <CONNECTION> error: Failed to read from defunct connection IPv4Address(('localhost', 7688)) (ResolvedIPv4Address(('127.0.0.1', 7688))): OSError('No data')
+WARNING  neo4j.session:session.py:606 Transaction failed and will be retried in 0.9184501765938371s (Failed to read from defunct connection IPv4Address(('localhost', 7688)) (ResolvedIPv4Address(('127.0.0.1', 7688))))
+WARNING  neo4j.session:session.py:606 Transaction failed and will be retried in 2.2892825910437558s (Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+Connection to 127.0.0.1:7688 closed with incomplete handshake response)
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py::test_context_shadow_masks_every_outgoing_field
+1 failed in 24.84s

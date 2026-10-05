@@ -1,0 +1,40 @@
+
+Running 1 test using 1 worker
+
+(node:1647) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1647) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow (16.9s)
+
+
+  1) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+
+    TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.
+    Call log:
+      - → POST http://127.0.0.1:8791/api/auth/login
+        - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+        - content-type: application/json
+        - content-length: 74
+
+
+       5 | const tenant=readFileSync(out+'/runtime/tenant.txt','utf8').trim();
+       6 | mkdirSync(out+'/captures',{recursive:true});
+    >  7 | async function login(page:any,role:string){const r=await page.request.post('/api/auth/login',{data:{email:`${role}@${tenant}.dev`,password:'dev-only-change-me'}});expect(r.status()).toBe(200);}
+         |                                                                       ^
+       8 | const routes=['/','/review','/tasks','/observatory','/judgment-map','/learning','/monitoring','/policy','/evaluation'];
+       9 | for(const role of ['requester','reviewer','team_member','operator','policy_editor','rule_admin','labeler']){
+      10 |  test(`screens ${role}`,async({page})=>{
+        at login (/Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:7:71)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:28:8
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/stale-real-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/stale-real-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/error-context.md
+
+  1 failed
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 

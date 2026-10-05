@@ -1,0 +1,65 @@
+[
+  {
+    "title": "QA-A UI login wrong password keyboard login and logout",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 4090,
+    "error": "Error: locator.press: Error: strict mode violation: getByRole('button', { name: '로그아웃' }) resolved to 2 elements:\n    1) <button class=\"ui-button plain\">로그아웃</button> aka getByRole('complementary').filter({ hasText: 'Jev Triage' }).getByRole('button')\n    2) <button class=\"ui-button plain\">로그아웃</button> aka getByRole('banner').getByRole('button', { name: '로그아웃' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '로그아웃' })\u001b[22m\n"
+  },
+  {
+    "title": "QA-A chips Shift Enter synthetic IME and Enter send",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 1833,
+    "error": "Error: locator.press: Unknown key: \"가\"\nCall log:\n\u001b[2m  - waiting for getByLabel('요청 내용')\u001b[22m\n\u001b[2m    - locator resolved to <textarea rows=\"1\" id=\"request-text\" aria-describedby=\"composer-hint\" placeholder=\"필요한 업무와 해결하려는 문제를 적어 주세요\">회의실 예약↵</textarea>\u001b[22m\n\u001b[2m  - elementHandle.press(\"가\")\u001b[22m\n"
+  },
+  {
+    "title": "QA-A attachment six files capped and oversized upload rejected",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 5494,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m413\u001b[39m\nReceived: \u001b[31m202\u001b[39m"
+  },
+  {
+    "title": "QA-A task lifecycle filters permission and refresh",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 19977,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m422\u001b[39m\nReceived array: \u001b[31m[403, 404]\u001b[39m"
+  },
+  {
+    "title": "QA-A DEFECT task detail Escape closes keyboard dialog",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 31702,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('status')\nExpected substring: \u001b[32m\"결정을 저장했습니다\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('status') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('status')\u001b[22m\n"
+  },
+  {
+    "title": "QA-A DEFECT task update in second tab appears without reload",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 18253,
+    "error": "TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - → POST http://127.0.0.1:8691/api/auth/login\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 75\u001b[22m\n"
+  },
+  {
+    "title": "QA-A reviewer reason mandatory and simultaneous conflict",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 121258,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"pending\"\u001b[39m\n\nCall Log:\n- Test timeout of 120000ms exceeded"
+  },
+  {
+    "title": "QA-A visual requester 1440 light",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 16894,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n"
+  },
+  {
+    "title": "QA-A visual requester 1440 dark",
+    "browser": "chromium",
+    "status": "failed",
+    "duration_ms": 21160,
+    "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n"
+  }
+]

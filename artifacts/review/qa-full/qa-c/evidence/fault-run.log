@@ -1,0 +1,456 @@
+EEEEEEEEEEE                                                              [100%]
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_jev_faults[timeout] __________________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+____________________ ERROR at setup of test_jev_faults[429] ____________________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+____________________ ERROR at setup of test_jev_faults[529] ____________________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+__________________ ERROR at setup of test_jev_faults[schema] ___________________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+_________________ ERROR at setup of test_parser_and_db_outage __________________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+___________ ERROR at setup of test_worker_handoff_and_kill_recovery ____________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+_____________ ERROR at setup of test_api_restart_and_sse_recovery ______________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+__________ ERROR at setup of test_policy_version_pinned_and_rollback ___________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+_________ ERROR at setup of test_parallel_review_and_idempotent_retry __________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+________ ERROR at setup of test_observation_outages_and_reconciliation _________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+__________ ERROR at setup of test_information_wait_and_late_recovery ___________
+tests/fault/scenarios.py:152: in harness
+    await bootstrap_policy(TENANT)
+jevtriage/policy/service.py:124: in bootstrap_policy
+    await write_tx(tenant, op)
+jevtriage/db/tx.py:114: in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:579: in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:108: in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/policy/service.py:119: in op
+    await (await tx.run("MERGE (p:Policy {tenant_id:$tenant}) ON CREATE SET p.next_version=1, p.active_version=0 SET p._lock=randomUUID() RETURN p.active_version AS active", tenant=tenant)).consume()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jevtriage/db/tx.py:46: in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py:201: in run
+    await result._tx_ready_run(query, parameters)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:180: in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:240: in _run
+    await self._attach()
+.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py:441: in _attach
+    await self._connection.fetch_message()
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:204: in inner
+    await coroutine_func(*args, **kwargs)
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:855: in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py:1197: in _process_message
+    await response.on_failure(summary_metadata or {})
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py:263: in on_failure
+    raise self._hydrate_error(metadata)
+E   neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Transaction.TransactionTimedOutClientConfiguration} {message: The transaction has been terminated. Retry your operation in a new transaction, and you should see a successful result. The transaction has not completed within the timeout specified at its start by the client. You may want to retry with a longer timeout. } {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+- generated xml file: /Users/psw/Projects/decision-chat-bot/artifacts/validation/t22/20261005T091430Z/junit.xml -
+=========================== short test summary info ============================
+ERROR tests/fault/scenarios.py::test_jev_faults[timeout] - neo4j.exceptions.C...
+ERROR tests/fault/scenarios.py::test_jev_faults[429] - neo4j.exceptions.Clien...
+ERROR tests/fault/scenarios.py::test_jev_faults[529] - neo4j.exceptions.Clien...
+ERROR tests/fault/scenarios.py::test_jev_faults[schema] - neo4j.exceptions.Cl...
+ERROR tests/fault/scenarios.py::test_parser_and_db_outage - neo4j.exceptions....
+ERROR tests/fault/scenarios.py::test_worker_handoff_and_kill_recovery - neo4j...
+ERROR tests/fault/scenarios.py::test_api_restart_and_sse_recovery - neo4j.exc...
+ERROR tests/fault/scenarios.py::test_policy_version_pinned_and_rollback - neo...
+ERROR tests/fault/scenarios.py::test_parallel_review_and_idempotent_retry - n...
+ERROR tests/fault/scenarios.py::test_observation_outages_and_reconciliation
+ERROR tests/fault/scenarios.py::test_information_wait_and_late_recovery - neo...
+11 errors in 26.72s

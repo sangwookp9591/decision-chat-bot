@@ -1,0 +1,1554 @@
+
+> jevtriage-frontend@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+stderr | src/pages/Review.test.tsx > review list title and source permission > titles each list row with the masked request title, id chip as the secondary line
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Learning.test.tsx > Learning page > requires explicit insufficient-data acknowledgement and a ten-character reason before approval
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Evaluation.test.tsx > Evaluation keyboard workflow > supports 1-4 field focus, Enter confirmation, and J/K navigation
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Monitoring.test.tsx > Monitoring > shows supplement answer wait separately from human review wait
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.progressive.test.tsx > optimistic request card > shows the sent request as a right-hand bubble immediately, before the server answers
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.test.tsx > Main page UX (P3-02/05/11/13) > restores the selected request from ?request_id= after a reload (P3-11)
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.layout.test.tsx > request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.chat.test.tsx > first screen > greets with the wave mascot, three example requests and a labelled multi-line composer
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/Main.test.tsx (11 tests) 14499ms
+   ✓ judgment result > shows uncertainty as a separate scale value and labels Jev signals distinctly 789ms
+   ✓ Main page UX (P3-02/05/11/13) > restores the selected request from ?request_id= after a reload (P3-11) 2422ms
+   ✓ Main page UX (P3-02/05/11/13) > puts the chosen request in the URL (P3-11) 2277ms
+   ✓ Main page UX (P3-02/05/11/13) > shows the info request and a supplement submit for a request that needs more information (P3-02) 2697ms
+   ✓ Main page UX (P3-02/05/11/13) > shows rejected requests as rejected, not as waiting for review (P3-02) 702ms
+   ✓ Main page UX (P3-02/05/11/13) > has no floating chat launcher: intake itself is the conversation with 일동이 (CHAT-1) 1093ms
+   ✓ Main page UX (P3-02/05/11/13) > shows attachment failures with a recovery action in Korean (P3-13) 1337ms
+   ✓ evidence viewer from the result card > opens the source viewer on the cited attachment revision and highlights the cited unit 2311ms
+   ✓ internal codes on the result card (P4-05) > shows each task once from the current draft and keeps the original in the comparison (P6-01) 458ms
+ ✓ src/pages/Monitoring.test.tsx (11 tests) 16333ms
+   ✓ Monitoring > shows supplement answer wait separately from human review wait 3460ms
+   ✓ Monitoring > renders null metrics as 미수집 instead of zero 1153ms
+   ✓ Monitoring > shows an observation incomplete banner 1632ms
+   ✓ Monitoring > uses business assignment and completed review counts and sends organization and status filters 2023ms
+   ✓ Monitoring > shows a field error instead of throwing when the start date is cleared (P3-09) 2295ms
+   ✓ Monitoring > links failures to the supported /observatory route with request and run ids (P3-03) 1253ms
+   ✓ Monitoring internal codes (P4-05) > translates collection issues, SLO reason and alert kinds; raw codes only inside 자세히 1425ms
+   ✓ Monitoring internal codes (P4-05) > independent areas (F3) > renders title and filters at once and fills each area as its own request answers 1286ms
+   ✓ Monitoring internal codes (P4-05) > independent areas (F3) > one failing area does not block the others 750ms
+   ✓ Monitoring internal codes (P4-05) > independent areas (F3) > skeletons stay hidden for the first 200ms, then show in the final shape 648ms
+   ✓ Monitoring KPI count-up (TOSS-SCREENS) > renders each numeric KPI through CountNumber and shows the final value on a fresh load 393ms
+ ✓ src/pages/Learning.test.tsx (10 tests) 18786ms
+   ✓ Learning page > requires explicit insufficient-data acknowledgement and a ten-character reason before approval 4838ms
+   ✓ Learning page > shows the three separated panels, filters and the evidence table with support and counter cases 2958ms
+   ✓ Learning page > disables every action for a reviewer and explains why 3224ms
+   ✓ Learning page > keeps publish disabled until validated, and shows insufficient-sample observation after publishing 4206ms
+   ✓ Learning page > loads the latest validation from the API after selecting a rule version 1226ms
+   ✓ validation inputs (P4-02) > disables 검증 실행 with a Korean hint when a date is cleared, and never throws 2256ms
+ ✓ src/pages/Review.test.tsx (20 tests) 22863ms
+   ✓ review list title and source permission > titles each list row with the masked request title, id chip as the secondary line 1346ms
+   ✓ review list title and source permission > says honestly when the reviewer may not read the raw text, and shows the masked title 2575ms
+   ✓ review list title and source permission > still opens the review when the request detail itself is not readable 753ms
+   ✓ review list title and source permission > shows the raw text when the reviewer may read it 1133ms
+   ✓ review comparison > lists each task once from the current draft and separates the AI original (P6-01) 1834ms
+   ✓ review comparison > renders the preserved AI original alongside the reviewer value 1286ms
+   ✓ review comparison > keeps the 409 conflict notice after reloading the latest review (P3-07) 1557ms
+   ✓ review comparison > opens the review of ?request_id= directly (P3-10), also when it is no longer pending 1268ms
+   ✓ review comparison > opens ?review_id= directly and reports an unknown request_id 803ms
+   ✓ review comparison > sends a decision once even when the button is activated twice in a row 1263ms
+   ✓ review evidence viewer > opens the cited unit in the source viewer using the attachment named by the run judgment 1224ms
+   ✓ review detail error ownership (P4-03) > keeps the detail error when the list refresh finishes afterwards 392ms
+   ✓ review list controls > shows an empty-state card with guidance and switches status through the shared select 393ms
+   ✓ review list controls > says why the reason-gated decisions are disabled 666ms
+   ✓ review list row title (TOSS-SCREENS) > does not put the raw request id in the title slot; a short id chip carries it and the full id stays reachable 770ms
+   ✓ shows the stored title in the review queue and a masked summary in detail when source access is denied 933ms
+   ✓ undetermined draft repair (P1-01) > edits all required draft fields and submits the repaired task 2672ms
+   ✓ undetermined draft repair (P1-01) > places server validation guidance at the unresolved field 1395ms
+ ✓ src/pages/Main.progressive.test.tsx (16 tests) 25452ms
+   ✓ optimistic request card > shows the sent request as a right-hand bubble immediately, before the server answers 2867ms
+   ✓ optimistic request card > confirms the bubble with the server request id 1679ms
+   ✓ optimistic request card > rolls back on failure: bubble removed, text kept, reason and retry shown 2842ms
+   ✓ partial events render by area > judgment.partial: four provisional cards at once; evidence and tasks stay skeletons; actions disabled 2583ms
+   ✓ partial events render by area > UX-7: an uncertain provisional classification shows the final guidance slot (no selected choice) from the provisional stage 1556ms
+   ✓ partial events render by area > evidence_ready and tasks_ready fill their own areas (any order) 1173ms
+   ✓ partial events render by area > judgment_saved updates the cards from the event payload before the detail call returns 1102ms
+   ✓ partial events render by area > ignores events of another request 1047ms
+   ✓ reload restores from the progress API > rebuilds the provisional cards and current step without events 729ms
+   ✓ stop cancels the active run and keeps a dimmed provisional result with reanalysis available 2147ms
+   ✓ slow and failed runs > after 5s without a final result shows the long-wait notice with the current step 404ms
+   ✓ slow and failed runs > judgment_failed shows the cause at once with a retry button 1686ms
+   ✓ provisional → final keeps the layout (F5) > shows summary, judgment and task areas in the final order from the first provisional card 1930ms
+   ✓ provisional → final keeps the layout (F5) > keeps the sent-request bubble above the result instead of removing it 880ms
+   ✓ provisional → final keeps the layout (F5) > reserves the summary slot while provisional, with no late-inserted note row 1368ms
+   ✓ provisional → final keeps the layout (F5) > tells "N items prepared" apart from "details can be opened" 1388ms
+ ✓ src/pages/Evaluation.test.tsx (15 tests) 27203ms
+   ✓ Evaluation keyboard workflow > supports 1-4 field focus, Enter confirmation, and J/K navigation 4802ms
+   ✓ Evaluation keyboard workflow > does not steal Enter or letters from the reason textarea or from a focused action button 1811ms
+   ✓ Evaluation keyboard workflow > moves the selection with arrow keys inside a radio group 2059ms
+   ✓ Evaluation answer input (UX-EVAL) > shows judgments as choice chips, never as JSON text inputs 2453ms
+   ✓ Evaluation answer input (UX-EVAL) > saves chip choices in the existing API format (strings and arrays) 4003ms
+   ✓ Evaluation answer input (UX-EVAL) > requires a reason to defer and sends it with the deferred status 1727ms
+   ✓ Evaluation answer input (UX-EVAL) > final split hides model predictions and blocks confirming until every choice is made 2896ms
+   ✓ Evaluation Korean labels (F6) > shows consensus state, history and field names in Korean; internal keys only inside 기술 상세 3014ms
+   ✓ Evaluation Korean labels (F6) > labels the agreed state "일치" 448ms
+   ✓ Evaluation Korean labels (F6) > labels the unlabeled state "라벨 없음" 598ms
+   ✓ Evaluation states > explains a missing role instead of showing the form 346ms
+   ✓ Evaluation states > offers a retry after a load failure 859ms
+   ✓ Evaluation states > keeps the form and shows an error toast when saving fails 1796ms
+ ✓ src/lib/motion.test.tsx (18 tests) 3060ms
+   ✓ motion utilities > useStaggerIn indexes children and marks the container 459ms
+   ✓ Button (TDS size/variant/color) > keeps legacy variants 680ms
+   ✓ Tabs > keeps tab semantics and selection 458ms
+ ✓ src/pages/Main.chat.test.tsx (17 tests) 27493ms
+   ✓ first screen > greets with the wave mascot, three example requests and a labelled multi-line composer 2943ms
+   ✓ first screen > uses the still PNG instead of the wave video under reduced motion 450ms
+   ✓ first screen > an example chip fills the composer for editing and sends nothing by itself 725ms
+   ✓ composer > Enter sends, Shift+Enter only adds a line, Ctrl/⌘+Enter still sends 2232ms
+   ✓ composer > shows attached files as chips, lets you remove one, and caps at five with a notice 2436ms
+   ✓ composer > accepts files dropped on the composer 592ms
+   ✓ conversation state transitions > sent bubble → upload % → analysis steps → provisional card → final result with the like icon 2420ms
+   ✓ conversation state transitions > review-needed results use the surprised icon; urgent results show a warning and no mascot 1267ms
+   ✓ conversation state transitions > shows the long-wait message after 5 seconds without a result 987ms
+   ✓ conversation state transitions > a failed send becomes a cause + retry bubble and returns the draft to the composer 1479ms
+   ✓ conversation state transitions > keeps review/assignment-like actions disabled until the final judgment is saved 2324ms
+   ✓ questions and choices inside the conversation > file read failure: 일동이 asks, [제외하고 진행] sends the exclusion for the unreadable ids 913ms
+   ✓ questions and choices inside the conversation > file read failure: [다시 첨부] opens the picker and the next send is a new revision 2141ms
+   ✓ questions and choices inside the conversation > reviewer info request: 일동이 asks and the answer typed in the same composer becomes a supplement revision 1931ms
+   ✓ questions and choices inside the conversation > after the result: [다시 분석] confirms then calls the reanalysis API; [새 요청 시작] clears the conversation 2400ms
+   ✓ restoring a conversation > rebuilds every revision bubble with its attachment chips from detail, plus the saved result 447ms
+   ✓ restoring a conversation > restores an in-flight run from the progress API and the list becomes a sheet behind the 내 요청 button 1768ms
+ ❯ src/pages/Main.layout.test.tsx (18 tests | 1 failed) 27521ms
+   × request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading 3123ms
+     → Unable to find role="button" and name `/문의 h\*\*\*@corp\.com 로 회신해 주세요\./`
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33mclass[39m=[32m"main-page chat-page"[39m
+      [33mstyle[39m=[32m"--shell-top: 0px;"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"대화 목록"[39m
+        [33mclass[39m=[32m"request-list"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"list-body"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-head"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"new-chat"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m새 요청[0m
+            [36m</button>[39m
+            [36m<h2>[39m
+              [0m내 요청 대화[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-scroll"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33maria-label[39m=[32m"오늘"[39m
+              [33mclass[39m=[32m"list-group"[39m
+            [36m>[39m
+              [36m<h3>[39m
+                [0m오늘[0m
+              [36m</h3>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"request-row"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"접수됨"[39m
+                  [33mclass[39m=[32m"status-dot"[39m
+                  [33mdata-status[39m=[32m"pending"[39m
+                  [33mrole[39m=[32m"img"[39m
+                  [33mtitle[39m=[32m"접수됨"[39m
+                [36m/>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"제목을 불러오는 중"[39m
+                  [33mclass[39m=[32m"request-title ui-skeleton"[39m
+                [36m/>[39m
+                [36m<code[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"request-id"[39m
+                  [33mtitle[39m=[32m"req_0123456789abcdef"[39m
+                [36m>[39m
+                  [0mreq_0123[0m
+                [36m</code>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                [36m>[39m
+                  [0mreq_0123456789abcdef[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</section>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"chat-surface"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-heading"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"내 요청"[39m
+            [33mclass[39m=[32m"icon-button menu-button"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mfocusable[39m=[32m"false"[39m
+              [33mheight[39m=[32m"20"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"20"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 7h16M4 12h16M4 17h16"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1>[39m
+            [0m일동이와 요청 접수[0m
+          [36m</h1>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"heading-actions"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"새 요청 시작"[39m
+              [33mclass[39m=[32m"icon-button new-button"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-primary chat-main"[39m
+          [33mdata-empty[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"chat-viewport"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"chat-scroll"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"일동이와의 대화"[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33maria-relevant[39m=[32m"additions"[39m
+                [33mclass[39m=[32m"chat-log"[39m
+                [33mrole[39m=[32m"log"[39m
+              [36m>[39m
+                [36m<section[39m
+                  [33maria-label[39m=[32m"일동이 인사"[39m
+                  [33mclass[39m=[32m"chat-greeting"[39m
+                [36m>[39m
+                  [36m<video[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mautoplay[39m=[32m""[39m
+                    [33mclass[39m=[32m"mascot "[39m
+                    [33mdata-mascot[39m=[32m"wave"[39m
+                    [33mloop[39m=[32m""[39m
+                    [33mplaysinline[39m=[32m""[39m
+                    [33mposter[39m=[32m"/assets/mascot/mascot.png"[39m
+                    [33msrc[39m=[32m"/assets/mascot/wave.webm"[39m
+                    [33mstyle[39m=[32m"width: 96px; height: 96px;"[39m
+                  [36m/>[39m
+                  [36m<h2>[39m
+                    [0m안녕하세요, 일동이예요[0m
+                  [36m</h2>[39m
+                  [36m<p>[39m
+                    [0m무엇을 도와드릴까요? 업무 요청을 적거나 문서를 올려 주세요.[0m
+                    [36m<br />[39m
+                    [0mAI·일반 개발·사람이 맡을 일을 나눠 드려요.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"composer-dock"[39m
+          [36m>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"일동이에게 요청"[39m
+              [33mclass[39m=[32m"composer"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"composer-box"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"icon-button attach-button"[39m
+                  [33mtitle[39m=[32m"파일 첨부"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33maccept[39m=[32m".pdf,.docx,.md"[39m
+                    [33maria-label[39m=[32m"파일 첨부"[39m
+                    [33mmultiple[39m=[32m""[39m
+                    [33mtype[39m=[32m"file"[39m
+                  [36m/>[39m
+                [36m</label>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                  [33mfor[39m=[32m"request-text"[39m
+                [36m>[39m
+                  [0m요청 내용[0m
+                [36m</label>[39m
+                [36m<textarea[39m
+                  [33maria-describedby[39m=[32m"composer-hint"[39m
+                  [33mid[39m=[32m"request-text"[39m
+                  [33mplaceholder[39m=[32m"필요한 업무와 해결하려는 문제를 적어 주세요"[39m
+                  [33mrows[39m=[32m"1"[39m
+                  [33mstyle[39m=[32m"height: auto;"[39m
+                [36m/>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"요청 보내기"[39m
+                  [33mclass[39m=[32m"ui-button primary send-button"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtitle[39m=[32m"요청 보내기"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 19V5M5 12l7-7 7 7"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"composer-hint"[39m
+                [33mid[39m=[32m"composer-hint"[39m
+              [36m>[39m
+                [0mPDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB[0m
+                [0m · Enter로 보내기 · Shift + Enter로 줄바꿈[0m
+              [36m</p>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"예시 요청"[39m
+            [33mclass[39m=[32m"example-chips"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m이렇게 요청해 보세요[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m병원별 판매량으로 다음 달 수요를 예측하고 싶어요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m출하 지시가 멈췄어요. 오늘 마감이에요[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33mclass[39m=[32m"main-page chat-page"[39m
+      [33mstyle[39m=[32m"--shell-top: 0px;"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"대화 목록"[39m
+        [33mclass[39m=[32m"request-list"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"list-body"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-head"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"new-chat"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m새 요청[0m
+            [36m</button>[39m
+            [36m<h2>[39m
+              [0m내 요청 대화[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-scroll"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33maria-label[39m=[32m"오늘"[39m
+              [33mclass[39m=[32m"list-group"[39m
+            [36m>[39m
+              [36m<h3>[39m
+                [0m오늘[0m
+              [36m</h3>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"request-row"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"접수됨"[39m
+                  [33mclass[39m=[32m"status-dot"[39m
+                  [33mdata-status[39m=[32m"pending"[39m
+                  [33mrole[39m=[32m"img"[39m
+                  [33mtitle[39m=[32m"접수됨"[39m
+                [36m/>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"제목을 불러오는 중"[39m
+                  [33mclass[39m=[32m"request-title ui-skeleton"[39m
+                [36m/>[39m
+                [36m<code[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"request-id"[39m
+                  [33mtitle[39m=[32m"req_0123456789abcdef"[39m
+                [36m>[39m
+                  [0mreq_0123[0m
+                [36m</code>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                [36m>[39m
+                  [0mreq_0123456789abcdef[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</section>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"chat-surface"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-heading"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"내 요청"[39m
+            [33mclass[39m=[32m"icon-button menu-button"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mfocusable[39m=[32m"false"[39m
+              [33mheight[39m=[32m"20"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"20"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 7h16M4 12h16M4 17h16"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1>[39m
+            [0m일동이와 요청 접수[0m
+          [36m</h1>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"heading-actions"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"새 요청 시작"[39m
+              [33mclass[39m=[32m"icon-button new-button"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-primary chat-main"[39m
+          [33mdata-empty[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"chat-viewport"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"chat-scroll"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"일동이와의 대화"[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33maria-relevant[39m=[32m"additions"[39m
+                [33mclass[39m=[32m"chat-log"[39m
+                [33mrole[39m=[32m"log"[39m
+              [36m>[39m
+                [36m<section[39m
+                  [33maria-label[39m=[32m"일동이 인사"[39m
+                  [33mclass[39m=[32m"chat-greeting"[39m
+                [36m>[39m
+                  [36m<video[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mautoplay[39m=[32m""[39m
+                    [33mclass[39m=[32m"mascot "[39m
+                    [33mdata-mascot[39m=[32m"wave"[39m
+                    [33mloop[39m=[32m""[39m
+                    [33mplaysinline[39m=[32m""[39m
+                    [33mposter[39m=[32m"/assets/mascot/mascot.png"[39m
+                    [33msrc[39m=[32m"/assets/mascot/wave.webm"[39m
+                    [33mstyle[39m=[32m"width: 96px; height: 96px;"[39m
+                  [36m/>[39m
+                  [36m<h2>[39m
+                    [0m안녕하세요, 일동이예요[0m
+                  [36m</h2>[39m
+                  [36m<p>[39m
+                    [0m무엇을 도와드릴까요? 업무 요청을 적거나 문서를 올려 주세요.[0m
+                    [36m<br />[39m
+                    [0mAI·일반 개발·사람이 맡을 일을 나눠 드려요.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"composer-dock"[39m
+          [36m>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"일동이에게 요청"[39m
+              [33mclass[39m=[32m"composer"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"composer-box"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"icon-button attach-button"[39m
+                  [33mtitle[39m=[32m"파일 첨부"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33maccept[39m=[32m".pdf,.docx,.md"[39m
+                    [33maria-label[39m=[32m"파일 첨부"[39m
+                    [33mmultiple[39m=[32m""[39m
+                    [33mtype[39m=[32m"file"[39m
+                  [36m/>[39m
+                [36m</label>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                  [33mfor[39m=[32m"request-text"[39m
+                [36m>[39m
+                  [0m요청 내용[0m
+                [36m</label>[39m
+                [36m<textarea[39m
+                  [33maria-describedby[39m=[32m"composer-hint"[39m
+                  [33mid[39m=[32m"request-text"[39m
+                  [33mplaceholder[39m=[32m"필요한 업무와 해결하려는 문제를 적어 주세요"[39m
+                  [33mrows[39m=[32m"1"[39m
+                  [33mstyle[39m=[32m"height: auto;"[39m
+                [36m/>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"요청 보내기"[39m
+                  [33mclass[39m=[32m"ui-button primary send-button"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtitle[39m=[32m"요청 보내기"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 19V5M5 12l7-7 7 7"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"composer-hint"[39m
+                [33mid[39m=[32m"composer-hint"[39m
+              [36m>[39m
+                [0mPDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB[0m
+                [0m · Enter로 보내기 · Shift + Enter로 줄바꿈[0m
+              [36m</p>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"예시 요청"[39m
+            [33mclass[39m=[32m"example-chips"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m이렇게 요청해 보세요[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m병원별 판매량으로 다음 달 수요를 예측하고 싶어요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m출하 지시가 멈췄어요. 오늘 마감이에요[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ✓ request list rows > groups rows like a chat sidebar: 오늘 / 어제 / 지난 7일 732ms
+   ✓ request list rows > the 새 요청 button on top of the sidebar starts a fresh conversation 1480ms
+   ✓ request list rows > the list scrolls on its own: the rows live in one scroll container 4505ms
+   ✓ request list rows > below 960px the list opens as a sheet from a top "내 요청" button and closes on pick 1587ms
+   ✓ result summary card in the conversation > shows the four classifications and a task split summary, not the full detail 923ms
+   ✓ result summary card in the conversation > 자세히 보기 opens the full result in a drawer; the evidence viewer stacks on top and leaves it open 1383ms
+   ✓ result summary card in the conversation > the summary card itself offers evidence so the original text stays one click away 916ms
+   ✓ composer keys > Enter sends, Shift+Enter keeps a newline, Enter during IME composition does not send 1221ms
+   ✓ typing indicator and scrolling > shows three typing dots while the analysis is running and removes them with the result 1188ms
+   ✓ typing indicator and scrolling > while reading above the bottom a new message shows a "새 메시지" pill instead of jumping; the pill scrolls down 2943ms
+   ✓ typing indicator and scrolling > at the bottom a new message follows smoothly, or instantly under reduced motion 866ms
+   ✓ ChatGPT-style conversation > empty state: greeting, then the big composer, then the example chips; after the first message the chips and greeting are gone 1121ms
+   ✓ ChatGPT-style conversation > your message is a grey bubble on the right; 일동이 answers without a bubble (fixed avatar column) 764ms
+   ✓ ChatGPT-style conversation > an action row sits under the answer: copy, re-analyze, source — disabled while provisional, enabled at the final result, same slot 1898ms
+   ✓ ChatGPT-style conversation > copy puts the summary, the four classifications and the task split on the clipboard 1148ms
+   ✓ ChatGPT-style conversation > the send button turns into a stop-shaped, disabled button while the message is on its way 1383ms
+stderr | src/pages/judgment-map/stage.test.tsx > detail panel formatting > shows versions as chips, a short id with copy, a formatted time and a Korean status badge
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/judgment-map/stage.test.tsx (9 tests) 3547ms
+   ✓ stage rendering > shows the kind as a small chip, the short title with the full title on hover, and per-layer counts 1332ms
+   ✓ detail panel formatting > shows versions as chips, a short id with copy, a formatted time and a Korean status badge 1332ms
+   ✓ detail panel formatting > copies the full id 481ms
+ ✓ src/state/progress.test.ts (11 tests) 45ms
+stderr | src/pages/JudgmentMap.test.tsx > JudgmentMap list view > renders counts, every node in layer lists and an empty-layer state
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/main/conversation.test.ts (7 tests) 68ms
+ ✓ src/pages/JudgmentMap.test.tsx (7 tests) 10942ms
+   ✓ JudgmentMap list view > renders counts, every node in layer lists and an empty-layer state 4590ms
+   ✓ JudgmentMap list view > localizes internal field and decision codes in ordinary node titles 1993ms
+   ✓ JudgmentMap list view > selects with Enter, shows detail counts and the path table, clears with Escape 4131ms
+ ✓ src/components/fields.test.tsx (7 tests) 5678ms
+   ✓ DateRange > shows Korean-ordered segments (년 월 일 시 분) and emits ISO-like local values 1759ms
+   ✓ DateRange > is a labelled group 946ms
+   ✓ SearchSelect > filters while typing, picks with Enter and closes on Escape 1085ms
+   ✓ NumberField > shows the allowed range, reports only valid numbers and flags out-of-range text 733ms
+   ✓ Switch, Checkbox, Select, EmptyCard > toggle with the keyboard-accessible controls 912ms
+stderr | src/pages/judgment-map/versionTabs.test.tsx > JudgmentMap version tabs and expanded view > filters nodes and links to the selected version and restores them with "전체"
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Observatory.test.tsx > Observatory deep links and flow (P3-03/P3-04) > resolves the request from ?run_id= alone and does not fall back to the first request
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ❯ src/pages/Policy.test.tsx (13 tests | 2 failed) 44361ms
+   ✓ Policy page > renders selected-version diff 4126ms
+   ✓ Policy page > explains a 409 publish conflict and reloads current policy 4374ms
+   ✓ Policy page > lets the editor clear and retype a JSON value without snapping back (P3-08) 3393ms
+   ✓ Policy page > shows validation errors in Korean with the internal code under technical details (P3-13) 2072ms
+   ✓ Policy page > policy.published events (F2) > ignores replayed events at or below the active version and validates exactly what was typed 1415ms
+   ✓ Policy page > policy.published events (F2) > does not overwrite an edit in progress with a newer version: asks first, then applies or keeps 2961ms
+   ✓ Policy page > policy.published events (F2) > reloads silently for a newer version when nothing was edited 1181ms
+   ✓ Policy page > policy.published events (F2) > a slower, older fetch never overwrites a newer one (generation check) 1901ms
+   ✓ Policy page > names every editor field in Korean with a short hint and keeps the internal key under 기술 상세 (F6) 2827ms
+   × Policy page > field form > edits a number, a band, a switch and a chip and validates exactly those values 6879ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number 7372ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ Policy page > field form > shows the allowed range and warns when the band is inverted 2598ms
+   ✓ Policy page > field form > is read-only without the editor role 3225ms
+stderr | src/pages/Tasks.test.tsx > Tasks block reasons (P4-01) > shows Korean block reasons in list and detail and disables the start button
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.list.test.tsx > request list follows tenant events (F4) > subscribes to tenant events even with no request selected and refetches the list after request.received
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/ui.test.tsx (6 tests) 2053ms
+   ✓ shared UI foundations > shows the accessible status name 702ms
+   ✓ shared UI foundations > traps modal focus and closes on Escape 866ms
+ ✓ src/pages/Main.list.test.tsx (2 tests) 3832ms
+   ✓ request list follows tenant events (F4) > subscribes to tenant events even with no request selected and refetches the list after request.received 2495ms
+   ✓ request list follows tenant events (F4) > debounces an event burst into one refetch and keeps the selected detail untouched 1316ms
+ ✓ src/pages/main/listFormat.test.ts (7 tests) 66ms
+ ✓ src/pages/judgment-map/versionTabs.test.tsx (5 tests) 7788ms
+   ✓ JudgmentMap version tabs and expanded view > filters nodes and links to the selected version and restores them with "전체" 5478ms
+   ✓ JudgmentMap version tabs and expanded view > shows an empty version area when no rule version data exists 681ms
+   ✓ JudgmentMap version tabs and expanded view > toggles the expanded view, keeps focus on the toggle and leaves it with Escape 1584ms
+ ✓ src/pages/Observatory.test.tsx (5 tests) 7829ms
+   ✓ Observatory deep links and flow (P3-03/P3-04) > resolves the request from ?run_id= alone and does not fall back to the first request 3419ms
+   ✓ Observatory deep links and flow (P3-03/P3-04) > renders steps in the given order with predecessor labels and the edge list 1353ms
+   ✓ Trace detail diagnostics (SPEC-F02) > shows failed step error, duration, and execution versions 1207ms
+   ✓ Observatory empty states and selectors > shows an empty-state card when there is no request to observe 411ms
+   ✓ Observatory empty states and selectors > lets the request be found by typing part of its id 1365ms
+ ✓ src/styles/screens-tokens.test.ts (40 tests) 310ms
+ ✓ src/styles/tokens.test.ts (47 tests) 10ms
+ ✓ src/pages/Tasks.test.tsx (7 tests) 10183ms
+   ✓ Tasks block reasons (P4-01) > shows Korean block reasons in list and detail and disables the start button 4187ms
+   ✓ Tasks block reasons (P4-01) > translates policy codes in the task premise shown in details 927ms
+   ✓ Tasks block reasons (P4-01) > keeps the latest block reasons after a 409 and explains them 2320ms
+   ✓ Tasks block reasons (P4-01) > allows starting a waiting task without blockers 670ms
+   ✓ Tasks block reasons (P4-01) > enables start after a completed confirmation, based on the server projection 1058ms
+   ✓ Tasks empty state and filters > explains what will appear and what to do next, differently when a filter is active 421ms
+   ✓ task row ids (TOSS-SCREENS) > shows ids as short chips in the row while keeping the full ids reachable 567ms
+ ✓ src/lib/labels.test.ts (2 tests) 10ms
+ ✓ src/pages/observatory/playback.test.ts (6 tests) 12ms
+ ✓ src/styles/fonts.test.ts (5 tests) 1960ms
+   ✓ font subset > covers every non-ASCII character that appears in app source 1845ms
+ ✓ src/components/EvidenceViewer.test.tsx (3 tests) 3800ms
+   ✓ EvidenceViewer > lists every unit in order with page breaks and highlights + scrolls to the anchor unit 2813ms
+   ✓ EvidenceViewer > shows positions only and the permission notice when the server withholds the source 584ms
+   ✓ EvidenceViewer > says so when the anchor unit is not in the document and when loading fails 395ms
+ ✓ src/state/useDelayedFlag.test.tsx (4 tests) 886ms
+   ✓ useDelayedFlag (Suspensive <Delay/> equivalent) > does not flash for loads shorter than the delay 357ms
+ ✓ src/webmcp/index.test.ts (3 tests) 488ms
+ ✓ src/components/evidenceViewerLogic.test.ts (5 tests) 14ms
+stderr | src/pages/judgment-map/Detail.test.tsx > judgment map evidence node > opens the source viewer at the node unit even when the account cannot read the source text
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/judgment-map/Detail.test.tsx (2 tests) 2838ms
+   ✓ judgment map evidence node > opens the source viewer at the node unit even when the account cannot read the source text 2103ms
+   ✓ judgment map evidence node > has no open-source button for other node kinds 665ms
+ ✓ src/pages/Login.test.tsx (3 tests) 4003ms
+   ✓ Login (P3-01) > has email and password fields and a submit button that posts credentials 3198ms
+   ✓ Login (P3-01) > shows a Korean error for wrong credentials and stays on the form 633ms
+stderr | src/pages/learning/validationCard.test.tsx > validation result display (P3-06) > shows field/value change counts, the period and the failure count
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/learning/validationCard.test.tsx (2 tests) 1216ms
+   ✓ validation result display (P3-06) > shows field/value change counts, the period and the failure count 1127ms
+ ✓ src/components/statusLabels.test.ts (3 tests) 52ms
+ ✓ src/state/events.test.ts (4 tests) 28ms
+stderr | src/pages/learning/proposal.test.tsx > reviewer can open a human proposal form
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/layout/routes.test.tsx > route prefetch > menu hover and keyboard focus prefetch the target route
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/layout/routes.test.tsx (4 tests) 1621ms
+   ✓ route prefetch > menu hover and keyboard focus prefetch the target route 1594ms
+ ✓ src/pages/learning/proposal.test.tsx (3 tests) 4484ms
+   ✓ reviewer can open a human proposal form 2298ms
+   ✓ operator cannot propose a candidate 959ms
+   ✓ offers only action values allowed by the server safety contract 1215ms
+ ✓ src/api/monitoring.test.ts (3 tests) 111ms
+ ✓ src/pages/main/ResultCard.test.tsx (2 tests) 901ms
+   ✓ judgment result ids > keeps raw run/revision ids out of the conversation card 475ms
+   ✓ judgment result ids > shows the ids as short chips inside the detail view 425ms
+ ✓ src/pages/learning/observation.test.tsx (1 test) 2254ms
+   ✓ shows all four human label cohorts and leaves insufficient truth unconfirmed 2235ms
+ ✓ src/components/ShortId.test.tsx (4 tests) 515ms
+   ✓ <ShortId> > shows the short form and keeps the full id for hover, copy and assistive tech 507ms
+stderr | src/smoke.test.tsx > frontend smoke > routes unauthenticated sessions to login
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/smoke.test.tsx (1 test) 1044ms
+   ✓ frontend smoke > routes unauthenticated sessions to login 1043ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/Main.layout.test.tsx > request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading
+TestingLibraryElementError: Unable to find role="button" and name `/문의 h\*\*\*@corp\.com 로 회신해 주세요\./`
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33mclass[39m=[32m"main-page chat-page"[39m
+      [33mstyle[39m=[32m"--shell-top: 0px;"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"대화 목록"[39m
+        [33mclass[39m=[32m"request-list"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"list-body"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-head"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"new-chat"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m새 요청[0m
+            [36m</button>[39m
+            [36m<h2>[39m
+              [0m내 요청 대화[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-scroll"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33maria-label[39m=[32m"오늘"[39m
+              [33mclass[39m=[32m"list-group"[39m
+            [36m>[39m
+              [36m<h3>[39m
+                [0m오늘[0m
+              [36m</h3>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"request-row"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"접수됨"[39m
+                  [33mclass[39m=[32m"status-dot"[39m
+                  [33mdata-status[39m=[32m"pending"[39m
+                  [33mrole[39m=[32m"img"[39m
+                  [33mtitle[39m=[32m"접수됨"[39m
+                [36m/>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"제목을 불러오는 중"[39m
+                  [33mclass[39m=[32m"request-title ui-skeleton"[39m
+                [36m/>[39m
+                [36m<code[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"request-id"[39m
+                  [33mtitle[39m=[32m"req_0123456789abcdef"[39m
+                [36m>[39m
+                  [0mreq_0123[0m
+                [36m</code>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                [36m>[39m
+                  [0mreq_0123456789abcdef[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</section>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"chat-surface"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-heading"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"내 요청"[39m
+            [33mclass[39m=[32m"icon-button menu-button"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mfocusable[39m=[32m"false"[39m
+              [33mheight[39m=[32m"20"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"20"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 7h16M4 12h16M4 17h16"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1>[39m
+            [0m일동이와 요청 접수[0m
+          [36m</h1>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"heading-actions"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"새 요청 시작"[39m
+              [33mclass[39m=[32m"icon-button new-button"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-primary chat-main"[39m
+          [33mdata-empty[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"chat-viewport"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"chat-scroll"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"일동이와의 대화"[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33maria-relevant[39m=[32m"additions"[39m
+                [33mclass[39m=[32m"chat-log"[39m
+                [33mrole[39m=[32m"log"[39m
+              [36m>[39m
+                [36m<section[39m
+                  [33maria-label[39m=[32m"일동이 인사"[39m
+                  [33mclass[39m=[32m"chat-greeting"[39m
+                [36m>[39m
+                  [36m<video[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mautoplay[39m=[32m""[39m
+                    [33mclass[39m=[32m"mascot "[39m
+                    [33mdata-mascot[39m=[32m"wave"[39m
+                    [33mloop[39m=[32m""[39m
+                    [33mplaysinline[39m=[32m""[39m
+                    [33mposter[39m=[32m"/assets/mascot/mascot.png"[39m
+                    [33msrc[39m=[32m"/assets/mascot/wave.webm"[39m
+                    [33mstyle[39m=[32m"width: 96px; height: 96px;"[39m
+                  [36m/>[39m
+                  [36m<h2>[39m
+                    [0m안녕하세요, 일동이예요[0m
+                  [36m</h2>[39m
+                  [36m<p>[39m
+                    [0m무엇을 도와드릴까요? 업무 요청을 적거나 문서를 올려 주세요.[0m
+                    [36m<br />[39m
+                    [0mAI·일반 개발·사람이 맡을 일을 나눠 드려요.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"composer-dock"[39m
+          [36m>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"일동이에게 요청"[39m
+              [33mclass[39m=[32m"composer"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"composer-box"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"icon-button attach-button"[39m
+                  [33mtitle[39m=[32m"파일 첨부"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33maccept[39m=[32m".pdf,.docx,.md"[39m
+                    [33maria-label[39m=[32m"파일 첨부"[39m
+                    [33mmultiple[39m=[32m""[39m
+                    [33mtype[39m=[32m"file"[39m
+                  [36m/>[39m
+                [36m</label>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                  [33mfor[39m=[32m"request-text"[39m
+                [36m>[39m
+                  [0m요청 내용[0m
+                [36m</label>[39m
+                [36m<textarea[39m
+                  [33maria-describedby[39m=[32m"composer-hint"[39m
+                  [33mid[39m=[32m"request-text"[39m
+                  [33mplaceholder[39m=[32m"필요한 업무와 해결하려는 문제를 적어 주세요"[39m
+                  [33mrows[39m=[32m"1"[39m
+                  [33mstyle[39m=[32m"height: auto;"[39m
+                [36m/>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"요청 보내기"[39m
+                  [33mclass[39m=[32m"ui-button primary send-button"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtitle[39m=[32m"요청 보내기"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 19V5M5 12l7-7 7 7"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"composer-hint"[39m
+                [33mid[39m=[32m"composer-hint"[39m
+              [36m>[39m
+                [0mPDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB[0m
+                [0m · Enter로 보내기 · Shift + Enter로 줄바꿈[0m
+              [36m</p>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"예시 요청"[39m
+            [33mclass[39m=[32m"example-chips"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m이렇게 요청해 보세요[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m병원별 판매량으로 다음 달 수요를 예측하고 싶어요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m출하 지시가 멈췄어요. 오늘 마감이에요[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33mclass[39m=[32m"main-page chat-page"[39m
+      [33mstyle[39m=[32m"--shell-top: 0px;"[39m
+    [36m>[39m
+      [36m<aside[39m
+        [33maria-label[39m=[32m"대화 목록"[39m
+        [33mclass[39m=[32m"request-list"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"list-body"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-head"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"new-chat"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0m새 요청[0m
+            [36m</button>[39m
+            [36m<h2>[39m
+              [0m내 요청 대화[0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"list-scroll"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33maria-label[39m=[32m"오늘"[39m
+              [33mclass[39m=[32m"list-group"[39m
+            [36m>[39m
+              [36m<h3>[39m
+                [0m오늘[0m
+              [36m</h3>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"request-row"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"접수됨"[39m
+                  [33mclass[39m=[32m"status-dot"[39m
+                  [33mdata-status[39m=[32m"pending"[39m
+                  [33mrole[39m=[32m"img"[39m
+                  [33mtitle[39m=[32m"접수됨"[39m
+                [36m/>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"제목을 불러오는 중"[39m
+                  [33mclass[39m=[32m"request-title ui-skeleton"[39m
+                [36m/>[39m
+                [36m<code[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"request-id"[39m
+                  [33mtitle[39m=[32m"req_0123456789abcdef"[39m
+                [36m>[39m
+                  [0mreq_0123[0m
+                [36m</code>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                [36m>[39m
+                  [0mreq_0123456789abcdef[0m
+                [36m</span>[39m
+              [36m</button>[39m
+            [36m</section>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</aside>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"chat-surface"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-heading"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-expanded[39m=[32m"false"[39m
+            [33maria-haspopup[39m=[32m"dialog"[39m
+            [33maria-label[39m=[32m"내 요청"[39m
+            [33mclass[39m=[32m"icon-button menu-button"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mfocusable[39m=[32m"false"[39m
+              [33mheight[39m=[32m"20"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"20"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M4 7h16M4 12h16M4 17h16"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<h1>[39m
+            [0m일동이와 요청 접수[0m
+          [36m</h1>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"heading-actions"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"새 요청 시작"[39m
+              [33mclass[39m=[32m"icon-button new-button"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"20"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"main-primary chat-main"[39m
+          [33mdata-empty[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"chat-viewport"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"chat-scroll"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-label[39m=[32m"일동이와의 대화"[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33maria-relevant[39m=[32m"additions"[39m
+                [33mclass[39m=[32m"chat-log"[39m
+                [33mrole[39m=[32m"log"[39m
+              [36m>[39m
+                [36m<section[39m
+                  [33maria-label[39m=[32m"일동이 인사"[39m
+                  [33mclass[39m=[32m"chat-greeting"[39m
+                [36m>[39m
+                  [36m<video[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mautoplay[39m=[32m""[39m
+                    [33mclass[39m=[32m"mascot "[39m
+                    [33mdata-mascot[39m=[32m"wave"[39m
+                    [33mloop[39m=[32m""[39m
+                    [33mplaysinline[39m=[32m""[39m
+                    [33mposter[39m=[32m"/assets/mascot/mascot.png"[39m
+                    [33msrc[39m=[32m"/assets/mascot/wave.webm"[39m
+                    [33mstyle[39m=[32m"width: 96px; height: 96px;"[39m
+                  [36m/>[39m
+                  [36m<h2>[39m
+                    [0m안녕하세요, 일동이예요[0m
+                  [36m</h2>[39m
+                  [36m<p>[39m
+                    [0m무엇을 도와드릴까요? 업무 요청을 적거나 문서를 올려 주세요.[0m
+                    [36m<br />[39m
+                    [0mAI·일반 개발·사람이 맡을 일을 나눠 드려요.[0m
+                  [36m</p>[39m
+                [36m</section>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"composer-dock"[39m
+          [36m>[39m
+            [36m<form[39m
+              [33maria-label[39m=[32m"일동이에게 요청"[39m
+              [33mclass[39m=[32m"composer"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"composer-box"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"icon-button attach-button"[39m
+                  [33mtitle[39m=[32m"파일 첨부"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 5v14M5 12h14"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33maccept[39m=[32m".pdf,.docx,.md"[39m
+                    [33maria-label[39m=[32m"파일 첨부"[39m
+                    [33mmultiple[39m=[32m""[39m
+                    [33mtype[39m=[32m"file"[39m
+                  [36m/>[39m
+                [36m</label>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"sr-only"[39m
+                  [33mfor[39m=[32m"request-text"[39m
+                [36m>[39m
+                  [0m요청 내용[0m
+                [36m</label>[39m
+                [36m<textarea[39m
+                  [33maria-describedby[39m=[32m"composer-hint"[39m
+                  [33mid[39m=[32m"request-text"[39m
+                  [33mplaceholder[39m=[32m"필요한 업무와 해결하려는 문제를 적어 주세요"[39m
+                  [33mrows[39m=[32m"1"[39m
+                  [33mstyle[39m=[32m"height: auto;"[39m
+                [36m/>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"요청 보내기"[39m
+                  [33mclass[39m=[32m"ui-button primary send-button"[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtitle[39m=[32m"요청 보내기"[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mfocusable[39m=[32m"false"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M12 19V5M5 12l7-7 7 7"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"composer-hint"[39m
+                [33mid[39m=[32m"composer-hint"[39m
+              [36m>[39m
+                [0mPDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB[0m
+                [0m · Enter로 보내기 · Shift + Enter로 줄바꿈[0m
+              [36m</p>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"예시 요청"[39m
+            [33mclass[39m=[32m"example-chips"[39m
+            [33mrole[39m=[32m"group"[39m
+          [36m>[39m
+            [36m<span>[39m
+              [0m이렇게 요청해 보세요[0m
+            [36m</span>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m병원별 판매량으로 다음 달 수요를 예측하고 싶어요[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"example-chip"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0m출하 지시가 멈췄어요. 오늘 마감이에요[0m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/pages/Main.layout.test.tsx:43:30
+     41|     vi.mocked(requestApi.detail).mockResolvedValue(detailOf('req_01234…
+     42|     open();
+     43|     const row = await screen.findByRole('button', { name: /문의 h\*\*\…
+       |                              ^
+     44|     expect(screen.getAllByRole('region', { name: '오늘' }).length).toB…
+     45|     expect(row).toHaveTextContent('req_0123');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/pages/Policy.test.tsx > Policy page > field form > edits a number, a band, a switch and a chip and validates exactly those values
+ FAIL  src/pages/Policy.test.tsx > Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ Test Files  2 failed | 40 passed (42)
+      Tests  3 failed | 366 passed (369)
+   Start at  18:28:08
+   Duration  94.02s (transform 26.09s, setup 0ms, collect 129.33s, tests 306.16s, environment 234.58s, prepare 46.33s)
+

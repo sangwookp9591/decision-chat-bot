@@ -1,0 +1,35 @@
+{
+  "method": "Neo4j Community offline database dump/load",
+  "before": {
+    "nodes": 815,
+    "relationships": 532,
+    "node_sha256": "8a7785fde13ec4d539b65fd44b2c3211229acd990f982b56f95659f4e32facbf",
+    "relationship_sha256": "223c473927a00d6b240df099214ed8f19a6f1004479c293e8914b76bf3d2ce0d"
+  },
+  "after": {
+    "nodes": 815,
+    "relationships": 532,
+    "node_sha256": "8a7785fde13ec4d539b65fd44b2c3211229acd990f982b56f95659f4e32facbf",
+    "relationship_sha256": "223c473927a00d6b240df099214ed8f19a6f1004479c293e8914b76bf3d2ce0d"
+  },
+  "dump_sha256": "f8d5fc507d8cc8548d387bc697bd2fe112c64657289b2e1b9f5b15fe18260abe",
+  "equal": true,
+  "application_file_count": 13,
+  "application_files_equal": true,
+  "application_file_hashes": {
+    "files/doc_1a6bc91b53e44ac892be546f33701929/6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe": "6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe",
+    "files/doc_b4eca55e8e164980aa736992cb05124b/6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe": "6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe",
+    "files/doc_d3ca7f4e2fcc4853a06a7767c4b30c7e/6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe": "6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe",
+    "files/doc_f3c090019aa2417a81c51d273a0924fe/6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe": "6f3f8e632d1fb1cc9eab92119b040ff7cd7911e2ce8832ffed18759ed66aebfe",
+    "files/t06_28c7ef4ae9f54620834d5982630810a5/b6858b03a6cae635deeaeab09a74e598979b72c917cbfff0bb3fe2cd05111dbc": "b6858b03a6cae635deeaeab09a74e598979b72c917cbfff0bb3fe2cd05111dbc",
+    "files/t06_4aecedde5fb74d50bd6cb1371b298dae/07bcbca5e5cff5eadb6a3578850bb9413f9bfd2406d9210b0c25b7f78449889a": "07bcbca5e5cff5eadb6a3578850bb9413f9bfd2406d9210b0c25b7f78449889a",
+    "files/t06_4aecedde5fb74d50bd6cb1371b298dae/1a12933d380bfb229f0c12ddddc4ced2fc726ac01299d40d09c377f17d545c95": "1a12933d380bfb229f0c12ddddc4ced2fc726ac01299d40d09c377f17d545c95",
+    "files/t06_4aecedde5fb74d50bd6cb1371b298dae/7e10c6083a4e6795ed08a066e099a990691d537b3bb21863fa640dddc2c376ae": "7e10c6083a4e6795ed08a066e099a990691d537b3bb21863fa640dddc2c376ae",
+    "files/t06_4aecedde5fb74d50bd6cb1371b298dae/edb9d8d423fd634572a4a8325a053b16fc8da614328f776cef55f3bfc2f577c0": "edb9d8d423fd634572a4a8325a053b16fc8da614328f776cef55f3bfc2f577c0",
+    "journal/.append.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "journal/current.jsonl": "24a3afa5539c5e1ff913a51cb5ddf1469b3828827620d6c6d1903b2c66daeb82",
+    "metrics/api-heartbeat.json": "34dc709506336527d3df3ebd15738eca06ebf676bfb61bbe739ba7a2536eea3b",
+    "metrics/worker-heartbeat.json": "347e34f828d26da7dbed3ecd37a32b365130f8c0fd4878c040055b3d004ab678"
+  },
+  "scope": "Neo4j neo4j database plus dedicated application data; system auth excluded"
+}

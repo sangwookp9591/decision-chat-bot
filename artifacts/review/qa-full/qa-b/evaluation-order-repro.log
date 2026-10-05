@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_team_set_order_does_not_create_disagreement _______________
+
+    def test_team_set_order_does_not_create_disagreement():
+        with client('labeler') as labeler, client('reviewer') as reviewer:
+            row = candidates(labeler)['candidates'][-3]
+            labels = {**row['proposed_labels'], 'team_set': ['AI팀', 'IT팀']}
+            reversed_labels = {**labels, 'team_set': ['IT팀', 'AI팀']}
+            path = f"/api/evaluation/candidates/tuning/{row['id']}"
+            for api, value in [(labeler, labels), (reviewer, reversed_labels)]:
+                result = api.put(path, json={'labels': value, 'confidence': 0.8})
+                assert result.status_code == 200, result.text
+            item = next(item for item in candidates(labeler)['candidates'] if item['id'] == row['id'])
+>           assert item['consensus'] == 'agreed', item['consensus']
+E           AssertionError: consensus_required
+E           assert 'consensus_required' == 'agreed'
+E             
+E             - agreed
+E             + consensus_required
+
+artifacts/review/qa-full/qa-b/repro/test_evaluation.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-b/repro/test_evaluation.py::test_team_set_order_does_not_create_disagreement
+1 failed, 3 deselected in 6.14s

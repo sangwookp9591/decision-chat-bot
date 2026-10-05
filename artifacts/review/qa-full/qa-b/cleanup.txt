@@ -1,0 +1,5 @@
+2026-10-05 18:37 KST
+Owned runner stopped via runtime/STOP.
+No LISTEN on TCP 11391 or 8791.
+No QA-B worker, API, runner or pytest process remains.
+Shared Neo4j not stopped by QA-B.

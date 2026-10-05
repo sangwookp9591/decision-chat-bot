@@ -1,0 +1,96 @@
+.FF..F.......FF                                                          [100%]
+=================================== FAILURES ===================================
+_ test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176] _
+artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:80: in test_oversized_integer_never_causes_500
+    assert r.status_code<500, f'oversized client integer returned {r.status_code}'
+E   AssertionError: oversized client integer returned 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_ test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176] _
+artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:80: in test_oversized_integer_never_causes_500
+    assert r.status_code<500, f'oversized client integer returned {r.status_code}'
+E   AssertionError: oversized client integer returned 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+___________ test_nested_review_changes_are_validated_before_service ____________
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:101: in map_httpcore_exceptions
+    yield
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:394: in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py:256: in handle_async_request
+    raise exc from None
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection_pool.py:236: in handle_async_request
+    response = await connection.handle_async_request(
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/connection.py:103: in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:136: in handle_async_request
+    raise exc
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:106: in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:177: in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpcore/_async/http11.py:217: in _receive_event
+    data = await self._network_stream.read(
+backend/.venv/lib/python3.14/site-packages/httpcore/_backends/anyio.py:32: in read
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+backend/.venv/lib/python3.14/site-packages/httpcore/_exceptions.py:14: in map_exceptions
+    raise to_exc(exc) from exc
+E   httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:126: in test_nested_review_changes_are_validated_before_service
+    r=await c.post('/api/reviews/'+review['id']+'/decision',
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1859: in post
+    return await self.request(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1540: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1629: in send
+    response = await self._send_handling_auth(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1657: in _send_handling_auth
+    response = await self._send_handling_redirects(
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1694: in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_client.py:1730: in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:393: in handle_async_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py:162: in __exit__
+    self.gen.throw(value)
+backend/.venv/lib/python3.14/site-packages/httpx/_transports/default.py:118: in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+E   httpx.ReadError
+___________ test_authorized_review_survives_newer_other_org_reviews ____________
+artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py:36: in test_authorized_review_survives_newer_other_org_reviews
+    assert target in ids, 'authorized review hidden behind newer reviews from another organization'
+E   AssertionError: authorized review hidden behind newer reviews from another organization
+E   assert 'starve_51270887_v_0' in []
+________________ test_context_shadow_masks_every_outgoing_field ________________
+artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py:75: in test_context_shadow_masks_every_outgoing_field
+    assert not any(leaked.values()), f'shadow external payload leaked fabricated samples: {leaked}'
+E   AssertionError: shadow external payload leaked fabricated samples: {'email': 22, 'phone': 22, 'registration': 22, 'card': 22, 'api_key': 22}
+E   assert not True
+E    +  where True = any(dict_values([22, 22, 22, 22, 22]))
+E    +    where dict_values([22, 22, 22, 22, 22]) = <built-in method values of dict object at 0x1114f8440>()
+E    +      where <built-in method values of dict object at 0x1114f8440> = {'api_key': 22, 'card': 22, 'email': 22, 'phone': 22, ...}.values
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (j:Judgment {tenant_id:$tenant}) WHERE j.created_at >= datetime($start) AND j.created_at < datetime($end) AND ($scope IS NULL OR j.request_id=$scope) OPTIONAL MATCH (o:ModelOutput {tenant_id:$tenant,run_id:j.run_id}) OPTIONAL MATCH (t:DraftTask {tenant_id:$tenant,run_id:j.run_id,draft_version:1}) OPTIONAL MATCH (h:ReviewDecision {tenant_id:$tenant,run_id:j.run_id}) WHERE h.action IN ['approve','approve_with_changes'] OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction {tenant_id:$tenant}) RETURN j,collect(DISTINCT o) AS outputs,collect(DISTINCT t) AS tasks,collect(DISTINCT h) AS decisions,collect(DISTINCT c) AS corrections ORDER BY j.created_at,j.id"
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (i:InputRevision {tenant_id:$tenant_id,id:$revision_id,request_id:$request_id}) OPTIONAL MATCH (i)-[:HAS_EVIDENCE]->(e:EvidenceSpan) OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) RETURN i.text AS text,collect(DISTINCT e) AS spans,collect(DISTINCT a) AS attachments'
+- generated xml file: /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-c/evidence/qa-runtime-junit.xml -
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176]
+FAILED artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176]
+FAILED artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_nested_review_changes_are_validated_before_service
+FAILED artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py::test_authorized_review_survives_newer_other_org_reviews
+FAILED artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py::test_context_shadow_masks_every_outgoing_field
+5 failed, 10 passed in 38.24s

@@ -1,0 +1,650 @@
+EEEEEEEEEEE                                                              [100%]
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_jev_faults[timeout] __________________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+------------------------------ Captured log setup ------------------------------
+WARNING  neo4j.session:session.py:606 Transaction failed and will be retried in 0.9027517185687168s (Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+Connection to 127.0.0.1:7688 closed with incomplete handshake response)
+WARNING  neo4j.session:session.py:606 Transaction failed and will be retried in 2.2981261738485155s (Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+Connection to 127.0.0.1:7688 closed with incomplete handshake response)
+____________________ ERROR at setup of test_jev_faults[429] ____________________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+____________________ ERROR at setup of test_jev_faults[529] ____________________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+__________________ ERROR at setup of test_jev_faults[schema] ___________________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+_________________ ERROR at setup of test_parser_and_db_outage __________________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+___________ ERROR at setup of test_worker_handoff_and_kill_recovery ____________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+_____________ ERROR at setup of test_api_restart_and_sse_recovery ______________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+__________ ERROR at setup of test_policy_version_pinned_and_rollback ___________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+_________ ERROR at setup of test_parallel_review_and_idempotent_retry __________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+________ ERROR at setup of test_observation_outages_and_reconciliation _________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+__________ ERROR at setup of test_information_wait_and_late_recovery ___________
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:275: in _connect_secure
+    await wait_for(loop.sock_connect(s, resolved_address), timeout)
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/tasks.py:488: in wait_for
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:647: in sock_connect
+    return await fut
+           ^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/selector_events.py:687: in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+E   ConnectionRefusedError: [Errno 61] Connect call failed ('::1', 7688, 0, 0)
+
+The above exception was the direct cause of the following exception:
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:329: in connect
+    s = await cls._connect_secure(
+.venv/lib/python3.14/site-packages/neo4j/_async_compat/network/_bolt_socket.py:357: in _connect_secure
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+
+The above exception was the direct cause of the following exception:
+tests/fault/scenarios.py:151: in harness
+    await apply_schema()
+jevtriage/db/schema.py:85: in apply_schema
+    await cross_tenant_tx("schema.migration", migrate, write=True)
+jevtriage/db/tx.py:81: in cross_tenant_tx
+    return await session.execute_write(work)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:756: in execute_write
+    return await self._run_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:620: in _run_transaction
+    raise errors[-1]
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:568: in _run_transaction
+    await self._open_transaction(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:434: in _open_transaction
+    await self._connect(access_mode=access_mode)
+.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py:125: in _connect
+    await super()._connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/work/workspace.py:184: in _connect
+    self._connection = await self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:681: in acquire
+    return await self._acquire(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:421: in _acquire
+    return await connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:234: in connection_creator
+    connection = await self.opener(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_pool.py:641: in opener
+    return await AsyncBolt.open(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py:366: in open
+    s, protocol_version = await AsyncBoltSocket.connect(
+.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt_socket.py:379: in connect
+    raise ServiceUnavailable(
+E   neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7688 (resolved to ('[::1]:7688', '127.0.0.1:7688')):
+E   Failed to establish connection to ResolvedIPv6Address(('::1', 7688, 0, 0)) (reason [Errno 61] Connect call failed ('::1', 7688, 0, 0))
+E   Connection to 127.0.0.1:7688 closed with incomplete handshake response
+- generated xml file: /Users/psw/Projects/decision-chat-bot/artifacts/validation/t22/20261005T091942Z/junit.xml -
+=========================== short test summary info ============================
+ERROR tests/fault/scenarios.py::test_jev_faults[timeout] - neo4j.exceptions.S...
+ERROR tests/fault/scenarios.py::test_jev_faults[429] - neo4j.exceptions.Servi...
+ERROR tests/fault/scenarios.py::test_jev_faults[529] - neo4j.exceptions.Servi...
+ERROR tests/fault/scenarios.py::test_jev_faults[schema] - neo4j.exceptions.Se...
+ERROR tests/fault/scenarios.py::test_parser_and_db_outage - neo4j.exceptions....
+ERROR tests/fault/scenarios.py::test_worker_handoff_and_kill_recovery - neo4j...
+ERROR tests/fault/scenarios.py::test_api_restart_and_sse_recovery - neo4j.exc...
+ERROR tests/fault/scenarios.py::test_policy_version_pinned_and_rollback - neo...
+ERROR tests/fault/scenarios.py::test_parallel_review_and_idempotent_retry - n...
+ERROR tests/fault/scenarios.py::test_observation_outages_and_reconciliation
+ERROR tests/fault/scenarios.py::test_information_wait_and_late_recovery - neo...
+11 errors in 15.72s

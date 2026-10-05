@@ -1,0 +1,213 @@
+FFFFFFFFFFFFFFFFFFF..FFF                                                 [100%]
+=================================== FAILURES ===================================
+________ test_error_response_does_not_echo_input[/api/auth/login-body0] ________
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "source":"qa-canary@example.invalid"}}]}
+_____ test_error_response_does_not_echo_input[/api/policy/validate-body1] ______
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_ test_error_response_does_not_echo_input[/api/requests/missing/reanalyze-body2] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+_ test_error_response_does_not_echo_input[/api/reviews/missing/decision-body3] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E     ?           ^^^^^ ^^^^^
+E       ,"input":"qa-canary@example.invalid","ctx":{"expected":"'approve', 'approve_with_changes', 'reject' or 'request_info'"}},{"type":"missing","loc":["body","request_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","input_revision"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","run_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","d...
+E     
+E     ...Full output truncated (2 lines hidden), use '-vv' to show
+_ test_error_response_does_not_echo_input[/api/tasks/missing/transition-body4] _
+../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}
+________ test_invalid_login_numeric_value_does_not_produce_500[1e1000] _________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+__________ test_invalid_login_numeric_value_does_not_produce_500[NaN] __________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_______ test_invalid_login_numeric_value_does_not_produce_500[Infinity] ________
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+_______ test_invalid_login_numeric_value_does_not_produce_500[-Infinity] _______
+../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400<=r.status_code<500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 < 500
+E    +  where 500 = <Response [500 Internal Server Error]>.status_code
+___________________ test_public_api_inventory_invalid_inputs ___________________
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:20: in test_public_api_inventory_invalid_inputs
+    c = await runtime.login()
+        ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_ test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176] _
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_ test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176] _
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_ test_oversized_integer_never_causes_500[/api/learning/rules/qa-missing/versions/1208925819614629174706176/validations] _
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_____________________ test_input_limits_and_foreign_tenant _____________________
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:86: in test_input_limits_and_foreign_tenant
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+___________ test_nested_review_changes_are_validated_before_service ____________
+../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:111: in test_nested_review_changes_are_validated_before_service
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_________________________ test_two_workers_claim_once __________________________
+../artifacts/review/qa-full/qa-c/repro/test_reliability.py:32: in test_two_workers_claim_once
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+___________________ test_regular_external_masking_all_fields ___________________
+../artifacts/review/qa-full/qa-c/repro/test_reliability.py:48: in test_regular_external_masking_all_fields
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+_____________________ test_simultaneous_changed_approvals ______________________
+../artifacts/review/qa-full/qa-c/repro/test_reliability.py:72: in test_simultaneous_changed_approvals
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+______________________ test_load_20_intakes_1000_reviews _______________________
+../artifacts/review/qa-full/qa-c/repro/test_reliability.py:111: in test_load_20_intakes_1000_reviews
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+__________________ test_two_api_sse_resume_and_redis_restart ___________________
+../artifacts/review/qa-full/qa-c/repro/test_reliability.py:207: in test_two_api_sse_resume_and_redis_restart
+    c=await runtime.login(port=11491)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+___________ test_authorized_review_survives_newer_other_org_reviews ____________
+../artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py:25: in test_authorized_review_survives_newer_other_org_reviews
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = <Response [401 Unauthorized]>.status_code
+________________ test_context_shadow_masks_every_outgoing_field ________________
+../artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py:72: in test_context_shadow_masks_every_outgoing_field
+    assert not any(leaked.values()), f'shadow external payload leaked fabricated samples: {leaked}'
+E   AssertionError: shadow external payload leaked fabricated samples: {'email': 20, 'phone': 20, 'registration': 20, 'card': 20, 'api_key': 20}
+E   assert not True
+E    +  where True = any(dict_values([20, 20, 20, 20, 20]))
+E    +    where dict_values([20, 20, 20, 20, 20]) = <built-in method values of dict object at 0x10d51c280>()
+E    +      where <built-in method values of dict object at 0x10d51c280> = {'api_key': 20, 'card': 20, 'email': 20, 'phone': 20, ...}.values
+------------------------------ Captured log call -------------------------------
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (j:Judgment {tenant_id:$tenant}) WHERE j.created_at >= datetime($start) AND j.created_at < datetime($end) AND ($scope IS NULL OR j.request_id=$scope) OPTIONAL MATCH (o:ModelOutput {tenant_id:$tenant,run_id:j.run_id}) OPTIONAL MATCH (t:DraftTask {tenant_id:$tenant,run_id:j.run_id,draft_version:1}) OPTIONAL MATCH (h:ReviewDecision {tenant_id:$tenant,run_id:j.run_id}) WHERE h.action IN ['approve','approve_with_changes'] OPTIONAL MATCH (h)-[:RECORDED]->(c:Correction {tenant_id:$tenant}) RETURN j,collect(DISTINCT o) AS outputs,collect(DISTINCT t) AS tasks,collect(DISTINCT h) AS decisions,collect(DISTINCT c) AS corrections ORDER BY j.created_at,j.id"
+WARNING  neo4j.notifications:result.py:345 Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (i:InputRevision {tenant_id:$tenant_id,id:$revision_id,request_id:$request_id}) OPTIONAL MATCH (i)-[:HAS_EVIDENCE]->(e:EvidenceSpan) OPTIONAL MATCH (i)-[:HAS_ATTACHMENT]->(a:Attachment) RETURN i.text AS text,collect(DISTINCT e) AS spans,collect(DISTINCT a) AS attachments'
+- generated xml file: /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-c/evidence/qa-junit.xml -
+=========================== short test summary info ============================
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/auth/login-body0]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/policy/validate-body1]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/requests/missing/reanalyze-body2]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/reviews/missing/decision-body3]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py::test_error_response_does_not_echo_input[/api/tasks/missing/transition-body4]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[1e1000]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[NaN]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[Infinity]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py::test_invalid_login_numeric_value_does_not_produce_500[-Infinity]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_public_api_inventory_invalid_inputs
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_oversized_integer_never_causes_500[/api/learning/rules/qa-missing/versions/1208925819614629174706176/validations]
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_input_limits_and_foreign_tenant
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py::test_nested_review_changes_are_validated_before_service
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_reliability.py::test_two_workers_claim_once
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_reliability.py::test_regular_external_masking_all_fields
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_reliability.py::test_simultaneous_changed_approvals
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_reliability.py::test_load_20_intakes_1000_reviews
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_reliability.py::test_two_api_sse_resume_and_redis_restart
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py::test_authorized_review_survives_newer_other_org_reviews
+FAILED ../artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py::test_context_shadow_masks_every_outgoing_field
+22 failed, 2 passed in 8.16s

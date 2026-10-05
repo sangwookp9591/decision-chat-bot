@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-05T19:29:57.180800",
+  "ports": [
+    11291,
+    8691
+  ],
+  "listener_output": "",
+  "exit_code": 1,
+  "owned_processes_stopped_by_runner_finally": true
+}

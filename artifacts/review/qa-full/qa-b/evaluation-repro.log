@@ -1,0 +1,64 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________________ test_invalid_label_values_rejected[labels0] __________________
+
+labels = {'ai_need': 'INVALID', 'feasibility': 'INVALID', 'risk_areas': 123, 'team_set': 'not-array', ...}
+
+    @pytest.mark.parametrize('labels', [
+        {'ai_need': 'INVALID', 'feasibility': 'INVALID', 'urgency': 'INVALID', 'team_set': 'not-array', 'risk_areas': 123},
+        {'ai_need': None, 'feasibility': None, 'urgency': None, 'team_set': [], 'risk_areas': []},
+    ])
+    def test_invalid_label_values_rejected(labels):
+        with client('labeler') as api:
+            row = candidates(api)['candidates'][-1]
+            result = api.put(f"/api/evaluation/candidates/tuning/{row['id']}", json={'labels': labels, 'confidence': 0.8, 'status': 'confirmed'})
+>           assert result.status_code == 422, f'invalid labels were persisted: HTTP {result.status_code} {result.text}'
+E           AssertionError: invalid labels were persisted: HTTP 200 {"id":"pharma-060","status":"confirmed"}
+E           assert 200 == 422
+E            +  where 200 = <Response [200 OK]>.status_code
+
+artifacts/review/qa-full/qa-b/repro/test_evaluation.py:39: AssertionError
+_________________ test_invalid_label_values_rejected[labels1] __________________
+
+labels = {'ai_need': None, 'feasibility': None, 'risk_areas': [], 'team_set': [], ...}
+
+    @pytest.mark.parametrize('labels', [
+        {'ai_need': 'INVALID', 'feasibility': 'INVALID', 'urgency': 'INVALID', 'team_set': 'not-array', 'risk_areas': 123},
+        {'ai_need': None, 'feasibility': None, 'urgency': None, 'team_set': [], 'risk_areas': []},
+    ])
+    def test_invalid_label_values_rejected(labels):
+        with client('labeler') as api:
+            row = candidates(api)['candidates'][-1]
+            result = api.put(f"/api/evaluation/candidates/tuning/{row['id']}", json={'labels': labels, 'confidence': 0.8, 'status': 'confirmed'})
+>           assert result.status_code == 422, f'invalid labels were persisted: HTTP {result.status_code} {result.text}'
+E           AssertionError: invalid labels were persisted: HTTP 200 {"id":"pharma-060","status":"confirmed"}
+E           assert 200 == 422
+E            +  where 200 = <Response [200 OK]>.status_code
+
+artifacts/review/qa-full/qa-b/repro/test_evaluation.py:39: AssertionError
+_________________ test_consensus_preserves_completed_progress __________________
+
+    def test_consensus_preserves_completed_progress():
+        with client('labeler') as labeler, client('reviewer') as reviewer:
+            row = candidates(labeler)['candidates'][-2]
+            labels = row['proposed_labels']
+            other = {**labels, 'ai_need': '필요' if labels['ai_need'] != '필요' else '불필요'}
+            path = f"/api/evaluation/candidates/tuning/{row['id']}"
+            for api, value in [(labeler, labels), (reviewer, other)]:
+                assert api.put(path, json={'labels': value, 'confidence': 0.8}).status_code == 200
+            before = candidates(labeler)['progress']
+            result = labeler.post(path + '/consensus', json={'labels': labels, 'confidence': 0.9})
+            assert result.status_code == 200, result.text
+            after_data = candidates(labeler)
+            item = next(item for item in after_data['candidates'] if item['id'] == row['id'])
+            assert item['consensus'] == 'resolved'
+>           assert after_data['progress']['confirmed'] >= before['confirmed'], (before, after_data['progress'])
+E           AssertionError: ({'confirmed': 5, 'deferred': 1, 'percent': 8, 'remaining': 54, ...}, {'confirmed': 4, 'deferred': 1, 'percent': 7, 'remaining': 55, ...})
+E           assert 4 >= 5
+
+artifacts/review/qa-full/qa-b/repro/test_evaluation.py:56: AssertionError
+=========================== short test summary info ============================
+FAILED artifacts/review/qa-full/qa-b/repro/test_evaluation.py::test_invalid_label_values_rejected[labels0]
+FAILED artifacts/review/qa-full/qa-b/repro/test_evaluation.py::test_invalid_label_values_rejected[labels1]
+FAILED artifacts/review/qa-full/qa-b/repro/test_evaluation.py::test_consensus_preserves_completed_progress
+3 failed in 4.75s

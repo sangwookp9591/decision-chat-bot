@@ -1,0 +1,56 @@
+Listing tests:
+  [chromium] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:9:5 › QA-A account locks after ten incorrect passwords
+  [chromium] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:20:5 › QA-A long text exceeds 20000 character contract safely
+  [chromium] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:26:58 › QA-A encrypted file requires exclusion
+  [chromium] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:26:58 › QA-A disguised file requires exclusion
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:10:5 › QA-A UI login wrong password keyboard login and logout
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:23:5 › QA-A chips Shift Enter synthetic IME and Enter send
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:37:5 › QA-A attachment six files capped and oversized upload rejected
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:63:5 › QA-A task lifecycle filters permission and refresh
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:74:5 › QA-A candidate task detail Escape closes keyboard dialog
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:79:5 › QA-A candidate task update in second tab appears without reload
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:88:5 › QA-A reviewer reason mandatory and simultaneous conflict
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 1440 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 1440 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 375 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 375 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 1440 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 1440 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 375 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 375 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 1440 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 1440 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 375 light
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 375 dark
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:105:5 › QA-A candidate team filter retains tasks assigned to IT
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:113:5 › QA-A candidate reviewer queue receives other role submission without reload
+  [chromium] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:120:5 › QA-A real predecessor blocks then unlocks task after completion
+  [chromium] › artifacts/review/qa-full/qa-a/repro/layout.spec.ts:5:5 › QA-A provisional to final exact zero pixel positions and copy
+  [webkit] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:9:5 › QA-A account locks after ten incorrect passwords
+  [webkit] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:20:5 › QA-A long text exceeds 20000 character contract safely
+  [webkit] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:26:58 › QA-A encrypted file requires exclusion
+  [webkit] › artifacts/review/qa-full/qa-a/repro/boundaries.spec.ts:26:58 › QA-A disguised file requires exclusion
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:10:5 › QA-A UI login wrong password keyboard login and logout
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:23:5 › QA-A chips Shift Enter synthetic IME and Enter send
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:37:5 › QA-A attachment six files capped and oversized upload rejected
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:63:5 › QA-A task lifecycle filters permission and refresh
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:74:5 › QA-A candidate task detail Escape closes keyboard dialog
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:79:5 › QA-A candidate task update in second tab appears without reload
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:88:5 › QA-A reviewer reason mandatory and simultaneous conflict
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 1440 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 1440 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 375 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual requester 375 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 1440 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 1440 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 375 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual reviewer 375 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 1440 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 1440 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 375 light
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:98:6 › QA-A visual team_member 375 dark
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:105:5 › QA-A candidate team filter retains tasks assigned to IT
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:113:5 › QA-A candidate reviewer queue receives other role submission without reload
+  [webkit] › artifacts/review/qa-full/qa-a/repro/journeys.spec.ts:120:5 › QA-A real predecessor blocks then unlocks task after completion
+  [webkit] › artifacts/review/qa-full/qa-a/repro/layout.spec.ts:5:5 › QA-A provisional to final exact zero pixel positions and copy
+Total: 54 tests in 3 files

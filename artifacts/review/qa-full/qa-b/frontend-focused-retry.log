@@ -1,0 +1,24 @@
+
+> jevtriage-frontend@0.1.0 test
+> vitest run --run src/pages/Policy.test.tsx --testNamePattern=explains why
+
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+ ❯ src/pages/Policy.test.tsx (13 tests | 1 failed | 12 skipped) 12332ms
+   × Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number 12327ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/Policy.test.tsx > Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  18:28:57
+   Duration  27.78s (transform 2.76s, setup 0ms, collect 5.94s, tests 12.33s, environment 5.45s, prepare 1.74s)
+

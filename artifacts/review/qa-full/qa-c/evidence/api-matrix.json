@@ -1,0 +1,1248 @@
+{
+  "openapi_paths": 63,
+  "rows": [
+    {
+      "method": "post",
+      "path": "/api/auth/login",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/auth/login",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"email\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"password\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/auth/login",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "get",
+      "path": "/api/auth/me",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/auth/me",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/meta",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/requests",
+      "case": "malformed_json",
+      "status": 202,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/requests",
+      "case": "missing_fields",
+      "status": 202,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/requests",
+      "case": "oversized_wrong_type",
+      "status": 202,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/requests",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/requests",
+      "case": "invalid_query",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"query\",\"limit\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"bad\"}]}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/file-decision",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/file-decision",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"exclude\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"expected_revision\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/file-decision",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/file-decision",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/file-decision",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/revisions",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_revision\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/revisions",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_revision\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/revisions",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_revision\"],\"msg\":\"Field required\",\"input\":null}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/revisions",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/revisions",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/reanalyze",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/reanalyze",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_revision\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/reanalyze",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/reanalyze",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/reanalyze",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/evidence/{span_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Evidence not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/evidence/{span_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/revisions/{revision}/document",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Document not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/revisions/{revision}/document",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/runs/{run_id}/cancel",
+      "case": "malformed_json",
+      "status": 404,
+      "error_body": "{\"detail\":\"Run not found\"}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/runs/{run_id}/cancel",
+      "case": "missing_fields",
+      "status": 404,
+      "error_body": "{\"detail\":\"Run not found\"}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/runs/{run_id}/cancel",
+      "case": "oversized_wrong_type",
+      "status": 404,
+      "error_body": "{\"detail\":\"Run not found\"}"
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/runs/{run_id}/cancel",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/requests/{request_id}/runs/{run_id}/cancel",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/judgment",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/judgment",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/runs",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/runs",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/progress",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/progress",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/{candidate_id}/decision",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/{candidate_id}/decision",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"action\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/{candidate_id}/decision",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/{candidate_id}/decision",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/{candidate_id}/decision",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"decision_id\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/mark-validated",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/mark-validated",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"validation_id\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/mark-validated",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/mark-validated",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/mark-validated",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/publish",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/publish",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_active_config_version\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/publish",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/publish",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/publish",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/stop",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/stop",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_active_config_version\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/stop",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/stop",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/stop",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/revert",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/revert",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"expected_active_config_version\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"to_version\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/revert",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/revert",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/revert",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":{\"code\":\"RULE_NOT_FOUND\"}}"
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validate",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validate",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"from\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"to\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validate",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validate",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validate",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validations",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}/versions/{version}/validations",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/validations/{validation_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Validation not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/validations/{validation_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}/effects",
+      "case": "invalid_query",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"query\",\"days\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"bad\"}]}"
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/rules/{rule_id}/effects",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/events/stream",
+      "case": "invalid_cursor",
+      "status": 400,
+      "error_body": "{\"detail\":\"Invalid Last-Event-ID\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/events/stream",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/events/snapshot",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/events/snapshot",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/evaluation/candidates",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/evaluation/candidates",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "put",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "put",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"labels\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"confidence\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "put",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "put",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "put",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}/consensus",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}/consensus",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"labels\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"confidence\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}/consensus",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}/consensus",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/evaluation/candidates/{split}/{sample_id}/consensus",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/active",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/active",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/versions",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/versions",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/versions/{version}",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/policy/versions/{version}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/validate",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/validate",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"config\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/validate",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/validate",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/validate",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/publish",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/publish",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"config\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"expected_active_version\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/publish",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/publish",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/publish",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/rollback",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/rollback",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"target_version\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"reason\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"expected_active_version\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/rollback",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/rollback",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/policy/rollback",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/summary",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/summary",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/slo",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/slo",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/failures",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/failures",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/alerts",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/alerts",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/collection-status",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/monitoring/collection-status",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/reviews",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/reviews",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/reviews/{review_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Review not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/reviews/{review_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/reviews/{review_id}/decision",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/reviews/{review_id}/decision",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"action\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"request_id\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"input_revision\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"run_id\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"draft_version\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"review_version\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/reviews/{review_id}/decision",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/reviews/{review_id}/decision",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/reviews/{review_id}/decision",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/runs/{run_id}/flow",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Run not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/runs/{run_id}/flow",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/runs/{run_id}/playback",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Run not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/runs/{run_id}/playback",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/requests/{request_id}/topology",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/requests/{request_id}/topology",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/steps/{step_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Step not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/observe/steps/{step_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/corrections",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/corrections",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/candidates",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/candidates",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"field\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"proposed_action\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"scope\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"rationale\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/generate",
+      "case": "malformed_json",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/generate",
+      "case": "missing_fields",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/generate",
+      "case": "oversized_wrong_type",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/generate",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/learning/candidates/generate",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/candidates/{candidate_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Candidate not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/learning/candidates/{candidate_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/corrections",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Request not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/requests/{request_id}/corrections",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/tasks",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/tasks",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/tasks/{task_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Task not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/tasks/{task_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "path": "/api/tasks/{task_id}/transition",
+      "case": "malformed_json",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"json_invalid\",\"loc\":[\"body\",6],\"msg\":\"JSON decode error\",\"input\":{},\"ctx\":{\"error\":\"Expecting value\"}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/tasks/{task_id}/transition",
+      "case": "missing_fields",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"to\"],\"msg\":\"Field required\",\"input\":{}},{\"type\":\"missing\",\"loc\":[\"body\",\"expected_status\"],\"msg\":\"Field required\",\"input\":{}}]}"
+    },
+    {
+      "method": "post",
+      "path": "/api/tasks/{task_id}/transition",
+      "case": "oversized_wrong_type",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"model_attributes_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid dictionary or object to extract fields from\",\"input\":[\"QAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQAQA"
+    },
+    {
+      "method": "post",
+      "path": "/api/tasks/{task_id}/transition",
+      "case": "no_csrf",
+      "status": 403
+    },
+    {
+      "method": "post",
+      "path": "/api/tasks/{task_id}/transition",
+      "case": "expired_or_unknown_session",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment",
+      "case": "invalid_query",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"query\",\"depth\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"bad\"}]}"
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment/path",
+      "case": "invalid_query",
+      "status": 422,
+      "error_body": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"query\",\"depth\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"bad\"},{\"type\":\"int_parsing\",\"loc\":[\"query\",\"limit\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"bad\"}]}"
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment/path",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment/nodes/{node_id}",
+      "case": "invalid_query",
+      "status": 404,
+      "error_body": "{\"detail\":\"Node not found\"}"
+    },
+    {
+      "method": "get",
+      "path": "/api/graph/judgment/nodes/{node_id}",
+      "case": "expired_or_unknown_session",
+      "status": 401
+    },
+    {
+      "method": "get",
+      "path": "/api/health",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    },
+    {
+      "method": "get",
+      "path": "/api/ready",
+      "case": "invalid_query",
+      "status": 200,
+      "error_body": null
+    }
+  ],
+  "failures": []
+}

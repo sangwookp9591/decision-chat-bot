@@ -1,0 +1,1506 @@
+INFO:     Started server process [26167]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26167]
+INFO:     Started server process [26280]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26280]
+INFO:     Started server process [26378]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26378]
+INFO:     Started server process [29337]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `display_name` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=60, offset=59>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 59, 'line': 1, 'column': 60}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (u:User {id:$user_id,tenant_id:$tenant_id}) RETURN u.display_name AS display_name'
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `org_id` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=5, column=26, offset=289>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 289, 'line': 5, 'column': 26}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant})\n            WHERE q.created_at >= datetime($start) AND q.created_at <= datetime($end)\n              AND ($status IS NULL OR q.status=$status)\n              AND ($org IS NULL OR $org IN coalesce(q.org_ids, []) OR q.org_id=$org\n                   OR (q.org_id IS NULL AND q.org_ids IS NULL))\n            OPTIONAL MATCH (a:Assignment {tenant_id:$tenant,request_id:q.id})\n            OPTIONAL MATCH (v:Review {tenant_id:$tenant,request_id:q.id})-[:HAS_DECISION]->(d:ReviewDecision)\n            RETURN q.id AS id, q.org_id AS org_id, q.org_ids AS org_ids,\n                   count(DISTINCT CASE WHEN a.pathway='auto' THEN a.id END) AS auto_assignments,\n                   count(DISTINCT d.id) AS review_decisions"
+Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `org_id` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=4, column=73, offset=252>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 252, 'line': 4, 'column': 73}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant})\n            WHERE q.created_at >= datetime($start) AND q.created_at <= datetime($end)\n              AND ($status IS NULL OR q.status=$status)\n              AND ($org IS NULL OR $org IN coalesce(q.org_ids, []) OR q.org_id=$org\n                   OR (q.org_id IS NULL AND q.org_ids IS NULL))\n            OPTIONAL MATCH (a:Assignment {tenant_id:$tenant,request_id:q.id})\n            OPTIONAL MATCH (v:Review {tenant_id:$tenant,request_id:q.id})-[:HAS_DECISION]->(d:ReviewDecision)\n            RETURN q.id AS id, q.org_id AS org_id, q.org_ids AS org_ids,\n                   count(DISTINCT CASE WHEN a.pathway='auto' THEN a.id END) AS auto_assignments,\n                   count(DISTINCT d.id) AS review_decisions"
+Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `org_id` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=8, column=34, offset=549>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 549, 'line': 8, 'column': 34}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant})\n            WHERE q.created_at >= datetime($start) AND q.created_at <= datetime($end)\n              AND ($status IS NULL OR q.status=$status)\n              AND ($org IS NULL OR $org IN coalesce(q.org_ids, []) OR q.org_id=$org\n                   OR (q.org_id IS NULL AND q.org_ids IS NULL))\n            OPTIONAL MATCH (a:Assignment {tenant_id:$tenant,request_id:q.id})\n            OPTIONAL MATCH (v:Review {tenant_id:$tenant,request_id:q.id})-[:HAS_DECISION]->(d:ReviewDecision)\n            RETURN q.id AS id, q.org_id AS org_id, q.org_ids AS org_ids,\n                   count(DISTINCT CASE WHEN a.pathway='auto' THEN a.id END) AS auto_assignments,\n                   count(DISTINCT d.id) AS review_decisions"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant})\n            WHERE q.created_at >= datetime($start) AND q.created_at <= datetime($end)\n              AND ($status IS NULL OR q.status=$status)\n              AND ($org IS NULL OR $org IN coalesce(q.org_ids, []) OR q.org_id=$org\n                   OR (q.org_id IS NULL AND q.org_ids IS NULL))\n            OPTIONAL MATCH (a:Assignment {tenant_id:$tenant,request_id:q.id})\n            OPTIONAL MATCH (v:Review {tenant_id:$tenant,request_id:q.id})-[:HAS_DECISION]->(d:ReviewDecision)\n            RETURN q.id AS id, q.org_id AS org_id, q.org_ids AS org_ids,\n                   count(DISTINCT CASE WHEN a.pathway='auto' THEN a.id END) AS auto_assignments,\n                   count(DISTINCT d.id) AS review_decisions"
+Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `org_id` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=3, column=73, offset=175>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 175, 'line': 3, 'column': 73}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (v:Review {tenant_id:$tenant})\n            MATCH (r:Request {tenant_id:$tenant,id:v.request_id})\n            WHERE ($org IS NULL OR $org IN coalesce(r.org_ids, []) OR r.org_id=$org)\n              AND ($status IS NULL OR r.status=$status)\n            RETURN v.status AS status,\n            CASE WHEN v.decided_at IS NULL THEN datetime().epochMillis\n                 ELSE v.decided_at.epochMillis END - v.created_at.epochMillis AS wait_ms'
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    |     await effective_context.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/router.py", line 54, in version_detail
+    |     result = await get_version(principal.tenant_id, version)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/service.py", line 167, in get_version
+    |     return await read_tx(tenant, op)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 136, in read_tx
+    |     return await session.execute_read(unit_of_work(timeout=timeout)(attempt))
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 695, in execute_read
+    |     return await self._run_transaction(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    |     result = await transaction_function(tx, *args, **kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 134, in attempt
+    |     return await fn(TenantTx(tx, tenant_id))
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/service.py", line 163, in op
+    |     row = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant, version:$version}) RETURN c.version AS version, c.status AS status, c.config_json AS config_json, c.diff_json AS diff_json, c.created_by AS created_by, c.reason AS reason, toString(c.created_at) AS created_at", tenant=tenant, version=version)).single()
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    |     return await self._tx.run(query, **params)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    |     await result._tx_ready_run(query, parameters)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    |     await self._run(query, parameters, None, None, None, None, None, None)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 223, in _run
+    |     self._connection.run(
+    |     ~~~~~~~~~~~~~~~~~~~~^
+    |         query_text,
+    |         ^^^^^^^^^^^
+    |     ...<11 lines>...
+    |         on_failure=on_failed_attach,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 193, in inner
+    |     func(*args, **kwargs)
+    |     ~~~~^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 971, in run
+    |     self._append(
+    |     ~~~~~~~~~~~~^
+    |         b"\x10",
+    |         ^^^^^^^^
+    |     ...<2 lines>...
+    |         dehydration_hooks=dehydration_hooks,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 804, in _append
+    |     self.outbox.append_message(signature, fields, dehydration_hooks)
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 146, in append_message
+    |     self._packer.pack_struct(tag, fields, dehydration_hooks)
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 241, in pack_struct
+    |     self._pack_struct(
+    |     ~~~~~~~~~~~~~~~~~^
+    |         signature,
+    |         ^^^^^^^^^^
+    |         fields,
+    |         ^^^^^^^
+    |         dehydration_hooks=self._inject_hooks(dehydration_hooks),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 258, in _pack_struct
+    |     self._pack(field, dehydration_hooks)
+    |     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 81, in _pack
+    |     self._py_pack(data, dehydration_hooks)
+    |     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 153, in _py_pack
+    |     self._py_pack(item, dehydration_hooks)
+    |     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 125, in _py_pack
+    |     raise OverflowError(f"Integer {value} out of range")
+    | OverflowError: Integer 1208925819614629174706176 out of range
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/router.py", line 54, in version_detail
+    result = await get_version(principal.tenant_id, version)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/service.py", line 167, in get_version
+    return await read_tx(tenant, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 136, in read_tx
+    return await session.execute_read(unit_of_work(timeout=timeout)(attempt))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 695, in execute_read
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 134, in attempt
+    return await fn(TenantTx(tx, tenant_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/policy/service.py", line 163, in op
+    row = await (await tx.run("MATCH (c:ConfigVersion {tenant_id:$tenant, version:$version}) RETURN c.version AS version, c.status AS status, c.config_json AS config_json, c.diff_json AS diff_json, c.created_by AS created_by, c.reason AS reason, toString(c.created_at) AS created_at", tenant=tenant, version=version)).single()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    await result._tx_ready_run(query, parameters)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 223, in _run
+    self._connection.run(
+    ~~~~~~~~~~~~~~~~~~~~^
+        query_text,
+        ^^^^^^^^^^^
+    ...<11 lines>...
+        on_failure=on_failed_attach,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 193, in inner
+    func(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 971, in run
+    self._append(
+    ~~~~~~~~~~~~^
+        b"\x10",
+        ^^^^^^^^
+    ...<2 lines>...
+        dehydration_hooks=dehydration_hooks,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 804, in _append
+    self.outbox.append_message(signature, fields, dehydration_hooks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 146, in append_message
+    self._packer.pack_struct(tag, fields, dehydration_hooks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 241, in pack_struct
+    self._pack_struct(
+    ~~~~~~~~~~~~~~~~~^
+        signature,
+        ^^^^^^^^^^
+        fields,
+        ^^^^^^^
+        dehydration_hooks=self._inject_hooks(dehydration_hooks),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 258, in _pack_struct
+    self._pack(field, dehydration_hooks)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 81, in _pack
+    self._py_pack(data, dehydration_hooks)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 153, in _py_pack
+    self._py_pack(item, dehydration_hooks)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 125, in _py_pack
+    raise OverflowError(f"Integer {value} out of range")
+OverflowError: Integer 1208925819614629174706176 out of range
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    |     await effective_context.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/api.py", line 52, in judgment_graph
+    |     result = await query.collect(principal.tenant_id, scope.visible, preload=scope.preload, request_id=request_id,
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                                  run_id=run_id, rule_id=rule_id, config_version=config_version,
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                                  status=status, depth=depth)
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 145, in collect
+    |     seeds = await read_tx(tenant, lambda tx: _seed_rows(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         tx, tenant, request_id=request_id, run_id=run_id, rule_id=rule_id,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         config_version=config_version, status=status, limit=40))
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 136, in read_tx
+    |     return await session.execute_read(unit_of_work(timeout=timeout)(attempt))
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 695, in execute_read
+    |     return await self._run_transaction(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    |     result = await transaction_function(tx, *args, **kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 134, in attempt
+    |     return await fn(TenantTx(tx, tenant_id))
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 103, in _seed_rows
+    |     await add("MATCH (n:ConfigVersion {tenant_id:$tenant,version:$v}) RETURN elementId(n) AS e", v=config_version)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 82, in add
+    |     for row in await (await tx.run(cypher, tenant=tenant, **params)).data():
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    |     return await self._tx.run(query, **params)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    |     await result._tx_ready_run(query, parameters)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    |     await self._run(query, parameters, None, None, None, None, None, None)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 223, in _run
+    |     self._connection.run(
+    |     ~~~~~~~~~~~~~~~~~~~~^
+    |         query_text,
+    |         ^^^^^^^^^^^
+    |     ...<11 lines>...
+    |         on_failure=on_failed_attach,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 193, in inner
+    |     func(*args, **kwargs)
+    |     ~~~~^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 971, in run
+    |     self._append(
+    |     ~~~~~~~~~~~~^
+    |         b"\x10",
+    |         ^^^^^^^^
+    |     ...<2 lines>...
+    |         dehydration_hooks=dehydration_hooks,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 804, in _append
+    |     self.outbox.append_message(signature, fields, dehydration_hooks)
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 146, in append_message
+    |     self._packer.pack_struct(tag, fields, dehydration_hooks)
+    |     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 241, in pack_struct
+    |     self._pack_struct(
+    |     ~~~~~~~~~~~~~~~~~^
+    |         signature,
+    |         ^^^^^^^^^^
+    |         fields,
+    |         ^^^^^^^
+    |         dehydration_hooks=self._inject_hooks(dehydration_hooks),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 258, in _pack_struct
+    |     self._pack(field, dehydration_hooks)
+    |     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 81, in _pack
+    |     self._py_pack(data, dehydration_hooks)
+    |     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 153, in _py_pack
+    |     self._py_pack(item, dehydration_hooks)
+    |     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 125, in _py_pack
+    |     raise OverflowError(f"Integer {value} out of range")
+    | OverflowError: Integer 1208925819614629174706176 out of range
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/api.py", line 52, in judgment_graph
+    result = await query.collect(principal.tenant_id, scope.visible, preload=scope.preload, request_id=request_id,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 run_id=run_id, rule_id=rule_id, config_version=config_version,
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                 status=status, depth=depth)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 145, in collect
+    seeds = await read_tx(tenant, lambda tx: _seed_rows(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        tx, tenant, request_id=request_id, run_id=run_id, rule_id=rule_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        config_version=config_version, status=status, limit=40))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 136, in read_tx
+    return await session.execute_read(unit_of_work(timeout=timeout)(attempt))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 695, in execute_read
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 134, in attempt
+    return await fn(TenantTx(tx, tenant_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 103, in _seed_rows
+    await add("MATCH (n:ConfigVersion {tenant_id:$tenant,version:$v}) RETURN elementId(n) AS e", v=config_version)
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/graph/query.py", line 82, in add
+    for row in await (await tx.run(cypher, tenant=tenant, **params)).data():
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    await result._tx_ready_run(query, parameters)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 223, in _run
+    self._connection.run(
+    ~~~~~~~~~~~~~~~~~~~~^
+        query_text,
+        ^^^^^^^^^^^
+    ...<11 lines>...
+        on_failure=on_failed_attach,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 193, in inner
+    func(*args, **kwargs)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 971, in run
+    self._append(
+    ~~~~~~~~~~~~^
+        b"\x10",
+        ^^^^^^^^
+    ...<2 lines>...
+        dehydration_hooks=dehydration_hooks,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 804, in _append
+    self.outbox.append_message(signature, fields, dehydration_hooks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 146, in append_message
+    self._packer.pack_struct(tag, fields, dehydration_hooks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 241, in pack_struct
+    self._pack_struct(
+    ~~~~~~~~~~~~~~~~~^
+        signature,
+        ^^^^^^^^^^
+        fields,
+        ^^^^^^^
+        dehydration_hooks=self._inject_hooks(dehydration_hooks),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 258, in _pack_struct
+    self._pack(field, dehydration_hooks)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 81, in _pack
+    self._py_pack(data, dehydration_hooks)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 153, in _py_pack
+    self._py_pack(item, dehydration_hooks)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_codec/packstream/v1/__init__.py", line 125, in _py_pack
+    raise OverflowError(f"Integer {value} out of range")
+OverflowError: Integer 1208925819614629174706176 out of range
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    |     await effective_context.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    |     return await decide(principal, review_id, command.model_dump(exclude_none=True),
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                         idempotency_key)
+    |                         ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    |     return await write_tx(tenant, op)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    |     result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    |     return await self._run_transaction(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    |     result = await transaction_function(tx, *args, **kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    |     result = await fn(TenantTx(tx, tenant_id))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    |     return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    |     value = await create_result(tx)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 341, in create
+    |     for name, value in (changes.get("classifications") or {}).items():
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | AttributeError: 'list' object has no attribute 'items'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    return await decide(principal, review_id, command.model_dump(exclude_none=True),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        idempotency_key)
+                        ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    return await write_tx(tenant, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    value = await create_result(tx)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 341, in create
+    for name, value in (changes.get("classifications") or {}).items():
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'items'
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29337]
+INFO:     Started server process [29544]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29544]
+INFO:     Started server process [30651]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30651]
+INFO:     Started server process [33005]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:11491 (Press CTRL+C to quit)
+Received notification from DBMS server: <GqlStatusObject gql_status='01G11', status_description='warn: null value eliminated in set function', position=None, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "MATCH (q:Request {tenant_id:$tenant,id:$request}) OPTIONAL MATCH (j:Job {tenant_id:$tenant,run_id:q.active_run_id}) OPTIONAL MATCH (e:Event {tenant_id:$tenant,request_id:$request,kind:'request.received'}) RETURN q.active_run_id AS run_id,j.id AS job_id,count(e) AS prior"
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    |     await effective_context.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    |     return await decide(principal, review_id, command.model_dump(exclude_none=True),
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                         idempotency_key)
+    |                         ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    |     return await write_tx(tenant, op)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    |     result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    |     return await self._run_transaction(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    |     result = await transaction_function(tx, *args, **kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    |     result = await fn(TenantTx(tx, tenant_id))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    |     return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    |     value = await create_result(tx)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 341, in create
+    |     for name, value in (changes.get("classifications") or {}).items():
+    |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | AttributeError: 'list' object has no attribute 'items'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    return await decide(principal, review_id, command.model_dump(exclude_none=True),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        idempotency_key)
+                        ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    return await write_tx(tenant, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    value = await create_result(tx)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 341, in create
+    for name, value in (changes.get("classifications") or {}).items():
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'items'
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_utils.py", line 107, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    |     await route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    |     await self.original_router.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    |     await included_router._handle_selected(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    |     await original_route.handle(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    |     await effective_context.app(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<3 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    |     return await decide(principal, review_id, command.model_dump(exclude_none=True),
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |                         idempotency_key)
+    |                         ^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    |     return await write_tx(tenant, op)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    |     result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    |     return await self._run_transaction(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     ...<5 lines>...
+    |     )
+    |     ^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    |     result = await transaction_function(tx, *args, **kwargs)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    |     result = await fn(TenantTx(tx, tenant_id))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    |     return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    |     value = await create_result(tx)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 351, in create
+    |     task_id = edit.get("draft_task_id")
+    |               ^^^^^^^^
+    | AttributeError: 'str' object has no attribute 'get'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1215, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 113, in journal_boundary
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 197, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/main.py", line 97, in csrf_guard
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 173, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/api.py", line 170, in review_decision
+    return await decide(principal, review_id, command.model_dump(exclude_none=True),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        idempotency_key)
+                        ^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 483, in decide
+    return await write_tx(tenant, op)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 481, in op
+    return await get_or_create_in_tx(tx, tenant, f"review:{review_id}", key, digest, create)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/idempotency.py", line 35, in get_or_create_in_tx
+    value = await create_result(tx)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/review/service.py", line 351, in create
+    task_id = edit.get("draft_task_id")
+              ^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33005]

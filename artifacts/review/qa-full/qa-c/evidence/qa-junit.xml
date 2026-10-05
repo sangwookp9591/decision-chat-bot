@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="22" skipped="0" tests="24" time="8.157" timestamp="2026-10-05T18:40:26.000204+09:00" hostname="bagsang-ug-ui-MacBookPro.local"><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_error_redaction" name="test_error_response_does_not_echo_input[/api/auth/login-body0]" time="0.019"><failure message="AssertionError: 422 error response echoed fabricated source input&#10;assert 'qa-canary@example.invalid' not in '{&quot;detail&quot;:[...invalid&quot;}}]}'&#10;  &#10;  'qa-canary@example.invalid' is contained here:&#10;    &quot;source&quot;:&quot;qa-canary@example.invalid&quot;}}]}">../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "source":"qa-canary@example.invalid"}}]}</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_error_redaction" name="test_error_response_does_not_echo_input[/api/policy/validate-body1]" time="0.043"><failure message="AssertionError: 422 error response echoed fabricated source input&#10;assert 'qa-canary@example.invalid' not in '{&quot;detail&quot;:[...invalid&quot;]}]}'&#10;  &#10;  'qa-canary@example.invalid' is contained here:&#10;    &quot;input&quot;:[&quot;qa-canary@example.invalid&quot;]}]}">../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_error_redaction" name="test_error_response_does_not_echo_input[/api/requests/missing/reanalyze-body2]" time="0.025"><failure message="AssertionError: 422 error response echoed fabricated source input&#10;assert 'qa-canary@example.invalid' not in '{&quot;detail&quot;:[...invalid&quot;]}]}'&#10;  &#10;  'qa-canary@example.invalid' is contained here:&#10;    &quot;input&quot;:[&quot;qa-canary@example.invalid&quot;]}]}">../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_error_redaction" name="test_error_response_does_not_echo_input[/api/reviews/missing/decision-body3]" time="0.049"><failure message="AssertionError: 422 error response echoed fabricated source input&#10;assert 'qa-canary@example.invalid' not in '{&quot;detail&quot;:[...invalid&quot;}}]}'&#10;  &#10;  'qa-canary@example.invalid' is contained here:&#10;  ?           ^^^^^ ^^^^^&#10;    ,&quot;input&quot;:&quot;qa-canary@example.invalid&quot;,&quot;ctx&quot;:{&quot;expected&quot;:&quot;'approve', 'approve_with_changes', 'reject' or 'request_info'&quot;}},{&quot;type&quot;:&quot;missing&quot;,&quot;loc&quot;:[&quot;body&quot;,&quot;request_id&quot;],&quot;msg&quot;:&quot;Field required&quot;,&quot;input&quot;:{&quot;action&quot;:&quot;qa-canary@example.invalid&quot;}},{&quot;type&quot;:&quot;missing&quot;,&quot;loc&quot;:[&quot;body&quot;,&quot;input_revision&quot;],&quot;msg&quot;:&quot;Field required&quot;,&quot;input&quot;:{&quot;action&quot;:&quot;qa-canary@example.invalid&quot;}},{&quot;type&quot;:&quot;missing&quot;,&quot;loc&quot;:[&quot;body&quot;,&quot;run_id&quot;],&quot;msg&quot;:&quot;Field required&quot;,&quot;input&quot;:{&quot;action&quot;:&quot;qa-canary@example.invalid&quot;}},{&quot;type&quot;:&quot;missing&quot;,&quot;loc&quot;:[&quot;body&quot;,&quot;d...&#10;  &#10;  ...Full output truncated (2 lines hidden), use '-vv' to show">../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"}}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E     ?           ^^^^^ ^^^^^
+E       ,"input":"qa-canary@example.invalid","ctx":{"expected":"'approve', 'approve_with_changes', 'reject' or 'request_info'"}},{"type":"missing","loc":["body","request_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","input_revision"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","run_id"],"msg":"Field required","input":{"action":"qa-canary@example.invalid"}},{"type":"missing","loc":["body","d...
+E     
+E     ...Full output truncated (2 lines hidden), use '-vv' to show</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_error_redaction" name="test_error_response_does_not_echo_input[/api/tasks/missing/transition-body4]" time="0.045"><failure message="AssertionError: 422 error response echoed fabricated source input&#10;assert 'qa-canary@example.invalid' not in '{&quot;detail&quot;:[...invalid&quot;]}]}'&#10;  &#10;  'qa-canary@example.invalid' is contained here:&#10;    &quot;input&quot;:[&quot;qa-canary@example.invalid&quot;]}]}">../artifacts/review/qa-full/qa-c/repro/test_api_error_redaction.py:48: in test_error_response_does_not_echo_input
+    assert SAMPLE not in response.text, '422 error response echoed fabricated source input'
+E   AssertionError: 422 error response echoed fabricated source input
+E   assert 'qa-canary@example.invalid' not in '{"detail":[...invalid"]}]}'
+E     
+E     'qa-canary@example.invalid' is contained here:
+E       "input":["qa-canary@example.invalid"]}]}</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_numeric_errors" name="test_invalid_login_numeric_value_does_not_produce_500[1e1000]" time="0.012"><failure message="AssertionError: invalid numeric field produced 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400&lt;=r.status_code&lt;500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_numeric_errors" name="test_invalid_login_numeric_value_does_not_produce_500[NaN]" time="0.011"><failure message="AssertionError: invalid numeric field produced 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400&lt;=r.status_code&lt;500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_numeric_errors" name="test_invalid_login_numeric_value_does_not_produce_500[Infinity]" time="0.012"><failure message="AssertionError: invalid numeric field produced 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400&lt;=r.status_code&lt;500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_numeric_errors" name="test_invalid_login_numeric_value_does_not_produce_500[-Infinity]" time="0.012"><failure message="AssertionError: invalid numeric field produced 500&#10;assert 500 &lt; 500&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_numeric_errors.py:24: in test_invalid_login_numeric_value_does_not_produce_500
+    assert 400&lt;=r.status_code&lt;500, f'invalid numeric field produced {r.status_code}'
+E   AssertionError: invalid numeric field produced 500
+E   assert 500 &lt; 500
+E    +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_public_api_inventory_invalid_inputs" time="1.192"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:20: in test_public_api_inventory_invalid_inputs
+    c = await runtime.login()
+        ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/policy/versions/1208925819614629174706176]" time="0.073"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/graph/judgment?config_version=1208925819614629174706176]" time="0.085"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_oversized_integer_never_causes_500[/api/learning/rules/qa-missing/versions/1208925819614629174706176/validations]" time="0.076"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:75: in test_oversized_integer_never_causes_500
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_input_limits_and_foreign_tenant" time="0.073"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:86: in test_input_limits_and_foreign_tenant
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_api_robustness" name="test_nested_review_changes_are_validated_before_service" time="0.540"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_api_robustness.py:111: in test_nested_review_changes_are_validated_before_service
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_two_workers_claim_once" time="0.973"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_reliability.py:32: in test_two_workers_claim_once
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_regular_external_masking_all_fields" time="0.078"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_reliability.py:48: in test_regular_external_masking_all_fields
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_simultaneous_changed_approvals" time="0.071"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_reliability.py:72: in test_simultaneous_changed_approvals
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_load_20_intakes_1000_reviews" time="0.070"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_reliability.py:111: in test_load_20_intakes_1000_reviews
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_retention_dry_run_and_execution_preserve_business" time="0.137" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_cancel_completion_race_20_times" time="1.427" /><testcase classname="artifacts.review.qa-full.qa-c.repro.test_reliability" name="test_two_api_sse_resume_and_redis_restart" time="0.522"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_reliability.py:207: in test_two_api_sse_resume_and_redis_restart
+    c=await runtime.login(port=11491)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_review_queue_starvation" name="test_authorized_review_survives_newer_other_org_reviews" time="1.623"><failure message="AssertionError: 401&#10;assert 401 == 200&#10; +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code">../artifacts/review/qa-full/qa-c/repro/test_review_queue_starvation.py:25: in test_authorized_review_survives_newer_other_org_reviews
+    c=await runtime.login()
+      ^^^^^^^^^^^^^^^^^^^^^
+../artifacts/review/qa-full/qa-c/repro/conftest.py:58: in login
+    assert r.status_code == 200, r.status_code
+E   AssertionError: 401
+E   assert 401 == 200
+E    +  where 401 = &lt;Response [401 Unauthorized]&gt;.status_code</failure></testcase><testcase classname="artifacts.review.qa-full.qa-c.repro.test_shadow_masking" name="test_context_shadow_masks_every_outgoing_field" time="0.264"><failure message="AssertionError: shadow external payload leaked fabricated samples: {'email': 20, 'phone': 20, 'registration': 20, 'card': 20, 'api_key': 20}&#10;assert not True&#10; +  where True = any(dict_values([20, 20, 20, 20, 20]))&#10; +    where dict_values([20, 20, 20, 20, 20]) = &lt;built-in method values of dict object at 0x10d51c280&gt;()&#10; +      where &lt;built-in method values of dict object at 0x10d51c280&gt; = {'api_key': 20, 'card': 20, 'email': 20, 'phone': 20, ...}.values">../artifacts/review/qa-full/qa-c/repro/test_shadow_masking.py:72: in test_context_shadow_masks_every_outgoing_field
+    assert not any(leaked.values()), f'shadow external payload leaked fabricated samples: {leaked}'
+E   AssertionError: shadow external payload leaked fabricated samples: {'email': 20, 'phone': 20, 'registration': 20, 'card': 20, 'api_key': 20}
+E   assert not True
+E    +  where True = any(dict_values([20, 20, 20, 20, 20]))
+E    +    where dict_values([20, 20, 20, 20, 20]) = &lt;built-in method values of dict object at 0x10d51c280&gt;()
+E    +      where &lt;built-in method values of dict object at 0x10d51c280&gt; = {'api_key': 20, 'card': 20, 'email': 20, 'phone': 20, ...}.values</failure></testcase></testsuite></testsuites>

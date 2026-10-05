@@ -1,0 +1,125 @@
+{
+  "samples": 20,
+  "outcomes": [
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    },
+    {
+      "request": "judgment_pending",
+      "run": "judgment_saved",
+      "job": "completed",
+      "actor": null
+    }
+  ]
+}

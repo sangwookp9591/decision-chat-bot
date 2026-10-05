@@ -1,0 +1,50 @@
+{
+  "statuses": [
+    200,
+    409
+  ],
+  "bodies": [
+    {
+      "review_id": "rvw_58fbc213478746159a7a785d99c55720",
+      "decision_id": "rdec_1752df9241b94f70b521d1389c79f303",
+      "action": "approve_with_changes",
+      "status": "approved",
+      "review_version": 2,
+      "draft_version": 2,
+      "assignment": {
+        "assignment_id": "asn_993f723883c24402902ae892af06e81b",
+        "task_ids": {
+          "draft-1": "task_21233e49697945219ee41b1b4b1190df",
+          "draft-2": "task_aa571364e665448cbbef3302ec0ca324"
+        }
+      },
+      "correction_ids": [
+        "cor_45bfd314f96644b6bbabe6b2b66e99bf"
+      ],
+      "needed_info": []
+    },
+    {
+      "detail": {
+        "message": "검토 대상이 변경되었습니다",
+        "latest": {
+          "request_id": "req_579f90956f1a48bf95b2b5c2884579a9",
+          "input_revision": "rev_d90d2701d3c6472a9755e95aae937540",
+          "run_id": "run_79a5b486518e46c399c06f8101f3d181",
+          "review_id": "rvw_58fbc213478746159a7a785d99c55720",
+          "draft_version": 2,
+          "review_version": 2,
+          "status": "approved"
+        }
+      }
+    }
+  ],
+  "counts": [
+    {
+      "assignments": 1,
+      "tasks": 2,
+      "distinct_tasks": 2
+    }
+  ],
+  "winner": 0,
+  "retry_status": 200
+}

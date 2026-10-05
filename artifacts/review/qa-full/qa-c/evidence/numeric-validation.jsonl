@@ -1,0 +1,8 @@
+{"json_number": "1e1000", "status": 500, "body": "Internal Server Error"}
+{"json_number": "NaN", "status": 500, "body": "Internal Server Error"}
+{"json_number": "Infinity", "status": 500, "body": "Internal Server Error"}
+{"json_number": "-Infinity", "status": 500, "body": "Internal Server Error"}
+{"json_number": "1e1000", "status": 500, "body": "Internal Server Error"}
+{"json_number": "NaN", "status": 500, "body": "Internal Server Error"}
+{"json_number": "Infinity", "status": 500, "body": "Internal Server Error"}
+{"json_number": "-Infinity", "status": 500, "body": "Internal Server Error"}

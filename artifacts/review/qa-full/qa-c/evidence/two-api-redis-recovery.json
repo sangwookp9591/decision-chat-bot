@@ -1,0 +1,43 @@
+{
+  "results": [
+    {
+      "phase": "redis_up",
+      "previous_cursor": 438,
+      "received_seq": 439,
+      "expected_seq": 439,
+      "latency_ms": 116.89,
+      "lines": [
+        ": poll",
+        "",
+        "id: 439"
+      ]
+    },
+    {
+      "phase": "redis_down",
+      "previous_cursor": 439,
+      "received_seq": 440,
+      "expected_seq": 440,
+      "latency_ms": 129.86,
+      "lines": [
+        ": poll",
+        "",
+        ": poll",
+        "",
+        "id: 440"
+      ]
+    },
+    {
+      "phase": "redis_recovered",
+      "previous_cursor": 440,
+      "received_seq": 441,
+      "expected_seq": 441,
+      "latency_ms": 11.98,
+      "lines": [
+        ": poll",
+        "",
+        "id: 441"
+      ]
+    }
+  ],
+  "duplicate_seq_count": 0
+}

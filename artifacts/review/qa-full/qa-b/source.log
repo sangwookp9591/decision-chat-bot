@@ -1,0 +1,35 @@
+
+Running 1 test using 1 worker
+
+(node:3844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader (4.2s)
+
+
+  1) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 503
+
+       5 | const tenant=readFileSync(out+'/runtime/tenant.txt','utf8').trim();
+       6 | mkdirSync(out+'/captures',{recursive:true});
+    >  7 | async function login(page:any,role:string){const r=await page.request.post('/api/auth/login',{data:{email:`${role}@${tenant}.dev`,password:'dev-only-change-me'}});expect(r.status()).toBe(200);}
+         |                                                                                                                                                                                       ^
+       8 | const routes=['/','/review','/tasks','/observatory','/judgment-map','/learning','/monitoring','/policy','/evaluation'];
+       9 | for(const role of ['requester','reviewer','team_member','operator','policy_editor','rule_admin','labeler']){
+      10 |  test(`screens ${role}`,async({page})=>{
+        at login (/Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:7:183)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:57:2
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/source-results/journeys-map-source-location-resolves-with-source-reader-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/source-results/journeys-map-source-location-resolves-with-source-reader-chromium/error-context.md
+
+  1 failed
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader 

@@ -1,0 +1,46 @@
+
+Running 2 tests using 1 worker
+
+(node:89396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:89396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (6.2s)
+  ✘  2 [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (29.8s)
+
+
+  1) [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 
+
+    Error: decision failed: 500 Internal Server Error
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      46 |         changes: { classifications: { ai_need: corrected } }, reason: '판단 맵 E2E: 분류 수정 승인' },
+      47 |     });
+    > 48 |     expect(decided.ok(), `decision failed: ${decided.status()} ${await decided.text()}`).toBeTruthy();
+         |                                                                                          ^
+      49 |     return requestId;
+      50 |   }
+      51 |   throw new Error('unreachable');
+        at seedJudgmentWithCorrection (/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:48:90)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:57:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry2-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/retry2-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/retry2-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/retry2-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 
+  1 passed (38.9s)

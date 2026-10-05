@@ -1,0 +1,78 @@
+
+Running 2 tests using 1 worker
+
+(node:15925) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15925) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow (41.0s)
+(node:17276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader (20.1s)
+
+
+  1) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('.obs-node')
+    Expected: 0
+    Received: 8
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('.obs-node') with timeout 15000ms
+      - waiting for locator('.obs-node')
+        34 × locator resolved to 8 elements
+           - unexpected value "8"
+
+
+      33 |  await expect(page.getByRole('combobox',{name:'실행 선택',exact:true})).toBeDisabled();
+      34 |  await page.screenshot({path:out+'/captures/stale-flow.png',fullPage:true});
+    > 35 |  await expect(page.locator('.obs-node')).toHaveCount(0);
+         |                                          ^
+      36 | });
+      37 | test('playback is read only and trace opens',async({page})=>{
+      38 |  await login(page,'operator');const active=await activeRun(page);await page.goto(`/observatory?run_id=${active.run}`);await expect(page.locator('.obs-node').first()).toBeVisible();
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:35:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/recovered-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/recovered-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/error-context.md
+
+  2) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('jm-board')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('jm-board') with timeout 15000ms
+      - waiting for getByTestId('jm-board')
+
+
+      55 | });
+      56 | test('map source location resolves with source reader',async({page})=>{
+    > 57 |  await login(page,'source_reader');const active=await activeRun(page);await page.goto(`/judgment-map?request_id=${active.id}`);await expect(page.getByTestId('jm-board')).toBeVisible();
+         |                                                                                                                                                                           ^
+      58 |  await page.getByRole('button',{name:'목록 보기',exact:true}).click();await page.locator('.jm-item[data-kind="EvidenceSpan"]').first().click();await page.getByRole('button',{name:'원문 열기',exact:true}).click();
+      59 |  await expect(page.getByTestId('ev-scroll')).toBeVisible();await expect(page.getByTestId('ev-scroll')).toContainText('이상반응');await page.screenshot({path:out+'/captures/map-source-resolved.png',fullPage:true});
+      60 | });
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:57:171
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/recovered-results/journeys-map-source-location-resolves-with-source-reader-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/recovered-results/journeys-map-source-location-resolves-with-source-reader-chromium/error-context.md
+
+  2 failed
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:56:5 › map source location resolves with source reader 

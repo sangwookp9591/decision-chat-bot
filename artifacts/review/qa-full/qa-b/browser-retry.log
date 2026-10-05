@@ -1,0 +1,64 @@
+
+Running 6 tests using 1 worker
+
+(node:93158) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:93158) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens requester (35.2s)
+  ✓  2 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens reviewer (19.2s)
+  ✓  3 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens team_member (15.0s)
+  ✓  4 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:10:6 › screens operator (15.8s)
+  ✘  5 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow (4.3s)
+(node:95726) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95726) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  6 [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:44:5 › real judgment map navigation and details (14.9s)
+
+
+  1) [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+
+    Error: locator.click: Error: strict mode violation: getByRole('option').filter({ hasText: 't-qa-b-1005181417-layout-1' }) resolved to 11 elements:
+        1) <li id=":r1:-o0" role="option" class="active" aria-selected="false">t-qa-b-1005181417-layout-1 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-1 · 알 수 없는 상태 · 취소됨' })
+        2) <li class="" id=":r1:-o1" role="option" aria-selected="false">t-qa-b-1005181417-layout-10 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-10' })
+        3) <li class="" id=":r1:-o2" role="option" aria-selected="false">t-qa-b-1005181417-layout-11 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-11' })
+        4) <li class="" id=":r1:-o3" role="option" aria-selected="false">t-qa-b-1005181417-layout-12 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-12' })
+        5) <li class="" id=":r1:-o4" role="option" aria-selected="false">t-qa-b-1005181417-layout-13 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-13' })
+        6) <li class="" id=":r1:-o5" role="option" aria-selected="false">t-qa-b-1005181417-layout-14 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-14' })
+        7) <li class="" id=":r1:-o6" role="option" aria-selected="false">t-qa-b-1005181417-layout-15 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-15' })
+        8) <li class="" id=":r1:-o7" role="option" aria-selected="false">t-qa-b-1005181417-layout-16 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-16' })
+        9) <li class="" id=":r1:-o8" role="option" aria-selected="false">t-qa-b-1005181417-layout-17 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-17' })
+        10) <li class="" id=":r1:-o9" role="option" aria-selected="false">t-qa-b-1005181417-layout-18 · 알 수 없는 상태 · 취소됨</li> aka getByRole('option', { name: 't-qa-b-1005181417-layout-18' })
+        ...
+
+    Call log:
+      - waiting for getByRole('option').filter({ hasText: 't-qa-b-1005181417-layout-1' })
+
+
+      30 |  const empty=active.items.find((x:any)=>x.id.includes('-layout-'));
+      31 |  await page.getByRole('combobox',{name:'요청 선택',exact:true}).fill(empty.id);
+    > 32 |  await page.getByRole('option').filter({hasText:empty.id}).click();
+         |                                                            ^
+      33 |  await expect(page.getByRole('combobox',{name:'실행 선택',exact:true})).toBeDisabled();
+      34 |  await page.screenshot({path:out+'/captures/stale-flow.png',fullPage:true});
+      35 |  await expect(page.locator('.obs-node')).toHaveCount(0);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:32:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-retry-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../artifacts/review/qa-full/qa-b/browser-retry-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/qa-full/qa-b/browser-retry-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/qa-full/qa-b/browser-retry-results/journeys-observatory-selec-dbd91-equest-clears-previous-Flow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › ../artifacts/review/qa-full/qa-b/repro/journeys.spec.ts:27:5 › observatory selecting an empty request clears previous Flow 
+  5 passed (1.9m)
