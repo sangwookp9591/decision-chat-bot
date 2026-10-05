@@ -1,0 +1,82 @@
+[
+  {
+    "file": "hero.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 86642
+  },
+  {
+    "file": "judgment.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 113168
+  },
+  {
+    "file": "review.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 125472
+  },
+  {
+    "file": "tasks.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 81792
+  },
+  {
+    "file": "map.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 147788
+  },
+  {
+    "file": "learning.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 140850
+  },
+  {
+    "file": "evaluation.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 104664
+  },
+  {
+    "file": "monitoring.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 75034
+  },
+  {
+    "file": "policy.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 86832
+  },
+  {
+    "file": "dark.webp",
+    "width": 2880,
+    "height": 1800,
+    "bytes": 107228
+  },
+  {
+    "file": "mobile-chat.webp",
+    "width": 750,
+    "height": 1800,
+    "bytes": 58558
+  },
+  {
+    "file": "mobile-review.webp",
+    "width": 750,
+    "height": 1800,
+    "bytes": 50594
+  },
+  {
+    "file": "progressive.gif",
+    "width": 960,
+    "height": 600,
+    "bytes": 172784,
+    "duration_ms": 4500,
+    "frames": 3
+  }
+]
