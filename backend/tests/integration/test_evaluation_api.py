@@ -8,7 +8,7 @@ from jevtriage.db.driver import get_driver
 from jevtriage.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
-FIELDS = {"ai_need": "필요", "feasibility": "가능", "urgency": "높음", "team_set": "플랫폼", "risk_areas": []}
+FIELDS = {"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": ["AI팀"], "risk_areas": []}
 
 
 async def test_label_edit_defer_resume_disagreement_and_consensus():
@@ -40,10 +40,14 @@ async def test_label_edit_defer_resume_disagreement_and_consensus():
             item = next(row for row in items if row["id"] == sample)
             assert item["consensus"] == "consensus_required"
             assert len(item["labels"]) == 2
+            before = http.get("/api/evaluation/candidates?split=tuning").json()["progress"]["confirmed"]
             resolved = http.post(f"/api/evaluation/candidates/tuning/{sample}/consensus", json={"labels": FIELDS, "confidence": .95})
             assert resolved.status_code == 200
-            item = next(row for row in http.get("/api/evaluation/candidates?split=tuning").json()["candidates"] if row["id"] == sample)
+            after_data = http.get("/api/evaluation/candidates?split=tuning").json()
+            assert after_data["progress"]["confirmed"] >= before
+            item = next(row for row in after_data["candidates"] if row["id"] == sample)
             assert item["consensus"] == "resolved"
+            assert item["my_labels"]["labels"]["team_set"] == ["AI팀"]
         driver = await get_driver()
         async with driver.session() as session:
             audit = await (await session.run("MATCH (a:AuditEvent {tenant_id:$tenant,kind:'evaluation_label',subject:$id}) RETURN count(a) AS count", tenant=tenant, id=sample)).single(strict=True)
@@ -52,4 +56,23 @@ async def test_label_edit_defer_resume_disagreement_and_consensus():
         driver = await get_driver()
         async with driver.session() as session:
             await (await session.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n", tenant=tenant)).consume()
+        app.dependency_overrides.clear()
+
+
+async def test_invalid_label_returns_field_specific_422():
+    from jevtriage.evaluation.service import _rows
+
+    tenant = f"eval_{uuid4().hex}"
+    sample = _rows("tuning")[0]["id"]
+    app = create_app()
+    app.dependency_overrides[enforce_csrf] = lambda: None
+    app.dependency_overrides[get_principal] = lambda: Principal(tenant, "labeler", (), frozenset({"labeler"}))
+    try:
+        with TestClient(app) as http:
+            response = http.put(f"/api/evaluation/candidates/tuning/{sample}", json={
+                "labels": {**FIELDS, "team_set": "AI팀"}, "confidence": .8,
+            })
+        assert response.status_code == 422
+        assert response.json()["detail"]["details"]["fields"]["team_set"]
+    finally:
         app.dependency_overrides.clear()

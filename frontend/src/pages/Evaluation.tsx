@@ -10,7 +10,13 @@ import './evaluation/evaluation.css';
 
 type LoadState = 'loading' | 'ready' | 'forbidden' | 'error';
 const noProgress: Progress = { total: 0, confirmed: 0, deferred: 0, remaining: 0, percent: 100 };
-const errorMessage = (error: unknown) => (error as Partial<ApiError>)?.message || '저장하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+const errorMessage = (error: unknown) => {
+  const apiError = error as Partial<ApiError>;
+  const fields = (apiError.details as { fields?: Record<string, string> } | undefined)?.fields;
+  const reasons = fields && Object.entries(fields).map(([field, reason]) => `${field}: ${reason}`);
+  if (apiError.status === 422 && reasons?.length) return `${apiError.message || '라벨을 확인해 주세요.'} ${reasons.join(' ')}`;
+  return apiError.message || '저장하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+};
 
 /** Same two-column footprint as the loaded screen so the swap does not move anything. */
 function EvalSkeleton() {

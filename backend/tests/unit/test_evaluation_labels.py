@@ -1,6 +1,16 @@
+import pytest
+from fastapi import HTTPException
+
 from jevtriage.auth.core import Principal
 from jevtriage.auth.policy import can
-from jevtriage.evaluation.service import consensus_state, visible_candidate
+from jevtriage.evaluation.service import (
+    LabelBody,
+    _rows,
+    _validate_labels,
+    consensus_state,
+    progress_summary,
+    visible_candidate,
+)
 
 
 def test_eval_label_action_is_limited_to_labelers_and_reviewers():
@@ -14,6 +24,50 @@ def test_eval_label_action_is_limited_to_labelers_and_reviewers():
 def test_disagreement_requires_consensus():
     assert consensus_state([{"ai_need": "필요"}, {"ai_need": "불필요"}]) == "consensus_required"
     assert consensus_state([{"ai_need": "필요"}, {"ai_need": "필요"}]) == "agreed"
+
+
+@pytest.mark.parametrize("labels,field", [
+    ({"ai_need": "INVALID", "feasibility": "가능", "urgency": "일반", "team_set": [], "risk_areas": []}, "ai_need"),
+    ({"ai_need": "필요", "feasibility": "INVALID", "urgency": "일반", "team_set": [], "risk_areas": []}, "feasibility"),
+    ({"ai_need": "필요", "feasibility": "가능", "urgency": "INVALID", "team_set": [], "risk_areas": []}, "urgency"),
+    ({"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": "AI팀", "risk_areas": []}, "team_set"),
+    ({"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": ["기타"], "risk_areas": []}, "team_set"),
+    ({"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": [], "risk_areas": "규제 검토"}, "risk_areas"),
+    ({"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": [], "risk_areas": [123]}, "risk_areas"),
+    ({"ai_need": None, "feasibility": "가능", "urgency": "일반", "team_set": [], "risk_areas": []}, "ai_need"),
+])
+def test_invalid_label_values_rejected_with_field_reason(labels, field):
+    sample_id = _rows("tuning")[0]["id"]
+    body = LabelBody(labels=labels, confidence=.8)
+    with pytest.raises(HTTPException) as error:
+        _validate_labels("tuning", sample_id, body)
+    assert error.value.status_code == 422
+    assert field in str(error.value.detail)
+
+
+def test_consensus_confirmed_counts_as_completed_progress():
+    summary = progress_summary(3, [
+        {"id": "a", "status": "confirmed"},
+        {"id": "b", "status": "consensus_confirmed"},
+    ])
+    assert summary["confirmed"] == 2
+    assert summary["remaining"] == 1
+
+
+def test_set_fields_are_order_independent_for_consensus():
+    assert consensus_state([
+        {"team_set": ["AI팀", "IT팀"], "risk_areas": []},
+        {"team_set": ["IT팀", "AI팀"], "risk_areas": []},
+    ]) == "agreed"
+
+
+def test_set_fields_are_normalized_before_recording():
+    sample_id = _rows("tuning")[0]["id"]
+    labels = {"ai_need": "필요", "feasibility": "가능", "urgency": "일반",
+              "team_set": ["IT팀", "AI팀", "AI팀"], "risk_areas": []}
+    body = LabelBody(labels=labels, confidence=.8)
+    _validate_labels("tuning", sample_id, body)
+    assert body.labels["team_set"] == ["AI팀", "IT팀"]
 
 
 def test_final_candidate_hides_proposed_prediction_until_confirmed():

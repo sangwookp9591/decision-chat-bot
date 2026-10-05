@@ -13,6 +13,18 @@ from jevtriage.evaluation.store import labels_for_split, record_label
 
 ROOT = Path(__file__).resolve().parents[3]
 LABEL_FIELDS = {"ai_need", "feasibility", "urgency", "team_set", "risk_areas"}
+LABEL_OPTIONS = {
+    "ai_need": {"필요", "불필요", "혼합"},
+    "feasibility": {"가능", "조건부 가능", "현재 불가"},
+    "urgency": {"긴급", "일반"},
+    "team_set": {"AI팀", "IT팀", "현업"},
+    "risk_areas": {"임상·안전성 검토", "약물감시 검토", "규제 검토"},
+}
+SET_FIELDS = {"team_set", "risk_areas"}
+
+
+def normalize_labels(labels: dict[str, Any]) -> dict[str, Any]:
+    return {key: sorted(set(value)) if key in SET_FIELDS else value for key, value in labels.items()}
 
 
 def consensus_state(labels: list[dict[str, Any]]) -> str:
@@ -20,7 +32,7 @@ def consensus_state(labels: list[dict[str, Any]]) -> str:
         return "unlabeled"
     if len(labels) == 1:
         return "single_label"
-    signatures = [json.dumps(x, sort_keys=True, ensure_ascii=False) for x in labels]
+    signatures = [json.dumps(normalize_labels(x), sort_keys=True, ensure_ascii=False) for x in labels]
     return "agreed" if len(set(signatures)) == 1 else "consensus_required"
 
 
@@ -28,7 +40,7 @@ def progress_summary(total: int, labels: list[dict[str, Any]]) -> dict[str, int]
     latest: dict[str, str] = {}
     for item in labels:
         latest[item["id"]] = item["status"]
-    confirmed = sum(status == "confirmed" for status in latest.values())
+    confirmed = sum(status in {"confirmed", "consensus_confirmed"} for status in latest.values())
     deferred = sum(status == "deferred" for status in latest.values())
     return {"total": total, "confirmed": confirmed, "deferred": deferred,
             "remaining": max(0, total - confirmed - deferred),
@@ -108,8 +120,23 @@ def _validate_labels(split: str, sample_id: str, body: LabelBody) -> None:
         raise HTTPException(404, "Sample not found")
     if body.status not in {"confirmed", "deferred"} or (body.status == "deferred" and not body.reason):
         raise HTTPException(422, "Deferred labels require a reason")
-    if set(body.labels) != LABEL_FIELDS:
-        raise HTTPException(422, "All evaluation label fields are required")
+    errors: dict[str, str] = {}
+    for field in LABEL_FIELDS - set(body.labels):
+        errors[field] = "필수 필드입니다."
+    for field in set(body.labels) - LABEL_FIELDS:
+        errors[field] = "알 수 없는 필드입니다."
+    for field in LABEL_FIELDS & set(body.labels):
+        value = body.labels[field]
+        if field in SET_FIELDS:
+            if not isinstance(value, list):
+                errors[field] = "허용된 값의 배열이어야 합니다."
+            elif any(not isinstance(item, str) or item not in LABEL_OPTIONS[field] for item in value):
+                errors[field] = "배열의 모든 값은 허용된 선택지여야 합니다."
+        elif not isinstance(value, str) or value not in LABEL_OPTIONS[field]:
+            errors[field] = "허용된 선택지 중 하나를 선택해야 합니다."
+    if errors:
+        raise HTTPException(422, {"message": "평가 라벨이 올바르지 않습니다.", "details": {"fields": errors}})
+    body.labels = normalize_labels(body.labels)
 
 
 async def save_label(split: str, sample_id: str, body: LabelBody,
