@@ -19,3 +19,9 @@ P1-01 (2026-10-05): 수정 승인은 원본 초안의 필수 필드 검증을 �
 재현·검증: `test_review_assignment.py`의 미정 초안 보완 승인 및 미해결 422 안내 시험 2건과 `Review.test.tsx`의 보완 입력·필드 오류 시험 2건은 수정 전 실패를 확인했다. 수정 후 검토 통합 시험 21건 통과. `frontend/e2e/review-repair.spec.ts`는 각 브라우저 프로세스별 새 tenant만 시드·정리하며 실제 API 10591/Vite 7891에서 Chromium·WebKit 모두 미해결 422 → 수정 승인 200, v2와 AI 원안 보존을 검증했다. 생성 Job을 사용하지 않아 worker 실행은 필요하지 않다. 전체 검증 결과는 해당 개선 단계의 코디네이터 보고로 함께 기록한다.
 
 P1-01 최종 확인: 검토 통합 시험 전체 24건 통과, 전체 Ruff 0건, import 계약 6개 통과, typecheck/build 통과. 전체 pytest 최초 실행은 475 통과·2 실패·1 건너뜀이며 실패는 `test_rules_integration.py::test_role_matrix_and_state_transitions`(learning 읽기 역할의 기대 403과 실제 200 차이)과 `test_write_invariants.py::test_completed_confirmation_predecessor_releases_feasibility_block`(tasks 감사 after의 가능성 차단값 잔존)으로 담당 밖 동시 변경 항목이다. 해당 파일은 수정하지 않고 코디네이터에 상세 실패를 보고했다. 전체 Vitest 초기 실행은 동시 변경 중 learning/proposal 및 Monitoring 시험 실패를 관찰했으나 이후 3회 연속 실행에서 각각 41개 파일·366건 모두 통과했다. P1-01 구현과 전용 시험에서 건너뛴 항목은 없으며 공유 서버/Neo4j를 정지하지 않고 전용 서버만 종료했다.
+
+FIX-QAC (2026-10-05): `DecisionCommand.changes`를 분류·업무 수정용 중첩 Pydantic 모델로 검증한다. 분류 목록, 문자열 업무 항목, 배열인 조직/업무 방식, 잘못된 선행 업무 ID 타입 및 허용하지 않은 필드는 서비스 트랜잭션에 진입하기 전에 422를 반환한다. 부분 수정은 기존 필드 이름을 유지하고 제공하지 않은 값은 서비스 명령에서 제외한다. 잘못된 입력 뒤 Review·Draft·판단·결정 이력 및 Assignment/Task/Correction은 변경되지 않는다. 유효한 수정 승인과 업무 필수 필드 오류의 기존 서비스 응답 계약은 유지한다.
+
+검토 목록은 책임 조직 조건을 DB WHERE에 적용한 뒤 `created_at DESC, id DESC`로 정렬하고 `SKIP/LIMIT`을 적용한다. `GET /api/reviews`에 선택적인 `limit`(기본 100, 최대 500)·`offset`(기본 0)을 추가했다. 기존 응답 `reviews[]`는 유지한다. 회귀 시험은 최신 타 조직 100건 뒤의 허용 검토가 목록과 상세에 모두 나타나는지, 정규 ID·네 종류의 조직 별칭과 역할 조건이 동일한지 확인한다.
+
+재현·검증 증거는 `artifacts/review/fix-qac/REPORT.md`와 수정 전/후 로그에 기록한다. 제품 시험은 `tests/unit/test_qac_api_boundaries.py`, `tests/unit/test_qac_external_boundary.py`, `tests/integration/test_qac_regressions.py`이다.

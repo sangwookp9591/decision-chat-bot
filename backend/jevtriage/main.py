@@ -1,10 +1,13 @@
 import asyncio
+import json
+import math
 import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager, suppress
 from datetime import UTC, datetime
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from neo4j.exceptions import ServiceUnavailable, SessionExpired
 
@@ -36,6 +39,21 @@ from jevtriage.review.api import router as review_router
 from jevtriage.tasks.api import router as tasks_router
 
 
+class NonFiniteJSON(ValueError):
+    pass
+
+
+def finite_json_number(value: str) -> float:
+    result = float(value)
+    if not math.isfinite(result):
+        raise NonFiniteJSON("Non-finite JSON number")
+    return result
+
+
+def reject_json_constant(value: str):
+    raise NonFiniteJSON("Non-finite JSON number")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.neo4j_driver = create_driver(get_settings())
@@ -60,6 +78,15 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Jev Triage API", lifespan=lifespan)
+    @app.exception_handler(RequestValidationError)
+    async def validation_error(request: Request, exc: RequestValidationError):
+        # Never serialize input, ctx, or exception objects. Custom validators may
+        # interpolate submitted values in their message, so use a generic message.
+        detail = [{"loc": error["loc"], "type": error["type"],
+                   "msg": ("Invalid value" if error["type"] in {"value_error", "assertion_error"}
+                           else error["msg"])} for error in exc.errors()]
+        return JSONResponse(status_code=422, content={"detail": detail})
+
     app.include_router(auth_router)
     app.include_router(ingest_router)
     app.include_router(jobs_router)
@@ -79,6 +106,19 @@ def create_app() -> FastAPI:
     app.include_router(request_learning_router)
     app.include_router(tasks_router)
     app.include_router(graph_router)
+
+    @app.middleware("http")
+    async def json_number_guard(request: Request, call_next):
+        media_type = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+        if media_type == "application/json" or media_type.endswith("+json"):
+            try:
+                json.loads(await request.body(), parse_float=finite_json_number,
+                           parse_constant=reject_json_constant)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                pass  # FastAPI returns its usual malformed-JSON validation error.
+            except ValueError:
+                return JSONResponse(status_code=400, content={"detail": "Invalid JSON number"})
+        return await call_next(request)
 
     @app.middleware("http")
     async def csrf_guard(request: Request, call_next):

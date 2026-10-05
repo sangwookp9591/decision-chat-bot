@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from jevtriage.auth.core import Principal, enforce_csrf, get_principal, require_roles
+from jevtriage.domain.api_types import Int64
 from jevtriage.policy.service import (
     PolicyError,
     get_active_snapshot,
@@ -25,13 +26,13 @@ class ValidateBody(BaseModel):
 class PublishBody(BaseModel):
     config: dict[str, Any]
     reason: str = Field(min_length=1)
-    expected_active_version: int = Field(ge=0)
+    expected_active_version: Int64 = Field(ge=0)
 
 
 class RollbackBody(BaseModel):
-    target_version: int = Field(ge=1)
+    target_version: Int64 = Field(ge=1)
     reason: str = Field(min_length=1)
-    expected_active_version: int = Field(ge=0)
+    expected_active_version: Int64 = Field(ge=0)
 
 
 def _raise(exc: PolicyError):
@@ -50,7 +51,7 @@ async def versions(principal: Principal = Depends(get_principal)):  # noqa: B008
 
 
 @router.get("/versions/{version}")
-async def version_detail(version: int, principal: Principal = Depends(get_principal)):  # noqa: B008
+async def version_detail(version: Int64, principal: Principal = Depends(get_principal)):  # noqa: B008
     result = await get_version(principal.tenant_id, version)
     if result is None:
         raise HTTPException(status_code=404, detail={"code": "VERSION_NOT_FOUND"})

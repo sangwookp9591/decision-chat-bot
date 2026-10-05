@@ -3,18 +3,45 @@ from __future__ import annotations
 
 import json
 from datetime import UTC, datetime
-from typing import Any, Literal
+from typing import Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from jevtriage.auth.core import Principal, can_review, get_principal
 from jevtriage.auth.policy import can, redact_source
+from jevtriage.domain.api_types import Int64
 from jevtriage.domain.drafts import draft_created_by, draft_source
 from jevtriage.review.service import ReviewError, decide, required_reviewer_org
 from jevtriage.review.store import decode, get_review, judgment_urgencies, list_reviews
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
+
+
+class ClassificationChanges(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    ai_need: Literal["필요", "불필요", "혼합", "정보 부족"] = Field(default=None)
+    feasibility: Literal["가능", "조건부 가능", "현재 불가", "정보 부족"] = Field(default=None)
+    urgency: Literal["긴급", "일반", "판단 보류"] = Field(default=None)
+    lead_org: str = Field(default=None)
+
+
+class DraftTaskChanges(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    draft_task_id: str
+    title: str = Field(default=None)
+    method: Literal["AI", "일반 기술", "사람"] = Field(default=None)
+    lead_org: str = Field(default=None)
+    collab_orgs: list[str] = Field(default=None)
+    deliverable: str = Field(default=None)
+    predecessors: list[str] = Field(default=None)
+    reason: str = Field(default=None)
+
+
+class ReviewChanges(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    classifications: ClassificationChanges | None = None
+    draft_tasks: list[DraftTaskChanges] | None = None
 
 
 class DecisionCommand(BaseModel):
@@ -23,9 +50,9 @@ class DecisionCommand(BaseModel):
     request_id: str
     input_revision: str
     run_id: str
-    draft_version: int = Field(ge=1)
-    review_version: int = Field(ge=1)
-    changes: dict[str, Any] | None = None
+    draft_version: Int64 = Field(ge=1)
+    review_version: Int64 = Field(ge=1)
+    changes: ReviewChanges | None = None
     reason: str | None = None
     needed_info: list[str] | None = None
 
@@ -90,10 +117,19 @@ def _draft(row: dict) -> dict:
 
 @router.get("")
 async def reviews(status: str = Query("pending"),
+                  limit: Int64 = Query(100, ge=1, le=500),  # noqa: B008
+                  offset: Int64 = Query(0, ge=0),  # noqa: B008
                   principal: Principal = Depends(get_principal)):  # noqa: B008
     if status not in {"pending", "approved", "rejected", "info_requested"}:
         raise HTTPException(422, "Invalid status")
-    rows = await list_reviews(principal.tenant_id, status)
+    if "reviewer" not in principal.roles:
+        return {"reviews": []}
+    legacy = [value for value in ("AI팀", "IT팀", "현업", "검토자")
+              if required_reviewer_org(principal.tenant_id, value, principal.org_ids)
+              in principal.org_ids]
+    rows = await list_reviews(principal.tenant_id, status,
+                              reviewer_orgs=[*principal.org_ids, *legacy],
+                              limit=limit, offset=offset)
     run_ids = list({row["v"]["run_id"] for row in rows})
     urgencies = await judgment_urgencies(principal.tenant_id, run_ids)
     now = datetime.now(UTC)

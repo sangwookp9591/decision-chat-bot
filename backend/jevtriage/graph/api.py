@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 
 from jevtriage.auth.core import Principal, get_principal
 from jevtriage.auth.policy import can, redact_source
+from jevtriage.domain.api_types import Int64
 from jevtriage.graph import query
 from jevtriage.graph.model import KINDS, MAX_DEPTH
 from jevtriage.ingest.service import request_meta as get_request_meta
@@ -41,7 +42,7 @@ class Scope:
 
 @router.get("/judgment")
 async def judgment_graph(request_id: str | None = None, run_id: str | None = None,
-                         rule_id: str | None = None, config_version: int | None = None,
+                         rule_id: str | None = None, config_version: Int64 | None = None,
                          status: str | None = None,
                          depth: int = Query(6, ge=1, le=MAX_DEPTH),
                          principal: Principal = Depends(get_principal)):  # noqa: B008

@@ -43,3 +43,11 @@
 ### 규칙 읽기 권한
 
 `rule:read`는 reviewer·operator·rule_admin의 규칙 조회 권한이며 `learn_admin`(rule_admin 전용 변경)과 분리한다. reviewer는 조직 제한 규칙 버전의 requester_org 범위와 소속 조직이 일치해야 한다; 조직 제한이 없는 규칙은 tenant 공통으로 조회한다. operator·rule_admin은 tenant 전체를 조회한다. 목록에서 가려진 버전은 제외하고 범위 밖 상세·효과는 404로 응답한다. 원문은 기존 source 권한으로 제거하며 후보 제안은 기존 `learn_propose`(reviewer·rule_admin)를 사용한다.
+
+## 요청 검증·조회 경계 (FIX-QAC, 2026-10-05)
+
+전역 `RequestValidationError` 핸들러는 422 `detail[]`에서 `loc`, `type`, `msg`만 반환하고 제출 값인 `input`과 예외 객체가 들어갈 수 있는 `ctx`를 제거한다. 사용자 값을 메시지에 삽입할 수 있는 custom ValueError/AssertionError는 일반화된 메시지를 반환한다. JSON 요청은 본문 경계에서 비유한 수를 거부하며 `1e1000`, `NaN`, `Infinity`, `-Infinity`는 중첩 설정 객체 안에서도 400을 반환한다. 타입 오류는 원문을 반사하거나 JSON 직렬화 500을 만들지 않는다.
+
+정책 버전 경로·게시/rollback 버전, 그래프 `config_version`, 검토 결정 버전 및 목록 offset은 공용 `domain.api_types.Int64`로 Neo4j의 signed int64 범위를 검증한다. 범위를 벗어난 값은 저장소 호출 전에 422로 거절한다. 각 필드의 기존 양수·깊이·limit 제약은 함께 적용한다.
+
+검토 목록은 reviewer 역할을 확인한 뒤 책임 조직의 정규 ID와 기존 별칭(`AI팀`, `IT팀`, `현업`, `검토자`)을 상세와 동일하게 해석하여 DB WHERE에 적용한다. 권한 필터 뒤에 정렬·페이지 제한을 적용하므로 더 최근의 타 조직 검토 100건이 허용 검토를 가리지 않는다. operator 역할만 가진 계정은 검토 목록을 받지 않는다. 담당자 별칭 `검토자`는 계속 tenant AI 조직에만 대응한다.

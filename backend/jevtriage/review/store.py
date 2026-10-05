@@ -71,13 +71,15 @@ async def get_review(tenant_id: str, review_id: str) -> dict | None:
     return await read_tx(tenant_id, op)
 
 
-async def list_reviews(tenant_id: str, status: str, limit: int = 100) -> list[dict]:
+async def list_reviews(tenant_id: str, status: str, *, reviewer_orgs: list[str],
+                       limit: int = 100, offset: int = 0) -> list[dict]:
     async def op(tx):
         return await (await tx.run(
             "MATCH (v:Review {tenant_id:$tenant,status:$status}) "
             "MATCH (q:Request {tenant_id:$tenant,id:v.request_id}) "
             "WHERE q.active_run_id=v.run_id AND q.latest_revision_id=v.revision_id "
-            "RETURN v,q ORDER BY v.created_at DESC LIMIT $limit",
-            tenant=tenant_id, status=status, limit=limit,
+            "AND v.required_reviewer_org IN $reviewer_orgs "
+            "RETURN v,q ORDER BY v.created_at DESC,v.id DESC SKIP $offset LIMIT $limit",
+            tenant=tenant_id, status=status, reviewer_orgs=reviewer_orgs, limit=limit, offset=offset,
         )).data()
     return await read_tx(tenant_id, op)
