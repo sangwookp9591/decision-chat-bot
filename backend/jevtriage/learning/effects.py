@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+from jevtriage.auth.policy import can
 from jevtriage.db.tx import read_tx
 from jevtriage.domain.serialize import to_native
 from jevtriage.policy.service import get_active_snapshot
@@ -32,6 +33,7 @@ def _metrics(rows):
             durations.append((committed - start).total_seconds() * 1000)
     counts = {
         "sample_count": n,
+        "labeled_count": sum(row.get("labeled", False) for row in rows),
         "classification_changes": sum(row["changed"] for row in rows),
         "corrections": sum(row["corrected"] for row in rows),
         "review_transitions": sum(row["reviewed"] for row in rows),
@@ -49,7 +51,8 @@ def _metrics(rows):
 
 
 def _effect(before, after, minimum):
-    if min(before["sample_count"], after["sample_count"]) < minimum:
+    if min(before["sample_count"], after["sample_count"],
+           before["labeled_count"], after["labeled_count"]) < minimum:
         return "insufficient_sample"
     changes = [after[key] - before[key] for key in ("correction_rate", "failure_rate")]
     if any(value > 0 for value in changes):
@@ -61,7 +64,7 @@ def _effect(before, after, minimum):
     return "no_change"
 
 
-async def rule_effects(tenant: str, rule_id: str, days: int | None = None):
+async def rule_effects(tenant: str, rule_id: str, days: int | None = None, principal=None):
     config_version, config = await get_active_snapshot(tenant)
     days = int(config.get("learning", {}).get("effect_window_days", 7)) if days is None else days
     if days < 1 or days > 90:
@@ -82,15 +85,17 @@ async def rule_effects(tenant: str, rule_id: str, days: int | None = None):
             "MATCH (run:Run {tenant_id:$tenant}) "
             "WHERE coalesce(run.run_kind,'production') <> 'shadow' AND run.started_at >= datetime($start) "
             "AND run.started_at < datetime($end) "
-            "OPTIONAL MATCH (j:Judgment {tenant_id:$tenant,run_id:run.id}) "
+            "OPTIONAL MATCH (q:Request {tenant_id:$tenant,id:run.request_id}) "
             "OPTIONAL MATCH (c:Correction {tenant_id:$tenant,run_id:run.id}) "
+            "OPTIONAL MATCH (h:ReviewDecision {tenant_id:$tenant,run_id:run.id}) "
+            "WHERE h.action IN ['approve','approve_with_changes'] "
             "OPTIONAL MATCH (v:Review {tenant_id:$tenant,run_id:run.id}) "
             "OPTIONAL MATCH (s:RunStep {tenant_id:$tenant,run_id:run.id})"
             "-[a:APPLIED]->(rule:RuleVersion {tenant_id:$tenant,rule_id:$rule}) "
             "RETURN run.id AS id,run.started_at AS started_at,"
             "run.first_judgment_committed_at AS committed_at,run.status AS status,"
-            "j.id AS judgment_id,count(DISTINCT c) AS corrections,"
-            "count(DISTINCT v) AS reviews,"
+            "properties(q) AS request_meta,count(DISTINCT c) AS corrections,"
+            "count(DISTINCT v) AS reviews,count(DISTINCT h) AS labels,"
             "collect(DISTINCT {outcome:a.outcome,before:a.before,after:a.after}) AS applications",
             tenant=tenant, rule=rule_id, start=start.isoformat(), end=end.isoformat(),
         )).data()
@@ -104,12 +109,16 @@ async def rule_effects(tenant: str, rule_id: str, days: int | None = None):
     at, start, end, rows, shadows = await read_tx(tenant, op)
     normalized = []
     for row in rows:
+        if principal and "rule_admin" not in principal.roles and not can(
+            principal, "learn_read", row["request_meta"] or {"tenant_id": tenant}
+        ):
+            continue
         apps = [a for a in row["applications"] if a["outcome"] in {"used", "out_of_scope"}]
         outcomes = {a["outcome"] for a in apps}
         changed = any(a["outcome"] == "used" and a["before"] != a["after"] for a in apps)
         normalized.append({"started_at": row["started_at"], "committed_at": row["committed_at"],
                            "changed": bool(changed), "corrected": bool(row["corrections"]),
-                           "reviewed": bool(row["reviews"]), "failed": row["status"] == "failed",
+                           "labeled": bool(row["labels"]), "reviewed": bool(row["reviews"]), "failed": row["status"] == "failed",
                            "outcome": "used" if "used" in outcomes else
                            "out_of_scope" if "out_of_scope" in outcomes else None})
     before_rows = [r for r in normalized if _native(r["started_at"]) < at]
@@ -119,6 +128,7 @@ async def rule_effects(tenant: str, rule_id: str, days: int | None = None):
               for outcome in ("used", "out_of_scope")}
     return {"rule_id": rule_id, "active_config_version": config_version,
             "published_at": at.isoformat(), "window_days": days,
+            "labeled_definition": "approved_human_review_per_run",
             "minimum_sample": minimum, "sample_count": len(normalized),
             "before_after": {"before": before, "after": after,
                              "before_from": start.isoformat(), "before_to": at.isoformat(),

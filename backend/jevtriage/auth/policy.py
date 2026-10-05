@@ -48,6 +48,11 @@ def can(principal: Principal, action: str, resource_meta: dict[str, Any]) -> boo
         return bool(roles.intersection({"reviewer", "rule_admin", "operator"}))
     if action in {"view_graph", "learn_read"}:
         return bool(roles.intersection({"reviewer", "rule_admin", "operator"})) and _request_scope(principal, resource_meta)
+    if action == "rule:read":
+        allowed = bool(roles.intersection({"reviewer", "rule_admin", "operator"}))
+        orgs = set(resource_meta.get("org_ids") or ())
+        return allowed and (not orgs or bool(roles.intersection({"operator", "rule_admin"}))
+                            or bool(orgs.intersection(principal.org_ids)))
     if action == "learn_admin":
         return "rule_admin" in roles
     if action == "learn_propose":

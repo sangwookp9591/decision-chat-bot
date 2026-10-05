@@ -17,7 +17,7 @@ export function ThreePanels({ corrections, candidates, rules }: { corrections: n
   return <div className="learning-panels">
     <div className="panel-fact"><b>관찰 사실</b><span>원문·입력·모델 반환·사람 수정. 수정 기록 {corrections ?? '—'}건</span></div>
     <div className="panel-hypothesis"><b>가설 (규칙 후보)</b><span>실행에 쓰이지 않음. 후보 {candidates}건</span></div>
-    <div className="panel-rule"><b>승인된 규칙</b><span>권한자 승인 + 검증 후 게시. {rules === null ? '운영 중 수는 규칙 관리자만 조회합니다' : `운영 중 ${rules}건`}</span></div>
+    <div className="panel-rule"><b>승인된 규칙</b><span>권한자 승인 + 검증 후 게시. {rules === null ? '운영 중 수를 불러오지 못했습니다' : `운영 중 ${rules}건`}</span></div>
   </div>;
 }
 
@@ -78,17 +78,17 @@ export function Timeline({ ruleLabel, items }: { ruleLabel: string; items: Timel
   </section>;
 }
 
-const metricRows = (m: EffectMetrics) => [percent(m.classification_change_rate), percent(m.correction_rate), percent(m.review_transition_rate), percent(m.failure_rate), `${millis(m.latency_p50_ms)} / ${millis(m.latency_p95_ms)} (n=${m.latency_sample_count})`];
+const metricRows = (m: EffectMetrics) => [String(m.labeled_count),percent(m.classification_change_rate), percent(m.correction_rate), percent(m.review_transition_rate), percent(m.failure_rate), `${millis(m.latency_p50_ms)} / ${millis(m.latency_p95_ms)} (n=${m.latency_sample_count})`];
 
 export function Observation({ effects, state }: { effects: RuleEffects | null; state: 'none' | 'forbidden' | 'unpublished' | 'error' | 'ok' }) {
   if (state !== 'ok' || !effects) {
-    const text = { none: '규칙 버전을 선택하면 게시 후 관찰이 표시됩니다.', forbidden: '게시 후 관찰은 규칙 관리자만 조회할 수 있습니다.', unpublished: '아직 게시한 적이 없어 관찰 기록이 없습니다.', error: '효과 집계를 불러오지 못했습니다.', ok: '' }[state];
+    const text = { none: '규칙 버전을 선택하면 게시 후 관찰이 표시됩니다.', forbidden: '게시 후 관찰 조회 권한이 없습니다.', unpublished: '아직 게시한 적이 없어 관찰 기록이 없습니다.', error: '효과 집계를 불러오지 못했습니다.', ok: '' }[state];
     return <section className="learning-card" aria-label="게시 후 관찰"><h3>게시 후 관찰</h3><p className="learning-empty">{text}</p></section>;
   }
   const { used, out_of_scope } = effects.groups;
   const shortage = effects.effect === 'insufficient_sample' ? sampleShortage(Math.min(effects.before_after.before.sample_count, effects.before_after.after.sample_count), effects.minimum_sample) : null;
   const m = [metricRows(effects.before_after.before), metricRows(effects.before_after.after), metricRows(used), metricRows(out_of_scope)];
-  const labels = ['분류 변경률', '사람 수정 발생률', '검토 전환율', '실패율', '지연 p50 / p95'];
+  const labels = ['사람 확정 정답 표본 수', '분류 변경률', '사람 수정 발생률', '검토 전환율', '실패율', '지연 p50 / p95'];
   return <section className="learning-card" aria-label="게시 후 관찰">
     <header><h3>게시 후 관찰</h3><span className="learning-tag">{formatTime(effects.published_at)} 게시 · 전후 {effects.window_days}일</span></header>
     <div className="learning-metrics">
@@ -98,6 +98,8 @@ export function Observation({ effects, state }: { effects: RuleEffects | null; s
       <div className="learning-metric"><span>효과 판정</span><b data-testid="effect-verdict">{effectLabels[effects.effect]}</b></div>
     </div>
     {shortage && <p className="learning-caution">{shortage}</p>}
+    <p className="learning-note">정답 정의: 사람이 승인 또는 수정 후 승인한 실행을 1건으로 셉니다. 미승인·기각·승인 대기와 수정 기록만 있는 실행은 정답으로 세지 않습니다.</p>
+    {Math.min(effects.before_after.before.labeled_count, effects.before_after.after.labeled_count) < effects.minimum_sample && <p className="learning-caution">미확정: 사람 확정 정답 표본이 최소 {effects.minimum_sample}건에 미달합니다.</p>}
     <div className="table-scroll" tabIndex={0} aria-label="표, 좌우 화살표 키로 이동"><table>
       <caption className="sr-only">적용 전후와 사용·미사용 집단 비교</caption>
       <thead><tr><th scope="col">지표</th><th scope="col">게시 전 (n={effects.before_after.before.sample_count})</th><th scope="col">게시 후 (n={effects.before_after.after.sample_count})</th><th scope="col">사용 (n={used.sample_count})</th><th scope="col">범위 밖 (n={out_of_scope.sample_count})</th></tr></thead>

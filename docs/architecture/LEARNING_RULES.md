@@ -9,3 +9,9 @@ API 쓰기는 `rule_admin` 세션·CSRF·`Idempotency-Key`·사유가 필요하�
 결정적 술어만 허용한다: 분류 필드의 `eq`/`in`, Noul 신호의 `gte`/`lte`, 카탈로그 업무 존재, 요청 조직. 동작은 target별 허용 목록으로 제한한다. `urgency`는 `긴급` 지정 또는 검토 사유 추가, `feasibility`는 `조건부 가능`·`현재 불가`·`정보 부족` 지정, `ai_need`는 정의된 네 분류값 지정, `lead_org`는 `AI팀`·`IT팀`·`현업` 지정, `collab_orgs`는 이 조직 중 하나 추가, `review_route`는 검토 사유 추가만 허용한다. 위험 필드나 필수 검토 표시를 바꾸는 동작은 허용하지 않는다. 위반은 저장·버전 생성·게시·되돌리기에서 HTTP 422 `RULE_INVARIANT`로 거절한다. 과거 Config에 이미 남은 위반 규칙은 적용 시 `blocked_by_invariant`로 기록하고 판단을 바꾸지 않는다. 같은 target에서 뒤에 게시된 규칙이 우선하며 필수 검토 추가가 그보다 우선한다. 모든 활성 규칙의 범위 밖 결과도 기록한다. 과거 Judgment와 APPLIED 관계는 새 Config 게시로 변경하지 않는다.
 
 검증: `make up` 다음 `cd backend && .venv/bin/pytest tests/integration/test_rules_integration.py -q`에서 실제 Neo4j와 mock Jev로 권한·상태 전이·안전 검사·게시·적용·범위 밖·버전 고정·중단·되돌리기·드라이버 재생성을 확인한다. mock 결과는 분류 품질 승인 증거가 아니다.
+
+## 규칙 조회와 변경 권한 (FIX-LEARN)
+
+규칙 목록·상세·효과는 `rule:read` 권한을 사용하며 reviewer·operator·rule_admin이 조회한다. tenant 경계는 저장소 조회에서 강제한다. reviewer에게는 각 버전의 `scope.all[].requester_org`와 소속 조직이 겹치는 버전만 노출하며 조직 조건 없는 규칙은 tenant 공통으로 읽을 수 있다. operator와 rule_admin은 tenant 전체 범위다. 가려진 버전은 목록의 최신 버전·버전 수에서도 제외하며 범위 밖 상세·효과는 404다. 원문 필드는 기존 `can_read_source` 권한대로 제거한다. 효과 실행 집계도 reviewer의 요청 범위로 제한한다.
+
+후보 결정·버전 생성·검증·게시·중단·되돌리기는 기존 rule_admin 전용 권한을 유지한다. 규칙 학습 화면은 조회 역할에도 규칙 버전과 게시 후 관찰을 연결하고 변경 버튼은 비활성으로 표시한다.

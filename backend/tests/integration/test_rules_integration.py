@@ -88,7 +88,8 @@ async def test_role_matrix_and_state_transitions(tenant):
                 ("get", "/api/learning/rules", None),
             ):
                 response = await client.request(method, path, json=body)
-                assert response.status_code == 403
+                expected = 200 if method == "get" and role in {"reviewer", "operator"} else 403
+                assert response.status_code == expected
     app.dependency_overrides[get_principal] = lambda: Principal(tenant, "admin", (), frozenset({"rule_admin"}))
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
         response = await client.post(f"/api/learning/candidates/{candidate}/decision", headers={"Idempotency-Key": "decision-1"}, json={"action": "approve", "reason": "검토"})

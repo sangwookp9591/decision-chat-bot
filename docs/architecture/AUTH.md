@@ -39,3 +39,7 @@
 `python scripts/bootstrap_dev.py [--password PASSWORD]`는 `t-alpha`, `t-beta` 각각에 AI·IT·현업 조직과 여섯 역할 계정을 만든다. 계정은 `<role>@<tenant>.dev`이며 기본 암호는 `dev-only-change-me`; 로컬 개발 전용이므로 운영에서 사용하지 않는다. `JEVTRIAGE_DEV_PASSWORD` 또는 `--password`로 실행 시 암호를 지정할 수 있다. 비밀번호는 Argon2id로 해시한다.
 
 개발 계정은 실제 운영 인증 공급자와 분리된 개발 편의 경로다. 운영 공급자 연동과 설정은 T26의 범위이며 이 bootstrap을 운영 계정 프로비저닝으로 사용하면 안 된다.
+
+### 규칙 읽기 권한
+
+`rule:read`는 reviewer·operator·rule_admin의 규칙 조회 권한이며 `learn_admin`(rule_admin 전용 변경)과 분리한다. reviewer는 조직 제한 규칙 버전의 requester_org 범위와 소속 조직이 일치해야 한다; 조직 제한이 없는 규칙은 tenant 공통으로 조회한다. operator·rule_admin은 tenant 전체를 조회한다. 목록에서 가려진 버전은 제외하고 범위 밖 상세·효과는 404로 응답한다. 원문은 기존 source 권한으로 제거하며 후보 제안은 기존 `learn_propose`(reviewer·rule_admin)를 사용한다.

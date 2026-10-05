@@ -13,3 +13,11 @@
 사람은 `POST /api/learning/candidates`로 `field`, `proposed_action`, `scope`, `rationale`, `supporting_correction_ids`를 제출할 수 있다. 실제로 존재하고 접근 가능한 Correction만 연결한다. 후보 상세는 지지 Correction과 반례 ReviewDecision의 실제 관계를 반환한다. 후보는 제안 데이터이며 Config, 활성 규칙, 업무에 영향을 주지 않는다.
 
 실행: `make up` 이후 `make test`로 전체 백엔드 단위·실제 Neo4j 통합 시험을 확인한다. 후보 생성 통합 시험은 3건 지지, 2건 자료 부족, 생성 재실행 멱등성과 Config 비변경을 검증한다.
+
+## 사람 후보 제안 화면 (FIX-LEARN)
+
+규칙 학습의 reviewer·rule_admin에게 `사람 후보 제안` 양식을 제공한다. 기존 `POST /api/learning/candidates`로 판단 항목·지원 값·지지 Correction ID·결정적 scope·사유를 보내고 생성된 후보를 자동 선택한다. operator 및 조회 불가 역할에게 양식을 숨긴다. 수정 기록은 선택 항목과 기존 요청 권한으로 조회하며 범위 밖 값이 가려진 기록은 지지 선택에 제공하지 않는다.
+
+양식은 ai_need·feasibility·urgency·lead_org의 지원 값을 제공하고 가능으로 상향·긴급 해제·협업 조직·검토 경로·컨텍스트 등 미지원 제안을 안내한다. feasibility는 조건부 가능·현재 불가·정보 부족, urgency는 긴급만 허용한다. 서버가 규칙 스키마·안전 불변 조건과 지지 기록 권한을 최종 확인하며 오류는 입력을 보존한 채 표시한다. 3건 미만 지지는 자료 부족 후보로 저장한다. 사람 후보 역시 관리자 승인 → 섀도 검증 → 검증 완료 처리 → 게시의 기존 여정을 거친다.
+
+제품 E2E `frontend/e2e/learning-human.spec.ts`는 별도 tenant에 결정적 사람 수정 fixture를 저장하고 실제 API/Neo4j 및 Chromium·WebKit으로 이 여정과 조회/변경 경계를 검증한다. fixture 생성에 모델 API를 사용하지 않는다.

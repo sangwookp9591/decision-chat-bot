@@ -35,7 +35,7 @@ export type ValidationResult = {
   failures: Array<Record<string, unknown>> | number; failure_count?: number; side_effects: number; status: string; max_calls: number; calls: number; usage: Record<string, unknown>;
 };
 export type EffectMetrics = {
-  sample_count: number; classification_changes: number; corrections: number; review_transitions: number; failures: number;
+  labeled_count: number; sample_count: number; classification_changes: number; corrections: number; review_transitions: number; failures: number;
   latency_sample_count: number; latency_p50_ms: number | null; latency_p95_ms: number | null;
   classification_change_rate: number | null; correction_rate: number | null; review_transition_rate: number | null; failure_rate: number | null;
 };
@@ -46,6 +46,7 @@ export type RuleEffects = {
   groups: { used: EffectMetrics; out_of_scope: EffectMetrics }; effect: EffectVerdict;
   shadow_runs_excluded: number; slo_included: boolean; comparison_conditions: string;
 };
+export type HumanProposal = { field: string; proposed_action: { set: string }; scope: RuleScope; rationale: string; supporting_correction_ids: string[] };
 export type DecisionAction = 'approve' | 'approve_with_scope_change' | 'reject';
 export type CorrectionList = { corrections: CorrectionCase[] };
 
@@ -62,6 +63,7 @@ export function normalizeCandidate(row: CandidateRow): CandidateDetail {
 }
 
 export const learningApi = {
+  propose: (body: HumanProposal) => post<{ id: string; status: string; source: string }>('/api/learning/candidates', body),
   candidates: async () => (await apiFetch<{ candidates: CandidateRow[] }>('/api/learning/candidates')).candidates.map(normalizeCandidate),
   candidate: async (id: string) => { const row = await apiFetch<CandidateRow & { examples?: CandidateExample[] }>(`/api/learning/candidates/${rule(id)}`); return { ...normalizeCandidate(row), examples: row.examples || [] }; },
   generate: () => apiFetch<{ candidates: unknown[] }>('/api/learning/candidates/generate', { method: 'POST' }),

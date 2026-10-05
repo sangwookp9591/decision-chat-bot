@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from jevtriage.auth.core import Principal, enforce_csrf, require_roles
+from jevtriage.learning.rule_access import readable_rule
 from jevtriage.learning.rules import (
     change_publication,
     create_version,
@@ -19,6 +20,7 @@ from jevtriage.policy.service import PolicyError
 
 router = APIRouter(prefix="/api/learning", tags=["learning"])
 ADMIN = Depends(require_roles("rule_admin"))
+READ = Depends(require_roles("reviewer", "rule_admin", "operator"))
 CSRF = Depends(enforce_csrf)
 
 
@@ -110,13 +112,21 @@ async def revert(rule_id: str, body: RevertBody, request: Request, principal: Pr
 
 
 @router.get("/rules")
-async def rules(principal: Principal = ADMIN):
-    return {"rules": await list_rules(principal.tenant_id)}
+async def rules(principal: Principal = READ):
+    visible = []
+    for row in await list_rules(principal.tenant_id):
+        detail = readable_rule(principal, await rule_detail(principal.tenant_id, row["rule_id"]))
+        if detail:
+            versions = detail["versions"]
+            visible.append({**row, "latest_version": max(v["version"] for v in versions),
+                            "version_count": len(versions)})
+    return {"rules": visible}
 
 
 @router.get("/rules/{rule_id}")
-async def detail(rule_id: str, principal: Principal = ADMIN):
+async def detail(rule_id: str, principal: Principal = READ):
     result = await rule_detail(principal.tenant_id, rule_id)
+    result = readable_rule(principal, result) if result else None
     if result is None:
         raise HTTPException(404, detail={"code": "RULE_NOT_FOUND"})
     return result

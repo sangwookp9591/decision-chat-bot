@@ -5,6 +5,7 @@ import { policyApi } from '../api/policy';
 import type { ApiError } from '../api/client';
 import { ErrorState, LoadingState } from '../components';
 import { statusText } from '../components/statusLabels';
+import { Proposal } from './learning/Proposal';
 import { Actions, type ActionHandlers } from './learning/Actions';
 import { Observation, CycleStrip, EvidenceTable, RuleSummary, ThreePanels, Timeline, ValidationCard, type TimelineItem } from './learning/sections';
 import { actionStates, candidateFilterKey, candidateStatusLabel, fieldLabel, filterLabels, isoOf, permissions, ruleDecisionDetail, sourceLabel, suggestRuleId, versionStatusLabel, type CandidateFilter } from './learning/learningModel';
@@ -39,6 +40,7 @@ export function Learning({ roles }: { roles: string[] }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [showProposal, setShowProposal] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
@@ -49,12 +51,12 @@ export function Learning({ roles }: { roles: string[] }) {
       if (Number.isFinite(configured) && configured > 0) setMinSample(configured);
       setError('');
       learningApi.corrections().then((r) => setCorrections(r.corrections.length), () => setCorrections(null));
-      if (perms.isAdmin) {
+      if (perms.canView) {
         const rules = await learningApi.rules();
         setRuleDetails(await Promise.all(rules.rules.map((r) => learningApi.rule(r.rule_id))));
       } else setRuleDetails(null);
     } catch (e) { setError(message(e)); } finally { setLoading(false); }
-  }, [perms.isAdmin]);
+  }, [perms.canView]);
   useEffect(() => { void load(); }, [load]);
 
   // The rule_id / config_version query parameters come from the judgment map links.
@@ -92,7 +94,7 @@ export function Learning({ roles }: { roles: string[] }) {
     return () => { live = false; };
   }, [selectedId, candidates]);
 
-  // Effects and lifecycle timeline follow the selected rule version (rule administrators only).
+  // Effects follow the selected readable rule; administrator actions remain separately gated.
   useEffect(() => {
     setEffectResult({ state: 'none' }); setTimeline([]);
     if (!version || !detail) { setEffectResult({ state: 'none' }); return; }
@@ -177,6 +179,8 @@ export function Learning({ roles }: { roles: string[] }) {
   const body = version?.body || detail?.proposed_body;
   return <section className="learning-page">
     <header className="learning-head"><div><h1>규칙 학습</h1></div><button type="button" className="ui-button secondary" onClick={() => void load()}>새로고침</button></header>
+    {perms.canPropose && <button type="button" className="ui-button primary" onClick={() => setShowProposal(true)}>사람 후보 제안</button>}
+    {perms.canPropose && showProposal && <Proposal busy={busy} onClose={() => setShowProposal(false)} onSubmit={(body) => void run('사람 후보를 제안했습니다. 승인·검증·게시 전까지 실행되지 않습니다.', async () => { const created = await learningApi.propose(body); choose(created.id); setShowProposal(false); })} />}
     <CycleStrip />
     <ThreePanels corrections={corrections} candidates={candidates.length} rules={publishedRules} />
     {error && <p role="alert" className="learning-error">{error}</p>}
@@ -197,13 +201,14 @@ export function Learning({ roles }: { roles: string[] }) {
           <div className="learning-card"><RuleSummary candidate={detail} version={version} />
             {ruleDetails && versions.length > 1 && <label className="learning-inline">규칙 버전<select value={version?.version} onChange={(e) => setVersionNo(Number(e.target.value))}>{versions.map((v) => <option key={v.version} value={v.version}>v{v.version} · {versionStatusLabel(v.status)}</option>)}</select></label>}
             {(detail.insufficient_approved || version?.insufficient_approved) && <p className="learning-caution" role="status">{version?.insufficient_approval_label || detail.insufficient_approval_label || '자료 부족 상태로 승인됨'}</p>}
-            {perms.isAdmin && version && <p className="learning-state">버전 {versionKey} · 상태 {versionStatusLabel(version.status)} · 게시 Config {version.config_versions.length ? version.config_versions.map((v) => `v${v}`).join(', ') : '없음'} · 적용 기록 {version.application_count}건 · 활성 Config v{activeConfig}</p>}
-            {!perms.isAdmin && <p className="learning-hint">규칙 버전·검증·효과는 규칙 관리자만 조회합니다.</p>}
+            {version && <p className="learning-state">버전 {versionKey} · 상태 {versionStatusLabel(version.status)} · 게시 Config {version.config_versions.length ? version.config_versions.map((v) => `v${v}`).join(', ') : '없음'} · 적용 기록 {version.application_count}건 · 활성 Config v{activeConfig}</p>}
+            {!perms.isAdmin && <p className="learning-hint">규칙 버전·효과를 조회할 수 있습니다. 변경은 규칙 관리자만 할 수 있습니다.</p>}
           </div>
           <EvidenceTable examples={detail.examples} ruleRef={version ? versionKey : null} />
           {perms.isAdmin && <><ValidationCard result={validation} minimum={minSample} />
             <Timeline ruleLabel={version ? versionKey : detail.id} items={timeline.length ? timeline : [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: sourceLabel(detail.source) }]} />
-            <Observation effects={effectResult.state === 'ok' ? effectResult.effects : null} state={effectResult.state} /></>}
+          </>}
+          <Observation effects={effectResult.state === 'ok' ? effectResult.effects : null} state={effectResult.state} />
           <Actions key={`${detail.id}:${versionKey}:${retry}`} states={states} isAdmin={perms.isAdmin} busy={busy} handlers={handlers}
             defaultRuleId={retry || !version ? suggestRuleId(detail.field, existingIds) : ruleId} defaultScope={detail.proposed_body.scope as RuleScope}
             requiresInsufficientAck={detail.status === '자료 부족' || !!detail.insufficient_approved}

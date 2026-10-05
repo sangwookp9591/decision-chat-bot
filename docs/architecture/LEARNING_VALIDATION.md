@@ -13,3 +13,9 @@
 `GET /api/learning/rules/{rule_id}/effects?days=7`은 해당 규칙의 첫 게시 Config 시각을 기준으로 양쪽 `days` 길이의 실제 Run을 비교한다(`days`는 1~90). 게시 후 같은 창의 `APPLIED` 결과로 `used`, `out_of_scope` 집단을 나눈다. 응답에는 기간 경계, 표본 수, 분류 변경률, Correction 발생률, Review 전환율, 실패율, Run 시작에서 첫 Judgment 커밋까지의 지연 p50/p95와 지연 표본 수를 각각 표시한다. 한 Run의 Correction/Review/APPLIED가 여러 개여도 각 비율에는 한 번만 센다. 섀도 Run은 제외한다.
 
 효과 판정은 전·후 창 중 작은 표본 수가 Config `learning.min_effect_sample`(기본 20) 미만이면 `insufficient_sample`이다. 그 밖에는 Correction 발생률과 실패율을 비교한다. 어느 하나라도 상승하면 `worse`, 둘 다 하락하면 `improved`, 하나만 하락하고 다른 하나가 그대로면 `partial`, 둘 다 그대로면 `no_change`다. 지연과 검토 전환은 해석용 지표로 제공하며 이 판정에는 사용하지 않는다. 이 판정은 관찰 관계이며 인과 효과를 보장하지 않는다.
+
+## 효과 관찰의 사람 정답 표본 (FIX-LEARN)
+
+`before_after.before/after`, `groups.used/out_of_scope` 모두 `labeled_count`를 반환한다. 정답 표본은 해당 production 실행에 사람의 `ReviewDecision.action`이 `approve` 또는 `approve_with_changes`인 결정이 하나 이상 있는 실행이며, 같은 실행의 여러 결정·여러 Correction은 1건으로 센다. 수정만 존재하거나 미승인·기각·대기 상태인 실행과 shadow 실행은 정답 표본에 포함하지 않는다. 정의 식별자는 `labeled_definition=approved_human_review_per_run`이다.
+
+효과 판정은 게시 전·후의 실행 표본 및 정답 표본 모두 Dynamic Config `min_effect_sample` 이상일 때만 확정한다. 기준 미달은 `insufficient_sample`을 반환하며 화면은 cohort별 정답 수와 정의, 정답 부족 시 **미확정**을 표시한다. 기존 관찰률·SLO 분모는 유지한다.
