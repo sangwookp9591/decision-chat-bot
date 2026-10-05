@@ -118,6 +118,9 @@ _NEIGHBOR = {
     "down": (f"MATCH (a)<-[r:{UP_TYPE_PATTERN}]-(b)", f"MATCH (a)-[r:{'|'.join(FORWARD_UP_TYPES)}]->(b)"),
 }
 _KIND_FILTER = " WHERE elementId(a) IN $ids AND a.tenant_id=$tenant AND b.tenant_id=$tenant AND any(l IN labels(b) WHERE l IN $kinds)"
+# Neighbours fetched per expansion step, relative to the remaining node budget (visibility
+# and status filtering happen after the read, so some headroom keeps results stable).
+_EXPAND_HEADROOM = 4
 _NODE_RETURN = (" OPTIONAL MATCH (run:Run {tenant_id:$tenant,id:b.run_id}) "
                 "RETURN DISTINCT elementId(b) AS e, labels(b) AS labels, properties(b) AS p, "
                 "coalesce(b.request_id,run.request_id) AS request_id")
@@ -174,13 +177,26 @@ async def collect(tenant: str, visible: Visible, *, request_id=None, run_id=None
                 break
             found: dict[str, dict] = {}
 
-            async def expand(tx, frontier=frontier, found=found, direction=direction):
+            # Bound the read in the database, not after it: a hub node (e.g. a ConfigVersion every Run
+            # points at) would otherwise load its whole neighbourhood before the cap is applied.
+            room = max(cap - len(nodes), 0)
+            if room == 0:
+                truncated = True
+                break
+            limit = room * _EXPAND_HEADROOM + len(frontier)
+
+            async def expand(tx, frontier=frontier, found=found, direction=direction, limit=limit):
+                hit = False
                 for pattern in _NEIGHBOR[direction]:
-                    rows = await (await tx.run(pattern + _KIND_FILTER + _NODE_RETURN,
-                                               tenant=tenant, ids=frontier, kinds=list(KINDS))).data()
+                    rows = await (await tx.run(pattern + _KIND_FILTER + _NODE_RETURN + " LIMIT $limit",
+                                               tenant=tenant, ids=frontier, kinds=list(KINDS),
+                                               limit=limit)).data()
+                    hit = hit or len(rows) >= limit
                     for row in rows:
                         found[row["e"]] = _row_node(row)
-            await read_tx(tenant, expand)
+                return hit
+            if await read_tx(tenant, expand):
+                truncated = True
             if preload:
                 await preload(record["request_id"] for record in found.values())
             nxt: list[str] = []
