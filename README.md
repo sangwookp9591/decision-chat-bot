@@ -10,7 +10,7 @@
 ![React + TypeScript](https://img.shields.io/badge/React-TypeScript-149ECA?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
-[빠른 시작](#빠른-시작) · [주요 기능](#주요-기능) · [아키텍처](#아키텍처-요약) · [문서](#문서-색인)
+[빠른 시작](#빠른-시작) · [설정 상세](#프로젝트-설정-상세) · [주요 기능](#주요-기능) · [아키텍처](#아키텍처-요약) · [문서](#문서-색인)
 
 </div>
 
@@ -183,6 +183,91 @@ curl --fail http://localhost:8000/api/ready
 ```
 
 Vite가 `/api` 요청을 API로 프록시합니다. 종료는 각 터미널에서 **Ctrl-C**로 API·Worker·Collector·Watchdog·Vite를 먼저 정리합니다. Worker는 새 Job 수신을 멈추고 진행 중 작업을 정리합니다. 이 저장소의 컨테이너를 혼자 사용할 때만 `make down`으로 종료하세요. **공유 Neo4j를 사용하는 다른 시험이 있으면 중지하지 않습니다.** [운영 Runbook](docs/operations/RUNBOOK.md)에 재시작·복구 절차가 있습니다.
+
+## 프로젝트 설정 상세
+
+빠른 시작을 처음 따라 할 때 필요한 준비물·설정값·계정·포트와 자주 막히는 지점을 모았습니다.
+
+### 사전 설치 (macOS 기준)
+
+```sh
+brew install --cask orbstack      # Docker Desktop 대신 OrbStack 사용
+brew install python@3.14 node@22
+open -a OrbStack                  # 처음 한 번 실행해 엔진을 켭니다
+
+python3.14 --version              # 3.14.x
+node --version                    # v22.x
+docker context use orbstack && docker info --format '{{.Name}}'
+```
+
+Docker Desktop이 함께 켜져 있으면 7687 포트를 먼저 잡아 Neo4j가 뜨지 않을 수 있습니다. Docker Desktop은 종료하고 `docker context use orbstack`을 확인하세요.
+
+### `.env` 작성
+
+`cp .env.example .env` 후 아래처럼 채웁니다. 키 값은 예시이며, 실제 키는 이 파일에만 두고 커밋·공유하지 않습니다.
+
+```dotenv
+JEV_API_KEY=<발급받은 Jev API 키>
+JEV_MODE=live                     # 키 없이 화면만 볼 때는 mock (mock 결과는 실제 판단이 아님)
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=development-only   # 개발 전용. 외부에 노출되는 환경에서는 바꾸고 컨테이너를 다시 만듭니다
+DATA_DIR=/absolute/path/to/decision-chat-bot/.data   # API·Worker·Collector·Watchdog가 같은 절대 경로를 써야 합니다
+REDIS_URL=                        # 선택. 쓰려면 redis://127.0.0.1:6379/0
+```
+
+- `NEO4J_PASSWORD`는 Neo4j 컨테이너를 **처음 만들 때** 계정 암호가 됩니다. 나중에 바꾸면 `.data/neo4j`를 지우고 다시 만들어야 합니다(개발 데이터가 사라집니다).
+- `REDIS_URL`을 비워 두면 실시간 이벤트는 Neo4j 저장 이벤트와 5초 주기 확인으로 전달됩니다. 여러 API 인스턴스를 띄우거나 반영을 더 빠르게 하려면 `docker compose up -d redis` 후 설정합니다.
+
+### 포트
+
+| 서비스 | 주소 | 비고 |
+| --- | --- | --- |
+| 웹 (Vite) | http://localhost:5173 | `/api`를 API로 프록시 |
+| API (FastAPI) | http://localhost:8000 | `/api/health`, `/api/ready` |
+| Neo4j Browser | http://localhost:7474 | `.env`의 Neo4j 계정으로 로그인 |
+| Neo4j Bolt | bolt://localhost:7687 | 앱 연결 |
+| Redis (선택) | redis://localhost:6379 | `docker compose up -d redis` |
+
+### 개발 계정과 역할
+
+`scripts/bootstrap_dev.py`는 tenant `t-alpha`, `t-beta`와 조직 `ai`·`it`·`business`, 그리고 역할별 계정을 만듭니다. 이메일은 `<역할>@<tenant>.dev`, 암호는 `JEVTRIAGE_DEV_PASSWORD`(기본 `dev-only-change-me`)입니다.
+
+| 역할 | 예시 계정 | 주로 쓰는 화면 |
+| --- | --- | --- |
+| requester | `requester@t-alpha.dev` | 요청 접수(일동이 대화) |
+| reviewer | `reviewer@t-alpha.dev` | 검토 대기, 규칙 조회 |
+| team_member | `team_member@t-alpha.dev` | 업무 |
+| operator | `operator@t-alpha.dev` | 실행 관찰, 모니터링, 규칙 조회 |
+| policy_editor | `policy_editor@t-alpha.dev` | 정책 |
+| rule_admin | `rule_admin@t-alpha.dev` | 규칙 학습(후보·검증·게시) |
+| labeler | `labeler@t-alpha.dev` | 평가 라벨 |
+
+개발 계정은 기본적으로 첨부 원문 열람 권한(`can_read_source`)이 꺼져 있어 근거 원문 대신 마스킹된 요약이 보입니다. 로컬에서 원문 표시까지 확인하려면 해당 계정에만 켭니다.
+
+```sh
+docker compose exec neo4j cypher-shell -u neo4j -p development-only \
+  "MATCH (u:User {email:'reviewer@t-alpha.dev'}) SET u.can_read_source = true"
+```
+
+### 설정이 끝났는지 확인
+
+1. `curl --fail http://localhost:8000/api/ready` 가 `{"status":"ready"}`를 돌려줍니다.
+2. http://localhost:5173 에서 `requester@t-alpha.dev`로 로그인합니다. 상단에 `live` 또는 `mock` 배지가 보입니다.
+3. 예시 칩 하나를 눌러 보내면 잠정 판단 → 최종 요약 카드가 나타납니다. 멈춰 있으면 Worker 터미널을 확인하세요.
+4. `reviewer@t-alpha.dev`로 다시 로그인해 검토 대기에 방금 요청이 보이는지 확인합니다.
+
+### 자주 막히는 지점
+
+| 증상 | 원인과 해결 |
+| --- | --- |
+| `make up` 후 Neo4j가 계속 unhealthy | 7687을 다른 프로세스(대개 Docker Desktop)가 사용 중. `lsof -i :7687`로 확인 후 종료하고 `docker context use orbstack` |
+| API 시작 시 Neo4j 인증 실패 | `.env`의 `NEO4J_PASSWORD`가 컨테이너를 처음 만들 때 값과 다름. 값을 되돌리거나 `.data/neo4j`를 지우고 다시 `make up` |
+| 요청을 보냈는데 결과가 나오지 않음 | Worker가 꺼져 있거나 다른 tenant로 제한됨. `make worker`(또는 `--tenant t-alpha`) 실행 여부 확인 |
+| 상단 배지가 `live`인데 판단 실패 | `JEV_API_KEY`가 비어 있거나 잘못됨. 키를 넣은 뒤 API·Worker 재시작 |
+| 모니터링이 '관측 불완전' | Collector·Watchdog 미실행 또는 `DATA_DIR`가 프로세스마다 다름. 모두 같은 절대 경로로 다시 실행 |
+| 로그인이 계속 거절됨 | 15분 안에 10회 실패하면 잠깁니다. 15분 뒤 다시 시도하거나 개발 DB에서 계정을 다시 만듭니다 |
+| 화면이 옛 모습 그대로 | 브라우저 강력 새로고침, 또는 `npm --prefix frontend ci` 후 `make web` 재시작 |
 
 ## 개발·시험 명령
 
