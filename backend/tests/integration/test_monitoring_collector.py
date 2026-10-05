@@ -115,6 +115,24 @@ def _record(writer, when, event, attempt, kind, **fields):
     writer.flush()
 
 
+def test_summary_reports_supplement_answer_wait_separately_from_first_judgment():
+    from jevtriage.monitoring.aggregates import summarize
+
+    start = datetime(2026, 1, 1, tzinfo=UTC)
+    rows = [
+        {"kind": "review_decided", "action": "request_info", "request_id": "req_1",
+         "ts": start.isoformat(), "attempt_id": "review-1"},
+        {"kind": "revision_received", "request_id": "req_1",
+         "ts": (start + timedelta(seconds=90)).isoformat(), "received_at":
+         (start + timedelta(seconds=90)).isoformat(), "attempt_id": "revision-1"},
+        {"kind": "review_decided", "action": "request_info", "request_id": "req_2",
+         "ts": (start + timedelta(seconds=5)).isoformat(), "attempt_id": "review-2"},
+    ]
+    result = summarize(rows, now=start + timedelta(minutes=5))
+    assert result["supplement_wait_ms"] == {"p50": 90_000.0, "p95": 90_000.0, "unresolved": 1}
+    assert result["judgment"]["eligible_requests"] == 0
+
+
 def test_collector_deduplicates_and_keeps_db_failure_in_availability(tmp_path):
     now = datetime.now(UTC)
     start = now - timedelta(minutes=5)

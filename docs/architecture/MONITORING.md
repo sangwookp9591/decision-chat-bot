@@ -17,6 +17,7 @@ watchdog은 collector heartbeat, 생산자 heartbeat·journal 쓰기 실패 누�
 - 섀도 실행은 `run_kind=shadow`인 Run 집계와 판단 완료에서 제외하고 별도 건수를 보인다. revision/run 지연은 최초 요청 지연과 별개다. 파일 제외·첫 적격 보완 경로·SSE 전달·단계별 지연·버전별 결과를 기록된 필드만으로 집계한다. 사용량·비용처럼 생산자가 기록하지 않는 값은 `null`이다.
 - 30일 오류 예산은 가용성 허용 실패율 0.1%, 판단 허용 실패율 1%다. 30일 전부터 이어진 수집기 체크포인트, 최근 heartbeat, 공백·손상 없음이 확인되지 않으면 `verified=false`와 잔여 예산 `null`로 표시한다. 최근 1시간 소진율은 조기 알림을 위해 별도로 계산하며 30일 달성 판정과 구별한다.
 - 사람 검토 대기는 Neo4j `Review.created_at`/`decided_at`에서 별도 조회한다. 업무 DB가 중단되면 검토 지표만 `null`과 `source_status=unavailable`로 보이고 journal 기반 시스템 지표는 조회 가능하다.
+- 보완 답변 대기는 journal의 `review_decided(action=request_info)`부터 같은 요청의 다음 `revision_received`까지 별도 계산한다. summary는 완료 대기의 p50/p95와 응답이 관측되지 않은 질문 수를 `supplement_wait_ms`로 반환한다. 이는 사람 검토 queue 지표 및 최초 판단 SLO 시계와 독립적이다.
 
 ## API와 대조
 

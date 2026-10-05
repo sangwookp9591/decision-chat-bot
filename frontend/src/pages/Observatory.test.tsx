@@ -34,6 +34,23 @@ describe('Observatory deep links and flow (P3-03/P3-04)', () => {
   });
 });
 
+describe('Trace detail diagnostics (SPEC-F02)', () => {
+  it('shows failed step error, duration, and execution versions', async () => {
+    vi.mocked(observeApi.step).mockResolvedValue({
+      id: 's2', name: 'Jev 판단', kind: 'ai', status: 'failed', run_id: 'run_1',
+      duration_ms: 12345, error_class: 'JevTimeout', config_version: 7,
+      versions: { model: 'model-test', schema: 'schema-test' },
+    });
+    render(<MemoryRouter initialEntries={['/observatory?run_id=run_1']}><Observatory /></MemoryRouter>);
+    fireEvent.click((await screen.findAllByRole('button', { name: /Jev 판단/ }))[0]);
+    const drawer = await screen.findByRole('dialog', { name: 'Trace 상세' });
+    expect(drawer).toHaveTextContent('JevTimeout');
+    expect(drawer).toHaveTextContent('12345 ms');
+    expect(drawer).toHaveTextContent('model-test');
+    expect(drawer).toHaveTextContent('schema-test');
+  });
+});
+
 describe('Observatory empty states and selectors', () => {
   it('shows an empty-state card when there is no request to observe', async () => {
     vi.mocked(observeApi.requests).mockResolvedValue({ items: [] });
@@ -52,4 +69,3 @@ describe('Observatory empty states and selectors', () => {
     await waitFor(() => expect(observeApi.runs).toHaveBeenCalledWith('req_beta'));
   });
 });
-

@@ -152,6 +152,22 @@ def summarize(rows: list[dict], *, now: datetime | None = None) -> dict:
                 revisions.append(float(r["duration_ms"]))
     sse_latency = [float(r["duration_ms"]) for r in rows if r["kind"] == "sse_deliver"
                    and r.get("duration_ms") is not None]
+    supplement_starts = [r for r in rows if r["kind"] == "review_decided"
+                         and r.get("action") == "request_info" and r.get("request_id")]
+    supplement_waits: list[float] = []
+    supplement_unresolved = 0
+    revisions_by_request: dict[str, list[datetime]] = defaultdict(list)
+    for row in rows:
+        if row["kind"] == "revision_received" and row.get("request_id"):
+            revisions_by_request[row["request_id"]].append(_time(row.get("received_at") or row["ts"]))
+    for request in supplement_starts:
+        requested_at = _time(request["ts"])
+        answer_at = next((at for at in sorted(revisions_by_request[request["request_id"]])
+                          if at >= requested_at), None)
+        if answer_at is None:
+            supplement_unresolved += 1
+        else:
+            supplement_waits.append(max(0.0, (answer_at - requested_at).total_seconds() * 1000))
     first_eligible: dict[str, tuple[datetime, str]] = {}
     for parts in attempts.values():
         start = next((r for r in parts if r["kind"] in
@@ -210,6 +226,9 @@ def summarize(rows: list[dict], *, now: datetime | None = None) -> dict:
                        "revision_p95": percentile(revisions, .95),
                        "step_p95": percentile(step_latency, .95)},
         "review_wait_ms": {"p50": None, "p95": None, "longest": None, "unresolved": None},
+        "supplement_wait_ms": {"p50": percentile(supplement_waits, .5),
+                               "p95": percentile(supplement_waits, .95),
+                               "unresolved": supplement_unresolved},
         "requests": {"received": len({r["request_id"] for r in rows
                                       if r["kind"] == "request_completed" and r.get("request_id")}),
                      "failed_before_id": sum(r["kind"] == "request_failed" and not r.get("request_id")

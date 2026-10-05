@@ -11,6 +11,7 @@ export type MonitoringSummary = {
   latency_ms: Record<string, Metric>;
   steps: Record<string, { count: number; p50_ms: Metric; p95_ms: Metric }>;
   review_wait_ms: { p50: Metric; p95: Metric; longest: Metric; unresolved: Metric; source_status?: string };
+  supplement_wait_ms: { p50: Metric; p95: Metric; unresolved: Metric };
   failures: Record<string, Array<{ request_id?: string; run_id?: string; attempt_id: string; error_class: string; ts: string }>>;
   collection: CollectionStatus; unscoped_events: number;
 };

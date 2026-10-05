@@ -14,6 +14,8 @@
 
 `GET /api/observe/steps/{step_id}`는 단계 원시 속성, 식별자, 시각, 소요, 요약, 주체, attempt 및 버전을 반환한다. 저장된 단계에 실제로 존재하는 정책/모델/스키마 버전만 반환하며 숨겨진 사고 과정은 제공하지 않는다. 원문은 이 API의 일반 요약에서 제외하고 `source_links` 필드를 원문 권한으로 제한한다.
 
+Trace 상세 drawer는 저장된 `error_class`, `duration_ms`, `config_version`, `versions`를 표시한다. 실패·재시도 단계도 동일한 요청별 접근 검사 후 상세를 읽는다. 표시 필드는 기존 단계 응답을 사용하며 원문 링크/본문의 `can_read_source` 제한은 유지한다.
+
 ## Playback
 
 `GET /api/observe/runs/{run_id}/playback`은 저장된 단계 시작/종료 및 검토 대기 시작/결정 이벤트를 시간순 반환하고 live 실행 여부와 최종 실행 상태를 포함한다. 이벤트 시각 간 대기시간을 압축 표시해도 `duration_ms`에 실제 시간을 제공한다. 이 엔드포인트는 읽기 전용이며 rerun 경로를 제공하지 않는다.
