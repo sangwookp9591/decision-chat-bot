@@ -29,7 +29,7 @@ Worker는 tenant 허용 목록이 있으면 그 목록으로 후보를 제한한
 
 R8 질의 점검: `graph/query.py`의 관계 속성 조회 시작점과 `learning/shadow.py`의 보호 상태 스냅샷은 라벨별 조회로 바꿨다. `graph/query.py`의 `elementId` 기반 조회·경로 확장은 tenant를 양 끝에서 확인하며, `elementId` 직접 조회라서 라벨 색인 대신 ID 조회를 사용한다. `review/store.py`의 `Correction` 선택 조회와 `review/service.py`의 첨부 조회는 대상 노드에도 tenant 조건을 추가했다. `auth/core.py`의 로그인 email 조회는 인증 전에 tenant를 알 수 없는 경로이며, `ingest/api.py`에는 라벨 없는 `MATCH`가 없다. `MEMBER_OF`는 별도 `Membership` 노드가 아닌 관계라서 노드 유일 제약을 만들지 않았다.
 
-활성 판단 Run의 생성과 Config 버전 고정은 `start_run_in_tx`/`pin_config_for_run_in_tx`가 담당한다. Task의 `block_reasons`는 미해결 전제가 있는 본업무의 시작 차단 근거이며 상태 전이에서 확인한다.
+활성 판단 Run의 생성과 Config 버전 고정은 `start_run_in_tx`/`pin_config_for_run_in_tx`가 담당한다. Task의 `block_reasons`는 미해결 전제가 있는 본업무의 시작 차단 근거다. 태스크 목록·상세 응답은 서버가 `can_start`와 `start_blockers`를 함께 계산해 반환하며, 상태 전이도 같은 판정 함수를 사용한다. 완료된 `confirmation_task` 선행 업무는 `feasibility_unresolved` 차단을 해제하고, 진행 중인 선행 업무나 다른 차단 근거가 남으면 진행 전이를 409로 거절한다.
 
 잠금 순서는 `Request → Run → Review → Assignment → Job`이며 같은 라벨에서는 ID 순서다. `lock_nodes_in_tx`가 잘못된 순서를 거절한다. 실제 쓰기 잠금은 해당 노드의 `_lock` 속성을 `randomUUID()`로 바꾸어 얻고 트랜잭션이 끝날 때까지 유지한다. EventCounter는 tenant별로 잠그고 seq 증가와 Event 생성이 같은 트랜잭션이므로 롤백 시 결번이 없다. Job은 소유권 검증과 결과 쓰기를 같은 트랜잭션에서 수행한다.
 

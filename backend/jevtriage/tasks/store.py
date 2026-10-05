@@ -6,6 +6,30 @@ import json
 from jevtriage.db.tx import read_tx
 
 
+def project_start_readiness(task: dict) -> dict:
+    """Project the server's start decision and the reasons shown by clients."""
+    predecessors = task.get('predecessor_tasks') or []
+    pending = [p for p in predecessors if p.get('status') not in ('완료', 'completed')]
+    completed_confirmation = any(
+        p.get('confirmation_task') and p.get('status') in ('완료', 'completed')
+        for p in predecessors
+    )
+    blockers = []
+    for reason in task.get('block_reasons') or []:
+        if reason == 'predecessor_incomplete':
+            if pending:
+                blockers.append(reason)
+        elif reason == 'feasibility_unresolved' and completed_confirmation:
+            continue
+        else:
+            blockers.append(reason)
+    if pending and 'predecessor_incomplete' not in blockers:
+        blockers.append('predecessor_incomplete')
+    if task.get('reason'):
+        blockers.append(f"reason:{task['reason']}")
+    return {'can_start': not blockers, 'start_blockers': blockers}
+
+
 async def lock_task_in_tx(tx, tenant_id: str, task_id: str):
     """Serialize a Task transition within its tenant."""
     row = await (await tx.run(
@@ -33,6 +57,7 @@ async def list_tasks(tenant_id: str, filters: dict) -> list[dict]:
             t['predecessors']=json.loads(t.get('predecessors') or '[]')
             t['orgs']=[x for x in row['orgs'] if x.get('org')]
             t['predecessor_tasks']=[dict(x) for x in row['predecessors'] if x]
+            t.update(project_start_readiness(t))
             t['request_status']=q.get('status'); t['request_title']=q.get('title')
             t['created_by']=q.get('created_by'); t['org_ids']=q.get('shared_org_ids') or q.get('org_ids') or []
             result.append(t)
@@ -57,6 +82,7 @@ async def get_task(tenant_id: str, task_id: str) -> dict | None:
         t['orgs']=[x for x in row['orgs'] if x.get('org')]
         t['predecessor_tasks']=[dict(x) for x in row['predecessors'] if x]
         t['successors']=[dict(x) for x in row['successors'] if x]
+        t.update(project_start_readiness(t))
         t['request']={k:q.get(k) for k in ('id','title','status','created_by','org_ids','shared_org_ids')}
         t['request']['org_ids']=t['request'].get('shared_org_ids') or t['request'].get('org_ids') or []
         return t
