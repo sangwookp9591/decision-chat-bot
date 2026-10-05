@@ -84,7 +84,7 @@ async def _create_input(
             await (await tx.run(
                 "MATCH (i:InputRevision {id:$revision_id,tenant_id:$tenant_id}) "
                 "CREATE (e:EvidenceSpan {id:$id,tenant_id:$tenant_id,request_id:$request_id,"
-                "revision_id:$revision_id,source:'chat',location_json:$location,"
+                "revision_id:$revision_id,source:'chat',created_at:i.created_at,created_by:i.created_by,location_json:$location,"
                 "char_start:$start,char_end:$end,text_hash:$text_hash,source_text:$text}) "
                 "CREATE (i)-[:HAS_EVIDENCE]->(e)",
                 id=span_id, tenant_id=tenant_id, request_id=request_id,
@@ -126,7 +126,8 @@ async def _create_input(
                 await tx.run(
                     "MATCH (i:InputRevision {id:$revision_id,tenant_id:$tenant_id}) "
                     "CREATE (e:EvidenceSpan {id:$id,tenant_id:$tenant_id,request_id:$request_id,"
-                    "revision_id:$revision_id,attachment_id:$attachment_id,location_json:$location,"
+                    "revision_id:$revision_id,attachment_id:$attachment_id,created_at:i.created_at,"
+                    "created_by:i.created_by,location_json:$location,"
                     "char_start:$start,char_end:$end,text_hash:$text_hash,source_text:$text}) "
                     "CREATE (i)-[:HAS_EVIDENCE]->(e)",
                     id=span_id,

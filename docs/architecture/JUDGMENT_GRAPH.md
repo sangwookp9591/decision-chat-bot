@@ -22,6 +22,8 @@
 - `GET /api/graph/judgment/path?node_id&direction=up|down|both&depth=6&limit=100` — Neo4j quantified path pattern(`((a)-[:...]->(b)){1,N}`)으로 상류/하류 경로. 다른 경로의 앞부분인 경로는 제외(최대 경로만), `limit`(최대 500) 초과 시 `truncated`. `ConfigVersion`은 `PUBLISHED_IN`을 거쳐 `RuleVersion`부터 상류로, `RuleVersion` 하류는 `PUBLISHED_IN`으로 `ConfigVersion`까지 이어진다. 응답: `paths`(node_ids, edge_ids, direction), 합친 `nodes`/`edges`, `upstream_ids`, `downstream_ids`.
 - `GET /api/graph/judgment/nodes/{id}` — 상세. 계층·종류·출처·내용 요약·결정 주체·시각·버전·상태, 전체 상류/하류 개수(깊이 8, 권한 있는 노드만), 직접 연결 노드와 연결, `refs`(`request_id`, `run_id`, `step_id`, `review_id`, `candidate_id`, `rule_id`, `rule_version`, `config_version`). `EvidenceSpan` 노드의 `refs`는 원문 뷰어 앵커(`span_id`, `revision_id`, `source`=attachment ID 또는 `chat`)를 가진다(참조 ID이며 원문 텍스트가 아니다). `source_link`는 `EvidenceSpan`이고 호출자의 `can_read_source`가 참일 때만 `/api/requests/{request_id}/evidence/{span_id}`이며, 그렇지 않으면 `null`이다. 원문 텍스트는 이 API가 반환하지 않는다.
 
+`EvidenceSpan.created_at`과 `created_by`는 근거가 속한 `InputRevision`의 실제 생성 시각과 주체다. 그래프 상세의 `at`과 `actor`에 이 저장값을 전달하며, 과거 데이터에서 값이 없으면 `null`로 남겨 화면에 기록 없음으로 표시한다. `first_received_at`이나 다른 시각에서 근거 노드의 과거 시각을 추정하지 않는다.
+
 모듈: `backend/jevtriage/graph/{model,query,api}.py`. 시험: `backend/tests/integration/test_judgment_graph.py`(실제 Neo4j에 시드한 관계와 노드·연결 ID 정확 일치, 없는 중간 관계 미생성, 양방향·깊이·limit, 권한/tenant).
 
 ## 화면 09 `/judgment-map`

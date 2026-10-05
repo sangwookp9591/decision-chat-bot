@@ -74,7 +74,7 @@ def describe(kind: str, p: dict[str, Any]) -> dict[str, Any]:
         loc = _decode(p.get("location_json")) or {}
         place = " ".join(str(v) for v in loc.values()) if isinstance(loc, dict) else _text(loc)
         out.update(title=_short(f"문서 근거 {place}".strip(), 48), summary=f"원문 위치 {place}".strip(),
-                   actor="— (관찰 사실)", at=None, version=p.get("revision_id"),
+                   actor=p.get("created_by"), at=p.get("created_at"), version=p.get("revision_id"),
                    source=p.get("attachment_id") or p.get("revision_id"), status="보존")
     elif kind == "ModelOutput":
         conf = p.get("confidence")
