@@ -14,9 +14,10 @@ from jevtriage.evaluation.store import labels_for_split, record_label
 ROOT = Path(__file__).resolve().parents[3]
 LABEL_FIELDS = {"ai_need", "feasibility", "urgency", "team_set", "risk_areas"}
 LABEL_OPTIONS = {
-    "ai_need": {"필요", "불필요", "혼합"},
-    "feasibility": {"가능", "조건부 가능", "현재 불가"},
-    "urgency": {"긴급", "일반"},
+    # Single-choice fields also accept the uncertain answer the labeling UI offers.
+    "ai_need": {"필요", "불필요", "혼합", "정보 부족"},
+    "feasibility": {"가능", "조건부 가능", "현재 불가", "정보 부족"},
+    "urgency": {"긴급", "일반", "판단 보류"},
     "team_set": {"AI팀", "IT팀", "현업"},
     "risk_areas": {"임상·안전성 검토", "약물감시 검토", "규제 검토"},
 }

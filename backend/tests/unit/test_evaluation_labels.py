@@ -45,6 +45,13 @@ def test_invalid_label_values_rejected_with_field_reason(labels, field):
     assert field in str(error.value.detail)
 
 
+def test_uncertain_answers_offered_by_the_labeling_ui_are_accepted():
+    sample_id = _rows("tuning")[0]["id"]
+    labels = {"ai_need": "정보 부족", "feasibility": "정보 부족", "urgency": "판단 보류",
+              "team_set": [], "risk_areas": []}
+    _validate_labels("tuning", sample_id, LabelBody(labels=labels, confidence=.5))
+
+
 def test_consensus_confirmed_counts_as_completed_progress():
     summary = progress_summary(3, [
         {"id": "a", "status": "confirmed"},
