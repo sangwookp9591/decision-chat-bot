@@ -1,0 +1,27 @@
+{
+  "status": 201,
+  "body": {
+    "id": "cand_6670c89345903ab55a23946e",
+    "status": "자료 부족",
+    "source": "human",
+    "proposed_body": {
+      "schema": "rule-v1",
+      "rule_id": "R-LEAD_ORG-01",
+      "version": 1,
+      "effect": "rule",
+      "target": "lead_org",
+      "scope": {
+        "all": [
+          {
+            "requester_org": "t-audit-e2e-1005-ai"
+          }
+        ]
+      },
+      "action": {
+        "set": "IT팀"
+      },
+      "candidate_id": "cand_6670c89345903ab55a23946e",
+      "decision_id": "pending"
+    }
+  }
+}

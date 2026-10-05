@@ -1,0 +1,71 @@
+{
+  "seed": 20261005,
+  "population": [
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R08",
+    "R09",
+    "R10",
+    "R12",
+    "R15",
+    "R19",
+    "R20",
+    "R22",
+    "R23"
+  ],
+  "selected": [
+    "R08",
+    "R15",
+    "R23",
+    "R10",
+    "R04",
+    "R03",
+    "R20",
+    "R19",
+    "R02",
+    "R09"
+  ],
+  "tests": {
+    "R08": "tests/integration/test_policy_versions.py::test_publish_diff_audit_snapshot_and_rollback",
+    "R15": "tests/integration/test_authz_matrix.py::test_request_detail_redacts_revision_text",
+    "R23": "tests/integration/test_shadow_api.py::test_shadow_stores_validation_without_business_mutation",
+    "R10": "tests/integration/test_sse_events.py::test_stream_order_resume_scope_and_snapshot",
+    "R04": "tests/integration/test_judgment_service.py::test_fixed_policy_survives_new_active_version",
+    "R03": "tests/integration/test_judgment_service.py::test_reanalysis_preserves_previous_judgment",
+    "R20": "tests/integration/test_candidates.py::test_three_support_cases_generate_idempotent_candidate_without_config_write",
+    "R19": "tests/integration/test_review_assignment.py::test_correction_preserves_original_and_relationships",
+    "R02": "tests/unit/test_parsers.py::test_corruption_spoof_and_size_rejection",
+    "R09": "tests/integration/test_observe_api.py::test_observe_reads_saved_steps_reviews_and_real_topology"
+  },
+  "commands": [
+    [
+      "backend",
+      [
+        ".venv/bin/pytest",
+        "-vv",
+        "tests/integration/test_policy_versions.py::test_publish_diff_audit_snapshot_and_rollback",
+        "tests/integration/test_authz_matrix.py::test_request_detail_redacts_revision_text",
+        "tests/integration/test_shadow_api.py::test_shadow_stores_validation_without_business_mutation",
+        "tests/integration/test_sse_events.py::test_stream_order_resume_scope_and_snapshot",
+        "tests/integration/test_judgment_service.py::test_fixed_policy_survives_new_active_version",
+        "tests/integration/test_judgment_service.py::test_reanalysis_preserves_previous_judgment",
+        "tests/integration/test_candidates.py::test_three_support_cases_generate_idempotent_candidate_without_config_write",
+        "tests/integration/test_review_assignment.py::test_correction_preserves_original_and_relationships",
+        "tests/unit/test_parsers.py::test_corruption_spoof_and_size_rejection",
+        "tests/integration/test_observe_api.py::test_observe_reads_saved_steps_reviews_and_real_topology"
+      ]
+    ],
+    [
+      "frontend",
+      [
+        "npx",
+        "vitest",
+        "run",
+        "src/lib/motion.test.tsx",
+        "--reporter=verbose"
+      ]
+    ]
+  ]
+}

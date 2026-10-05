@@ -1,0 +1,4 @@
+collect {'ts': '2026-10-05T03:41:42.371184+00:00', 'inserted': 12728, 'damaged': 0}
+{"id": "alert_f893e627a39a45f38ea8f25566299162", "kind": "worker_stopped", "ts": "2026-10-05T03:41:42.373521+00:00", "detail": {"last_seen": "2026-10-05T03:24:02.172311+00:00"}}
+{"id": "alert_128bcaf46b574347968a87c1df8372b3", "kind": "fast_judgment_budget_burn", "ts": "2026-10-05T03:41:42.529930+00:00", "detail": {"burn_rate_1h": 50.0}}
+local_watchdog_alerts 2

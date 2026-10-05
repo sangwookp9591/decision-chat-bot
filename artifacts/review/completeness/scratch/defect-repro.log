@@ -1,0 +1,138 @@
+
+Running 4 tests using 1 worker
+
+(node:59131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval (735ms)
+(node:59152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button (5.5s)
+(node:59617) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59617) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval (1.5s)
+(node:59861) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59861) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button (6.3s)
+
+
+  1) [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval 
+
+    Error: {"detail":{"message":"담당 조직이 tenant 범위에 없습니다"}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 422
+
+       5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');
+       6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');
+    >  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);
+         |                                                                                                                                                                                                                                 ^
+       8 | });
+       9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{
+      10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-chromium/error-context.md
+
+  2) [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })
+    Expected: enabled
+    Received: disabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })
+        14 × locator resolved to <button disabled class="ui-button secondary" aria-describedby="task-block-why">진행으로 변경</button>
+           - unexpected value "disabled"
+
+
+       9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{
+      10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();
+    > 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();
+         |                                                                                                                                                                             ^
+      12 | });
+      13 |
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-chromium/error-context.md
+
+  3) [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval 
+
+    Error: {"detail":{"message":"담당 조직이 tenant 범위에 없습니다"}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 422
+
+       5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');
+       6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');
+    >  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);
+         |                                                                                                                                                                                                                                 ^
+       8 | });
+       9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{
+      10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-webkit/error-context.md
+
+  4) [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button 
+
+    Error: expect(locator).toBeEnabled() failed
+
+    Locator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })
+    Expected: enabled
+    Received: disabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeEnabled" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })
+        14 × locator resolved to <button disabled class="ui-button secondary" aria-describedby="task-block-why">진행으로 변경</button>
+           - unexpected value "disabled"
+
+
+       9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{
+      10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();
+    > 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();
+         |                                                                                                                                                                             ^
+      12 | });
+      13 |
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-webkit/error-context.md
+
+  4 failed
+    [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval 
+    [chromium] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button 
+    [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:4:5 › AUDIT-P1-01 a reviewer can repair an undetermined draft before approval 
+    [webkit] › artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:9:5 › AUDIT-P1-02 completed confirmation enables the main task start button 

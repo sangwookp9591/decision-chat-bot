@@ -1,0 +1,118 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_rule_effect_comparisons_expose_human_labeled_sample_counts ________
+
+    @pytest.mark.asyncio(loop_scope='session')
+    async def test_rule_effect_comparisons_expose_human_labeled_sample_counts():
+        tenant = 'audit_spec_' + uuid4().hex
+        rule_id = 'R-AI_NEED-97'
+        await apply_schema()
+        await bootstrap_policy(tenant)
+    
+        async def seed(tx):
+            await (await tx.run(
+                'CREATE (r:RuleVersion {tenant_id:$tenant,id:$id,rule_id:$rule}) '
+                'CREATE (c:ConfigVersion {tenant_id:$tenant,id:$config,version:2,created_at:datetime()}) '
+                'CREATE (r)-[:PUBLISHED_IN]->(c)',
+                tenant=tenant, id=rule_id + '@1', rule=rule_id, config='cfg_' + tenant + '_2',
+            )).consume()
+    
+        async def cleanup(tx):
+            await (await tx.run('MATCH (n {tenant_id:$tenant}) DETACH DELETE n', tenant=tenant)).consume()
+    
+        try:
+            await write_tx(tenant, seed)
+            result = await rule_effects(tenant, rule_id, 7)
+            comparisons = [*result['before_after'].values(), *result['groups'].values()]
+            cohorts = [value for value in comparisons if isinstance(value, dict)]
+            assert len(cohorts) == 4
+            for cohort in cohorts:
+>               assert 'labeled_count' in cohort, '04_OBSERVATORY.md:39 requires human-labeled sample count for each comparison'
+E               AssertionError: 04_OBSERVATORY.md:39 requires human-labeled sample count for each comparison
+E               assert 'labeled_count' in {'classification_change_rate': None, 'classification_changes': 0, 'correction_rate': None, 'corrections': 0, ...}
+
+../artifacts/review/completeness/scratch/test_audit_spec_gaps.py:42: AssertionError
+______ test_rule_read_allowed_for_scoped_reviewer_and_operator[reviewer] _______
+
+role = 'reviewer'
+
+    @pytest.mark.asyncio(loop_scope='session')
+    @pytest.mark.parametrize('role', ['reviewer', 'operator'])
+    async def test_rule_read_allowed_for_scoped_reviewer_and_operator(role):
+        tenant = 'audit_spec_read_' + uuid4().hex
+        app = create_app()
+        app.dependency_overrides[get_principal] = lambda: Principal(
+            tenant, 'audit-reader', (), frozenset({role}),
+        )
+        async with httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=app), base_url='http://audit',
+        ) as client:
+            response = await client.get('/api/learning/rules')
+>       assert response.status_code == 200, (
+            f'08_LEARNING_LOOP.md:91 permits scoped {role} read; '
+            f'actual status={response.status_code}'
+        )
+E       AssertionError: 08_LEARNING_LOOP.md:91 permits scoped reviewer read; actual status=403
+E       assert 403 == 200
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+../artifacts/review/completeness/scratch/test_audit_spec_gaps.py:60: AssertionError
+______ test_rule_read_allowed_for_scoped_reviewer_and_operator[operator] _______
+
+role = 'operator'
+
+    @pytest.mark.asyncio(loop_scope='session')
+    @pytest.mark.parametrize('role', ['reviewer', 'operator'])
+    async def test_rule_read_allowed_for_scoped_reviewer_and_operator(role):
+        tenant = 'audit_spec_read_' + uuid4().hex
+        app = create_app()
+        app.dependency_overrides[get_principal] = lambda: Principal(
+            tenant, 'audit-reader', (), frozenset({role}),
+        )
+        async with httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=app), base_url='http://audit',
+        ) as client:
+            response = await client.get('/api/learning/rules')
+>       assert response.status_code == 200, (
+            f'08_LEARNING_LOOP.md:91 permits scoped {role} read; '
+            f'actual status={response.status_code}'
+        )
+E       AssertionError: 08_LEARNING_LOOP.md:91 permits scoped operator read; actual status=403
+E       assert 403 == 200
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+../artifacts/review/completeness/scratch/test_audit_spec_gaps.py:60: AssertionError
+__________ test_persisted_evidence_node_has_creation_time_and_creator __________
+
+    @pytest.mark.asyncio(loop_scope='session')
+    async def test_persisted_evidence_node_has_creation_time_and_creator():
+        tenant = 'audit_spec_metadata_' + uuid4().hex
+        await apply_schema()
+    
+        async def evidence(tx):
+            row = await (await tx.run(
+                'MATCH (e:EvidenceSpan {tenant_id:$tenant}) RETURN properties(e) AS span LIMIT 1',
+                tenant=tenant,
+            )).single(strict=True)
+            return row['span']
+    
+        async def cleanup(tx):
+            await (await tx.run('MATCH (n {tenant_id:$tenant}) DETACH DELETE n', tenant=tenant)).consume()
+    
+        try:
+            await create_request(tenant, 'audit-user', '시설 점검 입력과 확인 요청입니다.', [],
+                                 'audit-key', 'audit-hash', datetime.now(UTC).isoformat())
+            span = await read_tx(tenant, evidence)
+>           assert span.get('created_at') is not None, '08_LEARNING_LOOP.md:48 requires creation time on every node'
+E           AssertionError: 08_LEARNING_LOOP.md:48 requires creation time on every node
+E           assert None is not None
+E            +  where None = <built-in method get of dict object at 0x10e66d4c0>('created_at')
+E            +    where <built-in method get of dict object at 0x10e66d4c0> = {'char_end': 19, 'char_start': 0, 'id': 'esp_410d7cd6c7d6487ab7d049bb703532b1', 'location_json': '{"revision": 1, "paragraph": 0, "sentence": 0}', ...}.get
+
+../artifacts/review/completeness/scratch/test_audit_spec_gaps.py:85: AssertionError
+=========================== short test summary info ============================
+FAILED ../artifacts/review/completeness/scratch/test_audit_spec_gaps.py::test_rule_effect_comparisons_expose_human_labeled_sample_counts
+FAILED ../artifacts/review/completeness/scratch/test_audit_spec_gaps.py::test_rule_read_allowed_for_scoped_reviewer_and_operator[reviewer]
+FAILED ../artifacts/review/completeness/scratch/test_audit_spec_gaps.py::test_rule_read_allowed_for_scoped_reviewer_and_operator[operator]
+FAILED ../artifacts/review/completeness/scratch/test_audit_spec_gaps.py::test_persisted_evidence_node_has_creation_time_and_creator
+4 failed in 1.02s

@@ -1,0 +1,156 @@
+Listing tests:
+  [chromium] › a11y/a11y.spec.ts:20:5 › login screen has no critical or serious axe violations
+  [chromium] › a11y/a11y.spec.ts:28:5 › all primary application screens have no critical or serious axe violations
+  [chromium] › a11y/a11y.spec.ts:48:5 › shell, status, primary color and touch target contracts are visible
+  [chromium] › a11y/a11y.spec.ts:77:5 › reduced motion and Safari mascot media preference are respected
+  [chromium] › a11y/a11y.spec.ts:94:5 › conversation is keyboard operable: examples, composer, attach and send need no pointer
+  [chromium] › a11y/a11y.spec.ts:118:5 › keyboard submits a real request and opens its saved evidence
+  [chromium] › acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen
+  [chromium] › acceptance/gates.spec.ts:75:5 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen
+  [chromium] › acceptance/scenarios.spec.ts:63:5 › S1 general technical request: UI result equals stored judgment
+  [chromium] › acceptance/scenarios.spec.ts:76:5 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무
+  [chromium] › acceptance/scenarios.spec.ts:102:5 › S3 urgent request: reasons, review and priority on screen
+  [chromium] › acceptance/scenarios.spec.ts:128:5 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted
+  [chromium] › acceptance/scenarios.spec.ts:152:5 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  [chromium] › acceptance/scenarios.spec.ts:179:5 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  [chromium] › acceptance/scenarios.spec.ts:216:5 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  [chromium] › acceptance/scenarios.spec.ts:237:5 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  [chromium] › acceptance/scenarios.spec.ts:269:5 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  [chromium] › acceptance/scenarios.spec.ts:289:5 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+  [chromium] › chat-intake.spec.ts:13:5 › send → stop → cancelled state → reanalyze the same request
+  [chromium] › chat-intake.spec.ts:39:5 › send → right bubble → analysis steps → result with icon → reload restores → new request
+  [chromium] › chat-intake.spec.ts:71:5 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision
+  [chromium] › chat-intake.spec.ts:99:5 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision
+  [chromium] › chat-intake.spec.ts:124:5 › files can be dropped on the composer and removed again
+  [chromium] › chat-intake.spec.ts:139:7 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [chromium] › chat-intake.spec.ts:139:7 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [chromium] › chat-intake.spec.ts:139:7 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [chromium] › chat-intake.spec.ts:139:7 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [chromium] › chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned
+  [chromium] › chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned
+  [chromium] › chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned
+  [chromium] › chat-intake.spec.ts:229:5 › reduced motion: bubbles and typing dots do not animate
+  [chromium] › chat-intake.spec.ts:240:5 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down
+  [chromium] › evaluation-labels.spec.ts:12:5 › labeler confirms three, defers one, and sees a reviewer disagreement
+  [chromium] › evaluation-labels.spec.ts:71:5 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px
+  [chromium] › judgment-map.spec.ts:54:5 › real judgment and correction render as the stored graph, traceable from step to evidence
+  [chromium] › judgment-map.spec.ts:117:5 › a role without graph access is refused
+  [chromium] › learning.spec.ts:47:5 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops
+  [chromium] › main.spec.ts:10:5 › live request shows processing stages, saved judgment and evidence panel
+  [chromium] › main.spec.ts:29:5 › live damaged attachment can be excluded before a new revision judgment
+  [chromium] › monitoring.spec.ts:3:5 › operator monitoring screen matches a real API aggregate
+  [chromium] › p7-fixes.spec.ts:11:5 › F2 policy: a value typed right after entering the page is the value that gets validated
+  [chromium] › p7-fixes.spec.ts:30:5 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending
+  [chromium] › p7-fixes.spec.ts:41:5 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected
+  [chromium] › p7-fixes.spec.ts:55:5 › F5 result: provisional → final does not move the content (layout-shift after the provisional card)
+  [chromium] › p7-fixes.spec.ts:81:7 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final
+  [chromium] › p7-fixes.spec.ts:81:7 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final
+  [chromium] › p7-fixes.spec.ts:114:5 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세
+  [chromium] › policy.spec.ts:3:5 › validate, publish, inspect history, and rollback policy on live API
+  [chromium] › progressive-results.spec.ts:8:5 › submit → optimistic bubble → provisional cards → final result, with measured timings
+  [chromium] › rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission
+  [chromium] › rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail
+  [chromium] › rem-ui.spec.ts:39:5 › source reader sees the original and result identifiers stay compact
+  [chromium] › responsive-overflow.spec.ts:29:9 › viewport 375px › Main with a selected result
+  [chromium] › responsive-overflow.spec.ts:42:9 › viewport 375px › Review detail
+  [chromium] › responsive-overflow.spec.ts:55:9 › viewport 375px › Monitoring
+  [chromium] › responsive-overflow.spec.ts:60:9 › viewport 375px › Learning with a selected candidate
+  [chromium] › responsive-overflow.spec.ts:69:9 › viewport 375px › Tasks with a selected task
+  [chromium] › responsive-overflow.spec.ts:78:9 › viewport 375px › Observatory with a selected request
+  [chromium] › responsive-overflow.spec.ts:86:9 › viewport 375px › JudgmentMap
+  [chromium] › responsive-overflow.spec.ts:29:9 › viewport 520px › Main with a selected result
+  [chromium] › responsive-overflow.spec.ts:42:9 › viewport 520px › Review detail
+  [chromium] › responsive-overflow.spec.ts:55:9 › viewport 520px › Monitoring
+  [chromium] › responsive-overflow.spec.ts:60:9 › viewport 520px › Learning with a selected candidate
+  [chromium] › responsive-overflow.spec.ts:69:9 › viewport 520px › Tasks with a selected task
+  [chromium] › responsive-overflow.spec.ts:78:9 › viewport 520px › Observatory with a selected request
+  [chromium] › responsive-overflow.spec.ts:86:9 › viewport 520px › JudgmentMap
+  [chromium] › screens-ui.spec.ts:8:5 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다
+  [chromium] › screens-ui.spec.ts:26:5 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다
+  [chromium] › screens-ui.spec.ts:41:5 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다
+  [chromium] › source-viewer/source-viewer.spec.ts:53:5 › result card evidence opens the source viewer on the cited unit and highlights it
+  [chromium] › source-viewer/source-viewer.spec.ts:82:5 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  [chromium] › source-viewer/source-viewer.spec.ts:121:5 › without source permission the viewer shows positions only and the server sends no text
+  [chromium] › source-viewer/source-viewer.spec.ts:153:5 › review detail and judgment-map evidence nodes open the same viewer
+  [chromium] › source-viewer/source-viewer.spec.ts:185:5 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  [chromium] › source-viewer/source-viewer.spec.ts:237:5 › version area is an empty state when the criteria have no rule versions
+  [chromium] › source-viewer/source-viewer.spec.ts:246:5 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+  [chromium] › webmcp.spec.ts:3:5 › application remains usable with or without WebMCP support
+  [webkit] › a11y/a11y.spec.ts:20:5 › login screen has no critical or serious axe violations
+  [webkit] › a11y/a11y.spec.ts:28:5 › all primary application screens have no critical or serious axe violations
+  [webkit] › a11y/a11y.spec.ts:48:5 › shell, status, primary color and touch target contracts are visible
+  [webkit] › a11y/a11y.spec.ts:77:5 › reduced motion and Safari mascot media preference are respected
+  [webkit] › a11y/a11y.spec.ts:94:5 › conversation is keyboard operable: examples, composer, attach and send need no pointer
+  [webkit] › a11y/a11y.spec.ts:118:5 › keyboard submits a real request and opens its saved evidence
+  [webkit] › acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen
+  [webkit] › acceptance/gates.spec.ts:75:5 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen
+  [webkit] › acceptance/scenarios.spec.ts:63:5 › S1 general technical request: UI result equals stored judgment
+  [webkit] › acceptance/scenarios.spec.ts:76:5 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무
+  [webkit] › acceptance/scenarios.spec.ts:102:5 › S3 urgent request: reasons, review and priority on screen
+  [webkit] › acceptance/scenarios.spec.ts:128:5 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted
+  [webkit] › acceptance/scenarios.spec.ts:152:5 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  [webkit] › acceptance/scenarios.spec.ts:179:5 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  [webkit] › acceptance/scenarios.spec.ts:216:5 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  [webkit] › acceptance/scenarios.spec.ts:237:5 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  [webkit] › acceptance/scenarios.spec.ts:269:5 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  [webkit] › acceptance/scenarios.spec.ts:289:5 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+  [webkit] › chat-intake.spec.ts:13:5 › send → stop → cancelled state → reanalyze the same request
+  [webkit] › chat-intake.spec.ts:39:5 › send → right bubble → analysis steps → result with icon → reload restores → new request
+  [webkit] › chat-intake.spec.ts:71:5 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision
+  [webkit] › chat-intake.spec.ts:99:5 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision
+  [webkit] › chat-intake.spec.ts:124:5 › files can be dropped on the composer and removed again
+  [webkit] › chat-intake.spec.ts:139:7 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [webkit] › chat-intake.spec.ts:139:7 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [webkit] › chat-intake.spec.ts:139:7 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [webkit] › chat-intake.spec.ts:139:7 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960
+  [webkit] › chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned
+  [webkit] › chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned
+  [webkit] › chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned
+  [webkit] › chat-intake.spec.ts:229:5 › reduced motion: bubbles and typing dots do not animate
+  [webkit] › chat-intake.spec.ts:240:5 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down
+  [webkit] › evaluation-labels.spec.ts:12:5 › labeler confirms three, defers one, and sees a reviewer disagreement
+  [webkit] › evaluation-labels.spec.ts:71:5 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px
+  [webkit] › judgment-map.spec.ts:54:5 › real judgment and correction render as the stored graph, traceable from step to evidence
+  [webkit] › judgment-map.spec.ts:117:5 › a role without graph access is refused
+  [webkit] › learning.spec.ts:47:5 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops
+  [webkit] › main.spec.ts:10:5 › live request shows processing stages, saved judgment and evidence panel
+  [webkit] › main.spec.ts:29:5 › live damaged attachment can be excluded before a new revision judgment
+  [webkit] › monitoring.spec.ts:3:5 › operator monitoring screen matches a real API aggregate
+  [webkit] › p7-fixes.spec.ts:11:5 › F2 policy: a value typed right after entering the page is the value that gets validated
+  [webkit] › p7-fixes.spec.ts:30:5 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending
+  [webkit] › p7-fixes.spec.ts:41:5 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected
+  [webkit] › p7-fixes.spec.ts:55:5 › F5 result: provisional → final does not move the content (layout-shift after the provisional card)
+  [webkit] › p7-fixes.spec.ts:81:7 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final
+  [webkit] › p7-fixes.spec.ts:81:7 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final
+  [webkit] › p7-fixes.spec.ts:114:5 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세
+  [webkit] › policy.spec.ts:3:5 › validate, publish, inspect history, and rollback policy on live API
+  [webkit] › progressive-results.spec.ts:8:5 › submit → optimistic bubble → provisional cards → final result, with measured timings
+  [webkit] › rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission
+  [webkit] › rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail
+  [webkit] › rem-ui.spec.ts:39:5 › source reader sees the original and result identifiers stay compact
+  [webkit] › responsive-overflow.spec.ts:29:9 › viewport 375px › Main with a selected result
+  [webkit] › responsive-overflow.spec.ts:42:9 › viewport 375px › Review detail
+  [webkit] › responsive-overflow.spec.ts:55:9 › viewport 375px › Monitoring
+  [webkit] › responsive-overflow.spec.ts:60:9 › viewport 375px › Learning with a selected candidate
+  [webkit] › responsive-overflow.spec.ts:69:9 › viewport 375px › Tasks with a selected task
+  [webkit] › responsive-overflow.spec.ts:78:9 › viewport 375px › Observatory with a selected request
+  [webkit] › responsive-overflow.spec.ts:86:9 › viewport 375px › JudgmentMap
+  [webkit] › responsive-overflow.spec.ts:29:9 › viewport 520px › Main with a selected result
+  [webkit] › responsive-overflow.spec.ts:42:9 › viewport 520px › Review detail
+  [webkit] › responsive-overflow.spec.ts:55:9 › viewport 520px › Monitoring
+  [webkit] › responsive-overflow.spec.ts:60:9 › viewport 520px › Learning with a selected candidate
+  [webkit] › responsive-overflow.spec.ts:69:9 › viewport 520px › Tasks with a selected task
+  [webkit] › responsive-overflow.spec.ts:78:9 › viewport 520px › Observatory with a selected request
+  [webkit] › responsive-overflow.spec.ts:86:9 › viewport 520px › JudgmentMap
+  [webkit] › screens-ui.spec.ts:8:5 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다
+  [webkit] › screens-ui.spec.ts:26:5 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다
+  [webkit] › screens-ui.spec.ts:41:5 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다
+  [webkit] › source-viewer/source-viewer.spec.ts:53:5 › result card evidence opens the source viewer on the cited unit and highlights it
+  [webkit] › source-viewer/source-viewer.spec.ts:82:5 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  [webkit] › source-viewer/source-viewer.spec.ts:121:5 › without source permission the viewer shows positions only and the server sends no text
+  [webkit] › source-viewer/source-viewer.spec.ts:153:5 › review detail and judgment-map evidence nodes open the same viewer
+  [webkit] › source-viewer/source-viewer.spec.ts:185:5 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  [webkit] › source-viewer/source-viewer.spec.ts:237:5 › version area is an empty state when the criteria have no rule versions
+  [webkit] › source-viewer/source-viewer.spec.ts:246:5 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+  [webkit] › webmcp.spec.ts:3:5 › application remains usable with or without WebMCP support
+Total: 154 tests in 17 files

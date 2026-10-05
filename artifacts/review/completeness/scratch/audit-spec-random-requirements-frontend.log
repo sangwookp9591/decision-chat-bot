@@ -1,0 +1,27 @@
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+ ✓ src/lib/motion.test.tsx > motion utilities > reads prefers-reduced-motion
+ ✓ src/lib/motion.test.tsx > motion utilities > staggerStyle sets --i
+ ✓ src/lib/motion.test.tsx > motion utilities > useStaggerIn indexes children and marks the container
+ ✓ src/lib/motion.test.tsx > motion utilities > useCountUp returns the target immediately when motion is reduced
+ ✓ src/lib/motion.test.tsx > motion utilities > useCountUp eases toward a new target and lands exactly on it
+ ✓ src/lib/motion.test.tsx > motion utilities > CountUp keeps the final value readable for assistive tech
+ ✓ src/lib/motion.test.tsx > motion utilities > PressScale marks pressable surfaces
+ ✓ src/lib/motion.test.tsx > motion utilities > motion tokens mirror the CSS
+ ✓ src/lib/motion.test.tsx > route entrance gate > stays off on page load and arms on the first in-app link click
+ ✓ src/lib/motion.test.tsx > Button (TDS size/variant/color) > keeps legacy variants
+ ✓ src/lib/motion.test.tsx > Button (TDS size/variant/color) > maps TDS props to classes
+ ✓ src/lib/motion.test.tsx > Button (TDS size/variant/color) > loading disables and flags busy
+ ✓ src/lib/motion.test.tsx > Button (TDS size/variant/color) > fill is the default tone (no t-weak)
+ ✓ src/lib/motion.test.tsx > Tabs > keeps tab semantics and selection
+ ✓ src/lib/motion.test.tsx > count-up entrance (screens) > CountNumber is one plain text node showing the final value on a fresh page load (no half-counted frames for first paint, screenshots, axe)
+ ✓ src/lib/motion.test.tsx > count-up entrance (screens) > after the first in-app navigation it counts up from 0 and lands on the value
+ ✓ src/lib/motion.test.tsx > count-up entrance (screens) > reduced motion shows the value at once even after navigation
+ ✓ src/lib/motion.test.tsx > useSlideIndicator > publishes the pressed/selected child geometry as CSS variables on the container
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  13:23:19
+   Duration  1.10s (transform 91ms, setup 0ms, collect 208ms, tests 138ms, environment 297ms, prepare 81ms)
+

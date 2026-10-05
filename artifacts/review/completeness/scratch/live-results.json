@@ -1,0 +1,77 @@
+[
+  {
+    "id": "req_7e2fe8f1d23f4cff9d0510fbbb470984",
+    "times": {
+      "provisional": 1074,
+      "final": 2036.199999988079
+    },
+    "mode": "live",
+    "outputs": [
+      {
+        "question_id": "urgency",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "ai_team_involvement",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "clinical_safety",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "business_involvement",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "feasibility",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "ai_need",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "lead_org",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "review_signal",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "regulatory",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "pharmacovigilance",
+        "model": "jev-1.13.0"
+      },
+      {
+        "question_id": "it_team_involvement",
+        "model": "jev-1.13.0"
+      }
+    ]
+  },
+  {
+    "id": "req_f7ce2a90cbaf4292ab72e7ddb7872d77",
+    "times": {
+      "provisional": 1676.1000000238419,
+      "final": 5847.700000017881
+    },
+    "mode": "live",
+    "attachments": 3
+  },
+  {
+    "id": "req_3503948c4b87404cba4714536567406e",
+    "times": {
+      "provisional": 1140.800000011921,
+      "final": 29351.80000001192
+    },
+    "mode": "live"
+  },
+  {
+    "id": "req_33a60302a76c4b96906b01cdf11aab4e",
+    "scenario": "damaged-exclude"
+  }
+]

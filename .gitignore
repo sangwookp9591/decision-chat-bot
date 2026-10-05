@@ -24,3 +24,4 @@ artifacts/*-e2e/
 artifacts/demo/**/*.webm
 artifacts/demo/**/*.mp4
 artifacts/demo/**/raw/
+artifacts/review/completeness/scratch/data/

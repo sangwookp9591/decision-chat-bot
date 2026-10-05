@@ -1,0 +1,320 @@
+[p1 "Jev Triage" | space "Decision chatbot audit"(4): 2 managed, 0 untracked — p1* "Jev Triage", p2 "Jev Triage"]
+root
+  container
+    container
+      text "Jev"
+      text "Triage"
+    container "주 메뉴"
+      anchor [ref=475, loc=href:/, url=http://audit-e2e.localhost:7691/]
+        text "요청 접수"
+      anchor [ref=476, loc=href:/review, url=http://audit-e2e.localhost:7691/review]
+        text "검토 대기"
+      anchor [ref=477, loc=href:/tasks, url=http://audit-e2e.localhost:7691/tasks]
+        text "업무"
+      anchor [ref=478, loc=href:/observatory, url=http://audit-e2e.localhost:7691/observatory]
+        text "실행 관찰"
+      anchor [ref=479, loc=href:/judgment-map, url=http://audit-e2e.localhost:7691/judgment-map]
+        text "판단 맵"
+      anchor [ref=480, loc=href:/learning, url=http://audit-e2e.localhost:7691/learning]
+        text "규칙 학습"
+      anchor [ref=481, loc=href:/monitoring, url=http://audit-e2e.localhost:7691/monitoring]
+        text "모니터링"
+      anchor [ref=482, loc=href:/policy, url=http://audit-e2e.localhost:7691/policy]
+        text "정책"
+      anchor [ref=483, loc=href:/evaluation, url=http://audit-e2e.localhost:7691/evaluation]
+        text "평가 라벨"
+    container
+      text "usr_t-audit-e2e-1005_operator"
+      text "운영자"
+      button [ref=484]
+        text "로그아웃"
+  container
+    container
+      text "의사결정 지원"
+      container
+        container
+          text "usr_t-audit-e2e-1005_operator"
+          text "·"
+          text "운영자"
+        text "live"
+        button [ref=485]
+          text "로그아웃"
+    container
+      container
+        container
+          paragraph
+            text "운영 지표"
+          heading
+            text "모니터링"
+          paragraph
+            text "집계 기간"
+            text "2026. 9. 5. 오후 12:41:00"
+            text "~"
+            text "2026. 10. 5. 오후 12:41:00"
+            text "· 갱신"
+            text "2026. 10. 5. 오후 12:41:43"
+        button [ref=486]
+          text "새로고침"
+      form "기간·조건 필터"
+        container
+          group "시작"
+            text "시작"
+            container
+              container
+                spinbutton "시작 년" [ref=487, loc=css:input[aria-label="시작 년"]]
+                  text "2026"
+                text "년"
+              container
+                spinbutton "시작 월" [ref=488, loc=css:input[aria-label="시작 월"]]
+                  text "9"
+                text "월"
+              container
+                spinbutton "시작 일" [ref=489, loc=css:input[aria-label="시작 일"]]
+                  text "5"
+                text "일"
+              container
+                spinbutton "시작 시" [ref=490, loc=css:input[aria-label="시작 시"]]
+                  text "12"
+                text "시"
+              container
+                spinbutton "시작 분" [ref=491, loc=css:input[aria-label="시작 분"]]
+                  text "41"
+                text "분"
+          text "~"
+          group "종료"
+            text "종료"
+            container
+              container
+                spinbutton "종료 년" [ref=492, loc=css:input[aria-label="종료 년"]]
+                  text "2026"
+                text "년"
+              container
+                spinbutton "종료 월" [ref=493, loc=css:input[aria-label="종료 월"]]
+                  text "10"
+                text "월"
+              container
+                spinbutton "종료 일" [ref=494, loc=css:input[aria-label="종료 일"]]
+                  text "5"
+                text "일"
+              container
+                spinbutton "종료 시" [ref=495, loc=css:input[aria-label="종료 시"]]
+                  text "12"
+                text "시"
+              container
+                spinbutton "종료 분" [ref=496, loc=css:input[aria-label="종료 분"]]
+                  text "41"
+                text "분"
+        container
+          text "조직"
+          textbox [ref=497, loc=css:input[placeholder="조직 ID"]]
+            text "조직 ID"
+        container
+          text "요청 상태"
+          textbox [ref=498, loc=css:input[placeholder="예: review_pending"]]
+            text "예: review_pending"
+        container
+          text "버전"
+          textbox [ref=499, loc=css:input[placeholder="Config/모델 버전"]]
+            text "Config/모델 버전"
+        button [ref=500]
+          text "적용"
+      container "핵심 지표"
+        heading
+          text "핵심 지표"
+        container
+          container
+            text "요청 수"
+            text "8"
+          container
+            text "자동 처리"
+            text "0"
+          container
+            text "검토 대기"
+            text "1"
+          container
+            text "검토 완료"
+            text "3"
+          container
+            text "실패"
+            text "0"
+          container
+            text "시간초과"
+            text "4"
+          container
+            text "취소"
+            text "1"
+          container
+            text "섀도 실행"
+            text "2"
+        paragraph
+          text "자동 처리와 검토 완료는 요청 생성 기간의 영속 업무 집계입니다. 섀도 실행은 별도 집계입니다."
+      container "서비스 수준 목표"
+        heading
+          text "서비스 수준 목표"
+        table
+          table_row
+            table_cell
+              text "지표"
+            table_cell
+              text "분모"
+            table_cell
+              text "목표"
+            table_cell
+              text "현재"
+            table_cell
+              text "남은 예산"
+            table_cell
+              text "1시간 소진율"
+            table_cell
+              text "상태"
+          table_row
+            table_cell
+              text "접수·조회 가용성"
+            table_cell
+              text "418"
+            table_cell
+              text "≥99.9%"
+            table_cell
+              text "100.00%"
+            table_cell
+              text "미검증"
+            table_cell
+              text "미검증"
+            table_cell
+              text "○"
+              text "미검증"
+          table_row
+            table_cell
+              text "최초 판단 저장 신뢰성"
+            table_cell
+              text "8"
+            table_cell
+              text "≥99.0%"
+            table_cell
+              text "50.00%"
+            table_cell
+              text "미검증"
+            table_cell
+              text "미검증"
+            table_cell
+              text "○"
+              text "미검증"
+        paragraph
+          text "오류 예산은 완전한 연속 30일 관측일 때만 검증됩니다."
+          text "완전한 관측이 30일에 못 미쳐 아직 검증할 수 없습니다."
+      container
+        container "시스템 지연 분포"
+          heading
+            text "시스템 지연 분포"
+          paragraph
+            text "시스템 처리 시간이며 사람 검토 대기와 분리됩니다. 목표: 접수 p95 ≤2초, 텍스트 판단 ≤15초, 첨부 판단 ≤45초."
+          table
+            table_row
+              table_cell
+                text "구간"
+              table_cell
+                text "p50"
+              table_cell
+                text "p95"
+              table_cell
+                text "표본"
+            table_row
+              table_cell
+                text "접수 응답"
+              table_cell
+                text "미수집"
+              table_cell
+                text "998ms"
+              table_cell
+                text "미수집"
+            table_row
+              table_cell
+                text "텍스트 최초 판단"
+              table_cell
+                text "미수집"
+              table_cell
+                text "120.00초"
+              table_cell
+                text "미수집"
+            table_row
+              table_cell
+                text "첨부 최초 판단"
+              table_cell
+                text "미수집"
+              table_cell
+                text "5.73초"
+              table_cell
+                text "미수집"
+            table_row
+              table_cell
+                text "SSE 전달"
+              table_cell
+                text "미수집"
+              table_cell
+                text "1051.86초"
+              table_cell
+                text "미수집"
+            table_row
+              table_cell
+                text "재판단"
+              table_cell
+                text "미수집"
+              table_cell
+                text "4.57초"
+              table_cell
+                text "미수집"
+            table_row
+              table_cell
+                text "단계 전체"
+              table_cell
+                text "미수집"
+              table_cell
+                text "1.38초"
+              table_cell
+                text "미수집"
+        container "사람 검토 대기"
+          heading
+            text "사람 검토 대기"
+          paragraph
+            text "시스템 SLO와 별도로 표시"
+          container
+            text "p50"
+            text "463.11초"
+          container
+            text "p95"
+            text "1245.75초"
+          container
+            text "최장"
+            text "1245.75초"
+          container
+            text "미처리"
+            text "1"
+      container
+        container "실패 원인과 Trace"
+          heading
+            text "실패 원인과 Trace"
+          paragraph
+            text "해당 기간 실패 원인이 수집되지 않았습니다."
+        container "알림"
+          heading
+            text "알림"
+          unordered_list
+            list_item
+              text "작업자 프로세스가 멈췄습니다"
+              text "2026. 10. 5. 오후 12:41:42"
+              container [ref=501]
+                text "자세히"
+              text "{ "id": "alert_f893e627a39a45f38ea8f25566299162", "kind": "worker_stopped", "ts": "2026-10-05T03:41:42.373521+00:00", "detail": { "last_seen": "2026-10-05T03:24:02.172311+00:00" } }"
+            list_item
+              text "운영 알림"
+              text "2026. 10. 5. 오후 12:41:42"
+              container [ref=502]
+                text "자세히"
+              text "{ "id": "alert_128bcaf46b574347968a87c1df8372b3", "kind": "fast_judgment_budget_burn", "ts": "2026-10-05T03:41:42.529930+00:00", "detail": { "burn_rate_1h": 50 } }"
+      container
+        text "수집기 상태:"
+        text "정상"
+        text "· 마지막 수집"
+        text "2026. 10. 5. 오후 12:41:42"
+        text "· 미귀속 이벤트"
+        text "0"

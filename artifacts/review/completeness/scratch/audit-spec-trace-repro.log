@@ -1,0 +1,112 @@
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+stderr | ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx > Trace shows saved JevTimeout required by spec/04:13
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ❯ ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx (4 tests | 4 failed) 202ms
+   × Trace shows saved JevTimeout required by spec/04:13 126ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  JevTimeout
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+   × Trace shows saved 12345 required by spec/04:13 27ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  12345
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+   × Trace shows saved jev-audit-1 required by spec/04:13 26ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  jev-audit-1
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+   × Trace shows saved schema-audit-1 required by spec/04:13 22ms
+     → expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  schema-audit-1
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx > Trace shows saved JevTimeout required by spec/04:13
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  JevTimeout
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+ ❯ ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx:22:18
+     20|   fireEvent.click(await screen.findByRole('button', { name: /Jev 판단/…
+     21|   const dialog = await screen.findByRole('dialog', { name: 'Trace 상세…
+     22|   expect(dialog).toHaveTextContent(expected);
+       |                  ^
+     23| });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx > Trace shows saved 12345 required by spec/04:13
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  12345
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+ ❯ ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx:22:18
+     20|   fireEvent.click(await screen.findByRole('button', { name: /Jev 판단/…
+     21|   const dialog = await screen.findByRole('dialog', { name: 'Trace 상세…
+     22|   expect(dialog).toHaveTextContent(expected);
+       |                  ^
+     23| });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx > Trace shows saved jev-audit-1 required by spec/04:13
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  jev-audit-1
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+ ❯ ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx:22:18
+     20|   fireEvent.click(await screen.findByRole('button', { name: /Jev 판단/…
+     21|   const dialog = await screen.findByRole('dialog', { name: 'Trace 상세…
+     22|   expect(dialog).toHaveTextContent(expected);
+       |                  ^
+     23| });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx > Trace shows saved schema-audit-1 required by spec/04:13
+Error: expect(element).toHaveTextContent()
+
+Expected element to have text content:
+  schema-audit-1
+Received:
+  닫기실행 단계 step_1step_1Jev 판단 · 실패실행 run_1 · 설정 v시작 — · 종료 진행 중{ "input": {}, "output": {}, "judgment": null, "review_history": [], "source_links": [] }
+ ❯ ../artifacts/review/completeness/scratch/audit-spec-ui/trace.test.tsx:22:18
+     20|   fireEvent.click(await screen.findByRole('button', { name: /Jev 판단/…
+     21|   const dialog = await screen.findByRole('dialog', { name: 'Trace 상세…
+     22|   expect(dialog).toHaveTextContent(expected);
+       |                  ^
+     23| });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  13:11:56
+   Duration  1.05s (transform 142ms, setup 0ms, collect 279ms, tests 202ms, environment 298ms, prepare 70ms)
+

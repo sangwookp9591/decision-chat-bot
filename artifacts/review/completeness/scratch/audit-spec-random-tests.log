@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-8.4.2, pluggy-1.6.0 -- /Users/psw/Projects/decision-chat-bot/backend/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/psw/Projects/decision-chat-bot/backend
+configfile: pyproject.toml
+plugins: asyncio-1.4.0, anyio-4.15.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 10 items
+
+tests/integration/test_ingest_api.py::test_revision_conflict_is_rejected PASSED [ 10%]
+tests/unit/test_parsers.py::test_corruption_spoof_and_size_rejection PASSED [ 20%]
+tests/integration/test_judgment_service.py::test_fixed_policy_survives_new_active_version PASSED [ 30%]
+tests/integration/test_review_assignment.py::test_api_scope_and_detail PASSED [ 40%]
+tests/integration/test_policy_versions.py::test_publish_diff_audit_snapshot_and_rollback PASSED [ 50%]
+tests/integration/test_observe_api.py::test_observe_reads_saved_steps_reviews_and_real_topology PASSED [ 60%]
+tests/integration/test_sse_events.py::test_stream_order_resume_scope_and_snapshot PASSED [ 70%]
+tests/integration/test_monitoring_collector.py::test_monitoring_snapshot_keeps_windowed_legacy_sse_attribution PASSED [ 80%]
+tests/integration/test_rules_integration.py::test_role_matrix_and_state_transitions PASSED [ 90%]
+tests/integration/test_judgment_graph.py::test_path_both_directions_with_depth_and_limits PASSED [100%]
+
+============================== 10 passed in 4.01s ==============================

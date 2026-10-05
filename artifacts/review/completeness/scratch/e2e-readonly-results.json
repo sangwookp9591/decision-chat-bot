@@ -1,0 +1,759 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "../artifacts/review/completeness/scratch/playwright.audit.config.ts",
+      "policy.spec.ts",
+      "monitoring.spec.ts",
+      "screens-ui.spec.ts",
+      "evaluation-labels.spec.ts",
+      "webmcp.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/playwright.audit.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "evaluation-labels.spec.ts",
+      "file": "evaluation-labels.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2136,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts:64:26",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                      "column": 26,
+                      "line": 64
+                    },
+                    "snippet": "  62 |   const progress = await page.request.get('/api/evaluation/candidates?split=tuning');\n  63 |   const item = (await progress.json()).progress;\n> 64 |   expect(item.confirmed).toBeGreaterThanOrEqual(3);\n     |                          ^\n  65 |   expect(item.deferred).toBeGreaterThanOrEqual(1);\n  66 |   // Saved values keep the API format: strings for choices, arrays for teams and risks.\n  67 |   const saved = (await (await page.request.get('/api/evaluation/candidates?split=tuning')).json()).candidates[1].my_labels.labels;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                        "column": 26,
+                        "line": 64
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  62 |   const progress = await page.request.get('/api/evaluation/candidates?split=tuning');\n  63 |   const item = (await progress.json()).progress;\n> 64 |   expect(item.confirmed).toBeGreaterThanOrEqual(3);\n     |                          ^\n  65 |   expect(item.deferred).toBeGreaterThanOrEqual(1);\n  66 |   // Saved values keep the API format: strings for choices, arrays for teams and risks.\n  67 |   const saved = (await (await page.request.get('/api/evaluation/candidates?split=tuning')).json()).candidates[1].my_labels.labels;\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts:64:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:37.978Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                    "column": 26,
+                    "line": 64
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-674ad0d27a6caed2449e",
+          "file": "evaluation-labels.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:41.201Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-b384b96fd7ca0815daab",
+          "file": "evaluation-labels.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4372,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts:64:26",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                      "column": 26,
+                      "line": 64
+                    },
+                    "snippet": "  62 |   const progress = await page.request.get('/api/evaluation/candidates?split=tuning');\n  63 |   const item = (await progress.json()).progress;\n> 64 |   expect(item.confirmed).toBeGreaterThanOrEqual(3);\n     |                          ^\n  65 |   expect(item.deferred).toBeGreaterThanOrEqual(1);\n  66 |   // Saved values keep the API format: strings for choices, arrays for teams and risks.\n  67 |   const saved = (await (await page.request.get('/api/evaluation/candidates?split=tuning')).json()).candidates[1].my_labels.labels;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                        "column": 26,
+                        "line": 64
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m\n\n  62 |   const progress = await page.request.get('/api/evaluation/candidates?split=tuning');\n  63 |   const item = (await progress.json()).progress;\n> 64 |   expect(item.confirmed).toBeGreaterThanOrEqual(3);\n     |                          ^\n  65 |   expect(item.deferred).toBeGreaterThanOrEqual(1);\n  66 |   // Saved values keep the API format: strings for choices, arrays for teams and risks.\n  67 |   const saved = (await (await page.request.get('/api/evaluation/candidates?split=tuning')).json()).candidates[1].my_labels.labels;\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts:64:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:47.791Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/evaluation-labels.spec.ts",
+                    "column": 26,
+                    "line": 64
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-cd50a22e1520dc51de59",
+          "file": "evaluation-labels.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2098,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:54.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-35a403458d06fc93ea8b",
+          "file": "evaluation-labels.spec.ts",
+          "line": 71,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "monitoring.spec.ts",
+      "file": "monitoring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "operator monitoring screen matches a real API aggregate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 618,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:42.216Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "102577bb940c215e04dd-62df62de677eee8ebc99",
+          "file": "monitoring.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "operator monitoring screen matches a real API aggregate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1150,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:56.941Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "102577bb940c215e04dd-abd433125b95e5259c22",
+          "file": "monitoring.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "policy.spec.ts",
+      "file": "policy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "validate, publish, inspect history, and rollback policy on live API",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1477,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:42.849Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e56a23318734f05129b2-51551c9a14aecf25ed1c",
+          "file": "policy.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "validate, publish, inspect history, and rollback policy on live API",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:58.114Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e56a23318734f05129b2-658405d13618a5c77bb0",
+          "file": "policy.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "screens-ui.spec.ts",
+      "file": "screens-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:44.343Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-8984d81d475f5e67fe75",
+          "file": "screens-ui.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 587,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:45.311Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-cf3e1b5881faf9419c4c",
+          "file": "screens-ui.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 816,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:45.906Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-001014e29b3ba4d4ae45",
+          "file": "screens-ui.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:24:01.274Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-dd3ff2d25a9fa05116b3",
+          "file": "screens-ui.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1064,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:24:03.001Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-741018e231fac884b32b",
+          "file": "screens-ui.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:24:04.079Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-41db53dfebb5f9fa14ec",
+          "file": "screens-ui.spec.ts",
+          "line": 41,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "webmcp.spec.ts",
+      "file": "webmcp.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "application remains usable with or without WebMCP support",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:23:46.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7f3f65a13ac5a2340f2f-cba33b1d79d466fd2efd",
+          "file": "webmcp.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "application remains usable with or without WebMCP support",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:24:05.851Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7f3f65a13ac5a2340f2f-5982e3808c23ccd522de",
+          "file": "webmcp.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T03:23:37.417Z",
+    "duration": 29255.91,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

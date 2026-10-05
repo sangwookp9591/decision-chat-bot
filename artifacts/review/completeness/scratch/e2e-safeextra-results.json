@@ -1,0 +1,1214 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "artifacts/review/completeness/scratch/playwright.safeextra.config.ts",
+      "p7-fixes.spec.ts",
+      "chat-intake.spec.ts",
+      "--grep",
+      "F2 policy|F3 monitoring|F4 list|F6 Korean|files can be dropped|responsive [0-9]|layout [0-9]|reduced motion:",
+      "--workers=1"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/playwright.safeextra.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/e2e-safeextra-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "chat-intake.spec.ts",
+      "file": "chat-intake.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "files can be dropped on the composer and removed again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:34:52.387Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-7746a03409df5a41118b",
+          "file": "chat-intake.spec.ts",
+          "line": 124,
+          "column": 5
+        },
+        {
+          "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:34:55.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-4043fd4b493a097953ef",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:34:58.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8a54677273624e35803b",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2635,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:01.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-f20bc949dbdd97afc02a",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:04.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-95e899aaf85924426f20",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6003,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:06.249Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-325fe90568e5456d5420",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5480,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:12.807Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8dbdc3c02a9a9cd493e6",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5479,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m5\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:18.926Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-96004f1c014770fa741c",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "reduced motion: bubbles and typing dots do not animate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1114,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:25.120Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8aa56f3fd1a4c0e3c15c",
+          "file": "chat-intake.spec.ts",
+          "line": 229,
+          "column": 5
+        },
+        {
+          "title": "files can be dropped on the composer and removed again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2085,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:42.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-4a9a5a994208d464671e",
+          "file": "chat-intake.spec.ts",
+          "line": 124,
+          "column": 5
+        },
+        {
+          "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3755,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:45.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-084276d372c9122e4649",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2954,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:49.394Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-9f169882471fb0ae0f22",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:52.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-c30895a4fa1fae3a4c55",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2249,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:55.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-cc5a0c677df832ffed10",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5810,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:57.629Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-3390328dbb5da50ba3c0",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6228,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:04.026Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-cca566b6494e9fe7a7b1",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6220,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                      "column": 43,
+                      "line": 192
+                    },
+                    "snippet": "  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                        "column": 43,
+                        "line": 192
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m30\u001b[39m\nReceived:    \u001b[31m6\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');\n  191 |     const rows = list.locator('.request-row');\n> 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);\n      |                                           ^\n  193 |     const title = rows.first().locator('.request-title');\n  194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });\n  195 |     expect(await title.innerText()).not.toMatch(/^req_/);\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:11.143Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts",
+                    "column": 43,
+                    "line": 192
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-50daf7327cae36e00bf1",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "reduced motion: bubbles and typing dots do not animate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1314,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:18.198Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-196e812b45c236e319e8",
+          "file": "chat-intake.spec.ts",
+          "line": 229,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "p7-fixes.spec.ts",
+      "file": "p7-fixes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:26.437Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-ed1766b6dd21279b32b5",
+          "file": "p7-fixes.spec.ts",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5129,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:29.290Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-a32004ea3bc27ed3aa62",
+          "file": "p7-fixes.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:34.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-45e0071225f2ef65184a",
+          "file": "p7-fixes.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:35:39.825Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-23b7c3cddd4ff5e6d4c3",
+          "file": "p7-fixes.spec.ts",
+          "line": 114,
+          "column": 5
+        },
+        {
+          "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3593,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:19.865Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-0c2d7121d967088bb206",
+          "file": "p7-fixes.spec.ts",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5245,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:23.466Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-1334eb462aa00a8159a4",
+          "file": "p7-fixes.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5035,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:28.723Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-b2c3c4d068b0eadd8612",
+          "file": "p7-fixes.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1359,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:36:33.769Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-080256006533fabddf26",
+          "file": "p7-fixes.spec.ts",
+          "line": 114,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T03:34:49.862Z",
+    "duration": 105322.701,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

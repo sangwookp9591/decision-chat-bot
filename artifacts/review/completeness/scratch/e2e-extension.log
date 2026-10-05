@@ -1,0 +1,26 @@
+Error: ENOENT: no such file or directory, open '/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/extension/state.json'
+
+   at extension-r.spec.ts:15
+
+  13 | const phase = process.env.X38_PHASE || 'r1';
+  14 | const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+> 15 | const state = JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8'));
+     |                                      ^
+  16 | const truth = JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8'));
+  17 | const shot = (page: Page, name: string) => page.screenshot({ path: `${OUT}/screenshots/${phase}-${name}.png`, fullPage: false });
+  18 |
+    at Object.<anonymous> (/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/extension/extension-r.spec.ts:15:38)
+Error: ENOENT: no such file or directory, open '/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/extension/state.json'
+
+   at extension.spec.ts:15
+
+  13 | const phase = process.env.X38_PHASE || 'ui1';
+  14 | const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+> 15 | const state = JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8'));
+     |                                      ^
+  16 | const truth = JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8'));
+  17 | const shot = (page: Page, name: string) => page.screenshot({ path: `${OUT}/screenshots/${phase}-${name}.png`, fullPage: false });
+  18 |
+    at Object.<anonymous> (/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/extension/extension.spec.ts:15:38)
+Error: No tests found
+

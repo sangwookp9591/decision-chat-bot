@@ -1,0 +1,233 @@
+
+> jevtriage-frontend@0.1.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/psw/Projects/decision-chat-bot/frontend
+
+stderr | src/pages/Monitoring.test.tsx > Monitoring > renders null metrics as 미수집 instead of zero
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Review.test.tsx > review list title and source permission > titles each list row with the masked request title, id chip as the secondary line
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Evaluation.test.tsx > Evaluation keyboard workflow > supports 1-4 field focus, Enter confirmation, and J/K navigation
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Learning.test.tsx > Learning page > requires explicit insufficient-data acknowledgement and a ten-character reason before approval
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.layout.test.tsx > request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.test.tsx > Main page UX (P3-02/05/11/13) > restores the selected request from ?request_id= after a reload (P3-11)
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.progressive.test.tsx > optimistic request card > shows the sent request as a right-hand bubble immediately, before the server answers
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.chat.test.tsx > first screen > greets with the wave mascot, three example requests and a labelled multi-line composer
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/Monitoring.test.tsx (10 tests) 3694ms
+   ✓ Monitoring > renders null metrics as 미수집 instead of zero 497ms
+   ✓ Monitoring > shows an observation incomplete banner 318ms
+   ✓ Monitoring > uses business assignment and completed review counts and sends organization and status filters 783ms
+   ✓ Monitoring > shows a field error instead of throwing when the start date is cleared (P3-09) 584ms
+   ✓ Monitoring > links failures to the supported /observatory route with request and run ids (P3-03) 340ms
+   ✓ Monitoring internal codes (P4-05) > independent areas (F3) > one failing area does not block the others 323ms
+ ✓ src/pages/Main.test.tsx (11 tests) 4770ms
+   ✓ judgment result > shows uncertainty as a separate scale value and labels Jev signals distinctly 495ms
+   ✓ Main page UX (P3-02/05/11/13) > restores the selected request from ?request_id= after a reload (P3-11) 882ms
+   ✓ Main page UX (P3-02/05/11/13) > puts the chosen request in the URL (P3-11) 483ms
+   ✓ Main page UX (P3-02/05/11/13) > shows the info request and a supplement submit for a request that needs more information (P3-02) 592ms
+   ✓ Main page UX (P3-02/05/11/13) > shows rejected requests as rejected, not as waiting for review (P3-02) 323ms
+   ✓ Main page UX (P3-02/05/11/13) > shows attachment failures with a recovery action in Korean (P3-13) 329ms
+   ✓ evidence viewer from the result card > opens the source viewer on the cited attachment revision and highlights the cited unit 1182ms
+ ✓ src/pages/Review.test.tsx (18 tests) 5524ms
+   ✓ review list title and source permission > says honestly when the reviewer may not read the raw text, and shows the masked title 595ms
+   ✓ review list title and source permission > shows the raw text when the reviewer may read it 303ms
+   ✓ review comparison > lists each task once from the current draft and separates the AI original (P6-01) 410ms
+   ✓ review comparison > renders the preserved AI original alongside the reviewer value 312ms
+   ✓ review comparison > keeps the 409 conflict notice after reloading the latest review (P3-07) 425ms
+   ✓ review evidence viewer > opens the cited unit in the source viewer using the attachment named by the run judgment 486ms
+   ✓ review list controls > says why the reason-gated decisions are disabled 520ms
+   ✓ shows the stored title in the review queue and a masked summary in detail when source access is denied 422ms
+ ✓ src/pages/Learning.test.tsx (10 tests) 6020ms
+   ✓ Learning page > requires explicit insufficient-data acknowledgement and a ten-character reason before approval 1686ms
+   ✓ Learning page > shows the three separated panels, filters and the evidence table with support and counter cases 557ms
+   ✓ Learning page > disables every action for a reviewer and explains why 697ms
+   ✓ Learning page > keeps publish disabled until validated, and shows insufficient-sample observation after publishing 1300ms
+   ✓ Learning page > loads the latest validation from the API after selecting a rule version 672ms
+   ✓ validation inputs (P4-02) > disables 검증 실행 with a Korean hint when a date is cleared, and never throws 1020ms
+ ✓ src/pages/Evaluation.test.tsx (15 tests) 8608ms
+   ✓ Evaluation keyboard workflow > supports 1-4 field focus, Enter confirmation, and J/K navigation 1451ms
+   ✓ Evaluation keyboard workflow > does not steal Enter or letters from the reason textarea or from a focused action button 442ms
+   ✓ Evaluation keyboard workflow > moves the selection with arrow keys inside a radio group 329ms
+   ✓ Evaluation answer input (UX-EVAL) > shows judgments as choice chips, never as JSON text inputs 572ms
+   ✓ Evaluation answer input (UX-EVAL) > saves chip choices in the existing API format (strings and arrays) 979ms
+   ✓ Evaluation answer input (UX-EVAL) > requires a reason to defer and sends it with the deferred status 1194ms
+   ✓ Evaluation answer input (UX-EVAL) > final split hides model predictions and blocks confirming until every choice is made 1011ms
+   ✓ Evaluation Korean labels (F6) > shows consensus state, history and field names in Korean; internal keys only inside 기술 상세 1166ms
+   ✓ Evaluation Korean labels (F6) > labels the unlabeled state "라벨 없음" 358ms
+   ✓ Evaluation states > keeps the form and shows an error toast when saving fails 447ms
+ ✓ src/pages/Main.progressive.test.tsx (16 tests) 10035ms
+   ✓ optimistic request card > shows the sent request as a right-hand bubble immediately, before the server answers 1314ms
+   ✓ optimistic request card > confirms the bubble with the server request id 533ms
+   ✓ optimistic request card > rolls back on failure: bubble removed, text kept, reason and retry shown 570ms
+   ✓ partial events render by area > judgment.partial: four provisional cards at once; evidence and tasks stay skeletons; actions disabled 624ms
+   ✓ partial events render by area > UX-7: an uncertain provisional classification shows the final guidance slot (no selected choice) from the provisional stage 369ms
+   ✓ partial events render by area > evidence_ready and tasks_ready fill their own areas (any order) 841ms
+   ✓ partial events render by area > judgment_saved updates the cards from the event payload before the detail call returns 930ms
+   ✓ partial events render by area > ignores events of another request 389ms
+   ✓ reload restores from the progress API > rebuilds the provisional cards and current step without events 666ms
+   ✓ stop cancels the active run and keeps a dimmed provisional result with reanalysis available 646ms
+   ✓ slow and failed runs > after 5s without a final result shows the long-wait notice with the current step 407ms
+   ✓ slow and failed runs > judgment_failed shows the cause at once with a retry button 395ms
+   ✓ provisional → final keeps the layout (F5) > shows summary, judgment and task areas in the final order from the first provisional card 518ms
+   ✓ provisional → final keeps the layout (F5) > reserves the summary slot while provisional, with no late-inserted note row 455ms
+   ✓ provisional → final keeps the layout (F5) > tells "N items prepared" apart from "details can be opened" 1218ms
+ ✓ src/pages/Main.chat.test.tsx (17 tests) 10198ms
+   ✓ first screen > greets with the wave mascot, three example requests and a labelled multi-line composer 1210ms
+   ✓ composer > Enter sends, Shift+Enter only adds a line, Ctrl/⌘+Enter still sends 654ms
+   ✓ composer > shows attached files as chips, lets you remove one, and caps at five with a notice 524ms
+   ✓ conversation state transitions > sent bubble → upload % → analysis steps → provisional card → final result with the like icon 897ms
+   ✓ conversation state transitions > review-needed results use the surprised icon; urgent results show a warning and no mascot 740ms
+   ✓ conversation state transitions > shows the long-wait message after 5 seconds without a result 424ms
+   ✓ conversation state transitions > a failed send becomes a cause + retry bubble and returns the draft to the composer 786ms
+   ✓ conversation state transitions > keeps review/assignment-like actions disabled until the final judgment is saved 766ms
+   ✓ questions and choices inside the conversation > file read failure: 일동이 asks, [제외하고 진행] sends the exclusion for the unreadable ids 810ms
+   ✓ questions and choices inside the conversation > file read failure: [다시 첨부] opens the picker and the next send is a new revision 586ms
+   ✓ questions and choices inside the conversation > reviewer info request: 일동이 asks and the answer typed in the same composer becomes a supplement revision 564ms
+   ✓ questions and choices inside the conversation > after the result: [다시 분석] confirms then calls the reanalysis API; [새 요청 시작] clears the conversation 666ms
+   ✓ restoring a conversation > rebuilds every revision bubble with its attachment chips from detail, plus the saved result 849ms
+   ✓ restoring a conversation > restores an in-flight run from the progress API and the list becomes a sheet behind the 내 요청 button 406ms
+ ✓ src/pages/Main.layout.test.tsx (18 tests) 10305ms
+   ✓ request list rows > shows the masked first sentence with a status dot and a short id instead of the raw id, under a day heading 1362ms
+   ✓ request list rows > groups rows like a chat sidebar: 오늘 / 어제 / 지난 7일 371ms
+   ✓ request list rows > the list scrolls on its own: the rows live in one scroll container 902ms
+   ✓ request list rows > below 960px the list opens as a sheet from a top "내 요청" button and closes on pick 446ms
+   ✓ result summary card in the conversation > shows the four classifications and a task split summary, not the full detail 509ms
+   ✓ result summary card in the conversation > 자세히 보기 opens the full result in a drawer; the evidence viewer replaces it and returns to it 818ms
+   ✓ result summary card in the conversation > the summary card itself offers evidence so the original text stays one click away 566ms
+   ✓ composer keys > Enter sends, Shift+Enter keeps a newline, Enter during IME composition does not send 753ms
+   ✓ typing indicator and scrolling > shows three typing dots while the analysis is running and removes them with the result 365ms
+   ✓ typing indicator and scrolling > while reading above the bottom a new message shows a "새 메시지" pill instead of jumping; the pill scrolls down 1100ms
+   ✓ ChatGPT-style conversation > empty state: greeting, then the big composer, then the example chips; after the first message the chips and greeting are gone 475ms
+   ✓ ChatGPT-style conversation > an action row sits under the answer: copy, re-analyze, source — disabled while provisional, enabled at the final result, same slot 1288ms
+   ✓ ChatGPT-style conversation > copy puts the summary, the four classifications and the task split on the clipboard 425ms
+ ✓ src/state/progress.test.ts (11 tests) 10ms
+stderr | src/pages/judgment-map/stage.test.tsx > detail panel formatting > shows versions as chips, a short id with copy, a formatted time and a Korean status badge
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/judgment-map/stage.test.tsx (9 tests) 1152ms
+   ✓ stage rendering > shows the kind as a small chip, the short title with the full title on hover, and per-layer counts 545ms
+   ✓ detail panel formatting > shows versions as chips, a short id with copy, a formatted time and a Korean status badge 395ms
+ ✓ src/lib/motion.test.tsx (18 tests) 535ms
+stderr | src/pages/JudgmentMap.test.tsx > JudgmentMap list view > renders counts, every node in layer lists and an empty-layer state
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/Policy.test.tsx (13 tests) 12427ms
+   ✓ Policy page > renders selected-version diff 1043ms
+   ✓ Policy page > explains a 409 publish conflict and reloads current policy 1282ms
+   ✓ Policy page > lets the editor clear and retype a JSON value without snapping back (P3-08) 584ms
+   ✓ Policy page > shows validation errors in Korean with the internal code under technical details (P3-13) 428ms
+   ✓ Policy page > policy.published events (F2) > ignores replayed events at or below the active version and validates exactly what was typed 405ms
+   ✓ Policy page > policy.published events (F2) > does not overwrite an edit in progress with a newer version: asks first, then applies or keeps 923ms
+   ✓ Policy page > policy.published events (F2) > reloads silently for a newer version when nothing was edited 630ms
+   ✓ Policy page > policy.published events (F2) > a slower, older fetch never overwrites a newer one (generation check) 540ms
+   ✓ Policy page > names every editor field in Korean with a short hint and keeps the internal key under 기술 상세 (F6) 1704ms
+   ✓ Policy page > field form > edits a number, a band, a switch and a chip and validates exactly those values 2817ms
+   ✓ Policy page > field form > explains why 게시 is disabled and blocks it while a number field is not a number 1411ms
+   ✓ Policy page > field form > is read-only without the editor role 362ms
+ ✓ src/pages/JudgmentMap.test.tsx (7 tests) 1554ms
+   ✓ JudgmentMap list view > renders counts, every node in layer lists and an empty-layer state 779ms
+   ✓ JudgmentMap list view > selects with Enter, shows detail counts and the path table, clears with Escape 642ms
+ ✓ src/pages/main/conversation.test.ts (7 tests) 18ms
+ ✓ src/components/fields.test.tsx (7 tests) 1525ms
+   ✓ DateRange > shows Korean-ordered segments (년 월 일 시 분) and emits ISO-like local values 571ms
+   ✓ SearchSelect > filters while typing, picks with Enter and closes on Escape 368ms
+ ✓ src/pages/main/listFormat.test.ts (7 tests) 9ms
+stderr | src/pages/Tasks.test.tsx > Tasks block reasons (P4-01) > shows Korean block reasons in list and detail and disables the start button
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/judgment-map/versionTabs.test.tsx > JudgmentMap version tabs and expanded view > filters nodes and links to the selected version and restores them with "전체"
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Observatory.test.tsx > Observatory deep links and flow (P3-03/P3-04) > resolves the request from ?run_id= alone and does not fall back to the first request
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/pages/Main.list.test.tsx > request list follows tenant events (F4) > subscribes to tenant events even with no request selected and refetches the list after request.received
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/Main.list.test.tsx (2 tests) 925ms
+   ✓ request list follows tenant events (F4) > subscribes to tenant events even with no request selected and refetches the list after request.received 689ms
+ ✓ src/styles/screens-tokens.test.ts (39 tests) 18ms
+ ✓ src/pages/Observatory.test.tsx (4 tests) 1327ms
+   ✓ Observatory deep links and flow (P3-03/P3-04) > resolves the request from ?run_id= alone and does not fall back to the first request 794ms
+ ✓ src/pages/Tasks.test.tsx (6 tests) 2114ms
+   ✓ Tasks block reasons (P4-01) > shows Korean block reasons in list and detail and disables the start button 1104ms
+   ✓ Tasks block reasons (P4-01) > keeps the latest block reasons after a 409 and explains them 313ms
+ ✓ src/pages/judgment-map/versionTabs.test.tsx (5 tests) 1885ms
+   ✓ JudgmentMap version tabs and expanded view > filters nodes and links to the selected version and restores them with "전체" 1462ms
+   ✓ JudgmentMap version tabs and expanded view > toggles the expanded view, keeps focus on the toggle and leaves it with Escape 307ms
+ ✓ src/styles/tokens.test.ts (47 tests) 6ms
+ ✓ src/styles/fonts.test.ts (5 tests) 433ms
+   ✓ font subset > covers every non-ASCII character that appears in app source 423ms
+ ✓ src/components/EvidenceViewer.test.tsx (3 tests) 539ms
+   ✓ EvidenceViewer > lists every unit in order with page breaks and highlights + scrolls to the anchor unit 501ms
+ ✓ src/ui.test.tsx (5 tests) 425ms
+ ✓ src/lib/labels.test.ts (2 tests) 4ms
+ ✓ src/pages/observatory/playback.test.ts (6 tests) 4ms
+ ✓ src/state/useDelayedFlag.test.tsx (4 tests) 241ms
+ ✓ src/components/evidenceViewerLogic.test.ts (5 tests) 5ms
+stderr | src/pages/judgment-map/Detail.test.tsx > judgment map evidence node > opens the source viewer at the node unit even when the account cannot read the source text
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/judgment-map/Detail.test.tsx (2 tests) 655ms
+   ✓ judgment map evidence node > opens the source viewer at the node unit even when the account cannot read the source text 568ms
+ ✓ src/webmcp/index.test.ts (3 tests) 13ms
+ ✓ src/pages/Login.test.tsx (3 tests) 932ms
+   ✓ Login (P3-01) > has email and password fields and a submit button that posts credentials 553ms
+ ✓ src/state/events.test.ts (4 tests) 6ms
+stderr | src/pages/learning/validationCard.test.tsx > validation result display (P3-06) > shows field/value change counts, the period and the failure count
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/pages/learning/validationCard.test.tsx (2 tests) 264ms
+ ✓ src/components/statusLabels.test.ts (3 tests) 57ms
+stderr | src/layout/routes.test.tsx > route prefetch > menu hover and keyboard focus prefetch the target route
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/layout/routes.test.tsx (4 tests) 364ms
+   ✓ route prefetch > menu hover and keyboard focus prefetch the target route 353ms
+ ✓ src/api/monitoring.test.ts (3 tests) 7ms
+ ✓ src/pages/main/ResultCard.test.tsx (2 tests) 358ms
+ ✓ src/components/ShortId.test.tsx (4 tests) 37ms
+stderr | src/smoke.test.tsx > frontend smoke > routes unauthenticated sessions to login
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/smoke.test.tsx (1 test) 125ms
+
+ Test Files  40 passed (40)
+      Tests  358 passed (358)
+   Start at  12:17:55
+   Duration  27.62s (transform 6.76s, setup 0ms, collect 35.99s, tests 87.13s, environment 79.30s, prepare 12.39s)
+

@@ -1,0 +1,221 @@
+
+Running 26 tests using 1 worker
+
+(node:47350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:124:5 › files can be dropped on the composer and removed again (1.9s)
+  ✓   2 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.5s)
+  ✓   3 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.9s)
+  ✓   4 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.6s)
+  ✓   5 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.0s)
+  ✘   6 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (6.0s)
+(node:48049) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48049) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (5.5s)
+(node:48421) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48421) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   8 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (5.5s)
+(node:49334) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49334) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:229:5 › reduced motion: bubbles and typing dots do not animate (1.1s)
+  ✓  10 [chromium] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:11:5 › F2 policy: a value typed right after entering the page is the value that gets validated (2.8s)
+  ✓  11 [chromium] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:30:5 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.1s)
+  ✓  12 [chromium] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:41:5 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (5.4s)
+  ✓  13 [chromium] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:114:5 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (2.5s)
+(node:49886) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49886) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:124:5 › files can be dropped on the composer and removed again (2.1s)
+  ✓  15 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.8s)
+  ✓  16 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.0s)
+  ✓  17 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.0s)
+  ✓  18 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:139:7 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.2s)
+  ✘  19 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (5.8s)
+(node:51698) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51698) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  20 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (6.2s)
+(node:52828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  21 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (6.2s)
+(node:53116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  22 [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:229:5 › reduced motion: bubbles and typing dots do not animate (1.3s)
+  ✓  23 [webkit] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:11:5 › F2 policy: a value typed right after entering the page is the value that gets validated (3.6s)
+  ✓  24 [webkit] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:30:5 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.2s)
+  ✓  25 [webkit] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:41:5 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (5.0s)
+  ✓  26 [webkit] › artifacts/review/completeness/scratch/suite/p7-fixes.spec.ts:114:5 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (1.4s)
+
+
+  1) [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    5
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-chromium/error-context.md
+
+  2) [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    5
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-chromium/error-context.md
+
+  3) [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    5
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-chromium/error-context.md
+
+  4) [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    6
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-1440px--a1f86-roll-inside-composer-pinned-webkit/error-context.md
+
+  5) [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    6
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-960px-o-f9055-roll-inside-composer-pinned-webkit/error-context.md
+
+  6) [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 30
+    Received:    6
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      190 |     const list = narrow ? page.getByRole('dialog', { name: '내 요청 대화' }) : page.locator('.request-list');
+      191 |     const rows = list.locator('.request-row');
+    > 192 |     await expect.poll(() => rows.count()).toBeGreaterThanOrEqual(30);
+          |                                           ^
+      193 |     const title = rows.first().locator('.request-title');
+      194 |     await expect(title).not.toHaveClass(/ui-skeleton/, { timeout: 15_000 });
+      195 |     expect(await title.innerText()).not.toMatch(/^req_/);
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:192:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/safeextra-results/chat-intake-layout-375px-o-6117a-roll-inside-composer-pinned-webkit/error-context.md
+
+  6 failed
+    [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned 
+    [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned 
+    [chromium] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned 
+    [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned 
+    [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned 
+    [webkit] › artifacts/review/completeness/scratch/suite/chat-intake.spec.ts:173:7 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned 
+  20 passed (1.8m)

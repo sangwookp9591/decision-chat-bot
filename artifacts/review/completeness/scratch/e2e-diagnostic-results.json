@@ -1,0 +1,177 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "artifacts/review/completeness/scratch/playwright.diagnostic.config.ts",
+      "--grep",
+      "labeler confirms"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/playwright.diagnostic.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/diagnostic-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/e2e-diagnostic-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "evaluation-wait.spec.ts",
+      "file": "evaluation-wait.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1548,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:32:35.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "889c492bd1f09aa10d32-5bfce5e5d3e6ba82b23d",
+          "file": "evaluation-wait.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2551,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:32:38.121Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "889c492bd1f09aa10d32-f7baa48e1897832f4862",
+          "file": "evaluation-wait.spec.ts",
+          "line": 12,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T03:32:35.179Z",
+    "duration": 6509.821,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

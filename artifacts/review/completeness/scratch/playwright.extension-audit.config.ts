@@ -1,0 +1,2 @@
+import {defineConfig,devices} from '@playwright/test';
+export default defineConfig({testDir:'./suite/extension',workers:1,retries:0,reporter:'list',outputDir:'/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/extension-results',use:{baseURL:'http://127.0.0.1:7691'},projects:[{name:'chromium',use:{...devices['Desktop Chrome']}},{name:'webkit',use:{...devices['Desktop Safari']}}]});

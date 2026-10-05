@@ -1,0 +1,384 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "artifacts/review/completeness/scratch/playwright.defects.config.ts",
+      "defects.spec.ts"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/playwright.defects.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/defect-repro-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "defects.spec.ts",
+      "file": "defects.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AUDIT-P1-01 a reviewer can repair an undetermined draft before approval",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 735,
+                  "error": {
+                    "message": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m",
+                    "stack": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                      "column": 225,
+                      "line": 7
+                    },
+                    "snippet": "   5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');\n   6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');\n>  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);\n     |                                                                                                                                                                                                                                 ^\n   8 | });\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                        "column": 225,
+                        "line": 7
+                      },
+                      "message": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m\n\n   5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');\n   6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');\n>  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);\n     |                                                                                                                                                                                                                                 ^\n   8 | });\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:38:32.669Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                    "column": 225,
+                    "line": 7
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5cc8e42835e54f421100-b766f593e834635de74c",
+          "file": "defects.spec.ts",
+          "line": 4,
+          "column": 5
+        },
+        {
+          "title": "AUDIT-P1-02 completed confirmation enables the main task start button",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5516,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                      "column": 173,
+                      "line": 11
+                    },
+                    "snippet": "   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n> 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();\n     |                                                                                                                                                                             ^\n  12 | });\n  13 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                        "column": 173,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n\n\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n> 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();\n     |                                                                                                                                                                             ^\n  12 | });\n  13 |\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:38:34.094Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                    "column": 173,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5cc8e42835e54f421100-239fd4f9b431ebb420fd",
+          "file": "defects.spec.ts",
+          "line": 9,
+          "column": 5
+        },
+        {
+          "title": "AUDIT-P1-01 a reviewer can repair an undetermined draft before approval",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1504,
+                  "error": {
+                    "message": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m",
+                    "stack": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                      "column": 225,
+                      "line": 7
+                    },
+                    "snippet": "   5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');\n   6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');\n>  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);\n     |                                                                                                                                                                                                                                 ^\n   8 | });\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                        "column": 225,
+                        "line": 7
+                      },
+                      "message": "Error: {\"detail\":{\"message\":\"담당 조직이 tenant 범위에 없습니다\"}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m422\u001b[39m\n\n   5 |  await login(page,'reviewer');await page.goto('/review?request_id=req_33a60302a76c4b96906b01cdf11aab4e');\n   6 |  await page.getByLabel('개발 가능성 수정').fill('가능');await page.getByLabel('주관 조직',{exact:true}).fill('IT팀');await page.getByLabel('결정 사유',{exact:true}).fill('감사 재현: 업무 담당 조직을 올바르게 수정한 뒤 승인합니다.');\n>  7 |  const response=page.waitForResponse(r=>r.url().includes('/decision')&&r.request().method()==='POST');await page.getByRole('button',{name:'수정 승인',exact:true}).click();const r=await response;expect(r.status(),await r.text()).toBe(200);\n     |                                                                                                                                                                                                                                 ^\n   8 | });\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:7:225"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:38:40.353Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-01-a-revi-3c9b8-mined-draft-before-approval-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                    "column": 225,
+                    "line": 7
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5cc8e42835e54f421100-5d697ae66c4c23f9785a",
+          "file": "defects.spec.ts",
+          "line": 4,
+          "column": 5
+        },
+        {
+          "title": "AUDIT-P1-02 completed confirmation enables the main task start button",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6258,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                      "column": 173,
+                      "line": 11
+                    },
+                    "snippet": "   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n> 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();\n     |                                                                                                                                                                             ^\n  12 | });\n  13 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                        "column": 173,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeEnabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\nExpected: enabled\nReceived: disabled\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeEnabled\" getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '업무 상세' }).getByRole('button', { name: '진행으로 변경' })\u001b[22m\n\u001b[2m    14 × locator resolved to <button disabled class=\"ui-button secondary\" aria-describedby=\"task-block-why\">진행으로 변경</button>\u001b[22m\n\u001b[2m       - unexpected value \"disabled\"\u001b[22m\n\n\n   9 | test('AUDIT-P1-02 completed confirmation enables the main task start button',async({page})=>{\n  10 |  await login(page,'team_member');await page.goto('/tasks');await page.locator('.task-list button',{hasText:'감사 시드: 확인 완료 후 시작'}).click();\n> 11 |  const dialog=page.getByRole('dialog',{name:'업무 상세'});await expect(dialog).toContainText('감사 시드: 완료된 사전 확인 · 완료');await expect(dialog.getByRole('button',{name:'진행으로 변경'})).toBeEnabled();\n     |                                                                                                                                                                             ^\n  12 | });\n  13 |\n    at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts:11:173"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T03:38:42.824Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/e2e/defect-repro/defects-AUDIT-P1-02-comple-b92e3--the-main-task-start-button-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/diagnostic/defects.spec.ts",
+                    "column": 173,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5cc8e42835e54f421100-3e9b8364e707f52f572d",
+          "file": "defects.spec.ts",
+          "line": 9,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T03:38:32.136Z",
+    "duration": 17420.927,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

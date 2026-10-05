@@ -1,0 +1,9 @@
+{
+  "dedicated_ports_closed": {
+    "10391": true,
+    "7691": true,
+    "16391": true
+  },
+  "browser_space_finished": true,
+  "worker_stopped_after_five_live_runs": true
+}

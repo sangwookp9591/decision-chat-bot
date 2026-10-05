@@ -1,0 +1,3669 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "artifacts/review/completeness/scratch/playwright.audit.config.ts",
+      "--list"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/playwright.audit.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/artifacts/review/completeness/e2e/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/artifacts/review/completeness/e2e/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite",
+        "testIgnore": [
+          "**/extension/**"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../artifacts/review/completeness/scratch/e2e-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "a11y/a11y.spec.ts",
+      "file": "a11y/a11y.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "login screen has no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-d6e0732f28f659a3ff0f",
+          "file": "a11y/a11y.spec.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "all primary application screens have no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-8c72d1700dcac0c15b2c",
+          "file": "a11y/a11y.spec.ts",
+          "line": 28,
+          "column": 5
+        },
+        {
+          "title": "shell, status, primary color and touch target contracts are visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-87efb1d82e5a8f453c1b",
+          "file": "a11y/a11y.spec.ts",
+          "line": 48,
+          "column": 5
+        },
+        {
+          "title": "reduced motion and Safari mascot media preference are respected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-e0bb8fa59ba22afef21f",
+          "file": "a11y/a11y.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "conversation is keyboard operable: examples, composer, attach and send need no pointer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-4f4f379703b97c927c9c",
+          "file": "a11y/a11y.spec.ts",
+          "line": 94,
+          "column": 5
+        },
+        {
+          "title": "keyboard submits a real request and opens its saved evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-be2ae8fdccb17e19a2cf",
+          "file": "a11y/a11y.spec.ts",
+          "line": 118,
+          "column": 5
+        },
+        {
+          "title": "login screen has no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-26c081d527d7814f6f24",
+          "file": "a11y/a11y.spec.ts",
+          "line": 20,
+          "column": 5
+        },
+        {
+          "title": "all primary application screens have no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-ae8d327e537ee4333008",
+          "file": "a11y/a11y.spec.ts",
+          "line": 28,
+          "column": 5
+        },
+        {
+          "title": "shell, status, primary color and touch target contracts are visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-2bb0a2b8dbb139e6e585",
+          "file": "a11y/a11y.spec.ts",
+          "line": 48,
+          "column": 5
+        },
+        {
+          "title": "reduced motion and Safari mascot media preference are respected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-c13ab1d766c5e7274046",
+          "file": "a11y/a11y.spec.ts",
+          "line": 77,
+          "column": 5
+        },
+        {
+          "title": "conversation is keyboard operable: examples, composer, attach and send need no pointer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-f712f70d0ef1934d238a",
+          "file": "a11y/a11y.spec.ts",
+          "line": 94,
+          "column": 5
+        },
+        {
+          "title": "keyboard submits a real request and opens its saved evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-0ba52f8c057e946afb3b",
+          "file": "a11y/a11y.spec.ts",
+          "line": 118,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "acceptance/gates.spec.ts",
+      "file": "acceptance/gates.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-1cf55f2a3b0e403a8c97",
+          "file": "acceptance/gates.spec.ts",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-839c6d34c7c65143322e",
+          "file": "acceptance/gates.spec.ts",
+          "line": 75,
+          "column": 5
+        },
+        {
+          "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-479da05883d57ce52fcc",
+          "file": "acceptance/gates.spec.ts",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-ed02af52a1ae1fe6dff5",
+          "file": "acceptance/gates.spec.ts",
+          "line": 75,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "acceptance/scenarios.spec.ts",
+      "file": "acceptance/scenarios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S1 general technical request: UI result equals stored judgment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2a16d171e94819a7ac90",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2030a085ad6799bb269c",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "S3 urgent request: reasons, review and priority on screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-556bd4539be2c0a0c11e",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 102,
+          "column": 5
+        },
+        {
+          "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-cd90d5d4ea8655409418",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 128,
+          "column": 5
+        },
+        {
+          "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-06cc90fabda948bee4ba",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 152,
+          "column": 5
+        },
+        {
+          "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-25e289c9f483cd8aa3d8",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2894edff0e9b72dbbc22",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 216,
+          "column": 5
+        },
+        {
+          "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-49189fb5119284755f23",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 237,
+          "column": 5
+        },
+        {
+          "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-78664644d16fe026dd36",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 269,
+          "column": 5
+        },
+        {
+          "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-3ed9b3c6cf9bc1750499",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 289,
+          "column": 5
+        },
+        {
+          "title": "S1 general technical request: UI result equals stored judgment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-0ebdf22a1c5f922bafe2",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-14509b51fa238bab72c6",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 76,
+          "column": 5
+        },
+        {
+          "title": "S3 urgent request: reasons, review and priority on screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-94028c7dac1cd0588a5b",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 102,
+          "column": 5
+        },
+        {
+          "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-ddb66b206def91b475d2",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 128,
+          "column": 5
+        },
+        {
+          "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-0140bd90cfee1bed2548",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 152,
+          "column": 5
+        },
+        {
+          "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-b230b9f18954c740ee5b",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-8fae620ea7e31e4a3cc1",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 216,
+          "column": 5
+        },
+        {
+          "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-7f25fff2ecbece049618",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 237,
+          "column": 5
+        },
+        {
+          "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-4379c4bfb2860251ffdb",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 269,
+          "column": 5
+        },
+        {
+          "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-9eb0ea14df8e6ba27767",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 289,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "chat-intake.spec.ts",
+      "file": "chat-intake.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "send → stop → cancelled state → reanalyze the same request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-adbe461cc6d66a4bf5d2",
+          "file": "chat-intake.spec.ts",
+          "line": 13,
+          "column": 5
+        },
+        {
+          "title": "send → right bubble → analysis steps → result with icon → reload restores → new request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8a24bb28d459a4437fce",
+          "file": "chat-intake.spec.ts",
+          "line": 39,
+          "column": 5
+        },
+        {
+          "title": "unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-c73d76fc5757ad78c5a4",
+          "file": "chat-intake.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-525ab1840b67f8730819",
+          "file": "chat-intake.spec.ts",
+          "line": 99,
+          "column": 5
+        },
+        {
+          "title": "files can be dropped on the composer and removed again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-7746a03409df5a41118b",
+          "file": "chat-intake.spec.ts",
+          "line": 124,
+          "column": 5
+        },
+        {
+          "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-4043fd4b493a097953ef",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8a54677273624e35803b",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-f20bc949dbdd97afc02a",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-95e899aaf85924426f20",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-325fe90568e5456d5420",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8dbdc3c02a9a9cd493e6",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-96004f1c014770fa741c",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "reduced motion: bubbles and typing dots do not animate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8aa56f3fd1a4c0e3c15c",
+          "file": "chat-intake.spec.ts",
+          "line": 229,
+          "column": 5
+        },
+        {
+          "title": "scrolled up while the answer arrives: a \"새 메시지\" pill appears instead of a jump, and takes you down",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-9be69c5f96bf4a015007",
+          "file": "chat-intake.spec.ts",
+          "line": 240,
+          "column": 5
+        },
+        {
+          "title": "send → stop → cancelled state → reanalyze the same request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-3face574ccb600cf7caf",
+          "file": "chat-intake.spec.ts",
+          "line": 13,
+          "column": 5
+        },
+        {
+          "title": "send → right bubble → analysis steps → result with icon → reload restores → new request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-ad4459065c0a261280e9",
+          "file": "chat-intake.spec.ts",
+          "line": 39,
+          "column": 5
+        },
+        {
+          "title": "unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-d1ffd0a826c034ce386b",
+          "file": "chat-intake.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-46bea3f21f999d9eec3b",
+          "file": "chat-intake.spec.ts",
+          "line": 99,
+          "column": 5
+        },
+        {
+          "title": "files can be dropped on the composer and removed again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-4a9a5a994208d464671e",
+          "file": "chat-intake.spec.ts",
+          "line": 124,
+          "column": 5
+        },
+        {
+          "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-084276d372c9122e4649",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-9f169882471fb0ae0f22",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-c30895a4fa1fae3a4c55",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-cc5a0c677df832ffed10",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 7
+        },
+        {
+          "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-3390328dbb5da50ba3c0",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-cca566b6494e9fe7a7b1",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-50daf7327cae36e00bf1",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 7
+        },
+        {
+          "title": "reduced motion: bubbles and typing dots do not animate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-196e812b45c236e319e8",
+          "file": "chat-intake.spec.ts",
+          "line": 229,
+          "column": 5
+        },
+        {
+          "title": "scrolled up while the answer arrives: a \"새 메시지\" pill appears instead of a jump, and takes you down",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-9723fa7b667c856c2274",
+          "file": "chat-intake.spec.ts",
+          "line": 240,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "evaluation-labels.spec.ts",
+      "file": "evaluation-labels.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-674ad0d27a6caed2449e",
+          "file": "evaluation-labels.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-b384b96fd7ca0815daab",
+          "file": "evaluation-labels.spec.ts",
+          "line": 71,
+          "column": 5
+        },
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-cd50a22e1520dc51de59",
+          "file": "evaluation-labels.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-35a403458d06fc93ea8b",
+          "file": "evaluation-labels.spec.ts",
+          "line": 71,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "judgment-map.spec.ts",
+      "file": "judgment-map.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "real judgment and correction render as the stored graph, traceable from step to evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-b6d718bbe75d6490b3a1",
+          "file": "judgment-map.spec.ts",
+          "line": 54,
+          "column": 5
+        },
+        {
+          "title": "a role without graph access is refused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-58b5b16307dc4e0a6d43",
+          "file": "judgment-map.spec.ts",
+          "line": 117,
+          "column": 5
+        },
+        {
+          "title": "real judgment and correction render as the stored graph, traceable from step to evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-634ce9d71a71554ce4c2",
+          "file": "judgment-map.spec.ts",
+          "line": 54,
+          "column": 5
+        },
+        {
+          "title": "a role without graph access is refused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-99c932a99d5f1c8585af",
+          "file": "judgment-map.spec.ts",
+          "line": 117,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "learning.spec.ts",
+      "file": "learning.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-fd26f338bae37f8a13f1",
+          "file": "learning.spec.ts",
+          "line": 47,
+          "column": 5
+        },
+        {
+          "title": "reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-07738ea6c6edf2386f90",
+          "file": "learning.spec.ts",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "main.spec.ts",
+      "file": "main.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "live request shows processing stages, saved judgment and evidence panel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-73c0a473d50d0caf6e93",
+          "file": "main.spec.ts",
+          "line": 10,
+          "column": 5
+        },
+        {
+          "title": "live damaged attachment can be excluded before a new revision judgment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-4e2d9fbd72a0a37b008e",
+          "file": "main.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "live request shows processing stages, saved judgment and evidence panel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-61652813fed38f1c4496",
+          "file": "main.spec.ts",
+          "line": 10,
+          "column": 5
+        },
+        {
+          "title": "live damaged attachment can be excluded before a new revision judgment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-d22a03d5e5fcb2e63bf8",
+          "file": "main.spec.ts",
+          "line": 29,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "monitoring.spec.ts",
+      "file": "monitoring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "operator monitoring screen matches a real API aggregate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "102577bb940c215e04dd-62df62de677eee8ebc99",
+          "file": "monitoring.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "operator monitoring screen matches a real API aggregate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "102577bb940c215e04dd-abd433125b95e5259c22",
+          "file": "monitoring.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "p7-fixes.spec.ts",
+      "file": "p7-fixes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-ed1766b6dd21279b32b5",
+          "file": "p7-fixes.spec.ts",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-a32004ea3bc27ed3aa62",
+          "file": "p7-fixes.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-45e0071225f2ef65184a",
+          "file": "p7-fixes.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "F5 result: provisional → final does not move the content (layout-shift after the provisional card)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-9d4a3c1be405227e7023",
+          "file": "p7-fixes.spec.ts",
+          "line": 55,
+          "column": 5
+        },
+        {
+          "title": "F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-bd8f71eeef8e75b6e1e2",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 7
+        },
+        {
+          "title": "F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-4825a2b8d86c70491364",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 7
+        },
+        {
+          "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-23b7c3cddd4ff5e6d4c3",
+          "file": "p7-fixes.spec.ts",
+          "line": 114,
+          "column": 5
+        },
+        {
+          "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-0c2d7121d967088bb206",
+          "file": "p7-fixes.spec.ts",
+          "line": 11,
+          "column": 5
+        },
+        {
+          "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-1334eb462aa00a8159a4",
+          "file": "p7-fixes.spec.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-b2c3c4d068b0eadd8612",
+          "file": "p7-fixes.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "F5 result: provisional → final does not move the content (layout-shift after the provisional card)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-c6f9ab629d853d39b8a9",
+          "file": "p7-fixes.spec.ts",
+          "line": 55,
+          "column": 5
+        },
+        {
+          "title": "F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-89c621299b430a6ad7d3",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 7
+        },
+        {
+          "title": "F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-b95c0c6ca4d51a53391b",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 7
+        },
+        {
+          "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-080256006533fabddf26",
+          "file": "p7-fixes.spec.ts",
+          "line": 114,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "policy.spec.ts",
+      "file": "policy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "validate, publish, inspect history, and rollback policy on live API",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e56a23318734f05129b2-51551c9a14aecf25ed1c",
+          "file": "policy.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "validate, publish, inspect history, and rollback policy on live API",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "e56a23318734f05129b2-658405d13618a5c77bb0",
+          "file": "policy.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "progressive-results.spec.ts",
+      "file": "progressive-results.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "submit → optimistic bubble → provisional cards → final result, with measured timings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "186835faa27520c23d3a-518cce37cd3586680356",
+          "file": "progressive-results.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "submit → optimistic bubble → provisional cards → final result, with measured timings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "186835faa27520c23d3a-e4d861db839b43c74d58",
+          "file": "progressive-results.spec.ts",
+          "line": 8,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "rem-ui.spec.ts",
+      "file": "rem-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "review queue title and masked detail respect source permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-697c328c43a172ba194e",
+          "file": "rem-ui.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "source-reading reviewer can see the submitted text in review detail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-f03eae334a9033874538",
+          "file": "rem-ui.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "source reader sees the original and result identifiers stay compact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-503eb1e3dea370e7915f",
+          "file": "rem-ui.spec.ts",
+          "line": 39,
+          "column": 5
+        },
+        {
+          "title": "review queue title and masked detail respect source permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-05ee0c9fdc543d2a4c8c",
+          "file": "rem-ui.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "source-reading reviewer can see the submitted text in review detail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-02292c0a19e0e083400b",
+          "file": "rem-ui.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "source reader sees the original and result identifiers stay compact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "844e62d805c2be94389d-13311caf2de676d3f284",
+          "file": "rem-ui.spec.ts",
+          "line": 39,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "responsive-overflow.spec.ts",
+      "file": "responsive-overflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "viewport 375px",
+          "file": "responsive-overflow.spec.ts",
+          "line": 28,
+          "column": 8,
+          "specs": [
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-0bd093fb1b811dc0eff0",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 9
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-7f8c23c80557a47e339d",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 9
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-71840f759d297259a30a",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 9
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-cc0febd071104a3bdb84",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-31968b1b2b08910bdd71",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 9
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-af3474c4fb6bf2236cd4",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-9e983dd1cd542975e1fc",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 9
+            },
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-dbffed92a4b64d3a199d",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 9
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-c6088e7c0c25f2e875d7",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 9
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-38cdefa1a4b42673ed44",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 9
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-e80d663fc4d2e76bf623",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-68d81b70d77dd8bf9ca7",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 9
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-a1164b14096a2baf9b3f",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-37da488540af93b2ed20",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "viewport 520px",
+          "file": "responsive-overflow.spec.ts",
+          "line": 28,
+          "column": 8,
+          "specs": [
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-5cea1e7a26dcb0e0b1c6",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 9
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-40f2c273db6dfee3b0c8",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 9
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-d9473f37c9aa2b8b0205",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 9
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-503936d009f18599542f",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-8314616063cfbe6bd0b1",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 9
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-52067396d787f90dc60b",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-73a8dab278fb211f5614",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 9
+            },
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-a410b364a74f9fe9af24",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 9
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-b4a5367b55b4190e5f95",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 9
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-2c431e3873027f5ab8d1",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 9
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-843279c9ecf14b3d87a7",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-3bac73436d12b4516ba7",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 9
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-49f699d3c7d688d21292",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-c926104713fed179b643",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "screens-ui.spec.ts",
+      "file": "screens-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-8984d81d475f5e67fe75",
+          "file": "screens-ui.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-cf3e1b5881faf9419c4c",
+          "file": "screens-ui.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-001014e29b3ba4d4ae45",
+          "file": "screens-ui.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-dd3ff2d25a9fa05116b3",
+          "file": "screens-ui.spec.ts",
+          "line": 8,
+          "column": 5
+        },
+        {
+          "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-741018e231fac884b32b",
+          "file": "screens-ui.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-41db53dfebb5f9fa14ec",
+          "file": "screens-ui.spec.ts",
+          "line": 41,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "source-viewer/source-viewer.spec.ts",
+      "file": "source-viewer/source-viewer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-2eeca15d2c758095db86",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-56d252b426a946dd283f",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 82,
+          "column": 5
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5e068577a81d2148ed12",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 121,
+          "column": 5
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b2a87c8082d9e4b02fec",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 153,
+          "column": 5
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-e6f2d5dd42e65fbcf0d5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 185,
+          "column": 5
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-ab03601b9674d6588e6b",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 237,
+          "column": 5
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-03bea53ef82169a00371",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 246,
+          "column": 5
+        },
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-1f607dac6b422b2291b5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5b4913ad29d66401c200",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 82,
+          "column": 5
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b505f728f23c93072ac0",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 121,
+          "column": 5
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-78a9f4de580d7c2e9331",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 153,
+          "column": 5
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-05df560327b2a23a2c43",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 185,
+          "column": 5
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5623dcc519c0189440d0",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 237,
+          "column": 5
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-d64d9d9610ff8d92cbf1",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 246,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "webmcp.spec.ts",
+      "file": "webmcp.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "application remains usable with or without WebMCP support",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "7f3f65a13ac5a2340f2f-cba33b1d79d466fd2efd",
+          "file": "webmcp.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "application remains usable with or without WebMCP support",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "7f3f65a13ac5a2340f2f-5982e3808c23ccd522de",
+          "file": "webmcp.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T03:20:11.984Z",
+    "duration": 589.2879999999999,
+    "expected": 0,
+    "skipped": 154,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

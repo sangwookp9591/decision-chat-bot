@@ -1,0 +1,212 @@
+
+Running 16 tests using 1 worker
+
+(node:55633) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55633) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › artifacts/review/completeness/scratch/suite/a11y/a11y.spec.ts:94:5 › conversation is keyboard operable: examples, composer, attach and send need no pointer (926ms)
+  ✘   2 [chromium] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (0ms)
+  -   3 [chromium] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:75:5 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen
+(node:55723) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55723) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 [chromium] › artifacts/review/completeness/scratch/suite/judgment-map.spec.ts:54:5 › real judgment and correction render as the stored graph, traceable from step to evidence (1.6s)
+  ✓   5 [chromium] › artifacts/review/completeness/scratch/suite/judgment-map.spec.ts:117:5 › a role without graph access is refused (242ms)
+  ✘   6 [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission (5.3s)
+(node:55985) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55985) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   7 [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail (1.0m)
+(node:58579) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58579) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:39:5 › source reader sees the original and result identifiers stay compact (1.0s)
+(node:58682) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58682) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [webkit] › artifacts/review/completeness/scratch/suite/a11y/a11y.spec.ts:94:5 › conversation is keyboard operable: examples, composer, attach and send need no pointer (1.8s)
+  ✘  10 [webkit] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (0ms)
+  -  11 [webkit] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:75:5 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen
+(node:58843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [webkit] › artifacts/review/completeness/scratch/suite/judgment-map.spec.ts:54:5 › real judgment and correction render as the stored graph, traceable from step to evidence (2.1s)
+  ✓  13 [webkit] › artifacts/review/completeness/scratch/suite/judgment-map.spec.ts:117:5 › a role without graph access is refused (413ms)
+  ✘  14 [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission (5.6s)
+(node:59079) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:59079) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  15 [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail (1.0m)
+(node:63102) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:63102) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  16 [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:39:5 › source reader sees the original and result identifiers stay compact (2.0s)
+
+
+  1) [chromium] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen 
+
+    Error: login reviewer@t-audit-e2e-1005g: 401
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       at acceptance/helpers.ts:15
+
+      13 |   const ctx = await browser.newContext({ baseURL });
+      14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });
+    > 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();
+         |                                                             ^
+      16 |   const page = await ctx.newPage();
+      17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';
+      18 |   return { ctx, page, api: ctx.request, csrf };
+        at actor (/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/helpers.ts:15:61)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:31:8
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/acceptance-gates-G05-auto--9397c-DES-appear-on-the-업무-screen-chromium/error-context.md
+
+  2) [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title')
+    Expected: "회의실 예약 자동화"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title') with timeout 5000ms
+      - waiting for locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title')
+
+
+      17 |   await page.goto('/review');
+      18 |   const row = page.locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first();
+    > 19 |   await expect(row.locator('.review-row-title')).toHaveText('회의실 예약 자동화');
+         |                                                  ^
+      20 |   await page.screenshot({ path: `${shots}/${testInfo.project.name}-review-list.png`, fullPage: true });
+      21 |   await row.click();
+      22 |   await expect(page.getByRole('heading', { name: '회의실 예약 자동화' })).toBeVisible();
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:19:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/seeded-results/rem-ui-review-queue-title--4a73b-l-respect-source-permission-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/rem-ui-review-queue-title--4a73b-l-respect-source-permission-chromium/error-context.md
+
+  3) [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first()
+
+
+      31 |   await login(page, `source_reader@${tenant}.dev`);
+      32 |   await page.goto('/review');
+    > 33 |   await page.locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().click();
+         |                                                                                             ^
+      34 |   await expect(page.getByText('업무 판단 요청')).toBeVisible();
+      35 |   await expect(page.getByText(/원문 열람 권한이 없습니다/)).toHaveCount(0);
+      36 |   await page.screenshot({ path: `${shots}/${testInfo.project.name}-review-source-reader.png`, fullPage: true });
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:33:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/seeded-results/rem-ui-source-reading-revi-e8e56-itted-text-in-review-detail-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/rem-ui-source-reading-revi-e8e56-itted-text-in-review-detail-chromium/error-context.md
+
+  4) [webkit] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen 
+
+    Error: login reviewer@t-audit-e2e-1005g: 401
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       at acceptance/helpers.ts:15
+
+      13 |   const ctx = await browser.newContext({ baseURL });
+      14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });
+    > 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();
+         |                                                             ^
+      16 |   const page = await ctx.newPage();
+      17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';
+      18 |   return { ctx, page, api: ctx.request, csrf };
+        at actor (/Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/helpers.ts:15:61)
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:31:8
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/acceptance-gates-G05-auto--9397c-DES-appear-on-the-업무-screen-webkit/error-context.md
+
+  5) [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title')
+    Expected: "회의실 예약 자동화"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title') with timeout 5000ms
+      - waiting for locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().locator('.review-row-title')
+
+
+      17 |   await page.goto('/review');
+      18 |   const row = page.locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first();
+    > 19 |   await expect(row.locator('.review-row-title')).toHaveText('회의실 예약 자동화');
+         |                                                  ^
+      20 |   await page.screenshot({ path: `${shots}/${testInfo.project.name}-review-list.png`, fullPage: true });
+      21 |   await row.click();
+      22 |   await expect(page.getByRole('heading', { name: '회의실 예약 자동화' })).toBeVisible();
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:19:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/seeded-results/rem-ui-review-queue-title--4a73b-l-respect-source-permission-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/rem-ui-review-queue-title--4a73b-l-respect-source-permission-webkit/error-context.md
+
+  6) [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first()
+
+
+      31 |   await login(page, `source_reader@${tenant}.dev`);
+      32 |   await page.goto('/review');
+    > 33 |   await page.locator('.review-layout nav button').filter({ hasText: '회의실 예약 자동화' }).first().click();
+         |                                                                                             ^
+      34 |   await expect(page.getByText('업무 판단 요청')).toBeVisible();
+      35 |   await expect(page.getByText(/원문 열람 권한이 없습니다/)).toHaveCount(0);
+      36 |   await page.screenshot({ path: `${shots}/${testInfo.project.name}-review-source-reader.png`, fullPage: true });
+        at /Users/psw/Projects/decision-chat-bot/artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:33:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/review/completeness/e2e/seeded-results/rem-ui-source-reading-revi-e8e56-itted-text-in-review-detail-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/review/completeness/e2e/seeded-results/rem-ui-source-reading-revi-e8e56-itted-text-in-review-detail-webkit/error-context.md
+
+  6 failed
+    [chromium] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen 
+    [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission 
+    [chromium] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail 
+    [webkit] › artifacts/review/completeness/scratch/suite/acceptance/gates.spec.ts:35:5 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen 
+    [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:14:5 › review queue title and masked detail respect source permission 
+    [webkit] › artifacts/review/completeness/scratch/suite/rem-ui.spec.ts:29:5 › source-reading reviewer can see the submitted text in review detail 
+  2 did not run
+  8 passed (2.5m)

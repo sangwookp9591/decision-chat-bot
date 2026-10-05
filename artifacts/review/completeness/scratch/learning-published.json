@@ -1,0 +1,34 @@
+{
+  "rule_id": "R-AUDIT_LEAD-01",
+  "versions": [
+    {
+      "version": 1,
+      "status": "published",
+      "body": {
+        "action": {
+          "set": "IT팀"
+        },
+        "candidate_id": "cand_6670c89345903ab55a23946e",
+        "decision_id": "rdec_14e285f90eec4cfb812d1a0924d12f86",
+        "effect": "rule",
+        "rule_id": "R-AUDIT_LEAD-01",
+        "schema": "rule-v1",
+        "scope": {
+          "all": [
+            {
+              "requester_org": "t-audit-e2e-1005-ai"
+            }
+          ]
+        },
+        "target": "lead_org",
+        "version": 1
+      },
+      "insufficient_approved": true,
+      "config_versions": [
+        6
+      ],
+      "application_count": 0,
+      "insufficient_approval_label": "자료 부족 상태로 승인됨"
+    }
+  ]
+}

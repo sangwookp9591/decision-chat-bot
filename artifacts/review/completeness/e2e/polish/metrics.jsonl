@@ -1,0 +1,6 @@
+{"browser":"chromium","width":1440,"height":900,"label":"greeting","docH":900,"bodyH":900,"winH":900,"docW":1440,"winW":1440}
+{"browser":"chromium","width":960,"height":800,"label":"greeting","docH":800,"bodyH":800,"winH":800,"docW":960,"winW":960}
+{"browser":"chromium","width":375,"height":812,"label":"greeting","docH":812,"bodyH":812,"winH":812,"docW":375,"winW":375}
+{"browser":"webkit","width":1440,"height":900,"label":"greeting","docH":900,"bodyH":900,"winH":900,"docW":1440,"winW":1440}
+{"browser":"webkit","width":960,"height":800,"label":"greeting","docH":800,"bodyH":800,"winH":800,"docW":960,"winW":960}
+{"browser":"webkit","width":375,"height":812,"label":"greeting","docH":812,"bodyH":812,"winH":812,"docW":375,"winW":375}
