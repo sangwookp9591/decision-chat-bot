@@ -1,0 +1,164 @@
+
+Running 14 tests using 1 worker
+
+(node:56470) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:56470) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓   1 [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (3.6s)
+  ✓   2 [chromium] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (6.0s)
+  ✓   3 [chromium] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text (4.5s)
+  ✓   4 [chromium] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer (5.0s)
+  ✓   5 [chromium] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (4.3s)
+  ✓   6 [chromium] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions (2.1s)
+  ✘   7 [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (11.3s)
+(node:58388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✘   8 [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (6.3s)
+  -   9 [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -  10 [webkit] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text
+  -  11 [webkit] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  12 [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  13 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -  14 [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+
+
+  1) [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 
+
+    Error: source viewer dialog
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 61
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "targets": Array [
+    +       Array [
+    +         "li:nth-child(2) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(3) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(4) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(5) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(6) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(7) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(8) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(9) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(10) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(11) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(12) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(14) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(15) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(16) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(17) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(18) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(22) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(23) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +     ],
+    +   },
+    + ]
+
+      269 |     await page.getByRole('button', { name: '원문 열기' }).click();
+      270 |     await expect(page.getByRole('dialog')).toBeVisible();
+    > 271 |     expect(await blocking(page), 'source viewer dialog').toEqual([]);
+          |                                                          ^
+      272 |   } finally { await reviewer.context.close(); }
+      273 | });
+      274 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:271:58
+
+    Error Context: ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">근거 열기</button>
+           - unexpected value "inactive"
+
+
+      82 |     await page.keyboard.press('Escape');
+      83 |     await expect(dialog).toHaveCount(0);
+    > 84 |     await expect(button).toBeFocused();
+         |                          ^
+      85 |   }
+      86 | });
+      87 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:84:26
+
+    Error Context: ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v4-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+  6 did not run
+  6 passed (1.5m)

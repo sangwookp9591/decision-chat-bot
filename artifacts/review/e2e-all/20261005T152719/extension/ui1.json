@@ -1,0 +1,565 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts$",
+      "--grep",
+      "before stop",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/ui1-results"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/ui1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/ui1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_0ea14453a68645c2a626bac641b1e0ff\",\"correction\":\"cor_a353b61ce8ae498e84f00335da817fec\",\"run\":\"run_71203cd7696e4eafb85127c77c062eaf\",\"revision\":\"rev_d7b97af18ee34e1c9b4d8a0f6b3dbbb6\",\"config\":1},{\"request\":\"req_3d05d465c90442e4a4dcbe4aca00fd29\",\"correction\":\"cor_4c4036cf5c2341ac99b1bf3637ed53e2\",\"run\":\"run_dd784ef40c4a427ab665894a0bce7834\",\"revision\":\"rev_26d6dfe45b9c40d78eee80012e732a99\",\"config\":1},{\"request\":\"req_251a385801be4bedb08018c1d82b23db\",\"correction\":\"cor_86fc8b59d46a45e4abf75baea026cd9f\",\"run\":\"run_137b378f4016491795c0ddfbcfeb407b\",\"revision\":\"rev_cf4e1862ec6841d49da153de2148a79b\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1585,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:08.733Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_0ea14453a68645c2a626bac641b1e0ff\",\"correction\":\"cor_a353b61ce8ae498e84f00335da817fec\",\"run\":\"run_71203cd7696e4eafb85127c77c062eaf\",\"revision\":\"rev_d7b97af18ee34e1c9b4d8a0f6b3dbbb6\",\"config\":1},{\"request\":\"req_3d05d465c90442e4a4dcbe4aca00fd29\",\"correction\":\"cor_4c4036cf5c2341ac99b1bf3637ed53e2\",\"run\":\"run_dd784ef40c4a427ab665894a0bce7834\",\"revision\":\"rev_26d6dfe45b9c40d78eee80012e732a99\",\"config\":1},{\"request\":\"req_251a385801be4bedb08018c1d82b23db\",\"correction\":\"cor_86fc8b59d46a45e4abf75baea026cd9f\",\"run\":\"run_137b378f4016491795c0ddfbcfeb407b\",\"revision\":\"rev_cf4e1862ec6841d49da153de2148a79b\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-480a8587d75a485717bf",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 841,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:10.686Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-752bf43edb077d6d7082",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":10,\"ui_out\":8,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":18,\"corrections\":6,\"review_transitions\":18,\"failures\":0,\"classification_changes\":10},\"used\":{\"sample_count\":10,\"corrections\":3,\"review_transitions\":10,\"failures\":0,\"classification_changes\":10},\"out_of_scope\":{\"sample_count\":8,\"corrections\":3,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2181,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:11.550Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":10,\"ui_out\":8,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":18,\"corrections\":6,\"review_transitions\":18,\"failures\":0,\"classification_changes\":10},\"used\":{\"sample_count\":10,\"corrections\":3,\"review_transitions\":10,\"failures\":0,\"classification_changes\":10},\"out_of_scope\":{\"sample_count\":8,\"corrections\":3,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-5e71c43b02f9d221fdfc",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:13.750Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":80,\"map_edges\":84,\"flow_href\":\"/observatory?run_id=run_158d9a57e91149d9b02b9e7393c781b7\",\"learning_href\":\"/learning\"}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule_map\":[21,20]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12876,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:16.973Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":80,\"map_edges\":84,\"flow_href\":\"/observatory?run_id=run_158d9a57e91149d9b02b9e7393c781b7\",\"learning_href\":\"/learning\"}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule_map\":[21,20]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-2c90b43d23c808a90e2b",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_0ea14453a68645c2a626bac641b1e0ff\",\"correction\":\"cor_a353b61ce8ae498e84f00335da817fec\",\"run\":\"run_71203cd7696e4eafb85127c77c062eaf\",\"revision\":\"rev_d7b97af18ee34e1c9b4d8a0f6b3dbbb6\",\"config\":1},{\"request\":\"req_3d05d465c90442e4a4dcbe4aca00fd29\",\"correction\":\"cor_4c4036cf5c2341ac99b1bf3637ed53e2\",\"run\":\"run_dd784ef40c4a427ab665894a0bce7834\",\"revision\":\"rev_26d6dfe45b9c40d78eee80012e732a99\",\"config\":1},{\"request\":\"req_251a385801be4bedb08018c1d82b23db\",\"correction\":\"cor_86fc8b59d46a45e4abf75baea026cd9f\",\"run\":\"run_137b378f4016491795c0ddfbcfeb407b\",\"revision\":\"rev_cf4e1862ec6841d49da153de2148a79b\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5642,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:30.608Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_0ea14453a68645c2a626bac641b1e0ff\",\"correction\":\"cor_a353b61ce8ae498e84f00335da817fec\",\"run\":\"run_71203cd7696e4eafb85127c77c062eaf\",\"revision\":\"rev_d7b97af18ee34e1c9b4d8a0f6b3dbbb6\",\"config\":1},{\"request\":\"req_3d05d465c90442e4a4dcbe4aca00fd29\",\"correction\":\"cor_4c4036cf5c2341ac99b1bf3637ed53e2\",\"run\":\"run_dd784ef40c4a427ab665894a0bce7834\",\"revision\":\"rev_26d6dfe45b9c40d78eee80012e732a99\",\"config\":1},{\"request\":\"req_251a385801be4bedb08018c1d82b23db\",\"correction\":\"cor_86fc8b59d46a45e4abf75baea026cd9f\",\"run\":\"run_137b378f4016491795c0ddfbcfeb407b\",\"revision\":\"rev_cf4e1862ec6841d49da153de2148a79b\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9aa9af3e5e6ca0a5ebce",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1381,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:36.720Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-e381ed2a5d2d1da89a2b",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":10,\"ui_out\":8,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":18,\"corrections\":6,\"review_transitions\":18,\"failures\":0,\"classification_changes\":10},\"used\":{\"sample_count\":10,\"corrections\":3,\"review_transitions\":10,\"failures\":0,\"classification_changes\":10},\"out_of_scope\":{\"sample_count\":8,\"corrections\":3,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8882,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:38.119Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":10,\"ui_out\":8,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":18,\"corrections\":6,\"review_transitions\":18,\"failures\":0,\"classification_changes\":10},\"used\":{\"sample_count\":10,\"corrections\":3,\"review_transitions\":10,\"failures\":0,\"classification_changes\":10},\"out_of_scope\":{\"sample_count\":8,\"corrections\":3,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-601263f57a0cd655d21a",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14789,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:44:47.036Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-10d3f5103255e4811bb4",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":80,\"map_edges\":84,\"flow_href\":\"/observatory?run_id=run_158d9a57e91149d9b02b9e7393c781b7\",\"learning_href\":\"/learning\"}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule_map\":[21,20]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 103571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:45:01.979Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":80,\"map_edges\":84,\"flow_href\":\"/observatory?run_id=run_158d9a57e91149d9b02b9e7393c781b7\",\"learning_href\":\"/learning\"}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule_map\":[21,20]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-06c4b46a4f63b35d51ff",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:44:07.930Z",
+    "duration": 158406.367,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

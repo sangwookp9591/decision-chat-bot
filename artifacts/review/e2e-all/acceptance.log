@@ -1,0 +1,54 @@
+
+Running 12 tests using 1 worker
+
+(node:15945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (2.4s)
+  ✓   2 [chromium] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen (2.8s)
+  ✘   3 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (10.0m)
+  -   4 [chromium] › e2e/acceptance/scenarios.spec.ts:76:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무
+  -   5 [chromium] › e2e/acceptance/scenarios.spec.ts:102:1 › S3 urgent request: reasons, review and priority on screen
+  -   6 [chromium] › e2e/acceptance/scenarios.spec.ts:128:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted
+  -   7 [chromium] › e2e/acceptance/scenarios.spec.ts:152:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -   8 [chromium] › e2e/acceptance/scenarios.spec.ts:179:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -   9 [chromium] › e2e/acceptance/scenarios.spec.ts:216:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -  10 [chromium] › e2e/acceptance/scenarios.spec.ts:237:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -  11 [chromium] › e2e/acceptance/scenarios.spec.ts:269:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  12 [chromium] › e2e/acceptance/scenarios.spec.ts:289:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment 
+
+    Test timeout of 600000ms exceeded.
+
+    Error: locator.innerText: Test ended.
+    Call log:
+      - waiting for locator('.judgment-card').filter({ has: getByRole('heading', { name: 'AI 필요성', exact: true }) }).locator('.scale-options .selected').first()
+
+
+      39 |     const card = page.locator('.judgment-card', { has: page.getByRole('heading', { name: label, exact: true }) });
+      40 |     const uncertain = card.locator('.uncertain-result span');
+    > 41 |     out[key] = (await uncertain.count()) ? (await uncertain.first().innerText()).trim() : (await card.locator('.judgment-value').first().innerText()).trim();
+         |                                                                                                                                                   ^
+      42 |   }
+      43 |   return out;
+      44 | }
+        at uiClassifications (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:41:147)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:68:14
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment 
+  9 did not run
+  2 passed (10.3m)

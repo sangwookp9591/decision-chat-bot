@@ -1,0 +1,473 @@
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+
+Running 164 tests using 1 worker
+
+(node:15448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [chromium] › e2e/a11y/a11y.spec.ts:20:1 › login screen has no critical or serious axe violations (1.0s)
+  ✓    2 [chromium] › e2e/a11y/a11y.spec.ts:28:1 › all primary application screens have no critical or serious axe violations (7.6s)
+  ✓    3 [chromium] › e2e/a11y/a11y.spec.ts:48:1 › shell, status, primary color and touch target contracts are visible (1.0s)
+  ✓    4 [chromium] › e2e/a11y/a11y.spec.ts:77:1 › reduced motion and Safari mascot media preference are respected (1.5s)
+  ✓    5 [chromium] › e2e/a11y/a11y.spec.ts:94:1 › conversation is keyboard operable: examples, composer, attach and send need no pointer (1.9s)
+  ✓    6 [chromium] › e2e/a11y/a11y.spec.ts:118:1 › keyboard submits a real request and opens its saved evidence (11.4s)
+
+  ✓    7 [chromium] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (1.6s)
+  ✓    8 [chromium] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen (2.2s)
+  ✓    9 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (5.2s)
+  ✓   10 [chromium] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (8.5s)
+  ✓   11 [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (13.8s)
+  ✘   12 [chromium] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (12.1s)
+  -   13 [chromium] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -   14 [chromium] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -   15 [chromium] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -   16 [chromium] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -   17 [chromium] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -   18 [chromium] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+(node:19858) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19858) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   19 [chromium] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request (6.6s)
+  ✓   20 [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (6.5s)
+  ✓   21 [chromium] › e2e/chat-intake.spec.ts:71:1 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision (6.7s)
+  ✓   22 [chromium] › e2e/chat-intake.spec.ts:99:1 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision (8.9s)
+  ✓   23 [chromium] › e2e/chat-intake.spec.ts:124:1 › files can be dropped on the composer and removed again (857ms)
+  ✓   24 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.7s)
+  ✓   25 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.6s)
+  ✓   26 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.7s)
+  ✓   27 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.1s)
+  ✓   28 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (3.0s)
+  ✓   29 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (3.0s)
+  ✓   30 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (3.1s)
+  ✓   31 [chromium] › e2e/chat-intake.spec.ts:232:1 › reduced motion: bubbles and typing dots do not animate (975ms)
+  ✓   32 [chromium] › e2e/chat-intake.spec.ts:243:1 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down (6.3s)
+  ✓   33 [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (2.4s)
+  ✓   34 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (1.5s)
+  ✓   35 [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (10.1s)
+  ✓   36 [chromium] › e2e/judgment-map.spec.ts:117:1 › a role without graph access is refused (284ms)
+
+  ✓   37 [chromium] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (22.5s)
+
+  ✓   38 [chromium] › e2e/learning.spec.ts:61:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (29.1s)
+  ✓   39 [chromium] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (6.5s)
+  ✓   40 [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (6.5s)
+  ✘   41 [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (12.8s)
+(node:26986) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26986) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   42 [chromium] › e2e/monitoring.spec.ts:3:1 › operator monitoring screen matches a real API aggregate (828ms)
+  ✓   43 [chromium] › e2e/p7-fixes.spec.ts:11:1 › F2 policy: a value typed right after entering the page is the value that gets validated (5.5s)
+  ✓   44 [chromium] › e2e/p7-fixes.spec.ts:30:1 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.3s)
+  ✓   45 [chromium] › e2e/p7-fixes.spec.ts:41:1 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (6.9s)
+P7_F5_LAYOUT_SHIFT 0.00000
+  ✓   46 [chromium] › e2e/p7-fixes.spec.ts:55:1 › F5 result: provisional → final does not move the content (layout-shift after the provisional card) (6.0s)
+UX7_F5 uncertain {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✓   47 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (5.5s)
+UX7_F5 possible {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✓   48 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (5.6s)
+  ✓   49 [chromium] › e2e/p7-fixes.spec.ts:114:1 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (1.3s)
+  ✓   50 [chromium] › e2e/policy.spec.ts:3:1 › validate, publish, inspect history, and rollback policy on live API (1.3s)
+  ✓   51 [chromium] › e2e/rem-ui.spec.ts:20:1 › review queue title and masked detail respect source permission (960ms)
+  ✓   52 [chromium] › e2e/rem-ui.spec.ts:37:1 › source-reading reviewer can see the submitted text in review detail (1.0s)
+
+  ✓   53 [chromium] › e2e/rem-ui.spec.ts:50:1 › source reader sees the original and result identifiers stay compact (1.6s)
+  ✓   54 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 375px › Main with a selected result (18.2s)
+  ✓   55 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 375px › Review detail (7.6s)
+  ✓   56 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 375px › Monitoring (2.0s)
+  ✓   57 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 375px › Learning with a selected candidate (1.9s)
+  ✓   58 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 375px › Tasks with a selected task (4.2s)
+  ✓   59 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 375px › Observatory with a selected request (7.6s)
+  ✓   60 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 375px › JudgmentMap (4.5s)
+  ✓   61 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 520px › Main with a selected result (19.4s)
+  ✓   62 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 520px › Review detail (18.5s)
+  ✓   63 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 520px › Monitoring (1.2s)
+  ✓   64 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 520px › Learning with a selected candidate (1.1s)
+  ✓   65 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 520px › Tasks with a selected task (3.1s)
+  ✓   66 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 520px › Observatory with a selected request (6.3s)
+  ✓   67 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 520px › JudgmentMap (3.4s)
+  ✓   68 [chromium] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (1.5s)
+  ✓   69 [chromium] › e2e/screens-ui.spec.ts:8:1 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다 (892ms)
+  ✓   70 [chromium] › e2e/screens-ui.spec.ts:26:1 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다 (1.1s)
+  ✓   71 [chromium] › e2e/screens-ui.spec.ts:41:1 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다 (957ms)
+
+  ✓   72 [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (1.3s)
+  ✓   73 [chromium] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (4.1s)
+  ✓   74 [chromium] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text (1.7s)
+  ✓   75 [chromium] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer (2.2s)
+  ✓   76 [chromium] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (1.9s)
+  ✓   77 [chromium] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions (782ms)
+  ✓   78 [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (3.7s)
+  ✓   79 [chromium] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (1.3s)
+  ✓   80 [chromium] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (855ms)
+  ✓   81 [chromium] › e2e/webmcp.spec.ts:3:1 › application remains usable with or without WebMCP support (445ms)
+(node:34755) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34755) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PROGRESSIVE_TIMINGS {"click_to_optimistic_ms":79,"click_to_provisional_ms":1430,"click_to_final_ms":1430}
+  ✓   82 [chromium] › e2e/progressive-results.spec.ts:8:1 › submit → optimistic bubble → provisional cards → final result, with measured timings (6.1s)
+(node:34928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   83 [webkit] › e2e/a11y/a11y.spec.ts:20:1 › login screen has no critical or serious axe violations (1.4s)
+  ✓   84 [webkit] › e2e/a11y/a11y.spec.ts:28:1 › all primary application screens have no critical or serious axe violations (11.7s)
+  ✓   85 [webkit] › e2e/a11y/a11y.spec.ts:48:1 › shell, status, primary color and touch target contracts are visible (1.3s)
+  ✓   86 [webkit] › e2e/a11y/a11y.spec.ts:77:1 › reduced motion and Safari mascot media preference are respected (1.3s)
+  ✓   87 [webkit] › e2e/a11y/a11y.spec.ts:94:1 › conversation is keyboard operable: examples, composer, attach and send need no pointer (1.6s)
+  ✓   88 [webkit] › e2e/a11y/a11y.spec.ts:118:1 › keyboard submits a real request and opens its saved evidence (8.4s)
+
+  ✓   89 [webkit] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (2.2s)
+  ✓   90 [webkit] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen (3.9s)
+  ✓   91 [webkit] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (16.8s)
+  ✓   92 [webkit] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (30.5s)
+  ✓   93 [webkit] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (45.4s)
+  ✘   94 [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (39.1s)
+  -   95 [webkit] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -   96 [webkit] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -   97 [webkit] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -   98 [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -   99 [webkit] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  100 [webkit] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+(node:38848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  101 [webkit] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request (7.7s)
+  ✓  102 [webkit] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (6.8s)
+  ✓  103 [webkit] › e2e/chat-intake.spec.ts:71:1 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision (7.6s)
+  ✓  104 [webkit] › e2e/chat-intake.spec.ts:99:1 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision (9.3s)
+  ✓  105 [webkit] › e2e/chat-intake.spec.ts:124:1 › files can be dropped on the composer and removed again (1.1s)
+  ✓  106 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.0s)
+  ✓  107 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.0s)
+  ✓  108 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.3s)
+  ✓  109 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.4s)
+  ✓  110 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (3.7s)
+  ✓  111 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (3.7s)
+  ✓  112 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (3.4s)
+  ✓  113 [webkit] › e2e/chat-intake.spec.ts:232:1 › reduced motion: bubbles and typing dots do not animate (1.1s)
+  ✓  114 [webkit] › e2e/chat-intake.spec.ts:243:1 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down (5.6s)
+  ✓  115 [webkit] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (1.7s)
+  ✓  116 [webkit] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (1.1s)
+  ✓  117 [webkit] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (8.7s)
+  ✓  118 [webkit] › e2e/judgment-map.spec.ts:117:1 › a role without graph access is refused (387ms)
+
+  ✘  119 [webkit] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (10.2s)
+(node:40558) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40558) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓  120 [webkit] › e2e/learning.spec.ts:61:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (25.7s)
+  ✓  121 [webkit] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (8.1s)
+  ✓  122 [webkit] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (9.9s)
+  ✘  123 [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (15.9s)
+(node:41886) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41886) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  124 [webkit] › e2e/monitoring.spec.ts:3:1 › operator monitoring screen matches a real API aggregate (1.1s)
+  ✓  125 [webkit] › e2e/p7-fixes.spec.ts:11:1 › F2 policy: a value typed right after entering the page is the value that gets validated (4.2s)
+  ✓  126 [webkit] › e2e/p7-fixes.spec.ts:30:1 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.3s)
+  ✓  127 [webkit] › e2e/p7-fixes.spec.ts:41:1 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (5.5s)
+  -  128 [webkit] › e2e/p7-fixes.spec.ts:55:1 › F5 result: provisional → final does not move the content (layout-shift after the provisional card)
+UX7_F5 uncertain {"prov":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"final":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"uncertain":1}
+  ✓  129 [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (5.9s)
+UX7_F5 possible {"prov":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"final":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"uncertain":1}
+  ✘  130 [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (6.1s)
+(node:42593) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:42593) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  131 [webkit] › e2e/p7-fixes.spec.ts:114:1 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (1.8s)
+  ✓  132 [webkit] › e2e/policy.spec.ts:3:1 › validate, publish, inspect history, and rollback policy on live API (1.9s)
+  ✓  133 [webkit] › e2e/rem-ui.spec.ts:20:1 › review queue title and masked detail respect source permission (1.2s)
+  ✓  134 [webkit] › e2e/rem-ui.spec.ts:37:1 › source-reading reviewer can see the submitted text in review detail (1.1s)
+
+  ✓  135 [webkit] › e2e/rem-ui.spec.ts:50:1 › source reader sees the original and result identifiers stay compact (1.4s)
+  ✓  136 [webkit] › e2e/responsive-overflow.spec.ts:29:5 › viewport 375px › Main with a selected result (14.6s)
+  ✓  137 [webkit] › e2e/responsive-overflow.spec.ts:42:5 › viewport 375px › Review detail (5.3s)
+  ✓  138 [webkit] › e2e/responsive-overflow.spec.ts:55:5 › viewport 375px › Monitoring (1.1s)
+  ✓  139 [webkit] › e2e/responsive-overflow.spec.ts:60:5 › viewport 375px › Learning with a selected candidate (935ms)
+  ✓  140 [webkit] › e2e/responsive-overflow.spec.ts:69:5 › viewport 375px › Tasks with a selected task (3.8s)
+  ✓  141 [webkit] › e2e/responsive-overflow.spec.ts:78:5 › viewport 375px › Observatory with a selected request (7.6s)
+  ✓  142 [webkit] › e2e/responsive-overflow.spec.ts:86:5 › viewport 375px › JudgmentMap (4.0s)
+  ✓  143 [webkit] › e2e/responsive-overflow.spec.ts:29:5 › viewport 520px › Main with a selected result (17.2s)
+  ✓  144 [webkit] › e2e/responsive-overflow.spec.ts:42:5 › viewport 520px › Review detail (6.9s)
+  ✓  145 [webkit] › e2e/responsive-overflow.spec.ts:55:5 › viewport 520px › Monitoring (3.1s)
+  ✓  146 [webkit] › e2e/responsive-overflow.spec.ts:60:5 › viewport 520px › Learning with a selected candidate (1.6s)
+  ✓  147 [webkit] › e2e/responsive-overflow.spec.ts:69:5 › viewport 520px › Tasks with a selected task (4.8s)
+  ✓  148 [webkit] › e2e/responsive-overflow.spec.ts:78:5 › viewport 520px › Observatory with a selected request (6.1s)
+  ✓  149 [webkit] › e2e/responsive-overflow.spec.ts:86:5 › viewport 520px › JudgmentMap (3.5s)
+  ✓  150 [webkit] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (1.4s)
+  ✓  151 [webkit] › e2e/screens-ui.spec.ts:8:1 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다 (1.1s)
+  ✓  152 [webkit] › e2e/screens-ui.spec.ts:26:1 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다 (733ms)
+  ✓  153 [webkit] › e2e/screens-ui.spec.ts:41:1 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다 (1.2s)
+
+  ✓  154 [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (1.4s)
+  ✘  155 [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (107ms)
+  -  156 [webkit] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text
+  -  157 [webkit] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  158 [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  159 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -  160 [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:47289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  161 [webkit] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (1.5s)
+  ✓  162 [webkit] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (994ms)
+  ✓  163 [webkit] › e2e/webmcp.spec.ts:3:1 › application remains usable with or without WebMCP support (521ms)
+(node:47357) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47357) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PROGRESSIVE_TIMINGS {"click_to_optimistic_ms":149,"click_to_provisional_ms":1104,"click_to_final_ms":1104}
+  ✓  164 [webkit] › e2e/progressive-results.spec.ts:8:1 › submit → optimistic bubble → provisional cards → final result, with measured timings (5.7s)
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('main')
+    Expected substring: "개발 가능성 미충족"
+    Received string:    "새 요청내 요청 대화오늘고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_9d5areq_9d5a4aae1c18459f83312c426a37f220사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_3889req_3889648206c743eea3fcd63de4709200오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_c165req_c165e0c011da47388014555f11015952고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_f39freq_f39fa87700ac40ce890d05ffd25359b3SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c3bdreq_c3bdc514372847c483bf5a41a8cadc2e키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_2568req_25680a6727d046caa772de30d0650e3cSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_1dc1req_1dc1857d56b24f97a404e7d769f8db1f레이아웃 스크롤 표본 1t-e2e-10t-e2e-1005152719-layout-1레이아웃 스크롤 표본 2t-e2e-10t-e2e-1005152719-layout-2레이아웃 스크롤 표본 3t-e2e-10t-e2e-1005152719-layout-3레이아웃 스크롤 표본 4t-e2e-10t-e2e-1005152719-layout-4레이아웃 스크롤 표본 5t-e2e-10t-e2e-1005152719-layout-5레이아웃 스크롤 표본 6t-e2e-10t-e2e-1005152719-layout-6레이아웃 스크롤 표본 7t-e2e-10t-e2e-1005152719-layout-7레이아웃 스크롤 표본 8t-e2e-10t-e2e-1005152719-layout-8레이아웃 스크롤 표본 9t-e2e-10t-e2e-1005152719-layout-9레이아웃 스크롤 표본 10t-e2e-10t-e2e-1005152719-layout-10레이아웃 스크롤 표본 11t-e2e-10t-e2e-1005152719-layout-11레이아웃 스크롤 표본 12t-e2e-10t-e2e-1005152719-layout-12레이아웃 스크롤 표본 13t-e2e-10t-e2e-1005152719-layout-13레이아웃 스크롤 표본 14t-e2e-10t-e2e-1005152719-layout-14레이아웃 스크롤 표본 15t-e2e-10t-e2e-1005152719-layout-15레이아웃 스크롤 표본 16t-e2e-10t-e2e-1005152719-layout-16레이아웃 스크롤 표본 17t-e2e-10t-e2e-1005152719-layout-17레이아웃 스크롤 표본 18t-e2e-10t-e2e-1005152719-layout-18레이아웃 스크롤 표본 19t-e2e-10t-e2e-1005152719-layout-19레이아웃 스크롤 표본 20t-e2e-10t-e2e-1005152719-layout-20레이아웃 스크롤 표본 21t-e2e-10t-e2e-1005152719-layout-21레이아웃 스크롤 표본 22t-e2e-10t-e2e-1005152719-layout-22레이아웃 스크롤 표본 23t-e2e-10t-e2e-1005152719-layout-23레이아웃 스크롤 표본 24t-e2e-10t-e2e-1005152719-layout-24레이아웃 스크롤 표본 25t-e2e-10t-e2e-1005152719-layout-25레이아웃 스크롤 표본 26t-e2e-10t-e2e-1005152719-layout-26레이아웃 스크롤 표본 27t-e2e-10t-e2e-1005152719-layout-27레이아웃 스크롤 표본 28t-e2e-10t-e2e-1005152719-layout-28레이아웃 스크롤 표본 29t-e2e-10t-e2e-1005152719-layout-29레이아웃 스크롤 표본 30t-e2e-10t-e2e-1005152719-layout-30일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_9d5a분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('main') with timeout 5000ms
+      - waiting for locator('main')
+        14 × locator resolved to <main>…</main>
+           - unexpected value "새 요청내 요청 대화오늘고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_9d5areq_9d5a4aae1c18459f83312c426a37f220사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_3889req_3889648206c743eea3fcd63de4709200오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_c165req_c165e0c011da47388014555f11015952고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_f39freq_f39fa87700ac40ce890d05ffd25359b3SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c3bdreq_c3bdc514372847c483bf5a41a8cadc2e키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_2568req_25680a6727d046caa772de30d0650e3cSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_1dc1req_1dc1857d56b24f97a404e7d769f8db1f레이아웃 스크롤 표본 1t-e2e-10t-e2e-1005152719-layout-1레이아웃 스크롤 표본 2t-e2e-10t-e2e-1005152719-layout-2레이아웃 스크롤 표본 3t-e2e-10t-e2e-1005152719-layout-3레이아웃 스크롤 표본 4t-e2e-10t-e2e-1005152719-layout-4레이아웃 스크롤 표본 5t-e2e-10t-e2e-1005152719-layout-5레이아웃 스크롤 표본 6t-e2e-10t-e2e-1005152719-layout-6레이아웃 스크롤 표본 7t-e2e-10t-e2e-1005152719-layout-7레이아웃 스크롤 표본 8t-e2e-10t-e2e-1005152719-layout-8레이아웃 스크롤 표본 9t-e2e-10t-e2e-1005152719-layout-9레이아웃 스크롤 표본 10t-e2e-10t-e2e-1005152719-layout-10레이아웃 스크롤 표본 11t-e2e-10t-e2e-1005152719-layout-11레이아웃 스크롤 표본 12t-e2e-10t-e2e-1005152719-layout-12레이아웃 스크롤 표본 13t-e2e-10t-e2e-1005152719-layout-13레이아웃 스크롤 표본 14t-e2e-10t-e2e-1005152719-layout-14레이아웃 스크롤 표본 15t-e2e-10t-e2e-1005152719-layout-15레이아웃 스크롤 표본 16t-e2e-10t-e2e-1005152719-layout-16레이아웃 스크롤 표본 17t-e2e-10t-e2e-1005152719-layout-17레이아웃 스크롤 표본 18t-e2e-10t-e2e-1005152719-layout-18레이아웃 스크롤 표본 19t-e2e-10t-e2e-1005152719-layout-19레이아웃 스크롤 표본 20t-e2e-10t-e2e-1005152719-layout-20레이아웃 스크롤 표본 21t-e2e-10t-e2e-1005152719-layout-21레이아웃 스크롤 표본 22t-e2e-10t-e2e-1005152719-layout-22레이아웃 스크롤 표본 23t-e2e-10t-e2e-1005152719-layout-23레이아웃 스크롤 표본 24t-e2e-10t-e2e-1005152719-layout-24레이아웃 스크롤 표본 25t-e2e-10t-e2e-1005152719-layout-25레이아웃 스크롤 표본 26t-e2e-10t-e2e-1005152719-layout-26레이아웃 스크롤 표본 27t-e2e-10t-e2e-1005152719-layout-27레이아웃 스크롤 표본 28t-e2e-10t-e2e-1005152719-layout-28레이아웃 스크롤 표본 29t-e2e-10t-e2e-1005152719-layout-29레이아웃 스크롤 표본 30t-e2e-10t-e2e-1005152719-layout-30일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_9d5a분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요"
+
+
+      137 |   await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
+      138 |   await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText('검토 사유');
+    > 139 |   for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.locator('main')).toContainText(reason);
+          |                                                                                            ^
+      140 |   await shot(rq.page, 's4-insufficient-information');
+      141 |   await rv.page.goto('/review');
+      142 |   await rv.page.locator('nav[aria-label="검토 대기 목록"] button', { hasText: s4 }).click();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:139:92
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">채팅 · 문단 1 · 문장 1 근거 열기</button>
+           - unexpected value "inactive"
+
+
+      19 |     await expect(viewer).toHaveCount(0);
+      20 |     await expect(detail).toBeVisible();
+    > 21 |     await expect(evidence).toBeFocused();
+         |                            ^
+      22 |   } finally { await a.ctx.close(); }
+      23 | });
+      24 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('main')
+    Expected substring: "개발 가능성 미충족"
+    Received string:    "새 요청내 요청 대화오늘고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_8614req_861471e7bc644c758956b18059cbb7e7사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_21b4req_21b40ce8e1f0483a84b2146a944bfce2오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_3f91req_3f91ac65b64449509ad90556ff639244고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4474req_4474ebe0e29f41f28a5218258f7a93dcSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_a203req_a203cb18c1214f7483d2e6466bce2446키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_4b5freq_4b5f9c9cd5884b8d8333ba3a1c7a5b62SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_11dcreq_11dca9ad2f2f41dc8d770cd5d92d9282고객 문의 분류에 챗봇을 도입하고 싶습니다.req_9fd2req_9fd24850e4bc45848763a64284f3590c사내 회의실 예약 도구를 도입하려고 합니다.req_707areq_707aa1180170423ba0b5a7d0625feaa1제목 없는 요청t-e2e-10t-e2e-1005152719_ux2seed_req고객 문의 분류에 챗봇을 도입하고 싶습니다.req_86a1req_86a1d28ebda24c3bb22aabd37f844178회의실 예약 조회 기능을 만들고 싶습니다.req_d778req_d778b11ebf744b5781f89ce545bb95c7고객 문의 분류에 챗봇을 도입하고 싶습니다.req_d7fereq_d7fec585ea7349fbaa7ab08693f52d42F4 목록 갱신 확인 [MASKED_REGISTRATION_1]: 회의실 예약 안내 문서를 정리하고 싶습니다req_331dreq_331d57485c94499185cf1f97f03e807b회의실 예약 조회 화면을 만듭니다.req_b9ebreq_b9eb5d12ea43450090a654c54e806df8분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_85a9req_85a9c8e2a0ae49a3b98673d980781cd3사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_ae35req_ae359643882b4b3db5fc1578d355fc52임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_df2areq_df2a75f5bd7d47088b5d43a1d66b0300사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_4a63req_4a636ae356fa4f3da25eaa3785b1c403사내 휴게실 예약 알림 기능을 추가해 주세요.req_cac4req_cac455b55eb34605ab1d6b5fcbb371b9분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_7dbbreq_7dbbb254d17e4bc1977c2a5fb3d36766사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_038dreq_038d9ddf39ba415cbd05edbba53329b1회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_907freq_907f6ffe87ab4492951dfe0927c7a117고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_9d5areq_9d5a4aae1c18459f83312c426a37f220사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_3889req_3889648206c743eea3fcd63de4709200오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_c165req_c165e0c011da47388014555f11015952고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_f39freq_f39fa87700ac40ce890d05ffd25359b3SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c3bdreq_c3bdc514372847c483bf5a41a8cadc2e키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_2568req_25680a6727d046caa772de30d0650e3cSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_1dc1req_1dc1857d56b24f97a404e7d769f8db1f레이아웃 스크롤 표본 30t-e2e-10t-e2e-1005152719-layout-30레이아웃 스크롤 표본 15t-e2e-10t-e2e-1005152719-layout-15레이아웃 스크롤 표본 29t-e2e-10t-e2e-1005152719-layout-29레이아웃 스크롤 표본 28t-e2e-10t-e2e-1005152719-layout-28레이아웃 스크롤 표본 14t-e2e-10t-e2e-1005152719-layout-14레이아웃 스크롤 표본 7t-e2e-10t-e2e-1005152719-layout-7레이아웃 스크롤 표본 27t-e2e-10t-e2e-1005152719-layout-27레이아웃 스크롤 표본 26t-e2e-10t-e2e-1005152719-layout-26레이아웃 스크롤 표본 13t-e2e-10t-e2e-1005152719-layout-13레이아웃 스크롤 표본 25t-e2e-10t-e2e-1005152719-layout-25레이아웃 스크롤 표본 24t-e2e-10t-e2e-1005152719-layout-24레이아웃 스크롤 표본 12t-e2e-10t-e2e-1005152719-layout-12레이아웃 스크롤 표본 6t-e2e-10t-e2e-1005152719-layout-6레이아웃 스크롤 표본 3t-e2e-10t-e2e-1005152719-layout-3레이아웃 스크롤 표본 23t-e2e-10t-e2e-1005152719-layout-23레이아웃 스크롤 표본 22t-e2e-10t-e2e-1005152719-layout-22레이아웃 스크롤 표본 11t-e2e-10t-e2e-1005152719-layout-11레이아웃 스크롤 표본 21t-e2e-10t-e2e-1005152719-layout-21레이아웃 스크롤 표본 20t-e2e-10t-e2e-1005152719-layout-20레이아웃 스크롤 표본 10t-e2e-10t-e2e-1005152719-layout-10일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_8614분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('main') with timeout 5000ms
+      - waiting for locator('main')
+        6 × locator resolved to <main>…</main>
+          - unexpected value "새 요청내 요청 대화오늘고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_8614req_861471e7bc644c758956b18059cbb7e7사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_21b4req_21b40ce8e1f0483a84b2146a944bfce2오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_3f91req_3f91ac65b64449509ad90556ff639244고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4474req_4474ebe0e29f41f28a5218258f7a93dcSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_a203req_a203cb18c1214f7483d2e6466bce2446키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_4b5freq_4b5f9c9cd5884b8d8333ba3a1c7a5b62SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_11dcreq_11dca9ad2f2f41dc8d770cd5d92d9282고객 문의 분류에 챗봇을 도입하고 싶습니다.req_9fd2req_9fd24850e4bc45848763a64284f3590c사내 회의실 예약 도구를 도입하려고 합니다.req_707areq_707aa1180170423ba0b5a7d0625feaa1제목 없는 요청t-e2e-10t-e2e-1005152719_ux2seed_req고객 문의 분류에 챗봇을 도입하고 싶습니다.req_86a1req_86a1d28ebda24c3bb22aabd37f844178회의실 예약 조회 기능을 만들고 싶습니다.req_d778req_d778b11ebf744b5781f89ce545bb95c7고객 문의 분류에 챗봇을 도입하고 싶습니다.req_d7fereq_d7fec585ea7349fbaa7ab08693f52d42F4 목록 갱신 확인 [MASKED_REGISTRATION_1]: 회의실 예약 안내 문서를 정리하고 싶습니다req_331dreq_331d57485c94499185cf1f97f03e807b회의실 예약 조회 화면을 만듭니다.req_b9ebreq_b9eb5d12ea43450090a654c54e806df8분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_85a9req_85a9c8e2a0ae49a3b98673d980781cd3사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_ae35req_ae359643882b4b3db5fc1578d355fc52임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_df2areq_df2a75f5bd7d47088b5d43a1d66b0300사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_4a63req_4a636ae356fa4f3da25eaa3785b1c403사내 휴게실 예약 알림 기능을 추가해 주세요.req_cac4req_cac455b55eb34605ab1d6b5fcbb371b9분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_7dbbreq_7dbbb254d17e4bc1977c2a5fb3d36766사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_038dreq_038d9ddf39ba415cbd05edbba53329b1회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_907freq_907f6ffe87ab4492951dfe0927c7a117고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_9d5areq_9d5a4aae1c18459f83312c426a37f220사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_3889req_3889648206c743eea3fcd63de4709200오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_c165req_c165e0c011da47388014555f11015952고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_f39freq_f39fa87700ac40ce890d05ffd25359b3SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c3bdreq_c3bdc514372847c483bf5a41a8cadc2e키보드 접근성 검증 [MASKED_REGISTRATION_1]: 임상시험 이상반응 보고를 안전성 담당자가 확req_2568req_25680a6727d046caa772de30d0650e3cSAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_1dc1req_1dc1857d56b24f97a404e7d769f8db1f레이아웃 스크롤 표본 30t-e2e-10t-e2e-1005152719-layout-30레이아웃 스크롤 표본 15t-e2e-10t-e2e-1005152719-layout-15레이아웃 스크롤 표본 29t-e2e-10t-e2e-1005152719-layout-29레이아웃 스크롤 표본 28t-e2e-10t-e2e-1005152719-layout-28레이아웃 스크롤 표본 14t-e2e-10t-e2e-1005152719-layout-14레이아웃 스크롤 표본 7t-e2e-10t-e2e-1005152719-layout-7레이아웃 스크롤 표본 27t-e2e-10t-e2e-1005152719-layout-27레이아웃 스크롤 표본 26t-e2e-10t-e2e-1005152719-layout-26레이아웃 스크롤 표본 13t-e2e-10t-e2e-1005152719-layout-13레이아웃 스크롤 표본 25t-e2e-10t-e2e-1005152719-layout-25레이아웃 스크롤 표본 24t-e2e-10t-e2e-1005152719-layout-24레이아웃 스크롤 표본 12t-e2e-10t-e2e-1005152719-layout-12레이아웃 스크롤 표본 6t-e2e-10t-e2e-1005152719-layout-6레이아웃 스크롤 표본 3t-e2e-10t-e2e-1005152719-layout-3레이아웃 스크롤 표본 23t-e2e-10t-e2e-1005152719-layout-23레이아웃 스크롤 표본 22t-e2e-10t-e2e-1005152719-layout-22레이아웃 스크롤 표본 11t-e2e-10t-e2e-1005152719-layout-11레이아웃 스크롤 표본 21t-e2e-10t-e2e-1005152719-layout-21레이아웃 스크롤 표본 20t-e2e-10t-e2e-1005152719-layout-20레이아웃 스크롤 표본 10t-e2e-10t-e2e-1005152719-layout-10일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_8614분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요"
+
+
+      137 |   await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
+      138 |   await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText('검토 사유');
+    > 139 |   for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText(reason);
+          |                                                                                            ^
+      140 |   await shot(rq.page, 's4-insufficient-information');
+      141 |   await rv.page.goto('/review');
+      142 |   await rv.page.locator('nav[aria-label="검토 대기 목록"] button', { hasText: s4 }).click();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:139:92
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('status')
+    Expected substring: "비교 검증을 실행했습니다"
+    Received string:    "후보를 승인하고 규칙 버전(검증 중)을 만들었습니다."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('status') with timeout 5000ms
+      - waiting for getByRole('status')
+        14 × locator resolved to <p role="status" class="learning-notice">후보를 승인하고 규칙 버전(검증 중)을 만들었습니다.</p>
+           - unexpected value "후보를 승인하고 규칙 버전(검증 중)을 만들었습니다."
+
+
+      78 |     await expect(adminPage.getByRole('button', { name: '게시', exact: true })).toBeDisabled();
+      79 |     await adminPage.getByRole('button', { name: '검증 실행' }).click();
+    > 80 |     await expect(adminPage.getByRole('status')).toContainText('비교 검증을 실행했습니다');
+         |                                                 ^
+      81 |     await expect(adminPage.getByRole('button', { name: '검증 실행' })).toBeEnabled();
+      82 |     await expect(adminPage.getByRole('region', { name: '비교 검증' })).toContainText('사람 확정 정답 3건');
+      83 |     await expect(adminPage.getByRole('region', { name: '비교 검증' })).toContainText('부작용 0건');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/learning-human.spec.ts:80:49
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/learning-human-human-propo-9d1dd-coped-readers-cannot-mutate-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/learning-human-human-propo-9d1dd-coped-readers-cannot-mutate-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/learning-human-human-propo-9d1dd-coped-readers-cannot-mutate-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+        12 × locator resolved to <button type="button">채팅 · 문단 1 · 문장 1 근거 열기</button>
+           - unexpected value "inactive"
+
+
+      19 |     await expect(viewer).toHaveCount(0);
+      20 |     await expect(detail).toBeVisible();
+    > 21 |     await expect(evidence).toBeFocused();
+         |                            ^
+      22 |   } finally { await a.ctx.close(); }
+      23 | });
+      24 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 
+
+    Error: fixture must exercise the possible result layout
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      108 |     console.log('UX7_F5', sentence.name, JSON.stringify({ prov, final, uncertain }));
+      109 |     if (process.env.JEV_MODE === 'mock') {
+    > 110 |       expect(uncertain, `fixture must exercise the ${sentence.name} result layout`).toBe(sentence.name === 'uncertain' ? 1 : 0);
+          |                                                                                     ^
+      111 |     }
+      112 |     expect(prov, 'provisional layout captured').not.toBeNull(); expect(final, 'final layout captured').not.toBeNull();
+      113 |     for (const key of ['summary', 'judgment', 'tasks', 'judgmentHeight']) expect(Math.abs(final![key] - prov![key]), `${key}: ${prov![key]} → ${final![key]}`).toBeLessThanOrEqual(4);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts:110:85
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents 
+
+    TypeError: Cannot read properties of undefined (reading 'location')
+
+       98 |   expect(docs.pdf.units.map((u: any) => u.location.page)).toEqual([1, 2, 3]);
+       99 |   const picks = { pdf: docs.pdf.units[2], docx: docs.docx.units[4], md: docs.md.units[3], chat: docs.chat.units[1] ?? docs.chat.units[0] } as Record<string, any>;
+    > 100 |   const expected = { pdf: '3쪽', docx: '문단 5', md: expectedLabel(picks.md.location), chat: expectedLabel(picks.chat.location) } as Record<string, string>;
+          |                                                                                                                    ^
+      101 |   // the judgment cites exactly these units (the stored spans are real; only the citation list is pinned for determinism)
+      102 |   await page.route(`**/api/requests/${requestId}/judgment*`, async (route) => {
+      103 |     const body = await (await route.fetch()).json();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:100:116
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/20261005T152719/results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/20261005T152719/results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/20261005T152719/results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+    [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+    [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+    [webkit] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate 
+    [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+    [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents 
+  1 skipped
+  17 did not run
+  139 passed (15.0m)
+provisioned t-e2e-1005152719x,t-e2e-1005152719xi
+Evidence: /Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719

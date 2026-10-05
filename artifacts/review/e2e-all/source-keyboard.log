@@ -1,0 +1,68 @@
+
+Running 12 tests using 1 worker
+
+(node:68151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓   1 [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (3.3s)
+  ✓   2 [chromium] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (4.7s)
+  ✓   3 [chromium] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text (3.6s)
+  ✓   4 [chromium] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer (5.6s)
+  ✓   5 [chromium] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (2.5s)
+  ✓   6 [chromium] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions (1.1s)
+(node:68889) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68889) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓   7 [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (5.5s)
+  ✓   8 [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (8.8s)
+  ✓   9 [webkit] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text (5.2s)
+  ✓  10 [webkit] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer (4.6s)
+  ✘  11 [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (12.1s)
+  -  12 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+
+
+  1) [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: '크게 보기' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: '크게 보기' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '크게 보기' })
+        13 × locator resolved to <button type="button" class="jm-big" aria-pressed="true">크게 보기</button>
+           - unexpected value "inactive"
+
+
+      231 |     await expect(page.locator('.jm-page')).toHaveClass(/is-expanded/);
+      232 |     await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    > 233 |     await expect(toggle).toBeFocused();
+          |                          ^
+      234 |     await expect.poll(async () => (await stage.boundingBox())!.height).toBeGreaterThan(before.height);
+      235 |     await page.screenshot({ path: info.outputPath('map-expanded.png') });
+      236 |     await page.keyboard.press('Escape');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:233:26
+
+    Error Context: ../artifacts/review/e2e-all/source-keyboard-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-keyboard-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-keyboard-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-keyboard-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work 
+  1 did not run
+  10 passed (1.5m)

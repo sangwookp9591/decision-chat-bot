@@ -1,0 +1,70 @@
+
+Running 20 tests using 1 worker
+
+(node:63588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:63588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (9.7s)
+  ✓   2 [chromium] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (11.4s)
+  ✓   3 [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (15.9s)
+  ✓   4 [chromium] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (12.9s)
+  ✓   5 [chromium] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence (6.8s)
+  ✓   6 [chromium] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate (23.4s)
+  ✓   7 [chromium] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks (8.3s)
+  ✓   8 [chromium] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (40.1s)
+  ✓   9 [chromium] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer (8.5s)
+  ✓  10 [chromium] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work (1.8s)
+(node:68212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [webkit] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (11.8s)
+  ✓  12 [webkit] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (20.5s)
+  ✓  13 [webkit] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (33.9s)
+  ✓  14 [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (44.1s)
+  ✓  15 [webkit] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence (43.4s)
+  ✓  16 [webkit] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate (1.7m)
+  ✓  17 [webkit] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks (59.7s)
+  ✘  18 [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (10.0m)
+  -  19 [webkit] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  20 [webkit] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+
+
+  1) [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing 
+
+    Test timeout of 600000ms exceeded.
+
+    Error: apiRequestContext.get: Test ended.
+    Browser logs:
+
+    <launching> /Users/psw/Library/Caches/ms-playwright/webkit-2359/pw_run.sh --inspector-pipe --headless --no-startup-window
+    <launched> pid=68222
+    [pid=68222] <gracefully close start>
+
+       at acceptance/helpers.ts:64
+
+      62 |     runs += rr.runs.length;
+      63 |     for (const run of rr.runs) {
+    > 64 |       const j = await a.api.get(`/api/requests/${r.id}/judgment?run_id=${run.id}`);
+         |                             ^
+      65 |       if (j.ok()) outputs += ((await j.json()).outputs || []).length;
+      66 |     }
+      67 |   }
+        at visibleTotals (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:64:29)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:266:12
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-v6-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-v6-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-v6-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing 
+  2 did not run
+  17 passed (17.9m)

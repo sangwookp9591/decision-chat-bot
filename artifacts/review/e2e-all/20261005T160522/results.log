@@ -1,0 +1,37 @@
+
+Running 22 tests using 1 worker
+
+(node:17174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/acceptance/scenarios.spec.ts:239:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (21.9s)
+  ✓   2 [chromium] › e2e/acceptance/scenarios.spec.ts:286:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer (6.0s)
+  ✓   3 [chromium] › e2e/acceptance/scenarios.spec.ts:306:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work (1.8s)
+  ✓   4 [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (8.3s)
+
+  ✓   5 [chromium] › e2e/source-viewer/source-viewer.spec.ts:63:1 › result card evidence opens the source viewer on the cited unit and highlights it (1.0s)
+  ✓   6 [chromium] › e2e/source-viewer/source-viewer.spec.ts:95:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (3.3s)
+  ✓   7 [chromium] › e2e/source-viewer/source-viewer.spec.ts:136:1 › without source permission the viewer shows positions only and the server sends no text (1.4s)
+  ✓   8 [chromium] › e2e/source-viewer/source-viewer.spec.ts:168:1 › review detail and judgment-map evidence nodes open the same viewer (2.1s)
+  ✓   9 [chromium] › e2e/source-viewer/source-viewer.spec.ts:200:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (1.8s)
+  ✓  10 [chromium] › e2e/source-viewer/source-viewer.spec.ts:252:1 › version area is an empty state when the criteria have no rule versions (768ms)
+  ✓  11 [chromium] › e2e/source-viewer/source-viewer.spec.ts:261:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (3.7s)
+(node:18879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [webkit] › e2e/acceptance/scenarios.spec.ts:239:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (52.2s)
+  ✓  13 [webkit] › e2e/acceptance/scenarios.spec.ts:286:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer (25.3s)
+  ✓  14 [webkit] › e2e/acceptance/scenarios.spec.ts:306:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work (22.5s)
+  ✓  15 [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (11.0s)
+
+  ✓  16 [webkit] › e2e/source-viewer/source-viewer.spec.ts:63:1 › result card evidence opens the source viewer on the cited unit and highlights it (2.0s)
+  ✓  17 [webkit] › e2e/source-viewer/source-viewer.spec.ts:95:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (18.8s)
+  ✓  18 [webkit] › e2e/source-viewer/source-viewer.spec.ts:136:1 › without source permission the viewer shows positions only and the server sends no text (10.4s)
+  ✓  19 [webkit] › e2e/source-viewer/source-viewer.spec.ts:168:1 › review detail and judgment-map evidence nodes open the same viewer (28.0s)
+  ✓  20 [webkit] › e2e/source-viewer/source-viewer.spec.ts:200:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (1.6m)
+  ✓  21 [webkit] › e2e/source-viewer/source-viewer.spec.ts:252:1 › version area is an empty state when the criteria have no rule versions (9.3s)
+  ✓  22 [webkit] › e2e/source-viewer/source-viewer.spec.ts:261:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (1.8m)
+
+  22 passed (7.7m)

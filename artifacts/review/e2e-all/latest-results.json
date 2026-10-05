@@ -1,0 +1,1730 @@
+[
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "all primary application screens have no critical or serious axe violations",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 7413
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "all primary application screens have no critical or serious axe violations",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 9910
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "conversation is keyboard operable: examples, composer, attach and send need no pointer",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 780
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "conversation is keyboard operable: examples, composer, attach and send need no pointer",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1108
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "keyboard submits a real request and opens its saved evidence",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6878
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "keyboard submits a real request and opens its saved evidence",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6820
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "login screen has no critical or serious axe violations",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 872
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "login screen has no critical or serious axe violations",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1605
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "reduced motion and Safari mascot media preference are respected",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 936
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "reduced motion and Safari mascot media preference are respected",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1075
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "shell, status, primary color and touch target contracts are visible",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 816
+  },
+  {
+    "file": "a11y/a11y.spec.ts",
+    "title": "shell, status, primary color and touch target contracts are visible",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1065
+  },
+  {
+    "file": "acceptance/gates.spec.ts",
+    "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1595
+  },
+  {
+    "file": "acceptance/gates.spec.ts",
+    "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 2191
+  },
+  {
+    "file": "acceptance/gates.spec.ts",
+    "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 2203
+  },
+  {
+    "file": "acceptance/gates.spec.ts",
+    "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3868
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 1814
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 22520
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S1 general technical request: UI result equals stored judgment",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5164
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S1 general technical request: UI result equals stored judgment",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 11092
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 7780
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 20588
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S3 urgent request: reasons, review and priority on screen",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 13063
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S3 urgent request: reasons, review and priority on screen",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 31735
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 8324
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 51833
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6273
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 47868
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 21071
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 115599
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 8032
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 75539
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 21911
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 52159
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 6018
+  },
+  {
+    "file": "acceptance/scenarios.spec.ts",
+    "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 25306
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "files can be dropped on the composer and removed again",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1075
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "files can be dropped on the composer and removed again",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1188
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2976
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 3619
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2898
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 3335
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2990
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 3589
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "reduced motion: bubbles and typing dots do not animate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 880
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "reduced motion: bubbles and typing dots do not animate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1044
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2064
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2389
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2629
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2992
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2622
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2994
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 2645
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 3255
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 9082
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 9190
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "scrolled up while the answer arrives: a \"새 메시지\" pill appears instead of a jump, and takes you down",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5847
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "scrolled up while the answer arrives: a \"새 메시지\" pill appears instead of a jump, and takes you down",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5568
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "send → right bubble → analysis steps → result with icon → reload restores → new request",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5737
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "send → right bubble → analysis steps → result with icon → reload restores → new request",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 7012
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "send → stop → cancelled state → reanalyze the same request",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6296
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "send → stop → cancelled state → reanalyze the same request",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6941
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6238
+  },
+  {
+    "file": "chat-intake.spec.ts",
+    "title": "unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 7169
+  },
+  {
+    "file": "evaluation-labels.spec.ts",
+    "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1537
+  },
+  {
+    "file": "evaluation-labels.spec.ts",
+    "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1077
+  },
+  {
+    "file": "evaluation-labels.spec.ts",
+    "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 2405
+  },
+  {
+    "file": "evaluation-labels.spec.ts",
+    "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1672
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 1306
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 9401
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 3114
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 3942
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 893
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 1443
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 1253
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 5016
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 1088
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "T38-R fixes > [X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r1.log",
+    "reason": "",
+    "duration_ms": 10565
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "X08 after restart > [X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/r3.log",
+    "reason": "",
+    "duration_ms": 1826
+  },
+  {
+    "file": "extension/extension-r.spec.ts",
+    "title": "X08 after restart > [X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/r3.log",
+    "reason": "",
+    "duration_ms": 2561
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 1585
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 5642
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X03] requester has no access to rule learning; no rule actions exposed",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 841
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X03] requester has no access to rule learning; no rule actions exposed",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 1381
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 2181
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 8882
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 3202
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 14789
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 12876
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "before stop > [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui1.log",
+    "reason": "",
+    "duration_ms": 103571
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "lifecycle and persistence > [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 2998
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "lifecycle and persistence > [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 4219
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "lifecycle and persistence > [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 4461
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "lifecycle and persistence > [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 11012
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "map filters and zoom > [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 2808
+  },
+  {
+    "file": "extension/extension.spec.ts",
+    "title": "map filters and zoom > [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/extension/ui2.log",
+    "reason": "",
+    "duration_ms": 3925
+  },
+  {
+    "file": "judgment-map.spec.ts",
+    "title": "a role without graph access is refused",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 284
+  },
+  {
+    "file": "judgment-map.spec.ts",
+    "title": "a role without graph access is refused",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 387
+  },
+  {
+    "file": "judgment-map.spec.ts",
+    "title": "real judgment and correction render as the stored graph, traceable from step to evidence",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 10052
+  },
+  {
+    "file": "judgment-map.spec.ts",
+    "title": "real judgment and correction render as the stored graph, traceable from step to evidence",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 8688
+  },
+  {
+    "file": "learning-human.spec.ts",
+    "title": "human proposal → approval → shadow → publication; scoped readers cannot mutate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6851
+  },
+  {
+    "file": "learning-human.spec.ts",
+    "title": "human proposal → approval → shadow → publication; scoped readers cannot mutate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 7837
+  },
+  {
+    "file": "learning.spec.ts",
+    "title": "reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 29099
+  },
+  {
+    "file": "learning.spec.ts",
+    "title": "reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 25702
+  },
+  {
+    "file": "main.spec.ts",
+    "title": "live damaged attachment can be excluded before a new revision judgment",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6212
+  },
+  {
+    "file": "main.spec.ts",
+    "title": "live damaged attachment can be excluded before a new revision judgment",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 6191
+  },
+  {
+    "file": "main.spec.ts",
+    "title": "live request shows processing stages, saved judgment and evidence panel",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5552
+  },
+  {
+    "file": "main.spec.ts",
+    "title": "live request shows processing stages, saved judgment and evidence panel",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5947
+  },
+  {
+    "file": "modal-stack.spec.ts",
+    "title": "Escape closes only the evidence drawer and restores the judgment detail",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 8273
+  },
+  {
+    "file": "modal-stack.spec.ts",
+    "title": "Escape closes only the evidence drawer and restores the judgment detail",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 10964
+  },
+  {
+    "file": "monitoring.spec.ts",
+    "title": "operator monitoring screen matches a real API aggregate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 828
+  },
+  {
+    "file": "monitoring.spec.ts",
+    "title": "operator monitoring screen matches a real API aggregate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1148
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 3130
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5263
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5014
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5362
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5005
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5579
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5410
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5807
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5548
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5761
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 result: provisional → final does not move the content (layout-shift after the provisional card)",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 5628
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F5 result: provisional → final does not move the content (layout-shift after the provisional card)",
+    "browser": "webkit",
+    "status": "skipped",
+    "log": "20261005T154849/results.log",
+    "reason": "layout-shift entries exist only in Chromium",
+    "duration_ms": 261
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1257
+  },
+  {
+    "file": "p7-fixes.spec.ts",
+    "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T154849/results.log",
+    "reason": "",
+    "duration_ms": 1379
+  },
+  {
+    "file": "policy.spec.ts",
+    "title": "validate, publish, inspect history, and rollback policy on live API",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1250
+  },
+  {
+    "file": "policy.spec.ts",
+    "title": "validate, publish, inspect history, and rollback policy on live API",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1893
+  },
+  {
+    "file": "progressive-results.spec.ts",
+    "title": "submit → optimistic bubble → provisional cards → final result, with measured timings",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 6124
+  },
+  {
+    "file": "progressive-results.spec.ts",
+    "title": "submit → optimistic bubble → provisional cards → final result, with measured timings",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 5726
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "review queue title and masked detail respect source permission",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 960
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "review queue title and masked detail respect source permission",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1224
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "source reader sees the original and result identifiers stay compact",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1561
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "source reader sees the original and result identifiers stay compact",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1383
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "source-reading reviewer can see the submitted text in review detail",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1013
+  },
+  {
+    "file": "rem-ui.spec.ts",
+    "title": "source-reading reviewer can see the submitted text in review detail",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1072
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > JudgmentMap",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 4528
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > JudgmentMap",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 4019
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Learning with a selected candidate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1856
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Learning with a selected candidate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 935
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Main with a selected result",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 18247
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Main with a selected result",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 14645
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Monitoring",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 2016
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Monitoring",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1057
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Observatory with a selected request",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 7562
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Observatory with a selected request",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 7587
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Review detail",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 7576
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Review detail",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 5305
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Tasks with a selected task",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 4182
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 375px > Tasks with a selected task",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3839
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > JudgmentMap",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3426
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > JudgmentMap",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3469
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Learning with a selected candidate",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1093
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Learning with a selected candidate",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1572
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Main with a selected result",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 19353
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Main with a selected result",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 17225
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Monitoring",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1182
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Monitoring",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3142
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Observatory with a selected request",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 6334
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Observatory with a selected request",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 6062
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Review detail",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 18465
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Review detail",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 6935
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Tasks with a selected task",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 3136
+  },
+  {
+    "file": "responsive-overflow.spec.ts",
+    "title": "viewport 520px > Tasks with a selected task",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 4794
+  },
+  {
+    "file": "review-repair.spec.ts",
+    "title": "P1-01 repairs an undetermined draft and approves the final version with HTTP 200",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1531
+  },
+  {
+    "file": "review-repair.spec.ts",
+    "title": "P1-01 repairs an undetermined draft and approves the final version with HTTP 200",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1401
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 957
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1171
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 892
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1108
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1101
+  },
+  {
+    "file": "screens-ui.spec.ts",
+    "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 733
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 3273
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 18809
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 3679
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 106346
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 1774
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 95703
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 1044
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 2048
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "review detail and judgment-map evidence nodes open the same viewer",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 2070
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "review detail and judgment-map evidence nodes open the same viewer",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 27962
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "version area is an empty state when the criteria have no rule versions",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 768
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "version area is an empty state when the criteria have no rule versions",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 9279
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "without source permission the viewer shows positions only and the server sends no text",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 1429
+  },
+  {
+    "file": "source-viewer/source-viewer.spec.ts",
+    "title": "without source permission the viewer shows positions only and the server sends no text",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T160522/results.log",
+    "reason": "",
+    "duration_ms": 10432
+  },
+  {
+    "file": "task-blocker.spec.ts",
+    "title": "completed confirmation enables the main task from server readiness projection",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1316
+  },
+  {
+    "file": "task-blocker.spec.ts",
+    "title": "completed confirmation enables the main task from server readiness projection",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 1534
+  },
+  {
+    "file": "task-blocker.spec.ts",
+    "title": "server projected blockers keep start disabled and explain why",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 855
+  },
+  {
+    "file": "task-blocker.spec.ts",
+    "title": "server projected blockers keep start disabled and explain why",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 994
+  },
+  {
+    "file": "webmcp.spec.ts",
+    "title": "application remains usable with or without WebMCP support",
+    "browser": "chromium",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 445
+  },
+  {
+    "file": "webmcp.spec.ts",
+    "title": "application remains usable with or without WebMCP support",
+    "browser": "webkit",
+    "status": "passed",
+    "log": "20261005T152719/results.log",
+    "reason": "",
+    "duration_ms": 521
+  }
+]

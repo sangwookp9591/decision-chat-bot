@@ -1,0 +1,494 @@
+
+Running 142 tests using 1 worker
+
+(node:32101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:32101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [chromium] › e2e/a11y/a11y.spec.ts:20:1 › login screen has no critical or serious axe violations (1.1s)
+  ✓    2 [chromium] › e2e/a11y/a11y.spec.ts:28:1 › all primary application screens have no critical or serious axe violations (9.6s)
+  ✓    3 [chromium] › e2e/a11y/a11y.spec.ts:48:1 › shell, status, primary color and touch target contracts are visible (1.3s)
+  ✓    4 [chromium] › e2e/a11y/a11y.spec.ts:77:1 › reduced motion and Safari mascot media preference are respected (1.5s)
+  ✓    5 [chromium] › e2e/a11y/a11y.spec.ts:94:1 › conversation is keyboard operable: examples, composer, attach and send need no pointer (1.4s)
+  ✓    6 [chromium] › e2e/a11y/a11y.spec.ts:118:1 › keyboard submits a real request and opens its saved evidence (8.3s)
+  ✓    7 [chromium] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (2.0s)
+  ✓    8 [chromium] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen (2.4s)
+  ✓    9 [chromium] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request (6.6s)
+  ✘   10 [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (6.7s)
+(node:34801) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34801) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   11 [chromium] › e2e/chat-intake.spec.ts:71:1 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision (7.2s)
+  ✓   12 [chromium] › e2e/chat-intake.spec.ts:99:1 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision (12.7s)
+  ✓   13 [chromium] › e2e/chat-intake.spec.ts:124:1 › files can be dropped on the composer and removed again (1.4s)
+  ✓   14 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.3s)
+  ✓   15 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.7s)
+  ✓   16 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (4.0s)
+  ✓   17 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.3s)
+  ✓   18 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (3.9s)
+  ✓   19 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (4.3s)
+  ✓   20 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (3.7s)
+  ✓   21 [chromium] › e2e/chat-intake.spec.ts:232:1 › reduced motion: bubbles and typing dots do not animate (1.3s)
+  ✓   22 [chromium] › e2e/chat-intake.spec.ts:243:1 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down (8.1s)
+  ✓   23 [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (2.0s)
+  ✓   24 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (1.4s)
+  ✓   25 [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (13.8s)
+  ✓   26 [chromium] › e2e/judgment-map.spec.ts:117:1 › a role without graph access is refused (542ms)
+
+  ✓   27 [chromium] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (16.4s)
+  ✘   28 [chromium] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (16.5s)
+(node:39017) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:39017) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   29 [chromium] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (5.8s)
+  ✓   30 [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (6.3s)
+  ✓   31 [chromium] › e2e/monitoring.spec.ts:3:1 › operator monitoring screen matches a real API aggregate (998ms)
+  ✓   32 [chromium] › e2e/p7-fixes.spec.ts:11:1 › F2 policy: a value typed right after entering the page is the value that gets validated (3.6s)
+  ✓   33 [chromium] › e2e/p7-fixes.spec.ts:30:1 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.1s)
+  ✓   34 [chromium] › e2e/p7-fixes.spec.ts:41:1 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (6.0s)
+P7_F5_LAYOUT_SHIFT 0.00000
+  ✓   35 [chromium] › e2e/p7-fixes.spec.ts:55:1 › F5 result: provisional → final does not move the content (layout-shift after the provisional card) (7.9s)
+UX7_F5 uncertain {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✓   36 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (6.7s)
+UX7_F5 possible {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✓   37 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (6.1s)
+  ✓   38 [chromium] › e2e/p7-fixes.spec.ts:114:1 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (1.7s)
+  ✓   39 [chromium] › e2e/policy.spec.ts:3:1 › validate, publish, inspect history, and rollback policy on live API (2.0s)
+  ✓   40 [chromium] › e2e/rem-ui.spec.ts:20:1 › review queue title and masked detail respect source permission (1.1s)
+  ✓   41 [chromium] › e2e/rem-ui.spec.ts:37:1 › source-reading reviewer can see the submitted text in review detail (973ms)
+
+  ✓   42 [chromium] › e2e/rem-ui.spec.ts:50:1 › source reader sees the original and result identifiers stay compact (1.3s)
+  ✓   43 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 375px › Main with a selected result (16.1s)
+  ✓   44 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 375px › Review detail (5.9s)
+  ✓   45 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 375px › Monitoring (911ms)
+  ✓   46 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 375px › Learning with a selected candidate (2.0s)
+  ✓   47 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 375px › Tasks with a selected task (3.9s)
+  ✓   48 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 375px › Observatory with a selected request (7.2s)
+  ✓   49 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 375px › JudgmentMap (3.9s)
+  ✓   50 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 520px › Main with a selected result (16.7s)
+  ✓   51 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 520px › Review detail (8.8s)
+  ✓   52 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 520px › Monitoring (1.7s)
+  ✓   53 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 520px › Learning with a selected candidate (3.0s)
+  ✓   54 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 520px › Tasks with a selected task (5.8s)
+  ✓   55 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 520px › Observatory with a selected request (8.0s)
+  ✓   56 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 520px › JudgmentMap (3.6s)
+  ✓   57 [chromium] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (3.5s)
+  ✓   58 [chromium] › e2e/screens-ui.spec.ts:8:1 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다 (1.9s)
+  ✓   59 [chromium] › e2e/screens-ui.spec.ts:26:1 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다 (2.0s)
+  ✓   60 [chromium] › e2e/screens-ui.spec.ts:41:1 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다 (3.9s)
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+    asyncio.run(seed())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+    await write_tx(TENANT, op)
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 39, in op
+    await (await run(
+                 ~~~^
+        "MATCH (cand:RuleCandidate {id:'ux2seed_cand',tenant_id:$t}) "
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        "CREATE (rv)-[:DERIVED_FROM]->(d)",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t=TENANT, dec=f"ux2seed_dec{n}", rv=f"{RULE}@{n}", rule=RULE, n=n, status=status)).consume()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not callable
+  ✘   61 [chromium] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it (0ms)
+  -   62 [chromium] › e2e/source-viewer/source-viewer.spec.ts:86:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -   63 [chromium] › e2e/source-viewer/source-viewer.spec.ts:125:1 › without source permission the viewer shows positions only and the server sends no text
+  -   64 [chromium] › e2e/source-viewer/source-viewer.spec.ts:158:1 › review detail and judgment-map evidence nodes open the same viewer
+  -   65 [chromium] › e2e/source-viewer/source-viewer.spec.ts:190:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -   66 [chromium] › e2e/source-viewer/source-viewer.spec.ts:243:1 › version area is an empty state when the criteria have no rule versions
+  -   67 [chromium] › e2e/source-viewer/source-viewer.spec.ts:252:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:47062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   68 [chromium] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (4.7s)
+  ✓   69 [chromium] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (2.1s)
+  ✓   70 [chromium] › e2e/webmcp.spec.ts:3:1 › application remains usable with or without WebMCP support (764ms)
+(node:47700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PROGRESSIVE_TIMINGS {"click_to_optimistic_ms":111,"click_to_provisional_ms":5163,"click_to_final_ms":5163}
+  ✓   71 [chromium] › e2e/progressive-results.spec.ts:8:1 › submit → optimistic bubble → provisional cards → final result, with measured timings (13.4s)
+(node:48397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   72 [webkit] › e2e/a11y/a11y.spec.ts:20:1 › login screen has no critical or serious axe violations (3.4s)
+  ✓   73 [webkit] › e2e/a11y/a11y.spec.ts:28:1 › all primary application screens have no critical or serious axe violations (27.4s)
+  ✓   74 [webkit] › e2e/a11y/a11y.spec.ts:48:1 › shell, status, primary color and touch target contracts are visible (2.7s)
+  ✓   75 [webkit] › e2e/a11y/a11y.spec.ts:77:1 › reduced motion and Safari mascot media preference are respected (3.8s)
+  ✓   76 [webkit] › e2e/a11y/a11y.spec.ts:94:1 › conversation is keyboard operable: examples, composer, attach and send need no pointer (3.1s)
+  ✓   77 [webkit] › e2e/a11y/a11y.spec.ts:118:1 › keyboard submits a real request and opens its saved evidence (11.6s)
+  ✓   78 [webkit] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen (3.3s)
+  ✓   79 [webkit] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen (5.0s)
+  ✓   80 [webkit] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request (15.7s)
+  ✘   81 [webkit] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (12.7s)
+(node:51263) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51263) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   82 [webkit] › e2e/chat-intake.spec.ts:71:1 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision (9.6s)
+  ✓   83 [webkit] › e2e/chat-intake.spec.ts:99:1 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision (11.6s)
+  ✓   84 [webkit] › e2e/chat-intake.spec.ts:124:1 › files can be dropped on the composer and removed again (1.2s)
+  ✓   85 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.2s)
+  ✓   86 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.4s)
+  ✓   87 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.7s)
+  ✓   88 [webkit] › e2e/chat-intake.spec.ts:139:3 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.9s)
+  ✓   89 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned (3.9s)
+  ✓   90 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned (4.7s)
+  ✓   91 [webkit] › e2e/chat-intake.spec.ts:173:3 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned (4.4s)
+  ✓   92 [webkit] › e2e/chat-intake.spec.ts:232:1 › reduced motion: bubbles and typing dots do not animate (1.5s)
+  ✓   93 [webkit] › e2e/chat-intake.spec.ts:243:1 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down (7.6s)
+  ✓   94 [webkit] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (2.9s)
+  ✓   95 [webkit] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (1.8s)
+  ✓   96 [webkit] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (13.1s)
+  ✓   97 [webkit] › e2e/judgment-map.spec.ts:117:1 › a role without graph access is refused (1.1s)
+
+  ✓   98 [webkit] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (25.3s)
+  ✘   99 [webkit] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (17.0s)
+(node:55808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  100 [webkit] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (7.3s)
+  ✓  101 [webkit] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (6.8s)
+  ✓  102 [webkit] › e2e/monitoring.spec.ts:3:1 › operator monitoring screen matches a real API aggregate (1.2s)
+  ✓  103 [webkit] › e2e/p7-fixes.spec.ts:11:1 › F2 policy: a value typed right after entering the page is the value that gets validated (4.7s)
+  ✓  104 [webkit] › e2e/p7-fixes.spec.ts:30:1 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.4s)
+  ✓  105 [webkit] › e2e/p7-fixes.spec.ts:41:1 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (8.3s)
+  -  106 [webkit] › e2e/p7-fixes.spec.ts:55:1 › F5 result: provisional → final does not move the content (layout-shift after the provisional card)
+UX7_F5 uncertain {"prov":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"final":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"uncertain":1}
+  ✓  107 [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (9.6s)
+UX7_F5 possible {"prov":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"final":{"summary":-43.21875,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109.28125,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.78125},"uncertain":1}
+  ✓  108 [webkit] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (10.1s)
+  ✓  109 [webkit] › e2e/p7-fixes.spec.ts:114:1 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (3.4s)
+  ✓  110 [webkit] › e2e/policy.spec.ts:3:1 › validate, publish, inspect history, and rollback policy on live API (3.8s)
+  ✓  111 [webkit] › e2e/rem-ui.spec.ts:20:1 › review queue title and masked detail respect source permission (3.2s)
+  ✓  112 [webkit] › e2e/rem-ui.spec.ts:37:1 › source-reading reviewer can see the submitted text in review detail (2.6s)
+
+  ✓  113 [webkit] › e2e/rem-ui.spec.ts:50:1 › source reader sees the original and result identifiers stay compact (3.1s)
+  ✓  114 [webkit] › e2e/responsive-overflow.spec.ts:29:5 › viewport 375px › Main with a selected result (21.7s)
+  ✓  115 [webkit] › e2e/responsive-overflow.spec.ts:42:5 › viewport 375px › Review detail (14.7s)
+  ✓  116 [webkit] › e2e/responsive-overflow.spec.ts:55:5 › viewport 375px › Monitoring (1.3s)
+  ✓  117 [webkit] › e2e/responsive-overflow.spec.ts:60:5 › viewport 375px › Learning with a selected candidate (3.7s)
+  ✓  118 [webkit] › e2e/responsive-overflow.spec.ts:69:5 › viewport 375px › Tasks with a selected task (4.4s)
+  ✓  119 [webkit] › e2e/responsive-overflow.spec.ts:78:5 › viewport 375px › Observatory with a selected request (7.7s)
+  ✓  120 [webkit] › e2e/responsive-overflow.spec.ts:86:5 › viewport 375px › JudgmentMap (3.8s)
+  ✓  121 [webkit] › e2e/responsive-overflow.spec.ts:29:5 › viewport 520px › Main with a selected result (18.4s)
+  ✓  122 [webkit] › e2e/responsive-overflow.spec.ts:42:5 › viewport 520px › Review detail (12.7s)
+  ✓  123 [webkit] › e2e/responsive-overflow.spec.ts:55:5 › viewport 520px › Monitoring (1.6s)
+  ✓  124 [webkit] › e2e/responsive-overflow.spec.ts:60:5 › viewport 520px › Learning with a selected candidate (3.8s)
+  ✓  125 [webkit] › e2e/responsive-overflow.spec.ts:69:5 › viewport 520px › Tasks with a selected task (4.0s)
+  ✓  126 [webkit] › e2e/responsive-overflow.spec.ts:78:5 › viewport 520px › Observatory with a selected request (7.4s)
+  ✓  127 [webkit] › e2e/responsive-overflow.spec.ts:86:5 › viewport 520px › JudgmentMap (4.2s)
+  ✓  128 [webkit] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (4.5s)
+  ✓  129 [webkit] › e2e/screens-ui.spec.ts:8:1 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다 (2.9s)
+  ✓  130 [webkit] › e2e/screens-ui.spec.ts:26:1 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다 (2.1s)
+  ✓  131 [webkit] › e2e/screens-ui.spec.ts:41:1 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다 (2.0s)
+
+  ✘  132 [webkit] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it (6.2s)
+  -  133 [webkit] › e2e/source-viewer/source-viewer.spec.ts:86:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -  134 [webkit] › e2e/source-viewer/source-viewer.spec.ts:125:1 › without source permission the viewer shows positions only and the server sends no text
+  -  135 [webkit] › e2e/source-viewer/source-viewer.spec.ts:158:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  136 [webkit] › e2e/source-viewer/source-viewer.spec.ts:190:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  137 [webkit] › e2e/source-viewer/source-viewer.spec.ts:243:1 › version area is an empty state when the criteria have no rule versions
+  -  138 [webkit] › e2e/source-viewer/source-viewer.spec.ts:252:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:64283) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:64283) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  139 [webkit] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (2.5s)
+  ✓  140 [webkit] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (1.9s)
+  ✓  141 [webkit] › e2e/webmcp.spec.ts:3:1 › application remains usable with or without WebMCP support (1.5s)
+(node:64402) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:64402) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PROGRESSIVE_TIMINGS {"click_to_optimistic_ms":172,"click_to_provisional_ms":2354,"click_to_final_ms":2354}
+  ✓  142 [webkit] › e2e/progressive-results.spec.ts:8:1 › submit → optimistic bubble → provisional cards → final result, with measured timings (10.3s)
+
+
+  1) [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' })
+    Expected: visible
+    Error: strict mode violation: locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' }) resolved to 3 elements:
+        1) <button type="button" class="request-row" aria-current="true">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_b024d3beb2fc4628bb89c2040118ef60', exact: true })
+        2) <button type="button" class="request-row">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_3428efcb76fa492a80552abe1674f86b', exact: true })
+        3) <button type="button" class="request-row">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_2395dcef762e4bdb95ab4f4e021015d8', exact: true })
+
+    Call log:
+      - Expect "toBeVisible" locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' }) with timeout 5000ms
+      - waiting for locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' })
+
+
+      62 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 30_000 });
+      63 |   await expect(page.locator(`.request-list .request-row code[title="${id}"]`)).toBeVisible(); // short id in the row, full id on hover
+    > 64 |   await expect(page.locator('.request-list .request-row', { hasText: text })).toBeVisible(); // titled by the request's first sentence, not the raw id
+         |                                                                               ^
+      65 |   await page.locator('.request-list').getByRole('button', { name: '새 요청' }).click(); // the sidebar's button
+      66 |   await expect(page).not.toHaveURL(/request_id/);
+      67 |   await expect(page.getByRole('heading', { name: '안녕하세요, 일동이예요' })).toBeVisible();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts:64:79
+
+    Error Context: ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: '승인', exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '승인', exact: true })
+
+
+      90 |   for (const requestId of correctedRequests) await expect(table.getByText(requestId)).toBeVisible();
+      91 |   await expect(table.getByText('지지').first()).toBeVisible();
+    > 92 |   await expect(reviewerPage.getByRole('button', { name: '승인', exact: true })).toBeDisabled();
+         |                                                                               ^
+      93 |   await expect(reviewerPage.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();
+      94 |   await expect(reviewerPage.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();
+      95 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/learning.spec.ts:92:79
+
+    Error Context: ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005
+    Cypher query lacks a tenant parameter
+    Cypher query lacks a tenant parameter
+    Traceback (most recent call last):
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+        asyncio.run(seed())
+        ~~~~~~~~~~~^^^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+        return runner.run(main)
+               ~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+        return self._loop.run_until_complete(task)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+        return future.result()
+               ~~~~~~~~~~~~~^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+        await write_tx(TENANT, op)
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+        result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+        return await self._run_transaction(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ...<5 lines>...
+        )
+        ^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+        result = await transaction_function(tx, *args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+        result = await fn(TenantTx(tx, tenant_id))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 39, in op
+        await (await run(
+                     ~~~^
+            "MATCH (cand:RuleCandidate {id:'ux2seed_cand',tenant_id:$t}) "
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ...<4 lines>...
+            "CREATE (rv)-[:DERIVED_FROM]->(d)",
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            t=TENANT, dec=f"ux2seed_dec{n}", rv=f"{RULE}@{n}", rule=RULE, n=n, status=status)).consume()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    TypeError: 'bool' object is not callable
+
+
+      34 |
+      35 | test.beforeAll(async ({ browser }, info) => {
+    > 36 |   test.setTimeout(480_000);
+         |   ^
+      37 |   execFileSync('../backend/.venv/bin/python', ['e2e/source-viewer/seed.py', tenant]);
+      38 |   const baseURL = info.project.use.baseURL as string;
+      39 |   owner = await actor(browser, baseURL, 'source_reader');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:36:3
+
+    Error Context: ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' })
+    Expected: visible
+    Error: strict mode violation: locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' }) resolved to 3 elements:
+        1) <button type="button" class="request-row" aria-current="true">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_b8090b2bffb347979f2f979069f77064', exact: true })
+        2) <button type="button" class="request-row">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_edee6eca06ca4a7ea7b3a8ab3270226c', exact: true })
+        3) <button type="button" class="request-row">…</button> aka getByRole('button', { name: '검토 대기 사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다. req_b024d3beb2fc4628bb89c2040118ef60', exact: true })
+
+    Call log:
+      - Expect "toBeVisible" locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' }) with timeout 5000ms
+      - waiting for locator('.request-list .request-row').filter({ hasText: '사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.' })
+
+
+      62 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 30_000 });
+      63 |   await expect(page.locator(`.request-list .request-row code[title="${id}"]`)).toBeVisible(); // short id in the row, full id on hover
+    > 64 |   await expect(page.locator('.request-list .request-row', { has: page.locator(`code[title="${id}"]`) })).toBeVisible(); // titled by the request's first sentence, not the raw id
+         |                                                                               ^
+      65 |   await page.locator('.request-list').getByRole('button', { name: '새 요청' }).click(); // the sidebar's button
+      66 |   await expect(page).not.toHaveURL(/request_id/);
+      67 |   await expect(page.getByRole('heading', { name: '안녕하세요, 일동이예요' })).toBeVisible();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts:64:79
+
+    Error Context: ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/chat-intake-send-→-right-b-e92b2-load-restores-→-new-request-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: '승인', exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '승인', exact: true })
+
+
+      90 |   const reviewerPage = await reviewer.newPage();
+      91 |   await reviewerPage.goto('/learning');
+    > 92 |   await expect(reviewerPage.getByRole('heading', { name: '규칙 학습', exact: true })).toBeVisible();
+         |                                                                               ^
+      93 |   await expect(reviewerPage.getByText('모델 재학습 없음 · 규칙·컨텍스트로만 반영')).toBeVisible();
+      94 |   const stored = await (await reviewer.request.get('/api/learning/corrections?field=ai_need')).json() as { corrections: Array<{ id: string; request_id: string }> };
+      95 |   expect(stored.corrections.length).toBeGreaterThanOrEqual(3);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/learning.spec.ts:92:79
+
+    Error Context: ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/learning-reviewer-correcti-d1692-hes-observes-use-then-stops-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">근거 열기</button>
+           - unexpected value "inactive"
+
+
+      82 |     await page.keyboard.press('Escape');
+      83 |     await expect(dialog).toHaveCount(0);
+    > 84 |     await expect(button).toBeFocused();
+         |                          ^
+      85 |   }
+      86 | });
+      87 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:84:26
+
+    Error Context: ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/all-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request 
+    [chromium] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops 
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+    [webkit] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request 
+    [webkit] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:55:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+  1 skipped
+  12 did not run
+  123 passed (13.8m)

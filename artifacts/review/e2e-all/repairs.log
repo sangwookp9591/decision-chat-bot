@@ -1,0 +1,61 @@
+
+Running 11 tests using 1 worker
+
+(node:2224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (1.7s)
+  ✓   2 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (963ms)
+
+  ✓   3 [chromium] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (9.0s)
+  ✓   4 [chromium] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (2.5s)
+  ✘   5 [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (8.0s)
+(node:2975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [chromium] › e2e/rem-ui.spec.ts:20:1 › review queue title and masked detail respect source permission (1.1s)
+  ✓   7 [chromium] › e2e/rem-ui.spec.ts:37:1 › source-reading reviewer can see the submitted text in review detail (953ms)
+
+  ✓   8 [chromium] › e2e/rem-ui.spec.ts:50:1 › source reader sees the original and result identifiers stay compact (1.3s)
+  ✓   9 [chromium] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (986ms)
+  ✓  10 [chromium] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (1.2s)
+  ✓  11 [chromium] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (775ms)
+
+
+  1) [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.result-summary > code').filter({ hasText: /revision/ })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('.result-summary > code').filter({ hasText: /revision/ }) with timeout 5000ms
+      - waiting for locator('.result-summary > code').filter({ hasText: /revision/ })
+
+
+      39 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
+      40 |   await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+    > 41 |   await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();
+         |                                                                                        ^
+      42 | });
+      43 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts:41:88
+
+    Error Context: ../artifacts/review/e2e-all/repairs-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/repairs-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/repairs-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment 
+  10 passed (36.9s)

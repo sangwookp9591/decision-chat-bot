@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
- * T21 UI acceptance (live Jev, real Neo4j, dedicated tenant): scenarios 1-8 through the real UI with
+ * T21 UI acceptance (explicit JEV_MODE, real Neo4j, dedicated tenant): scenarios 1-8 through the real UI with
  * every displayed value compared with the stored value read through the API. Labels are never asserted
  * as ground truth. Run: make test-acceptance-ui (see Makefile) or the command in playwright.acceptance.config.ts.
  */
@@ -22,11 +22,12 @@ test.beforeAll(async ({ browser }, info) => {
   rq = await actor(browser, base, 'requester');
   rv = await actor(browser, base, 'reviewer');
   op = await actor(browser, base, 'operator');
-  // t-acc21f is served by a worker with a deliberately invalid Jev key: Jev rejects it (real failed run).
+  // The dedicated fault tenant has an invalid-key live worker or a schema-fault mock worker.
   // Submitted first so the retry budget elapses while the other scenarios run.
   failedActor = await actor(browser, base, 'requester', `${tenant}f`);
   failedId = await submitApi(failedActor, '월별 판매 현황을 조회하는 화면이 필요합니다.');
 });
+test.afterAll(async () => { await Promise.all([rq, rv, op, failedActor].filter(Boolean).map(a => a.ctx.close())); });
 
 // The provisional card also has a 판단 결과 heading; only the saved result (not .provisional-result) proves the judgment is stored.
 const finalResult = (page: import('@playwright/test').Page) => page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true });
@@ -38,7 +39,7 @@ async function uiClassifications(page: import('@playwright/test').Page) {
   for (const [key, label] of Object.entries(CLASS_LABELS)) {
     const card = page.locator('.judgment-card', { has: page.getByRole('heading', { name: label, exact: true }) });
     const uncertain = card.locator('.uncertain-result span');
-    out[key] = (await uncertain.count()) ? (await uncertain.first().innerText()).trim() : (await card.locator('.scale-options .selected').first().innerText()).trim();
+    out[key] = (await uncertain.count()) ? (await uncertain.first().innerText()).trim() : (await card.locator('.judgment-value').first().innerText()).trim();
   }
   return out;
 }
@@ -56,18 +57,16 @@ async function submitViaUi(a: Actor, text: string, files: { name: string; mimeTy
 }
 
 let s1: string, s2: string, s3: string, s4: string, s6: string;
-function recall(key: string): string {
-  try { return JSON.parse(readFileSync(join(outDir, 'ui-evidence.json'), 'utf8'))[key]?.request_id || ''; } catch { return ''; }
-}
 
 test('S1 general technical request: UI result equals stored judgment', async () => {
   s1 = await submitViaUi(rq, 'SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.');
   await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
-  await expect(rq.page.locator('.environment-badge.mode-live').last()).toBeVisible();
+  await expect(rq.page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
   const api = await (await rq.api.get(`/api/requests/${s1}/judgment`)).json();
   const ui = await uiClassifications(rq.page);
   expect(ui).toEqual(Object.fromEntries(Object.keys(CLASS_LABELS).map((k) => [k, api.classifications[k]])));
-  await expect(rq.page.locator('main')).toContainText(api.run_id);
+  await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
+  await expect(rq.page.getByRole('dialog', { name: '판단 상세' }).locator('.short-id').filter({ hasText: api.run_id.slice(0, 8) })).toHaveCount(1);
   for (const t of api.draft_tasks) await expect(rq.page.locator('.task-row', { hasText: t.title }).first()).toBeVisible();
   await shot(rq.page, 's1-general-technical');
   keep('s1', { request_id: s1, run_id: api.run_id, ui });
@@ -76,7 +75,7 @@ test('S1 general technical request: UI result equals stored judgment', async () 
 test('S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무', async () => {
   const text = '고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다. 모델 평가 방법, 사내 시스템 연동, 현업의 승인 기준이 필요합니다.';
   let id = '', j: Record<string, any> = {};
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < Number(process.env.E2E_LIVE_ATTEMPTS || 4); i++) {
     id = await submitApi(rq, text);
     j = await waitJudged(rq, id);
     const methods = new Set(j.draft_tasks.map((t: any) => t.method));
@@ -103,7 +102,7 @@ test('S3 urgent request: reasons, review and priority on screen', async () => {
   const texts = ['오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다. 당일 마감 전에 반드시 복구가 필요합니다.',
     '주문 접수 시스템이 중단되어 모든 영업 업무가 멈췄습니다. 오늘 안에 마감해야 하는 고객 계약이 있어 즉시 처리가 필요합니다.'];
   let id = '', j: Record<string, any> = {};
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < Number(process.env.E2E_LIVE_ATTEMPTS || 4); i++) {
     id = await submitApi(rq, texts[i % 2]);
     j = await waitJudged(rq, id);
     if (j.classifications.urgency === '긴급') break;
@@ -117,7 +116,8 @@ test('S3 urgent request: reasons, review and priority on screen', async () => {
   const list = rv.page.locator('nav[aria-label="검토 대기 목록"]');
   await expect(list.locator('button', { hasText: id })).toBeVisible();
   const box = list.getByLabel('긴급 우선 정렬');
-  if (!(await box.isChecked())) await box.check();
+  if (!(await box.isChecked())) { await box.focus(); await box.press('Space'); }
+  await expect(box).toBeChecked();
   await expect(list.locator('button').first()).toContainText('긴급');
   await list.locator('button', { hasText: id }).click();
   await expect(rv.page.locator('main')).toContainText('필수 검토');
@@ -130,10 +130,11 @@ test('S4 insufficient information: reasons shown, request-info keeps everything 
   const j = await waitJudged(rq, s4);
   await pendingReview(rv, s4);
   await rq.page.goto('/');
-  await rq.page.getByText(s4).first().click();
+  await rq.page.locator('.request-list .request-row', { hasText: s4 }).click();
   await expect(finalResult(rq.page)).toBeVisible();
-  await expect(rq.page.locator('main')).toContainText('검토 사유');
-  for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.locator('main')).toContainText(reason);
+  await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
+  await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText('검토 사유');
+  for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText(reason);
   await shot(rq.page, 's4-insufficient-information');
   await rv.page.goto('/review');
   await rv.page.locator('nav[aria-label="검토 대기 목록"] button', { hasText: s4 }).click();
@@ -143,7 +144,7 @@ test('S4 insufficient information: reasons shown, request-info keeps everything 
   expect((await (await rv.api.get(`/api/tasks?request_id=${s4}`)).json()).tasks).toHaveLength(0);
   const d = await (await rq.api.get(`/api/requests/${s4}`)).json();
   expect(d.request.status).toBe('보완 필요');
-  await rq.page.goto('/');
+  await rq.page.goto(`/?request_id=${s4}`);
   await expect(rq.page.locator('main')).toContainText('보완 필요');
   await shot(rq.page, 's4-after-request-info');
   keep('s4', { request_id: s4, status: d.request.status, reasons: j.review_reasons });
@@ -168,7 +169,7 @@ test('S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-fil
   await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
   const d = await (await rq.api.get(`/api/requests/${id}`)).json();
   expect(d.attachments.filter((a: any) => a.excluded).map((a: any) => a.filename)).toEqual(['broken.pdf']);
-  await expect(rq.page.getByText(/revision/).first()).toBeVisible();
+  expect(d.request.revision_number).toBe(2);
   const evidenceButtons = rq.page.getByRole('button', { name: /근거 열기/ });
   const n = await evidenceButtons.count();
   if (n) { await evidenceButtons.first().click(); await expect(rq.page.getByRole('heading', { name: '근거 원문' })).toBeVisible(); }
@@ -217,7 +218,7 @@ test('S7 re-analysis from the UI: previous/new runs distinguished, no duplicate 
   const before = await (await rv.api.get(`/api/tasks?request_id=${s2}`)).json();
   rq.page.once('dialog', (d) => void d.accept());
   await rq.page.goto('/');
-  await rq.page.getByText(s2).first().click();
+  await rq.page.locator('.request-list .request-row', { hasText: s2 }).click();
   await expect(finalResult(rq.page)).toBeVisible();
   await rq.page.getByRole('button', { name: '다시 분석', exact: true }).click();
   await expect.poll(async () => (await (await rq.api.get(`/api/requests/${s2}/runs`)).json()).runs.length, { timeout: 60_000 }).toBe(2);
@@ -226,7 +227,8 @@ test('S7 re-analysis from the UI: previous/new runs distinguished, no duplicate 
     return runs.every((r) => ['judgment_saved', 'failed'].includes(r.status));
   }, { timeout: 200_000, intervals: [3000] }).toBe(true);
   await rq.page.reload();
-  await rq.page.getByText(s2).first().click();
+  await rq.page.locator('.request-list .request-row', { hasText: s2 }).click();
+  await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
   await expect(rq.page.getByRole('heading', { name: '이전 실행 비교' })).toBeVisible({ timeout: 60_000 });
   const after = await (await rv.api.get(`/api/tasks?request_id=${s2}`)).json();
   expect(after.tasks.map((t: any) => t.id).sort()).toEqual(before.tasks.map((t: any) => t.id).sort());
@@ -235,8 +237,22 @@ test('S7 re-analysis from the UI: previous/new runs distinguished, no duplicate 
 });
 
 test('S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing', async ({ browser }) => {
+  if (!s2) {
+    s2 = await submitApi(rq, '재생 검증용: 월별 매출 조회 화면을 만듭니다.');
+    await waitJudged(rq, s2);
+    await pendingReview(rv, s2);
+    await rv.page.goto('/review');
+    await rv.page.locator('nav[aria-label="검토 대기 목록"] button', { hasText: s2 }).click();
+    await rv.page.getByRole('button', { name: '승인', exact: true }).click();
+    await expect(rv.page.getByRole('status')).toBeVisible();
+  }
+  if (!s3) {
+    s3 = await submitApi(rq, '재생 검증용: 오늘 중단된 업무를 복구할 조회 화면이 필요합니다.');
+    await waitJudged(rq, s3);
+    await pendingReview(rv, s3);
+  }
   await expect.poll(async () => (await (await failedActor.api.get(`/api/requests/${failedId}`)).json()).request.status, { timeout: 300_000, intervals: [5000] }).toMatch(/failed|실패/);
-  const cases: [string, Actor, string][] = [['success', op, s2 || recall('s2')], ['waiting', op, s3 || recall('s3')], ['failed', failedActor, failedId]];
+  const cases: [string, Actor, string][] = [['success', op, s2], ['waiting', op, s3], ['failed', failedActor, failedId]];
   const labels: Record<string, string> = { succeeded: '성공', failed: '실패', skipped: '건너뜀', waiting_human: '사람 검토', running: '진행 중', pending: '대기' };
   const result: Record<string, unknown> = {};
   for (const [name, who, rid] of cases) {
@@ -256,7 +272,8 @@ test('S8 observe and replay: success, waiting-for-review and failed runs; Play c
     await who.page.waitForTimeout(1500);
     const pause = who.page.getByRole('button', { name: /일시정지/ });
     if (await pause.count()) await pause.click();  // a failed run stops playback by itself
-    await who.page.getByRole('button', { name: '전체 결과' }).click();
+    await who.page.getByRole('button', { name: '전체 결과' }).focus();
+    await who.page.getByRole('button', { name: '전체 결과' }).press('Enter');
     const afterNodes = await who.page.locator('.obs-node').allInnerTexts();
     flow.nodes.forEach((n: any, i: number) => expect(afterNodes[i]).toContain(labels[n.status] || n.status));
     expect(await visibleTotals(who)).toEqual(totalsBefore);
@@ -297,7 +314,8 @@ test('G10 WebMCP product tools: unauthorised IDs return API 404 through the tool
   });
   await other.page.goto('/');
   await expect.poll(() => other.page.evaluate(() => Object.keys((window as unknown as { __tools: object }).__tools).sort().join(',')), { timeout: 15_000 }).toBe('get_request,get_trace,search_requests');
-  const foreignRequest = s2 || recall('s2');
+  const foreignRequest = s2 || await submitApi(rq, 'WebMCP 권한 검증용 저장 요청입니다.');
+  await waitJudged(rq, foreignRequest);
   const foreignRun = (await (await rq.api.get(`/api/requests/${foreignRequest}/runs`)).json()).active_run_id as string;
   const call = (name: string, input: unknown) => other.page.evaluate(async ([n, i]) => {
     const tools = (window as unknown as { __tools: Record<string, { execute: (x: unknown) => Promise<unknown> }> }).__tools;

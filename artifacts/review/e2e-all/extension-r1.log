@@ -1,0 +1,104 @@
+
+Running 12 tests using 1 worker
+
+(node:49166) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49166) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/extension/extension-r.spec.ts:69:3 › [r1] T38-R fixes › [F3][X05] Observatory Trace "규칙 적용" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED (12.7s)
+  ✓   2 [chromium] › e2e/extension/extension-r.spec.ts:90:3 › [r1] T38-R fixes › [F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value (3.1s)
+  ✘   3 [chromium] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown (7.4s)
+(node:49776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 [chromium] › e2e/extension/extension-r.spec.ts:138:3 › [r1] T38-R fixes › [EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map (3.0s)
+  ✓   5 [chromium] › e2e/extension/extension-r.spec.ts:166:3 › [r1] T38-R fixes › [X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED (6.7s)
+  -   6 [chromium] › e2e/extension/extension-r.spec.ts:193:3 › [r1] X08 after restart › [X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id
+(node:50586) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:50586) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [webkit] › e2e/extension/extension-r.spec.ts:69:3 › [r1] T38-R fixes › [F3][X05] Observatory Trace "규칙 적용" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED (10.4s)
+  ✓   8 [webkit] › e2e/extension/extension-r.spec.ts:90:3 › [r1] T38-R fixes › [F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value (5.4s)
+  ✘   9 [webkit] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown (9.0s)
+(node:51362) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51362) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [webkit] › e2e/extension/extension-r.spec.ts:138:3 › [r1] T38-R fixes › [EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map (3.0s)
+  ✓  11 [webkit] › e2e/extension/extension-r.spec.ts:166:3 › [r1] T38-R fixes › [X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED (1.9s)
+  -  12 [webkit] › e2e/extension/extension-r.spec.ts:193:3 › [r1] X08 after restart › [X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id
+
+
+  1) [chromium] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms
+      - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()
+
+
+      120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');
+      121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing
+    > 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();
+          |                                                                                 ^
+      123 |     await shot(page, 'f5-disabled-without-ack');
+      124 |     await ack.focus(); await ack.press('Space');
+      125 |     await reason.fill('짧은 사유');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81
+
+    Error Context: ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms
+      - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()
+
+
+      120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');
+      121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing
+    > 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();
+          |                                                                                 ^
+      123 |     await shot(page, 'f5-disabled-without-ack');
+      124 |     await ack.focus(); await ack.press('Space');
+      125 |     await reason.fill('짧은 사유');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81
+
+    Error Context: ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown 
+    [webkit] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown 
+  2 skipped
+  8 passed (1.2m)

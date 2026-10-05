@@ -1,0 +1,819 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results",
+      "--config=e2e/all.config.ts",
+      "source-viewer"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "source-viewer/source-viewer.spec.ts",
+      "file": "source-viewer/source-viewer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6216,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "Q3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgpDeXBoZXIgcXVlcnkgbGFja3MgYSB0ZW5hbnQgcGFyYW1ldGVyCkN5cGhlciBxdWVyeSBsYWNrcyBhIHRlbmFudCBwYXJhbWV0ZXIKQ3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgpDeXBoZXIgcXVlcnkgbGFja3MgYSB0ZW5hbnQgcGFyYW1ldGVyCkN5cGhlciBxdWVyeSBsYWNrcyBhIHRlbmFudCBwYXJhbWV0ZXIKQ3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgo="
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:09.534Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2b023fab475eba07057f-2eeca15d2c758095db86",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 18920,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).filter({ hasText: '첨부' }).first()\u001b[22m\n",
+                    "stack": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).filter({ hasText: '첨부' }).first()\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:111:169",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                      "column": 169,
+                      "line": 111
+                    },
+                    "snippet": "  109 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();\n  110 |   for (const kind of ['pdf', 'docx', 'md', 'chat']) {\n> 111 |     await page.getByRole('button', { name: /근거 열기/ }).filter({ hasText: kind === 'chat' ? '채팅' : '첨부' }).nth(kind === 'chat' ? 0 : ['pdf', 'docx', 'md'].indexOf(kind)).click();\n      |                                                                                                                                                                         ^\n  112 |     const dialog = page.getByRole('dialog');\n  113 |     await expect(dialog.locator('[aria-current=\"location\"] .ev-label')).toHaveText(expected[kind]);\n  114 |     await expect(dialog.locator('[aria-current=\"location\"]')).toHaveAttribute('data-unit-id', picks[kind].unit_id);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "column": 169,
+                        "line": 111
+                      },
+                      "message": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).filter({ hasText: '첨부' }).first()\u001b[22m\n\n\n  109 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();\n  110 |   for (const kind of ['pdf', 'docx', 'md', 'chat']) {\n> 111 |     await page.getByRole('button', { name: /근거 열기/ }).filter({ hasText: kind === 'chat' ? '채팅' : '첨부' }).nth(kind === 'chat' ? 0 : ['pdf', 'docx', 'md'].indexOf(kind)).click();\n      |                                                                                                                                                                         ^\n  112 |     const dialog = page.getByRole('dialog');\n  113 |     await expect(dialog.locator('[aria-current=\"location\"] .ev-label')).toHaveText(expected[kind]);\n  114 |     await expect(dialog.locator('[aria-current=\"location\"]')).toHaveAttribute('data-unit-id', picks[kind].unit_id);\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:111:169"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:39.691Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "column": 169,
+                    "line": 111
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2b023fab475eba07057f-56d252b426a946dd283f",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 87,
+          "column": 1
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5e068577a81d2148ed12",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 126,
+          "column": 1
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b2a87c8082d9e4b02fec",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 159,
+          "column": 1
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-e6f2d5dd42e65fbcf0d5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 191,
+          "column": 1
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-ab03601b9674d6588e6b",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 244,
+          "column": 1
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:00:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-03bea53ef82169a00371",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 253,
+          "column": 1
+        },
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6758,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:83:26",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                      "column": 26,
+                      "line": 83
+                    },
+                    "snippet": "  81 |     await page.keyboard.press('Escape');\n  82 |     await expect(dialog).toHaveCount(0);\n> 83 |     await expect(button).toBeFocused();\n     |                          ^\n  84 |   }\n  85 | });\n  86 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "column": 26,
+                        "line": 83
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n\n  81 |     await page.keyboard.press('Escape');\n  82 |     await expect(dialog).toHaveCount(0);\n> 83 |     await expect(button).toBeFocused();\n     |                          ^\n  84 |   }\n  85 | });\n  86 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:83:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "Q3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgpDeXBoZXIgcXVlcnkgbGFja3MgYSB0ZW5hbnQgcGFyYW1ldGVyCkN5cGhlciBxdWVyeSBsYWNrcyBhIHRlbmFudCBwYXJhbWV0ZXIKQ3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgpDeXBoZXIgcXVlcnkgbGFja3MgYSB0ZW5hbnQgcGFyYW1ldGVyCkN5cGhlciBxdWVyeSBsYWNrcyBhIHRlbmFudCBwYXJhbWV0ZXIKQ3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgo="
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:00.558Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "column": 26,
+                    "line": 83
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2b023fab475eba07057f-1f607dac6b422b2291b5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.239Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5b4913ad29d66401c200",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 87,
+          "column": 1
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.240Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b505f728f23c93072ac0",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 126,
+          "column": 1
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.240Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-78a9f4de580d7c2e9331",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 159,
+          "column": 1
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-05df560327b2a23a2c43",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 191,
+          "column": 1
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5623dcc519c0189440d0",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 244,
+          "column": 1
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:01:32.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-d64d9d9610ff8d92cbf1",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 253,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:00:05.997Z",
+    "duration": 86296.87000000001,
+    "expected": 1,
+    "skipped": 11,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

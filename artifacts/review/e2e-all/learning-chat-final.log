@@ -1,0 +1,19 @@
+
+Running 4 tests using 1 worker
+
+(node:66575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:66575) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (8.0s)
+
+  ✓  2 [chromium] › e2e/learning.spec.ts:61:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (28.4s)
+(node:68462) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68462) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [webkit] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (11.6s)
+
+  ✓  4 [webkit] › e2e/learning.spec.ts:61:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (40.0s)
+
+  4 passed (1.7m)

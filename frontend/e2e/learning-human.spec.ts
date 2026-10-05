@@ -76,7 +76,11 @@ test('human proposal → approval → shadow → publication; scoped readers can
     await adminPage.getByRole('button', { name: '승인', exact: true }).click();
     await expect(adminPage.getByRole('status')).toContainText('규칙 버전');
     await expect(adminPage.getByRole('button', { name: '게시', exact: true })).toBeDisabled();
-    await adminPage.getByRole('button', { name: '검증 실행' }).click();
+    const [validationResponse] = await Promise.all([
+      adminPage.waitForResponse(r => r.url().endsWith('/validate') && r.request().method() === 'POST', { timeout: 60_000 }),
+      adminPage.getByRole('button', { name: '검증 실행' }).click(),
+    ]);
+    expect(validationResponse.ok(), await validationResponse.text()).toBeTruthy();
     await expect(adminPage.getByRole('status')).toContainText('비교 검증을 실행했습니다');
     await expect(adminPage.getByRole('button', { name: '검증 실행' })).toBeEnabled();
     await expect(adminPage.getByRole('region', { name: '비교 검증' })).toContainText('사람 확정 정답 3건');

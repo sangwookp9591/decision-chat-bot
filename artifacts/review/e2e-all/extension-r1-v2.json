@@ -1,0 +1,201 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension-r.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-v2-results",
+      "--grep",
+      "F5"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension-r.spec.ts",
+      "file": "extension/extension-r.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[r1] T38-R fixes",
+          "file": "extension/extension-r.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_9c98a3f9f9f580e9941f90bb\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6075,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:02:49.219Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_9c98a3f9f9f580e9941f90bb\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7cec399467eac6754175",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_8e5ed8076c18c535a1c5e44e\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8992,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:02:57.383Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_8e5ed8076c18c535a1c5e44e\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-fea3ff79cf3f8b50cb49",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:02:48.035Z",
+    "duration": 19109.435,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

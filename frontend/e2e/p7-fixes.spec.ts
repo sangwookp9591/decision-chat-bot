@@ -106,6 +106,9 @@ for (const sentence of f5Sentences) {
     await page.waitForTimeout(500);
     const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });
     console.log('UX7_F5', sentence.name, JSON.stringify({ prov, final, uncertain }));
+    if (process.env.JEV_MODE === 'mock') {
+      expect(uncertain, `fixture must exercise the ${sentence.name} result layout`).toBe(sentence.name === 'uncertain' ? 1 : 0);
+    }
     expect(prov, 'provisional layout captured').not.toBeNull(); expect(final, 'final layout captured').not.toBeNull();
     for (const key of ['summary', 'judgment', 'tasks', 'judgmentHeight']) expect(Math.abs(final![key] - prov![key]), `${key}: ${prov![key]} → ${final![key]}`).toBeLessThanOrEqual(4);
   });

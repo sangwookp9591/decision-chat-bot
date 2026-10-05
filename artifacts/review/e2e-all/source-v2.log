@@ -1,0 +1,111 @@
+
+Running 14 tests using 1 worker
+
+(node:48437) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48437) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+  ✓   1 [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (6.2s)
+  ✘   2 [chromium] › e2e/source-viewer/source-viewer.spec.ts:87:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (18.9s)
+  -   3 [chromium] › e2e/source-viewer/source-viewer.spec.ts:126:1 › without source permission the viewer shows positions only and the server sends no text
+  -   4 [chromium] › e2e/source-viewer/source-viewer.spec.ts:159:1 › review detail and judgment-map evidence nodes open the same viewer
+  -   5 [chromium] › e2e/source-viewer/source-viewer.spec.ts:191:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -   6 [chromium] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -   7 [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:49731) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:49731) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+Cypher query lacks a tenant parameter
+  ✘   8 [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (6.8s)
+  -   9 [webkit] › e2e/source-viewer/source-viewer.spec.ts:87:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -  10 [webkit] › e2e/source-viewer/source-viewer.spec.ts:126:1 › without source permission the viewer shows positions only and the server sends no text
+  -  11 [webkit] › e2e/source-viewer/source-viewer.spec.ts:159:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  12 [webkit] › e2e/source-viewer/source-viewer.spec.ts:191:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  13 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -  14 [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+
+
+  1) [chromium] › e2e/source-viewer/source-viewer.spec.ts:87:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents 
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: /근거 열기/ }).filter({ hasText: '첨부' }).first()
+
+
+      109 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible();
+      110 |   for (const kind of ['pdf', 'docx', 'md', 'chat']) {
+    > 111 |     await page.getByRole('button', { name: /근거 열기/ }).filter({ hasText: kind === 'chat' ? '채팅' : '첨부' }).nth(kind === 'chat' ? 0 : ['pdf', 'docx', 'md'].indexOf(kind)).click();
+          |                                                                                                                                                                         ^
+      112 |     const dialog = page.getByRole('dialog');
+      113 |     await expect(dialog.locator('[aria-current="location"] .ev-label')).toHaveText(expected[kind]);
+      114 |     await expect(dialog.locator('[aria-current="location"]')).toHaveAttribute('data-unit-id', picks[kind].unit_id);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:111:169
+
+    Error Context: ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-70c76-d-for-real-parsed-documents-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">근거 열기</button>
+           - unexpected value "inactive"
+
+
+      81 |     await page.keyboard.press('Escape');
+      82 |     await expect(dialog).toHaveCount(0);
+    > 83 |     await expect(button).toBeFocused();
+         |                          ^
+      84 |   }
+      85 | });
+      86 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:83:26
+
+    Error Context: ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v2-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:87:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+  11 did not run
+  1 passed (1.4m)

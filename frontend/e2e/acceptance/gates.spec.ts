@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
 import { actor, outDir, shot, tenant, type Actor } from './helpers';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -6,7 +7,8 @@ import { join } from 'node:path';
 /**
  * T21-gates UI: G05 (auto-assigned tasks shown in 업무) and G06 (Neo4j relationships == 업무 Topology + 업무 screens).
  * Reads the stored-state snapshot that backend/tests/acceptance/acc_e_gates.py wrote (ACC_RECORDS=<records.jsonl>;
- * the Cypher results are in `g05_auto_assign` / `g06_graph`), then compares what the screens show. Run acc_e_gates.py first.
+ * the Cypher results are in `g05_auto_assign` / `g06_graph`), then compares what the screens show.
+ * When no snapshot is supplied, prepare a real auto-assigned request with scripts/e2e/gates.py.
  */
 test.describe.configure({ mode: 'serial' });
 test.setTimeout(180_000);
@@ -27,22 +29,20 @@ function records(): Record<string, any> {
 
 let rv: Actor, rq: Actor;
 test.beforeAll(async ({ browser }, info) => {
-  const recordsPath = process.env.ACC_RECORDS || '';
-  test.skip(!recordsPath || !existsSync(recordsPath), 'G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함');
-  const base = info.project.use.baseURL as string;
-  try {
-    rv = await actor(browser, base, 'reviewer', gateTenant);
-    rq = await actor(browser, base, 'requester', gateTenant);
-  } catch {
-    test.skip(true, `별도 acceptance 계정 없음: reviewer@${gateTenant}.dev 및 requester@${gateTenant}.dev를 acceptance setup으로 준비해야 함`);
+  if (!process.env.ACC_RECORDS || !existsSync(process.env.ACC_RECORDS)) {
+    process.env.ACC_RECORDS = join(outDir, 'gate-records.jsonl');
+    execFileSync('../backend/.venv/bin/python', ['../scripts/e2e/gates.py', process.env.ACC_RECORDS], { timeout: 120_000 });
   }
+  const base = info.project.use.baseURL as string;
+  rv = await actor(browser, base, 'reviewer', gateTenant);
+  rq = await actor(browser, base, 'requester', gateTenant);
 });
 
 test('G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen', async () => {
   const rec = records().g05_auto_assign;
   expect(rec, 'g05_auto_assign record').toBeTruthy();
   const auto = Object.values(rec.auto_assigned || {}) as any[];
-  test.skip(auto.length === 0, '미검증: 자동 배정 성공 사례가 없음(사유는 records g05_auto_assign)');
+  expect(auto.length, 'fixture must contain a real automatic assignment').toBeGreaterThan(0);
   const shown: Record<string, unknown> = {};
   await rv.page.goto('/tasks');
   for (const a of auto) {

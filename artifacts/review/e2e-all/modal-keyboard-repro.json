@@ -1,0 +1,240 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results",
+      "--config=e2e/all.config.ts",
+      "modal-stack"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "modal-stack.spec.ts",
+      "file": "modal-stack.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Escape closes only the evidence drawer and restores the judgment detail",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 20302,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog').filter({ has: getByTestId('ev-scroll') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog').filter({ has: getByTestId('ev-scroll') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:17:26",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                      "column": 26,
+                      "line": 17
+                    },
+                    "snippet": "  15 |     await evidence.press('Enter');\n  16 |     const viewer = a.page.getByRole('dialog').filter({ has: a.page.getByTestId('ev-scroll') });\n> 17 |     await expect(viewer).toBeVisible();\n     |                          ^\n  18 |     await a.page.keyboard.press('Escape');\n  19 |     await expect(viewer).toHaveCount(0);\n  20 |     await expect(detail).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                        "column": 26,
+                        "line": 17
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog').filter({ has: getByTestId('ev-scroll') }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog').filter({ has: getByTestId('ev-scroll') })\u001b[22m\n\n\n  15 |     await evidence.press('Enter');\n  16 |     const viewer = a.page.getByRole('dialog').filter({ has: a.page.getByTestId('ev-scroll') });\n> 17 |     await expect(viewer).toBeVisible();\n     |                          ^\n  18 |     await a.page.keyboard.press('Escape');\n  19 |     await expect(viewer).toHaveCount(0);\n  20 |     await expect(detail).toBeVisible();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:17:26"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:18:44.427Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                    "column": 26,
+                    "line": 17
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8996acd41451dbdc83ea-39574c3b194a1dce9baf",
+          "file": "modal-stack.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "Escape closes only the evidence drawer and restores the judgment detail",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 21637,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">채팅 · 문단 1 · 문장 1 근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">채팅 · 문단 1 · 문장 1 근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                      "column": 28,
+                      "line": 21
+                    },
+                    "snippet": "  19 |     await expect(viewer).toHaveCount(0);\n  20 |     await expect(detail).toBeVisible();\n> 21 |     await expect(evidence).toBeFocused();\n     |                            ^\n  22 |   } finally { await a.ctx.close(); }\n  23 | });\n  24 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                        "column": 28,
+                        "line": 21
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\nExpected: focused\nReceived: inactive\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()\u001b[22m\n\u001b[2m    14 × locator resolved to <button type=\"button\">채팅 · 문단 1 · 문장 1 근거 열기</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\n\n  19 |     await expect(viewer).toHaveCount(0);\n  20 |     await expect(detail).toBeVisible();\n> 21 |     await expect(evidence).toBeFocused();\n     |                            ^\n  22 |   } finally { await a.ctx.close(); }\n  23 | });\n  24 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T06:19:10.168Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/modal-keyboard-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts",
+                    "column": 28,
+                    "line": 21
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8996acd41451dbdc83ea-1d06f51c1ce9f57d4484",
+          "file": "modal-stack.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:18:43.426Z",
+    "duration": 51072.865,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,327 @@
+
+Running 14 tests using 1 worker
+
+(node:55432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Cypher query lacks a tenant parameter
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+    asyncio.run(seed())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+    await write_tx(TENANT, op)
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 30, in op
+    await (await run(
+           ^^^^^^^^^^
+    ...<6 lines>...
+        tenant=TENANT, org=f"{TENANT}-ai")).consume()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 27, in run
+    return await tx.run(query.replace("ux2seed_", f"{TENANT}_ux2seed_"), **{k: v.replace("ux2seed_", f"{TENANT}_ux2seed_") if isinstance(v, str) else v for k, v in params.items()})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    await result._tx_ready_run(query, parameters)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 240, in _run
+    await self._attach()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 441, in _attach
+    await self._connection.fetch_message()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 204, in inner
+    await coroutine_func(*args, **kwargs)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 855, in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 1197, in _process_message
+    await response.on_failure(summary_metadata or {})
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 263, in on_failure
+    raise self._hydrate_error(metadata)
+neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): t} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+  ✘   1 [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (0ms)
+  -   2 [chromium] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -   3 [chromium] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text
+  -   4 [chromium] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer
+  -   5 [chromium] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -   6 [chromium] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -   7 [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:55842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:55842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Cypher query lacks a tenant parameter
+Traceback (most recent call last):
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+    asyncio.run(seed())
+    ~~~~~~~~~~~^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+    await write_tx(TENANT, op)
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+    return await self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+    result = await transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+    result = await fn(TenantTx(tx, tenant_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 30, in op
+    await (await run(
+           ^^^^^^^^^^
+    ...<6 lines>...
+        tenant=TENANT, org=f"{TENANT}-ai")).consume()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 27, in run
+    return await tx.run(query.replace("ux2seed_", f"{TENANT}_ux2seed_"), **{k: v.replace("ux2seed_", f"{TENANT}_ux2seed_") if isinstance(v, str) else v for k, v in params.items()})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+    return await self._tx.run(query, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+    await result._tx_ready_run(query, parameters)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+    await self._run(query, parameters, None, None, None, None, None, None)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 240, in _run
+    await self._attach()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 441, in _attach
+    await self._connection.fetch_message()
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 204, in inner
+    await coroutine_func(*args, **kwargs)
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 855, in fetch_message
+    res = await self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 1197, in _process_message
+    await response.on_failure(summary_metadata or {})
+  File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 263, in on_failure
+    raise self._hydrate_error(metadata)
+neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): t} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+  ✘   8 [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it (0ms)
+  -   9 [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -  10 [webkit] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text
+  -  11 [webkit] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  12 [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  13 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+  -  14 [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+
+
+  1) [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005
+    Cypher query lacks a tenant parameter
+    Traceback (most recent call last):
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+        asyncio.run(seed())
+        ~~~~~~~~~~~^^^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+        return runner.run(main)
+               ~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+        return self._loop.run_until_complete(task)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+        return future.result()
+               ~~~~~~~~~~~~~^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+        await write_tx(TENANT, op)
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+        result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+        return await self._run_transaction(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ...<5 lines>...
+        )
+        ^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+        result = await transaction_function(tx, *args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+        result = await fn(TenantTx(tx, tenant_id))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 30, in op
+        await (await run(
+               ^^^^^^^^^^
+        ...<6 lines>...
+            tenant=TENANT, org=f"{TENANT}-ai")).consume()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 27, in run
+        return await tx.run(query.replace("ux2seed_", f"{TENANT}_ux2seed_"), **{k: v.replace("ux2seed_", f"{TENANT}_ux2seed_") if isinstance(v, str) else v for k, v in params.items()})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+        return await self._tx.run(query, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+        await result._tx_ready_run(query, parameters)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+        await self._run(query, parameters, None, None, None, None, None, None)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 240, in _run
+        await self._attach()
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 441, in _attach
+        await self._connection.fetch_message()
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 204, in inner
+        await coroutine_func(*args, **kwargs)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 855, in fetch_message
+        res = await self._process_message(tag, fields)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 1197, in _process_message
+        await response.on_failure(summary_metadata or {})
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 263, in on_failure
+        raise self._hydrate_error(metadata)
+    neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): t} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+
+      35 | test.beforeAll(async ({ browser }, info) => {
+      36 |   test.setTimeout(480_000);
+    > 37 |   execFileSync('../backend/.venv/bin/python', ['e2e/source-viewer/seed.py', tenant]);
+         |   ^
+      38 |   const baseURL = info.project.use.baseURL as string;
+      39 |   owner = await actor(browser, baseURL, 'source_reader');
+      40 |   for (let attempt = 1; attempt <= 3 && !requestId; attempt += 1) {
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:37:3
+
+    Error Context: ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005
+    Cypher query lacks a tenant parameter
+    Traceback (most recent call last):
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 58, in <module>
+        asyncio.run(seed())
+        ~~~~~~~~~~~^^^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+        return runner.run(main)
+               ~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+        return self._loop.run_until_complete(task)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+      File "/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+        return future.result()
+               ~~~~~~~~~~~~~^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 54, in seed
+        await write_tx(TENANT, op)
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 114, in write_tx
+        result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 756, in execute_write
+        return await self._run_transaction(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ...<5 lines>...
+        )
+        ^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py", line 579, in _run_transaction
+        result = await transaction_function(tx, *args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 108, in attempt
+        result = await fn(TenantTx(tx, tenant_id))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 30, in op
+        await (await run(
+               ^^^^^^^^^^
+        ...<6 lines>...
+            tenant=TENANT, org=f"{TENANT}-ai")).consume()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py", line 27, in run
+        return await tx.run(query.replace("ux2seed_", f"{TENANT}_ux2seed_"), **{k: v.replace("ux2seed_", f"{TENANT}_ux2seed_") if isinstance(v, str) else v for k, v in params.items()})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py", line 46, in run
+        return await self._tx.run(query, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py", line 201, in run
+        await result._tx_ready_run(query, parameters)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 180, in _tx_ready_run
+        await self._run(query, parameters, None, None, None, None, None, None)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 240, in _run
+        await self._attach()
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py", line 441, in _attach
+        await self._connection.fetch_message()
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 204, in inner
+        await coroutine_func(*args, **kwargs)
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py", line 855, in fetch_message
+        res = await self._process_message(tag, fields)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py", line 1197, in _process_message
+        await response.on_failure(summary_metadata or {})
+      File "/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py", line 263, in on_failure
+        raise self._hydrate_error(metadata)
+    neo4j.exceptions.ClientError: {neo4j_code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): t} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}
+
+
+      35 | test.beforeAll(async ({ browser }, info) => {
+      36 |   test.setTimeout(480_000);
+    > 37 |   execFileSync('../backend/.venv/bin/python', ['e2e/source-viewer/seed.py', tenant]);
+         |   ^
+      38 |   const baseURL = info.project.use.baseURL as string;
+      39 |   owner = await actor(browser, baseURL, 'source_reader');
+      40 |   for (let attempt = 1; attempt <= 3 && !requestId; attempt += 1) {
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:37:3
+
+    Error Context: ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-v3-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:56:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+  12 did not run

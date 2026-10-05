@@ -1,0 +1,604 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/acceptance-v3-results",
+      "--config=e2e/all.config.ts",
+      "--project=chromium",
+      "acceptance/scenarios"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/acceptance-v3-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/acceptance-v3-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "acceptance/scenarios.spec.ts",
+      "file": "acceptance/scenarios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S1 general technical request: UI result equals stored judgment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5943,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:56:34.416Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2a16d171e94819a7ac90",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:56:41.385Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2030a085ad6799bb269c",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 77,
+          "column": 1
+        },
+        {
+          "title": "S3 urgent request: reasons, review and priority on screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13994,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:56:50.107Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-556bd4539be2c0a0c11e",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 12890,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main')\nExpected substring: \u001b[32m\"검토 사유\"\u001b[39m\nReceived string:    \u001b[31m\"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('main') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main')\u001b[22m\n\u001b[2m    13 × locator resolved to <main>…</main>\u001b[22m\n\u001b[2m       - unexpected value \"새 요청내 요청 대화오늘고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11레이아웃 스크롤 표본 5t-e2e-alt-e2e-all-1005-layout-5일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n\u001b[2m    - locator resolved to <main>…</main>\u001b[22m\n\u001b[2m    - unexpected value \"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main')\nExpected substring: \u001b[32m\"검토 사유\"\u001b[39m\nReceived string:    \u001b[31m\"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('main') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main')\u001b[22m\n\u001b[2m    13 × locator resolved to <main>…</main>\u001b[22m\n\u001b[2m       - unexpected value \"새 요청내 요청 대화오늘고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11레이아웃 스크롤 표본 5t-e2e-alt-e2e-all-1005-layout-5일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n\u001b[2m    - locator resolved to <main>…</main>\u001b[22m\n\u001b[2m    - unexpected value \"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:137:41",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                      "column": 41,
+                      "line": 137
+                    },
+                    "snippet": "  135 |   await rq.page.getByText(s4).first().click();\n  136 |   await expect(finalResult(rq.page)).toBeVisible();\n> 137 |   await expect(rq.page.locator('main')).toContainText('검토 사유');\n      |                                         ^\n  138 |   for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.locator('main')).toContainText(reason);\n  139 |   await shot(rq.page, 's4-insufficient-information');\n  140 |   await rv.page.goto('/review');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "column": 41,
+                        "line": 137
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('main')\nExpected substring: \u001b[32m\"검토 사유\"\u001b[39m\nReceived string:    \u001b[31m\"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('main') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('main')\u001b[22m\n\u001b[2m    13 × locator resolved to <main>…</main>\u001b[22m\n\u001b[2m       - unexpected value \"새 요청내 요청 대화오늘고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11레이아웃 스크롤 표본 5t-e2e-alt-e2e-all-1005-layout-5일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n\u001b[2m    - locator resolved to <main>…</main>\u001b[22m\n\u001b[2m    - unexpected value \"새 요청내 요청 대화오늘회의실 예약 조회 기능을 만들고 싶습니다.req_ecefreq_ecef781bc74241fdbb928ae2abea5653고객 문의 분류에 챗봇을 도입하고 싶습니다.req_611freq_611f38b843554236b2b0d31771dec9f6F4 목록 갱신 확인 1791179824346: 회의실 예약 안내 문서를 정리하고 싶습니다.req_5ab9req_5ab9679c3d0c4a98bf001dc9f38a8cf9고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 req_ac80req_ac80665db48b4c08ab31bab651cddb4f사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_dc9dreq_dc9d668d7452451bbd73becf6b59c476오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_7ad7req_7ad711e087f846aaa24ca99636a8278d분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_5fbdreq_5fbd089f32ff4ce7a23300a24b72a54d고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_4064req_4064594622ed470d939644423bad87b9사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_edeereq_edee6eca06ca4a7ea7b3a8ab3270226cSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_8ad1req_8ad15635fd8c41769b82c51e56d1bcbe사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9953req_995324a4301b468a990cb4933fa3d170사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_99e9req_99e938ae5d9540b0b3801651a90c791c사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_18cbreq_18cb17d3fd11445dbc3203c559916d52사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_c493req_c4938773a7e3488caa830a13a7529b45임상시험 이상반응 보고서를 자동으로 분류하고 안전성 담당자에게 전달하는 기능이 필요합니다.req_56b1req_56b14f23da7649a090a2d5866aab6f5d사내 도서 대여 현황을 한눈에 볼 수 있는 화면이 필요합니다.req_58e3req_58e36f7b79a2482aac8b539f41f59830사내 공지사항 게시판의 글꼴 크기를 조금 키워 주세요.req_777freq_777f0f2437c24580ab51f781056726ce오늘 오후 6시까지 마감해야 하는 월말 정산 시스템이 멈춰서 전 부서 업무가 중단됐습니다.req_911freq_911f504089f94f9abb2442ae5ccd9a25고객 문의 메일을 자동 분류하고 답변 초안을 생성하는 생성형 AI 기능이 필요합니다.req_6214req_62148e62439d445d95eb8feb14de7d93SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_3064req_3064017959c44127ac89beea9c5c443d사내 휴게실 예약 알림 기능을 추가해 주세요.req_229creq_229cb67355004934b734d0f07d8cbf29분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_faa3req_faa329972c0f477b9b2da0f177c1a8c8사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_b024req_b024d3beb2fc4628bb89c2040118ef60회의실 사용 현황을 월별로 요약하고 중복 예약을 검토해 주세요.req_c413req_c413b9e4b9c04bf98963dbc7581a1151키보드 접근성 검증 1791179661984: 임상시험 이상반응 보고를 안전성 담당자가 확인하고 규제 기한 req_fac6req_fac6dd4ca5924223b53a0a1d36483117SAP 매출 CSV를 월별로 집계해 화면에 보여 주세요req_af7ereq_af7e062d2b35403b8388fe900f3f179f고객 문의 분류에 챗봇을 도입하고 싶습니다.req_df89req_df898d2be6dc4cbdb3fb6f9f70dc523c사내 회의실 예약 도구를 도입하려고 합니다.req_8fa9req_8fa97f93603140b5aa1e0de6e81f9969고객 문의 분류에 챗봇을 도입하고 싶습니다.req_7621req_76215e46d7f34f7e8af6057c0157058bSAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.req_c310req_c310b24e3eb844bfa03287e01f6808cc회의실 예약 조회 기능을 만들고 싶습니다.req_7f5ereq_7f5e179ba21649f386167a7d098aea20고객 문의 분류에 챗봇을 도입하고 싶습니다.req_b3c9req_b3c96151541946e8a978603422c296cbF4 목록 갱신 확인 1791179275240: 회의실 예약 안내 문서를 정리하고 싶습니다.req_d045req_d045250c969f4fea8f887559b61435d2분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_dc8ereq_dc8e7106ecf6462aac2ceebbd140784c사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_3428req_3428efcb76fa492a80552abe1674f86b사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_9c90req_9c90900fa67d454aaf0b56909e723259사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_09e0req_09e0512e9f3c42e8af527f417f1cd090사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_20cfreq_20cf071b179a4d37a1466d48730fe0c9사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_1a3ereq_1a3ef6fe68a244dba9de3eebe54858f8사내 회의실 예약 현황을 부서별로 조회하고 예약 가능 시간을 확인하는 화면이 필요합니다.req_d043req_d0436b0dbc3147c3bc2f7984d4102678분기별 시설 점검 일정을 검색하고 담당자별로 확인하고 싶습니다.req_f158req_f15897be040e428faad85b88808ccac5사내 회의실 예약 현황을 한곳에서 조회할 수 있는 화면이 필요합니다.req_2395req_2395dcef762e4bdb95ab4f4e021015d8레이아웃 스크롤 표본 26t-e2e-alt-e2e-all-1005-layout-26레이아웃 스크롤 표본 25t-e2e-alt-e2e-all-1005-layout-25레이아웃 스크롤 표본 13t-e2e-alt-e2e-all-1005-layout-13레이아웃 스크롤 표본 24t-e2e-alt-e2e-all-1005-layout-24레이아웃 스크롤 표본 23t-e2e-alt-e2e-all-1005-layout-23레이아웃 스크롤 표본 12t-e2e-alt-e2e-all-1005-layout-12레이아웃 스크롤 표본 6t-e2e-alt-e2e-all-1005-layout-6레이아웃 스크롤 표본 11t-e2e-alt-e2e-all-1005-layout-11일동이와 요청 접수MOCK 연결고객 개인 데이터를 외부 시스템과 연동해 자동 분석하고 싶은데, 어떤 데이터가 있는지, 접근 권한과 승인이 있는지 아직 아무도 모릅니다.접수됨 · req_ac80분석 진행♙검토 대기분석을 마쳤어요✓내용 정리 완료✓Jev 판단 완료✓근거 연결 완료✓업무 나누기 완료✓결과 저장 완료확인이 조금 필요해요판단 결과♙검토 대기MOCK요약 정보가 없습니다.원문 발췌 · 작성 주체: code:extractive@1근거 4건 연결됨AI 필요성불필요선택 신뢰도 99%근거 열기개발 가능성정보 부족·판단 보류정보 부족선택 신뢰도 99%근거 열기긴급도일반선택 신뢰도 99%근거 열기주관 조직IT팀선택 신뢰도 99%근거 열기업무 분담업무 2건 · IT팀 2자세히 보기요청 내용PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB · Enter로 보내기 · Shift + Enter로 줄바꿈 · 보내면 새 요청으로 접수돼요\"\u001b[22m\n\n\n  135 |   await rq.page.getByText(s4).first().click();\n  136 |   await expect(finalResult(rq.page)).toBeVisible();\n> 137 |   await expect(rq.page.locator('main')).toContainText('검토 사유');\n      |                                         ^\n  138 |   for (const reason of j.review_reasons.slice(0, 2)) await expect(rq.page.locator('main')).toContainText(reason);\n  139 |   await shot(rq.page, 's4-insufficient-information');\n  140 |   await rv.page.goto('/review');\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:137:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:04.140Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/acceptance-v3-results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/acceptance-v3-results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "column": 41,
+                    "line": 137
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-cd90d5d4ea8655409418",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 130,
+          "column": 1
+        },
+        {
+          "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-06cc90fabda948bee4ba",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 154,
+          "column": 1
+        },
+        {
+          "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-25e289c9f483cd8aa3d8",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 181,
+          "column": 1
+        },
+        {
+          "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2894edff0e9b72dbbc22",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 218,
+          "column": 1
+        },
+        {
+          "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-49189fb5119284755f23",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 239,
+          "column": 1
+        },
+        {
+          "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-78664644d16fe026dd36",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 271,
+          "column": 1
+        },
+        {
+          "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:57:17.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-3ed9b3c6cf9bc1750499",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 291,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T05:56:33.626Z",
+    "duration": 44037.257000000005,
+    "expected": 3,
+    "skipped": 6,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

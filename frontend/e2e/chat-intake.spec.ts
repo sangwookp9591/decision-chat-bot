@@ -32,7 +32,7 @@ test('send → stop → cancelled state → reanalyze the same request', async (
   expect(after.runs.length).toBeGreaterThan(before.runs.length);
   expect(after.active_run_id).not.toBe(before.active_run_id);
   const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();
-  expect(savedJudgment.mode).toBe('live');
+  expect(savedJudgment.mode).toBe(process.env.JEV_MODE || 'live');
   await a.ctx.close();
 });
 
@@ -61,7 +61,7 @@ test('send → right bubble → analysis steps → result with icon → reload r
   await expect(page.getByRole('group', { name: '내가 보낸 요청' })).toContainText(text);
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 30_000 });
   await expect(page.locator(`.request-list .request-row code[title="${id}"]`)).toBeVisible(); // short id in the row, full id on hover
-  await expect(page.locator('.request-list .request-row', { hasText: text })).toBeVisible(); // titled by the request's first sentence, not the raw id
+  await expect(page.locator('.request-list .request-row', { has: page.locator(`code[title="${id}"]`) })).toBeVisible(); // titled by the request's first sentence, not the raw id
   await page.locator('.request-list').getByRole('button', { name: '새 요청' }).click(); // the sidebar's button
   await expect(page).not.toHaveURL(/request_id/);
   await expect(page.getByRole('heading', { name: '안녕하세요, 일동이예요' })).toBeVisible();
@@ -175,7 +175,7 @@ for (const size of [{ w: 1440, h: 900 }, { w: 960, h: 800 }, { w: 375, h: 812 }]
     const a = await actor(browser, baseURL, 'requester'); const page = a.page;
     const seeded = await a.api.get('/api/requests?limit=50');
     const seedCount = seeded.ok() ? ((await seeded.json()).items as unknown[]).length : 0;
-    test.skip(seedCount < 30, `레이아웃 표본 fixture 필요: tenant에 요청 ${seedCount}/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)`);
+    expect(seedCount, `레이아웃 표본 fixture 필요: tenant에 요청 ${seedCount}/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음: scripts/e2e/run.py로 준비` ).toBeGreaterThanOrEqual(30);
     await page.setViewportSize({ width: size.w, height: size.h });
     await page.goto('/');
     const composerBox = async () => (await page.locator('form.composer').boundingBox())!;

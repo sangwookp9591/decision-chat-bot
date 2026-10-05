@@ -1,0 +1,15 @@
+
+Running 2 tests using 1 worker
+
+(node:66493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:66493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (2.4s)
+(node:66610) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:66610) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (4.0s)
+
+  2 passed (9.1s)

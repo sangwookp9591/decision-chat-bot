@@ -25,3 +25,13 @@ artifacts/demo/**/*.webm
 artifacts/demo/**/*.mp4
 artifacts/demo/**/raw/
 artifacts/review/completeness/scratch/data/
+# full E2E run outputs (traces, screenshots, run data) stay local; only the report and summaries are committed
+artifacts/review/e2e-all/**
+!artifacts/review/e2e-all/*.md
+!artifacts/review/e2e-all/*.json
+!artifacts/review/e2e-all/*.log
+!artifacts/review/e2e-all/20261005T152719/
+!artifacts/review/e2e-all/20261005T152719/extension/
+!artifacts/review/e2e-all/20261005T152719/extension/*.json
+!artifacts/review/e2e-all/20261005T160522/
+!artifacts/review/e2e-all/20261005T160522/results.*

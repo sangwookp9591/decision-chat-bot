@@ -1,0 +1,922 @@
+
+Running 16 tests using 1 worker
+
+(node:41815) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41815) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 (8.3s)
+(node:42614) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:42614) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [chromium] › e2e/extension/extension.spec.ts:89:3 › [ui1] before stop › [X03] requester has no access to rule learning; no rule actions exposed (1.3s)
+  ✓   3 [chromium] › e2e/extension/extension.spec.ts:98:3 › [ui1] before stop › [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족 (4.0s)
+  ✘   4 [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (8.1s)
+(node:43713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [chromium] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs (18.0s)
+  -   6 [chromium] › e2e/extension/extension.spec.ts:259:3 › [ui1] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API
+  -   7 [chromium] › e2e/extension/extension.spec.ts:296:3 › [ui1] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)
+  -   8 [chromium] › e2e/extension/extension.spec.ts:346:3 › [ui1] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload
+(node:44219) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44219) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   9 [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 (12.2s)
+(node:44909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:44909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [webkit] › e2e/extension/extension.spec.ts:89:3 › [ui1] before stop › [X03] requester has no access to rule learning; no rule actions exposed (2.8s)
+  ✓  11 [webkit] › e2e/extension/extension.spec.ts:98:3 › [ui1] before stop › [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족 (6.7s)
+  ✘  12 [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (13.3s)
+(node:46810) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46810) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [webkit] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs (31.1s)
+  -  14 [webkit] › e2e/extension/extension.spec.ts:259:3 › [ui1] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API
+  -  15 [webkit] › e2e/extension/extension.spec.ts:296:3 › [ui1] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)
+  -  16 [webkit] › e2e/extension/extension.spec.ts:346:3 › [ui1] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload
+
+
+  1) [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: '승인', exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '승인', exact: true })
+
+
+      81 |     await shot(page, 'x02-insufficient');
+      82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.
+    > 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();
+         |                                                                         ^
+      84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();
+      85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();
+      86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Trace 상세' })
+    Timeout: 5000ms
+    - Expected substring  -   1
+    + Received string     + 183
+
+    - 설정 v2
+    + 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused"정보 부족""조건부 가능"v4 R-LEAD_ORG-01@1ruleused"IT팀""현업"v4 R-AI_NEED-01@1ruleused"불필요""필요"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{
+    +   "input": {},
+    +   "output": {},
+    +   "judgment": {
+    +     "id": "jdg_b59ab6c4ff6f46fda5508653d77f4ecc",
+    +     "ai_need": "필요",
+    +     "feasibility": "조건부 가능",
+    +     "urgency": "일반",
+    +     "lead_org": "현업",
+    +     "risk_confirmed": true,
+    +     "versions": {
+    +       "model": "e2e-fixture",
+    +       "qset": "qset-v2",
+    +       "catalog": "catalog-v2",
+    +       "schema": "judgment-v1",
+    +       "config_version": 4
+    +     },
+    +     "outputs": [
+    +       {
+    +         "noul": 0.99,
+    +         "evidence": null,
+    +         "value": 0.99,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "it_team_involvement"
+    +       },
+    +       {
+    +         "noul": 0.99,
+    +         "evidence": null,
+    +         "value": 0.99,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "business_involvement"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "regulatory"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "clinical_safety"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "pharmacovigilance"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "ai_team_involvement"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": 0,
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"0\":0.99,\"1\":0.005,\"2\":0.005}",
+    +         "question_id": "review_signal"
+    +       }
+    +     ]
+    +   },
+    +   "review_history": [
+    +     {
+    +       "review_id": "rvw_286f7b17bae14f88b9f26bda51bc1f1e",
+    +       "created_at": "2026-10-05T05:57:14.646000000+00:00",
+    +       "status": "pending",
+    +       "history": [],
+    +       "corrections": []
+    +     }
+    +   ],
+    +   "source_links": []
+    + }
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Trace 상세' })
+        14 × locator resolved to <aside role="dialog" class="obs-drawer" aria-label="Trace 상세">…</aside>
+           - unexpected value "닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused"정보 부족""조건부 가능"v4 R-LEAD_ORG-01@1ruleused"IT팀""현업"v4 R-AI_NEED-01@1ruleused"불필요""필요"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{
+      "input": {},
+      "output": {},
+      "judgment": {
+        "id": "jdg_b59ab6c4ff6f46fda5508653d77f4ecc",
+        "ai_need": "필요",
+        "feasibility": "조건부 가능",
+        "urgency": "일반",
+        "lead_org": "현업",
+        "risk_confirmed": true,
+        "versions": {
+          "model": "e2e-fixture",
+          "qset": "qset-v2",
+          "catalog": "catalog-v2",
+          "schema": "judgment-v1",
+          "config_version": 4
+        },
+        "outputs": [
+          {
+            "noul": 0.99,
+            "evidence": null,
+            "value": 0.99,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "it_team_involvement"
+          },
+          {
+            "noul": 0.99,
+            "evidence": null,
+            "value": 0.99,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "business_involvement"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "regulatory"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "clinical_safety"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "pharmacovigilance"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "ai_team_involvement"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": 0,
+            "confidence": 0.99,
+            "probabilities": "{\"0\":0.99,\"1\":0.005,\"2\":0.005}",
+            "question_id": "review_signal"
+          }
+        ]
+      },
+      "review_history": [
+        {
+          "review_id": "rvw_286f7b17bae14f88b9f26bda51bc1f1e",
+          "created_at": "2026-10-05T05:57:14.646000000+00:00",
+          "status": "pending",
+          "history": [],
+          "corrections": []
+        }
+      ],
+      "source_links": []
+    }"
+
+
+      151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
+      152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);
+    > 153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);
+          |                            ^
+      154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);
+      155 |       await expect(drawer).toContainText(`"ai_need": "${expectAi}"`);
+      156 |       const text = await drawer.innerText();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: '승인', exact: true })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '승인', exact: true })
+
+
+      81 |     await shot(page, 'x02-insufficient');
+      82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.
+    > 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();
+         |                                                                         ^
+      84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();
+      85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();
+      86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Trace 상세' })
+    Timeout: 5000ms
+    - Expected substring  -   1
+    + Received string     + 183
+
+    - 설정 v2
+    + 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused"정보 부족""조건부 가능"v4 R-LEAD_ORG-01@1ruleused"IT팀""현업"v4 R-AI_NEED-01@1ruleused"불필요""필요"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{
+    +   "input": {},
+    +   "output": {},
+    +   "judgment": {
+    +     "id": "jdg_b59ab6c4ff6f46fda5508653d77f4ecc",
+    +     "ai_need": "필요",
+    +     "feasibility": "조건부 가능",
+    +     "urgency": "일반",
+    +     "lead_org": "현업",
+    +     "risk_confirmed": true,
+    +     "versions": {
+    +       "model": "e2e-fixture",
+    +       "qset": "qset-v2",
+    +       "catalog": "catalog-v2",
+    +       "schema": "judgment-v1",
+    +       "config_version": 4
+    +     },
+    +     "outputs": [
+    +       {
+    +         "noul": 0.99,
+    +         "evidence": null,
+    +         "value": 0.99,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "it_team_involvement"
+    +       },
+    +       {
+    +         "noul": 0.99,
+    +         "evidence": null,
+    +         "value": 0.99,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "business_involvement"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "정보 부족",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+    +         "question_id": "feasibility"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "IT팀",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+    +         "question_id": "lead_org"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "regulatory"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "clinical_safety"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "일반",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+    +         "question_id": "urgency"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "pharmacovigilance"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": "불필요",
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+    +         "question_id": "ai_need"
+    +       },
+    +       {
+    +         "noul": 0.01,
+    +         "evidence": null,
+    +         "value": 0.01,
+    +         "confidence": null,
+    +         "probabilities": null,
+    +         "question_id": "ai_team_involvement"
+    +       },
+    +       {
+    +         "noul": null,
+    +         "evidence": null,
+    +         "value": 0,
+    +         "confidence": 0.99,
+    +         "probabilities": "{\"0\":0.99,\"1\":0.005,\"2\":0.005}",
+    +         "question_id": "review_signal"
+    +       }
+    +     ]
+    +   },
+    +   "review_history": [
+    +     {
+    +       "review_id": "rvw_286f7b17bae14f88b9f26bda51bc1f1e",
+    +       "created_at": "2026-10-05T05:57:14.646000000+00:00",
+    +       "status": "pending",
+    +       "history": [],
+    +       "corrections": []
+    +     }
+    +   ],
+    +   "source_links": []
+    + }
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms
+      - waiting for getByRole('dialog', { name: 'Trace 상세' })
+        12 × locator resolved to <aside role="dialog" class="obs-drawer" aria-label="Trace 상세">…</aside>
+           - unexpected value "닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused"정보 부족""조건부 가능"v4 R-LEAD_ORG-01@1ruleused"IT팀""현업"v4 R-AI_NEED-01@1ruleused"불필요""필요"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{
+      "input": {},
+      "output": {},
+      "judgment": {
+        "id": "jdg_b59ab6c4ff6f46fda5508653d77f4ecc",
+        "ai_need": "필요",
+        "feasibility": "조건부 가능",
+        "urgency": "일반",
+        "lead_org": "현업",
+        "risk_confirmed": true,
+        "versions": {
+          "model": "e2e-fixture",
+          "qset": "qset-v2",
+          "catalog": "catalog-v2",
+          "schema": "judgment-v1",
+          "config_version": 4
+        },
+        "outputs": [
+          {
+            "noul": 0.99,
+            "evidence": null,
+            "value": 0.99,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "it_team_involvement"
+          },
+          {
+            "noul": 0.99,
+            "evidence": null,
+            "value": 0.99,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "business_involvement"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "정보 부족",
+            "confidence": 0.99,
+            "probabilities": "{\"가능\":0.0033333333333333335,\"조건부 가능\":0.0033333333333333335,\"현재 불가\":0.0033333333333333335,\"정보 부족\":0.99}",
+            "question_id": "feasibility"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "IT팀",
+            "confidence": 0.99,
+            "probabilities": "{\"AI팀\":0.0033333333333333335,\"IT팀\":0.99,\"현업\":0.0033333333333333335,\"판단 보류\":0.0033333333333333335}",
+            "question_id": "lead_org"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "regulatory"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "clinical_safety"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "일반",
+            "confidence": 0.99,
+            "probabilities": "{\"긴급\":0.005,\"일반\":0.99,\"판단 보류\":0.005}",
+            "question_id": "urgency"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "pharmacovigilance"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": "불필요",
+            "confidence": 0.99,
+            "probabilities": "{\"필요\":0.0033333333333333335,\"불필요\":0.99,\"혼합\":0.0033333333333333335,\"정보 부족\":0.0033333333333333335}",
+            "question_id": "ai_need"
+          },
+          {
+            "noul": 0.01,
+            "evidence": null,
+            "value": 0.01,
+            "confidence": null,
+            "probabilities": null,
+            "question_id": "ai_team_involvement"
+          },
+          {
+            "noul": null,
+            "evidence": null,
+            "value": 0,
+            "confidence": 0.99,
+            "probabilities": "{\"0\":0.99,\"1\":0.005,\"2\":0.005}",
+            "question_id": "review_signal"
+          }
+        ]
+      },
+      "review_history": [
+        {
+          "review_id": "rvw_286f7b17bae14f88b9f26bda51bc1f1e",
+          "created_at": "2026-10-05T05:57:14.646000000+00:00",
+          "status": "pending",
+          "history": [],
+          "corrections": []
+        }
+      ],
+      "source_links": []
+    }"
+
+
+      151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
+      152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);
+    > 153 |       await expect(drawer).toContainText(`설정 v${rep[rid].flow_config_version}`);
+          |                            ^
+      154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);
+      155 |       await expect(drawer).toContainText(`"ai_need": "${expectAi}"`);
+      156 |       const text = await drawer.innerText();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+    [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+    [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+    [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+  6 skipped
+  6 passed (2.0m)

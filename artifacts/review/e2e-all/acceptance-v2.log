@@ -1,0 +1,75 @@
+
+Running 10 tests using 1 worker
+
+(node:35433) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35433) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (8.0s)
+  ✓   2 [chromium] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (12.8s)
+  ✘   3 [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (29.8s)
+  -   4 [chromium] › e2e/acceptance/scenarios.spec.ts:129:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted
+  -   5 [chromium] › e2e/acceptance/scenarios.spec.ts:153:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -   6 [chromium] › e2e/acceptance/scenarios.spec.ts:180:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -   7 [chromium] › e2e/acceptance/scenarios.spec.ts:217:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -   8 [chromium] › e2e/acceptance/scenarios.spec.ts:238:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -   9 [chromium] › e2e/acceptance/scenarios.spec.ts:270:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  10 [chromium] › e2e/acceptance/scenarios.spec.ts:290:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen 
+
+    TimeoutError: locator.check: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for locator('nav[aria-label="검토 대기 목록"]').getByLabel('긴급 우선 정렬')
+        - locator resolved to <input type="checkbox"/>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <span class="fld-box" aria-hidden="true"></span> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <span class="fld-box" aria-hidden="true"></span> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        28 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - performing click action
+           - <span class="fld-box" aria-hidden="true"></span> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      119 |   await expect(list.locator('button', { hasText: id })).toBeVisible();
+      120 |   const box = list.getByLabel('긴급 우선 정렬');
+    > 121 |   if (!(await box.isChecked())) await box.check();
+          |                                           ^
+      122 |   await expect(list.locator('button').first()).toContainText('긴급');
+      123 |   await list.locator('button', { hasText: id }).click();
+      124 |   await expect(rv.page.locator('main')).toContainText('필수 검토');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:121:43
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-v2-results/acceptance-scenarios-S3-ur-3209f-view-and-priority-on-screen-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-v2-results/acceptance-scenarios-S3-ur-3209f-view-and-priority-on-screen-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-v2-results/acceptance-scenarios-S3-ur-3209f-view-and-priority-on-screen-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen 
+  7 did not run
+  2 passed (55.5s)

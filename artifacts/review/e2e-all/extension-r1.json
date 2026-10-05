@@ -1,0 +1,721 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension-r.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension-r.spec.ts",
+      "file": "extension/extension-r.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[r1] T38-R fixes",
+          "file": "extension/extension-r.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+              "ok": true,
+              "tags": [
+                "version,"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"}]},\"rule_lead_lead_org\":{\"request\":\"req_231bd41744c14424a33c06f4c6c95d40\",\"run\":\"run_638d7a8f272046eaa1c885cd6e83137a\",\"step\":\"step_9120754bc159442cbc1dc4077706acdb\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]},\"rule2_feasibility\":{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"run\":\"run_e1e3916daac44a9681f56a669531b03e\",\"step\":\"step_09a5569c8709432b9a886871911a39e9\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12652,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:37.283Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"}]},\"rule_lead_lead_org\":{\"request\":\"req_231bd41744c14424a33c06f4c6c95d40\",\"run\":\"run_638d7a8f272046eaa1c885cd6e83137a\",\"step\":\"step_9120754bc159442cbc1dc4077706acdb\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]},\"rule2_feasibility\":{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"run\":\"run_e1e3916daac44a9681f56a669531b03e\",\"step\":\"step_09a5569c8709432b9a886871911a39e9\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-3a3f82cde92553076153",
+              "file": "extension/extension-r.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "[F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"tenant\":\"t-e2e-ext-1005i\",\"request\":\"req_bc2e21e952314fd89e0d21e286da6b8e\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3077,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:50.515Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"tenant\":\"t-e2e-ext-1005i\",\"request\":\"req_bc2e21e952314fd89e0d21e286da6b8e\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-5b377a2029db021559dd",
+              "file": "extension/extension-r.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7439,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                          "column": 81,
+                          "line": 122
+                        },
+                        "snippet": "  120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');\n  121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing\n> 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();\n      |                                                                                 ^\n  123 |     await shot(page, 'f5-disabled-without-ack');\n  124 |     await ack.focus(); await ack.press('Space');\n  125 |     await reason.fill('짧은 사유');"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "column": 81,
+                            "line": 122
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n\n\n  120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');\n  121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing\n> 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();\n      |                                                                                 ^\n  123 |     await shot(page, 'f5-disabled-without-ack');\n  124 |     await ack.focus(); await ack.press('Space');\n  125 |     await reason.fill('짧은 사유');\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:53.627Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "column": 81,
+                        "line": 122
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7cec399467eac6754175",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"span_nodes_on_map\":[\"esp_062a178088c142b9a96020274a4963b6\",\"esp_08f1337d638f41e89df1dbd4c14702eb\",\"esp_10436e7ba8324108963e5d15cc18fee6\",\"esp_14dda45de08b437ca7a14840a6d5797b\",\"esp_1adb6d7807e947eeb679d6398b22608f\",\"esp_1ca2df10b0d14e27a9408f2bd1ec1753\",\"esp_21daa0f4cb034f2dbcf86a4c1f0a9f9f\",\"esp_36c5d14ce95b4b359590fbb2b8a4078a\",\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_5d710663b0424bd8b4d34a0d0762568e\",\"esp_6873fc151a4542a2b5e8d710bbfdbbd8\",\"esp_7495f56b27734d4096cccbeb24397005\",\"esp_793d1e4bffde46c19f860bbce12bad34\",\"esp_897575043589425b9b07b7feb3a5f6dd\",\"esp_8ca3186a5b0d4bc2b551f8eb64c1d40a\",\"esp_8eab3c42d0404a82a67dfd4cbc7cdfab\",\"esp_8eeba7553f534c16bc8b79d000c82d93\",\"esp_96335a2f52fe4834a0a6fc8a19eb6cba\",\"esp_99b1fbc07e03487e989c49a1668297d9\",\"esp_a039f5e3f1324770bfc9d661773851fc\",\"esp_a6977a27cec648a69ddd26556135c80c\",\"esp_cb8e7ccccf9943589c8e8faf0c95321a\",\"esp_d163f88b9479447982d1d8546fc6ce1a\",\"esp_e9e2d00704e64f6dbf7059bd2b1477f0\",\"esp_ef37731eacce4ff0a70b92b43cd2cd26\",\"esp_fa5fb2622f074173a7558441240cc106\"],\"cited\":[\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_793d1e4bffde46c19f860bbce12bad34\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2964,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:02.114Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"span_nodes_on_map\":[\"esp_062a178088c142b9a96020274a4963b6\",\"esp_08f1337d638f41e89df1dbd4c14702eb\",\"esp_10436e7ba8324108963e5d15cc18fee6\",\"esp_14dda45de08b437ca7a14840a6d5797b\",\"esp_1adb6d7807e947eeb679d6398b22608f\",\"esp_1ca2df10b0d14e27a9408f2bd1ec1753\",\"esp_21daa0f4cb034f2dbcf86a4c1f0a9f9f\",\"esp_36c5d14ce95b4b359590fbb2b8a4078a\",\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_5d710663b0424bd8b4d34a0d0762568e\",\"esp_6873fc151a4542a2b5e8d710bbfdbbd8\",\"esp_7495f56b27734d4096cccbeb24397005\",\"esp_793d1e4bffde46c19f860bbce12bad34\",\"esp_897575043589425b9b07b7feb3a5f6dd\",\"esp_8ca3186a5b0d4bc2b551f8eb64c1d40a\",\"esp_8eab3c42d0404a82a67dfd4cbc7cdfab\",\"esp_8eeba7553f534c16bc8b79d000c82d93\",\"esp_96335a2f52fe4834a0a6fc8a19eb6cba\",\"esp_99b1fbc07e03487e989c49a1668297d9\",\"esp_a039f5e3f1324770bfc9d661773851fc\",\"esp_a6977a27cec648a69ddd26556135c80c\",\"esp_cb8e7ccccf9943589c8e8faf0c95321a\",\"esp_d163f88b9479447982d1d8546fc6ce1a\",\"esp_e9e2d00704e64f6dbf7059bd2b1477f0\",\"esp_ef37731eacce4ff0a70b92b43cd2cd26\",\"esp_fa5fb2622f074173a7558441240cc106\"],\"cited\":[\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_793d1e4bffde46c19f860bbce12bad34\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-8965b305bffa1edb241a",
+              "file": "extension/extension-r.spec.ts",
+              "line": 138,
+              "column": 3
+            },
+            {
+              "title": "[X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":12,\"validation\":\"val_83e7473c04cc4948ba0021a11051de9e\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6724,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:05.434Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":12,\"validation\":\"val_83e7473c04cc4948ba0021a11051de9e\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-ac4751d1882e6a52a1a2",
+              "file": "extension/extension-r.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "[F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+              "ok": true,
+              "tags": [
+                "version,"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"}]},\"rule_lead_lead_org\":{\"request\":\"req_231bd41744c14424a33c06f4c6c95d40\",\"run\":\"run_638d7a8f272046eaa1c885cd6e83137a\",\"step\":\"step_9120754bc159442cbc1dc4077706acdb\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]},\"rule2_feasibility\":{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"run\":\"run_e1e3916daac44a9681f56a669531b03e\",\"step\":\"step_09a5569c8709432b9a886871911a39e9\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10443,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:14.109Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"}]},\"rule_lead_lead_org\":{\"request\":\"req_231bd41744c14424a33c06f4c6c95d40\",\"run\":\"run_638d7a8f272046eaa1c885cd6e83137a\",\"step\":\"step_9120754bc159442cbc1dc4077706acdb\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]},\"rule2_feasibility\":{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"run\":\"run_e1e3916daac44a9681f56a669531b03e\",\"step\":\"step_09a5569c8709432b9a886871911a39e9\",\"rows\":[{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"},{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"}]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-708c5df240257dcf9fd8",
+              "file": "extension/extension-r.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "[F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"tenant\":\"t-e2e-ext-1005i\",\"request\":\"req_bc2e21e952314fd89e0d21e286da6b8e\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5362,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:25.303Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"tenant\":\"t-e2e-ext-1005i\",\"request\":\"req_bc2e21e952314fd89e0d21e286da6b8e\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-8f0fb357694003f50c8a",
+              "file": "extension/extension-r.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8951,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                          "column": 81,
+                          "line": 122
+                        },
+                        "snippet": "  120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');\n  121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing\n> 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();\n      |                                                                                 ^\n  123 |     await shot(page, 'f5-disabled-without-ack');\n  124 |     await ack.focus(); await ack.press('Space');\n  125 |     await reason.fill('짧은 사유');"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "column": 81,
+                            "line": 122
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first() with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()\u001b[22m\n\n\n  120 |     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');\n  121 |     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing\n> 122 |     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();\n      |                                                                                 ^\n  123 |     await shot(page, 'f5-disabled-without-ack');\n  124 |     await ack.focus(); await ack.press('Space');\n  125 |     await reason.fill('짧은 사유');\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts:122:81"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:30.736Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-r1-results/extension-extension-r--r1--c5951-ards-자료-부족-상태로-승인됨-is-shown-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "column": 81,
+                        "line": 122
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-fea3ff79cf3f8b50cb49",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"span_nodes_on_map\":[\"esp_062a178088c142b9a96020274a4963b6\",\"esp_08f1337d638f41e89df1dbd4c14702eb\",\"esp_10436e7ba8324108963e5d15cc18fee6\",\"esp_14dda45de08b437ca7a14840a6d5797b\",\"esp_1adb6d7807e947eeb679d6398b22608f\",\"esp_1ca2df10b0d14e27a9408f2bd1ec1753\",\"esp_21daa0f4cb034f2dbcf86a4c1f0a9f9f\",\"esp_36c5d14ce95b4b359590fbb2b8a4078a\",\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_5d710663b0424bd8b4d34a0d0762568e\",\"esp_6873fc151a4542a2b5e8d710bbfdbbd8\",\"esp_7495f56b27734d4096cccbeb24397005\",\"esp_793d1e4bffde46c19f860bbce12bad34\",\"esp_897575043589425b9b07b7feb3a5f6dd\",\"esp_8ca3186a5b0d4bc2b551f8eb64c1d40a\",\"esp_8eab3c42d0404a82a67dfd4cbc7cdfab\",\"esp_8eeba7553f534c16bc8b79d000c82d93\",\"esp_96335a2f52fe4834a0a6fc8a19eb6cba\",\"esp_99b1fbc07e03487e989c49a1668297d9\",\"esp_a039f5e3f1324770bfc9d661773851fc\",\"esp_a6977a27cec648a69ddd26556135c80c\",\"esp_cb8e7ccccf9943589c8e8faf0c95321a\",\"esp_d163f88b9479447982d1d8546fc6ce1a\",\"esp_e9e2d00704e64f6dbf7059bd2b1477f0\",\"esp_ef37731eacce4ff0a70b92b43cd2cd26\",\"esp_fa5fb2622f074173a7558441240cc106\"],\"cited\":[\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_793d1e4bffde46c19f860bbce12bad34\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2993,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:41.546Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request\":\"req_d71d18c53d924b2f87d3f744ecc48b94\",\"span_nodes_on_map\":[\"esp_062a178088c142b9a96020274a4963b6\",\"esp_08f1337d638f41e89df1dbd4c14702eb\",\"esp_10436e7ba8324108963e5d15cc18fee6\",\"esp_14dda45de08b437ca7a14840a6d5797b\",\"esp_1adb6d7807e947eeb679d6398b22608f\",\"esp_1ca2df10b0d14e27a9408f2bd1ec1753\",\"esp_21daa0f4cb034f2dbcf86a4c1f0a9f9f\",\"esp_36c5d14ce95b4b359590fbb2b8a4078a\",\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_5d710663b0424bd8b4d34a0d0762568e\",\"esp_6873fc151a4542a2b5e8d710bbfdbbd8\",\"esp_7495f56b27734d4096cccbeb24397005\",\"esp_793d1e4bffde46c19f860bbce12bad34\",\"esp_897575043589425b9b07b7feb3a5f6dd\",\"esp_8ca3186a5b0d4bc2b551f8eb64c1d40a\",\"esp_8eab3c42d0404a82a67dfd4cbc7cdfab\",\"esp_8eeba7553f534c16bc8b79d000c82d93\",\"esp_96335a2f52fe4834a0a6fc8a19eb6cba\",\"esp_99b1fbc07e03487e989c49a1668297d9\",\"esp_a039f5e3f1324770bfc9d661773851fc\",\"esp_a6977a27cec648a69ddd26556135c80c\",\"esp_cb8e7ccccf9943589c8e8faf0c95321a\",\"esp_d163f88b9479447982d1d8546fc6ce1a\",\"esp_e9e2d00704e64f6dbf7059bd2b1477f0\",\"esp_ef37731eacce4ff0a70b92b43cd2cd26\",\"esp_fa5fb2622f074173a7558441240cc106\"],\"cited\":[\"esp_50aa068a68a84c03afab95147c75989a\",\"esp_793d1e4bffde46c19f860bbce12bad34\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-141f09d6ba52555d4f1f",
+              "file": "extension/extension-r.spec.ts",
+              "line": 138,
+              "column": 3
+            },
+            {
+              "title": "[X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":12,\"validation\":\"val_83e7473c04cc4948ba0021a11051de9e\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1858,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:45.052Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":12,\"validation\":\"val_83e7473c04cc4948ba0021a11051de9e\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7f0691d2584d058856a6",
+              "file": "extension/extension-r.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[r1] X08 after restart",
+          "file": "extension/extension-r.spec.ts",
+          "line": 190,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "r3 phase only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 191,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:12.195Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "r3 phase only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 191,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-44df23674a865550f3f0",
+              "file": "extension/extension-r.spec.ts",
+              "line": 193,
+              "column": 3
+            },
+            {
+              "title": "[X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "r3 phase only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 191,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:01:46.931Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "r3 phase only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 191,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-757879f72c4496d51877",
+              "file": "extension/extension-r.spec.ts",
+              "line": 193,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:00:32.920Z",
+    "duration": 74063.679,
+    "expected": 8,
+    "skipped": 2,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

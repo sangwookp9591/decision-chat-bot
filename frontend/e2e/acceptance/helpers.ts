@@ -57,13 +57,19 @@ export async function visibleTotals(a: Actor) {
   const reviews = (await (await a.api.get('/api/reviews?status=pending')).json()).reviews.length;
   const list = (await (await a.api.get('/api/requests?limit=100')).json()).items as any[];
   let runs = 0, outputs = 0;
-  for (const r of list) {
-    const rr = await (await a.api.get(`/api/requests/${r.id}/runs`)).json();
-    runs += rr.runs.length;
-    for (const run of rr.runs) {
-      const j = await a.api.get(`/api/requests/${r.id}/judgment?run_id=${run.id}`);
-      if (j.ok()) outputs += ((await j.json()).outputs || []).length;
-    }
+  // Bound concurrency while retaining the same complete comparison scope.
+  // Sequential reads exceed S8's budget once earlier scenarios have populated the tenant.
+  for (let i = 0; i < list.length; i += 8) {
+    const counts = await Promise.all(list.slice(i, i + 8).map(async (r) => {
+      const rr = await (await a.api.get(`/api/requests/${r.id}/runs`)).json();
+      let count = 0;
+      for (const run of rr.runs) {
+        const j = await a.api.get(`/api/requests/${r.id}/judgment?run_id=${run.id}`);
+        if (j.ok()) count += ((await j.json()).outputs || []).length;
+      }
+      return { runs: rr.runs.length, outputs: count };
+    }));
+    for (const count of counts) { runs += count.runs; outputs += count.outputs; }
   }
   return { tasks, reviews, requests: list.length, runs, outputs };
 }

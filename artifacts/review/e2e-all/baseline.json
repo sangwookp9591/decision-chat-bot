@@ -1,0 +1,4540 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results",
+      "--project=chromium",
+      "--max-failures=12"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/playwright.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 12,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "a11y/a11y.spec.ts",
+      "file": "a11y/a11y.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "login screen has no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:44.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-d6e0732f28f659a3ff0f",
+          "file": "a11y/a11y.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "all primary application screens have no critical or serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7699,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:46.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-8c72d1700dcac0c15b2c",
+          "file": "a11y/a11y.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "shell, status, primary color and touch target contracts are visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1060,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:54.218Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-87efb1d82e5a8f453c1b",
+          "file": "a11y/a11y.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "reduced motion and Safari mascot media preference are respected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1079,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:55.288Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-e0bb8fa59ba22afef21f",
+          "file": "a11y/a11y.spec.ts",
+          "line": 77,
+          "column": 1
+        },
+        {
+          "title": "conversation is keyboard operable: examples, composer, attach and send need no pointer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:56.381Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-4f4f379703b97c927c9c",
+          "file": "a11y/a11y.spec.ts",
+          "line": 94,
+          "column": 1
+        },
+        {
+          "title": "keyboard submits a real request and opens its saved evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4577,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:43:57.493Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ecce5f1c0c4efe896ba4-be2ae8fdccb17e19a2cf",
+          "file": "a11y/a11y.spec.ts",
+          "line": 118,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "acceptance/gates.spec.ts",
+      "file": "acceptance/gates.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "skip",
+                  "description": "G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 31,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.094Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                        "line": 31,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-1cf55f2a3b0e403a8c97",
+          "file": "acceptance/gates.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "skip",
+                  "description": "G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                    "line": 31,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.107Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "G05/G06 전용 준비물이 없음: `make test-acceptance`로 acc_e_gates.py 기록(ACC_RECORDS)과 별도 gate tenant 계정을 먼저 시드해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/gates.spec.ts",
+                        "line": 31,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "d3c1708ef7dced794b9f-839c6d34c7c65143322e",
+          "file": "acceptance/gates.spec.ts",
+          "line": 81,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "acceptance/scenarios.spec.ts",
+      "file": "acceptance/scenarios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S1 general technical request: UI result equals stored judgment",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 0,
+                  "error": {
+                    "message": "Error: login requester@t-e2e-all-1005f: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: login requester@t-e2e-all-1005f: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:27:17",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                      "column": 61,
+                      "line": 15
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39macceptance/helpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                        "column": 61,
+                        "line": 15
+                      },
+                      "message": "Error: login requester@t-e2e-all-1005f: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   at acceptance/helpers.ts:15\n\n  13 |   const ctx = await browser.newContext({ baseURL });\n  14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });\n> 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();\n     |                                                             ^\n  16 |   const page = await ctx.newPage();\n  17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';\n  18 |   return { ctx, page, api: ctx.request, csrf };\n    at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:27:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.126Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts",
+                    "column": 61,
+                    "line": 15
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2a16d171e94819a7ac90",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 63,
+          "column": 1
+        },
+        {
+          "title": "S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2030a085ad6799bb269c",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "S3 urgent request: reasons, review and priority on screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-556bd4539be2c0a0c11e",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "S4 insufficient information: reasons shown, request-info keeps everything unexecuted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-cd90d5d4ea8655409418",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 128,
+          "column": 1
+        },
+        {
+          "title": "S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-06cc90fabda948bee4ba",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "S6 human intervention: modify-approve preserves original; reject and request-info are separate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-25e289c9f483cd8aa3d8",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-2894edff0e9b72dbbc22",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 216,
+          "column": 1
+        },
+        {
+          "title": "S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-49189fb5119284755f23",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 237,
+          "column": 1
+        },
+        {
+          "title": "S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-78664644d16fe026dd36",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 269,
+          "column": 1
+        },
+        {
+          "title": "G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:02.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "00562259f9d5426c2cd4-3ed9b3c6cf9bc1750499",
+          "file": "acceptance/scenarios.spec.ts",
+          "line": 289,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "chat-intake.spec.ts",
+      "file": "chat-intake.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "send → stop → cancelled state → reanalyze the same request",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2713,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"live\"\u001b[39m\nReceived: \u001b[31m\"mock\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"live\"\u001b[39m\nReceived: \u001b[31m\"mock\"\u001b[39m\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts:35:30",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                      "column": 30,
+                      "line": 35
+                    },
+                    "snippet": "  33 |   expect(after.active_run_id).not.toBe(before.active_run_id);\n  34 |   const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();\n> 35 |   expect(savedJudgment.mode).toBe('live');\n     |                              ^\n  36 |   await a.ctx.close();\n  37 | });\n  38 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                        "column": 30,
+                        "line": 35
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"live\"\u001b[39m\nReceived: \u001b[31m\"mock\"\u001b[39m\n\n  33 |   expect(after.active_run_id).not.toBe(before.active_run_id);\n  34 |   const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();\n> 35 |   expect(savedJudgment.mode).toBe('live');\n     |                              ^\n  36 |   await a.ctx.close();\n  37 | });\n  38 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts:35:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:03.351Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/chat-intake-send-→-stop-→--b011b--reanalyze-the-same-request-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/chat-intake-send-→-stop-→--b011b--reanalyze-the-same-request-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                    "column": 30,
+                    "line": 35
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-adbe461cc6d66a4bf5d2",
+          "file": "chat-intake.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "send → right bubble → analysis steps → result with icon → reload restores → new request",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2836,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:07.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8a24bb28d459a4437fce",
+          "file": "chat-intake.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4360,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:10.324Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-c73d76fc5757ad78c5a4",
+          "file": "chat-intake.spec.ts",
+          "line": 71,
+          "column": 1
+        },
+        {
+          "title": "reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6308,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:14.693Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-525ab1840b67f8730819",
+          "file": "chat-intake.spec.ts",
+          "line": 99,
+          "column": 1
+        },
+        {
+          "title": "files can be dropped on the composer and removed again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:21.012Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-7746a03409df5a41118b",
+          "file": "chat-intake.spec.ts",
+          "line": 124,
+          "column": 1
+        },
+        {
+          "title": "responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2982,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:21.967Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-4043fd4b493a097953ef",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 3
+        },
+        {
+          "title": "responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2630,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:24.961Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8a54677273624e35803b",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 3
+        },
+        {
+          "title": "responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2578,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:27.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-f20bc949dbdd97afc02a",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 3
+        },
+        {
+          "title": "responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:30.192Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-95e899aaf85924426f20",
+          "file": "chat-intake.spec.ts",
+          "line": 139,
+          "column": 3
+        },
+        {
+          "title": "layout 1440px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                    "line": 178,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 243,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:32.689Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                        "line": 178,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-325fe90568e5456d5420",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 3
+        },
+        {
+          "title": "layout 960px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                    "line": 178,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 390,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:32.945Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                        "line": 178,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8dbdc3c02a9a9cd493e6",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 3
+        },
+        {
+          "title": "layout 375px: one screen tall, request list and chat scroll inside, composer pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                    "line": 178,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 293,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:33.360Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "레이아웃 표본 fixture 필요: tenant에 요청 6/30건만 있어 목록 내부 스크롤 조건을 만들 수 없음 (artifacts/review/chat-polish/README.md)",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts",
+                        "line": 178,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-96004f1c014770fa741c",
+          "file": "chat-intake.spec.ts",
+          "line": 173,
+          "column": 3
+        },
+        {
+          "title": "reduced motion: bubbles and typing dots do not animate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:33.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-8aa56f3fd1a4c0e3c15c",
+          "file": "chat-intake.spec.ts",
+          "line": 232,
+          "column": 1
+        },
+        {
+          "title": "scrolled up while the answer arrives: a \"새 메시지\" pill appears instead of a jump, and takes you down",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:34.996Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f0b7b8c4105162e9fbe0-9be69c5f96bf4a015007",
+          "file": "chat-intake.spec.ts",
+          "line": 243,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "evaluation-labels.spec.ts",
+      "file": "evaluation-labels.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "labeler confirms three, defers one, and sees a reviewer disagreement",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 397,
+                  "error": {
+                    "message": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:13:3",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                      "column": 64,
+                      "line": 8
+                    },
+                    "snippet": "   6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {\n   7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });\n>  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();\n     |                                                                ^\n   9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';\n  10 | }\n  11 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                        "column": 64,
+                        "line": 8
+                      },
+                      "message": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {\n   7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });\n>  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();\n     |                                                                ^\n   9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';\n  10 | }\n  11 |\n    at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:13:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:39.270Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                    "column": 64,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-674ad0d27a6caed2449e",
+          "file": "evaluation-labels.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 391,
+                  "error": {
+                    "message": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:75:3",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                      "column": 64,
+                      "line": 8
+                    },
+                    "snippet": "   6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {\n   7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });\n>  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();\n     |                                                                ^\n   9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';\n  10 | }\n  11 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                        "column": 64,
+                        "line": 8
+                      },
+                      "message": "Error: login labeler: 401\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n   6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {\n   7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });\n>  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();\n     |                                                                ^\n   9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';\n  10 | }\n  11 |\n    at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:75:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:40.666Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts",
+                    "column": 64,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b07d4449cc1a720605c2-b384b96fd7ca0815daab",
+          "file": "evaluation-labels.spec.ts",
+          "line": 74,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "extension/extension-r.spec.ts",
+      "file": "extension/extension-r.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[r1] T38-R fixes",
+          "file": "extension/extension-r.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+              "ok": true,
+              "tags": [
+                "version,"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.344Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-3a3f82cde92553076153",
+              "file": "extension/extension-r.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "[F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.344Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-5b377a2029db021559dd",
+              "file": "extension/extension-r.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.344Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7cec399467eac6754175",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-8965b305bffa1edb241a",
+              "file": "extension/extension-r.spec.ts",
+              "line": 133,
+              "column": 3
+            },
+            {
+              "title": "[X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-ac4751d1882e6a52a1a2",
+              "file": "extension/extension-r.spec.ts",
+              "line": 161,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[r1] X08 after restart",
+          "file": "extension/extension-r.spec.ts",
+          "line": 185,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "r3 phase only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                        "line": 186,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "r3 phase only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension-r.spec.ts",
+                            "line": 186,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-44df23674a865550f3f0",
+              "file": "extension/extension-r.spec.ts",
+              "line": 188,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-480a8587d75a485717bf",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-752bf43edb077d6d7082",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-5e71c43b02f9d221fdfc",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-2c90b43d23c808a90e2b",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] map filters and zoom",
+          "file": "extension/extension.spec.ts",
+          "line": 256,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "run once with ui2",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 257,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "run once with ui2",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 257,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-00d3630a084a60d3b6ba",
+              "file": "extension/extension.spec.ts",
+              "line": 258,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] lifecycle and persistence",
+          "file": "extension/extension.spec.ts",
+          "line": 292,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-643ff9dabff38ac6b0cd",
+              "file": "extension/extension.spec.ts",
+              "line": 295,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 16,
+                        "column": 6
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:44:41.345Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 16,
+                            "column": 6
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9b55f09509e08ddcce30",
+              "file": "extension/extension.spec.ts",
+              "line": 345,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "judgment-map.spec.ts",
+      "file": "judgment-map.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "real judgment and correction render as the stored graph, traceable from step to evidence",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 720000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 148670,
+                  "error": {
+                    "message": "Error: review for the judged request never appeared\n\nreview for the judged request never appeared\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 150000ms exceeded while waiting on the predicate",
+                    "stack": "Error: review for the judged request never appeared\n\nreview for the judged request never appeared\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 150000ms exceeded while waiting on the predicate\n    at seedJudgmentWithCorrection (/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:36:106)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:57:51",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts",
+                      "column": 106,
+                      "line": 36
+                    },
+                    "snippet": "  34 |       review = list.reviews.find((row) => row.request_id === requestId);\n  35 |       return Boolean(review);\n> 36 |     }, { timeout: 150_000, intervals: [3000], message: 'review for the judged request never appeared' }).toBeTruthy();\n     |                                                                                                          ^\n  37 |     const stored = await (await api.get(`/api/graph/judgment?request_id=${requestId}`)).json() as Graph;\n  38 |     if (!(stored.edges as Array<{ type: string }>).some((edge) => edge.type === 'CITES') && attempt < 3) continue;\n  39 |     const detail = await (await api.get(`/api/reviews/${review!.id}`)).json() as { review: Record<string, any>; final_classifications: Record<string, string> };"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts",
+                        "column": 106,
+                        "line": 36
+                      },
+                      "message": "Error: review for the judged request never appeared\n\nreview for the judged request never appeared\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 150000ms exceeded while waiting on the predicate\n\n  34 |       review = list.reviews.find((row) => row.request_id === requestId);\n  35 |       return Boolean(review);\n> 36 |     }, { timeout: 150_000, intervals: [3000], message: 'review for the judged request never appeared' }).toBeTruthy();\n     |                                                                                                          ^\n  37 |     const stored = await (await api.get(`/api/graph/judgment?request_id=${requestId}`)).json() as Graph;\n  38 |     if (!(stored.edges as Array<{ type: string }>).some((edge) => edge.type === 'CITES') && attempt < 3) continue;\n  39 |     const detail = await (await api.get(`/api/reviews/${review!.id}`)).json() as { review: Record<string, any>; final_classifications: Record<string, string> };\n    at seedJudgmentWithCorrection (/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:36:106)\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:57:51"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:44:41.852Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts",
+                    "column": 106,
+                    "line": 36
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-b6d718bbe75d6490b3a1",
+          "file": "judgment-map.spec.ts",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "a role without graph access is refused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:11.211Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b6eb483f6d42091769bb-58b5b16307dc4e0a6d43",
+          "file": "judgment-map.spec.ts",
+          "line": 117,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "learning-human.spec.ts",
+      "file": "learning-human.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "human proposal → approval → shadow → publication; scoped readers cannot mutate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7452,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    },
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:11.612Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fa0373c004b7adee53c9-0ab38389ff1ebe6ad286",
+          "file": "learning-human.spec.ts",
+          "line": 47,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "learning.spec.ts",
+      "file": "learning.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:19.090Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e0ec79b0c4f511f16424-fd26f338bae37f8a13f1",
+          "file": "learning.spec.ts",
+          "line": 47,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "main.spec.ts",
+      "file": "main.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "live request shows processing stages, saved judgment and evidence panel",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2589,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:30.424Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-73c0a473d50d0caf6e93",
+          "file": "main.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "live damaged attachment can be excluded before a new revision judgment",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8173,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.result-summary > code').filter({ hasText: /revision/ })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.result-summary > code').filter({ hasText: /revision/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.result-summary > code').filter({ hasText: /revision/ })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.result-summary > code').filter({ hasText: /revision/ })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.result-summary > code').filter({ hasText: /revision/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.result-summary > code').filter({ hasText: /revision/ })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts:41:88",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts",
+                      "column": 88,
+                      "line": 41
+                    },
+                    "snippet": "  39 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });\n  40 |   await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();\n> 41 |   await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();\n     |                                                                                        ^\n  42 | });\n  43 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts",
+                        "column": 88,
+                        "line": 41
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.result-summary > code').filter({ hasText: /revision/ })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.result-summary > code').filter({ hasText: /revision/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.result-summary > code').filter({ hasText: /revision/ })\u001b[22m\n\n\n  39 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });\n  40 |   await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();\n> 41 |   await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();\n     |                                                                                        ^\n  42 | });\n  43 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts:41:88"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:33.030Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts",
+                    "column": 88,
+                    "line": 41
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "81228c4c8886d566ba11-4e2d9fbd72a0a37b008e",
+          "file": "main.spec.ts",
+          "line": 29,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "monitoring.spec.ts",
+      "file": "monitoring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "operator monitoring screen matches a real API aggregate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 873,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:42.033Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "102577bb940c215e04dd-62df62de677eee8ebc99",
+          "file": "monitoring.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "p7-fixes.spec.ts",
+      "file": "p7-fixes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "F2 policy: a value typed right after entering the page is the value that gets validated",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3660,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:43.083Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-ed1766b6dd21279b32b5",
+          "file": "p7-fixes.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:46.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-a32004ea3bc27ed3aa62",
+          "file": "p7-fixes.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "F4 list: a request created in another tab appears without reloading a tab that has nothing selected",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:51.792Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-45e0071225f2ef65184a",
+          "file": "p7-fixes.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "F5 result: provisional → final does not move the content (layout-shift after the provisional card)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2612,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "P7_F5_LAYOUT_SHIFT 0.00000\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:56.741Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-9d4a3c1be405227e7023",
+          "file": "p7-fixes.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 121080,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.provisional-result')\nExpected: visible\nTimeout: 120000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.provisional-result') with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('.provisional-result')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.provisional-result')\nExpected: visible\nTimeout: 120000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.provisional-result') with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('.provisional-result')\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts:104:55",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts",
+                      "column": 55,
+                      "line": 104
+                    },
+                    "snippet": "  102 |     await page.getByRole('button', { name: '요청 보내기' }).click();\n  103 |     await page.evaluate(() => window.scrollTo(0, 200)); // scrolled state: regions are measured in document coordinates\n> 104 |     await expect(page.locator('.provisional-result')).toBeVisible({ timeout: 120_000 });\n      |                                                       ^\n  105 |     await expect(page.locator('.result-stack:not(.provisional-result) .summary-text')).toHaveText(/\\S/, { timeout: 120_000 });\n  106 |     await page.waitForTimeout(500);\n  107 |     const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts",
+                        "column": 55,
+                        "line": 104
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.provisional-result')\nExpected: visible\nTimeout: 120000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.provisional-result') with timeout 120000ms\u001b[22m\n\u001b[2m  - waiting for locator('.provisional-result')\u001b[22m\n\n\n  102 |     await page.getByRole('button', { name: '요청 보내기' }).click();\n  103 |     await page.evaluate(() => window.scrollTo(0, 200)); // scrolled state: regions are measured in document coordinates\n> 104 |     await expect(page.locator('.provisional-result')).toBeVisible({ timeout: 120_000 });\n      |                                                       ^\n  105 |     await expect(page.locator('.result-stack:not(.provisional-result) .summary-text')).toHaveText(/\\S/, { timeout: 120_000 });\n  106 |     await page.waitForTimeout(500);\n  107 |     const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts:104:55"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:47:59.360Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/p7-fixes-F5-residue-uncert-3e21f-x-from-provisional-to-final-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/p7-fixes-F5-residue-uncert-3e21f-x-from-provisional-to-final-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts",
+                    "column": 55,
+                    "line": 104
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-bd8f71eeef8e75b6e1e2",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 3
+        },
+        {
+          "title": "F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4737,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "UX7_F5 possible {\"prov\":{\"summary\":-43.5,\"summary.0\":28,\"summary.1\":46.5,\"summary.2\":19.5,\"summary.3\":22.5,\"judgment\":109,\"judgmentHeight\":288.5,\"card0.0\":19.5,\"card0.1\":25.5,\"card0.2\":19.5,\"card0.3\":28,\"tasks\":409.5},\"final\":{\"summary\":-43.5,\"summary.0\":28,\"summary.1\":46.5,\"summary.2\":19.5,\"summary.3\":22.5,\"judgment\":109,\"judgmentHeight\":288.5,\"card0.0\":19.5,\"card0.1\":25.5,\"card0.2\":19.5,\"card0.3\":28,\"tasks\":409.5},\"uncertain\":1}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:01.935Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-4825a2b8d86c70491364",
+          "file": "p7-fixes.spec.ts",
+          "line": 81,
+          "column": 3
+        },
+        {
+          "title": "F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:06.914Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "71e03045ba9f3ca96c00-23b7c3cddd4ff5e6d4c3",
+          "file": "p7-fixes.spec.ts",
+          "line": 114,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "policy.spec.ts",
+      "file": "policy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "validate, publish, inspect history, and rollback policy on live API",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1976,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:08.818Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e56a23318734f05129b2-51551c9a14aecf25ed1c",
+          "file": "policy.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "progressive-results.spec.ts",
+      "file": "progressive-results.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "submit → optimistic bubble → provisional cards → final result, with measured timings",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "timings",
+                  "description": "{\"click_to_optimistic_ms\":482,\"click_to_provisional_ms\":3411,\"click_to_final_ms\":3411}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9756,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PROGRESSIVE_TIMINGS {\"click_to_optimistic_ms\":482,\"click_to_provisional_ms\":3411,\"click_to_final_ms\":3411}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:27.591Z",
+                  "annotations": [
+                    {
+                      "type": "timings",
+                      "description": "{\"click_to_optimistic_ms\":482,\"click_to_provisional_ms\":3411,\"click_to_final_ms\":3411}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/progressive-results-submit-90a7a-esult-with-measured-timings-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "186835faa27520c23d3a-518cce37cd3586680356",
+          "file": "progressive-results.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "rem-ui.spec.ts",
+      "file": "rem-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "review queue title and masked detail respect source permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:10.824Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "844e62d805c2be94389d-697c328c43a172ba194e",
+          "file": "rem-ui.spec.ts",
+          "line": 14,
+          "column": 1
+        },
+        {
+          "title": "source-reading reviewer can see the submitted text in review detail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1139,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:17.206Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "844e62d805c2be94389d-f03eae334a9033874538",
+          "file": "rem-ui.spec.ts",
+          "line": 32,
+          "column": 1
+        },
+        {
+          "title": "source reader sees the original and result identifiers stay compact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1312,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": ""
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:50:18.360Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "844e62d805c2be94389d-503eb1e3dea370e7915f",
+          "file": "rem-ui.spec.ts",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "responsive-overflow.spec.ts",
+      "file": "responsive-overflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "viewport 375px",
+          "file": "responsive-overflow.spec.ts",
+          "line": 28,
+          "column": 8,
+          "specs": [
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:20.938Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-0bd093fb1b811dc0eff0",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6773,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:37.449Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-7f8c23c80557a47e339d",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 5
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1130,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:44.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-71840f759d297259a30a",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 5
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2048,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:45.391Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-cc0febd071104a3bdb84",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 5
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2799,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:47.447Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-31968b1b2b08910bdd71",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6391,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:50.253Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-af3474c4fb6bf2236cd4",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 5
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3497,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:50:56.658Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-9e983dd1cd542975e1fc",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "viewport 520px",
+          "file": "responsive-overflow.spec.ts",
+          "line": 28,
+          "column": 8,
+          "specs": [
+            {
+              "title": "Main with a selected result",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15505,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:00.164Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-5cea1e7a26dcb0e0b1c6",
+              "file": "responsive-overflow.spec.ts",
+              "line": 29,
+              "column": 5
+            },
+            {
+              "title": "Review detail",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7139,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:15.681Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-40f2c273db6dfee3b0c8",
+              "file": "responsive-overflow.spec.ts",
+              "line": 42,
+              "column": 5
+            },
+            {
+              "title": "Monitoring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1094,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:22.832Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-d9473f37c9aa2b8b0205",
+              "file": "responsive-overflow.spec.ts",
+              "line": 55,
+              "column": 5
+            },
+            {
+              "title": "Learning with a selected candidate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2250,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:23.943Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-503936d009f18599542f",
+              "file": "responsive-overflow.spec.ts",
+              "line": 60,
+              "column": 5
+            },
+            {
+              "title": "Tasks with a selected task",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3147,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:26.210Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-8314616063cfbe6bd0b1",
+              "file": "responsive-overflow.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "Observatory with a selected request",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6693,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:29.369Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-52067396d787f90dc60b",
+              "file": "responsive-overflow.spec.ts",
+              "line": 78,
+              "column": 5
+            },
+            {
+              "title": "JudgmentMap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3486,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:51:36.070Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fcc57161be8b9693434f-73a8dab278fb211f5614",
+              "file": "responsive-overflow.spec.ts",
+              "line": 86,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "review-repair.spec.ts",
+      "file": "review-repair.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P1-01 repairs an undetermined draft and approves the final version with HTTP 200",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1556,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:51:39.573Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cdab7c10d05e6961470-e8fcd5ef25d35432b6e1",
+          "file": "review-repair.spec.ts",
+          "line": 35,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "screens-ui.spec.ts",
+      "file": "screens-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1669,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:51:45.245Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-8984d81d475f5e67fe75",
+          "file": "screens-ui.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1023,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:51:46.922Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-cf3e1b5881faf9419c4c",
+          "file": "screens-ui.spec.ts",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:51:47.957Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a9ab6b02b7c43e25d553-001014e29b3ba4d4ae45",
+          "file": "screens-ui.spec.ts",
+          "line": 41,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "source-viewer/source-viewer.spec.ts",
+      "file": "source-viewer/source-viewer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1356,
+                  "error": {
+                    "message": "SyntaxError: Unexpected end of JSON input",
+                    "stack": "SyntaxError: Unexpected end of JSON input\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:63:27",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                      "column": 27,
+                      "line": 63
+                    },
+                    "snippet": "  61 |   expect(count).toBeGreaterThan(0);\n  62 |   for (let index = 0; index < count; index += 1) {\n> 63 |     const button = buttons.nth(index);\n     |                           ^\n  64 |     const text = (await button.textContent()) || '';\n  65 |     const location = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));\n  66 |     await button.click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "column": 27,
+                        "line": 63
+                      },
+                      "message": "SyntaxError: Unexpected end of JSON input\n\n  61 |   expect(count).toBeGreaterThan(0);\n  62 |   for (let index = 0; index < count; index += 1) {\n> 63 |     const button = buttons.nth(index);\n     |                           ^\n  64 |     const text = (await button.textContent()) || '';\n  65 |     const location = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));\n  66 |     await button.click();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:63:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:51:50.727Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "column": 27,
+                    "line": 63
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2b023fab475eba07057f-2eeca15d2c758095db86",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-56d252b426a946dd283f",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 82,
+          "column": 1
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5e068577a81d2148ed12",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 121,
+          "column": 1
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b2a87c8082d9e4b02fec",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-e6f2d5dd42e65fbcf0d5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 185,
+          "column": 1
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-ab03601b9674d6588e6b",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 237,
+          "column": 1
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:11.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-03bea53ef82169a00371",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 246,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "task-blocker.spec.ts",
+      "file": "task-blocker.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "completed confirmation enables the main task from server readiness projection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:15.113Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7aa1fe7fd6642553605f-2b6c51bb576eed4c73cc",
+          "file": "task-blocker.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "server projected blockers keep start disabled and explain why",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3742,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:19.769Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7aa1fe7fd6642553605f-d5e1c56b4a418cca96e9",
+          "file": "task-blocker.spec.ts",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "webmcp.spec.ts",
+      "file": "webmcp.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "application remains usable with or without WebMCP support",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:52:23.677Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7f3f65a13ac5a2340f2f-cba33b1d79d466fd2efd",
+          "file": "webmcp.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T05:43:44.183Z",
+    "duration": 536505.982,
+    "expected": 53,
+    "skipped": 34,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}

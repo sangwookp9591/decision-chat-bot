@@ -1,0 +1,41 @@
+
+Running 1 test using 1 worker
+
+(node:40945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+UX7_F5 possible {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✘  1 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (7.9s)
+
+
+  1) [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 
+
+    Error: fixture must exercise the possible result layout
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      108 |     console.log('UX7_F5', sentence.name, JSON.stringify({ prov, final, uncertain }));
+      109 |     if (process.env.JEV_MODE === 'mock') {
+    > 110 |       expect(uncertain, `fixture must exercise the ${sentence.name} result layout`).toBe(sentence.name === 'uncertain' ? 1 : 0);
+          |                                                                                     ^
+      111 |     }
+      112 |     expect(prov, 'provisional layout captured').not.toBeNull(); expect(final, 'final layout captured').not.toBeNull();
+      113 |     for (const key of ['summary', 'judgment', 'tasks', 'judgmentHeight']) expect(Math.abs(final![key] - prov![key]), `${key}: ${prov![key]} → ${final![key]}`).toBeLessThanOrEqual(4);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts:110:85
+
+    Error Context: ../artifacts/review/e2e-all/p7-fixture-red-results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/p7-fixture-red-results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/p7-fixture-red-results/p7-fixes-F5-residue-possib-a1c5d-x-from-provisional-to-final-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 

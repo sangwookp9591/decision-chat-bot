@@ -1,0 +1,119 @@
+
+Running 20 tests using 1 worker
+
+(node:51744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (6.6s)
+  ✓   2 [chromium] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (10.1s)
+  ✓   3 [chromium] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (15.3s)
+  ✓   4 [chromium] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (10.1s)
+  ✓   5 [chromium] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence (9.3s)
+  ✓   6 [chromium] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate (36.1s)
+  ✘   7 [chromium] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks (1.2m)
+  -   8 [chromium] › e2e/acceptance/scenarios.spec.ts:240:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -   9 [chromium] › e2e/acceptance/scenarios.spec.ts:272:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  10 [chromium] › e2e/acceptance/scenarios.spec.ts:292:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+(node:57970) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57970) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [webkit] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (11.4s)
+  ✓  12 [webkit] › e2e/acceptance/scenarios.spec.ts:77:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무 (21.1s)
+  ✓  13 [webkit] › e2e/acceptance/scenarios.spec.ts:103:1 › S3 urgent request: reasons, review and priority on screen (28.5s)
+  ✘  14 [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted (26.1s)
+  -  15 [webkit] › e2e/acceptance/scenarios.spec.ts:155:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -  16 [webkit] › e2e/acceptance/scenarios.spec.ts:182:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -  17 [webkit] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -  18 [webkit] › e2e/acceptance/scenarios.spec.ts:240:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -  19 [webkit] › e2e/acceptance/scenarios.spec.ts:272:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  20 [webkit] › e2e/acceptance/scenarios.spec.ts:292:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: '이전 실행 비교' })
+    Expected: visible
+    Timeout: 60000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: '이전 실행 비교' }) with timeout 60000ms
+      - waiting for getByRole('heading', { name: '이전 실행 비교' })
+
+
+      231 |   await rq.page.reload();
+      232 |   await rq.page.getByText(s2).first().click();
+    > 233 |   await expect(rq.page.getByRole('heading', { name: '이전 실행 비교' })).toBeVisible({ timeout: 60_000 });
+          |                                                                    ^
+      234 |   const after = await (await rv.api.get(`/api/tasks?request_id=${s2}`)).json();
+      235 |   expect(after.tasks.map((t: any) => t.id).sort()).toEqual(before.tasks.map((t: any) => t.id).sort());
+      236 |   await shot(rq.page, 's7-reanalysis-comparison');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:233:68
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S7-re-e7007-nguished-no-duplicate-tasks-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S7-re-e7007-nguished-no-duplicate-tasks-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S7-re-e7007-nguished-no-duplicate-tasks-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByText('req_e1ed4b8a16c64e1d912aaf6d17e95576').first()
+        - locator resolved to <span class="sr-only">req_e1ed4b8a16c64e1d912aaf6d17e95576</span>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <section class="main-page chat-page">…</section> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <section class="main-page chat-page">…</section> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+
+
+      133 |   await pendingReview(rv, s4);
+      134 |   await rq.page.goto('/');
+    > 135 |   await rq.page.getByText(s4).first().click();
+          |                                       ^
+      136 |   await expect(finalResult(rq.page)).toBeVisible();
+      137 |   await rq.page.getByRole('button', { name: '자세히 보기' }).last().click();
+      138 |   await expect(rq.page.getByRole('dialog', { name: '판단 상세' })).toContainText('검토 사유');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:135:39
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-v5-results/acceptance-scenarios-S4-in-6736b-keeps-everything-unexecuted-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:219:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks 
+    [webkit] › e2e/acceptance/scenarios.spec.ts:130:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted 
+  9 did not run
+  9 passed (4.4m)

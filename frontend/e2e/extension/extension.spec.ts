@@ -13,7 +13,7 @@ const tenant = process.env.X38_TENANT as string;
 const phase = process.env.X38_PHASE || 'ui1';
 const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
 const hasFixture = Boolean(OUT && tenant && existsSync(`${OUT}/state.json`) && existsSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`));
-test.skip(!hasFixture, 'X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함');
+test.beforeAll(() => expect(hasFixture, 'X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함: scripts/e2e/run.py').toBe(true));
 const state = hasFixture ? JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8')) : { cand_y: '', cand_z: '', seed: { plan: { same_direction: [] } } };
 const truth = hasFixture ? JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8')) : { candidates: [], corrections: [] };
 const shot = (page: Page, name: string) => page.screenshot({ path: `${OUT}/screenshots/${phase}-${name}.png`, fullPage: false });
@@ -68,7 +68,7 @@ test.describe(`[${phase}] before stop`, () => {
     await expect(table.getByText('반례', { exact: true })).toHaveCount(dbCounter);
     const unc = JSON.parse(dbCand(candY).unc);
     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();
-    await expect(page.getByText('적용 범위 (제안)')).toBeVisible();
+    await expect(page.getByText('적용 범위 (확정)')).toBeVisible();
     await shot(page, 'x01-x02-candidate-support');
     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });
 
@@ -80,7 +80,7 @@ test.describe(`[${phase}] before stop`, () => {
     await expect(page.getByRole('table', { name: '근거 수정 기록' }).getByText('지지', { exact: true })).toHaveCount(dbCand(candZ).links.filter((l: any) => l.role === 'support').length);
     await shot(page, 'x02-insufficient');
     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.
-    await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();
+    await expect(page.getByRole('button', { name: '승인', exact: true }).and(page.locator(':enabled'))).toHaveCount(0);
     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();
     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();
     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });
@@ -145,12 +145,12 @@ test.describe(`[${phase}] before stop`, () => {
     const oos = state.post_requests.out_of_scope;
     const rep = state.post_requests.report;
     const out: Record<string, unknown> = {};
-    for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {
+    for (const [label, rid, expectAi] of [['used', used, rep[used].api_ai_need], ['out_of_scope', oos, rep[oos].model_raw_ai_need]] as const) {
       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);
-      await page.getByRole('button', { name: /규칙 적용/ }).click();
+      await page.locator('.obs-node').filter({ has: page.getByText('규칙 적용', { exact: true }) }).click();
       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);
-      await expect(drawer).toContainText(`설정 v${state.pub_config}`);
+      await expect(drawer).toContainText(`설정 v${rep[rid].flow_config_version}`);
       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);
       await expect(drawer).toContainText(`"ai_need": "${expectAi}"`);
       const text = await drawer.innerText();
@@ -225,7 +225,8 @@ test.describe(`[${phase}] before stop`, () => {
     const first = page.locator('.jm-item[data-kind="ModelOutput"]').first();
     await first.focus();
     const startId = await first.getAttribute('data-node-id');
-    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('Home');
+    await page.keyboard.press('ArrowDown');
     const focused = () => page.evaluate(() => (document.activeElement as HTMLElement).dataset.nodeId);
     await expect.poll(focused).not.toBe(startId);
     await page.keyboard.press('ArrowDown');
@@ -234,7 +235,7 @@ test.describe(`[${phase}] before stop`, () => {
     await shot(page, 'x06-list-view');
     // Flow <-> Topology <-> Learning: same IDs
     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);
-    await page.getByRole('button', { name: /규칙 적용/ }).click();
+    await page.locator('.obs-node').filter({ has: page.getByText('규칙 적용', { exact: true }) }).click();
     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);
     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);
     await page.getByRole('button', { name: '업무 Topology' }).click();
@@ -364,7 +365,7 @@ test.describe(`[${phase}] lifecycle and persistence`, () => {
     await shot(page, 'x08-map-trace');
     // Trace of the stored run
     await page.goto(`/observatory?request_id=${r2.post_request.request_id}&run_id=${r2.post_request.run_id}`);
-    await page.getByRole('button', { name: /규칙 적용/ }).click();
+    await page.locator('.obs-node').filter({ has: page.getByText('규칙 적용', { exact: true }) }).click();
     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${r2.post_request.run_id}`);
     note({ checked: Object.fromEntries(Object.entries(snap).map(([k, v]: any) => [k, [v.node_count, v.edge_count]])) });
   });

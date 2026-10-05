@@ -1,0 +1,457 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results",
+      "--config=e2e/all.config.ts",
+      "--project=chromium",
+      "source-viewer"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "source-viewer/source-viewer.spec.ts",
+      "file": "source-viewer/source-viewer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "result card evidence opens the source viewer on the cited unit and highlights it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 0,
+                  "error": {
+                    "message": "Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005\nCypher query lacks a tenant parameter\nCypher query lacks a tenant parameter\nTraceback (most recent call last):\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 56, in <module>\n    asyncio.run(seed())\n    ~~~~~~~~~~~^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 205, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 128, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py\", line 719, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 52, in seed\n    await write_tx(TENANT, op)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 114, in write_tx\n    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 756, in execute_write\n    return await self._run_transaction(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n    )\n    ^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 579, in _run_transaction\n    result = await transaction_function(tx, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 108, in attempt\n    result = await fn(TenantTx(tx, tenant_id))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 28, in op\n    await (await tx.run(\n           ^^^^^^^^^^^^^\n    ...<6 lines>...\n        t=TENANT, org=f\"{TENANT}-ai\")).consume()\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 46, in run\n    return await self._tx.run(query, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py\", line 201, in run\n    await result._tx_ready_run(query, parameters)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 180, in _tx_ready_run\n    await self._run(query, parameters, None, None, None, None, None, None)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 240, in _run\n    await self._attach()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 441, in _attach\n    await self._connection.fetch_message()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 204, in inner\n    await coroutine_func(*args, **kwargs)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py\", line 855, in fetch_message\n    res = await self._process_message(tag, fields)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py\", line 1197, in _process_message\n    await response.on_failure(summary_metadata or {})\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 263, in on_failure\n    raise self._hydrate_error(metadata)\nneo4j.exceptions.ConstraintError: {neo4j_code: Neo.ClientError.Schema.ConstraintValidationFailed} {message: Node(62539) already exists with label `Request` and property `id` = 'ux2seed_req'} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}\n",
+                    "stack": "Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005\nCypher query lacks a tenant parameter\nCypher query lacks a tenant parameter\nTraceback (most recent call last):\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 56, in <module>\n    asyncio.run(seed())\n    ~~~~~~~~~~~^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 205, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 128, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py\", line 719, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 52, in seed\n    await write_tx(TENANT, op)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 114, in write_tx\n    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 756, in execute_write\n    return await self._run_transaction(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n    )\n    ^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 579, in _run_transaction\n    result = await transaction_function(tx, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 108, in attempt\n    result = await fn(TenantTx(tx, tenant_id))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 28, in op\n    await (await tx.run(\n           ^^^^^^^^^^^^^\n    ...<6 lines>...\n        t=TENANT, org=f\"{TENANT}-ai\")).consume()\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 46, in run\n    return await self._tx.run(query, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py\", line 201, in run\n    await result._tx_ready_run(query, parameters)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 180, in _tx_ready_run\n    await self._run(query, parameters, None, None, None, None, None, None)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 240, in _run\n    await self._attach()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 441, in _attach\n    await self._connection.fetch_message()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 204, in inner\n    await coroutine_func(*args, **kwargs)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py\", line 855, in fetch_message\n    res = await self._process_message(tag, fields)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py\", line 1197, in _process_message\n    await response.on_failure(summary_metadata or {})\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 263, in on_failure\n    raise self._hydrate_error(metadata)\nneo4j.exceptions.ConstraintError: {neo4j_code: Neo.ClientError.Schema.ConstraintValidationFailed} {message: Node(62539) already exists with label `Request` and property `id` = 'ux2seed_req'} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:36:3",
+                    "location": {
+                      "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                      "column": 3,
+                      "line": 36
+                    },
+                    "snippet": "  34 | test.beforeAll(async ({ browser }, info) => {\n  35 |   test.setTimeout(480_000);\n> 36 |   execFileSync('../backend/.venv/bin/python', ['e2e/source-viewer/seed.py', tenant]);\n     |   ^\n  37 |   const baseURL = info.project.use.baseURL as string;\n  38 |   owner = await actor(browser, baseURL, 'source_reader');\n  39 |   for (let attempt = 1; attempt <= 3 && !requestId; attempt += 1) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "column": 3,
+                        "line": 36
+                      },
+                      "message": "Error: Command failed: ../backend/.venv/bin/python e2e/source-viewer/seed.py t-e2e-all-1005\nCypher query lacks a tenant parameter\nCypher query lacks a tenant parameter\nTraceback (most recent call last):\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 56, in <module>\n    asyncio.run(seed())\n    ~~~~~~~~~~~^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 205, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py\", line 128, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py\", line 719, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 52, in seed\n    await write_tx(TENANT, op)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 114, in write_tx\n    result = await session.execute_write(unit_of_work(timeout=timeout)(attempt))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 756, in execute_write\n    return await self._run_transaction(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n    )\n    ^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/session.py\", line 579, in _run_transaction\n    result = await transaction_function(tx, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 108, in attempt\n    result = await fn(TenantTx(tx, tenant_id))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/seed.py\", line 28, in op\n    await (await tx.run(\n           ^^^^^^^^^^^^^\n    ...<6 lines>...\n        t=TENANT, org=f\"{TENANT}-ai\")).consume()\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/jevtriage/db/tx.py\", line 46, in run\n    return await self._tx.run(query, **params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/transaction.py\", line 201, in run\n    await result._tx_ready_run(query, parameters)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 180, in _tx_ready_run\n    await self._run(query, parameters, None, None, None, None, None, None)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 240, in _run\n    await self._attach()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/work/result.py\", line 441, in _attach\n    await self._connection.fetch_message()\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 204, in inner\n    await coroutine_func(*args, **kwargs)\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt.py\", line 855, in fetch_message\n    res = await self._process_message(tag, fields)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_bolt5.py\", line 1197, in _process_message\n    await response.on_failure(summary_metadata or {})\n  File \"/Users/psw/Projects/decision-chat-bot/backend/.venv/lib/python3.14/site-packages/neo4j/_async/io/_common.py\", line 263, in on_failure\n    raise self._hydrate_error(metadata)\nneo4j.exceptions.ConstraintError: {neo4j_code: Neo.ClientError.Schema.ConstraintValidationFailed} {message: Node(62539) already exists with label `Request` and property `id` = 'ux2seed_req'} {gql_status: 50N42} {gql_status_description: error: general processing exception - unexpected error. Unexpected error has occurred. See debug log for details.}\n\n\n  34 | test.beforeAll(async ({ browser }, info) => {\n  35 |   test.setTimeout(480_000);\n> 36 |   execFileSync('../backend/.venv/bin/python', ['e2e/source-viewer/seed.py', tenant]);\n     |   ^\n  37 |   const baseURL = info.project.use.baseURL as string;\n  38 |   owner = await actor(browser, baseURL, 'source_reader');\n  39 |   for (let attempt = 1; attempt <= 3 && !requestId; attempt += 1) {\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:36:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "Q3lwaGVyIHF1ZXJ5IGxhY2tzIGEgdGVuYW50IHBhcmFtZXRlcgpDeXBoZXIgcXVlcnkgbGFja3MgYSB0ZW5hbnQgcGFyYW1ldGVyClRyYWNlYmFjayAobW9zdCByZWNlbnQgY2FsbCBsYXN0KToKICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2Zyb250ZW5kL2UyZS9zb3VyY2Utdmlld2VyL3NlZWQucHkiLCBsaW5lIDU2LCBpbiA8bW9kdWxlPgogICAgYXN5bmNpby5ydW4oc2VlZCgpKQogICAgfn5+fn5+fn5+fn5eXl5eXl5eXgogIEZpbGUgIi9MaWJyYXJ5L0ZyYW1ld29ya3MvUHl0aG9uLmZyYW1ld29yay9WZXJzaW9ucy8zLjE0L2xpYi9weXRob24zLjE0L2FzeW5jaW8vcnVubmVycy5weSIsIGxpbmUgMjA1LCBpbiBydW4KICAgIHJldHVybiBydW5uZXIucnVuKG1haW4pCiAgICAgICAgICAgfn5+fn5+fn5+fl5eXl5eXgogIEZpbGUgIi9MaWJyYXJ5L0ZyYW1ld29ya3MvUHl0aG9uLmZyYW1ld29yay9WZXJzaW9ucy8zLjE0L2xpYi9weXRob24zLjE0L2FzeW5jaW8vcnVubmVycy5weSIsIGxpbmUgMTI4LCBpbiBydW4KICAgIHJldHVybiBzZWxmLl9sb29wLnJ1bl91bnRpbF9jb21wbGV0ZSh0YXNrKQogICAgICAgICAgIH5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+Xl5eXl5eCiAgRmlsZSAiL0xpYnJhcnkvRnJhbWV3b3Jrcy9QeXRob24uZnJhbWV3b3JrL1ZlcnNpb25zLzMuMTQvbGliL3B5dGhvbjMuMTQvYXN5bmNpby9iYXNlX2V2ZW50cy5weSIsIGxpbmUgNzE5LCBpbiBydW5fdW50aWxfY29tcGxldGUKICAgIHJldHVybiBmdXR1cmUucmVzdWx0KCkKICAgICAgICAgICB+fn5+fn5+fn5+fn5+Xl4KICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2Zyb250ZW5kL2UyZS9zb3VyY2Utdmlld2VyL3NlZWQucHkiLCBsaW5lIDUyLCBpbiBzZWVkCiAgICBhd2FpdCB3cml0ZV90eChURU5BTlQsIG9wKQogIEZpbGUgIi9Vc2Vycy9wc3cvUHJvamVjdHMvZGVjaXNpb24tY2hhdC1ib3QvYmFja2VuZC9qZXZ0cmlhZ2UvZGIvdHgucHkiLCBsaW5lIDExNCwgaW4gd3JpdGVfdHgKICAgIHJlc3VsdCA9IGF3YWl0IHNlc3Npb24uZXhlY3V0ZV93cml0ZSh1bml0X29mX3dvcmsodGltZW91dD10aW1lb3V0KShhdHRlbXB0KSkKICAgICAgICAgICAgIF5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl4KICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2JhY2tlbmQvLnZlbnYvbGliL3B5dGhvbjMuMTQvc2l0ZS1wYWNrYWdlcy9uZW80ai9fYXN5bmMvd29yay9zZXNzaW9uLnB5IiwgbGluZSA3NTYsIGluIGV4ZWN1dGVfd3JpdGUKICAgIHJldHVybiBhd2FpdCBzZWxmLl9ydW5fdHJhbnNhY3Rpb24oCiAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgogICAgLi4uPDUgbGluZXM+Li4uCiAgICApCiAgICBeCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9iYWNrZW5kLy52ZW52L2xpYi9weXRob24zLjE0L3NpdGUtcGFja2FnZXMvbmVvNGovX2FzeW5jL3dvcmsvc2Vzc2lvbi5weSIsIGxpbmUgNTc5LCBpbiBfcnVuX3RyYW5zYWN0aW9uCiAgICByZXN1bHQgPSBhd2FpdCB0cmFuc2FjdGlvbl9mdW5jdGlvbih0eCwgKmFyZ3MsICoqa3dhcmdzKQogICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl4KICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2JhY2tlbmQvamV2dHJpYWdlL2RiL3R4LnB5IiwgbGluZSAxMDgsIGluIGF0dGVtcHQKICAgIHJlc3VsdCA9IGF3YWl0IGZuKFRlbmFudFR4KHR4LCB0ZW5hbnRfaWQpKQogICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9mcm9udGVuZC9lMmUvc291cmNlLXZpZXdlci9zZWVkLnB5IiwgbGluZSAyOCwgaW4gb3AKICAgIGF3YWl0IChhd2FpdCB0eC5ydW4oCiAgICAgICAgICAgXl5eXl5eXl5eXl5eXgogICAgLi4uPDYgbGluZXM+Li4uCiAgICAgICAgdD1URU5BTlQsIG9yZz1mIntURU5BTlR9LWFpIikpLmNvbnN1bWUoKQogICAgICAgIF5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9iYWNrZW5kL2pldnRyaWFnZS9kYi90eC5weSIsIGxpbmUgNDYsIGluIHJ1bgogICAgcmV0dXJuIGF3YWl0IHNlbGYuX3R4LnJ1bihxdWVyeSwgKipwYXJhbXMpCiAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl4KICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2JhY2tlbmQvLnZlbnYvbGliL3B5dGhvbjMuMTQvc2l0ZS1wYWNrYWdlcy9uZW80ai9fYXN5bmMvd29yay90cmFuc2FjdGlvbi5weSIsIGxpbmUgMjAxLCBpbiBydW4KICAgIGF3YWl0IHJlc3VsdC5fdHhfcmVhZHlfcnVuKHF1ZXJ5LCBwYXJhbWV0ZXJzKQogIEZpbGUgIi9Vc2Vycy9wc3cvUHJvamVjdHMvZGVjaXNpb24tY2hhdC1ib3QvYmFja2VuZC8udmVudi9saWIvcHl0aG9uMy4xNC9zaXRlLXBhY2thZ2VzL25lbzRqL19hc3luYy93b3JrL3Jlc3VsdC5weSIsIGxpbmUgMTgwLCBpbiBfdHhfcmVhZHlfcnVuCiAgICBhd2FpdCBzZWxmLl9ydW4ocXVlcnksIHBhcmFtZXRlcnMsIE5vbmUsIE5vbmUsIE5vbmUsIE5vbmUsIE5vbmUsIE5vbmUpCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9iYWNrZW5kLy52ZW52L2xpYi9weXRob24zLjE0L3NpdGUtcGFja2FnZXMvbmVvNGovX2FzeW5jL3dvcmsvcmVzdWx0LnB5IiwgbGluZSAyNDAsIGluIF9ydW4KICAgIGF3YWl0IHNlbGYuX2F0dGFjaCgpCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9iYWNrZW5kLy52ZW52L2xpYi9weXRob24zLjE0L3NpdGUtcGFja2FnZXMvbmVvNGovX2FzeW5jL3dvcmsvcmVzdWx0LnB5IiwgbGluZSA0NDEsIGluIF9hdHRhY2gKICAgIGF3YWl0IHNlbGYuX2Nvbm5lY3Rpb24uZmV0Y2hfbWVzc2FnZSgpCiAgRmlsZSAiL1VzZXJzL3Bzdy9Qcm9qZWN0cy9kZWNpc2lvbi1jaGF0LWJvdC9iYWNrZW5kLy52ZW52L2xpYi9weXRob24zLjE0L3NpdGUtcGFja2FnZXMvbmVvNGovX2FzeW5jL2lvL19jb21tb24ucHkiLCBsaW5lIDIwNCwgaW4gaW5uZXIKICAgIGF3YWl0IGNvcm91dGluZV9mdW5jKCphcmdzLCAqKmt3YXJncykKICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2JhY2tlbmQvLnZlbnYvbGliL3B5dGhvbjMuMTQvc2l0ZS1wYWNrYWdlcy9uZW80ai9fYXN5bmMvaW8vX2JvbHQucHkiLCBsaW5lIDg1NSwgaW4gZmV0Y2hfbWVzc2FnZQogICAgcmVzID0gYXdhaXQgc2VsZi5fcHJvY2Vzc19tZXNzYWdlKHRhZywgZmllbGRzKQogICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgogIEZpbGUgIi9Vc2Vycy9wc3cvUHJvamVjdHMvZGVjaXNpb24tY2hhdC1ib3QvYmFja2VuZC8udmVudi9saWIvcHl0aG9uMy4xNC9zaXRlLXBhY2thZ2VzL25lbzRqL19hc3luYy9pby9fYm9sdDUucHkiLCBsaW5lIDExOTcsIGluIF9wcm9jZXNzX21lc3NhZ2UKICAgIGF3YWl0IHJlc3BvbnNlLm9uX2ZhaWx1cmUoc3VtbWFyeV9tZXRhZGF0YSBvciB7fSkKICBGaWxlICIvVXNlcnMvcHN3L1Byb2plY3RzL2RlY2lzaW9uLWNoYXQtYm90L2JhY2tlbmQvLnZlbnYvbGliL3B5dGhvbjMuMTQvc2l0ZS1wYWNrYWdlcy9uZW80ai9fYXN5bmMvaW8vX2NvbW1vbi5weSIsIGxpbmUgMjYzLCBpbiBvbl9mYWlsdXJlCiAgICByYWlzZSBzZWxmLl9oeWRyYXRlX2Vycm9yKG1ldGFkYXRhKQpuZW80ai5leGNlcHRpb25zLkNvbnN0cmFpbnRFcnJvcjoge25lbzRqX2NvZGU6IE5lby5DbGllbnRFcnJvci5TY2hlbWEuQ29uc3RyYWludFZhbGlkYXRpb25GYWlsZWR9IHttZXNzYWdlOiBOb2RlKDYyNTM5KSBhbHJlYWR5IGV4aXN0cyB3aXRoIGxhYmVsIGBSZXF1ZXN0YCBhbmQgcHJvcGVydHkgYGlkYCA9ICd1eDJzZWVkX3JlcSd9IHtncWxfc3RhdHVzOiA1ME40Mn0ge2dxbF9zdGF0dXNfZGVzY3JpcHRpb246IGVycm9yOiBnZW5lcmFsIHByb2Nlc3NpbmcgZXhjZXB0aW9uIC0gdW5leHBlY3RlZCBlcnJvci4gVW5leHBlY3RlZCBlcnJvciBoYXMgb2NjdXJyZWQuIFNlZSBkZWJ1ZyBsb2cgZm9yIGRldGFpbHMufQo="
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:31.575Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/source-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "column": 3,
+                    "line": 36
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2b023fab475eba07057f-2eeca15d2c758095db86",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.890Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-56d252b426a946dd283f",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 86,
+          "column": 1
+        },
+        {
+          "title": "without source permission the viewer shows positions only and the server sends no text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.891Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-5e068577a81d2148ed12",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 125,
+          "column": 1
+        },
+        {
+          "title": "review detail and judgment-map evidence nodes open the same viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.891Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-b2a87c8082d9e4b02fec",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 158,
+          "column": 1
+        },
+        {
+          "title": "judgment map: version tabs filter nodes and links, zoom controls and expanded view work",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.891Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-e6f2d5dd42e65fbcf0d5",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 190,
+          "column": 1
+        },
+        {
+          "title": "version area is an empty state when the criteria have no rule versions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.892Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-ab03601b9674d6588e6b",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 243,
+          "column": 1
+        },
+        {
+          "title": "axe: source viewer, version tabs and expanded map have no critical or serious violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T05:53:35.892Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "2b023fab475eba07057f-03bea53ef82169a00371",
+          "file": "source-viewer/source-viewer.spec.ts",
+          "line": 252,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T05:53:30.398Z",
+    "duration": 5517.687,
+    "expected": 0,
+    "skipped": 6,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -4,7 +4,7 @@ const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
 type Graph = { nodes: Array<{ id: string; kind: string; layer: number }>; edges: unknown[]; node_count: number; edge_count: number; layers: Array<{ layer: number; count: number }> };
 
 async function login(api: APIRequestContext, role: string) {
-  const response = await api.post('/api/auth/login', { data: { email: `${role}@t-alpha.dev`, password } });
+  const response = await api.post('/api/auth/login', { data: { email: `${role}@${process.env.E2E_TENANT || 't-alpha'}.dev`, password } });
   expect(response.ok(), `login ${role} failed: ${response.status()}`).toBeTruthy();
   const state = await api.storageState();
   return state.cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';

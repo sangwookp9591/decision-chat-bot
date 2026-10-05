@@ -13,7 +13,7 @@ const tenant = process.env.X38_TENANT as string;
 const phase = process.env.X38_PHASE || 'r1';
 const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
 const hasFixture = Boolean(OUT && tenant && existsSync(`${OUT}/state.json`) && existsSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`));
-test.skip(!hasFixture, 'X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함');
+test.beforeAll(() => expect(hasFixture, 'X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함: scripts/e2e/run.py').toBe(true));
 const state = hasFixture ? JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8')) : {};
 const truth = hasFixture ? JSON.parse(readFileSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`, 'utf8')) : { applied: [] };
 const shot = (page: Page, name: string) => page.screenshot({ path: `${OUT}/screenshots/${phase}-${name}.png`, fullPage: false });
@@ -36,7 +36,7 @@ const jsonText = (v: unknown) => JSON.stringify(v);
 /** Open the Trace of a run, open its "규칙 적용" step and compare the drawer table with the step API (and the stored APPLIED rows). */
 async function traceRuleTable(page: Page, api: APIRequestContext, requestId: string, runId: string, stepId: string, dbApplied: any[]) {
   await page.goto(`/observatory?request_id=${requestId}&run_id=${runId}`);
-  await page.getByRole('button', { name: /규칙 적용/ }).click();
+  await page.locator('.obs-node').filter({ has: page.getByText('규칙 적용', { exact: true }) }).click();
   const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
   await expect(drawer).toContainText(`실행 ${runId}`);
   await expect(drawer).toContainText(stepId);
@@ -104,19 +104,24 @@ test.describe(`[${phase}] T38-R fixes`, () => {
     test.setTimeout(90_000);
     const ctx = await as(browser, baseURL as string, 'rule_admin');
     const page = await ctx.newPage();
-    const cid = state.cand_ins_ui as string;
+    const proposer = await as(browser, baseURL as string, 'reviewer');
+    const csrf = (await proposer.storageState()).cookies.find(c => c.name === 'jev_csrf')!.value;
+    const created = await proposer.request.post('/api/learning/candidates', { headers: { 'X-CSRF-Token': csrf }, data: { field: 'ai_need', proposed_action: { set: '혼합' }, scope: { all: [{ field: 'lead_org', op: 'eq', value: '현업' }] }, rationale: '브라우저별 독립 자료 부족 승인 시험', supporting_correction_ids: [] } });
+    expect(created.status()).toBe(201);
+    const cid = (await created.json()).id as string;
+    await proposer.close();
     await page.goto(`/learning?candidate_id=${cid}`);
     await expect(page.getByRole('heading', { name: '규칙 학습', exact: true })).toBeVisible();
     await expect(page.getByText('자료 부족: 효과를 주장하지 않습니다.')).toBeVisible();
     const approve = page.getByRole('button', { name: '승인', exact: true });
     const reason = page.getByLabel('결정 사유');
     const ack = page.getByLabel('자료 부족 상태임을 확인');
-    await page.getByLabel('규칙 ID').fill('R-AI_NEED-03');
+    await page.getByLabel('규칙 ID').fill(`R-BROWSER-${Date.now()}`);
     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');
     await expect(approve).toBeDisabled();                         // reason ok, acknowledgement missing
     await expect(page.getByText('비활성: 자료 부족 확인 체크와 10자 이상 사유가 필요합니다.').first()).toBeVisible();
     await shot(page, 'f5-disabled-without-ack');
-    await ack.check();
+    await ack.focus(); await ack.press('Space');
     await reason.fill('짧은 사유');
     await expect(approve).toBeDisabled();                         // acknowledgement ok, reason too short
     await reason.fill('T38-R 화면 시험: 지지 수정 0건 확인');

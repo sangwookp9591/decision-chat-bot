@@ -1,0 +1,56 @@
+
+Running 5 tests using 1 worker
+
+(node:63598) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:63598) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✓  1 [webkit] › e2e/source-viewer/source-viewer.spec.ts:88:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents (9.0s)
+  ✓  2 [webkit] › e2e/source-viewer/source-viewer.spec.ts:128:1 › without source permission the viewer shows positions only and the server sends no text (3.4s)
+  ✓  3 [webkit] › e2e/source-viewer/source-viewer.spec.ts:160:1 › review detail and judgment-map evidence nodes open the same viewer (6.1s)
+  ✘  4 [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work (22.4s)
+  -  5 [webkit] › e2e/source-viewer/source-viewer.spec.ts:244:1 › version area is an empty state when the criteria have no rule versions
+
+
+  1) [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: '크게 보기' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: '크게 보기' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: '크게 보기' })
+        13 × locator resolved to <button type="button" class="jm-big" aria-pressed="true">크게 보기</button>
+           - unexpected value "inactive"
+
+
+      231 |     await expect(page.locator('.jm-page')).toHaveClass(/is-expanded/);
+      232 |     await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    > 233 |     await expect(toggle).toBeFocused();
+          |                          ^
+      234 |     await expect.poll(async () => (await stage.boundingBox())!.height).toBeGreaterThan(before.height);
+      235 |     await page.screenshot({ path: info.outputPath('map-expanded.png') });
+      236 |     await page.keyboard.press('Escape');
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:233:26
+
+    Error Context: ../artifacts/review/e2e-all/source-rest-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-rest-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-rest-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-rest-results/source-viewer-source-viewe-d18c3-rols-and-expanded-view-work-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:192:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work 
+  1 did not run
+  3 passed (1.0m)

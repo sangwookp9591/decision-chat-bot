@@ -1,0 +1,209 @@
+
+Running 2 tests using 1 worker
+
+(node:79111) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:79111) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✘  1 [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (4.1s)
+(node:79487) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:79487) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+  ✘  2 [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations (7.0s)
+
+
+  1) [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 
+
+    Error: source viewer dialog
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 64
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "targets": Array [
+    +       Array [
+    +         "li:nth-child(2) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(3) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(4) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(5) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(6) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(7) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(8) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(9) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(10) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(11) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(12) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(13) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(14) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(16) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(17) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(19) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(22) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(23) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         ".is-anchor > .ev-hidden",
+    +       ],
+    +     ],
+    +   },
+    + ]
+
+      270 |     await page.getByRole('button', { name: '원문 열기' }).click();
+      271 |     await expect(page.getByRole('dialog')).toBeVisible();
+    > 272 |     expect(await blocking(page), 'source viewer dialog').toEqual([]);
+          |                                                          ^
+      273 |   } finally { await reviewer.context.close(); }
+      274 | });
+      275 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:272:58
+
+    Error Context: ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 
+
+    Error: source viewer dialog
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 61
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "targets": Array [
+    +       Array [
+    +         "li:nth-child(2) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(3) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(4) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(5) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(6) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(7) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(8) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(9) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(10) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(11) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(12) > .is-dim.jm-item[data-kind=\"EvidenceSpan\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(14) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(15) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(16) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(17) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(18) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(19) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +       Array [
+    +         "li:nth-child(21) > .is-dim.jm-item[data-kind=\"ModelOutput\"] > small",
+    +       ],
+    +     ],
+    +   },
+    + ]
+
+      270 |     await page.getByRole('button', { name: '원문 열기' }).click();
+      271 |     await expect(page.getByRole('dialog')).toBeVisible();
+    > 272 |     expect(await blocking(page), 'source viewer dialog').toEqual([]);
+          |                                                          ^
+      273 |   } finally { await reviewer.context.close(); }
+      274 | });
+      275 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:272:58
+
+    Error Context: ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-webkit/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-webkit/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/source-axe-final-results/source-viewer-source-viewe-f7d26-tical-or-serious-violations-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 
+    [webkit] › e2e/source-viewer/source-viewer.spec.ts:253:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations 

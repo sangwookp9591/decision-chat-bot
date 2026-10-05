@@ -1,0 +1,236 @@
+
+Running 16 tests using 1 worker
+
+(node:35473) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35473) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 (9.6s)
+(node:35898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [chromium] › e2e/extension/extension.spec.ts:89:3 › [ui1] before stop › [X03] requester has no access to rule learning; no rule actions exposed (1.0s)
+  ✓   3 [chromium] › e2e/extension/extension.spec.ts:98:3 › [ui1] before stop › [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족 (2.7s)
+  ✘   4 [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (2.7s)
+(node:36228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   5 [chromium] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs (11.7s)
+  -   6 [chromium] › e2e/extension/extension.spec.ts:258:3 › [ui1] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API
+  -   7 [chromium] › e2e/extension/extension.spec.ts:295:3 › [ui1] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)
+  -   8 [chromium] › e2e/extension/extension.spec.ts:345:3 › [ui1] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload
+(node:36763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   9 [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 (9.7s)
+(node:37149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [webkit] › e2e/extension/extension.spec.ts:89:3 › [ui1] before stop › [X03] requester has no access to rule learning; no rule actions exposed (2.6s)
+  ✓  11 [webkit] › e2e/extension/extension.spec.ts:98:3 › [ui1] before stop › [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족 (5.9s)
+  ✘  12 [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value (1.7s)
+(node:37502) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37502) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  13 [webkit] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs (13.2s)
+  -  14 [webkit] › e2e/extension/extension.spec.ts:258:3 › [ui1] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API
+  -  15 [webkit] › e2e/extension/extension.spec.ts:295:3 › [ui1] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)
+  -  16 [webkit] › e2e/extension/extension.spec.ts:345:3 › [ui1] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload
+
+
+  1) [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('적용 범위 (제안)')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('적용 범위 (제안)') with timeout 5000ms
+      - waiting for getByText('적용 범위 (제안)')
+
+
+      69 |     const unc = JSON.parse(dbCand(candY).unc);
+      70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();
+    > 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();
+         |                                                ^
+      72 |     await shot(page, 'x01-x02-candidate-support');
+      73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });
+      74 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:
+        1) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })
+        2) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })
+
+    Call log:
+      - waiting for getByRole('button', { name: /규칙 적용/ })
+
+
+      148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {
+      149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);
+    > 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();
+          |                                                         ^
+      151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
+      152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);
+      153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:
+        1) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })
+        2) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })
+
+    Call log:
+      - waiting for getByRole('button', { name: /규칙 적용/ })
+
+
+      235 |     // Flow <-> Topology <-> Learning: same IDs
+      236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);
+    > 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();
+          |                                                       ^
+      238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);
+      239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);
+      240 |     await page.getByRole('button', { name: '업무 Topology' }).click();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('적용 범위 (제안)')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('적용 범위 (제안)') with timeout 5000ms
+      - waiting for getByText('적용 범위 (제안)')
+
+
+      69 |     const unc = JSON.parse(dbCand(candY).unc);
+      70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();
+    > 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();
+         |                                                ^
+      72 |     await shot(page, 'x01-x02-candidate-support');
+      73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });
+      74 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:
+        1) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })
+        2) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })
+
+    Call log:
+      - waiting for getByRole('button', { name: /규칙 적용/ })
+
+
+      148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {
+      149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);
+    > 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();
+          |                                                         ^
+      151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });
+      152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);
+      153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs 
+
+    Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:
+        1) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })
+        2) <button class="obs-node obs-status obs-succeeded">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })
+
+    Call log:
+      - waiting for getByRole('button', { name: /규칙 적용/ })
+
+
+      235 |     // Flow <-> Topology <-> Learning: same IDs
+      236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);
+    > 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();
+          |                                                       ^
+      238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);
+      239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);
+      240 |     await page.getByRole('button', { name: '업무 Topology' }).click();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55
+
+    Error Context: ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+    [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+    [chromium] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs 
+    [webkit] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족 
+    [webkit] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value 
+    [webkit] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs 
+  6 skipped
+  4 passed (1.2m)

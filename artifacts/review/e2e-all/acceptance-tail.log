@@ -1,0 +1,73 @@
+
+Running 6 tests using 1 worker
+
+(node:11536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (19.7s)
+  ✓  2 [chromium] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer (7.7s)
+  ✘  3 [chromium] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work (754ms)
+(node:12564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing (5.1s)
+  -  5 [webkit] › e2e/acceptance/scenarios.spec.ts:273:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  6 [webkit] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "API_ERROR 404"
+    Received string:    "request_id 입력이 올바르지 않습니다."
+
+      311 |   const gotTrace = await call('get_trace', { run_id: foreignRun });
+      312 |   expect(gotRequest).toMatchObject({ ok: false });
+    > 313 |   expect((gotRequest as { message: string }).message).toContain('API_ERROR 404');
+          |                                                       ^
+      314 |   expect((gotTrace as { message: string }).message).toContain('API_ERROR 404');
+      315 |   const search = await call('search_requests', { limit: 100 }) as { ok: boolean; value: { items: { id: string }[] } };
+      316 |   expect(search.ok).toBe(true);
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:313:55
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-G10-W-22dbf-pported-browsers-still-work-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-G10-W-22dbf-pported-browsers-still-work-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-G10-W-22dbf-pported-browsers-still-work-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing 
+
+    TypeError: Cannot read properties of undefined (reading '0')
+
+      246 |   for (const [name, who, rid] of cases) {
+      247 |     const runs = await (await who.api.get(`/api/requests/${rid}/runs`)).json();
+    > 248 |     const runId = runs.active_run_id || runs.runs[0].id;
+          |                                                  ^
+      249 |     const flow = await (await who.api.get(`/api/observe/runs/${runId}/flow`)).json();
+      250 |     await who.page.goto(`/observatory?request_id=${rid}&run_id=${runId}`);
+      251 |     await expect(who.page.locator('.obs-node').first()).toBeVisible({ timeout: 30_000 });
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:248:50
+
+    Error Context: ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/acceptance-tail-results/acceptance-scenarios-S8-ob-b0b58-d-runs-Play-changes-nothing-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:293:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work 
+    [webkit] › e2e/acceptance/scenarios.spec.ts:241:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing 
+  2 did not run
+  2 passed (38.5s)

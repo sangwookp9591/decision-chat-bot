@@ -1,0 +1,392 @@
+
+Running 95 tests using 1 worker
+
+(node:89060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:89060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e/a11y/a11y.spec.ts:20:1 › login screen has no critical or serious axe violations (1.2s)
+  ✓   2 [chromium] › e2e/a11y/a11y.spec.ts:28:1 › all primary application screens have no critical or serious axe violations (7.7s)
+  ✓   3 [chromium] › e2e/a11y/a11y.spec.ts:48:1 › shell, status, primary color and touch target contracts are visible (1.1s)
+  ✓   4 [chromium] › e2e/a11y/a11y.spec.ts:77:1 › reduced motion and Safari mascot media preference are respected (1.1s)
+  ✓   5 [chromium] › e2e/a11y/a11y.spec.ts:94:1 › conversation is keyboard operable: examples, composer, attach and send need no pointer (1.1s)
+  ✓   6 [chromium] › e2e/a11y/a11y.spec.ts:118:1 › keyboard submits a real request and opens its saved evidence (4.6s)
+  -   7 [chromium] › e2e/acceptance/gates.spec.ts:41:1 › G05 auto-assigned requests: stored Assignment/Task/HAS_TASK/ASSIGNED_TO/PRECEDES appear on the 업무 screen
+  -   8 [chromium] › e2e/acceptance/gates.spec.ts:81:1 › G06 stored relationships (Cypher) == 업무 Topology screen == 업무 screen
+  ✘   9 [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment (0ms)
+  -  10 [chromium] › e2e/acceptance/scenarios.spec.ts:76:1 › S2 mixed request: reviewer approves in UI; stored tasks, lead/collab and predecessors show in 업무
+  -  11 [chromium] › e2e/acceptance/scenarios.spec.ts:102:1 › S3 urgent request: reasons, review and priority on screen
+  -  12 [chromium] › e2e/acceptance/scenarios.spec.ts:128:1 › S4 insufficient information: reasons shown, request-info keeps everything unexecuted
+  -  13 [chromium] › e2e/acceptance/scenarios.spec.ts:152:1 › S5 documents: PDF+DOCX+MD plus a damaged file; explicit exclusion; per-file evidence
+  -  14 [chromium] › e2e/acceptance/scenarios.spec.ts:179:1 › S6 human intervention: modify-approve preserves original; reject and request-info are separate
+  -  15 [chromium] › e2e/acceptance/scenarios.spec.ts:216:1 › S7 re-analysis from the UI: previous/new runs distinguished, no duplicate tasks
+  -  16 [chromium] › e2e/acceptance/scenarios.spec.ts:237:1 › S8 observe and replay: success, waiting-for-review and failed runs; Play changes nothing
+  -  17 [chromium] › e2e/acceptance/scenarios.spec.ts:269:1 › S9 script/HTML in a document is shown as inert text (no dialog, no execution) for requester and reviewer
+  -  18 [chromium] › e2e/acceptance/scenarios.spec.ts:289:1 › G10 WebMCP product tools: unauthorised IDs return API 404 through the tool handlers; unsupported browsers still work
+(node:90380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:90380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  19 [chromium] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request (2.7s)
+(node:91094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:91094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 [chromium] › e2e/chat-intake.spec.ts:39:1 › send → right bubble → analysis steps → result with icon → reload restores → new request (2.8s)
+  ✓  21 [chromium] › e2e/chat-intake.spec.ts:71:1 › unreadable file: 일동이 asks, [다시 첨부] then a corrected file continues as a new revision (4.4s)
+  ✓  22 [chromium] › e2e/chat-intake.spec.ts:99:1 › reviewer info request becomes a question bubble; the answer in the same composer is a supplement revision (6.3s)
+  ✓  23 [chromium] › e2e/chat-intake.spec.ts:124:1 › files can be dropped on the composer and removed again (948ms)
+  ✓  24 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 375px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (3.0s)
+  ✓  25 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 520px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.6s)
+  ✓  26 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 960px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.6s)
+  ✓  27 [chromium] › e2e/chat-intake.spec.ts:139:3 › responsive 1440px: greeting and a restored result have no horizontal overflow; list panel folds below 960 (2.5s)
+  -  28 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 1440px: one screen tall, request list and chat scroll inside, composer pinned
+  -  29 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 960px: one screen tall, request list and chat scroll inside, composer pinned
+  -  30 [chromium] › e2e/chat-intake.spec.ts:173:3 › layout 375px: one screen tall, request list and chat scroll inside, composer pinned
+  ✓  31 [chromium] › e2e/chat-intake.spec.ts:232:1 › reduced motion: bubbles and typing dots do not animate (1.3s)
+  ✓  32 [chromium] › e2e/chat-intake.spec.ts:243:1 › scrolled up while the answer arrives: a "새 메시지" pill appears instead of a jump, and takes you down (4.2s)
+  ✘  33 [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement (397ms)
+(node:94835) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:94835) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  34 [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px (391ms)
+  -  35 [chromium] › e2e/extension/extension-r.spec.ts:69:3 › [r1] T38-R fixes › [F3][X05] Observatory Trace "규칙 적용" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED
+  -  36 [chromium] › e2e/extension/extension-r.spec.ts:90:3 › [r1] T38-R fixes › [F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value
+  -  37 [chromium] › e2e/extension/extension-r.spec.ts:103:3 › [r1] T38-R fixes › [F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards "자료 부족 상태로 승인됨" is shown
+  -  38 [chromium] › e2e/extension/extension-r.spec.ts:133:3 › [r1] T38-R fixes › [EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map
+  -  39 [chromium] › e2e/extension/extension-r.spec.ts:161:3 › [r1] T38-R fixes › [X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED
+  -  40 [chromium] › e2e/extension/extension-r.spec.ts:188:3 › [r1] X08 after restart › [X08][F6] validation card is read from the server after API/worker restart and a reload: id, sample, changed, side effects, calls = DB = API; shadow Run id differs from the ValidationRun id
+  -  41 [chromium] › e2e/extension/extension.spec.ts:47:3 › [ui1] before stop › [X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족
+  -  42 [chromium] › e2e/extension/extension.spec.ts:89:3 › [ui1] before stop › [X03] requester has no access to rule learning; no rule actions exposed
+  -  43 [chromium] › e2e/extension/extension.spec.ts:98:3 › [ui1] before stop › [X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족
+  -  44 [chromium] › e2e/extension/extension.spec.ts:141:3 › [ui1] before stop › [X05] Trace: "규칙 적용" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value
+  -  45 [chromium] › e2e/extension/extension.spec.ts:166:3 › [ui1] before stop › [X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs
+  -  46 [chromium] › e2e/extension/extension.spec.ts:258:3 › [ui1] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API
+  -  47 [chromium] › e2e/extension/extension.spec.ts:295:3 › [ui1] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)
+  -  48 [chromium] › e2e/extension/extension.spec.ts:345:3 › [ui1] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload
+(node:95151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  49 [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence (2.5m)
+(node:3276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  50 [chromium] › e2e/judgment-map.spec.ts:117:1 › a role without graph access is refused (227ms)
+
+  ✓  51 [chromium] › e2e/learning-human.spec.ts:47:1 › human proposal → approval → shadow → publication; scoped readers cannot mutate (7.5s)
+  ✓  52 [chromium] › e2e/learning.spec.ts:47:1 › reviewer corrections become a candidate; rule admin approves, validates, publishes, observes use, then stops (11.3s)
+  ✓  53 [chromium] › e2e/main.spec.ts:10:1 › live request shows processing stages, saved judgment and evidence panel (2.6s)
+  ✘  54 [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment (8.2s)
+(node:5126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  55 [chromium] › e2e/monitoring.spec.ts:3:1 › operator monitoring screen matches a real API aggregate (873ms)
+  ✓  56 [chromium] › e2e/p7-fixes.spec.ts:11:1 › F2 policy: a value typed right after entering the page is the value that gets validated (3.7s)
+  ✓  57 [chromium] › e2e/p7-fixes.spec.ts:30:1 › F3 monitoring: title, filters and finished areas show while the slowest aggregate is still pending (5.0s)
+  ✓  58 [chromium] › e2e/p7-fixes.spec.ts:41:1 › F4 list: a request created in another tab appears without reloading a tab that has nothing selected (4.9s)
+P7_F5_LAYOUT_SHIFT 0.00000
+  ✓  59 [chromium] › e2e/p7-fixes.spec.ts:55:1 › F5 result: provisional → final does not move the content (layout-shift after the provisional card) (2.6s)
+  ✘  60 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (2.0m)
+(node:17473) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17473) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+UX7_F5 possible {"prov":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"final":{"summary":-43.5,"summary.0":28,"summary.1":46.5,"summary.2":19.5,"summary.3":22.5,"judgment":109,"judgmentHeight":288.5,"card0.0":19.5,"card0.1":25.5,"card0.2":19.5,"card0.3":28,"tasks":409.5},"uncertain":1}
+  ✓  61 [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (possible): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final (4.7s)
+  ✓  62 [chromium] › e2e/p7-fixes.spec.ts:114:1 › F6 Korean: evaluation and policy screens show names, not snake_case keys, outside 기술 상세 (1.9s)
+  ✓  63 [chromium] › e2e/policy.spec.ts:3:1 › validate, publish, inspect history, and rollback policy on live API (2.0s)
+  ✓  64 [chromium] › e2e/rem-ui.spec.ts:14:1 › review queue title and masked detail respect source permission (1.4s)
+  ✓  65 [chromium] › e2e/rem-ui.spec.ts:32:1 › source-reading reviewer can see the submitted text in review detail (1.1s)
+
+  ✓  66 [chromium] › e2e/rem-ui.spec.ts:46:1 › source reader sees the original and result identifiers stay compact (1.3s)
+  ✓  67 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 375px › Main with a selected result (16.5s)
+  ✓  68 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 375px › Review detail (6.8s)
+  ✓  69 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 375px › Monitoring (1.1s)
+  ✓  70 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 375px › Learning with a selected candidate (2.0s)
+  ✓  71 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 375px › Tasks with a selected task (2.8s)
+  ✓  72 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 375px › Observatory with a selected request (6.4s)
+  ✓  73 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 375px › JudgmentMap (3.5s)
+  ✓  74 [chromium] › e2e/responsive-overflow.spec.ts:29:5 › viewport 520px › Main with a selected result (15.5s)
+  ✓  75 [chromium] › e2e/responsive-overflow.spec.ts:42:5 › viewport 520px › Review detail (7.1s)
+  ✓  76 [chromium] › e2e/responsive-overflow.spec.ts:55:5 › viewport 520px › Monitoring (1.1s)
+  ✓  77 [chromium] › e2e/responsive-overflow.spec.ts:60:5 › viewport 520px › Learning with a selected candidate (2.3s)
+  ✓  78 [chromium] › e2e/responsive-overflow.spec.ts:69:5 › viewport 520px › Tasks with a selected task (3.1s)
+  ✓  79 [chromium] › e2e/responsive-overflow.spec.ts:78:5 › viewport 520px › Observatory with a selected request (6.7s)
+  ✓  80 [chromium] › e2e/responsive-overflow.spec.ts:86:5 › viewport 520px › JudgmentMap (3.5s)
+  ✓  81 [chromium] › e2e/review-repair.spec.ts:35:1 › P1-01 repairs an undetermined draft and approves the final version with HTTP 200 (1.6s)
+  ✓  82 [chromium] › e2e/screens-ui.spec.ts:8:1 › 모니터링: 기간을 한국어 형식 입력으로 바꾸고 적용하면 해당 범위로 다시 조회한다 (1.7s)
+  ✓  83 [chromium] › e2e/screens-ui.spec.ts:26:1 › 실행 관찰: 요청을 검색해 고르면 실행 목록이 따라온다 (1.0s)
+  ✓  84 [chromium] › e2e/screens-ui.spec.ts:41:1 › 검토 대기·업무: 필터는 공용 선택 구성요소이고 빈 목록은 안내 카드를 보여 준다 (2.3s)
+  ✘  85 [chromium] › e2e/source-viewer/source-viewer.spec.ts:53:1 › result card evidence opens the source viewer on the cited unit and highlights it (1.4s)
+  -  86 [chromium] › e2e/source-viewer/source-viewer.spec.ts:82:1 › PDF page, DOCX paragraph, MD line and chat sentence anchors are highlighted for real parsed documents
+  -  87 [chromium] › e2e/source-viewer/source-viewer.spec.ts:121:1 › without source permission the viewer shows positions only and the server sends no text
+  -  88 [chromium] › e2e/source-viewer/source-viewer.spec.ts:153:1 › review detail and judgment-map evidence nodes open the same viewer
+  -  89 [chromium] › e2e/source-viewer/source-viewer.spec.ts:185:1 › judgment map: version tabs filter nodes and links, zoom controls and expanded view work
+  -  90 [chromium] › e2e/source-viewer/source-viewer.spec.ts:237:1 › version area is an empty state when the criteria have no rule versions
+  -  91 [chromium] › e2e/source-viewer/source-viewer.spec.ts:246:1 › axe: source viewer, version tabs and expanded map have no critical or serious violations
+(node:27359) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27359) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  92 [chromium] › e2e/task-blocker.spec.ts:16:1 › completed confirmation enables the main task from server readiness projection (3.9s)
+  ✓  93 [chromium] › e2e/task-blocker.spec.ts:37:1 › server projected blockers keep start disabled and explain why (3.7s)
+  ✓  94 [chromium] › e2e/webmcp.spec.ts:3:1 › application remains usable with or without WebMCP support (1.3s)
+(node:27917) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27917) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PROGRESSIVE_TIMINGS {"click_to_optimistic_ms":482,"click_to_provisional_ms":3411,"click_to_final_ms":3411}
+  ✓  95 [chromium] › e2e/progressive-results.spec.ts:8:1 › submit → optimistic bubble → provisional cards → final result, with measured timings (9.8s)
+
+
+  1) [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment 
+
+    Error: login requester@t-e2e-all-1005f: 401
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       at acceptance/helpers.ts:15
+
+      13 |   const ctx = await browser.newContext({ baseURL });
+      14 |   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });
+    > 15 |   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();
+         |                                                             ^
+      16 |   const page = await ctx.newPage();
+      17 |   const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';
+      18 |   return { ctx, page, api: ctx.request, csrf };
+        at actor (/Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/helpers.ts:15:61)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/acceptance/scenarios.spec.ts:27:17
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/acceptance-scenarios-S1-ge-6bb0d-sult-equals-stored-judgment-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "live"
+    Received: "mock"
+
+      33 |   expect(after.active_run_id).not.toBe(before.active_run_id);
+      34 |   const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();
+    > 35 |   expect(savedJudgment.mode).toBe('live');
+         |                              ^
+      36 |   await a.ctx.close();
+      37 | });
+      38 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/chat-intake.spec.ts:35:30
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/chat-intake-send-→-stop-→--b011b--reanalyze-the-same-request-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/chat-intake-send-→-stop-→--b011b--reanalyze-the-same-request-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/chat-intake-send-→-stop-→--b011b--reanalyze-the-same-request-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement 
+
+    Error: login labeler: 401
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {
+       7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
+    >  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();
+         |                                                                ^
+       9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+      10 | }
+      11 |
+        at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:13:3
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/evaluation-labels-labeler--04427-ees-a-reviewer-disagreement-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px 
+
+    Error: login labeler: 401
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+       6 | async function login(api: import('@playwright/test').APIRequestContext, role: string) {
+       7 |   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
+    >  8 |   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();
+         |                                                                ^
+       9 |   return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+      10 | }
+      11 |
+        at login (/Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:8:64)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/evaluation-labels.spec.ts:75:3
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/evaluation-labels-final-sp-73906--does-not-overflow-at-375px-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 
+
+    Error: review for the judged request never appeared
+
+    review for the judged request never appeared
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+    Call Log:
+    - Timeout 150000ms exceeded while waiting on the predicate
+
+      34 |       review = list.reviews.find((row) => row.request_id === requestId);
+      35 |       return Boolean(review);
+    > 36 |     }, { timeout: 150_000, intervals: [3000], message: 'review for the judged request never appeared' }).toBeTruthy();
+         |                                                                                                          ^
+      37 |     const stored = await (await api.get(`/api/graph/judgment?request_id=${requestId}`)).json() as Graph;
+      38 |     if (!(stored.edges as Array<{ type: string }>).some((edge) => edge.type === 'CITES') && attempt < 3) continue;
+      39 |     const detail = await (await api.get(`/api/reviews/${review!.id}`)).json() as { review: Record<string, any>; final_classifications: Record<string, string> };
+        at seedJudgmentWithCorrection (/Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:36:106)
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/judgment-map.spec.ts:57:51
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/judgment-map-real-judgment-40c7b-eable-from-step-to-evidence-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.result-summary > code').filter({ hasText: /revision/ })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('.result-summary > code').filter({ hasText: /revision/ }) with timeout 5000ms
+      - waiting for locator('.result-summary > code').filter({ hasText: /revision/ })
+
+
+      39 |   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
+      40 |   await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+    > 41 |   await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();
+         |                                                                                        ^
+      42 | });
+      43 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/main.spec.ts:41:88
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/main-live-damaged-attachme-5e6d9-ore-a-new-revision-judgment-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.provisional-result')
+    Expected: visible
+    Timeout: 120000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('.provisional-result') with timeout 120000ms
+      - waiting for locator('.provisional-result')
+
+
+      102 |     await page.getByRole('button', { name: '요청 보내기' }).click();
+      103 |     await page.evaluate(() => window.scrollTo(0, 200)); // scrolled state: regions are measured in document coordinates
+    > 104 |     await expect(page.locator('.provisional-result')).toBeVisible({ timeout: 120_000 });
+          |                                                       ^
+      105 |     await expect(page.locator('.result-stack:not(.provisional-result) .summary-text')).toHaveText(/\S/, { timeout: 120_000 });
+      106 |     await page.waitForTimeout(500);
+      107 |     const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/p7-fixes.spec.ts:104:55
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/p7-fixes-F5-residue-uncert-3e21f-x-from-provisional-to-final-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/p7-fixes-F5-residue-uncert-3e21f-x-from-provisional-to-final-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/p7-fixes-F5-residue-uncert-3e21f-x-from-provisional-to-final-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › e2e/source-viewer/source-viewer.spec.ts:53:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+
+    SyntaxError: Unexpected end of JSON input
+
+      61 |   expect(count).toBeGreaterThan(0);
+      62 |   for (let index = 0; index < count; index += 1) {
+    > 63 |     const button = buttons.nth(index);
+         |                           ^
+      64 |     const text = (await button.textContent()) || '';
+      65 |     const location = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      66 |     await button.click();
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/source-viewer/source-viewer.spec.ts:63:27
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    Error Context: ../artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/baseline-results/source-viewer-source-viewe-7671a-ited-unit-and-highlights-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [chromium] › e2e/acceptance/scenarios.spec.ts:63:1 › S1 general technical request: UI result equals stored judgment 
+    [chromium] › e2e/chat-intake.spec.ts:13:1 › send → stop → cancelled state → reanalyze the same request 
+    [chromium] › e2e/evaluation-labels.spec.ts:12:1 › labeler confirms three, defers one, and sees a reviewer disagreement 
+    [chromium] › e2e/evaluation-labels.spec.ts:74:1 › final split hides predictions; the screen has no JSON text inputs and does not overflow at 375px 
+    [chromium] › e2e/judgment-map.spec.ts:54:1 › real judgment and correction render as the stored graph, traceable from step to evidence 
+    [chromium] › e2e/main.spec.ts:29:1 › live damaged attachment can be excluded before a new revision judgment 
+    [chromium] › e2e/p7-fixes.spec.ts:81:3 › F5 residue (uncertain): summary/judgment/tasks document top and judgment height stay within 4px from provisional to final 
+    [chromium] › e2e/source-viewer/source-viewer.spec.ts:53:1 › result card evidence opens the source viewer on the cited unit and highlights it 
+  19 skipped
+  15 did not run
+  53 passed (8.9m)

@@ -1,0 +1,201 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/live-extension-results",
+      "--grep",
+      "out-of-scope run keeps"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/live-extension-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/live-extension-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_d35da03d0f8843cc90ff6d98fcd2aa31\",\"run\":\"run_16aafbff36be4c1a96a1db44d683f216\",\"step\":\"step_d59bade1a94d4e37a6dee8f702018ea0\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_ebc13744f9094c6987c351f5eb0f74df\",\"run\":\"run_b3885ed8b3574f839fa9b82c4b0980b1\",\"step\":\"step_376f6107d1874d478494d9482aa9f47e\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2376,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:08:46.988Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_d35da03d0f8843cc90ff6d98fcd2aa31\",\"run\":\"run_16aafbff36be4c1a96a1db44d683f216\",\"step\":\"step_d59bade1a94d4e37a6dee8f702018ea0\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_ebc13744f9094c6987c351f5eb0f74df\",\"run\":\"run_b3885ed8b3574f839fa9b82c4b0980b1\",\"step\":\"step_376f6107d1874d478494d9482aa9f47e\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_d35da03d0f8843cc90ff6d98fcd2aa31\",\"run\":\"run_16aafbff36be4c1a96a1db44d683f216\",\"step\":\"step_d59bade1a94d4e37a6dee8f702018ea0\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_ebc13744f9094c6987c351f5eb0f74df\",\"run\":\"run_b3885ed8b3574f839fa9b82c4b0980b1\",\"step\":\"step_376f6107d1874d478494d9482aa9f47e\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3965,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:08:50.727Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_d35da03d0f8843cc90ff6d98fcd2aa31\",\"run\":\"run_16aafbff36be4c1a96a1db44d683f216\",\"step\":\"step_d59bade1a94d4e37a6dee8f702018ea0\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_ebc13744f9094c6987c351f5eb0f74df\",\"run\":\"run_b3885ed8b3574f839fa9b82c4b0980b1\",\"step\":\"step_376f6107d1874d478494d9482aa9f47e\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-10d3f5103255e4811bb4",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:08:46.307Z",
+    "duration": 9081.871,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

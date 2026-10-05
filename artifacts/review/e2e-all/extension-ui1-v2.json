@@ -1,0 +1,1007 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8343,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 73,
+                          "line": 83
+                        },
+                        "snippet": "  81 |     await shot(page, 'x02-insufficient');\n  82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.\n> 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();\n     |                                                                         ^\n  84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();\n  85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();\n  86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 73,
+                            "line": 83
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n\n\n  81 |     await shot(page, 'x02-insufficient');\n  82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.\n> 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();\n     |                                                                         ^\n  84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();\n  85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();\n  86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:09.006Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 73,
+                        "line": 83
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-480a8587d75a485717bf",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1261,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:19.192Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-752bf43edb077d6d7082",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":24,\"ui_out\":1,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":25,\"corrections\":9,\"review_transitions\":25,\"failures\":0,\"classification_changes\":24},\"used\":{\"sample_count\":24,\"corrections\":9,\"review_transitions\":24,\"failures\":0,\"classification_changes\":24},\"out_of_scope\":{\"sample_count\":1,\"corrections\":0,\"review_transitions\":1,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4009,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:20.897Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":24,\"ui_out\":1,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":25,\"corrections\":9,\"review_transitions\":25,\"failures\":0,\"classification_changes\":24},\"used\":{\"sample_count\":24,\"corrections\":9,\"review_transitions\":24,\"failures\":0,\"classification_changes\":24},\"out_of_scope\":{\"sample_count\":1,\"corrections\":0,\"review_transitions\":1,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-5e71c43b02f9d221fdfc",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8140,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    14 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    14 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 28,
+                          "line": 153
+                        },
+                        "snippet": "  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n> 153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);\n      |                            ^\n  154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);\n  155 |       await expect(drawer).toContainText(`\"ai_need\": \"${expectAi}\"`);\n  156 |       const text = await drawer.innerText();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 28,
+                            "line": 153
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    14 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n> 153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);\n      |                            ^\n  154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);\n  155 |       await expect(drawer).toContainText(`\"ai_need\": \"${expectAi}\"`);\n  156 |       const text = await drawer.innerText();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:24.946Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 28,
+                        "line": 153
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule_map\":[25,24]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18037,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:34.617Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule_map\":[25,24]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-2c90b43d23c808a90e2b",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12193,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 73,
+                          "line": 83
+                        },
+                        "snippet": "  81 |     await shot(page, 'x02-insufficient');\n  82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.\n> 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();\n     |                                                                         ^\n  84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();\n  85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();\n  86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 73,
+                            "line": 83
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: '승인', exact: true })\nExpected: disabled\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" getByRole('button', { name: '승인', exact: true }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: '승인', exact: true })\u001b[22m\n\n\n  81 |     await shot(page, 'x02-insufficient');\n  82 |     // Non-admin: every administrator action disabled with a reason, single-review approval is not a rule publication.\n> 83 |     await expect(page.getByRole('button', { name: '승인', exact: true })).toBeDisabled();\n     |                                                                         ^\n  84 |     await expect(page.getByText('규칙 관리자만 실행할 수 있습니다.').first()).toBeVisible();\n  85 |     await expect(page.getByText('요청 한 건의 수정 승인은 규칙 게시가 아닙니다.')).toBeVisible();\n  86 |     note({ insufficient_candidate: candZ, db_status: dbCand(candZ).status, reviewer_buttons_disabled: true });\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:83:73"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:54.083Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 73,
+                        "line": 83
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9aa9af3e5e6ca0a5ebce",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2811,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:59:08.566Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-e381ed2a5d2d1da89a2b",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":24,\"ui_out\":1,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":25,\"corrections\":9,\"review_transitions\":25,\"failures\":0,\"classification_changes\":24},\"used\":{\"sample_count\":24,\"corrections\":9,\"review_transitions\":24,\"failures\":0,\"classification_changes\":24},\"out_of_scope\":{\"sample_count\":1,\"corrections\":0,\"review_transitions\":1,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:59:12.022Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":24,\"ui_out\":1,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":25,\"corrections\":9,\"review_transitions\":25,\"failures\":0,\"classification_changes\":24},\"used\":{\"sample_count\":24,\"corrections\":9,\"review_transitions\":24,\"failures\":0,\"classification_changes\":24},\"out_of_scope\":{\"sample_count\":1,\"corrections\":0,\"review_transitions\":1,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-601263f57a0cd655d21a",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13299,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    12 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    12 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 28,
+                          "line": 153
+                        },
+                        "snippet": "  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n> 153 |       await expect(drawer).toContainText(`설정 v${rep[rid].flow_config_version}`);\n      |                            ^\n  154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);\n  155 |       await expect(drawer).toContainText(`\"ai_need\": \"${expectAi}\"`);\n  156 |       const text = await drawer.innerText();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 28,
+                            "line": 153
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Trace 상세' })\nTimeout: 5000ms\n\u001b[32m- Expected substring  -   1\u001b[39m\n\u001b[31m+ Received string     + 183\u001b[39m\n\n\u001b[32m- 설정 v2\u001b[39m\n\u001b[31m+ 닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[39m\n\u001b[31m+   \"input\": {},\u001b[39m\n\u001b[31m+   \"output\": {},\u001b[39m\n\u001b[31m+   \"judgment\": {\u001b[39m\n\u001b[31m+     \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[39m\n\u001b[31m+     \"ai_need\": \"필요\",\u001b[39m\n\u001b[31m+     \"feasibility\": \"조건부 가능\",\u001b[39m\n\u001b[31m+     \"urgency\": \"일반\",\u001b[39m\n\u001b[31m+     \"lead_org\": \"현업\",\u001b[39m\n\u001b[31m+     \"risk_confirmed\": true,\u001b[39m\n\u001b[31m+     \"versions\": {\u001b[39m\n\u001b[31m+       \"model\": \"e2e-fixture\",\u001b[39m\n\u001b[31m+       \"qset\": \"qset-v2\",\u001b[39m\n\u001b[31m+       \"catalog\": \"catalog-v2\",\u001b[39m\n\u001b[31m+       \"schema\": \"judgment-v1\",\u001b[39m\n\u001b[31m+       \"config_version\": 4\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"outputs\": [\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"it_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.99,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.99,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"business_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"정보 부족\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"feasibility\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"IT팀\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"lead_org\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"regulatory\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"clinical_safety\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"일반\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"urgency\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"pharmacovigilance\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": \"불필요\",\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_need\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": 0.01,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0.01,\u001b[39m\n\u001b[31m+         \"confidence\": null,\u001b[39m\n\u001b[31m+         \"probabilities\": null,\u001b[39m\n\u001b[31m+         \"question_id\": \"ai_team_involvement\"\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       {\u001b[39m\n\u001b[31m+         \"noul\": null,\u001b[39m\n\u001b[31m+         \"evidence\": null,\u001b[39m\n\u001b[31m+         \"value\": 0,\u001b[39m\n\u001b[31m+         \"confidence\": 0.99,\u001b[39m\n\u001b[31m+         \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[39m\n\u001b[31m+         \"question_id\": \"review_signal\"\u001b[39m\n\u001b[31m+       }\u001b[39m\n\u001b[31m+     ]\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   \"review_history\": [\u001b[39m\n\u001b[31m+     {\u001b[39m\n\u001b[31m+       \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[39m\n\u001b[31m+       \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[39m\n\u001b[31m+       \"status\": \"pending\",\u001b[39m\n\u001b[31m+       \"history\": [],\u001b[39m\n\u001b[31m+       \"corrections\": []\u001b[39m\n\u001b[31m+     }\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   \"source_links\": []\u001b[39m\n\u001b[31m+ }\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('dialog', { name: 'Trace 상세' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Trace 상세' })\u001b[22m\n\u001b[2m    12 × locator resolved to <aside role=\"dialog\" class=\"obs-drawer\" aria-label=\"Trace 상세\">…</aside>\u001b[22m\n\u001b[2m       - unexpected value \"닫기실행 단계 step_…51bca7step_65e4f3aaa77a456e882989071851bca7규칙 적용규칙 · 성공오류 분류 없음 · 소요 10 ms실행 run_b462eff872f74bf396bf5b06ebf58670 · 설정 v4실행 버전 config_version: 4 · config: 4 · model: jev-1.13.0 · qset: qset-v2 · catalog: catalog-v2 · schema: judgment-v1시작 2026-10-05T05:57:14.453000000+00:00 · 종료 2026-10-05T05:57:14.463000000+00:00적용된 규칙규칙효과결과변경 전변경 후ConfigR-FEASIBILITY-01@1ruleused\"정보 부족\"\"조건부 가능\"v4 R-LEAD_ORG-01@1ruleused\"IT팀\"\"현업\"v4 R-AI_NEED-01@1ruleused\"불필요\"\"필요\"v4 판단 맵에서 단계 보기 · R-FEASIBILITY-01 규칙 학습R-LEAD_ORG-01 규칙 학습R-AI_NEED-01 규칙 학습{\u001b[22m\n\u001b[2m  \"input\": {},\u001b[22m\n\u001b[2m  \"output\": {},\u001b[22m\n\u001b[2m  \"judgment\": {\u001b[22m\n\u001b[2m    \"id\": \"jdg_b59ab6c4ff6f46fda5508653d77f4ecc\",\u001b[22m\n\u001b[2m    \"ai_need\": \"필요\",\u001b[22m\n\u001b[2m    \"feasibility\": \"조건부 가능\",\u001b[22m\n\u001b[2m    \"urgency\": \"일반\",\u001b[22m\n\u001b[2m    \"lead_org\": \"현업\",\u001b[22m\n\u001b[2m    \"risk_confirmed\": true,\u001b[22m\n\u001b[2m    \"versions\": {\u001b[22m\n\u001b[2m      \"model\": \"e2e-fixture\",\u001b[22m\n\u001b[2m      \"qset\": \"qset-v2\",\u001b[22m\n\u001b[2m      \"catalog\": \"catalog-v2\",\u001b[22m\n\u001b[2m      \"schema\": \"judgment-v1\",\u001b[22m\n\u001b[2m      \"config_version\": 4\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    \"outputs\": [\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"it_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.99,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.99,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"business_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"정보 부족\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"가능\\\":0.0033333333333333335,\\\"조건부 가능\\\":0.0033333333333333335,\\\"현재 불가\\\":0.0033333333333333335,\\\"정보 부족\\\":0.99}\",\u001b[22m\n\u001b[2m        \"question_id\": \"feasibility\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"IT팀\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"AI팀\\\":0.0033333333333333335,\\\"IT팀\\\":0.99,\\\"현업\\\":0.0033333333333333335,\\\"판단 보류\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"lead_org\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"regulatory\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"clinical_safety\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"일반\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"긴급\\\":0.005,\\\"일반\\\":0.99,\\\"판단 보류\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"urgency\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"pharmacovigilance\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": \"불필요\",\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"필요\\\":0.0033333333333333335,\\\"불필요\\\":0.99,\\\"혼합\\\":0.0033333333333333335,\\\"정보 부족\\\":0.0033333333333333335}\",\u001b[22m\n\u001b[2m        \"question_id\": \"ai_need\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": 0.01,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0.01,\u001b[22m\n\u001b[2m        \"confidence\": null,\u001b[22m\n\u001b[2m        \"probabilities\": null,\u001b[22m\n\u001b[2m        \"question_id\": \"ai_team_involvement\"\u001b[22m\n\u001b[2m      },\u001b[22m\n\u001b[2m      {\u001b[22m\n\u001b[2m        \"noul\": null,\u001b[22m\n\u001b[2m        \"evidence\": null,\u001b[22m\n\u001b[2m        \"value\": 0,\u001b[22m\n\u001b[2m        \"confidence\": 0.99,\u001b[22m\n\u001b[2m        \"probabilities\": \"{\\\"0\\\":0.99,\\\"1\\\":0.005,\\\"2\\\":0.005}\",\u001b[22m\n\u001b[2m        \"question_id\": \"review_signal\"\u001b[22m\n\u001b[2m      }\u001b[22m\n\u001b[2m    ]\u001b[22m\n\u001b[2m  },\u001b[22m\n\u001b[2m  \"review_history\": [\u001b[22m\n\u001b[2m    {\u001b[22m\n\u001b[2m      \"review_id\": \"rvw_286f7b17bae14f88b9f26bda51bc1f1e\",\u001b[22m\n\u001b[2m      \"created_at\": \"2026-10-05T05:57:14.646000000+00:00\",\u001b[22m\n\u001b[2m      \"status\": \"pending\",\u001b[22m\n\u001b[2m      \"history\": [],\u001b[22m\n\u001b[2m      \"corrections\": []\u001b[22m\n\u001b[2m    }\u001b[22m\n\u001b[2m  ],\u001b[22m\n\u001b[2m  \"source_links\": []\u001b[22m\n\u001b[2m}\"\u001b[22m\n\n\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n> 153 |       await expect(drawer).toContainText(`설정 v${rep[rid].flow_config_version}`);\n      |                            ^\n  154 |       await expect(drawer).toContainText(rep[rid].step_ids_in_applied[0]);\n  155 |       await expect(drawer).toContainText(`\"ai_need\": \"${expectAi}\"`);\n  156 |       const text = await drawer.innerText();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:153:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:59:18.731Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v2-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 28,
+                        "line": 153
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-10d3f5103255e4811bb4",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule_map\":[25,24]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31097,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:59:37.283Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule_map\":[25,24]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-06c4b46a4f63b35d51ff",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] map filters and zoom",
+          "file": "extension/extension.spec.ts",
+          "line": 257,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "run once with ui2",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 258,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:52.897Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "run once with ui2",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 258,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-00d3630a084a60d3b6ba",
+              "file": "extension/extension.spec.ts",
+              "line": 259,
+              "column": 3
+            },
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "run once with ui2",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 258,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:09.363Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "run once with ui2",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 258,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-522db9a55ec6635a704e",
+              "file": "extension/extension.spec.ts",
+              "line": 259,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] lifecycle and persistence",
+          "file": "extension/extension.spec.ts",
+          "line": 293,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 294,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:52.898Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 294,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-643ff9dabff38ac6b0cd",
+              "file": "extension/extension.spec.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 294,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:58:52.898Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 294,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9b55f09509e08ddcce30",
+              "file": "extension/extension.spec.ts",
+              "line": 346,
+              "column": 3
+            },
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 294,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:09.364Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 294,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-7e859b61e14b5d52e73b",
+              "file": "extension/extension.spec.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 294,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:00:09.365Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 294,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-e074dfcd455e8283bba9",
+              "file": "extension/extension.spec.ts",
+              "line": 346,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T05:58:07.278Z",
+    "duration": 122265.2,
+    "expected": 6,
+    "skipped": 6,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

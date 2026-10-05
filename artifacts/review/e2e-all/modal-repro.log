@@ -1,0 +1,88 @@
+
+Running 2 tests using 1 worker
+
+(node:53403) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53403) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (14.8s)
+(node:53928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail (22.5s)
+
+
+  1) [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">채팅 · 문단 1 · 문장 1 근거 열기</button>
+           - unexpected value "inactive"
+
+
+      19 |     await expect(viewer).toHaveCount(0);
+      20 |     await expect(detail).toBeVisible();
+    > 21 |     await expect(evidence).toBeFocused();
+         |                            ^
+      22 |   } finally { await a.ctx.close(); }
+      23 | });
+      24 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28
+
+    Error Context: ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first() with timeout 5000ms
+      - waiting for getByRole('dialog', { name: '판단 상세' }).getByRole('button', { name: /근거 열기/ }).first()
+        14 × locator resolved to <button type="button">채팅 · 문단 1 · 문장 1 근거 열기</button>
+           - unexpected value "inactive"
+
+
+      19 |     await expect(viewer).toHaveCount(0);
+      20 |     await expect(detail).toBeVisible();
+    > 21 |     await expect(evidence).toBeFocused();
+         |                            ^
+      22 |   } finally { await a.ctx.close(); }
+      23 | });
+      24 |
+        at /Users/psw/Projects/decision-chat-bot/frontend/e2e/modal-stack.spec.ts:21:28
+
+    Error Context: ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace ../artifacts/review/e2e-all/modal-repro-results/modal-stack-Escape-closes--8d991-estores-the-judgment-detail-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 
+    [webkit] › e2e/modal-stack.spec.ts:4:1 › Escape closes only the evidence drawer and restores the judgment detail 

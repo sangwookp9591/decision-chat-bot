@@ -1,0 +1,10 @@
+{
+  "checked_at_utc": "2026-10-05T07:14:30.721232+00:00",
+  "ports": [
+    11091,
+    8491
+  ],
+  "listeners": "",
+  "owned_e2e_workers": [],
+  "clean": true
+}

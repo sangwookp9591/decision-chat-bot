@@ -1,3 +1,5 @@
+import { execFileSync, spawn, type ChildProcess } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import { expect, test, type APIRequestContext, type Browser } from '@playwright/test';
 
 /**
@@ -8,7 +10,19 @@ import { expect, test, type APIRequestContext, type Browser } from '@playwright/
  *   E2E_TENANT=<tenant> E2E_API=http://127.0.0.1:<port> E2E_PORT=<port> npx playwright test -c playwright.learning.config.ts
  * 계정은 `<role>@<tenant>.dev` / JEVTRIAGE_DEV_PASSWORD(기본 dev-only-change-me).
  */
-const tenant = process.env.E2E_TENANT || 't-alpha';
+const tenant = `${process.env.E2E_TENANT || 't-alpha'}-learning-${randomUUID().slice(0, 8)}`;
+let worker: ChildProcess;
+test.beforeAll(() => {
+  execFileSync('../backend/.venv/bin/python', ['../backend/tests/acceptance/provision.py', tenant]);
+  if (process.env.JEV_MODE === 'mock') worker = spawn('../backend/.venv/bin/python', ['../scripts/e2e/mock_worker.py', '--tenant', tenant], { stdio: 'ignore' });
+  else throw new Error('Learning fixture needs mock mode; live learning requires a dedicated provisioned worker.');
+});
+test.afterAll(async () => {
+  if (worker && worker.exitCode === null) {
+    const closed = new Promise<void>(resolve => worker.once('exit', () => resolve()));
+    worker.kill('SIGTERM'); await closed;
+  }
+});
 const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
 type Review = { id: string; request_id: string };
 

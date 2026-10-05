@@ -1,0 +1,385 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui2-results",
+      "--grep",
+      "map filters|lifecycle and persistence"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui2-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui2] map filters and zoom",
+          "file": "extension/extension.spec.ts",
+          "line": 257,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request_id\":[89,93],\"rule_id\":[29,28],\"config_version\":[27,26],\"status_published\":[128,148]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5777,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:11.902Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request_id\":[89,93],\"rule_id\":[29,28],\"config_version\":[27,26],\"status_published\":[128,148]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-c076b6a96fa69065ba5d",
+              "file": "extension/extension.spec.ts",
+              "line": 259,
+              "column": 3
+            },
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request_id\":[89,93],\"rule_id\":[29,28],\"config_version\":[27,26],\"status_published\":[128,148]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5150,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:31.751Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request_id\":[89,93],\"rule_id\":[29,28],\"config_version\":[27,26],\"status_published\":[128,148]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-febb433eabcf5c98b56d",
+              "file": "extension/extension.spec.ts",
+              "line": 259,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui2] lifecycle and persistence",
+          "file": "extension/extension.spec.ts",
+          "line": 293,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"changed_config_versions\":7,\"v1\":{\"applications\":27,\"configs\":[2,7]},\"v2\":{\"applications\":1,\"configs\":[6]},\"configs\":{\"revert\":7,\"stop\":5,\"v2\":6},\"timeline\":\"후보 제안\\nAI 가설\\n2026. 10. 5. 14시 49분 4초 · code:candidate@v1\\n범위 수정 후 승인\\n범위 수정 후 승인 · 사유: T38: 범위를 임상·규제 신호 낮음으로 확정 · 확정 범위: AI 필요성 = 불필요 · 담당 조직 · 주관 = IT팀 · 신호 임상·안전 위험 확률 ≤ 0.5 · 신호 규제 대응 위험 확률 ≤ 0.5\\n자세히\\n2026. 10. 5. 14시 49분 5초 · usr_t-e2e-ext-1005_rule_admin\\n비교 검증\\n검증 val_f53c1f49835347eb811a65e0fd062910 · 완료\\n2026. 10. 5. 14시 49분 6초 · usr_t-e2e-ext-1005_rule_admin\\n게시 · 운영 중\\nR-AI_NEED-01@1 · T38: 게시\\n2026. 10. 5. 14시 49분 7초 · usr_t-e2e-ext-1005_rule_admin · Config v2\\n중단\\nR-AI_NEED-01@1 · T38: 중단(진행 중 실행 시험)\\n2026. 10. 5. 15시 4분 20초 · usr_t-e2e-ext-1005_rule_admin · Config v5\\n게시 · 운영 중\\nR-AI_NEED-01@2 · T38: v2 게시\\n2026. 10. 5. 15시 4분 41초 · usr_t-e2e-ext-1005_rule_admin · Config v6\\n되돌리기\\nR-AI_NEED-01@1 · T38: v1로 되돌리기\\n2026. 10. 5. 15시 4분 52초 · usr_t-e2e-ext-1005_rule_admin · Config v7\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5968,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:18.063Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"changed_config_versions\":7,\"v1\":{\"applications\":27,\"configs\":[2,7]},\"v2\":{\"applications\":1,\"configs\":[6]},\"configs\":{\"revert\":7,\"stop\":5,\"v2\":6},\"timeline\":\"후보 제안\\nAI 가설\\n2026. 10. 5. 14시 49분 4초 · code:candidate@v1\\n범위 수정 후 승인\\n범위 수정 후 승인 · 사유: T38: 범위를 임상·규제 신호 낮음으로 확정 · 확정 범위: AI 필요성 = 불필요 · 담당 조직 · 주관 = IT팀 · 신호 임상·안전 위험 확률 ≤ 0.5 · 신호 규제 대응 위험 확률 ≤ 0.5\\n자세히\\n2026. 10. 5. 14시 49분 5초 · usr_t-e2e-ext-1005_rule_admin\\n비교 검증\\n검증 val_f53c1f49835347eb811a65e0fd062910 · 완료\\n2026. 10. 5. 14시 49분 6초 · usr_t-e2e-ext-1005_rule_admin\\n게시 · 운영 중\\nR-AI_NEED-01@1 · T38: 게시\\n2026. 10. 5. 14시 49분 7초 · usr_t-e2e-ext-1005_rule_admin · Config v2\\n중단\\nR-AI_NEED-01@1 · T38: 중단(진행 중 실행 시험)\\n2026. 10. 5. 15시 4분 20초 · usr_t-e2e-ext-1005_rule_admin · Config v5\\n게시 · 운영 중\\nR-AI_NEED-01@2 · T38: v2 게시\\n2026. 10. 5. 15시 4분 41초 · usr_t-e2e-ext-1005_rule_admin · Config v6\\n되돌리기\\nR-AI_NEED-01@1 · T38: v1로 되돌리기\\n2026. 10. 5. 15시 4분 52초 · usr_t-e2e-ext-1005_rule_admin · Config v7\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-fc466a99cff785222c5e",
+              "file": "extension/extension.spec.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"checked\":{\"candidate_status\":[143,168],\"config_2\":[27,26],\"request\":[89,93],\"rule2\":[29,28],\"rule_ai_need\":[62,61],\"run\":[89,93]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6804,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:24.061Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"checked\":{\"candidate_status\":[143,168],\"config_2\":[27,26],\"request\":[89,93],\"rule2\":[29,28],\"rule_ai_need\":[62,61],\"run\":[89,93]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-3fd5896d88f090b99673",
+              "file": "extension/extension.spec.ts",
+              "line": 346,
+              "column": 3
+            },
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"changed_config_versions\":7,\"v1\":{\"applications\":27,\"configs\":[2,7]},\"v2\":{\"applications\":1,\"configs\":[6]},\"configs\":{\"revert\":7,\"stop\":5,\"v2\":6},\"timeline\":\"후보 제안\\nAI 가설\\n2026. 10. 5. 14시 49분 4초 · code:candidate@v1\\n범위 수정 후 승인\\n범위 수정 후 승인 · 사유: T38: 범위를 임상·규제 신호 낮음으로 확정 · 확정 범위: AI 필요성 = 불필요 · 담당 조직 · 주관 = IT팀 · 신호 임상·안전 위험 확률 ≤ 0.5 · 신호 규제 대응 위험 확률 ≤ 0.5\\n자세히\\n2026. 10. 5. 14시 49분 5초 · usr_t-e2e-ext-1005_rule_admin\\n비교 검증\\n검증 val_f53c1f49835347eb811a65e0fd062910 · 완료\\n2026. 10. 5. 14시 49분 6초 · usr_t-e2e-ext-1005_rule_admin\\n게시 · 운영 중\\nR-AI_NEED-01@1 · T38: 게시\\n2026. 10. 5. 14시 49분 7초 · usr_t-e2e-ext-1005_rule_admin · Config v2\\n중단\\nR-AI_NEED-01@1 · T38: 중단(진행 중 실행 시험)\\n2026. 10. 5. 15시 4분 20초 · usr_t-e2e-ext-1005_rule_admin · Config v5\\n게시 · 운영 중\\nR-AI_NEED-01@2 · T38: v2 게시\\n2026. 10. 5. 15시 4분 41초 · usr_t-e2e-ext-1005_rule_admin · Config v6\\n되돌리기\\nR-AI_NEED-01@1 · T38: v1로 되돌리기\\n2026. 10. 5. 15시 4분 52초 · usr_t-e2e-ext-1005_rule_admin · Config v7\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9301,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:37.361Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"changed_config_versions\":7,\"v1\":{\"applications\":27,\"configs\":[2,7]},\"v2\":{\"applications\":1,\"configs\":[6]},\"configs\":{\"revert\":7,\"stop\":5,\"v2\":6},\"timeline\":\"후보 제안\\nAI 가설\\n2026. 10. 5. 14시 49분 4초 · code:candidate@v1\\n범위 수정 후 승인\\n범위 수정 후 승인 · 사유: T38: 범위를 임상·규제 신호 낮음으로 확정 · 확정 범위: AI 필요성 = 불필요 · 담당 조직 · 주관 = IT팀 · 신호 임상·안전 위험 확률 ≤ 0.5 · 신호 규제 대응 위험 확률 ≤ 0.5\\n자세히\\n2026. 10. 5. 14시 49분 5초 · usr_t-e2e-ext-1005_rule_admin\\n비교 검증\\n검증 val_f53c1f49835347eb811a65e0fd062910 · 완료\\n2026. 10. 5. 14시 49분 6초 · usr_t-e2e-ext-1005_rule_admin\\n게시 · 운영 중\\nR-AI_NEED-01@1 · T38: 게시\\n2026. 10. 5. 14시 49분 7초 · usr_t-e2e-ext-1005_rule_admin · Config v2\\n중단\\nR-AI_NEED-01@1 · T38: 중단(진행 중 실행 시험)\\n2026. 10. 5. 15시 4분 20초 · usr_t-e2e-ext-1005_rule_admin · Config v5\\n게시 · 운영 중\\nR-AI_NEED-01@2 · T38: v2 게시\\n2026. 10. 5. 15시 4분 41초 · usr_t-e2e-ext-1005_rule_admin · Config v6\\n되돌리기\\nR-AI_NEED-01@1 · T38: v1로 되돌리기\\n2026. 10. 5. 15시 4분 52초 · usr_t-e2e-ext-1005_rule_admin · Config v7\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-03696590d78236d37d29",
+              "file": "extension/extension.spec.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"checked\":{\"candidate_status\":[143,168],\"config_2\":[27,26],\"request\":[89,93],\"rule2\":[29,28],\"rule_ai_need\":[62,61],\"run\":[89,93]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13470,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:06:46.702Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"checked\":{\"candidate_status\":[143,168],\"config_2\":[27,26],\"request\":[89,93],\"rule2\":[29,28],\"rule_ai_need\":[62,61],\"run\":[89,93]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-5661fd45b2d695d9c95c",
+              "file": "extension/extension.spec.ts",
+              "line": 346,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:06:09.889Z",
+    "duration": 50564.763,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

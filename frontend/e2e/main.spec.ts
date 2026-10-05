@@ -19,7 +19,7 @@ test('live request shows processing stages, saved judgment and evidence panel', 
   await expect(page.locator('.stage-list')).toContainText('Jev 판단');
   await expect(page.locator('.stage-list')).toContainText('근거 연결');
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
-  await expect(page.locator('.environment-badge.mode-live').last()).toBeVisible();
+  await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
   const evidence = page.getByRole('button', { name: /근거 열기|근거 패널 열기/ }).first();
   await expect(evidence).toBeVisible();
   await evidence.click();
@@ -37,6 +37,10 @@ test('live damaged attachment can be excluded before a new revision judgment', a
   await expect(page.getByRole('group', { name: '읽기 실패 파일' })).toContainText('damaged.pdf');
   await page.getByRole('button', { name: '제외하고 진행' }).click();
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
-  await expect(page.locator('.environment-badge.mode-live').last()).toBeVisible();
-  await expect(page.locator('.result-summary > code').filter({ hasText: /revision/ })).toBeVisible();
+  await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+  await page.getByRole('button', { name: '자세히 보기' }).last().click();
+  await expect(page.locator('.result-ids code.short-id')).toHaveCount(2);
+  const id = new URL(page.url()).searchParams.get('request_id');
+  const detail = await (await page.request.get(`/api/requests/${id}`)).json();
+  expect(detail.request.revision_number).toBe(2);
 });

@@ -1,0 +1,557 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension-r.spec.ts$",
+      "--grep",
+      "T38-R fixes",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/r1-results"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/r1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/20261005T152719/extension/r1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension-r.spec.ts",
+      "file": "extension/extension-r.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[r1] T38-R fixes",
+          "file": "extension/extension-r.spec.ts",
+          "line": 66,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+              "ok": true,
+              "tags": [
+                "version,"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule_lead_lead_org\":{\"request\":\"req_6377fe560f7f48c78fee644f3f824ec1\",\"run\":\"run_54db5fdccea84e5a84493aa26e3cd970\",\"step\":\"step_c20c0595a0224d72b35d4f24cc32be11\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule2_feasibility\":{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"run\":\"run_158d9a57e91149d9b02b9e7393c781b7\",\"step\":\"step_167e74e9f597404aa5b7ef044a7334d1\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3114,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:47.964Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule_lead_lead_org\":{\"request\":\"req_6377fe560f7f48c78fee644f3f824ec1\",\"run\":\"run_54db5fdccea84e5a84493aa26e3cd970\",\"step\":\"step_c20c0595a0224d72b35d4f24cc32be11\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule2_feasibility\":{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"run\":\"run_158d9a57e91149d9b02b9e7393c781b7\",\"step\":\"step_167e74e9f597404aa5b7ef044a7334d1\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-3a3f82cde92553076153",
+              "file": "extension/extension-r.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "[F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"tenant\":\"t-e2e-1005152719xi\",\"request\":\"req_20251bea9a5f411996480b5d2aeeb38c\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 893,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:51.373Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"tenant\":\"t-e2e-1005152719xi\",\"request\":\"req_20251bea9a5f411996480b5d2aeeb38c\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-5b377a2029db021559dd",
+              "file": "extension/extension-r.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_3771321c5883602c95fbce1f\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1253,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:52.278Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_3771321c5883602c95fbce1f\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7cec399467eac6754175",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"span_nodes_on_map\":[\"esp_03efff3daff74d448145062089b3e8c6\",\"esp_0672e8f1e60641e3b47670a3a89fadd4\",\"esp_261562433a714c5ab1b2e417bf03a74c\",\"esp_2a4d0429ec92402991af9f378522c1f4\",\"esp_2e1645cf69ac4215883b49598f79a974\",\"esp_541bed0125524b92931a99ea97954b71\",\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_66813acfdf844bee9ed5b03288763a22\",\"esp_68655ca00a5e4f1f879023c97e75d82f\",\"esp_6c27c095f3264087b3f476e42a4da593\",\"esp_6dd345e78e5c4b57ad013ffa144dc8ae\",\"esp_74618426885a4ff3a2a4ff8c74e80fe5\",\"esp_8f4c65be82f7447e890983ff4782b1c5\",\"esp_a54efb1c91064b1989acbd399facf943\",\"esp_a86b41a5bb1048679aef8dfc6b342821\",\"esp_ac9c80ef68e643dfaae2eab5cb4b8448\",\"esp_b0ae5e6a96024020bf1d31b052ef55c2\",\"esp_b184f532124b4a07bc89a11a073fa426\",\"esp_b746cdcd1feb46c2bd74aa077b1850b7\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\",\"esp_d9cd18b85abe49d2a5b1006303321448\",\"esp_e0b61c652c6144398e08fbe2a110e9fa\",\"esp_e6dc15f5e9034503a3d13e67354dd6ae\",\"esp_f2849b872a274c3ca794ad26584e8627\",\"esp_f5275528ca904289a282a912f0c0ae40\",\"esp_fbbb8d880c51418aa256e22cdd75bce9\"],\"cited\":[\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1306,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:53.550Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"span_nodes_on_map\":[\"esp_03efff3daff74d448145062089b3e8c6\",\"esp_0672e8f1e60641e3b47670a3a89fadd4\",\"esp_261562433a714c5ab1b2e417bf03a74c\",\"esp_2a4d0429ec92402991af9f378522c1f4\",\"esp_2e1645cf69ac4215883b49598f79a974\",\"esp_541bed0125524b92931a99ea97954b71\",\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_66813acfdf844bee9ed5b03288763a22\",\"esp_68655ca00a5e4f1f879023c97e75d82f\",\"esp_6c27c095f3264087b3f476e42a4da593\",\"esp_6dd345e78e5c4b57ad013ffa144dc8ae\",\"esp_74618426885a4ff3a2a4ff8c74e80fe5\",\"esp_8f4c65be82f7447e890983ff4782b1c5\",\"esp_a54efb1c91064b1989acbd399facf943\",\"esp_a86b41a5bb1048679aef8dfc6b342821\",\"esp_ac9c80ef68e643dfaae2eab5cb4b8448\",\"esp_b0ae5e6a96024020bf1d31b052ef55c2\",\"esp_b184f532124b4a07bc89a11a073fa426\",\"esp_b746cdcd1feb46c2bd74aa077b1850b7\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\",\"esp_d9cd18b85abe49d2a5b1006303321448\",\"esp_e0b61c652c6144398e08fbe2a110e9fa\",\"esp_e6dc15f5e9034503a3d13e67354dd6ae\",\"esp_f2849b872a274c3ca794ad26584e8627\",\"esp_f5275528ca904289a282a912f0c0ae40\",\"esp_fbbb8d880c51418aa256e22cdd75bce9\"],\"cited\":[\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-8965b305bffa1edb241a",
+              "file": "extension/extension-r.spec.ts",
+              "line": 138,
+              "column": 3
+            },
+            {
+              "title": "[X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":8,\"validation\":\"val_21068b3217da4608b0274894bbd77e08\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1088,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:54.874Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":8,\"validation\":\"val_21068b3217da4608b0274894bbd77e08\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-ac4751d1882e6a52a1a2",
+              "file": "extension/extension-r.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "[F3][X05] Observatory Trace \"규칙 적용\" step detail lists rule_id@version, outcome and before/after for every rule (used, out_of_scope, multi-rule) = step API = stored APPLIED",
+              "ok": true,
+              "tags": [
+                "version,"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule_lead_lead_org\":{\"request\":\"req_6377fe560f7f48c78fee644f3f824ec1\",\"run\":\"run_54db5fdccea84e5a84493aa26e3cd970\",\"step\":\"step_c20c0595a0224d72b35d4f24cc32be11\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule2_feasibility\":{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"run\":\"run_158d9a57e91149d9b02b9e7393c781b7\",\"step\":\"step_167e74e9f597404aa5b7ef044a7334d1\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3942,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:46:56.492Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_edb1c00a65a94839bc4c694a33865d2d\",\"run\":\"run_8b24f8b714b1431b91f7ad7afb27430e\",\"step\":\"step_be0f2e297bf648e6858aa412b13fed79\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]},\"out_of_scope\":{\"request\":\"req_2dc250e4b8924d28a0ca78f1d2a4067f\",\"run\":\"run_53bcbe3b5ead4a4791a86c0271f7ec3e\",\"step\":\"step_a9a1f2b9878b4138b836de2724e86a12\",\"rows\":[{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule_lead_lead_org\":{\"request\":\"req_6377fe560f7f48c78fee644f3f824ec1\",\"run\":\"run_54db5fdccea84e5a84493aa26e3cd970\",\"step\":\"step_c20c0595a0224d72b35d4f24cc32be11\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"used\",\"before\":\"IT팀\",\"after\":\"현업\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"불필요\",\"after\":\"불필요\"}]},\"rule2_feasibility\":{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"run\":\"run_158d9a57e91149d9b02b9e7393c781b7\",\"step\":\"step_167e74e9f597404aa5b7ef044a7334d1\",\"rows\":[{\"rule\":\"R-LEAD_ORG-01@1\",\"outcome\":\"out_of_scope\",\"before\":\"IT팀\",\"after\":\"IT팀\"},{\"rule\":\"R-FEASIBILITY-01@1\",\"outcome\":\"used\",\"before\":\"정보 부족\",\"after\":\"조건부 가능\"},{\"rule\":\"R-AI_NEED-01@1\",\"outcome\":\"used\",\"before\":\"불필요\",\"after\":\"필요\"}]}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-708c5df240257dcf9fd8",
+              "file": "extension/extension-r.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "[F4] Trace shows blocked_by_invariant for the violating rules written straight into the DB; the classification stays the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"tenant\":\"t-e2e-1005152719xi\",\"request\":\"req_20251bea9a5f411996480b5d2aeeb38c\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1443,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:47:00.793Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"tenant\":\"t-e2e-1005152719xi\",\"request\":\"req_20251bea9a5f411996480b5d2aeeb38c\",\"shown\":[{\"rule\":\"R-URGENCY-91@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"일반\",\"after\":\"일반\"},{\"rule\":\"R-FEASIBILITY-92@1\",\"outcome\":\"blocked_by_invariant\",\"before\":\"정보 부족\",\"after\":\"정보 부족\"}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-8f0fb357694003f50c8a",
+              "file": "extension/extension-r.spec.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "[F5] 자료 부족 candidate: approve is disabled until the acknowledgement checkbox and a ≥10 character reason; afterwards \"자료 부족 상태로 승인됨\" is shown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_44d8458904db204e14acf3cb\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5016,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:47:02.250Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_44d8458904db204e14acf3cb\",\"api_label\":\"자료 부족 상태로 승인됨\",\"status\":\"approved\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-fea3ff79cf3f8b50cb49",
+              "file": "extension/extension-r.spec.ts",
+              "line": 103,
+              "column": 3
+            },
+            {
+              "title": "[EVID][X06] text-only request: chat EvidenceSpan nodes are on the map (evidence layer), the cited span is reachable from the business step on the map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"span_nodes_on_map\":[\"esp_03efff3daff74d448145062089b3e8c6\",\"esp_0672e8f1e60641e3b47670a3a89fadd4\",\"esp_261562433a714c5ab1b2e417bf03a74c\",\"esp_2a4d0429ec92402991af9f378522c1f4\",\"esp_2e1645cf69ac4215883b49598f79a974\",\"esp_541bed0125524b92931a99ea97954b71\",\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_66813acfdf844bee9ed5b03288763a22\",\"esp_68655ca00a5e4f1f879023c97e75d82f\",\"esp_6c27c095f3264087b3f476e42a4da593\",\"esp_6dd345e78e5c4b57ad013ffa144dc8ae\",\"esp_74618426885a4ff3a2a4ff8c74e80fe5\",\"esp_8f4c65be82f7447e890983ff4782b1c5\",\"esp_a54efb1c91064b1989acbd399facf943\",\"esp_a86b41a5bb1048679aef8dfc6b342821\",\"esp_ac9c80ef68e643dfaae2eab5cb4b8448\",\"esp_b0ae5e6a96024020bf1d31b052ef55c2\",\"esp_b184f532124b4a07bc89a11a073fa426\",\"esp_b746cdcd1feb46c2bd74aa077b1850b7\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\",\"esp_d9cd18b85abe49d2a5b1006303321448\",\"esp_e0b61c652c6144398e08fbe2a110e9fa\",\"esp_e6dc15f5e9034503a3d13e67354dd6ae\",\"esp_f2849b872a274c3ca794ad26584e8627\",\"esp_f5275528ca904289a282a912f0c0ae40\",\"esp_fbbb8d880c51418aa256e22cdd75bce9\"],\"cited\":[\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9401,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:47:07.303Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"request\":\"req_720593a5d884478fbafe1479a90cbe7a\",\"span_nodes_on_map\":[\"esp_03efff3daff74d448145062089b3e8c6\",\"esp_0672e8f1e60641e3b47670a3a89fadd4\",\"esp_261562433a714c5ab1b2e417bf03a74c\",\"esp_2a4d0429ec92402991af9f378522c1f4\",\"esp_2e1645cf69ac4215883b49598f79a974\",\"esp_541bed0125524b92931a99ea97954b71\",\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_66813acfdf844bee9ed5b03288763a22\",\"esp_68655ca00a5e4f1f879023c97e75d82f\",\"esp_6c27c095f3264087b3f476e42a4da593\",\"esp_6dd345e78e5c4b57ad013ffa144dc8ae\",\"esp_74618426885a4ff3a2a4ff8c74e80fe5\",\"esp_8f4c65be82f7447e890983ff4782b1c5\",\"esp_a54efb1c91064b1989acbd399facf943\",\"esp_a86b41a5bb1048679aef8dfc6b342821\",\"esp_ac9c80ef68e643dfaae2eab5cb4b8448\",\"esp_b0ae5e6a96024020bf1d31b052ef55c2\",\"esp_b184f532124b4a07bc89a11a073fa426\",\"esp_b746cdcd1feb46c2bd74aa077b1850b7\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\",\"esp_d9cd18b85abe49d2a5b1006303321448\",\"esp_e0b61c652c6144398e08fbe2a110e9fa\",\"esp_e6dc15f5e9034503a3d13e67354dd6ae\",\"esp_f2849b872a274c3ca794ad26584e8627\",\"esp_f5275528ca904289a282a912f0c0ae40\",\"esp_fbbb8d880c51418aa256e22cdd75bce9\"],\"cited\":[\"esp_629731f7b268426eaf6e5dc44fc43afd\",\"esp_becec0d4d5334a49baa92b3a411fb4e1\"],\"stored_sources\":[\"chat\",\"chat\"]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-141f09d6ba52555d4f1f",
+              "file": "extension/extension-r.spec.ts",
+              "line": 138,
+              "column": 3
+            },
+            {
+              "title": "[X02][X05] lead_org rule on the learning screen: candidate → decision → version → shadow validation → published, application count = stored APPLIED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":8,\"validation\":\"val_21068b3217da4608b0274894bbd77e08\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10565,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:47:16.764Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"rule\":\"R-LEAD_ORG-01@1\",\"action\":{\"set\":\"현업\"},\"applications\":8,\"validation\":\"val_21068b3217da4608b0274894bbd77e08\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f51fcae6222e14c41407-7f0691d2584d058856a6",
+              "file": "extension/extension-r.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:46:47.440Z",
+    "duration": 40297.687,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

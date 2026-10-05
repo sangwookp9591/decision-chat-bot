@@ -1,0 +1,19 @@
+
+Running 6 tests using 1 worker
+
+(node:62411) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:62411) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e/extension/extension.spec.ts:259:3 › [ui2] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API (5.8s)
+  ✓  2 [chromium] › e2e/extension/extension.spec.ts:296:3 › [ui2] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload) (6.0s)
+  ✓  3 [chromium] › e2e/extension/extension.spec.ts:346:3 › [ui2] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload (6.8s)
+(node:62946) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:62946) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [webkit] › e2e/extension/extension.spec.ts:259:3 › [ui2] map filters and zoom › [X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API (5.2s)
+  ✓  5 [webkit] › e2e/extension/extension.spec.ts:296:3 › [ui2] lifecycle and persistence › [X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload) (9.3s)
+  ✓  6 [webkit] › e2e/extension/extension.spec.ts:346:3 › [ui2] lifecycle and persistence › [X08] judgment map and trace: counts and IDs equal the stored snapshot after reload (13.5s)
+
+  6 passed (50.6s)

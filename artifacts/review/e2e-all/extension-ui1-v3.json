@@ -1,0 +1,305 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v3-results",
+      "--grep",
+      "X01|X05"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v3-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-v3-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3968,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:02:48.687Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-480a8587d75a485717bf",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4830,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:02:52.864Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                    },
+                    {
+                      "type": "evidence",
+                      "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6648,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:02:59.190Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"candidate\":\"cand_0921eb3fbc37f1cdc047db4b\",\"support_rows\":[{\"request\":\"req_8c93fd144c8449648066493ed4f077df\",\"correction\":\"cor_1d10f507cffc4655b3ab36b7c4e5315c\",\"run\":\"run_c704b21c29624024afd76529478c9f2c\",\"revision\":\"rev_fe35f21d5e66485cab3d51d6a2700fd6\",\"config\":1},{\"request\":\"req_45abb835e55049b1b44d7437d2945151\",\"correction\":\"cor_d158d0633f654cc99384f9b44726148f\",\"run\":\"run_3a8cf1008abd48e3b2af5d083bcbb1b5\",\"revision\":\"rev_237f7835e5964a52aa2fc5147f8cacb2\",\"config\":1},{\"request\":\"req_8b7cac99b46043a98be0735959d1d557\",\"correction\":\"cor_a33cde00d57b4c66a031a1f19bff1db9\",\"run\":\"run_f4f604c86aa040949549c27f9b07b182\",\"revision\":\"rev_90d4189f89bf4174acb143b9206213b9\",\"config\":1}],\"db_support\":3,\"db_counter\":4,\"uncertainty\":{\"counter_count\":3,\"minimum_support\":3,\"organization_count\":3,\"single_organization_bias\":false,\"support_count\":3}}"
+                        },
+                        {
+                          "type": "evidence",
+                          "description": "{\"insufficient_candidate\":\"cand_ebddb68698b96a3adf8ec88c\",\"db_status\":\"approved\",\"reviewer_buttons_disabled\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9aa9af3e5e6ca0a5ebce",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7899,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T06:03:06.712Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"used\":{\"request\":\"req_5e1f34d5151249ca8547a9e7bd93b985\",\"run\":\"run_b462eff872f74bf396bf5b06ebf58670\",\"step\":\"step_65e4f3aaa77a456e882989071851bca7\",\"shows_rule_version\":true,\"shows_before_after\":false},\"out_of_scope\":{\"request\":\"req_78c5638e14494eb3ab844e8b93003de9\",\"run\":\"run_7c3074d60ce341f5b4bec7ba7e58dd63\",\"step\":\"step_d09220bd41d34ab4bab4dd887e479d49\",\"shows_rule_version\":true,\"shows_before_after\":false}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-10d3f5103255e4811bb4",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T06:02:47.255Z",
+    "duration": 27599.989999999998,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

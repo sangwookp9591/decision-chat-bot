@@ -1,0 +1,1041 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/psw/Projects/decision-chat-bot/frontend/node_modules/.bin/playwright",
+      "test",
+      "--config=e2e/all.config.ts",
+      "extension/extension.spec.ts",
+      "--workers=1",
+      "--reporter=list,json",
+      "--output=/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results"
+    ],
+    "configFile": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/all.config.ts",
+    "rootDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/psw/Projects/decision-chat-bot/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "extension/extension.spec.ts",
+      "file": "extension/extension.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[ui1] before stop",
+          "file": "extension/extension.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9576,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 48,
+                          "line": 71
+                        },
+                        "snippet": "  69 |     const unc = JSON.parse(dbCand(candY).unc);\n  70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();\n> 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();\n     |                                                ^\n  72 |     await shot(page, 'x01-x02-candidate-support');\n  73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });\n  74 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 48,
+                            "line": 71
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n\n\n  69 |     const unc = JSON.parse(dbCand(candY).unc);\n  70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();\n> 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();\n     |                                                ^\n  72 |     await shot(page, 'x01-x02-candidate-support');\n  73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });\n  74 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:03.961Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 48,
+                        "line": 71
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-480a8587d75a485717bf",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1012,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:15.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-752bf43edb077d6d7082",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":21,\"ui_out\":0,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"used\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"out_of_scope\":{\"sample_count\":0,\"corrections\":0,\"review_transitions\":0,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2671,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:16.488Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":21,\"ui_out\":0,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"used\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"out_of_scope\":{\"sample_count\":0,\"corrections\":0,\"review_transitions\":0,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-5e71c43b02f9d221fdfc",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2664,
+                      "error": {
+                        "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n",
+                        "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 57,
+                          "line": 150
+                        },
+                        "snippet": "  148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {\n  149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);\n> 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                         ^\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n  153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 57,
+                            "line": 150
+                          },
+                          "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n\n  148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {\n  149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);\n> 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                         ^\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n  153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:19.191Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 57,
+                        "line": 150
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-ce6790b521cc53bfb169",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11696,
+                      "error": {
+                        "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n",
+                        "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 55,
+                          "line": 237
+                        },
+                        "snippet": "  235 |     // Flow <-> Topology <-> Learning: same IDs\n  236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);\n> 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                       ^\n  238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);\n  239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);\n  240 |     await page.getByRole('button', { name: '업무 Topology' }).click();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 55,
+                            "line": 237
+                          },
+                          "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n\n  235 |     // Flow <-> Topology <-> Learning: same IDs\n  236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);\n> 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                       ^\n  238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);\n  239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);\n  240 |     await page.getByRole('button', { name: '업무 Topology' }).click();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:23.571Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 55,
+                        "line": 237
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-2c90b43d23c808a90e2b",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "[X01][X02] reviewer sees AI original vs correction with who/when/revision/run/Config, support & counter examples, 자료 부족",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9748,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 48,
+                          "line": 71
+                        },
+                        "snippet": "  69 |     const unc = JSON.parse(dbCand(candY).unc);\n  70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();\n> 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();\n     |                                                ^\n  72 |     await shot(page, 'x01-x02-candidate-support');\n  73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });\n  74 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 48,
+                            "line": 71
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('적용 범위 (제안)')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('적용 범위 (제안)') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('적용 범위 (제안)')\u001b[22m\n\n\n  69 |     const unc = JSON.parse(dbCand(candY).unc);\n  70 |     await expect(page.getByText(`지지 ${unc.support_count}건 · 반례 ${unc.counter_count}건 · 최소 ${unc.minimum_support}건`)).toBeVisible();\n> 71 |     await expect(page.getByText('적용 범위 (제안)')).toBeVisible();\n     |                                                ^\n  72 |     await shot(page, 'x01-x02-candidate-support');\n  73 |     note({ candidate: candY, support_rows: rowsOut, db_support: dbSupport, db_counter: dbCounter, uncertainty: unc });\n  74 |\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:71:48"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:37.928Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-26957-port-counter-examples-자료-부족-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 48,
+                        "line": 71
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9aa9af3e5e6ca0a5ebce",
+              "file": "extension/extension.spec.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "[X03] requester has no access to rule learning; no rule actions exposed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:50.435Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-e381ed2a5d2d1da89a2b",
+              "file": "extension/extension.spec.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "[X03][X04][X09] rule admin: confirmed scope, validation card = DB, lifecycle timeline, observation counts = effects API = DB, 표본 부족",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"ui_used\":21,\"ui_out\":0,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"used\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"out_of_scope\":{\"sample_count\":0,\"corrections\":0,\"review_transitions\":0,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5924,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:53.545Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"ui_used\":21,\"ui_out\":0,\"db\":{\"before\":{\"sample_count\":8,\"corrections\":5,\"review_transitions\":8,\"failures\":0,\"classification_changes\":0},\"after\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"used\":{\"sample_count\":21,\"corrections\":9,\"review_transitions\":21,\"failures\":0,\"classification_changes\":21},\"out_of_scope\":{\"sample_count\":0,\"corrections\":0,\"review_transitions\":0,\"failures\":0,\"classification_changes\":0}},\"api_effect\":\"insufficient_sample\",\"minimum_sample\":20}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-601263f57a0cd655d21a",
+              "file": "extension/extension.spec.ts",
+              "line": 98,
+              "column": 3
+            },
+            {
+              "title": "[X05] Trace: \"규칙 적용\" step of an in-scope run shows the stored judgment; out-of-scope run keeps the model value",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1683,
+                      "error": {
+                        "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n",
+                        "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 57,
+                          "line": 150
+                        },
+                        "snippet": "  148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {\n  149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);\n> 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                         ^\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n  153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 57,
+                            "line": 150
+                          },
+                          "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n\n  148 |     for (const [label, rid, expectAi] of [['used', used, '필요'], ['out_of_scope', oos, '불필요']] as const) {\n  149 |       await page.goto(`/observatory?request_id=${rid}&run_id=${rep[rid].run_id}`);\n> 150 |       await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                         ^\n  151 |       const drawer = page.getByRole('dialog', { name: 'Trace 상세' });\n  152 |       await expect(drawer).toContainText(`실행 ${rep[rid].run_id}`);\n  153 |       await expect(drawer).toContainText(`설정 v${state.pub_config}`);\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:150:57"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:59.496Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-74c92-e-run-keeps-the-model-value-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 57,
+                        "line": 150
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-10d3f5103255e4811bb4",
+              "file": "extension/extension.spec.ts",
+              "line": 141,
+              "column": 3
+            },
+            {
+              "title": "[X06] judgment map: nodes/edges = graph API = DB, bottom-up trace to source span, top-down trace, list view keyboard, Flow/Topology/Learning IDs",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "evidence",
+                      "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13202,
+                      "error": {
+                        "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n",
+                        "stack": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55",
+                        "location": {
+                          "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                          "column": 55,
+                          "line": 237
+                        },
+                        "snippet": "  235 |     // Flow <-> Topology <-> Learning: same IDs\n  236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);\n> 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                       ^\n  238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);\n  239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);\n  240 |     await page.getByRole('button', { name: '업무 Topology' }).click();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "column": 55,
+                            "line": 237
+                          },
+                          "message": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: /규칙 적용/ }) resolved to 2 elements:\n    1) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '5. 규칙 규칙 적용 ○ 성공 재시도' })\n    2) <button class=\"obs-node obs-status obs-succeeded\">…</button> aka getByRole('button', { name: '6. 규칙 자동 배정 조건 검사 ○ 성공 재시도' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /규칙 적용/ })\u001b[22m\n\n\n  235 |     // Flow <-> Topology <-> Learning: same IDs\n  236 |     await page.goto(`/observatory?request_id=${post.request_id}&run_id=${post.run_id}`);\n> 237 |     await page.getByRole('button', { name: /규칙 적용/ }).click();\n      |                                                       ^\n  238 |     await expect(page.getByRole('dialog', { name: 'Trace 상세' })).toContainText(`실행 ${post.run_id}`);\n  239 |     await expect(page.getByRole('link', { name: '같은 실행의 판단 맵 보기' })).toHaveAttribute('href', `/judgment-map?run_id=${post.run_id}`);\n  240 |     await page.getByRole('button', { name: '업무 Topology' }).click();\n    at /Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts:237:55"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:56:02.618Z",
+                      "annotations": [
+                        {
+                          "type": "evidence",
+                          "description": "{\"map_nodes\":89,\"map_edges\":93,\"flow_href\":\"/observatory?run_id=run_e1e3916daac44a9681f56a669531b03e\",\"learning_href\":\"/learning\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-webkit/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/psw/Projects/decision-chat-bot/artifacts/review/e2e-all/extension-ui1-results/extension-extension--ui1-b-29c2b--Flow-Topology-Learning-IDs-webkit/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "column": 55,
+                        "line": 237
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-06c4b46a4f63b35d51ff",
+              "file": "extension/extension.spec.ts",
+              "line": 166,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] map filters and zoom",
+          "file": "extension/extension.spec.ts",
+          "line": 256,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "run once with ui2",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 257,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:37.053Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "run once with ui2",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 257,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-00d3630a084a60d3b6ba",
+              "file": "extension/extension.spec.ts",
+              "line": 258,
+              "column": 3
+            },
+            {
+              "title": "[X06] criteria filters (request / rule / Config version / status), zoom controls — counts follow the graph API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "run once with ui2",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 257,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:56:18.006Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "run once with ui2",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 257,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-522db9a55ec6635a704e",
+              "file": "extension/extension.spec.ts",
+              "line": 258,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "[ui1] lifecycle and persistence",
+          "file": "extension/extension.spec.ts",
+          "line": 292,
+          "column": 6,
+          "specs": [
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:37.053Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-643ff9dabff38ac6b0cd",
+              "file": "extension/extension.spec.ts",
+              "line": 295,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:55:37.054Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-9b55f09509e08ddcce30",
+              "file": "extension/extension.spec.ts",
+              "line": 345,
+              "column": 3
+            },
+            {
+              "title": "[X07][X08] rule learning screen: lifecycle timeline, version states, application counts, validation card, observation = stored values (and after reload)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:56:18.006Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-7e859b61e14b5d52e73b",
+              "file": "extension/extension.spec.ts",
+              "line": 295,
+              "column": 3
+            },
+            {
+              "title": "[X08] judgment map and trace: counts and IDs equal the stored snapshot after reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "ui2/ui3 only",
+                      "location": {
+                        "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                        "line": 293,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-05T05:56:18.006Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "ui2/ui3 only",
+                          "location": {
+                            "file": "/Users/psw/Projects/decision-chat-bot/frontend/e2e/extension/extension.spec.ts",
+                            "line": 293,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "62aa2a61f0663b254c87-e074dfcd455e8283bba9",
+              "file": "extension/extension.spec.ts",
+              "line": 345,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T05:55:03.099Z",
+    "duration": 74945.094,
+    "expected": 4,
+    "skipped": 6,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}
