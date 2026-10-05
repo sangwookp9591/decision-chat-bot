@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import asyncio
 import json
-import threading
 from datetime import UTC, datetime
 from uuid import uuid4
 
@@ -15,7 +14,7 @@ from jevtriage.domain.rules import apply_rules
 from jevtriage.judgment.catalog import CATALOG_VERSION
 from jevtriage.judgment.eligibility import evaluate_auto_assign
 from jevtriage.judgment.jev_client import MODEL_VERSION, JevClient
-from jevtriage.judgment.masking import MaskingSession, mask_for_external
+from jevtriage.judgment.masking import MaskingClient, MaskingSession
 from jevtriage.judgment.pipeline import (
     SCHEMA_VERSION,
     assemble,
@@ -85,36 +84,7 @@ async def execute_judgment(ctx, client=None) -> str:
                 and all(clause["requester_org"] in org_ids
                         for clause in r["scope"]["all"])]
     mask_session = MaskingSession()
-    mask_policy = {**policy, "_masking_session": mask_session}
-    mask_lock = threading.Lock()
-
-    class ExternalClient:
-        def __init__(self, inner):
-            self.inner = inner
-
-        def ask(self, state, question_map):
-            with mask_lock:
-                external = {**state}
-                if guidance:
-                    external["operating_guidance"] = guidance
-                for key in ("chat_text", "source_unit"):
-                    if key in external:
-                        external[key] = mask_for_external(external[key], mask_policy)
-                if "units" in external:
-                    external["units"] = [
-                        {**unit, "text": mask_for_external(unit["text"], mask_policy)}
-                        for unit in external["units"]
-                    ]
-                if "operating_guidance" in external:
-                    external["operating_guidance"] = [
-                        mask_for_external(item, mask_policy) for item in external["operating_guidance"]
-                    ]
-            return self.inner.ask(external, question_map)
-
-        def __getattr__(self, name):
-            return getattr(self.inner, name)
-
-    client = ExternalClient(client)
+    client = MaskingClient(client, policy, session=mask_session, guidance=guidance)
     mask_summary = {}
     try:
         async with ctx.step("Jev 판단", kind="ai", output_summary=mask_summary) as jev_step_id:

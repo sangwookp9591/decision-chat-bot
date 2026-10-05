@@ -63,3 +63,11 @@ HTTP는 스키마 오류 같은 경계 동작을 확인하거나 SDK가 아직 �
 - [Models](https://docs.typesafe.ai/models)
 - [Python SDK](https://docs.typesafe.ai/sdk/python) 및 [Python SDK Usage](https://docs.typesafe.ai/sdk/python/usage)
 - [Primitives](https://docs.typesafe.ai/primitives), [Choice](https://docs.typesafe.ai/primitives/choice), [Score](https://docs.typesafe.ai/primitives/score), [Noul](https://docs.typesafe.ai/primitives/noul), [Confidence](https://docs.typesafe.ai/confidence)
+
+## 외부 전송 마스킹 경계 (FIX-QAC, 2026-10-05)
+
+일반 판단과 context 규칙의 섀도 재판단은 공용 `judgment.masking.MaskingClient`를 사용한다. state의 채팅·근거 단위·근거 검증·운영 가이드뿐 아니라 새로 추가된 중첩 문자열과 질문 설명도 같은 토큰 표와 잠금으로 복사·마스킹한다. 질문 ID와 criteria의 키는 응답 계약을 유지한다. 내부 원문은 수정하지 않으므로 근거 영속화는 원문·위치를 보존한다. 일반 판단은 실행 고정 정책의 마스킹 설정과 세션을, 섀도는 검증 기준 정책의 설정을 사용한다. 섀도 호출 제한·사용량 집계는 마스킹된 호출에 적용한다.
+
+`JevClient.ask` 자체에도 같은 공용 마스킹 구현을 적용하여 향후 직접 호출 경로의 기본 마스킹을 보장한다. 서비스에 주입한 테스트/대체 클라이언트도 공용 래퍼를 거친다. SDK의 `system_one` 전송은 `jev_client.py` 한 곳으로 제한하며 제품 시험이 이 경계를 검사한다. `masking.enabled=false`와 categories 정책은 기존 동작을 유지한다.
+
+회귀 시험: `tests/integration/test_qac_regressions.py`는 일반·섀도의 실제 전체 모델 페이로드에서 이메일·전화·주민번호·Luhn 카드·런타임 조합 키 패턴 표본의 원문이 모두 0건임을 확인한다. `tests/unit/test_qac_external_boundary.py`는 직접 Jev 전송, 미래 중첩 state 및 질문 설명의 같은 경계를 검증한다. 실제 외부 API는 호출하지 않는다.

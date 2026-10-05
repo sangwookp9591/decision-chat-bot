@@ -6,6 +6,8 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
+from jevtriage.judgment.masking import MaskingClient
+
 MODEL_VERSION = "jev-1.13.0"
 
 class JevError(Exception): pass
@@ -29,8 +31,12 @@ class JevClient:
     def __init__(self, api_key: str, model: str = MODEL_VERSION, mode: str = "live", deadline: float = 120, max_retries: int = 2):
         self.api_key, self.model, self.mode = api_key, model, mode
         self.deadline, self.max_retries = deadline, max_retries
+        self.mask_policy = {}
+        self.masker = MaskingClient(None)
 
     def ask(self, state: Any, question_map: dict[str, dict]) -> ModelOutput:
+        self.masker.policy = {**self.mask_policy, "_masking_session": self.masker.session}
+        state, question_map = self.masker.payload(state, question_map)
         if self.mode == "mock": return self._mock(question_map)
         started = time.monotonic(); attempt = 0
         while True:

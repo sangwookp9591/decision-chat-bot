@@ -13,6 +13,7 @@ from jevtriage.db.tx import read_tx, write_tx
 from jevtriage.domain.serialize import json_value, loads_or
 from jevtriage.journal.writer import JournalWriter
 from jevtriage.judgment.jev_client import JevClient
+from jevtriage.judgment.masking import MaskingClient
 from jevtriage.judgment.pipeline import run_judgment
 from jevtriage.judgment.service import load_input_for_shadow as load_input
 from jevtriage.learning.apply import apply_rules
@@ -61,8 +62,11 @@ def _human_truth(judgment, corrections):
 
 
 class _LimitedClient:
-    def __init__(self, inner, limit, guidance):
-        self.inner, self.limit, self.guidance = inner, limit, guidance
+    external_masking = True
+
+    def __init__(self, inner, limit, guidance, policy=None):
+        self.inner = MaskingClient(inner, policy)
+        self.limit, self.guidance = limit, guidance
         self.calls = 0
         self.usage = Counter()
 
@@ -122,7 +126,7 @@ async def validate_rules(tenant: str, actor: str, rule_id: str, version: int,
     if context and client is None:
         settings = get_settings()
         client = JevClient(api_key=settings.jev_api_key.get_secret_value(), mode=settings.jev_mode)
-    limited = _LimitedClient(client, limit, [data["body"]["context_text"]]) if context else None
+    limited = _LimitedClient(client, limit, [data["body"]["context_text"]], base_config) if context else None
     changed, changes, labeled, fix_base, fix_candidate = 0, Counter(), 0, 0, 0
     failures = []
     for row in data["judgments"]:

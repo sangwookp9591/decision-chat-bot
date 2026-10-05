@@ -6,6 +6,7 @@ from .catalog import CATALOG_VERSION
 from .decompose import decompose
 from .eligibility import evaluate_auto_assign
 from .evidence import link_evidence, select_units
+from .masking import MaskingClient
 from .questions import ORG_KEYS, QSET_VERSION, RISK_KEYS, questions
 
 SCHEMA_VERSION = "judgment-v1"
@@ -16,6 +17,8 @@ TEAM_INVOLVEMENT_THRESHOLD = 0.5
 CATALOG_NOUL_THRESHOLD = 0.5
 
 def run_judgment(input_units, chat_text, policy_snapshot, client, *, chat_context_text=None):
+    if not getattr(client, "external_masking", False):
+        client = MaskingClient(client, policy_snapshot)
     units, state, result, classifications = classify(
         input_units, chat_text, policy_snapshot, client, chat_context_text=chat_context_text)
     evidence = build_evidence(units, classifications, client, policy_snapshot)
