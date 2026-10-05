@@ -102,7 +102,7 @@ describe('result summary card in the conversation', () => {
     expect(answer.querySelector('.scale-options')).toBeNull();
     expect(within(answer).queryByText('화면 만들기')).toBeNull();
   });
-  it('자세히 보기 opens the full result in a drawer; the evidence viewer replaces it and returns to it', async () => {
+  it('자세히 보기 opens the full result in a drawer; the evidence viewer stacks on top and leaves it open', async () => {
     vi.mocked(requestApi.document).mockRejectedValue(new Error('x'));
     const answer = await judged();
     fireEvent.click(within(answer).getByRole('button', { name: '자세히 보기' }));
@@ -110,7 +110,7 @@ describe('result summary card in the conversation', () => {
     expect(within(drawer).getByText('화면 만들기')).toBeInTheDocument();
     expect(drawer.querySelector('.scale-options')).not.toBeNull();
     fireEvent.click(within(drawer).getByRole('button', { name: /근거 열기|근거 패널 열기/ }));
-    expect(screen.queryByRole('dialog', { name: '판단 상세' })).toBeNull();
+    expect(screen.getByRole('dialog', { name: '판단 상세', hidden: true })).toBeInTheDocument();
   });
   it('the summary card itself offers evidence so the original text stays one click away', async () => {
     vi.mocked(requestApi.document).mockResolvedValue({ request_id: 'req_1', revision: 1, revision_id: 'rev_1', source: 'chat', kind: 'chat', filename: null, can_read_source: true, units: [] });

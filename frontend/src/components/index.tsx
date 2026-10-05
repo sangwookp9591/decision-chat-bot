@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useDelayedFlag } from '../state/useDelayedFlag';
 import { armRouteMotion } from '../lib/motion';
 import './ui.css';
@@ -49,7 +50,45 @@ export function Tabs({ tabs, value, onChange }: { tabs: { id: string; label: str
 }
 export function Modal({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) { return <Overlay open={open} title={title} onClose={onClose} className="modal-panel">{children}</Overlay>; }
 export function Drawer({ open, title, onClose, children }: { open: boolean; title: string; onClose: () => void; children: ReactNode }) { return <Overlay open={open} title={title} onClose={onClose} className="drawer-panel">{children}</Overlay>; }
-function Overlay({ open, title, onClose, children, className }: { open: boolean; title: string; onClose: () => void; children: ReactNode; className: string }) { const ref = useRef<HTMLDivElement>(null); useEffect(() => { if (!open) return; const previous = document.activeElement as HTMLElement | null; const panel = ref.current; const focusables = () => panel?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])'); focusables()?.[0]?.focus(); const keydown = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); if (event.key === 'Tab') { const nodes = Array.from(focusables() || []); if (!nodes.length) { event.preventDefault(); return; } const first = nodes[0]; const last = nodes[nodes.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } }; document.addEventListener('keydown', keydown); return () => { document.removeEventListener('keydown', keydown); previous?.focus(); }; }, [open, onClose]); if (!open) return null; return <div className="overlay-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><section ref={ref} className={`overlay-panel ${className}`} role="dialog" aria-modal="true" aria-label={title} tabIndex={-1}><header><h2>{title}</h2><Button variant="plain" aria-label="닫기" onClick={onClose}>×</Button></header><div className="overlay-content">{children}</div></section></div>; }
+const openOverlays: HTMLElement[] = [];
+let rootWasInert = false;
+function Overlay({ open, title, onClose, children, className }: { open: boolean; title: string; onClose: () => void; children: ReactNode; className: string }) {
+  const ref = useRef<HTMLElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const panel = ref.current;
+    if (!panel) return;
+    const root = document.getElementById('root');
+    if (!openOverlays.length && root) { rootWasInert = root.inert; root.inert = true; }
+    openOverlays.push(panel);
+    const focusables = () => panel.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    focusables()[0]?.focus();
+    const keydown = (event: KeyboardEvent) => {
+      if (openOverlays[openOverlays.length - 1] !== panel) return;
+      if (event.key === 'Escape') { event.preventDefault(); onCloseRef.current(); }
+      if (event.key === 'Tab') {
+        const nodes = Array.from(focusables());
+        if (!nodes.length) { event.preventDefault(); return; }
+        const first = nodes[0]; const last = nodes[nodes.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', keydown);
+    return () => {
+      document.removeEventListener('keydown', keydown);
+      const index = openOverlays.indexOf(panel);
+      if (index >= 0) openOverlays.splice(index, 1);
+      if (!openOverlays.length && root) root.inert = rootWasInert;
+      previous?.focus();
+    };
+  }, [open]);
+  if (!open) return null;
+  return createPortal(<div className="overlay-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><section ref={ref} className={`overlay-panel ${className}`} role="dialog" aria-modal="true" aria-label={title} tabIndex={-1}><header><h2>{title}</h2><Button variant="plain" aria-label="닫기" onClick={onClose}>×</Button></header><div className="overlay-content">{children}</div></section></div>, document.body);
+}
 export function Toast({ message, onClose, kind }: { message: string; onClose: () => void; kind?: 'error' }) { useEffect(() => { if (!message) return; const timer = window.setTimeout(onClose, 4000); return () => window.clearTimeout(timer); }, [message, onClose]); return message ? <div className={`toast${kind ? ` toast-${kind}` : ''}`} role={kind === 'error' ? 'alert' : 'status'}><span>{message}</span><button type="button" aria-label="알림 닫기" onClick={onClose}>×</button></div> : null; }
 type Column<T> = { key: keyof T; label: string; render?: (row: T) => ReactNode };
 export function DataTable<T extends object>({ columns, rows, getRowKey, caption }: { columns: Column<T>[]; rows: T[]; getRowKey: (row: T) => string; caption: string }) { const [sortKey, setSortKey] = useState<keyof T | null>(null); const [ascending, setAscending] = useState(true); const sorted = useMemo(() => !sortKey ? rows : [...rows].sort((a, b) => String(a[sortKey] ?? '').localeCompare(String(b[sortKey] ?? ''), 'ko') * (ascending ? 1 : -1)), [rows, sortKey, ascending]); return <div className="table-scroll" tabIndex={0} aria-label="표, 좌우 화살표 키로 이동"><table><caption>{caption}</caption><thead><tr>{columns.map((column) => <th key={String(column.key)} scope="col" aria-sort={sortKey === column.key ? (ascending ? 'ascending' : 'descending') : undefined}><button type="button" onClick={() => { setAscending(sortKey === column.key ? !ascending : true); setSortKey(column.key); }}>{column.label}<span aria-hidden="true">{sortKey === column.key ? ascending ? ' ↑' : ' ↓' : ' ↕'}</span></button></th>)}</tr></thead><tbody>{sorted.map((row) => <tr key={getRowKey(row)}>{columns.map((column) => <td key={String(column.key)}>{column.render ? column.render(row) : String(row[column.key] ?? '—')}</td>)}</tr>)}</tbody></table></div>; }

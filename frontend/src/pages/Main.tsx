@@ -37,7 +37,7 @@ export function Main() {
   const [pending, setPending] = useState<PendingSend | null>(null); const [listOpen, setListOpen] = useState(false); const [detailOpen, setDetailOpen] = useState(false);
   const [requests, setRequests] = useState<RequestItem[]>([]); const [source, setSource] = useState(''); const [sourceTitle, setSourceTitle] = useState(''); const [viewer, setViewer] = useState<ViewerTarget | null>(null);
   const textRef = useRef<HTMLTextAreaElement>(null); const attachRef = useRef<HTMLInputElement>(null); const pageRef = useRef<HTMLElement>(null); const scrollRef = useRef<HTMLDivElement>(null);
-  const atBottom = useRef(true); const openedAt = useRef(Date.now()); const returnToDetail = useRef(false); const [unread, setUnread] = useState(false); const [away, setAway] = useState(false); const [copied, setCopied] = useState(false);
+  const atBottom = useRef(true); const openedAt = useRef(Date.now()); const [unread, setUnread] = useState(false); const [away, setAway] = useState(false); const [copied, setCopied] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null); const dockTop = useRef<number | null>(null); const wasEmpty = useRef(true);
   const { titles, want } = useRequestTitles(detail);
   const resetRun = () => { setJudgment(null); setPreviousJudgment(null); setRuns(null); };
@@ -200,11 +200,11 @@ export function Main() {
     } catch (problem) { setNotice(errorMessage(problem)); } finally { setBusy(false); }
   }
   function openEvidence(output: Judgment['outputs'][number], evidence?: Judgment['outputs'][number]['evidence'][number]) {
-    returnToDetail.current = detailOpen; setDetailOpen(false); // the viewer takes the drawer's place and hands it back on close
+    // The viewer stacks on top of an open detail drawer; Escape closes only the top dialog.
     if (!evidence || !requestId || !judgment) { setSourceTitle(`${questionLabel(output.question_id)} · 근거 위치`); setSource('이 판단에는 저장된 원문 위치 근거가 없습니다.'); return; }
     setSource(''); setViewer({ requestId, revision: judgment.revision_id, source: evidence.attachment_id || 'chat', unitId: evidence.id, title: `${questionLabel(output.question_id)} · 근거 원문` });
   }
-  const closeEvidence = useCallback(() => { setViewer(null); setSource(''); if (returnToDetail.current) { returnToDetail.current = false; setDetailOpen(true); } }, []);
+  const closeEvidence = useCallback(() => { setViewer(null); setSource(''); }, []);
   const closeDetail = useCallback(() => setDetailOpen(false), []);
   const closeList = useCallback(() => setListOpen(false), []);
   const cancelled = progress.phase === 'cancelled' || detail?.request.status === 'cancelled';
