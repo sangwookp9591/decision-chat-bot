@@ -107,10 +107,13 @@ async def test_same_idempotency_key_returns_same_request(ingest_tenant):
 
 
 async def test_rejected_file_waits_until_excluded_revision(ingest_tenant):
+    # Attachment ids are globally unique; derive them from the tenant so a run that was
+    # interrupted before cleanup cannot collide with the next one.
+    good, bad = f"att_good_{ingest_tenant}", f"att_bad_{ingest_tenant}"
     attachments = [
-        {"id": "att_good", "filename": "good.md", "sha256": "a", "status": "ok", "units": []},
+        {"id": good, "filename": "good.md", "sha256": "a", "status": "ok", "units": []},
         {
-            "id": "att_bad",
+            "id": bad,
             "filename": "bad.pdf",
             "sha256": "b",
             "status": "rejected",
@@ -143,7 +146,7 @@ async def test_rejected_file_waits_until_excluded_revision(ingest_tenant):
         first["request_id"],
         "user-1",
         1,
-        ["att_bad"],
+        [bad],
         "decision-key",
         "decision-hash",
     )
