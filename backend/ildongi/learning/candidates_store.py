@@ -81,3 +81,20 @@ async def decision_marker(tenant: str, candidate_id: str):
             tenant=tenant, id=candidate_id,
         )).single()
     return await read_tx(tenant, op)
+
+
+async def list_orgs(tenant: str) -> list[dict]:
+    async def op(tx):
+        return await (await tx.run(
+            "MATCH (o:Org {tenant_id:$tenant}) RETURN o.id AS id,o.name AS name ORDER BY o.name,o.id",
+            tenant=tenant,
+        )).data()
+    return await read_tx(tenant, op)
+
+
+async def unknown_org_ids(tenant: str, scope: dict) -> list[str]:
+    ids = {clause["requester_org"] for clause in scope["all"] if "requester_org" in clause}
+    if not ids:
+        return []
+    known = {org["id"] for org in await list_orgs(tenant)}
+    return sorted(ids - known)

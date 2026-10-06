@@ -1,6 +1,7 @@
 import { apiFetch, idempotencyKey } from './client';
 
-export type Predicate = { field?: string; signal?: string; catalog_task?: string; requester_org?: string; op?: string; value?: unknown; present?: boolean };
+export type LearningOrg = { id: string; name: string };
+export type Predicate = { text?: { contains_any: string[] }; field?: string; signal?: string; catalog_task?: string; requester_org?: string; op?: string; value?: unknown; present?: boolean };
 export type RuleScope = { all: Predicate[] };
 export type RuleBody = {
   schema?: string; rule_id: string; version: number; effect: 'rule' | 'context'; target: string;
@@ -63,6 +64,7 @@ export function normalizeCandidate(row: CandidateRow): CandidateDetail {
 }
 
 export const learningApi = {
+  orgs: () => apiFetch<{ orgs: LearningOrg[] }>('/api/learning/orgs'),
   propose: (body: HumanProposal) => post<{ id: string; status: string; source: string }>('/api/learning/candidates', body),
   candidates: async () => (await apiFetch<{ candidates: CandidateRow[] }>('/api/learning/candidates')).candidates.map(normalizeCandidate),
   candidate: async (id: string) => { const row = await apiFetch<CandidateRow & { examples?: CandidateExample[] }>(`/api/learning/candidates/${rule(id)}`); return { ...normalizeCandidate(row), examples: row.examples || [] }; },

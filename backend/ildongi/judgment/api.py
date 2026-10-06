@@ -72,7 +72,8 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
             "draft_version": draft["draft_version"], "source": draft_source(draft["draft_version"]),
             "created_by": draft_created_by(draft, nodes), "created_at": _date(draft.get("created_at")),
             "tasks": [{key: task.get(key) for key in ("id", "draft_task_id", "draft_version",
-                       "title", "method", "lead_org", "deliverable", "status", "reason", "author")}
+                       "title", "method", "lead_org", "deliverable", "status", "reason", "author",
+                       "description", "description_author")}
                       | {"collab_orgs": json.loads(task.get("collab_orgs") or "[]"),
                          "predecessors": json.loads(task.get("predecessors") or "[]")}
                       for task in nodes]})
@@ -88,6 +89,8 @@ async def judgment(request_id: str, run_id: str | None = Query(None),
                 ("ai_need", "feasibility", "urgency", "lead_org")},
             "risk_confirmed": j["risk_confirmed"], "risks": json.loads(j["risks"]),
             "summary": json.loads(j["summary"]), "author": j["author"],
+            "questions": json.loads(j["questions_json"]) if j.get("questions_json") else None,
+            "llm": json.loads(j["llm_json"]) if j.get("llm_json") else None,
             "versions": json.loads(j["versions"]), "mode": j["mode"],
             "rule_effects": json.loads(j.get("rule_effects") or "[]"),
             "created_at": _date(j["created_at"]), "outputs": outputs, "draft_tasks": tasks,

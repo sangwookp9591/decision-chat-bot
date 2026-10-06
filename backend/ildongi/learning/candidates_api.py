@@ -19,8 +19,10 @@ from ildongi.learning.candidates_store import (
     create_human_candidate,
     decision_marker,
     list_candidates,
+    list_orgs,
     request_metas,
     supporting_corrections,
+    unknown_org_ids,
 )
 from ildongi.learning.corrections import get_request_corrections, list_corrections
 
@@ -67,6 +69,11 @@ async def corrections(field: str | None = None, request_id: str | None = None,
     return redact_source(principal, {"corrections": rows})
 
 
+@router.get("/orgs")
+async def orgs(principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
+    return {"orgs": await list_orgs(principal.tenant_id)}
+
+
 @router.get("/candidates")
 async def candidates(status: str | None = None, field: str | None = None,
                      principal: Principal = Depends(require_roles("reviewer", "rule_admin", "operator"))):  # noqa: B008
@@ -105,12 +112,15 @@ async def propose(body: HumanCandidate, principal: Principal = Depends(get_princ
         raise HTTPException(422, detail={"code": code, "reason": str(exc)}) from exc
     # Scope accepts only deterministic predicates from the shared rule contract.
     for predicate in body.scope["all"]:
-        if not isinstance(predicate, dict) or not (set(predicate) <= {"field", "op", "value", "signal", "catalog_task", "present", "requester_org"}):
+        if not isinstance(predicate, dict) or not (set(predicate) <= {"field", "op", "value", "signal", "catalog_task", "present", "requester_org", "text"}):
             raise HTTPException(422, "Invalid scope predicate")
         if "field" in predicate and (predicate["field"] not in FIELDS or predicate.get("op") not in {"eq", "in"}):
             raise HTTPException(422, "Invalid classification predicate")
         if "signal" in predicate and predicate.get("op") not in {"gte", "lte"}:
             raise HTTPException(422, "Invalid signal predicate")
+    unknown = await unknown_org_ids(principal.tenant_id, body.scope)
+    if unknown:
+        raise HTTPException(422, detail={"code": "UNKNOWN_ORG", "reason": f"알 수 없는 조직: {', '.join(unknown)}"})
     valid_corrections = await supporting_corrections(
         principal.tenant_id, list(set(body.supporting_correction_ids)), body.field,
     )

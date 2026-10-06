@@ -323,7 +323,7 @@ scripts/ops/         운영·백업 도구
 scripts/fault/       장애 주입 시험
 eval/                품질 평가 데이터·실행기
 loadtest/            부하 시험
-artifacts/           시연·검증·감사 증거
+artifacts/           시연·검증·감사 증거 (옛 이름 대응표: artifacts/README.md)
 ```
 
 ## 문서 색인

@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from neo4j.exceptions import ServiceUnavailable, SessionExpired
 
 from ildongi import api_encoding  # noqa: F401  (registers Neo4j temporal JSON encoders)
+from ildongi.assist.api import router as assist_router
 from ildongi.auth.core import enforce_csrf
 from ildongi.auth.router import router as auth_router
 from ildongi.config import get_settings
@@ -29,6 +30,7 @@ from ildongi.judgment.progress import router as progress_router
 from ildongi.learning.candidates_api import request_router as request_learning_router
 from ildongi.learning.candidates_api import router as learning_router
 from ildongi.learning.effects_api import router as effects_router
+from ildongi.learning.explain_api import router as explain_router
 from ildongi.learning.rules_api import router as learning_rules_router
 from ildongi.learning.shadow_api import router as shadow_router
 from ildongi.learning.shadow_api import validation_router
@@ -87,6 +89,8 @@ def create_app() -> FastAPI:
                            else error["msg"])} for error in exc.errors()]
         return JSONResponse(status_code=422, content={"detail": detail})
 
+    app.include_router(assist_router)
+    app.include_router(explain_router)
     app.include_router(auth_router)
     app.include_router(ingest_router)
     app.include_router(jobs_router)

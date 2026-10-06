@@ -159,6 +159,9 @@ async def review_detail(review_id: str,
         judgment["versions"] = decode(judgment.get("versions"), {})
         judgment["risks"] = decode(judgment.get("risks"), {})
         judgment["summary"] = decode(judgment.get("summary"), {})
+        judgment["questions"] = decode(judgment.pop("questions_json", None), None)
+        judgment["llm"] = decode(judgment.pop("llm_json", None), None)
+        judgment["rule_effects"] = decode(judgment.get("rule_effects"), [])
         judgment["created_at"] = str(judgment["created_at"])
     history = []
     for row in data["history"]:

@@ -26,3 +26,8 @@ Choice confidence 기본 임계값은 `ai_need`·`feasibility`·`urgency`·`lead
 ## 공용 입력 구성요소
 
 `frontend/src/components/fields.tsx`(+`fields.css`): `Field`, `TextField`, `Select`, `Checkbox`, `Switch`, `ChipGroup`, `NumberField`, `SearchSelect`(검색 가능한 combobox), `DateTimeField`/`DateRange`(년·월·일·시·분 입력, 브라우저 로케일과 무관한 한국어 형식), `EmptyCard`, `FilterBar`. 정책·업무·검토 대기·실행 관찰·모니터링이 사용하며 모든 컨트롤은 44px 터치 높이와 같은 포커스 링을 쓴다.
+
+
+## 글쓰기 보조 설정
+
+`PolicyConfig.llm`에는 제공자(`anthropic`·`openai`·`google` 또는 null), 모델, 요약·업무 설명·질문·규칙 설명 스위치, 호출 시간·단계 예산·출력 토큰 제한이 들어간다. 기본값은 비활성이며 과거 정책도 기본값으로 검증한다(`policy-schema-v1` 유지). 제공자가 설정되면 모델과 마스킹이 필수이고, 마스킹을 끈 게시는 `LLM_REQUIRES_MASKING`으로 거절한다. 기존 게시·되돌리기·감사·실행별 정책 고정 경로를 재사용하므로 진행 중 실행은 당시 LLM 설정을 유지한다. API 키는 Settings의 서버 비밀로만 보관하며 정책·DB·diff에 저장하지 않는다. [구현과 수용 기준](LLM_ASSIST.md)을 참고한다.

@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
+import { learningApi, type LearningOrg } from '../../api/learning';
 import { Link } from 'react-router-dom';
 import { RawDetails } from '../../components/RawDetails';
 import type { CandidateDetail, CandidateExample, EffectMetrics, RuleEffects, RuleVersionRow, ValidationResult } from '../../api/learning';
-import { describeAction, describeScope, effectLabels, fieldLabel, formatTime, millis, percent, sampleShortage, validationNotice, valueText, versionStatusLabel } from './learningModel';
-import { comparisonConditionsLabel } from '../../lib/labels';
+import { describeAction, effectLabels, fieldLabel, formatTime, millis, percent, sampleShortage, validationNotice, valueText, versionStatusLabel } from './learningModel';
+import { comparisonConditionsLabel, scopeText } from '../../lib/labels';
 
 export const CYCLE = ['수정 기록', '가설', '검토된 규칙', '비교 검증', '게시', '효과 관찰'];
 
@@ -109,6 +111,12 @@ export function Observation({ effects, state }: { effects: RuleEffects | null; s
 }
 
 export function RuleSummary({ candidate, version }: { candidate: CandidateDetail; version: RuleVersionRow | null }) {
+  const [orgs, setOrgs] = useState<LearningOrg[]>([]);
+  useEffect(() => {
+    let live = true;
+    learningApi.orgs().then((result) => { if (live) setOrgs(result.orgs); }, () => {});
+    return () => { live = false; };
+  }, []);
   const body = version?.body || candidate.proposed_body;
   const confirmed = !!version;
   const u = candidate.uncertainty;
@@ -124,7 +132,7 @@ export function RuleSummary({ candidate, version }: { candidate: CandidateDetail
     <h2>{describeAction(body.action)} — {fieldLabel(candidate.field)}</h2>
     <p className="learning-hint">후보 문장은 결정적 규칙 본문에서 만든 것이며 실행에는 쓰이지 않습니다. {insufficient && <strong>자료 부족: 효과를 주장하지 않습니다.</strong>}</p>
     <div className="learning-facts">
-      <div><span>적용 범위 ({confirmed ? '확정' : '제안'})</span><b>{describeScope(body.scope.all)}</b></div>
+      <div><span>적용 범위 ({confirmed ? '확정' : '제안'})</span><b>{scopeText(body.scope, orgs)}</b></div>
       <div><span>판단 항목</span><b>{fieldLabel(candidate.field)} · 대상 {fieldLabel(body.target)}</b></div>
       <div><span>불확실성</span><b>지지 {u.support_count ?? candidate.support_count ?? 0}건 · 반례 {u.counter_count ?? candidate.counter_count ?? 0}건{u.minimum_support ? ` · 최소 ${u.minimum_support}건` : ''}{u.single_organization_bias ? ' · 한 조직에 치우침' : ''}{u.rationale ? ` · ${u.rationale}` : ''}</b></div>
     </div>

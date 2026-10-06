@@ -1,3 +1,5 @@
+import { Explanation } from './learning/Explanation';
+import type { FullPolicyConfig } from './policy/PolicyForm';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { learningApi, type CandidateDetail, type RuleDetail, type RuleEffects, type RuleScope, type RuleVersionRow, type ValidationResult } from '../api/learning';
@@ -32,6 +34,7 @@ export function Learning({ roles }: { roles: string[] }) {
   const [detail, setDetail] = useState<CandidateDetail | null>(null);
   const [versionNo, setVersionNo] = useState<number | null>(null);
   const [activeConfig, setActiveConfig] = useState(0);
+  const [explanationEnabled, setExplanationEnabled] = useState(false);
   const [minSample, setMinSample] = useState(DEFAULT_MIN_SAMPLE);
   const [validations, setValidations] = useState<Record<string, ValidationResult>>({});
   const [effectResult, setEffectResult] = useState<{ state: 'none' | 'forbidden' | 'unpublished' | 'error' } | { state: 'ok'; effects: RuleEffects }>({ state: 'none' });
@@ -46,6 +49,7 @@ export function Learning({ roles }: { roles: string[] }) {
   const load = useCallback(async () => {
     try {
       const [list, active] = await Promise.all([learningApi.candidates(), policyApi.active()]);
+      setExplanationEnabled(Boolean((active.config as FullPolicyConfig).llm?.features.rule_explanation));
       setCandidates(list); setActiveConfig(active.version);
       const configured = Number((active.config as unknown as { learning?: { min_effect_sample?: number } }).learning?.min_effect_sample);
       if (Number.isFinite(configured) && configured > 0) setMinSample(configured);
@@ -204,6 +208,7 @@ export function Learning({ roles }: { roles: string[] }) {
             {version && <p className="learning-state">버전 {versionKey} · 상태 {versionStatusLabel(version.status)} · 게시 Config {version.config_versions.length ? version.config_versions.map((v) => `v${v}`).join(', ') : '없음'} · 적용 기록 {version.application_count}건 · 활성 Config v{activeConfig}</p>}
             {!perms.isAdmin && <p className="learning-hint">규칙 버전·효과를 조회할 수 있습니다. 변경은 규칙 관리자만 할 수 있습니다.</p>}
           </div>
+          <Explanation key={detail.id} candidate={detail} enabled={explanationEnabled} canEdit={perms.isAdmin} />
           <EvidenceTable examples={detail.examples} ruleRef={version ? versionKey : null} />
           {perms.isAdmin && <><ValidationCard result={validation} minimum={minSample} />
             <Timeline ruleLabel={version ? versionKey : detail.id} items={timeline.length ? timeline : [{ kind: '후보 제안', at: isoOf(detail.created_at), actor: detail.author, detail: sourceLabel(detail.source) }]} />

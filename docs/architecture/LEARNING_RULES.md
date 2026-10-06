@@ -15,3 +15,8 @@ API 쓰기는 `rule_admin` 세션·CSRF·`Idempotency-Key`·사유가 필요하�
 규칙 목록·상세·효과는 `rule:read` 권한을 사용하며 reviewer·operator·rule_admin이 조회한다. tenant 경계는 저장소 조회에서 강제한다. reviewer에게는 각 버전의 `scope.all[].requester_org`와 소속 조직이 겹치는 버전만 노출하며 조직 조건 없는 규칙은 tenant 공통으로 읽을 수 있다. operator와 rule_admin은 tenant 전체 범위다. 가려진 버전은 목록의 최신 버전·버전 수에서도 제외하며 범위 밖 상세·효과는 404다. 원문 필드는 기존 `can_read_source` 권한대로 제거한다. 효과 실행 집계도 reviewer의 요청 범위로 제한한다.
 
 후보 결정·버전 생성·검증·게시·중단·되돌리기는 기존 rule_admin 전용 권한을 유지한다. 규칙 학습 화면은 조회 역할에도 규칙 버전과 게시 후 관찰을 연결하고 변경 버튼은 비활성으로 표시한다.
+
+
+## 원문 키워드 조건 (RULE_KEYWORD)
+
+`{"text":{"contains_any":["서버","VPN"]}}`은 해당 revision의 모든 마스킹 전 EvidenceSpan에서 하나라도 포함되면 참이다. 문자마다 NFKC·casefold 후 공백·제어·서식 문자를 제거하며, 키워드 1~20개·정규화 후 1~50자·정규화 중복 금지를 검사한다. 조건들은 기존처럼 AND이며 text 조건을 여러 개 두면 모두 포함을 표현한다. 원문 단위가 없는 실행에서는 거짓으로 처리하고, 키워드 섀도 표본의 원문을 읽을 수 없으면 `input_unavailable`로 실패를 남긴다. `context` 조건에는 요청 조직과 원문 키워드만 허용한다. 일치 기록은 규칙당 최대 5개의 `{unit_id,char_start,char_end,keyword}`이며 원문 조각을 포함하지 않는다. `rule_effects`에는 `target`과 `rule:<id>@v<version>` 출처가, `APPLIED`에는 `source`가 저장된다. 결과·검토 화면은 규칙 근거와 모델 원판단 근거를 구분하고 기존 원문 권한을 유지한다. API와 worker를 함께 배포한 뒤 키워드 규칙을 게시한다. 상세 계약과 검증 기록은 [RULE_KEYWORD.md](RULE_KEYWORD.md)를 따른다.

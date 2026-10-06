@@ -1,3 +1,4 @@
+import type { LlmConfig } from '../../api/llm';
 import type { ReactNode } from 'react';
 import type { PolicyConfig } from '../../api/policy';
 import { ChipGroup, NumberField, Switch, TextField } from '../../components/fields';
@@ -27,7 +28,7 @@ const ranges: Record<string, [number, number]> = { min_support: [2, 1000], min_e
 const maskLabels: Array<[string, string]> = [['registration', '주민·등록번호'], ['business', '사업자번호'], ['card', '카드번호'], ['email', '이메일'], ['phone', '전화번호'], ['account', '계좌번호'], ['ip', 'IP 주소'], ['url_query', 'URL 쿼리'], ['api_key', 'API 키']];
 
 /** Keys the server sends beyond the shared PolicyConfig type. */
-export type FullPolicyConfig = PolicyConfig & { noul_uncertain_band?: number[]; learning?: Record<string, number>; masking?: { enabled: boolean; categories: string[] }; retention?: Record<string, number> };
+export type FullPolicyConfig = PolicyConfig & { llm?: LlmConfig; noul_uncertain_band?: number[]; learning?: Record<string, number>; masking?: { enabled: boolean; categories: string[] }; retention?: Record<string, number> };
 type Props = {
   config: FullPolicyConfig; readOnly: boolean;
   set: (path: Array<string | number>, value: unknown) => void;

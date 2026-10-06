@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from copy import deepcopy
 from typing import Any
 
@@ -16,6 +17,55 @@ ORGANIZATIONS = {"AI팀", "IT팀", "현업"}
 
 class RuleInvariantError(ValueError):
     """An action could weaken a server enforced review or assignment rule."""
+
+
+def normalize_for_match(text: str) -> tuple[str, list[int]]:
+    # ponytail: per-character NFKC does not compose NFD Hangul; normalize at ingest if needed.
+    out, index = [], []
+    for i, ch in enumerate(text):
+        for n in unicodedata.normalize("NFKC", ch).casefold():
+            if n.isspace() or unicodedata.category(n) in {"Zs", "Cc", "Cf"}:
+                continue
+            out.append(n)
+            index.append(i)
+    return "".join(out), index
+
+
+def text_matches(clause: dict, units: list[dict], limit: int = 5) -> list[dict]:
+    matches = []
+    if limit <= 0:
+        return matches
+    for unit in units:
+        text, index = normalize_for_match(unit["text"])
+        for keyword in clause["text"]["contains_any"]:
+            normalized, _ = normalize_for_match(keyword)
+            if not normalized:
+                continue
+            start = 0
+            while (pos := text.find(normalized, start)) >= 0:
+                matches.append({"unit_id": unit["unit_id"], "char_start": index[pos],
+                                "char_end": index[pos + len(normalized) - 1] + 1,
+                                "keyword": keyword})
+                if len(matches) >= limit:
+                    return matches
+                start = pos + len(normalized)
+    return matches
+
+
+def context_rules_for(rules: list[dict], features: dict) -> list[str]:
+    guidance = []
+    for reference in rules:
+        body = {"schema": "rule-v1", **reference.get("body", reference)}
+        try:
+            # Guidance selection validates predicates, independent of legacy rule identity.
+            validate_rule({**body, "rule_id": "R-CONTEXT-00"})
+        except (ValueError, TypeError):
+            continue
+        if body["effect"] == "context" and all(
+            _matches(clause, {}, features) for clause in body["scope"]["all"]
+        ):
+            guidance.append(body["context_text"])
+    return guidance
 
 
 def validate_rule_or_raise(body: dict[str, Any]) -> dict[str, Any]:
@@ -54,12 +104,29 @@ def validate_rule(body: dict[str, Any]) -> dict[str, Any]:
         elif "catalog_task" in clause:
             if set(clause) != {"catalog_task", "present"} or not isinstance(clause["catalog_task"], str) or not isinstance(clause["present"], bool):
                 raise ValueError("invalid catalog predicate")
+        elif "text" in clause:
+            predicate = clause["text"]
+            if set(clause) != {"text"} or not isinstance(predicate, dict) or set(predicate) != {"contains_any"}:
+                raise ValueError("invalid text predicate")
+            keywords = predicate["contains_any"]
+            if not isinstance(keywords, list) or not 1 <= len(keywords) <= 20:
+                raise ValueError("invalid text predicate")
+            normalized = []
+            for keyword in keywords:
+                if not isinstance(keyword, str):
+                    raise ValueError("invalid text predicate")  # noqa: TRY004 - RULE_INVALID API contract
+                value, _ = normalize_for_match(keyword)
+                if not 1 <= len(value) <= 50:
+                    raise ValueError("invalid text predicate")
+                normalized.append(value)
+            if len(set(normalized)) != len(normalized):
+                raise ValueError("duplicate keyword")
         elif "requester_org" in clause:
             if set(clause) != {"requester_org"} or not isinstance(clause["requester_org"], str):
                 raise ValueError("invalid requester org predicate")
         else:
             raise ValueError("unsupported scope predicate")
-    if body["effect"] == "context" and any("requester_org" not in clause for clause in scope["all"]):
+    if body["effect"] == "context" and any(not ({"requester_org", "text"} & clause.keys()) for clause in scope["all"]):
         raise ValueError("context scope must be decidable before Decision AI")
     action = body.get("action")
     if not isinstance(action, dict) or len(action) != 1:
@@ -100,6 +167,8 @@ def _matches(clause: dict, result: dict, features: dict) -> bool:
     if "catalog_task" in clause:
         found = any(task.get("catalog_task_id", task.get("type_id")) == clause["catalog_task"] for task in result.get("draft_tasks", []))
         return found == clause["present"]
+    if "text" in clause:
+        return bool(text_matches(clause, features.get("text_units", []), limit=1))
     return clause["requester_org"] in features.get("requester_orgs", [])
 
 
@@ -117,6 +186,7 @@ def apply_rules(judgment_result: dict, rules_snapshot: list[dict], *, features: 
             before = sorted({org for task in result.get("draft_tasks", [])
                              for org in task.get("collab_orgs", [])})
         application = {"rule_version": rule_version, "effect": body["effect"],
+                       "target": target, "source": f"rule:{body['rule_id']}@v{body['version']}", "matches": [],
                        "outcome": "out_of_scope", "before": before, "after": before}
         applications.append(application)
         try:
@@ -126,6 +196,10 @@ def apply_rules(judgment_result: dict, rules_snapshot: list[dict], *, features: 
             continue
         if not all(_matches(clause, result, features) for clause in body["scope"]["all"]):
             continue
+        for clause in body["scope"]["all"]:
+            if "text" in clause:
+                application["matches"].extend(text_matches(
+                    clause, features.get("text_units", []), 5 - len(application["matches"])))
         action = body["action"]
         original = judgment_result.get("classifications", {})
         if (target == "urgency" and original.get("urgency") == "긴급"

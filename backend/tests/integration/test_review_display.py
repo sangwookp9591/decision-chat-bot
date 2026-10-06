@@ -1,6 +1,8 @@
 """Review list/detail expose the stored masked request title; preview follows source permission."""
 from __future__ import annotations
 
+import json
+
 import httpx
 import pytest
 
@@ -61,3 +63,48 @@ async def test_review_detail_includes_original_for_source_reader(tenant):  # noq
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
         body = (await client.get(f"/api/reviews/{review_id}")).json()
     assert body["request"]["request_text"] == "업무 판단 요청"
+
+
+async def test_source_derived_assist_text_is_redacted_from_judgment_and_review(tenant):  # noqa: F811
+    allowed, review_id, command = await sample(tenant)
+
+    async def add_assist_text(tx):
+        await (await tx.run(
+            "MATCH (q:Request {tenant_id:$tenant,id:$request}) SET q.org_ids=$orgs",
+            tenant=tenant, request=command["request_id"], orgs=[f"{tenant}-it"],
+        )).consume()
+        await (await tx.run(
+            "MATCH (j:Judgment {tenant_id:$tenant,run_id:$run}) "
+            "SET j.questions_json=$questions",
+            tenant=tenant, run=command["run_id"],
+            questions=json.dumps({"items": ["원문에서 나온 질문"], "author": "llm:test"}),
+        )).consume()
+        await (await tx.run(
+            "MATCH (t:DraftTask {tenant_id:$tenant,run_id:$run}) "
+            "SET t.description='원문에서 나온 업무 설명'",
+            tenant=tenant, run=command["run_id"],
+        )).consume()
+    await write_tx(tenant, add_assist_text)
+
+    app = create_app()
+    async def fetch(principal):
+        app.dependency_overrides[get_principal] = lambda: principal
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+            judgment = (await client.get(f"/api/requests/{command['request_id']}/judgment")).json()
+            review = (await client.get(f"/api/reviews/{review_id}")).json()
+            return judgment, review
+
+    denied = Principal(allowed.tenant_id, allowed.user_id, allowed.org_ids, allowed.roles, False)
+    judgment, review = await fetch(denied)
+    assert "description" not in judgment["draft_tasks"][0]
+    assert "questions" not in judgment
+    assert "description" not in review["current_draft"]["tasks"][0]
+    assert "questions" not in review["judgment"]
+    assert "questions_json" not in review["judgment"]
+    assert "원문에서 나온" not in json.dumps([judgment, review], ensure_ascii=False)
+
+    judgment, review = await fetch(allowed)
+    assert judgment["draft_tasks"][0]["description"] == "원문에서 나온 업무 설명"
+    assert judgment["questions"]["items"] == ["원문에서 나온 질문"]
+    assert review["current_draft"]["tasks"][0]["description"] == "원문에서 나온 업무 설명"
+    assert review["judgment"]["questions"]["items"] == ["원문에서 나온 질문"]

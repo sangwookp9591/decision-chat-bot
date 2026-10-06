@@ -19,6 +19,7 @@ const versionRow = (status: string) => ({ rule_id: 'R-LEAD_ORG-01', versions: [{
 
 function setup(roles: string[], status = 'approved', versionStatus: string | null = 'validating') {
   Object.assign(mocks.api, {
+    orgs: vi.fn().mockResolvedValue({ orgs: [] }),
     candidates: vi.fn().mockResolvedValue([{ ...detail(status), examples: [] }]), candidate: vi.fn().mockResolvedValue(detail(status)),
     corrections: vi.fn().mockResolvedValue({ corrections: [{}, {}, {}, {}] }), generate: vi.fn(),
     rules: vi.fn().mockResolvedValue({ rules: versionStatus ? [{ rule_id: 'R-LEAD_ORG-01', latest_version: 1, version_count: 1 }] : [] }),

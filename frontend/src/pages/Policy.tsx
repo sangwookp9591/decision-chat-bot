@@ -1,3 +1,4 @@
+import { LlmSettings } from './policy/LlmSettings';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, DataTable, ErrorState, LoadingState, StatusBadge } from '../components';
 import { PolicyForm, policyHint, policyLabel, type FullPolicyConfig } from './policy/PolicyForm';
@@ -120,6 +121,7 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
     <div className="policy-safety"><strong>잠금 · 필수 검토</strong><span>임상·안전·규제·긴급 검토는 항상 필요하며 편집할 수 없습니다.</span><strong>잠금 · 무승인 배정 금지</strong><span>승인 없이 업무를 배정하는 설정은 허용되지 않습니다.</span></div>
     <div className="policy-grid"><section className="policy-card"><h2>정책 편집기</h2>{!canEdit && <p role="note">정책 편집자 권한이 없어 읽기 전용입니다.</p>}
       {incoming !== null && <div className="policy-incoming" role="status"><strong>새 버전 v{incoming}이 게시되었습니다.</strong><span>편집 중인 값은 아직 그대로입니다. 새 버전을 반영하면 지금 편집한 내용은 사라집니다.</span><PolicyButton variant="secondary" onClick={() => void refresh(true)}>새 버전 반영</PolicyButton><PolicyButton variant="plain" onClick={() => setIncoming(null)}>내 편집 유지</PolicyButton></div>}
+      <LlmSettings config={full.llm} canEdit={canEdit} onChange={(next) => setPath(['llm'], next)} />
       <PolicyForm config={full} readOnly={!canEdit} set={setPath} invalid={markInvalid} />
       <details className="policy-advanced"><summary>고급: JSON 보기</summary>
         <p className="policy-hint">항목별 원본 값입니다. 위 입력란에 없는 항목(예: 새 검토자 그룹)은 여기서 고칩니다. 잘못된 JSON은 마지막으로 유효했던 값이 유지됩니다.</p>

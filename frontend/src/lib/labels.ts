@@ -128,3 +128,17 @@ const consensusLabels: Record<string, string> = {
 export const consensusLabel = (state: string) => consensusLabels[state] || '확인 필요한 상태';
 const decisionStatusLabels: Record<string, string> = { confirmed: '확정', deferred: '보류' };
 export const decisionStatusLabel = (status: string) => decisionStatusLabels[status] || status;
+
+
+export const orgLabel = (org: { name: string }) => ({ ai: 'AI팀', it: 'IT팀', business: '현업' }[org.name] || org.name);
+
+export function scopeText(scope: import('../api/learning').RuleScope, orgs: Array<{ id: string; name: string }> = []): string {
+  if (!scope.all.length) return '모든 요청';
+  return scope.all.map((clause) => {
+    if (clause.text) return `원문에 ${clause.text.contains_any.map((keyword) => `‘${keyword}’`).join(' 또는 ')} 포함`;
+    if (clause.requester_org) return `요청 조직 ${orgLabel(orgs.find((org) => org.id === clause.requester_org) || { name: clause.requester_org })}`;
+    if (clause.field) return `${fieldLabel(clause.field)} ${Array.isArray(clause.value) ? clause.value.join(' 또는 ') : String(clause.value)}`;
+    if (clause.signal) return `${questionLabel(clause.signal)} ${clause.op === 'gte' ? '이상' : '이하'} ${String(clause.value)}`;
+    return `업무 유형 ${clause.catalog_task} ${clause.present ? '포함' : '없음'}`;
+  }).join(' · ');
+}

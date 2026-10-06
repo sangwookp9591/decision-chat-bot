@@ -11,7 +11,7 @@ vi.mock('../state/events',()=>({useEventStream:(_f:unknown,_s:unknown,onEvent:(e
 const row=(over:Record<string,unknown>={})=>({id:'rvw_1',request_id:'req_1',run_id:'run_1',revision_id:'rev_1',draft_version:1,review_version:1,status:'pending',reasons:['정보 부족'],...over});
 const detail=(over:Record<string,unknown>={})=>({review:row(over),request:{title:'요청',request_text:'원문 내용'},judgment:{ai_need:'정보 부족'},outputs:[],drafts:[],history:[],final_classifications:{ai_need:'정보 부족'},final_draft_version:1});
 vi.mock('../api/reviews',()=>({reviewApi:{list:vi.fn(),detail:vi.fn(),decide:vi.fn()}}));
-vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]}),judgment:vi.fn(),document:vi.fn()}}));
+vi.mock('../api/requests',()=>({requestApi:{detail:vi.fn().mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]}),judgment:vi.fn(),evidence:vi.fn(),document:vi.fn()}}));
 const renderAt=(url='/review')=>render(<MemoryRouter initialEntries={[url]}><Review/></MemoryRouter>);
 beforeEach(()=>{cleanup();vi.clearAllMocks();vi.mocked(reviewApi.list).mockImplementation(async(status='pending')=>({reviews:status==='pending'?[row() as any]:[]}));vi.mocked(reviewApi.detail).mockResolvedValue(detail() as any);vi.mocked(requestApi.detail).mockResolvedValue({revisions:[{id:'rev_1',text:'원문 내용'}]} as any)});
 describe('review list title and source permission',()=>{
@@ -93,13 +93,13 @@ describe('review comparison',()=>{
 describe('review evidence viewer',()=>{
  it('opens the cited unit in the source viewer using the attachment named by the run judgment',async()=>{
   vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),outputs:[{id:'o1',question_id:'ai_need',type:'Choice',value:'필요',evidence:[{id:'esp_7',location:{paragraph:3}}]}]} as any);
-  vi.mocked(requestApi.judgment).mockResolvedValue({outputs:[{evidence:[{id:'esp_7',attachment_id:'att_2'}]}]} as any);
+  vi.mocked(requestApi.evidence).mockResolvedValue({id:'esp_7',attachment_id:'att_2'} as any);
   vi.mocked(requestApi.document).mockResolvedValue({request_id:'req_1',revision:1,revision_id:'rev_1',source:'att_2',kind:'docx',filename:'b.docx',can_read_source:false,units:[{unit_id:'esp_6',order:0,location:{paragraph:2},char_start:0,char_end:1},{unit_id:'esp_7',order:1,location:{paragraph:3},char_start:1,char_end:2}]} as any);
   Element.prototype.scrollTo=vi.fn() as any;
   renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
   fireEvent.click(screen.getByRole('button',{name:'원문 열기'}));
   expect(await screen.findByText(/원문 열람 권한 없음/)).toBeInTheDocument();
-  expect(requestApi.judgment).toHaveBeenCalledWith('req_1','run_1');
+  expect(requestApi.evidence).toHaveBeenCalledWith('req_1','esp_7');
   expect(requestApi.document).toHaveBeenCalledWith('req_1','rev_1','att_2');
   expect(document.querySelector('[data-unit-id="esp_7"]')).toHaveAttribute('aria-current','location');
   expect(screen.getAllByText('원문 비공개').length).toBe(2);
@@ -192,4 +192,19 @@ describe('undetermined draft repair (P1-01)',()=>{
   expect(await screen.findByText('업무 방식을 선택해 주세요.')).toBeTruthy();
   expect(screen.getByLabelText('업무 방식')).toHaveAttribute('aria-invalid','true');
  });
+});
+
+it('shows classification rule badge and source citations with original text from the permission-checked API', async () => {
+ const effect={rule_version:'R-LEAD_ORG-03@1',target:'lead_org',source:'rule:R-LEAD_ORG-03@v1',effect:'rule',outcome:'used',before:'AI팀',after:'IT팀',matches:[{unit_id:'esp_vpn',char_start:0,char_end:3,keyword:'VPN'}]};
+ vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),judgment:{lead_org:'IT팀',rule_effects:[effect]}} as any);
+ vi.mocked(requestApi.evidence).mockResolvedValue({id:'esp_vpn',attachment_id:'att_vpn',location:{},source_text:'VPN 접속 원문'});
+ vi.mocked(requestApi.document).mockResolvedValue({request_id:'req_1',revision:1,revision_id:'rev_1',source:'att_vpn',kind:'md',filename:'vpn.md',can_read_source:true,units:[{unit_id:'esp_vpn',order:0,location:{},char_start:0,char_end:3,text:'VPN 접속 원문'}]});
+ Element.prototype.scrollTo=vi.fn();
+ renderAt('/review?review_id=rvw_1');
+ expect(await screen.findByText('규칙 적용 · R-LEAD_ORG-03 v1')).toBeInTheDocument();
+ expect(screen.getByText('모델 판단 AI팀 → 규칙 IT팀')).toBeInTheDocument();
+ expect(await screen.findByText('VPN 접속 원문')).toBeInTheDocument();
+ fireEvent.click(screen.getByRole('button',{name:'규칙 원문 열기'}));
+ await screen.findByText(/원문 ·|규칙 근거 · VPN · 근거 원문/);
+ expect(requestApi.document).toHaveBeenCalledWith('req_1','rev_1','att_vpn');
 });

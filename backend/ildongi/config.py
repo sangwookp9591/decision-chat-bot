@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -9,6 +10,10 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=Path(__file__).resolve().parents[2] / ".env", env_file_encoding="utf-8", extra="ignore")
 
     ai_api_key: SecretStr = SecretStr("")
+    anthropic_api_key: SecretStr = SecretStr("")
+    openai_api_key: SecretStr = SecretStr("")
+    gemini_api_key: SecretStr = SecretStr("")
+    llm_mode: Literal["live", "fake", "off"] = "live"
     ai_name: str = "Decision AI"
     ai_model: str = "jev-1.13.0"
     neo4j_uri: str = "bolt://localhost:7687"

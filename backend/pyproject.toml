@@ -15,6 +15,9 @@ dependencies = [
   "pypdf>=5,<7",
   "python-docx>=1.1,<2",
   "redis>=5.2,<7",
+  "anthropic>=1.11,<2",
+  "openai>=3.24,<4",
+  "google-genai>=2.28,<3",
 ]
 
 [dependency-groups]
@@ -39,7 +42,7 @@ root_package = "ildongi"
 [[tool.importlinter.contracts]]
 name = "Feature API to service to store"
 type = "layers"
-containers = ["ildongi.auth", "ildongi.review", "ildongi.judgment", "ildongi.ingest", "ildongi.tasks", "ildongi.observe", "ildongi.graph", "ildongi.monitoring", "ildongi.learning", "ildongi.evaluation"]
+containers = ["ildongi.auth", "ildongi.review", "ildongi.judgment", "ildongi.ingest", "ildongi.tasks", "ildongi.observe", "ildongi.graph", "ildongi.monitoring", "ildongi.learning", "ildongi.evaluation", "ildongi.assist"]
 layers = ["(api)", "(service)", "(store)"]
 
 [[tool.importlinter.contracts]]
@@ -75,3 +78,9 @@ ignore_imports = [
   # Compatibility path for existing callers of domain.runs.start_run_in_tx.
   "ildongi.domain.runs -> ildongi.db.runs",
 ]
+
+[[tool.importlinter.contracts]]
+name = "Assist cannot decide or publish policy"
+type = "forbidden"
+source_modules = ["ildongi.assist"]
+forbidden_modules = ["ildongi.judgment", "ildongi.learning", "ildongi.review", "ildongi.policy"]

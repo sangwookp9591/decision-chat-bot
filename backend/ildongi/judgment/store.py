@@ -62,7 +62,7 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
         "revision_id:$revision_id,run_id:$run_id,ai_need:$ai_need,feasibility:$feasibility,"
         "urgency:$urgency,lead_org:$lead_org,risk_confirmed:$risk_confirmed,risks:$risks,"
         "summary:$summary,author:$author,versions:$versions,eligibility_json:$eligibility,"
-        "mode:$mode,created_at:datetime()}) "
+        "mode:$mode,questions_json:$questions,llm_json:$llm,created_at:datetime()}) "
         "CREATE (r)-[:PRODUCED]->(j)",
         tenant_id=tenant_id, request_id=request_id, revision_id=revision_id, run_id=run_id,
         judgment_id=judgment_id, **classes, risk_confirmed=risk_confirmed,
@@ -70,6 +70,8 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
         author=result["summary"].get("author", "code:extractive@1"),
         versions=_json(versions), eligibility=_json({"allowed": eligible, "reasons": reasons}),
         mode=result["usage"]["mode"],
+        questions=_json(result["questions"]) if result.get("questions") else None,
+        llm=_json(result["llm"]) if result.get("llm") else None,
     )).consume()
     valid_citations = result.get("evidence", {})
     for question_id, answer in answers.items():
@@ -114,7 +116,8 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
             "CREATE (t:DraftTask {id:$id,tenant_id:$tenant_id,request_id:$request_id,run_id:$run_id,"
             "draft_task_id:$draft_task_id,draft_version:1,title:$title,method:$method,"
             "lead_org:$lead_org,collab_orgs:$collab_orgs,deliverable:$deliverable,"
-            "predecessors:$predecessors,status:$status,reason:$reason,author:$author}) "
+            "predecessors:$predecessors,status:$status,reason:$reason,author:$author,"
+            "description:$description,description_author:$description_author}) "
             "CREATE (t)-[:IN_DRAFT]->(d)",
             tenant_id=tenant_id, draft_id=draft_id, request_id=request_id, run_id=run_id,
             id=f"{draft_id}_{task['draft_task_id']}", draft_task_id=task["draft_task_id"],
@@ -124,6 +127,7 @@ async def save_judgment_in_tx(tx, ctx, result: dict, *, policy_version: int,
             deliverable=task.get("deliverable", "미정"),
             predecessors=_json(task.get("predecessors", [])),
             status="undetermined" if task.get("status") in {"미정", "undetermined"} else "draft",
+            description=task.get("description"), description_author=task.get("description_author"),
             reason=task.get("reason"), author=task.get("author", "code:decompose"),
         )).consume()
     status = "auto_assign_eligible" if eligible else "검토 대기"

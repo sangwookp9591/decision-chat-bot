@@ -16,7 +16,7 @@ from ildongi.judgment.ai_client import AiClient
 from ildongi.judgment.masking import MaskingClient
 from ildongi.judgment.pipeline import run_judgment
 from ildongi.judgment.service import load_input_for_shadow as load_input
-from ildongi.learning.apply import apply_rules
+from ildongi.learning.apply import apply_rules, context_rules_for
 from ildongi.policy.service import get_active_snapshot
 
 
@@ -127,10 +127,13 @@ async def validate_rules(tenant: str, actor: str, rule_id: str, version: int,
         settings = get_settings()
         client = AiClient(api_key=settings.ai_api_key.get_secret_value(), mode=settings.ai_mode)
     limited = _LimitedClient(client, limit, [data["body"]["context_text"]], base_config) if context else None
+    needs_text = any("text" in clause for reference in [*base_config.get("rules", []), data["body"]]
+                     for clause in reference.get("body", reference)["scope"]["all"])
     changed, changes, labeled, fix_base, fix_candidate = 0, Counter(), 0, 0, 0
     failures = []
     for row in data["judgments"]:
         j = row["j"]
+        input_loading = False
         try:
             result = {"classifications": {k: j.get(k) for k in ("ai_need", "feasibility", "urgency", "lead_org")},
                       "draft_tasks": [dict(t) for t in row["tasks"]]}
@@ -138,9 +141,16 @@ async def validate_rules(tenant: str, actor: str, rule_id: str, version: int,
             features = {"requester_orgs": orgs,
                         "signals": {k: v["noul"] for k, v in _answers(row["outputs"]).items()
                                     if v["type"] == "noul"}}
-            before, _ = apply_rules(result, base_config.get("rules", []), features=features)
-            if context and all(c.get("requester_org") in orgs for c in data["body"]["scope"]["all"]):
+            if needs_text or context and context_rules_for([data["body"]], features):
+                input_loading = True
                 units, chat, _ = await load_input(tenant, j["request_id"], j["revision_id"])
+                if needs_text and not units:
+                    raise LookupError("input_unavailable")
+                input_loading = False
+                features["text_units"] = units
+            before, _ = apply_rules(result, base_config.get("rules", []), features=features)
+            if context and context_rules_for([data["body"]], features):
+                limited.guidance = context_rules_for(candidate, features)
                 rerun = await asyncio.to_thread(run_judgment, units, chat, base_config, limited)
                 result = rerun
                 features["signals"] = {k: v["noul"] for k, v in rerun["raw_model_output"]["answers"].items()
@@ -157,7 +167,7 @@ async def validate_rules(tenant: str, actor: str, rule_id: str, version: int,
                 fix_candidate += any(candidate_classes.get(k) != v for k, v in truth.items())
         except Exception as exc:  # noqa: BLE001 - one failed sample is recorded; the validation run continues
             failures.append({"judgment_id": j["id"], "error": type(exc).__name__,
-                             "reason": "shadow_max_calls_exceeded" if str(exc) == "shadow_max_calls_exceeded" else "shadow_call_failed"})
+                             "reason": "input_unavailable" if input_loading and needs_text else "shadow_max_calls_exceeded" if str(exc) == "shadow_max_calls_exceeded" else "shadow_call_failed"})
     validation_id = f"val_{uuid4().hex}"
     run_id = f"run_shadow_{uuid4().hex}"
     async def save(tx):

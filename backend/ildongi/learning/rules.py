@@ -12,6 +12,7 @@ from ildongi.db.idempotency import IdempotencyConflict, get_or_create_in_tx
 from ildongi.db.tx import read_tx, write_tx
 from ildongi.domain.ids import new_id
 from ildongi.learning.apply import RuleInvariantError, validate_rule
+from ildongi.learning.candidates_store import unknown_org_ids
 from ildongi.policy.service import (
     DEFAULT_CONFIG,
     PolicyError,
@@ -65,6 +66,9 @@ async def decide_candidate(tenant: str, actor: str, candidate_id: str, action: s
             validate_rule({"schema": "rule-v1", "rule_id": "R-CHECK-00", "version": 1, "effect": "rule", "target": "ai_need", "scope": scope, "action": {"set": "혼합"}})
         except ValueError as exc:
             raise PolicyError("SCOPE_INVALID", str(exc)) from exc
+        unknown = await unknown_org_ids(tenant, scope)
+        if unknown:
+            raise PolicyError("UNKNOWN_ORG", f"알 수 없는 조직: {', '.join(unknown)}")
 
     async def op(tx):
         row = await (await tx.run("MATCH (c:RuleCandidate {tenant_id:$tenant,id:$id}) SET c._lock=randomUUID() RETURN c.status AS status,c.proposed_body AS proposed_body", tenant=tenant, id=candidate_id)).single()

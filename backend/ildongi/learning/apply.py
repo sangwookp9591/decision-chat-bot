@@ -6,11 +6,14 @@ from ildongi.domain.rules import (
     TARGETS,
     RuleInvariantError,
     apply_rules,
+    context_rules_for,
+    normalize_for_match,
+    text_matches,
     validate_rule,
     validate_rule_or_raise,
 )
 
 __all__ = [
     "CLASS_VALUES", "ORGANIZATIONS", "TARGETS", "RuleInvariantError",
-    "apply_rules", "validate_rule", "validate_rule_or_raise",
+    "apply_rules", "context_rules_for", "normalize_for_match", "text_matches", "validate_rule", "validate_rule_or_raise",
 ]

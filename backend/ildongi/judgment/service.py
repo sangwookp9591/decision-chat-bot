@@ -6,11 +6,12 @@ import json
 from datetime import UTC, datetime
 from uuid import uuid4
 
+from ildongi.assist import service as assist
 from ildongi.config import get_settings
 from ildongi.db.events import append_event_in_tx
 from ildongi.db.pinning import pin_config_for_run_in_tx
 from ildongi.db.tx import read_tx
-from ildongi.domain.rules import apply_rules
+from ildongi.domain.rules import apply_rules, context_rules_for
 from ildongi.judgment.ai_client import MODEL_VERSION, AiClient
 from ildongi.judgment.catalog import CATALOG_VERSION
 from ildongi.judgment.eligibility import evaluate_auto_assign
@@ -79,10 +80,7 @@ async def execute_judgment(ctx, client=None) -> str:
         )).single()
         return row["org_ids"] if row and row["org_ids"] else []
     org_ids = await read_tx(ctx.tenant_id, requester_orgs)
-    guidance = [r["context_text"] for r in rules_snapshot
-                if r.get("effect") == "context" and r.get("context_text")
-                and all(clause["requester_org"] in org_ids
-                        for clause in r["scope"]["all"])]
+    guidance = context_rules_for(rules_snapshot, {"requester_orgs": org_ids, "text_units": units})
     mask_session = MaskingSession()
     client = MaskingClient(client, policy, session=mask_session, guidance=guidance)
     mask_summary = {}
@@ -190,6 +188,7 @@ async def execute_judgment(ctx, client=None) -> str:
                 "signals": {key: value["noul"] for key, value in answers.items()
                             if value.get("type") == "noul"},
                 "requester_orgs": org_ids,
+                "text_units": units,
             })
             for application in applications:
                 application["config_version"] = policy_version
@@ -215,6 +214,25 @@ async def execute_judgment(ctx, client=None) -> str:
             allowed = allowed and not result.get("rule_review_reasons")
             result["review_reasons"] = reasons
             result["eligibility"] = {"allowed": allowed, "reasons": reasons}
+        assist_summary = {}
+        async with ctx.step("글 다듬기", kind="external", output_summary=assist_summary):
+            outcome = await assist.write_run_texts(
+                units=units, result=result, llm_config=policy.get("llm") or {},
+                policy=policy, mask_session=mask_session, settings=settings)
+            if ctx.lost.is_set():
+                raise asyncio.CancelledError()
+            result = assist.apply_texts(result, outcome)
+            assist_summary.update(calls=outcome.calls, llm=outcome.llm_version)
+            ctx.journal.append({
+                "event_id": f"event_{uuid4().hex}", "attempt_id": ctx.attempt_id,
+                "request_id": ctx.request_id, "run_id": ctx.run_id, "tenant_id": ctx.tenant_id,
+                "kind": "llm_assist", "ts": datetime.now(UTC).isoformat(),
+                "validity": json.dumps({
+                    "outcomes": {call["feature"]: call["outcome"] for call in outcome.calls},
+                    "input_tokens": sum(call["input_tokens"] for call in outcome.calls),
+                    "output_tokens": sum(call["output_tokens"] for call in outcome.calls),
+                }, separators=(",", ":")),
+            })
         async with ctx.step("결과 저장", kind="code"):
             async def save_and_assign(tx):
                 assignment = await (await tx.run(
@@ -243,9 +261,9 @@ async def execute_judgment(ctx, client=None) -> str:
                         "MATCH (s:RunStep {tenant_id:$tenant,id:$step,run_id:$run}) "
                         "MATCH (r:RuleVersion {tenant_id:$tenant,id:$rule}) "
                         "MERGE (s)-[a:APPLIED]->(r) "
-                        "SET a.outcome=$outcome,a.before=$before,a.after=$after,a.rule_version=$rule",
+                        "SET a.outcome=$outcome,a.before=$before,a.after=$after,a.rule_version=$rule,a.source=$source",
                         tenant=ctx.tenant_id, step=rule_step_id, run=ctx.run_id,
-                        rule=application["rule_version"], outcome=application["outcome"],
+                        source=application.get("source"), rule=application["rule_version"], outcome=application["outcome"],
                         before=json.dumps(application["before"], ensure_ascii=False),
                         after=json.dumps(application["after"], ensure_ascii=False),
                     )).consume()

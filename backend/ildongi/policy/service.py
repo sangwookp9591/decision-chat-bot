@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 from pydantic_core import PydanticCustomError
@@ -76,6 +76,30 @@ class RetentionSettings(BaseModel):
     batch_size: int = Field(default=500, ge=1, le=10000)
 
 
+class LlmFeatures(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    summary: bool = False
+    task_description: bool = False
+    questions: bool = False
+    rule_explanation: bool = False
+
+
+class LlmConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    provider: Literal["anthropic", "openai", "google"] | None = None
+    model: str | None = Field(default=None, pattern=r"^[A-Za-z0-9._:/-]{1,100}$")
+    features: LlmFeatures = Field(default_factory=LlmFeatures)
+    timeout_seconds: float = Field(default=15, ge=1, le=60)
+    step_budget_seconds: float = Field(default=20, ge=1, le=90)
+    max_output_tokens: int = Field(default=2000, ge=256, le=8000)
+
+    @model_validator(mode="after")
+    def model_required(self):
+        if self.provider and not self.model:
+            raise ValueError("llm.model is required when llm.provider is set")
+        return self
+
+
 class PolicyConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
     schema_version: str = POLICY_SCHEMA_VERSION
@@ -92,6 +116,7 @@ class PolicyConfig(BaseModel):
     rules: list[RuleReference] = Field(default_factory=list)
     learning: LearningConfig = Field(default_factory=LearningConfig)
     masking: MaskingConfig = Field(default_factory=MaskingConfig)
+    llm: LlmConfig = Field(default_factory=LlmConfig)
     retention: RetentionSettings = Field(default_factory=RetentionSettings)
 
     @model_validator(mode="after")
@@ -133,6 +158,8 @@ class PolicyError(Exception):
 def validate_invariants(config: dict[str, Any] | PolicyConfig) -> list[dict[str, str]]:
     model = config if isinstance(config, PolicyConfig) else PolicyConfig.model_validate(config)
     issues: list[dict[str, str]] = []
+    if model.llm.provider and not model.masking.enabled:
+        issues.append({"code": "LLM_REQUIRES_MASKING", "reason": "글쓰기 보조는 마스킹을 켠 상태에서만 사용할 수 있습니다."})
     if model.risk_clear_max > .5:
         issues.append({"code": "RISK_BAND_TOO_PERMISSIVE", "reason": "risk_clear_max는 0.5를 초과할 수 없습니다."})
     return issues
@@ -156,6 +183,15 @@ async def get_active_snapshot(tenant: str) -> tuple[int, dict[str, Any]]:
             return row["version"], json.loads(row["config_json"])
         return 0, DEFAULT_CONFIG.copy()
     return await read_tx(tenant, op)
+
+
+async def validate_for_tenant(raw: dict[str, Any], tenant: str):
+    config, errors = validate_config(raw)
+    if config is not None:
+        _, active = await get_active_snapshot(tenant)
+        if config["rules"] != active.get("rules", []):
+            errors.append({"code": "RULE_ADMIN_REQUIRED", "reason": "rules 변경은 rule_admin 전용 경로에서만 허용됩니다."})
+    return config, errors
 
 
 async def get_version(tenant: str, version: int) -> dict[str, Any] | None:
@@ -214,7 +250,7 @@ async def publish_config_in_tx(tx, tenant: str, actor: str, config: dict[str, An
 
 
 async def publish(tenant: str, actor: str, raw: dict[str, Any], reason: str, expected: int, *, idempotency_key: str):
-    config, errors = validate_config(raw, allow_rules=False)
+    config, errors = validate_config(raw)
     if errors:
         raise PolicyError(errors[0]["code"], errors[0]["reason"])
     if not reason.strip():

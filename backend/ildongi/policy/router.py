@@ -13,7 +13,7 @@ from ildongi.policy.service import (
     list_versions,
     publish,
     rollback,
-    validate_config,
+    validate_for_tenant,
 )
 
 router = APIRouter(prefix="/api/policy", tags=["policy"])
@@ -60,8 +60,7 @@ async def version_detail(version: Int64, principal: Principal = Depends(get_prin
 
 @router.post("/validate")
 async def validate(body: ValidateBody, principal: Principal = Depends(get_principal)):  # noqa: B008
-    del principal
-    config, errors = validate_config(body.config, allow_rules=False)
+    config, errors = await validate_for_tenant(body.config, principal.tenant_id)
     return {"valid": not errors, "config": config, "errors": errors}
 
 

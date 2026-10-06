@@ -5,7 +5,8 @@ from typing import Any
 
 from ildongi.auth.types import Principal
 
-SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text", "preview"})
+SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text", "preview",
+                           "description", "questions", "questions_json"})
 
 
 def _request_scope(principal: Principal, meta: dict[str, Any]) -> bool:
@@ -74,15 +75,26 @@ def scope_filter_cypher(principal: Principal) -> str:
             "WHERE org_id IN $org_ids))")
 
 
-def redact_source(principal: Principal, payload: Any) -> Any:
+def redact_source(principal: Principal, payload: Any, *, _path: tuple[str, ...] = ()) -> Any:
     """Copy an API payload without raw source fields for non-source readers."""
     if principal.can_read_source:
         return payload
     if isinstance(payload, dict):
-        return {key: redact_source(principal, value) for key, value in payload.items()
-                if key not in SOURCE_FIELDS}
+        predicate = payload.get("text")
+        keyword_scope = (
+            _path[-3:] in {("proposed_body", "scope", "all"), ("body", "scope", "all"),
+                           ("rules", "scope", "all")}
+            and set(payload) == {"text"} and isinstance(predicate, dict)
+            and set(predicate) == {"contains_any"}
+            and isinstance(predicate["contains_any"], list)
+            and 1 <= len(predicate["contains_any"]) <= 20
+            and all(isinstance(keyword, str) for keyword in predicate["contains_any"])
+        )
+        return {key: redact_source(principal, value, _path=(*_path, key))
+                for key, value in payload.items()
+                if key not in SOURCE_FIELDS or key == "text" and keyword_scope}
     if isinstance(payload, list):
-        return [redact_source(principal, value) for value in payload]
+        return [redact_source(principal, value, _path=_path) for value in payload]
     if isinstance(payload, tuple):
-        return tuple(redact_source(principal, value) for value in payload)
+        return tuple(redact_source(principal, value, _path=_path) for value in payload)
     return payload

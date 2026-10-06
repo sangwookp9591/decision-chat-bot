@@ -3,79 +3,79 @@
     "file": "hero.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 86642
+    "bytes": 71948
   },
   {
     "file": "judgment.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 113168
+    "bytes": 99454
   },
   {
     "file": "review.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 125472
+    "bytes": 97428
   },
   {
     "file": "tasks.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 81792
+    "bytes": 81026
   },
   {
     "file": "map.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 147788
+    "bytes": 100148
   },
   {
     "file": "learning.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 140850
+    "bytes": 120852
   },
   {
     "file": "evaluation.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 104664
+    "bytes": 103964
   },
   {
     "file": "monitoring.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 75034
+    "bytes": 73104
   },
   {
     "file": "policy.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 86832
+    "bytes": 86310
   },
   {
     "file": "dark.webp",
     "width": 2880,
     "height": 1800,
-    "bytes": 107228
+    "bytes": 90816
   },
   {
     "file": "mobile-chat.webp",
     "width": 750,
     "height": 1800,
-    "bytes": 58558
+    "bytes": 58508
   },
   {
     "file": "mobile-review.webp",
     "width": 750,
     "height": 1800,
-    "bytes": 50594
+    "bytes": 44698
   },
   {
     "file": "progressive.gif",
     "width": 960,
     "height": 600,
-    "bytes": 172784,
+    "bytes": 162869,
     "duration_ms": 4500,
     "frames": 3
   }
