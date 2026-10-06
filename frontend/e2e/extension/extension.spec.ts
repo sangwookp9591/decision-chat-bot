@@ -11,7 +11,7 @@ import { expect, test, type APIRequestContext, type Browser, type Page } from '@
 const OUT = process.env.X38_OUT as string;
 const tenant = process.env.X38_TENANT as string;
 const phase = process.env.X38_PHASE || 'ui1';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 const hasFixture = Boolean(OUT && tenant && existsSync(`${OUT}/state.json`) && existsSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`));
 test.beforeAll(() => expect(hasFixture, 'X38 extension fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함: scripts/e2e/run.py').toBe(true));
 const state = hasFixture ? JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8')) : { cand_y: '', cand_z: '', seed: { plan: { same_direction: [] } } };

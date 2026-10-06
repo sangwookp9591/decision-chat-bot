@@ -6,7 +6,7 @@
 
 새 섀도 검증은 `val_<uuid>` ValidationRun과 별도 `run_shadow_<uuid>` Run을 만들고 `(ValidationRun)-[:HAS_SHADOW_RUN]->(Run)`으로 연결한다. 검증 API의 `id`는 ValidationRun ID이며 `run_id`는 섀도 Run ID다. 기존 저장 데이터의 ID는 변경하지 않는다.
 
-후보의 `effect=context`가 요청 조직 범위에 해당하면 보관된 InputRevision/EvidenceSpan에서 state를 재구성해 `operating_guidance`를 넣고 Jev를 재호출한다. 클라이언트는 `JEV_MODE` 설정을 따른다. 호출 상한은 Config의 `learning.shadow_max_calls`(기본 20)와 요청의 `max_calls` 중 작은 값이다. 실제 호출 수, token usage, 판단별 실패를 ValidationRun에 남긴다. 상한 초과나 호출 실패 시 검증 상태는 `failed`다.
+후보의 `effect=context`가 요청 조직 범위에 해당하면 보관된 InputRevision/EvidenceSpan에서 state를 재구성해 `operating_guidance`를 넣고 Decision AI를 재호출한다. 클라이언트는 `AI_MODE` 설정을 따른다. 호출 상한은 Config의 `learning.shadow_max_calls`(기본 20)와 요청의 `max_calls` 중 작은 값이다. 실제 호출 수, token usage, 판단별 실패를 ValidationRun에 남긴다. 상한 초과나 호출 실패 시 검증 상태는 `failed`다.
 
 검증 시작과 저장 직전에 tenant의 Task, Assignment, Review, Event, Request, 정식 Judgment 전체 속성을 카운트와 SHA-256으로 비교한다. 이 값에는 `Request.active_run_id`가 포함된다. 차이가 있으면 `side_effects=1`, `status=failed`다. 섀도 Run/ValidationRun과 journal만 새로 쓰며 SLO와 사용자 이벤트에 넣지 않는다. `mark-validated`는 완료 상태와 `side_effects=0`을 함께 요구한다.
 

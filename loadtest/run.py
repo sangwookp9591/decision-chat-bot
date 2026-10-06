@@ -19,8 +19,9 @@ from uuid import uuid4
 
 import httpx
 from docx import Document
-from jevtriage.db.tx import read_tx
-from jevtriage.ingest.parsers import parse_file
+from ildongi.config import get_settings
+from ildongi.db.tx import read_tx
+from ildongi.ingest.parsers import parse_file
 from PIL import Image
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
@@ -121,10 +122,10 @@ def manifest(output: Path, args, inputs: dict, extracted: dict) -> None:
         "machine": platform.platform(), "cpu": platform.processor(),
         "logical_cpus": os.cpu_count(), "memory_bytes": command("sysctl", "-n", "hw.memsize"),
         "api_workers": 2, "worker_concurrency": 10, "sse_connections": 20,
-        "client_slots": 10, "jev_mode": "live", "model": "jev-1.13.0",
+        "client_slots": 10, "ai_mode": "live", "model": get_settings().ai_model,
         "duration_seconds": args.duration, "warmup_seconds": args.warmup,
         "target_requests": args.requests,
-        "jev_call_cap": args.jev_call_cap,
+        "ai_call_cap": args.ai_call_cap,
         "input_bytes": {name: len(data or text.encode()) for name, (text, data, _) in inputs.items()},
         "input_characters": {name: len(text) for name, (text, _, _) in inputs.items()},
         "attachment_extracted_characters": extracted,
@@ -136,7 +137,7 @@ def manifest(output: Path, args, inputs: dict, extracted: dict) -> None:
 async def login(client: httpx.AsyncClient):
     response = await client.post("/api/auth/login", json={"email": "requester@t-alpha.dev", "password": "dev-only-change-me"})
     response.raise_for_status()
-    csrf = client.cookies.get("jev_csrf")
+    csrf = client.cookies.get("ildongi_csrf")
     if not csrf:
         raise RuntimeError("login did not return CSRF cookie")
     return csrf
@@ -218,7 +219,7 @@ async def run(args) -> None:
                         calls += int(usage.get("attempts") or 0)
                         input_tokens += int(usage.get("input_tokens") or 0)
                         output_tokens += int(usage.get("output_tokens") or 0)
-                        errors += attempt.get("error_class") == "JevRateLimited"
+                        errors += attempt.get("error_class") == "AiRateLimited"
                 return {"calls": calls, "rate_limited": errors, "input_tokens": input_tokens,
                         "output_tokens": output_tokens}
             return await read_tx("t-alpha", query)
@@ -235,10 +236,10 @@ async def run(args) -> None:
                                 "projected_30m_calls": round(usage["calls"] * 1800 / args.warmup),
                                 "calls_per_request": usage["calls"] / len(client_rows) if client_rows else None}
                     (output / "warmup_estimate.json").write_text(json.dumps(estimate, indent=2))
-                if usage["calls"] >= args.jev_call_cap:
-                    stop_reason = f"Jev call safety cap ({args.jev_call_cap})"
+                if usage["calls"] >= args.ai_call_cap:
+                    stop_reason = f"Decision AI call safety cap ({args.ai_call_cap})"
                 elif usage["calls"] and usage["rate_limited"] / usage["calls"] > .05:
-                    stop_reason = "Jev 429 ratio exceeded 5%"
+                    stop_reason = "Decision AI 429 ratio exceeded 5%"
                 if stop_reason:
                     stop.set()
                     break
@@ -317,5 +318,5 @@ if __name__ == "__main__":
     parser.add_argument("--requests", type=int, default=200)
     parser.add_argument("--settle", type=int, default=120)
     parser.add_argument("--reconnect-interval", type=int, default=60)
-    parser.add_argument("--jev-call-cap", type=int, default=25_000)
+    parser.add_argument("--ai-call-cap", type=int, default=25_000)
     asyncio.run(run(parser.parse_args()))

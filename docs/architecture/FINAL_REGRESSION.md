@@ -7,7 +7,7 @@ serial 실패에 따른 후속 미실행은 별도로 재실행하기 전까지 
 
 이번 실행은 `scripts/e2e/run.py`의 독립 tenant·결정적 mock worker 준비 방식으로
 API 11791·Vite 9191에서 Chromium·WebKit을 `--workers=1`로 실행했다.
-실제 Jev 호출은 없으며 mock 결과를 모델 품질 증거로 취급하지 않는다.
+실제 Decision AI 호출은 없으며 mock 결과를 모델 품질 증거로 취급하지 않는다.
 접수·정책·검토·배정·규칙·그래프 경로는 실제 API와 Neo4j를 사용하고,
 특정 UI 상태 회귀에 명시된 route fixture는 보고서에서 구분한다.
 

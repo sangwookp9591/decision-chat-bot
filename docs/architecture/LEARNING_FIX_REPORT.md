@@ -15,7 +15,7 @@
 
 - 전체 `cd backend && .venv/bin/pytest -q`: **483 passed, 1 skipped** (166.39초).
 - 담당 backend 시험(`test_learning_read_contract`, `test_rules_integration`, `test_effects_api`, `test_effect_labels`): **19 passed** (7.21초).
-- `.venv/bin/ruff check jevtriage tests`: **0건**; `.venv/bin/lint-imports`: **6 kept / 0 broken**.
+- `.venv/bin/ruff check ildongi tests`: **0건**; `.venv/bin/lint-imports`: **6 kept / 0 broken**.
 - 전체 vitest: 반복 성공 366/366/367개, 최종 변경 후 **368 passed / 42 files** (17.42초). 담당 Learning UI 시험도 통과했다.
 - `npm run typecheck`, `npm run build`: 최종 통과.
 - API **10891**, Vite **8191**, `E2E_BASE_URL=http://127.0.0.1:8191 npx playwright test e2e/learning-human.spec.ts --project=chromium --project=webkit --workers=1`: 최신 API 재시작 후 최종 **2 passed** (21.2초).

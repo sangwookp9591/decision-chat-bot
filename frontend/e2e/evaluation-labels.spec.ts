@@ -1,12 +1,12 @@
 import { expect, request, test } from '@playwright/test';
 
 const tenant = process.env.E2E_TENANT || 't-alpha';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 
 async function login(api: import('@playwright/test').APIRequestContext, role: string) {
   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();
-  return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+  return (await api.storageState()).cookies.find((cookie) => cookie.name === 'ildongi_csrf')?.value || '';
 }
 
 test('labeler confirms three, defers one, and sees a reviewer disagreement', async ({ page }) => {

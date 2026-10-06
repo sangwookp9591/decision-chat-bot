@@ -4,23 +4,23 @@ up:
 down:
 	docker compose down
 api:
-	cd backend && .venv/bin/uvicorn jevtriage.main:app --reload --host 0.0.0.0
+	cd backend && .venv/bin/uvicorn ildongi.main:app --reload --host 0.0.0.0
 worker:
-	cd backend && .venv/bin/python -m jevtriage.jobs.worker
+	cd backend && .venv/bin/python -m ildongi.jobs.worker
 collector:
-	cd backend && .venv/bin/python -m jevtriage.journal.collector
+	cd backend && .venv/bin/python -m ildongi.journal.collector
 watchdog:
-	cd backend && .venv/bin/python -m jevtriage.journal.watchdog
+	cd backend && .venv/bin/python -m ildongi.journal.watchdog
 retention:
-	cd backend && .venv/bin/python -m jevtriage.ops.retention $(RETENTION_ARGS)
+	cd backend && .venv/bin/python -m ildongi.ops.retention $(RETENTION_ARGS)
 web:
 	cd frontend && npm run dev
 test:
 	cd backend && .venv/bin/pytest
 	cd frontend && npm run test
 lint: lint-imports
-	cd backend && .venv/bin/ruff check jevtriage tests
-	cd backend && .venv/bin/ruff check --isolated --preview --select PLC2701 jevtriage
+	cd backend && .venv/bin/ruff check ildongi tests
+	cd backend && .venv/bin/ruff check --isolated --preview --select PLC2701 ildongi
 lint-imports:
 	cd backend && .venv/bin/lint-imports
 typecheck:
@@ -36,8 +36,8 @@ RESTORE_DATA_DIR ?=
 RESTORE_NEO4J_DIR ?=
 DATA_DIR ?= $(CURDIR)/.data
 NEO4J_DATA_DIR ?= $(CURDIR)/.data/neo4j
-COMPOSE_PROJECT ?= jevtriage-backup
-NEO4J_CONTAINER ?= jevtriage-backup-neo4j-1
+COMPOSE_PROJECT ?= ildongi-backup
+NEO4J_CONTAINER ?= ildongi-backup-neo4j-1
 NEO4J_BOLT_PORT ?= 7689
 backup:
 	bash scripts/ops/backup.sh --backup-dir "$(BACKUP_DIR)" --container "$(NEO4J_CONTAINER)" --project "$(COMPOSE_PROJECT)" --port "$(NEO4J_BOLT_PORT)" --neo4j-volume "$(NEO4J_DATA_DIR)" --data-dir "$(DATA_DIR)"
@@ -50,7 +50,7 @@ load:
 	bash loadtest/run.sh
 
 .PHONY: test-acceptance
-# T21 acceptance (functional/safety/permission gates): live Jev + shared Neo4j, dedicated tenants.
+# T21 acceptance (functional/safety/permission gates): live Decision AI + shared Neo4j, dedicated tenants.
 # Writes artifacts/validation/t21/<run-id>/. ACC_SKIP_UI=1 skips the Playwright part.
 test-acceptance:
 	bash backend/tests/acceptance/run.sh

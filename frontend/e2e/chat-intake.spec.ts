@@ -1,9 +1,11 @@
+const aiName = process.env.AI_NAME ?? 'Decision AI';
+
 import { expect, test, type Page } from '@playwright/test';
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { actor, submitApi, waitJudged, pendingReview } from './acceptance/helpers';
 
-// CHAT-1: request intake is a conversation with 일동이 (no floating widget). Live scenarios (API + worker, JEV_MODE=live, non-sensitive text).
+// CHAT-1: request intake is a conversation with 일동이 (no floating widget). Live scenarios (API + worker, AI_MODE=live, non-sensitive text).
 const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:5173';
 const shotDir = resolve(process.cwd(), process.env.CHAT_SHOT_DIR || '../artifacts/review/chat-intake');
 mkdirSync(shotDir, { recursive: true });
@@ -32,7 +34,7 @@ test('send → stop → cancelled state → reanalyze the same request', async (
   expect(after.runs.length).toBeGreaterThan(before.runs.length);
   expect(after.active_run_id).not.toBe(before.active_run_id);
   const savedJudgment = await (await a.api.get(`/api/requests/${requestId}/judgment`)).json();
-  expect(savedJudgment.mode).toBe(process.env.JEV_MODE || 'live');
+  expect(savedJudgment.mode).toBe(process.env.AI_MODE || 'live');
   await a.ctx.close();
 });
 
@@ -48,7 +50,7 @@ test('send → right bubble → analysis steps → result with icon → reload r
   await page.getByRole('button', { name: '요청 보내기' }).click();
   await expect(page.getByRole('group', { name: '내가 보낸 요청' })).toContainText(text, { timeout: 2000 }); // optimistic
   await expect(page.getByRole('heading', { name: '분석 진행' })).toBeVisible();
-  for (const step of ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장']) await expect(page.locator('.stage-list')).toContainText(step);
+  for (const step of ['내용 정리', `${aiName} 판단`, '근거 연결', '업무 나누기', '결과 저장']) await expect(page.locator('.stage-list')).toContainText(step);
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 200_000 });
   await expect(resultIcon(page)).toHaveCount(1); // like / surprised, or the warning without a mascot for urgent
   await expect(page.getByRole('button', { name: '다시 분석', exact: true })).toBeEnabled();

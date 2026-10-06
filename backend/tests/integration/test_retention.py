@@ -5,13 +5,13 @@ import pytest
 import pytest_asyncio
 from starlette.requests import Request
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.events import router as event_router
-from jevtriage.ops.retention import RetentionConfig, cleanup
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import Principal
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.events import router as event_router
+from ildongi.ops.retention import RetentionConfig, cleanup
+from ildongi.policy.service import bootstrap_policy
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -96,7 +96,7 @@ async def test_cleanup_uses_configured_retention_and_rotated_journal_and_metrics
     import os
     os.utime(expired_archive, (old, old))
 
-    from jevtriage.journal.collector import connect
+    from ildongi.journal.collector import connect
     with connect(data_dir) as db:
         db.execute("INSERT INTO offsets(file_key,path,byte_offset,updated_at) VALUES('archive',?,?,?)",
                    (str(expired_archive), expired_archive.stat().st_size, datetime.now(UTC).isoformat()))

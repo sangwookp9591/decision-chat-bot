@@ -3,18 +3,18 @@ import { randomUUID } from 'node:crypto';
 import { expect, test, type APIRequestContext, type Browser } from '@playwright/test';
 
 /**
- * 규칙 학습 실데이터 E2E (live Jev, 실제 Neo4j). 검토자 수정 3건 → 후보 → 규칙 관리자 승인(범위 확정)
+ * 규칙 학습 실데이터 E2E (live Decision AI, 실제 Neo4j). 검토자 수정 3건 → 후보 → 규칙 관리자 승인(범위 확정)
  * → 검증 → 게시 → 새 요청의 '범위 안 사용' 증가 → 중단.
  *
  * 준비: E2E 전용 tenant를 새로 만들어(실행마다 새 tenant — 후보 ID가 범위로 결정되므로) 그 tenant만 처리하는 worker를 띄운다.
  *   E2E_TENANT=<tenant> E2E_API=http://127.0.0.1:<port> E2E_PORT=<port> npx playwright test -c playwright.learning.config.ts
- * 계정은 `<role>@<tenant>.dev` / JEVTRIAGE_DEV_PASSWORD(기본 dev-only-change-me).
+ * 계정은 `<role>@<tenant>.dev` / ILDONGI_DEV_PASSWORD(기본 dev-only-change-me).
  */
 const tenant = `${process.env.E2E_TENANT || 't-alpha'}-learning-${randomUUID().slice(0, 8)}`;
 let worker: ChildProcess;
 test.beforeAll(() => {
   execFileSync('../backend/.venv/bin/python', ['../backend/tests/acceptance/provision.py', tenant]);
-  if (process.env.JEV_MODE === 'mock') worker = spawn('../backend/.venv/bin/python', ['../scripts/e2e/mock_worker.py', '--tenant', tenant], { stdio: 'ignore' });
+  if (process.env.AI_MODE === 'mock') worker = spawn('../backend/.venv/bin/python', ['../scripts/e2e/mock_worker.py', '--tenant', tenant], { stdio: 'ignore' });
   else throw new Error('Learning fixture needs mock mode; live learning requires a dedicated provisioned worker.');
 });
 test.afterAll(async () => {
@@ -23,13 +23,13 @@ test.afterAll(async () => {
     worker.kill('SIGTERM'); await closed;
   }
 });
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 type Review = { id: string; request_id: string };
 
 async function login(api: APIRequestContext, role: string) {
   const response = await api.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
   expect(response.ok(), `login ${role} failed: ${response.status()}`).toBeTruthy();
-  return (await api.storageState()).cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+  return (await api.storageState()).cookies.find((cookie) => cookie.name === 'ildongi_csrf')?.value || '';
 }
 async function submit(api: APIRequestContext, csrf: string, label: string) {
   const response = await api.post('/api/requests', {
@@ -68,13 +68,13 @@ test('reviewer corrections become a candidate; rule admin approves, validates, p
   // 1. Four live requests; three with the same AI original for ai_need get the same reviewer correction.
   const ids = await Promise.all(['A', 'B', 'C', 'D'].map((label) => submit(requester, requesterCsrf, label)));
   const reviewer = await context(browser, base, 'reviewer');
-  const csrf = (await reviewer.request.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';
+  const csrf = (await reviewer.request.storageState()).cookies.find((c) => c.name === 'ildongi_csrf')?.value || '';
   const reviews = await pendingReviews(reviewer.request, ids);
   const details = await Promise.all(reviews.map(async (r) => (await (await reviewer.request.get(`/api/reviews/${r.id}`)).json()) as { review: Record<string, any>; final_classifications: Record<string, string> }));
   const groups = new Map<string, typeof details>();
   for (const d of details) groups.set(d.final_classifications.ai_need, [...(groups.get(d.final_classifications.ai_need) || []), d]);
   const [original, same] = [...groups.entries()].sort((a, b) => b[1].length - a[1].length)[0];
-  expect(same.length, `live Jev gave differing ai_need originals: ${JSON.stringify([...groups].map(([k, v]) => [k, v.length]))}`).toBeGreaterThanOrEqual(3);
+  expect(same.length, `live Decision AI gave differing ai_need originals: ${JSON.stringify([...groups].map(([k, v]) => [k, v.length]))}`).toBeGreaterThanOrEqual(3);
   const corrected = ['필요', '불필요', '혼합'].find((value) => value !== original) as string;
   const correctedRequests: string[] = [];
   for (const d of same.slice(0, 3)) {

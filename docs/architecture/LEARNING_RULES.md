@@ -4,11 +4,11 @@
 
 API 쓰기는 `rule_admin` 세션·CSRF·`Idempotency-Key`·사유가 필요하다. 게시·중단·되돌리기는 활성 Config 버전 기대값을 검사한 단일 Neo4j 쓰기 트랜잭션에서 새 `ConfigVersion`, 감사 기록, `rule.*` 이벤트를 함께 만든다. 일반 `policy_editor` 경로는 `rules` 차이를 게시할 수 없다. 규칙 게시의 `rules` 항목에는 본문 식별자·효과·대상·범위·동작·검증된 컨텍스트 문장을 저장한다. 저장·게시·되돌리기마다 정책 스키마와 안전 불변 조건을 검사한다.
 
-실행 핸들러는 Run 시작 시점의 Config 버전을 고정하고 그 버전의 규칙 목록만 사용한다. Jev 호출 이전에 컨텍스트 규칙의 `context_text`를 질문 state의 `operating_guidance` 데이터로 전달한다. Jev 판단 후 `규칙 적용` RunStep에서 순수 함수 `apply_rules`를 호출하고, 기존 eligibility 서버 조건을 다시 평가한다. 결과 저장과 같은 `ctx.commit(affects_request=True)` 안에서 `(RunStep)-[:APPLIED {outcome,before,after,rule_version}]->(RuleVersion)` 및 Judgment의 `rule_effects`를 기록한다. API는 규칙 버전·효과·사용/범위 밖/충돌·전후 값·Config 버전을 원문 없이 노출한다.
+실행 핸들러는 Run 시작 시점의 Config 버전을 고정하고 그 버전의 규칙 목록만 사용한다. Decision AI 호출 이전에 컨텍스트 규칙의 `context_text`를 질문 state의 `operating_guidance` 데이터로 전달한다. Decision AI 판단 후 `규칙 적용` RunStep에서 순수 함수 `apply_rules`를 호출하고, 기존 eligibility 서버 조건을 다시 평가한다. 결과 저장과 같은 `ctx.commit(affects_request=True)` 안에서 `(RunStep)-[:APPLIED {outcome,before,after,rule_version}]->(RuleVersion)` 및 Judgment의 `rule_effects`를 기록한다. API는 규칙 버전·효과·사용/범위 밖/충돌·전후 값·Config 버전을 원문 없이 노출한다.
 
 결정적 술어만 허용한다: 분류 필드의 `eq`/`in`, Noul 신호의 `gte`/`lte`, 카탈로그 업무 존재, 요청 조직. 동작은 target별 허용 목록으로 제한한다. `urgency`는 `긴급` 지정 또는 검토 사유 추가, `feasibility`는 `조건부 가능`·`현재 불가`·`정보 부족` 지정, `ai_need`는 정의된 네 분류값 지정, `lead_org`는 `AI팀`·`IT팀`·`현업` 지정, `collab_orgs`는 이 조직 중 하나 추가, `review_route`는 검토 사유 추가만 허용한다. 위험 필드나 필수 검토 표시를 바꾸는 동작은 허용하지 않는다. 위반은 저장·버전 생성·게시·되돌리기에서 HTTP 422 `RULE_INVARIANT`로 거절한다. 과거 Config에 이미 남은 위반 규칙은 적용 시 `blocked_by_invariant`로 기록하고 판단을 바꾸지 않는다. 같은 target에서 뒤에 게시된 규칙이 우선하며 필수 검토 추가가 그보다 우선한다. 모든 활성 규칙의 범위 밖 결과도 기록한다. 과거 Judgment와 APPLIED 관계는 새 Config 게시로 변경하지 않는다.
 
-검증: `make up` 다음 `cd backend && .venv/bin/pytest tests/integration/test_rules_integration.py -q`에서 실제 Neo4j와 mock Jev로 권한·상태 전이·안전 검사·게시·적용·범위 밖·버전 고정·중단·되돌리기·드라이버 재생성을 확인한다. mock 결과는 분류 품질 승인 증거가 아니다.
+검증: `make up` 다음 `cd backend && .venv/bin/pytest tests/integration/test_rules_integration.py -q`에서 실제 Neo4j와 mock Decision AI로 권한·상태 전이·안전 검사·게시·적용·범위 밖·버전 고정·중단·되돌리기·드라이버 재생성을 확인한다. mock 결과는 분류 품질 승인 증거가 아니다.
 
 ## 규칙 조회와 변경 권한 (FIX-LEARN)
 

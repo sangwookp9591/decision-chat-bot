@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from jevtriage.domain.models import RequestStatus, RunStatus
-from jevtriage.domain.transitions import InvalidTransition, assert_transition
-from jevtriage.journal.writer import JournalWriter
+from ildongi.domain.models import RequestStatus, RunStatus
+from ildongi.domain.transitions import InvalidTransition, assert_transition
+from ildongi.journal.writer import JournalWriter
 
 
 def _write_batch(directory: str, worker: int, count: int) -> None:

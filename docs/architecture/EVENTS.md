@@ -30,7 +30,7 @@ FIX-SSE 확인에서 Neo4j 5.26 `SHOW INDEXES`는 `event_tenant_seq` RANGE 색�
 - **업무·검토 화면 갱신**: `task.transitioned`는 업무 상태 변경을 커밋한 뒤 발행한다. 스트림은 요청 접근 권한을 확인한 뒤 이벤트의 `request_id`와 허용된 상태 필드를 전달한다(업무 ID는 페이로드 허용 목록에 없어 전달하지 않는다). 열린 업무 화면은 현재 필터 목록을 다시 읽고, 선택한 상세가 해당 요청에 속하면 상세도 다시 읽어 상태 전이 버튼을 최신 상태로 맞춘다. 정상 검토 생성은 판단 저장 트랜잭션에서 `judgment_saved`, 자동 배정이 검토로 전환된 경우는 `auto_assignment_deferred`, 검토 변경은 `review_decided`를 발행한다. 검토 대기 화면은 세 이벤트에서 현재 선택된 상태 필터로 목록을 다시 읽으며 선택 상세를 유지한다. 별도 `review.created` 이벤트는 발행하지 않는다.
 - **재연결**: 브라우저 자동 재연결은 `Last-Event-ID`를 `?after=`와 함께 보내 400을 받으므로 오류가 나면 클라이언트가 소스를 닫고 지수 백오프(1→2→4…최대 30초, 연속 6회 실패 시 `disconnected`)로 직접 `?after=<마지막 seq>`만 붙여 다시 연결한다. 오류 때마다 `/api/auth/me`를 한 번 조회해 세션 만료는 로그인 화면으로 전환한다. `session-expired` 이벤트도 같은 방식으로 처리한다.
 - **복구**: `snapshot-required`이면 요청 화면은 snapshot을 읽어 커서를 맞춘 뒤 `onSnapshot`·`onResync`로 다시 조회하고 재연결한다. 요청이 없는 화면(정책)은 저장된 커서를 버리고 화면 재조회 콜백을 부른 뒤 처음부터 한 번 다시 연결한다.
-- **커서 범위**: 커서는 tenant 전역 seq이므로 sessionStorage 키를 `jevtriage:last-event-seq:<tenant>:<user>`로 둔다. 같은 탭에서 다른 tenant로 로그인해도 이전 커서가 섞이지 않는다.
+- **커서 범위**: 커서는 tenant 전역 seq이므로 sessionStorage 키를 `ildongi:last-event-seq:<tenant>:<user>`로 둔다. 같은 탭에서 다른 tenant로 로그인해도 이전 커서가 섞이지 않는다.
 
 ### 정책 화면의 재생 이벤트 처리 (UX-6, F2)
 

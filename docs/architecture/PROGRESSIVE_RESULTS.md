@@ -4,7 +4,7 @@
 
 ## 배경과 근거
 
-사용자는 판단 파이프라인 전체(Jev 분류 → 근거 연결 → 업무 분해 → 저장)가 끝날 때까지 결과를 하나도 보지 못했다. 공개 사례에서 다음 원칙을 채택한다.
+사용자는 판단 파이프라인 전체(Decision AI 분류 → 근거 연결 → 업무 분해 → 저장)가 끝날 때까지 결과를 하나도 보지 못했다. 공개 사례에서 다음 원칙을 채택한다.
 
 - 데이터가 필요한 영역 가까이에서 영역별로 로딩하고, 최종 콘텐츠와 닮은 폴백을 쓴다 — [토스페이먼츠 초기 렌더링 최적화](https://toss.tech/article/faster-initial-rendering).
 - 짧은 로딩(≈200ms 이내)은 로딩 UI를 보여주지 않아 깜빡임을 막는다 — 토스 오픈소스 [Suspensive `<Delay/>`](https://suspensive.org/docs/react/Delay).
@@ -17,7 +17,7 @@
 | --- | --- | --- | --- |
 | 접수 | Request·Run 생성 | `request.received` | `request_id, run_id, status` |
 | 진행 | 각 RunStep 시작·종료 | `run.step`(기존) | `step_name, kind, status` |
-| 잠정 판단 | 핵심 분류 Jev 응답 직후, Run에 `preliminary` 저장 | `judgment.partial` | `request_id, run_id, classifications{ai_need,feasibility,urgency,lead_org}, confidences{…}, risk_flags{…}, preliminary:true` |
+| 잠정 판단 | 핵심 분류 Decision AI 응답 직후, Run에 `preliminary` 저장 | `judgment.partial` | `request_id, run_id, classifications{ai_need,feasibility,urgency,lead_org}, confidences{…}, risk_flags{…}, preliminary:true` |
 | 근거 연결 완료 | 근거 결과를 Run에 임시 저장 | `judgment.evidence_ready` | `request_id, run_id, evidence_count` |
 | 업무 분해 완료 | 초안 결과를 Run에 임시 저장 | `judgment.tasks_ready` | `request_id, run_id, task_count` |
 | 최종 판단 | 기존 정식 Judgment 저장(최초 판단 완료) | `judgment_saved`(기존) | 기존 + `classifications` |
@@ -25,7 +25,7 @@
 - **잠정 결과는 판단 완료가 아니다.** 05_SLO의 최초 판단 완료 시각은 정식 Judgment 커밋 시각 그대로다. 잠정 결과는 검토·배정·자동 배정 판단에 쓰지 않는다. 화면에는 '잠정 — 근거와 업무 분해를 확인하는 중' 배지를 단다.
 - 잠정 결과 쓰기도 `ctx.commit`(소유권·active run 검증) 안에서 한다. 과거 run의 잠정 결과는 active run이 아니면 쓰지 않는다.
 - 근거 연결과 업무 분해는 서로 독립이므로 병렬로 실행한다.
-- 근거 연결 내부에서도 선택 단위 × 네 판단의 Jev Noul 호출을 최대 4개씩 병렬 실행한다. 완결된 호출 결과는 기존 판단 순서와 원문 단위 순서로 모아 저장하므로 진행 이벤트 및 최종 근거 배열의 계약은 동일하다. 한 호출의 실패는 단계 실패로 전파한다. [PERF-3 측정](../../artifacts/validation/perf/evidence.md)은 live 20건 수신→최종 지연과 근거 연결 지연을 분리해 기록한다.
+- 근거 연결 내부에서도 선택 단위 × 네 판단의 Decision AI Noul 호출을 최대 4개씩 병렬 실행한다. 완결된 호출 결과는 기존 판단 순서와 원문 단위 순서로 모아 저장하므로 진행 이벤트 및 최종 근거 배열의 계약은 동일하다. 한 호출의 실패는 단계 실패로 전파한다. [PERF-3 측정](../../artifacts/validation/perf/evidence.md)은 live 20건 수신→최종 지연과 근거 연결 지연을 분리해 기록한다.
 
 ## 조회 API
 
@@ -47,7 +47,7 @@
 
 `POST /api/requests/{request_id}/runs/{run_id}/cancel`은 요청 작성자와 같은 tenant의 운영자에게 허용한다. CSRF를 요구하며, 다른 tenant의 요청·실행은 404, 같은 tenant의 권한 없는 호출은 403이다. 대기·실행 중인 Run은 `cancelled`로 바꾸고 `{request_id,run_id,status}`를 200으로 반환한다. 이미 끝난 Run은 변경 없이 현재 `cancelled|failed|judgment_saved` 상태를 200으로 반환한다. 이 계약은 재전송에도 동일하다.
 
-취소 트랜잭션은 Request→Run→Job 순서로 잠그고 Job을 `cancelled`로 바꾸며 lease generation을 올린다. 그래서 대기 작업은 claim 대상에서 즉시 빠지고, 기존 워커의 단계 시작·종료·결과 저장 `ctx.commit`은 소유권 검증에서 막힌다. 진행 중인 외부 Jev 호출은 반환될 때까지 기다리되 결과는 저장하지 않는다. 최종 Judgment가 먼저 커밋된 경우에는 취소보다 완료를 우선해 Run·Job 상태를 `judgment_saved`·`completed`로 수렴시킨다. 취소가 먼저 커밋되면 이후 완료 시도는 lease 검증에 실패한다.
+취소 트랜잭션은 Request→Run→Job 순서로 잠그고 Job을 `cancelled`로 바꾸며 lease generation을 올린다. 그래서 대기 작업은 claim 대상에서 즉시 빠지고, 기존 워커의 단계 시작·종료·결과 저장 `ctx.commit`은 소유권 검증에서 막힌다. 진행 중인 외부 Decision AI 호출은 반환될 때까지 기다리되 결과는 저장하지 않는다. 최종 Judgment가 먼저 커밋된 경우에는 취소보다 완료를 우선해 Run·Job 상태를 `judgment_saved`·`completed`로 수렴시킨다. 취소가 먼저 커밋되면 이후 완료 시도는 lease 검증에 실패한다.
 
 Run은 `cancelled_by`, `cancelled_at`, `cancelled_step`과 종료 시각을 남기고, 진행 중 RunStep도 `cancelled`로 닫는다. 요청 상태도 `cancelled`가 된다. 같은 트랜잭션에서 `judgment.cancelled` 이벤트를 한 번 발행한다. 커밋 후에는 `worker_run(status_code=cancelled)` journal 기록을 한 번 남겨 모니터링 취소 집계와 맞춘다. SSE와 progress 조회의 `cancelled`는 화면에서 '취소됨'으로 나타난다. 잠정 분류가 이미 있었다면 결과를 흐리게 남기고 로딩 표시를 끝낸다. 같은 요청의 '다시 분석'은 현재 revision으로 새 Run·Job을 만든다.
 
@@ -57,7 +57,7 @@ Run은 `cancelled_by`, `cancelled_at`, `cancelled_step`과 종료 시각을 남�
 
 ## 구현 상태 (PERF-1, 2026-10-04)
 
-`POST /api/requests`가 요청을 저장한 뒤 `request.received`를 한 번 기록한다. `Jev 판단` RunStep은 핵심 분류 호출만 포함한다. 분류 응답 직후 active run 및 Job 소유권을 확인하는 `ctx.commit(affects_request=True)`에서 `Run.preliminary_json`·`preliminary_at`과 `judgment.partial` 이벤트를 함께 기록한다. 이 시점에는 `Judgment`, `Review`, `Assignment`를 만들지 않는다. 근거 연결과 업무 분해는 별도 스레드에서 동시에 실행하고 각각 `Run.evidence_json`·`evidence_count`·`evidence_ready_at`과 `Run.tasks_json`·`task_count`·`tasks_ready_at` 및 대응 이벤트를 커밋한다. 임시 근거 JSON에는 원문을 넣지 않고 unit ID·확률·작성 주체만 넣는다. 정식 근거와 작업 초안은 최종 `Judgment`/`Draft` 트랜잭션에 저장한다. `judgment_saved`에는 네 분류 필드를 `classifications`로 추가했다.
+`POST /api/requests`가 요청을 저장한 뒤 `request.received`를 한 번 기록한다. `Decision AI 판단` RunStep은 핵심 분류 호출만 포함한다. 분류 응답 직후 active run 및 Job 소유권을 확인하는 `ctx.commit(affects_request=True)`에서 `Run.preliminary_json`·`preliminary_at`과 `judgment.partial` 이벤트를 함께 기록한다. 이 시점에는 `Judgment`, `Review`, `Assignment`를 만들지 않는다. 근거 연결과 업무 분해는 별도 스레드에서 동시에 실행하고 각각 `Run.evidence_json`·`evidence_count`·`evidence_ready_at`과 `Run.tasks_json`·`task_count`·`tasks_ready_at` 및 대응 이벤트를 커밋한다. 임시 근거 JSON에는 원문을 넣지 않고 unit ID·확률·작성 주체만 넣는다. 정식 근거와 작업 초안은 최종 `Judgment`/`Draft` 트랜잭션에 저장한다. `judgment_saved`에는 네 분류 필드를 `classifications`로 추가했다.
 
 `GET /api/requests/{id}/progress?run_id=`는 `can_view_request` 권한을 확인한 뒤 RunStep, 잠정 분류, 준비 여부, 수신→잠정·수신→최종 시간을 Neo4j에서 읽는다. `run_id`가 없으면 active run을 사용한다. 시간 값이 아직 없으면 `null`이다. journal의 `judgment_preliminary.time_to_preliminary_ms`는 수신 시각과 잠정 커밋 시각 차이다. 검증: `backend/tests/integration/test_progressive_judgment.py`에서 근거/분해 호출을 멈춘 상태로 잠정 결과만 읽고, 정식 판단·배정이 없음을 확인한다.
 
@@ -91,10 +91,10 @@ Run은 `cancelled_by`, `cancelled_at`, `cancelled_step`과 종료 시각을 남�
 | 초기 CSS | 46.2 kB (gzip 9.6 kB) | 20.3 kB (gzip 5.2 kB) |
 | 콜드 dev 서버 → 모니터링 제목(API 목) 3회 | 569·568·558 ms | 492·519·532 ms |
 | 콜드 dev 서버 → 모니터링 제목(실제 API) 3회 | 444·459·401 ms | 545·503·383 ms |
-| 제출 → 낙관적 카드 / 잠정 카드 / 최종 결과(live, mock Jev) | 해당 없음(최종만) | 39 ms / 396 ms / 703 ms |
+| 제출 → 낙관적 카드 / 잠정 카드 / 최종 결과(live, mock Decision AI) | 해당 없음(최종만) | 39 ms / 396 ms / 703 ms |
 
 - **모니터링 첫 실행 5초 초과는 이 환경에서 재현되지 않았다.** 비어 있는 `cacheDir`의 새 dev 서버(콜드)에서 목 API·실제 API(`/api/monitoring/summary` 60ms) 모두 0.4–0.6초였다. 개선 전후 차이는 측정 잡음 범위이므로 '콜드 시작이 빨라졌다'고 주장하지 않는다. 원인 후보(공유 `node_modules/.vite` 의존성 재최적화로 인한 전체 새로고침, 여러 dev 서버 동시 기동, 운영 데이터가 쌓인 집계 지연)는 같은 조건에서 다시 보지 못했다. 측정 방법은 `node scripts/measure-cold-start.mjs [횟수] [경로]`(실제 API는 `REAL_API=1 E2E_API=…`)이다.
-- 실측으로 확인된 개선은 초기 번들 감소(JS −40%, CSS −56%)와 점진 표시(첫 의미 있는 결과 396ms, 최종 703ms의 약 56% 지점)다. mock Jev는 응답이 빠르므로 live Jev에서는 두 값의 차이가 더 커진다.
+- 실측으로 확인된 개선은 초기 번들 감소(JS −40%, CSS −56%)와 점진 표시(첫 의미 있는 결과 396ms, 최종 703ms의 약 56% 지점)다. mock Decision AI는 응답이 빠르므로 live Decision AI에서는 두 값의 차이가 더 커진다.
 
 ### 시험
 

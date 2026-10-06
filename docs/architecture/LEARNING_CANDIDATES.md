@@ -4,7 +4,7 @@
 
 후보와 수정 기록 응답의 Neo4j 시각은 ISO 8601 문자열이다. 클라이언트는 Neo4j 내부 DateTime 객체 구조를 복원하지 않는다.
 
-`POST /api/learning/candidates/generate`와 `python -m jevtriage.learning.candidates --tenant TENANT`는 저장된 Corrections를 `(field, ai_value, corrected_value)`로 묶는다. 판단 특징은 같은 요청·실행의 Judgment 분류와 실제 Noul ModelOutput 신호에서 수집한다. 각 수정 사례에서 공통으로 관측된 특징만 `scope.all`에 넣고, 분류는 `eq`, 신호는 실제 관측값이 0.5 이상이면 `gte 0.5`, 미만이면 `lte 0.5`라는 고정 구간 술어로 표현한다. 자유 텍스트는 범위 판단에 쓰지 않는다. 공통 특징이 없으면 빈 `all` 범위다.
+`POST /api/learning/candidates/generate`와 `python -m ildongi.learning.candidates --tenant TENANT`는 저장된 Corrections를 `(field, ai_value, corrected_value)`로 묶는다. 판단 특징은 같은 요청·실행의 Judgment 분류와 실제 Noul ModelOutput 신호에서 수집한다. 각 수정 사례에서 공통으로 관측된 특징만 `scope.all`에 넣고, 분류는 `eq`, 신호는 실제 관측값이 0.5 이상이면 `gte 0.5`, 미만이면 `lte 0.5`라는 고정 구간 술어로 표현한다. 자유 텍스트는 범위 판단에 쓰지 않는다. 공통 특징이 없으면 빈 `all` 범위다.
 
 동일 범위에서 해당 필드를 수정하지 않은 승인 결정이나 다른 값으로 수정한 승인 결정은 반례로 센다. 지지는 동일한 방향으로 바뀐 Correction이다. 기본 최소 지지 수는 3이며, 부족하면 `자료 부족`이다. 후보의 불확실성 필드에는 지지·반례 수, 최소 표본 기준 및 지지가 단일 요청 조직에 편중됐는지를 담는다. 이 구현은 효과나 정답률을 추론하지 않는다. 후보의 작성자는 `code:candidate@v1`이고 문장은 결정적 JSON 템플릿이다. 모델 생성은 호출하지 않는다.
 

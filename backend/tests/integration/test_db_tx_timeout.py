@@ -5,9 +5,9 @@ from uuid import uuid4
 import pytest
 from neo4j.exceptions import ClientError, Neo4jError
 
-from jevtriage.db.tx import write_tx
-from jevtriage.jobs.worker import Worker
-from jevtriage.journal.writer import JournalWriter
+from ildongi.db.tx import write_tx
+from ildongi.jobs.worker import Worker
+from ildongi.journal.writer import JournalWriter
 
 
 @pytest.mark.asyncio

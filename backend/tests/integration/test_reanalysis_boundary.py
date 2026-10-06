@@ -1,4 +1,4 @@
-"""Reanalysis result boundaries against Neo4j and one mock Jev worker pass."""
+"""Reanalysis result boundaries against Neo4j and one mock Decision AI worker pass."""
 from __future__ import annotations
 
 import asyncio
@@ -8,17 +8,17 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.events import list_events
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.service import reanalyze
-from jevtriage.ingest.store import add_revision, create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.judgment.store import get_judgment
-from jevtriage.review.service import ReviewError, decide
+from ildongi.auth.core import Principal
+from ildongi.db.events import list_events
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.service import reanalyze
+from ildongi.ingest.store import add_revision, create_request, get_request_meta
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.service import execute_judgment
+from ildongi.judgment.store import get_judgment
+from ildongi.review.service import ReviewError, decide
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -47,7 +47,7 @@ async def run_worker(tenant, run_id):
         )).single(strict=True)
         return row["id"]
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
 
 

@@ -4,12 +4,12 @@ from uuid import uuid4
 import httpx
 import pytest
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.learning.effects import rule_effects
-from jevtriage.main import create_app
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.learning.effects import rule_effects
+from ildongi.main import create_app
+from ildongi.policy.service import bootstrap_policy
 
 
 @pytest.mark.asyncio(loop_scope='session')
@@ -70,7 +70,7 @@ async def test_rule_read_allowed_for_scoped_reviewer_and_operator(role):
     ('requester', 'IT팀', 403),
 ])
 async def test_rule_read_scope_and_write_matrix(monkeypatch, role, org, expected):
-    from jevtriage.learning import effects_api, rules_api
+    from ildongi.learning import effects_api, rules_api
 
     row = {'rule_id': 'R-AI_NEED-01', 'versions': [
         {'version': 1, 'body': {'scope': {'all': [{'requester_org': 'IT팀'}]},

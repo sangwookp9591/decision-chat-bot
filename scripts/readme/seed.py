@@ -14,13 +14,13 @@ def client(role):
     c.post('/api/auth/login',json={'email':f'{role}@{T}.dev','password':'dev-only-change-me'}).raise_for_status()
     return c
 def call(c,method,url,body=None):
-    r = c.request(method,url,json=body,headers={'X-CSRF-Token':c.cookies.get('jev_csrf',''),'Idempotency-Key':str(uuid.uuid4())})
+    r = c.request(method,url,json=body,headers={'X-CSRF-Token':c.cookies.get('ildongi_csrf',''),'Idempotency-Key':str(uuid.uuid4())})
     r.raise_for_status()
     return r.json()
 rq,rev,admin = client('requester'),client('reviewer'),client('rule_admin')
 ids=[]
 for i in range(3):
-    r = rq.post('/api/requests',data={'text':TEXT+f' 가상 사례 {i+1}.'},headers={'X-CSRF-Token':rq.cookies.get('jev_csrf',''),'Idempotency-Key':str(uuid.uuid4())})
+    r = rq.post('/api/requests',data={'text':TEXT+f' 가상 사례 {i+1}.'},headers={'X-CSRF-Token':rq.cookies.get('ildongi_csrf',''),'Idempotency-Key':str(uuid.uuid4())})
     r.raise_for_status(); rid = r.json()['request_id']; ids.append(rid)
     for _ in range(160):
         r = rq.get(f'/api/requests/{rid}/judgment')

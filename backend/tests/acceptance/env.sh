@@ -17,14 +17,14 @@ case "$CMD" in
     : >"$PIDS"
     PY=backend/.venv/bin/python
     ( cd backend && DATA_DIR="$DATA" ../backend/.venv/bin/python tests/acceptance/provision.py ) >"$OUT/logs/provision.log" 2>&1 || { cat "$OUT/logs/provision.log"; exit 1; }
-    start api DATA_DIR="$DATA" .venv/bin/uvicorn jevtriage.main:app --host 127.0.0.1 --port "$PORT"
-    start worker DATA_DIR="$DATA" .venv/bin/python -m jevtriage.jobs.worker \
+    start api DATA_DIR="$DATA" .venv/bin/uvicorn ildongi.main:app --host 127.0.0.1 --port "$PORT"
+    start worker DATA_DIR="$DATA" .venv/bin/python -m ildongi.jobs.worker \
       --tenant "$TEN" --tenant "${TEN}b" --tenant "${TEN}p" --tenant "${TEN}g"
-    # Deliberately invalid key: real Jev rejects it, giving a genuine failed run (no secret involved).
-    start worker_badkey DATA_DIR="$DATA" JEV_API_KEY=invalid-acceptance-key \
-      .venv/bin/python -m jevtriage.jobs.worker --tenant "${TEN}f"
-    start collector DATA_DIR="$DATA" .venv/bin/python -m jevtriage.journal.collector
-    start watchdog DATA_DIR="$DATA" .venv/bin/python -m jevtriage.journal.watchdog
+    # Deliberately invalid key: real Decision AI rejects it, giving a genuine failed run (no secret involved).
+    start worker_badkey DATA_DIR="$DATA" AI_API_KEY=invalid-acceptance-key \
+      .venv/bin/python -m ildongi.jobs.worker --tenant "${TEN}f"
+    start collector DATA_DIR="$DATA" .venv/bin/python -m ildongi.journal.collector
+    start watchdog DATA_DIR="$DATA" .venv/bin/python -m ildongi.journal.watchdog
     for _ in $(seq 1 40); do curl -sf "http://127.0.0.1:$PORT/api/ready" >/dev/null && break; sleep 1; done
     curl -sf "http://127.0.0.1:$PORT/api/ready" >/dev/null && echo "api ready on $PORT" || { echo "api not ready"; exit 1; }
     ;;
@@ -34,10 +34,10 @@ case "$CMD" in
     if [ -n "$pid" ]; then pkill -P "$pid" 2>/dev/null; kill "$pid" 2>/dev/null; sleep 2; pkill -9 -P "$pid" 2>/dev/null; kill -9 "$pid" 2>/dev/null; fi
     grep -v "^$which " "$PIDS" >"$PIDS.tmp"; mv "$PIDS.tmp" "$PIDS"
     if [ "$which" = api ]; then
-      start api DATA_DIR="$DATA" .venv/bin/uvicorn jevtriage.main:app --host 127.0.0.1 --port "$PORT"
+      start api DATA_DIR="$DATA" .venv/bin/uvicorn ildongi.main:app --host 127.0.0.1 --port "$PORT"
       for _ in $(seq 1 40); do curl -sf "http://127.0.0.1:$PORT/api/ready" >/dev/null && break; sleep 1; done
     else
-      start worker DATA_DIR="$DATA" .venv/bin/python -m jevtriage.jobs.worker \
+      start worker DATA_DIR="$DATA" .venv/bin/python -m ildongi.jobs.worker \
         --tenant "$TEN" --tenant "${TEN}b" --tenant "${TEN}p" --tenant "${TEN}g"
     fi
     ;;

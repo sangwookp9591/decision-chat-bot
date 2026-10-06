@@ -1,3 +1,4 @@
+import { AI_NAME } from '../lib/brand';
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -116,7 +117,7 @@ describe('partial events render by area', () => {
 
 describe('reload restores from the progress API', () => {
   it('rebuilds the provisional cards and current step without events', async () => {
-    vi.mocked(requestApi.progress).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', status: 'processing', steps: [{ name: 'Jev 판단', kind: 'ai', status: 'succeeded' }, { name: '근거 연결', kind: 'ai', status: 'running' }], preliminary: { classifications: classes }, evidence_ready: false, tasks_ready: false, final: false });
+    vi.mocked(requestApi.progress).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', status: 'processing', steps: [{ name: `${AI_NAME} 판단`, kind: 'ai', status: 'succeeded' }, { name: '근거 연결', kind: 'ai', status: 'running' }], preliminary: { classifications: classes }, evidence_ready: false, tasks_ready: false, final: false });
     renderMain('/?request_id=req_1');
     expect(await screen.findAllByText('잠정')).not.toHaveLength(0);
     expect(requestApi.progress).toHaveBeenCalledWith('req_1');

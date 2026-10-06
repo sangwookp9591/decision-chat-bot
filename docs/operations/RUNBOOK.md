@@ -11,7 +11,7 @@
 
 | 증상 | 확인 | 복구 |
 | --- | --- | --- |
-| Jev 오류/지연 | API 또는 worker의 attempt/run ID, `error_class`, deadline·attempt 횟수, `JEV_MODE`; 키 값은 출력하지 않음 | 설정된 서버 secret의 존재/권한을 비밀 저장소에서 확인하고 upstream 상태·한도를 확인. transient 오류는 제한된 재시도 정책에 따름. 실패 Run은 새 실행 정책을 검토; 운영에서 mock으로 전환해 성공 처리하지 않음 |
+| Decision AI 오류/지연 | API 또는 worker의 attempt/run ID, `error_class`, deadline·attempt 횟수, `AI_MODE`; 키 값은 출력하지 않음 | 설정된 서버 secret의 존재/권한을 비밀 저장소에서 확인하고 upstream 상태·한도를 확인. transient 오류는 제한된 재시도 정책에 따름. 실패 Run은 새 실행 정책을 검토; 운영에서 mock으로 전환해 성공 처리하지 않음 |
 | Neo4j 중단 | `docker compose ps`, `/api/ready`, Neo4j 컨테이너 로그와 포트, 디스크 | 원인 확인 뒤 `make up`, `/api/ready`와 DB 조회 확인. 장애 중 HTTP 실패는 journal과 metrics에서 attempt를 대조. 미커밋 입력은 성공으로 가정하지 않음 |
 | 파서 실패/부분 첨부 | 요청 ID, revision, 첨부 상태·파서 오류, 크기/형식 한도 | 확인 가능한 파일만 재첨부하거나 사용자가 제외하도록 안내. 제외/재첨부는 새 revision 경로로 처리하고 이전 실행 기록 유지. OCR은 지원되지 않음 |
 | SSE 정지/누락 | 로그인 세션, 브라우저 연결, `Last-Event-ID`, tenant 이벤트 seq와 snapshot 응답 | 재연결 후 영속 상태/snapshot을 기준으로 화면 복구. 네트워크/서버 복구 뒤 이벤트 순서와 상태를 대조. 이벤트를 수동으로 재생해 업무를 실행하지 않음 |
@@ -30,7 +30,7 @@
 
 일반 정지는 API·worker·collector·watchdog·Vite를 각각 Ctrl-C하고 마지막에 `make down`을 실행한다. 백업/복원 전에는 모든 writer와 collector를 정지한다. 재시작은 `make up`, 스키마 확인, API 준비 상태, worker/관측 프로세스, tenant·요청/Trace 조회 순서로 확인한다. 운영 호스트 유실은 로컬 파일만으로 복구할 수 없으므로 외부 복제 백업과 별도 감지/복구 절차가 필요하다.
 
-운영 dump는 기본 `decision-chat-bot` 컨테이너를 대상으로 하지 않는다. writer와 기본 `make up` 프로젝트를 멈춘 뒤 `jevtriage-backup` 프로젝트, `jevtriage-backup-neo4j-1` 컨테이너, 7689 포트를 사용한다. 백업 스크립트는 컨테이너의 Compose project/포트/data mount를 확인하고, default 공유 DB가 같은 데이터 디렉터리를 사용하는 중이면 즉시 거절한다. 오프라인 dump 중에는 전용 Neo4j만 정지되며 완료 후 별도 명령으로 다시 시작한다. 운영에서는 정지 시간을 정하고 모든 애플리케이션 writer/collector가 멈춘 것을 확인한다.
+운영 dump는 기본 `decision-chat-bot` 컨테이너를 대상으로 하지 않는다. writer와 기본 `make up` 프로젝트를 멈춘 뒤 `ildongi-backup` 프로젝트, `ildongi-backup-neo4j-1` 컨테이너, 7689 포트를 사용한다. 백업 스크립트는 컨테이너의 Compose project/포트/data mount를 확인하고, default 공유 DB가 같은 데이터 디렉터리를 사용하는 중이면 즉시 거절한다. 오프라인 dump 중에는 전용 Neo4j만 정지되며 완료 후 별도 명령으로 다시 시작한다. 운영에서는 정지 시간을 정하고 모든 애플리케이션 writer/collector가 멈춘 것을 확인한다.
 
 이 Runbook은 개발 구성에 대한 절차다. 알림 수신자·보존·RPO/RTO·운영 인증은 [배포 전 검토](DEPLOYMENT.md)에 따라 결정되지 않았다.
 

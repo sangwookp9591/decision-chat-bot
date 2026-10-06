@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from jevtriage import main
+from ildongi import main
 
 
 class UnavailableDriver:

@@ -7,10 +7,10 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import cross_tenant_tx, read_tx, write_tx
+from ildongi.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -21,7 +21,7 @@ async def world():
     tenant, other = f"graph_{key}", f"graph_other_{key}"
     ids = {name: f"{name}_{key}" for name in (
         "req1", "req2", "run1", "run2", "run3", "j1", "mo1", "mo2", "es1", "rd1", "c1", "c9",
-        "cand1", "dec1", "val1", "step_jev", "step_rule", "step_oos")}
+        "cand1", "dec1", "val1", "step_ai", "step_rule", "step_oos")}
     ids["rv"] = f"R-ROUTE-07@{key}"
     ids["rule"] = "R-ROUTE-07"
     ids["cfg"] = f"cfg_{tenant}_2"
@@ -36,8 +36,8 @@ async def world():
             "CREATE (r3:Run {id:$run3,tenant_id:$tenant,request_id:$req2}) "
             "CREATE (j:Judgment {id:$j1,tenant_id:$tenant,request_id:$req1,run_id:$run1}) "
             "CREATE (r1)-[:PRODUCED]->(j) "
-            "CREATE (mo1:ModelOutput {id:$mo1,tenant_id:$tenant,question_id:'lead_org',type:'Choice',value:'AI팀',confidence:0.72,model:'jev-test',run_id:$run1}) "
-            "CREATE (mo2:ModelOutput {id:$mo2,tenant_id:$tenant,question_id:'feasibility',type:'Choice',value:'조건부 가능',confidence:0.67,model:'jev-test',run_id:$run1}) "
+            "CREATE (mo1:ModelOutput {id:$mo1,tenant_id:$tenant,question_id:'lead_org',type:'Choice',value:'AI팀',confidence:0.72,model:'ai-test',run_id:$run1}) "
+            "CREATE (mo2:ModelOutput {id:$mo2,tenant_id:$tenant,question_id:'feasibility',type:'Choice',value:'조건부 가능',confidence:0.67,model:'ai-test',run_id:$run1}) "
             "CREATE (mo1)-[:OF_JUDGMENT]->(j) CREATE (mo2)-[:OF_JUDGMENT]->(j) "
             "CREATE (es:EvidenceSpan {id:$es1,tenant_id:$tenant,request_id:$req1,revision_id:'rev_1',attachment_id:'att_1',location_json:'{\"page\":3}',source_text:'원문 비공개 텍스트'}) "
             "CREATE (mo1)-[:CITES {prob:0.9}]->(es) "
@@ -55,7 +55,7 @@ async def world():
             "CREATE (val)-[:VALIDATES]->(rv) "
             "CREATE (cfg:ConfigVersion {id:$cfg,tenant_id:$tenant,version:2,status:'active',created_by:'admin',reason:'게시',created_at:datetime()}) "
             "CREATE (rv)-[:PUBLISHED_IN]->(cfg) "
-            "CREATE (s1:RunStep {id:$step_jev,tenant_id:$tenant,run_id:$run1,name:'Jev 판단',kind:'jev',status:'succeeded',started_at:datetime(),actor:'worker'}) "
+            "CREATE (s1:RunStep {id:$step_ai,tenant_id:$tenant,run_id:$run1,name:'Decision AI 판단',kind:'ai',status:'succeeded',started_at:datetime(),actor:'worker'}) "
             "CREATE (r1)-[:HAS_STEP]->(s1) CREATE (s1)-[:USED_OUTPUT]->(mo1) CREATE (s1)-[:USED_OUTPUT]->(mo2) "
             "CREATE (s2:RunStep {id:$step_rule,tenant_id:$tenant,run_id:$run2,name:'규칙 적용',kind:'rule',status:'succeeded',started_at:datetime(),actor:'worker'}) "
             "CREATE (r2)-[:HAS_STEP]->(s2) CREATE (s2)-[:APPLIED {outcome:'used',before:'\"AI팀\"',after:'\"IT팀\"',rule_version:$rv}]->(rv) "
@@ -112,7 +112,7 @@ async def test_rule_graph_matches_stored_nodes_and_edges_exactly(world):
     applied = {e["source"]: e["props"]["outcome"] for e in body["edges"] if e["type"] == "APPLIED"}
     assert applied == {i["step_rule"]: "used", i["step_oos"]: "out_of_scope"}
     # No fabricated link: the step that used the model output is not related to the rule here.
-    assert not any(e["source"] == i["step_jev"] for e in body["edges"])
+    assert not any(e["source"] == i["step_ai"] for e in body["edges"])
     assert [layer["count"] for layer in body["layers"]] == [3, 1, 1, 3, 2]
 
 
@@ -121,7 +121,7 @@ async def test_request_graph_has_isolated_nodes_and_no_synthesized_edges(world):
     async with client_for(operator(world)) as client:
         body = (await client.get("/api/graph/judgment", params={"request_id": i["req1"]})).json()
     nodes = {n["id"] for n in body["nodes"]}
-    assert {i["mo1"], i["mo2"], i["es1"], i["c1"], i["rd1"], i["step_jev"]} <= nodes
+    assert {i["mo1"], i["mo2"], i["es1"], i["c1"], i["rd1"], i["step_ai"]} <= nodes
     assert i["c9"] not in nodes  # another request's correction without any relationship
     mo2_edges = [e for e in body["edges"] if i["mo2"] in (e["source"], e["target"])]
     assert [e["type"] for e in mo2_edges] == ["USED_OUTPUT"]  # mo2 cites nothing; no CITES invented
@@ -144,7 +144,7 @@ async def test_path_both_directions_with_depth_and_limits(world):
     assert [p["node_ids"] for p in up["paths"]] == [[i["step_rule"], i["rv"], i["dec1"], i["cand1"], i["c1"], i["mo1"], i["es1"]]]
     assert up["downstream_ids"] == []
     ends = sorted(p["node_ids"][-1] for p in down["paths"])
-    assert ends == sorted([i["step_jev"], i["rd1"], i["val1"], i["step_rule"], i["step_oos"], i["cfg"]])
+    assert ends == sorted([i["step_ai"], i["rd1"], i["val1"], i["step_rule"], i["step_oos"], i["cfg"]])
     assert all(p["node_ids"][:3] == [i["es1"], i["mo1"]] or p["node_ids"][:2] == [i["es1"], i["mo1"]] for p in down["paths"])
     assert {p["direction"] for p in both["paths"]} == {"up", "down"}
     assert sum(1 for p in both["paths"] if p["direction"] == "up") == 1

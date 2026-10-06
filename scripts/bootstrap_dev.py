@@ -7,10 +7,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
-from jevtriage.auth.core import hash_password
-from jevtriage.db.driver import close_driver, get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import hash_password
+from ildongi.db.driver import close_driver, get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.policy.service import bootstrap_policy
 
 ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin", "labeler")
 
@@ -44,7 +44,7 @@ async def bootstrap(password: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--password", default=os.getenv("JEVTRIAGE_DEV_PASSWORD", "dev-only-change-me"))
+    parser.add_argument("--password", default=os.getenv("ILDONGI_DEV_PASSWORD", "dev-only-change-me"))
     args = parser.parse_args()
     try:
         asyncio.run(bootstrap(args.password))

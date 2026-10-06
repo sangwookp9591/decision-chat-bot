@@ -7,25 +7,25 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal, enforce_csrf, get_principal
-from jevtriage.db.driver import close_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.judgment.store import get_judgment
-from jevtriage.learning.apply import apply_rules, validate_rule
-from jevtriage.learning.rules import (
+from ildongi.auth.core import Principal, enforce_csrf, get_principal
+from ildongi.db.driver import close_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.service import execute_judgment
+from ildongi.judgment.store import get_judgment
+from ildongi.learning.apply import apply_rules, validate_rule
+from ildongi.learning.rules import (
     change_publication,
     create_version,
     decide_candidate,
     mark_validated,
     rule_detail,
 )
-from jevtriage.main import create_app
-from jevtriage.policy.service import PolicyError, bootstrap_policy, get_active_snapshot
+from ildongi.main import create_app
+from ildongi.policy.service import PolicyError, bootstrap_policy, get_active_snapshot
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -140,7 +140,7 @@ async def test_publication_application_stop_revert_and_restart(tenant):
             return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id", tenant=tenant, run=run)).single(strict=True))["id"]
         return await read_tx(tenant, job)
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, await job_for(frozen_run))
     frozen_saved = await get_judgment(tenant, frozen_request, frozen_run)
     assert frozen_saved is not None and json.loads(frozen_saved["judgment"]["rule_effects"]) == []
@@ -150,7 +150,7 @@ async def test_publication_application_stop_revert_and_restart(tenant):
     errors = []
     async def handler(ctx):
         try:
-            await execute_judgment(ctx, JevClient("", mode="mock"))
+            await execute_judgment(ctx, AiClient("", mode="mock"))
         except Exception as exc:
             errors.append(repr(exc))
             raise
@@ -199,7 +199,7 @@ async def test_out_of_scope_recorded(tenant):
     async def job(tx):
         return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id", tenant=tenant, run=run_id)).single(strict=True))["id"]
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
     saved = await get_judgment(tenant, created["request_id"], run_id)
     assert saved is not None
@@ -242,7 +242,7 @@ async def test_context_guidance_is_data_and_scope_bound(tenant):
     states = []
     class RecordingClient:
         def __init__(self):
-            self.inner = JevClient("", mode="mock")
+            self.inner = AiClient("", mode="mock")
         def ask(self, state, questions):
             states.append(state)
             return self.inner.ask(state, questions)

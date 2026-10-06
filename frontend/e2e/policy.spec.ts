@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('validate, publish, inspect history, and rollback policy on live API', async ({ page }) => {
-  const login = await page.request.post('/api/auth/login', { data: { email: `policy_editor@${process.env.E2E_TENANT || 't-alpha'}.dev`, password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } });
+  const login = await page.request.post('/api/auth/login', { data: { email: `policy_editor@${process.env.E2E_TENANT || 't-alpha'}.dev`, password: process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me' } });
   expect(login.ok(), `login failed: ${login.status()}`).toBeTruthy();
   await page.goto('/policy');
   await expect(page.getByRole('heading', { name: '정책', exact: true })).toBeVisible();

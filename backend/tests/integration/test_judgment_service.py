@@ -7,13 +7,13 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.judgment.store import get_judgment
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.service import execute_judgment
+from ildongi.judgment.store import get_judgment
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -40,7 +40,7 @@ async def test_mock_worker_persists_information_gap_and_review(tenant):
         return row["id"]
     job_id = await read_tx(tenant, get_job)
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, job_id)
     saved = await get_judgment(tenant, request_id, run_id)
     assert saved is not None
@@ -59,9 +59,9 @@ async def test_mock_worker_persists_information_gap_and_review(tenant):
     assert state["status"] == "judgment_saved" and state["first"] is not None
 
 
-@pytest.mark.parametrize("error_type", ["JevAuthError", "JevSchemaError", "JevRateLimited"])
-async def test_jev_failure_marks_run_and_request_failed(tenant, error_type):
-    from jevtriage.judgment import jev_client
+@pytest.mark.parametrize("error_type", ["AiAuthError", "AiSchemaError", "AiRateLimited"])
+async def test_ai_failure_marks_run_and_request_failed(tenant, error_type):
+    from ildongi.judgment import ai_client
     created = await create_request(tenant, "tester", "자료를 처리해 주세요.", [],
                                    str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
     request_id = created["request_id"]
@@ -73,7 +73,7 @@ async def test_jev_failure_marks_run_and_request_failed(tenant, error_type):
     job_id = await read_tx(tenant, get_job)
     class ErrorClient:
         def ask(self, *_):
-            raise getattr(jev_client, error_type)(error_type)
+            raise getattr(ai_client, error_type)(error_type)
     async def handler(ctx):
         await execute_judgment(ctx, ErrorClient())
     await Worker(handlers={"judgment": handler}).process_job(tenant, job_id)
@@ -88,7 +88,7 @@ async def test_jev_failure_marks_run_and_request_failed(tenant, error_type):
 
 
 async def test_fixed_policy_survives_new_active_version(tenant):
-    from jevtriage.policy.service import DEFAULT_CONFIG
+    from ildongi.policy.service import DEFAULT_CONFIG
     old = {**DEFAULT_CONFIG, "risk_clear_max": 0.1}
     new = {**DEFAULT_CONFIG, "risk_clear_max": 0.2}
     async def policies(tx):
@@ -111,14 +111,14 @@ async def test_fixed_policy_survives_new_active_version(tenant):
                                     tenant=tenant, run=run_id)).single(strict=True))["id"]
     job_id = await write_tx(tenant, fix_and_job)
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, job_id)
     saved = await get_judgment(tenant, request_id, run_id)
     assert json.loads(saved["judgment"]["versions"])["config_version"] == 1
 
 
 async def test_reanalysis_preserves_previous_judgment(tenant):
-    from jevtriage.ingest.store import add_revision
+    from ildongi.ingest.store import add_revision
     created = await create_request(tenant, "tester", "첫 번째 요청입니다.", [],
                                    str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
     request_id = created["request_id"]
@@ -129,7 +129,7 @@ async def test_reanalysis_preserves_previous_judgment(tenant):
             return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id",
                                         tenant=tenant, run=run_id)).single(strict=True))["id"]
         async def handler(ctx):
-            await execute_judgment(ctx, JevClient("", mode="mock"))
+            await execute_judgment(ctx, AiClient("", mode="mock"))
         await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
         return run_id
     old_run = await run_active()
@@ -146,8 +146,8 @@ async def test_reanalysis_preserves_previous_judgment(tenant):
 async def test_judgment_api_scopes_runs_and_omits_source_without_permission(tenant):
     import httpx
 
-    from jevtriage.auth.core import Principal, get_principal
-    from jevtriage.main import create_app
+    from ildongi.auth.core import Principal, get_principal
+    from ildongi.main import create_app
     created = await create_request(tenant, "tester", "비민감 업무입니다.", [],
                                    str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
     request_id = created["request_id"]
@@ -156,7 +156,7 @@ async def test_judgment_api_scopes_runs_and_omits_source_without_permission(tena
         return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id",
                                     tenant=tenant, run=run_id)).single(strict=True))["id"]
     async def handler(ctx):
-        await execute_judgment(ctx, JevClient("", mode="mock"))
+        await execute_judgment(ctx, AiClient("", mode="mock"))
     await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
     app = create_app()
     app.dependency_overrides[get_principal] = lambda: Principal(tenant, "tester", (), frozenset(), False)
@@ -175,7 +175,7 @@ async def test_judgment_api_scopes_runs_and_omits_source_without_permission(tena
 
 
 async def test_deadline_before_handler_marks_active_request_failed(tenant):
-    from jevtriage.db.events import list_events
+    from ildongi.db.events import list_events
     created = await create_request(tenant, "tester", "기한 초과 시험입니다.", [],
                                    str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
     request_id = created["request_id"]
@@ -194,7 +194,7 @@ async def test_deadline_before_handler_marks_active_request_failed(tenant):
 
 
 async def test_expired_old_run_does_not_change_active_request(tenant):
-    from jevtriage.db.events import list_events
+    from ildongi.db.events import list_events
     created = await create_request(tenant, "tester", "이전 실행입니다.", [],
                                    str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
     request_id = created["request_id"]
@@ -206,7 +206,7 @@ async def test_expired_old_run_does_not_change_active_request(tenant):
         return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id",
                                     tenant=tenant, run=old_run)).single(strict=True))["id"]
     job_id = await write_tx(tenant, age_and_job)
-    from jevtriage.ingest.store import add_revision
+    from ildongi.ingest.store import add_revision
     await add_revision(tenant, request_id, "tester", 1, "새 실행입니다.", [],
                        str(uuid4()), str(uuid4()))
     current = await get_request_meta(tenant, request_id)
@@ -220,8 +220,8 @@ async def test_expired_old_run_does_not_change_active_request(tenant):
 
 
 async def test_real_span_citation_is_persisted_with_probability(tenant):
-    from jevtriage.judgment.jev_client import ModelOutput
-    class CiteClient(JevClient):
+    from ildongi.judgment.ai_client import ModelOutput
+    class CiteClient(AiClient):
         def ask(self, state, question_map):
             if "is_evidence" in question_map:
                 return ModelOutput(self.model, {"is_evidence": {"type": "noul", "noul": .9}},
@@ -252,8 +252,8 @@ async def test_real_span_citation_is_persisted_with_probability(tenant):
 
 
 async def test_chat_text_is_persisted_and_cited_at_judgment_location(tenant):
-    from jevtriage.judgment.jev_client import ModelOutput
-    class CiteChatClient(JevClient):
+    from ildongi.judgment.ai_client import ModelOutput
+    class CiteChatClient(AiClient):
         def ask(self, state, question_map):
             if "is_evidence" in question_map:
                 return ModelOutput(self.model, {"is_evidence": {"type": "noul", "noul": .9}},
@@ -296,7 +296,7 @@ async def test_chat_text_is_persisted_and_cited_at_judgment_location(tenant):
 
 
 async def test_external_state_masked_but_saved_citation_uses_original_span(tenant):
-    from jevtriage.judgment.jev_client import ModelOutput
+    from ildongi.judgment.ai_client import ModelOutput
 
     sensitive = "name@example.com"
     source = f"담당자 {sensitive}에게 월별 집계 결과를 보냅니다."
@@ -309,7 +309,7 @@ async def test_external_state_masked_but_saved_citation_uses_original_span(tenan
         return (await (await tx.run("MATCH (j:Job {tenant_id:$tenant,run_id:$run}) RETURN j.id AS id",
                                     tenant=tenant, run=run_id)).single(strict=True))["id"]
 
-    class InspectClient(JevClient):
+    class InspectClient(AiClient):
         def __init__(self):
             super().__init__("", mode="mock")
             self.states = []

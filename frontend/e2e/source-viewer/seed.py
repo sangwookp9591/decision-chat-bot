@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "backend"))
 sys.path.insert(0, str(ROOT / "backend" / "tests" / "acceptance"))
 
-from jevtriage.db.driver import close_driver
-from jevtriage.db.tx import write_tx
+from ildongi.db.driver import close_driver
+from ildongi.db.tx import write_tx
 from provision import provision
 
 TENANT = sys.argv[1] if len(sys.argv) > 1 else "t-ux2"

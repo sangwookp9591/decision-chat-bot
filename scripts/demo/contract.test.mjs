@@ -6,7 +6,7 @@ test('REC-2 uses isolated ports and tenant-restricted live worker', () => {
   assert.match(read('run.py'), /10291/);
   assert.match(read('vite.mjs'), /7591/);
   assert.match(read('run.py'), /'--tenant',env\['DEMO_TENANT'\]/);
-  assert.match(read('run.py'), /JEV_MODE='live'/);
+  assert.match(read('run.py'), /AI_MODE='live'/);
 });
 test('REC-2 records all fifteen current scenes with motion and error accounting', () => {
   const script = read('record.mjs');

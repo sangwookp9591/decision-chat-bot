@@ -7,7 +7,7 @@ const taskBase = {
   reason: null, block_reasons: ['feasibility_unresolved'], status: '막힘',
 };
 const tenant = process.env.E2E_TENANT || 't-audit-e2e-1005';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 async function login(page: import('@playwright/test').Page) {
   const response = await page.request.post('/api/auth/login', { data: { email: `team_member@${tenant}.dev`, password } });
   expect(response.ok(), `login failed: ${response.status()}`).toBeTruthy();

@@ -2,4 +2,4 @@
 
 import os
 
-os.environ["JEVTRIAGE_STRICT_TENANT"] = "1"
+os.environ["ILDONGI_STRICT_TENANT"] = "1"

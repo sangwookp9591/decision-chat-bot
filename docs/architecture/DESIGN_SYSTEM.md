@@ -180,7 +180,7 @@ TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바�
 
 - **앱 셸**: 사이드바는 페이지 바탕과 같은 회색 면(구분선 없음), 활성 항목은 흰 pill(`--color-surface` + `--shadow-card`, 글자 `--color-primary-ink`). 상단바는 48px로 얇게, 테두리·면 없음. 회색 바탕 위 `plain` 버튼은 `--btn-bg: surface` 면을 따로 준다(`style.css`).
 - **페이지 머리**: `h1`은 t2(375px 이하 t3), 설명은 `--color-ink-2`. `main > section > header`가 간격·설명 색을 한곳에서 준다.
-- **eyebrow**: 영문 대문자(`JEV TRIAGE`, `TRACE / PLAYBACK` …)를 없애고 짧은 한국어 라벨(`사람 검토`, `배정 업무`, `운영 지표`, `실행 기록`, `정답 라벨`, `판단 관계`) 또는 제거. 스타일은 caption 색 t7 600(대비 AA). `screens-tokens.test.ts`가 영문 대문자 3자 이상을 막는다.
+- **eyebrow**: 영문 대문자(`AI TRIAGE`, `TRACE / PLAYBACK` …)를 없애고 짧은 한국어 라벨(`사람 검토`, `배정 업무`, `운영 지표`, `실행 기록`, `정답 라벨`, `판단 관계`) 또는 제거. 스타일은 caption 색 t7 600(대비 AA). `screens-tokens.test.ts`가 영문 대문자 3자 이상을 막는다.
 - **카드**: 큰 반경(`--radius-xl`)·테두리 없음, 회색 바탕 위 흰 면 + `--shadow-card`. 안쪽 조용한 영역은 `--color-surface-2`. 상태 강조는 외곽선 대신 면 색(`--status-*-bg`) + 필요하면 inset 링.
 - **리스트 행**: 넉넉한 세로 간격(14px), 호버 시 `--color-fill` 면, 누르면 0.99 scale. 선택된 행은 `--color-primary-tint` + inset 링.
 - **원시 ID**: 제목 자리에 `req_…`/`run_…`/`task_…` 전체 길이를 쓰지 않는다. `<ShortId id=… />`는 `req_…bc8acd`처럼 짧게 보이고, **전체 ID는 `title`(호버)과 시각적으로 숨긴 텍스트(`short-id-full`)로 남아** 복사·검색·보조기술·텍스트 비교(`toContainText`)에서 그대로 찾힌다. 검토 대기 목록 행은 `긴급도(제목) + 짧은 ID 칩 + 상태 + 사유`로 바뀌었다. (목록 API에 요청 첫 문장이 없어 제목은 긴급도로 했다 — 첫 문장 마스킹 값은 백엔드가 목록에 담아주면 같은 자리에 넣으면 된다.)

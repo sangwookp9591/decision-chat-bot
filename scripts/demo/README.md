@@ -1,6 +1,6 @@
 # 현재 제품 흐름 녹화
 
-저장소 루트에서 `bash scripts/demo/record.sh`를 실행합니다. `.env`의 실제 Jev 연결 설정을 읽고 새 tenant, API **10291**, Vite **7591**, tenant 제한 worker를 사용합니다. 이미 해당 포트가 사용 중이면 중단하며, 종료 시 직접 시작한 프로세스만 정리합니다. 공유 OrbStack Neo4j·Redis를 중단하지 않습니다.
+저장소 루트에서 `bash scripts/demo/record.sh`를 실행합니다. `.env`의 실제 Decision AI 연결 설정을 읽고 새 tenant, API **10291**, Vite **7591**, tenant 제한 worker를 사용합니다. 이미 해당 포트가 사용 중이면 중단하며, 종료 시 직접 시작한 프로세스만 정리합니다. 공유 OrbStack Neo4j·Redis를 중단하지 않습니다.
 
 `artifacts/demo/<UTC 타임스탬프>/`에 다음 파일이 생깁니다.
 

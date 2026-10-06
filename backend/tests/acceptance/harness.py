@@ -2,7 +2,7 @@
 
 Environment (all optional): ACC_API (default http://127.0.0.1:8121), ACC_TENANT (t-acc21),
 ACC_TENANT_B (t-acc21b), ACC_OUT (evidence directory), ACC_PASSWORD.
-Nothing here reads or prints JEV_API_KEY.
+Nothing here reads or prints AI_API_KEY.
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ TENANT = os.environ.get("ACC_TENANT", "t-acc21")
 TENANT_B = os.environ.get("ACC_TENANT_B", TENANT + "b")   # other tenant (isolation)
 TENANT_P = TENANT + "p"   # policy / auto-assign tests
 TENANT_G = TENANT + "g"   # T21-gates (G03/G05/G06) tenant
-TENANT_F = TENANT + "f"   # worker with an invalid Jev key (real failed runs)
+TENANT_F = TENANT + "f"   # worker with an invalid Decision AI key (real failed runs)
 PASSWORD = os.environ.get("ACC_PASSWORD", "dev-only-change-me")
 OUT = Path(os.environ.get("ACC_OUT", "")) if os.environ.get("ACC_OUT") else None
 PROCESSING = {"judgment_pending", "received"}
@@ -35,7 +35,7 @@ class Client:
 
     @property
     def csrf(self) -> str:
-        return self.http.cookies.get("jev_csrf") or ""
+        return self.http.cookies.get("ildongi_csrf") or ""
 
     def _h(self, extra: dict | None = None, write: bool = True) -> dict:
         h = dict(extra or {})
@@ -101,8 +101,8 @@ def db_read(tenant: str, cypher: str, **params) -> list[dict]:
     import asyncio
 
     async def go():
-        from jevtriage.db.driver import close_driver
-        from jevtriage.db.tx import read_tx
+        from ildongi.db.driver import close_driver
+        from ildongi.db.tx import read_tx
 
         async def q(tx):
             return await (await tx.run(cypher, tenant=tenant, **params)).data()
@@ -119,8 +119,8 @@ def db_write(tenant: str, cypher: str, **params) -> None:
     import asyncio
 
     async def go():
-        from jevtriage.db.driver import close_driver
-        from jevtriage.db.tx import write_tx
+        from ildongi.db.driver import close_driver
+        from ildongi.db.tx import write_tx
 
         async def q(tx):
             await (await tx.run(cypher, tenant=tenant, **params)).consume()

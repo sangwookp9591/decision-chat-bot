@@ -4,19 +4,19 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.db.driver import get_driver
-from jevtriage.db.events import append_event, list_events
-from jevtriage.db.idempotency import IdempotencyConflict, get_or_create
-from jevtriage.db.jobs import (
+from ildongi.db.driver import get_driver
+from ildongi.db.events import append_event, list_events
+from ildongi.db.idempotency import IdempotencyConflict, get_or_create
+from ildongi.db.jobs import (
     OwnershipLost,
     claim_or_takeover,
     create_job,
     heartbeat,
     verify_owner_in_tx,
 )
-from jevtriage.db.requests import StaleRun, add_input_revision, create_request, set_active_run
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
+from ildongi.db.requests import StaleRun, add_input_revision, create_request, set_active_run
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

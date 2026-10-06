@@ -4,15 +4,15 @@ from pathlib import Path
 
 import pytest
 
-pytestmark = pytest.mark.skipif(os.getenv("JEV_MODE") != "live", reason="requires JEV_MODE=live and live Jev credentials")
+pytestmark = pytest.mark.skipif(os.getenv("AI_MODE") != "live", reason="requires AI_MODE=live and live Decision AI credentials")
 
 
 def test_two_live_request_shapes():
-    from jevtriage.config import get_settings
-    from jevtriage.judgment.jev_client import JevClient
-    from jevtriage.judgment.pipeline import run_judgment
+    from ildongi.config import get_settings
+    from ildongi.judgment.ai_client import AiClient
+    from ildongi.judgment.pipeline import run_judgment
     settings = get_settings()
-    c = JevClient(api_key=settings.jev_api_key.get_secret_value(), mode="live")
+    c = AiClient(api_key=settings.ai_api_key.get_secret_value(), mode="live")
     cases = [("aggregate", "월별 매출 데이터를 집계해 부서별 리포트로 제공한다."), ("forecast_alert", "수요 예측 결과가 기준을 넘으면 운영 담당자에게 알림을 보낸다.")]
     results = {}
     for name, text in cases:

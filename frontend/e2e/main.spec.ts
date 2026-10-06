@@ -1,7 +1,9 @@
+const aiName = process.env.AI_NAME ?? 'Decision AI';
+
 import { expect, test, type Page } from '@playwright/test';
 
 const tenant = process.env.E2E_TENANT || 't-alpha';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 async function login(page: Page) {
   const response = await page.request.post('/api/auth/login', { data: { email: `requester@${tenant}.dev`, password } });
   expect(response.ok(), `login failed: ${response.status()}`).toBeTruthy();
@@ -22,7 +24,7 @@ test('live request shows processing stages, saved judgment and evidence panel', 
       const heading = [...document.querySelectorAll('h1,h2,h3')].find((node) => node.textContent === '분석 진행');
       const stages = document.querySelector('.stage-list');
       if (heading instanceof HTMLElement && heading.offsetHeight > 0 && stages instanceof HTMLElement && stages.offsetHeight > 0
-        && ['내용 정리', 'Jev 판단', '근거 연결'].every((label) => stages.textContent?.includes(label))) {
+        && ['내용 정리', `${aiName} 판단`, '근거 연결'].every((label) => stages.textContent?.includes(label))) {
         state.observed = true;
         observer.disconnect();
       }
@@ -36,7 +38,7 @@ test('live request shows processing stages, saved judgment and evidence panel', 
   expect(accepted.status()).toBe(202);
   await expect.poll(() => page.evaluate(() => (window as unknown as { __mainProgress: { observed: boolean } }).__mainProgress.observed), { timeout: 30_000 }).toBe(true);
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
-  await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+  await expect(page.locator(`.environment-badge.mode-${process.env.AI_MODE || 'live'}`).last()).toBeVisible();
   const evidence = page.getByRole('button', { name: /근거 열기|근거 패널 열기/ }).first();
   await expect(evidence).toBeVisible();
   await evidence.click();
@@ -54,7 +56,7 @@ test('live damaged attachment can be excluded before a new revision judgment', a
   await expect(page.getByRole('group', { name: '읽기 실패 파일' })).toContainText('damaged.pdf');
   await page.getByRole('button', { name: '제외하고 진행' }).click();
   await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 180_000 });
-  await expect(page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+  await expect(page.locator(`.environment-badge.mode-${process.env.AI_MODE || 'live'}`).last()).toBeVisible();
   await page.getByRole('button', { name: '자세히 보기' }).last().click();
   await expect(page.locator('.result-ids code.short-id')).toHaveCount(2);
   const id = new URL(page.url()).searchParams.get('request_id');

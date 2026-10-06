@@ -5,15 +5,16 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.learning.shadow import rule_validations, validate_rules, validation_detail
-from jevtriage.observe.flow import get_flow
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.config import get_settings
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.learning.shadow import rule_validations, validate_rules, validation_detail
+from ildongi.observe.flow import get_flow
+from ildongi.policy.service import bootstrap_policy
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
-NAMES = ["입력 정리", "Jev 판단", "근거 연결", "업무 분해", "규칙 적용", "자동 배정 조건 검사", "결과 저장"]
+NAMES = ["입력 정리", f"{get_settings().ai_name} 판단", "근거 연결", "업무 분해", "규칙 적용", "자동 배정 조건 검사", "결과 저장"]
 
 
 async def _cleanup(tenant):

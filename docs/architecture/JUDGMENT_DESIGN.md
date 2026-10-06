@@ -4,23 +4,23 @@
 
 별도 생성 모델 키가 없으므로 요약은 입력 단위에서 최대 세 구간을 그대로 잇는 발췌형이며 `code:extractive@1`로 기록한다. 원문을 문장 단위로 바꾸거나 인용을 생성하지 않고 선택한 span ID와 텍스트를 보존한다.
 
-결정별 근거는 후보 원문 단위에 대해 Jev Noul로 개별 질문해 확률을 저장한다. 기본 연결 임계값은 `0.6`이며 운영 정책에서 `evidence_noul_threshold`로 주입한다. 이 수치는 정확도 보장이 아닌 초기 운영값이며 품질 평가 표본으로 조정해야 한다. 단위 선택은 입력 순서 기반 결정적 최대 12개, 단위당 2,000자 제한이다. 통과 근거가 없으면 빈 배열(화면 표시는 “근거 없음”)이다. 근거 질문은 판단 4개 × 선택 단위 수만큼 독립적으로 보내되 최대 4개를 동시에 실행한다. 질문 문구, Jev state, 임계값, 결과 배열의 원문 순서는 그대로 유지한다. 20건 live 품질·지연 비교는 [PERF-3 측정](../../artifacts/validation/perf/evidence.md)에 기록했다.
+결정별 근거는 후보 원문 단위에 대해 Decision AI Noul로 개별 질문해 확률을 저장한다. 기본 연결 임계값은 `0.6`이며 운영 정책에서 `evidence_noul_threshold`로 주입한다. 이 수치는 정확도 보장이 아닌 초기 운영값이며 품질 평가 표본으로 조정해야 한다. 단위 선택은 입력 순서 기반 결정적 최대 12개, 단위당 2,000자 제한이다. 통과 근거가 없으면 빈 배열(화면 표시는 “근거 없음”)이다. 근거 질문은 판단 4개 × 선택 단위 수만큼 독립적으로 보내되 최대 4개를 동시에 실행한다. 질문 문구, Decision AI state, 임계값, 결과 배열의 원문 순서는 그대로 유지한다. 20건 live 품질·지연 비교는 [PERF-3 측정](../../artifacts/validation/perf/evidence.md)에 기록했다.
 
-업무 분해는 `catalog-v1`의 일반 업무 유형별 필요 여부를 Jev Noul로 판정하고, 카탈로그 정의에서 업무명·방식·조직·산출물을 가져온다. 선행 관계는 카탈로그에서 계산하고 위상 정렬 중 순환은 오류로 거절한다. 필드 작성자는 카탈로그 버전으로 남긴다. 실제 사용자 업무 문구를 예시 문장으로 고정 분류하지 않는다.
+업무 분해는 `catalog-v1`의 일반 업무 유형별 필요 여부를 Decision AI Noul로 판정하고, 카탈로그 정의에서 업무명·방식·조직·산출물을 가져온다. 선행 관계는 카탈로그에서 계산하고 위상 정렬 중 순환은 오류로 거절한다. 필드 작성자는 카탈로그 버전으로 남긴다. 실제 사용자 업무 문구를 예시 문장으로 고정 분류하지 않는다.
 
 Choice/Score 신뢰도는 Noul 확률과 별도 키/경로로 다룬다. 자동 배정은 실행 계약의 필수 검토를 상수로 강제하며 위험 미확정, 긴급, 조건부/불가/정보 부족/미정은 정책으로 해제할 수 없다. 판단 함수에는 DB 저장이나 worker 연동이 없다.
 
 ## 구현 메모 및 한계
 
-외부 Jev state는 `ExternalClient` 경계에서 `mask_for_external(text, policy)`를 거친다. 최초 분류의 `units[].text`와 `chat_text`, 근거 판정의 `source_unit`, 업무 분해의 동일 state, 적용 운영 문장 `operating_guidance`가 대상이다. 요청마다 생성한 `MaskingSession`이 같은 문자열에 같은 토큰을 배정하고 호출 종료 후 폐기한다. 단위 ID는 마스킹하지 않으므로 Jev 근거 연결 결과는 저장된 원문 EvidenceSpan과 같은 위치를 가리킨다. 정책 `masking.enabled`의 기본값은 true이고 범주별 선택이 가능하다. 운영 제한과 패턴 한계는 [데이터 처리 문서](../operations/DATA_HANDLING.md)에 기록한다.
+외부 Decision AI state는 `ExternalClient` 경계에서 `mask_for_external(text, policy)`를 거친다. 최초 분류의 `units[].text`와 `chat_text`, 근거 판정의 `source_unit`, 업무 분해의 동일 state, 적용 운영 문장 `operating_guidance`가 대상이다. 요청마다 생성한 `MaskingSession`이 같은 문자열에 같은 토큰을 배정하고 호출 종료 후 폐기한다. 단위 ID는 마스킹하지 않으므로 Decision AI 근거 연결 결과는 저장된 원문 EvidenceSpan과 같은 위치를 가리킨다. 정책 `masking.enabled`의 기본값은 true이고 범주별 선택이 가능하다. 운영 제한과 패턴 한계는 [데이터 처리 문서](../operations/DATA_HANDLING.md)에 기록한다.
 
-SDK는 공식 `typesafe-sdk==0.7.2`를 사용하며 API 키를 생성자에 명시하고 `jev-1.13.0`을 기본 고정한다. mock은 `JEV_MODE=mock`에서만 활성화되어 결과에 mode를 표시한다. 401/422는 비재시도 분류이며 429/529/일시 실패는 두 번까지 제한한다. timeout/deadline과 Retry-After 헤더 기반 재시도는 SDK `RetryPolicy`에 429/529·연결/timeout 재시도, Retry-After, 최대 재시도 2회를 명시한다. 호출 deadline은 120초다. 운영 부하별 p95 조정은 후속 평가가 필요하다.
+SDK는 공식 `typesafe-sdk==0.7.2`를 사용하며 API 키를 생성자에 명시하고 `jev-1.13.0`을 기본 고정한다. mock은 `AI_MODE=mock`에서만 활성화되어 결과에 mode를 표시한다. 401/422는 비재시도 분류이며 429/529/일시 실패는 두 번까지 제한한다. timeout/deadline과 Retry-After 헤더 기반 재시도는 SDK `RetryPolicy`에 429/529·연결/timeout 재시도, Retry-After, 최대 재시도 2회를 명시한다. 호출 deadline은 120초다. 운영 부하별 p95 조정은 후속 평가가 필요하다.
 
 ## qset-v2 / catalog-v2 (Q1, 튜닝 표본 기준)
 
 ### 원인 분석 (qset-v1, tuning 60건, 실행 20261003T074120Z)
 
-Jev 공식 문서(primitives)는 Choice `criteria`를 "옵션별 설명 맵", Noul `criteria`를 예/아니오 의미 보충으로 정의하고, 지시문은 상태 필드 경로를 가리키는 구체적 질문이어야 한다고 안내한다. qset-v1은 Choice 옵션 설명이 전부 `None`이었다.
+Decision AI 공식 문서(primitives)는 Choice `criteria`를 "옵션별 설명 맵", Noul `criteria`를 예/아니오 의미 보충으로 정의하고, 지시문은 상태 필드 경로를 가리키는 구체적 질문이어야 한다고 안내한다. qset-v1은 Choice 옵션 설명이 전부 `None`이었다.
 
 | 원인 범주 | 건수(오분류 표본) | 내용 |
 | --- | --- | --- |

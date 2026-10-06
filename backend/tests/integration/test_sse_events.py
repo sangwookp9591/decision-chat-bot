@@ -7,13 +7,13 @@ import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.driver import get_driver
-from jevtriage.db.events import append_event
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.events import router as event_router
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal
+from ildongi.db.driver import get_driver
+from ildongi.db.events import append_event
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.events import router as event_router
+from ildongi.main import create_app
 
 
 @pytest_asyncio.fixture(loop_scope="session")

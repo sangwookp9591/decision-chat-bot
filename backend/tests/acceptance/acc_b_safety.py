@@ -389,7 +389,7 @@ def test_auto_assignment_stays_zero_for_unsafe_requests_under_permissive_policy(
 
 
 def test_auto_assignment_positive_control_if_live_model_is_confident(auto_assign_policy):
-    """Informational: the policy-permitted path. Passes either way; records whether live Jev ever
+    """Informational: the policy-permitted path. Passes either way; records whether live Decision AI ever
     produced a fully eligible plain technical request (confidence thresholds are strict)."""
     rq = auto_assign_policy["rq"]
     texts = [
@@ -449,7 +449,7 @@ def test_required_review_release_is_rejected_for_publish_and_rollback(auto_assig
 # ------------------------------------------------------------------ key protection
 def _env_key() -> str:
     for line in (ROOT / ".env").read_text().splitlines():
-        if line.startswith("JEV_API_KEY="):
+        if line.startswith("AI_API_KEY="):
             return line.split("=", 1)[1].strip().strip("'\"")
     return ""
 
@@ -471,9 +471,9 @@ def _count_in(paths, needle: bytes, skip_names=()) -> tuple[int, int]:
     return hits, scanned
 
 
-def test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses(users):
+def test_ai_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_responses(users):
     key = _env_key()
-    assert len(key) >= 8, "JEV_API_KEY must be configured for a meaningful key-protection check"
+    assert len(key) >= 8, "AI_API_KEY must be configured for a meaningful key-protection check"
     needle = key.encode()
     # sample of API responses a browser could receive
     blobs = [users["requester"].get("/api/meta").content, users["requester"].get("/api/auth/me").content,
@@ -490,7 +490,7 @@ def test_jev_api_key_value_is_absent_from_logs_journals_artifacts_bundle_and_res
         "frontend_src": _count_in([ROOT / "frontend" / "src"], needle),
         "repo_docs_and_scripts": _count_in([ROOT / "docs", ROOT / "scripts", ROOT / "README.md",
                                             ROOT / "TASK.md", ROOT / "PRD.md", ROOT / ".env.example"], needle),
-        "backend_source_and_tests": _count_in([ROOT / "backend" / "jevtriage", ROOT / "backend" / "tests"], needle),
+        "backend_source_and_tests": _count_in([ROOT / "backend" / "ildongi", ROOT / "backend" / "tests"], needle),
     }
     out = {k: {"matches": v[0], "files_scanned": v[1]} for k, v in areas.items()}
     record("b_key_protection", out)  # counts only, never the value

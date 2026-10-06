@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 SCENARIOS = {
-    "Jev 장애": ["test_jev_faults"],
+    "Decision AI 장애": ["test_ai_faults"],
     "파서·Neo4j 장애": ["test_parser_and_db_outage"],
     "worker 인계·재시작": ["test_worker_handoff_and_kill_recovery"],
     "API 재시작·SSE": ["test_api_restart_and_sse_recovery"],
@@ -51,7 +51,7 @@ def main(folder: Path) -> None:
                      "단일 로컬 표본은 운영 성능 달성 판정으로 사용하지 않는다.")
     else:
         lines.append("SSE 재연결 p95: 미검증.")
-    lines.append("Jev 장애 주입 결과는 JEV_MODE=mock이며 실연동 품질 게이트를 대체하지 않는다.")
+    lines.append("Decision AI 장애 주입 결과는 AI_MODE=mock이며 실연동 품질 게이트를 대체하지 않는다.")
     (folder / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

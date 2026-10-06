@@ -5,12 +5,12 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.events import list_events
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
+from ildongi.auth.core import Principal
+from ildongi.db.events import list_events
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.jobs.worker import Worker
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -54,7 +54,7 @@ async def states(tenant, request_id, run_id, job_id):
 
 
 async def test_pending_cancel_is_immediate_idempotent_and_audited(tenant, monkeypatch):
-    import jevtriage.jobs.cancel as cancel_module
+    import ildongi.jobs.cancel as cancel_module
     cancel_run = cancel_module.cancel_run
     journal = []
     monkeypatch.setattr(cancel_module, "JournalWriter", lambda: type(
@@ -84,11 +84,11 @@ async def test_pending_cancel_is_immediate_idempotent_and_audited(tenant, monkey
 
 
 async def test_running_cancel_fences_late_result(tenant):
-    from jevtriage.jobs.cancel import cancel_run
+    from ildongi.jobs.cancel import cancel_run
     request_id, run_id, job_id = await setup_run(tenant)
     entered, release = asyncio.Event(), asyncio.Event()
     async def handler(ctx):
-        async with ctx.step("Jev 판단", kind="ai"):
+        async with ctx.step("Decision AI 판단", kind="ai"):
             entered.set()
             await release.wait()
             await ctx.commit(lambda tx: tx.run(
@@ -105,10 +105,10 @@ async def test_running_cancel_fences_late_result(tenant):
             tenant=tenant, run=run_id,
         )).single(strict=True)
         return row["stage"]
-    assert await read_tx(tenant, stage) == "Jev 판단"
+    assert await read_tx(tenant, stage) == "Decision AI 판단"
     async def step_state(tx):
         row = await (await tx.run(
-            "MATCH (s:RunStep {tenant_id:$tenant,run_id:$run,name:'Jev 판단'}) "
+            "MATCH (s:RunStep {tenant_id:$tenant,run_id:$run,name:'Decision AI 판단'}) "
             "RETURN s.status AS status",
             tenant=tenant, run=run_id,
         )).single(strict=True)
@@ -126,7 +126,7 @@ async def test_running_cancel_fences_late_result(tenant):
 
 
 async def test_cancel_authorization_and_tenant_isolation(tenant):
-    from jevtriage.jobs.cancel import cancel_run
+    from ildongi.jobs.cancel import cancel_run
     request_id, run_id, job_id = await setup_run(tenant)
     peer = Principal(tenant, "peer", (), frozenset({"requester"}), True)
     with pytest.raises(PermissionError):
@@ -140,7 +140,7 @@ async def test_cancel_authorization_and_tenant_isolation(tenant):
 
 
 async def test_completed_cancel_is_idempotent_and_completion_race_converges(tenant):
-    from jevtriage.jobs.cancel import cancel_run
+    from ildongi.jobs.cancel import cancel_run
     author = Principal(tenant, "author", (), frozenset({"requester"}), True)
     request_id, run_id, job_id = await setup_run(tenant)
     worker = Worker(handlers={"judgment": lambda ctx: asyncio.sleep(0)}, tenants=[tenant])

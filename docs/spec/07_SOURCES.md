@@ -4,13 +4,13 @@
 
 | 공식 자료 | 문서에 반영한 사실 |
 | --- | --- |
-| [TypeSafe AI 소개](https://docs.typesafe.ai/introduction) | Jev는 state와 typed questions에 대한 구조화된 판단 모델. Choice·Score의 confidence와 Noul의 확률은 다른 필드 |
-| [TypeSafe AI](https://typesafe.ai/) | Jev가 확률과 신뢰 신호를 제공하고 애플리케이션이 자동 처리·검토 기준을 결정하는 역할 |
+| [TypeSafe AI 소개](https://docs.typesafe.ai/introduction) | 제공자 모델(Jev)은 state와 typed questions에 대한 구조화된 판단 모델. Choice·Score의 confidence와 Noul의 확률은 다른 필드 |
+| [TypeSafe AI](https://typesafe.ai/) | 제공자 모델(Jev)이 확률과 신뢰 신호를 제공하고 애플리케이션이 자동 처리·검토 기준을 결정하는 역할 |
 | [WebMCP 초안](https://webmachinelearning.github.io/webmcp/) | 2026년 9월 30일자 Draft Community Group Report. JavaScript 도구 노출 및 Document의 modelContext 정의. W3C 표준 아님 |
 | [d3-zoom](https://d3js.org/d3-zoom) | DOM 비종속 확대·이동 동작으로 HTML, SVG, Canvas에 사용할 수 있음. 화면 조작 구현의 선택지 근거 |
 | [Neo4j Cypher Manual: 가변 길이 경로](https://neo4j.com/docs/cypher-manual/current/patterns/reference/variable-length-paths/) | quantified path pattern 및 quantified relationship으로 가변 길이 경로를 질의할 수 있음. 실제 저장 관계 탐색의 선택지 근거 |
 
-Jev의 속도·가격·정확도에 관한 홍보 수치는 이 프로젝트의 SLO 근거로 사용하지 않았다. Confidence를 업무 정답률로 취급하지 않는다. WebMCP 지원 여부와 호출 결과는 구현 환경에서 별도로 확인해야 한다.
+제공자 모델(Jev)의 속도·가격·정확도에 관한 홍보 수치는 이 프로젝트의 SLO 근거로 사용하지 않았다. Confidence를 업무 정답률로 취급하지 않는다. WebMCP 지원 여부와 호출 결과는 구현 환경에서 별도로 확인해야 한다.
 
 FastAPI·Neo4j·SSE·Dynamic Config의 역할과 SLO 수치, 평가 목표, 입력 한도는 이 프로젝트를 위한 설계 요구 및 초기 제안이다. 특정 공급자가 보장하는 계약이나 공식 벤치마크가 아니다. 개발 에이전트는 구현 시점의 공식 문서·실제 의존성 버전·현재 프로젝트 규칙을 확인한다.
 

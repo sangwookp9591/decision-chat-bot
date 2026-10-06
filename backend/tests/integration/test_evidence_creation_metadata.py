@@ -5,11 +5,11 @@ from uuid import uuid4
 import httpx
 import pytest
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request
+from ildongi.main import create_app
 
 
 @pytest.mark.asyncio(loop_scope="session")

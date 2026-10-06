@@ -10,7 +10,7 @@ describe('SSE sequence ordering', () => {
   });
 });
 
-const backendSources = import.meta.glob('../../../backend/jevtriage/**/*.py', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const backendSources = import.meta.glob('../../../backend/ildongi/**/*.py', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 describe('event kinds', () => {
   it('subscribes to every kind the backend publishes', () => {
@@ -36,7 +36,7 @@ describe('reconnect contract', () => {
     expect([0, 1, 2, 10].map(reconnectDelay)).toEqual([1000, 2000, 4000, 30000]);
   });
   it('scopes the stored cursor to tenant and user', () => {
-    sessionStorage.setItem('jevtriage:last-event-seq:t-alpha:u1', '9');
+    sessionStorage.setItem('ildongi:last-event-seq:t-alpha:u1', '9');
     setEventCursorScope('t-alpha:u1'); expect(lastEventSeq()).toBe(9);
     setEventCursorScope('t-beta:u1'); expect(lastEventSeq()).toBe(0);
     vi.unstubAllGlobals();

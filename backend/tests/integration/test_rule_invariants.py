@@ -5,12 +5,12 @@ from uuid import uuid4
 import httpx
 import pytest
 
-from jevtriage.auth.core import Principal, enforce_csrf, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.learning.apply import apply_rules, validate_rule
-from jevtriage.main import create_app
-from jevtriage.policy.service import DEFAULT_CONFIG, get_active_snapshot, validate_config
+from ildongi.auth.core import Principal, enforce_csrf, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.learning.apply import apply_rules, validate_rule
+from ildongi.main import create_app
+from ildongi.policy.service import DEFAULT_CONFIG, get_active_snapshot, validate_config
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

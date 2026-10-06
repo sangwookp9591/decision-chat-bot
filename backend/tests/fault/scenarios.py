@@ -18,10 +18,11 @@ import httpx
 import pytest
 from neo4j.exceptions import Neo4jError
 
-from jevtriage.auth.core import hash_password
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import hash_password
+from ildongi.config import get_settings
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.policy.service import bootstrap_policy
 
 pytestmark = pytest.mark.asyncio
 ROOT = Path(__file__).resolve().parents[3]
@@ -87,7 +88,7 @@ class Harness:
             self.logs.pop(name).close()
 
     async def api(self):
-        self.start("api", "uvicorn", "jevtriage.main:app", "--host", "127.0.0.1",
+        self.start("api", "uvicorn", "ildongi.main:app", "--host", "127.0.0.1",
                    "--port", self.port, "--no-access-log")
         async with httpx.AsyncClient(base_url=self.base) as client:
             async def ready():
@@ -98,18 +99,18 @@ class Harness:
             await wait_until(ready, timeout=20)
 
     def worker(self, name="worker", *, fault="", delay="0", lease="2", deadline="30"):
-        return self.start(name, "jevtriage.jobs.worker", "--tenant", TENANT,
+        return self.start(name, "ildongi.jobs.worker", "--tenant", TENANT,
                           "--lease-seconds", lease, "--poll-seconds", "0.1",
                           "--deadline-seconds", deadline, "--max-attempts", "3",
-                          extra_env={"JEV_MOCK_FAULT": fault,
-                                     "JEV_MOCK_DELAY_SECONDS": delay})
+                          extra_env={"AI_MOCK_FAULT": fault,
+                                     "AI_MOCK_DELAY_SECONDS": delay})
 
     async def login(self, role):
         client = httpx.AsyncClient(base_url=self.base, timeout=20)
         response = await client.post("/api/auth/login", json={
             "email": f"{role}@{TENANT}.dev", "password": PASSWORD})
         assert response.status_code == 200, (role, response.status_code, response.text)
-        client.headers["X-CSRF-Token"] = client.cookies["jev_csrf"]
+        client.headers["X-CSRF-Token"] = client.cookies["ildongi_csrf"]
         return client
 
     async def submit(self, client, text="Test request for a monthly CSV dashboard"):
@@ -180,8 +181,8 @@ async def harness():
             password_hash=password_hash)).consume()
     await write_tx(TENANT, create_users)
     h = Harness()
-    h.start("collector", "jevtriage.journal.collector", "--interval", "0.2")
-    h.start("watchdog", "jevtriage.journal.watchdog", "--interval", "0.5",
+    h.start("collector", "ildongi.journal.collector", "--interval", "0.2")
+    h.start("watchdog", "ildongi.journal.watchdog", "--interval", "0.5",
             "--stale-seconds", "2")
     await h.api()
     yield h
@@ -191,12 +192,12 @@ async def harness():
 
 
 @pytest.mark.parametrize("fault", ["timeout", "429", "529", "schema"])
-async def test_jev_faults(harness, fault):
+async def test_ai_faults(harness, fault):
     h = harness
     client = await h.login("requester")
     try:
-        request = await h.submit(client, f"Jev fault {fault} {uuid4().hex}")
-        h.worker(f"worker_jev_{fault}", fault=fault)
+        request = await h.submit(client, f"Decision AI fault {fault} {uuid4().hex}")
+        h.worker(f"worker_ai_{fault}", fault=fault)
         state = await h.terminal(request["request_id"], timeout=35)
         elapsed_duration = state["ended_at"] - state["started_at"]
         elapsed = elapsed_duration.seconds + elapsed_duration.nanoseconds / 1_000_000_000
@@ -206,10 +207,10 @@ async def test_jev_faults(harness, fault):
             "MATCH (a:Assignment {tenant_id:$tenant,request_id:$id}) RETURN count(a) AS n",
             id=request["request_id"])
         assert state["run_status"] == "failed" and assignments[0]["n"] == 0
-        record(f"jev_{fault}", "pass", request_id=request["request_id"], state=state["run_status"],
+        record(f"ai_{fault}", "pass", request_id=request["request_id"], state=state["run_status"],
                assignments=0, mode="mock")
     finally:
-        h.stop(f"worker_jev_{fault}")
+        h.stop(f"worker_ai_{fault}")
         await client.aclose()
 
 
@@ -241,7 +242,7 @@ async def test_parser_and_db_outage(harness):
         assert any(r["kind"] == "request_failed" and r.get("status_code") == 503 for r in rows)
         from datetime import timedelta
 
-        from jevtriage.monitoring.aggregates import events_between, summarize
+        from ildongi.monitoring.aggregates import events_between, summarize
         async def collected():
             collected_rows = events_between(h.data, datetime.now(UTC) - timedelta(minutes=5),
                                             datetime.now(UTC))
@@ -267,7 +268,7 @@ async def test_worker_handoff_and_kill_recovery(harness):
                 return None
             steps = await h.graph(
                 "MATCH (s:RunStep {tenant_id:$tenant,run_id:$run,status:'running'}) "
-                "WHERE s.name='Jev 판단' RETURN count(s) AS n", run=state["run_id"])
+                "WHERE s.name=$step RETURN count(s) AS n", run=state["run_id"], step=f"{get_settings().ai_name} 판단")
             return state if steps[0]["n"] else None
         await wait_until(running_first)
         os.killpg(a.pid, signal.SIGSTOP)
@@ -309,7 +310,7 @@ async def test_worker_handoff_and_kill_recovery(harness):
                 return None
             steps = await h.graph(
                 "MATCH (s:RunStep {tenant_id:$tenant,run_id:$run,status:'running'}) "
-                "WHERE s.name='Jev 판단' RETURN count(s) AS n", run=state["run_id"])
+                "WHERE s.name=$step RETURN count(s) AS n", run=state["run_id"], step=f"{get_settings().ai_name} 판단")
             return state if steps[0]["n"] else None
         await wait_until(running_second)
         h.stop("worker_killed", signal.SIGKILL)
@@ -493,7 +494,7 @@ async def test_observation_outages_and_reconciliation(harness):
                 json.loads(path.read_text()).get("kind") == "collector_stopped"
                 for path in (h.data / "alerts").glob("alert_*.json"))
         await wait_until(collector_alert, timeout=8)
-        h.start("collector", "jevtriage.journal.collector", "--interval", "0.2")
+        h.start("collector", "ildongi.journal.collector", "--interval", "0.2")
         journal_dir = h.data / "journal"
         old_mode = journal_dir.stat().st_mode & 0o777
         journal_dir.chmod(0)
@@ -532,8 +533,8 @@ async def test_observation_outages_and_reconciliation(harness):
         assert duplicate_ids == 0 and count_after >= count_before
         from datetime import timedelta
 
-        from jevtriage.monitoring.aggregates import events_between
-        from jevtriage.monitoring.api import reconcile_commits
+        from ildongi.monitoring.aggregates import events_between
+        from ildongi.monitoring.api import reconcile_commits
         collected = events_between(h.data, datetime.now(UTC) - timedelta(minutes=10),
                                    datetime.now(UTC))
         reconciliation = await reconcile_commits(TENANT, collected)
@@ -545,7 +546,7 @@ async def test_observation_outages_and_reconciliation(harness):
                collected_before=count_before, collected_after=count_after,
                reconciliation=reconciliation)
     finally:
-        h.start("collector", "jevtriage.journal.collector", "--interval", "0.2")
+        h.start("collector", "ildongi.journal.collector", "--interval", "0.2")
         await requester.aclose()
 
 
@@ -608,7 +609,7 @@ async def test_information_wait_and_late_recovery(harness):
             assert metrics["failed_120s"] >= 1 and metrics["late_recoveries"] >= 1
             from datetime import timedelta
 
-            from jevtriage.monitoring.aggregates import events_between, summarize
+            from ildongi.monitoring.aggregates import events_between, summarize
             collected = events_between(h.data, datetime.now(UTC) - timedelta(minutes=10),
                                        datetime.now(UTC))
             intake_attempts = {row["attempt_id"] for row in collected

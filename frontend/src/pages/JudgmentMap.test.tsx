@@ -1,3 +1,4 @@
+import { AI_NAME } from '../lib/brand';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -74,18 +75,18 @@ describe('JudgmentMap list view', () => {
     expect(await screen.findByTestId('jm-summary')).toHaveTextContent('노드 7개 · 연결 0개');
     fireEvent.click(screen.getByRole('button', { name: '목록 보기' }));
     const list = screen.getByTestId('jm-list');
-    expect(within(list).getAllByRole('button', { name: /문서 근거|Jev 반환값|사람 수정/ })).toHaveLength(4);
+    expect(within(list).getAllByRole('button', { name: new RegExp(`문서 근거|${AI_NAME} 반환값|사람 수정`) })).toHaveLength(4);
     expect(within(list).getByText('이 기준에 해당하는 노드가 없습니다.')).toBeInTheDocument();
     expect(mocks.judgment).toHaveBeenCalledWith({ request_id: undefined, run_id: undefined, rule_id: 'R-X-01', config_version: undefined, status: undefined });
   });
   it('localizes internal field and decision codes in ordinary node titles', async () => {
-    mocks.judgment.mockResolvedValue({ ...graph, nodes: [node('n1', 'ModelOutput', 1, 'Jev · lead_org'), node('n2', 'RuleDecision', 3, '검토 결정 · request_info')] });
+    mocks.judgment.mockResolvedValue({ ...graph, nodes: [node('n1', 'ModelOutput', 1, `${AI_NAME} · lead_org`), node('n2', 'RuleDecision', 3, '검토 결정 · request_info')] });
     renderPage();
     fireEvent.click(await screen.findByRole('button', { name: '목록 보기' }));
     const list = screen.getByTestId('jm-list');
-    expect(within(list).getByText('Jev · 담당 조직 · 주관')).toBeInTheDocument();
+    expect(within(list).getByText(`${AI_NAME} · 담당 조직 · 주관`)).toBeInTheDocument();
     expect(within(list).getByText('검토 결정 · 정보 요청')).toBeInTheDocument();
-    expect(within(list).queryByText('Jev · lead_org')).not.toBeInTheDocument();
+    expect(within(list).queryByText(`${AI_NAME} · lead_org`)).not.toBeInTheDocument();
   });
   it('selects with Enter, shows detail counts and the path table, clears with Escape', async () => {
     renderPage();

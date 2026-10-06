@@ -1,7 +1,7 @@
 """E) T21-gates: G05 automatic assignment (live), G06 policy versions + graph, G03 evidence behaviour.
 
-Live Jev only; dedicated tenant `<ACC_TENANT>g`, tenant-limited worker. Labels are never asserted as
-ground truth. Where live Jev does not satisfy an eligibility condition the reasons are recorded as
+Live Decision AI only; dedicated tenant `<ACC_TENANT>g`, tenant-limited worker. Labels are never asserted as
+ground truth. Where live Decision AI does not satisfy an eligibility condition the reasons are recorded as
 they are and the affected part is reported as unverified (pytest skip) - conditions are never
 bypassed and thresholds are never moved outside the server invariants (POLICY.md).
 Collected only by `make test-acceptance` (file prefix `acc_`). Evidence: records.jsonl (`g05_*`,

@@ -1,7 +1,7 @@
 import pytest
 
-from jevtriage.judgment.masking import MaskingSession, mask_for_external
-from jevtriage.policy.service import DEFAULT_CONFIG, validate_config
+from ildongi.judgment.masking import MaskingSession, mask_for_external
+from ildongi.policy.service import DEFAULT_CONFIG, validate_config
 
 
 @pytest.mark.parametrize("value", [

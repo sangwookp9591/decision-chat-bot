@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
- * T21 UI acceptance (explicit JEV_MODE, real Neo4j, dedicated tenant): scenarios 1-8 through the real UI with
+ * T21 UI acceptance (explicit AI_MODE, real Neo4j, dedicated tenant): scenarios 1-8 through the real UI with
  * every displayed value compared with the stored value read through the API. Labels are never asserted
  * as ground truth. Run: make test-acceptance-ui (see Makefile) or the command in playwright.acceptance.config.ts.
  */
@@ -61,7 +61,7 @@ let s1: string, s2: string, s3: string, s4: string, s6: string;
 test('S1 general technical request: UI result equals stored judgment', async () => {
   s1 = await submitViaUi(rq, 'SAP에서 내려받은 매출 CSV를 월별로 집계해 화면에 보여 주세요.');
   await expect(finalResult(rq.page)).toBeVisible({ timeout: 200_000 });
-  await expect(rq.page.locator(`.environment-badge.mode-${process.env.JEV_MODE || 'live'}`).last()).toBeVisible();
+  await expect(rq.page.locator(`.environment-badge.mode-${process.env.AI_MODE || 'live'}`).last()).toBeVisible();
   const api = await (await rq.api.get(`/api/requests/${s1}/judgment`)).json();
   const ui = await uiClassifications(rq.page);
   expect(ui).toEqual(Object.fromEntries(Object.keys(CLASS_LABELS).map((k) => [k, api.classifications[k]])));

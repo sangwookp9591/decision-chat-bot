@@ -1,4 +1,4 @@
-"""Run Jev judgment on one frozen candidate split and save sanitized results."""
+"""Run Decision AI judgment on one frozen candidate split and save sanitized results."""
 from __future__ import annotations
 
 import argparse
@@ -13,9 +13,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
-from jevtriage.config import get_settings
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.pipeline import run_judgment
+from ildongi.config import get_settings
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.pipeline import run_judgment
 from metrics import evaluate
 
 
@@ -41,7 +41,7 @@ def _predict(judgment: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-async def _run_one(row: dict[str, Any], client: JevClient, semaphore: asyncio.Semaphore,
+async def _run_one(row: dict[str, Any], client: AiClient, semaphore: asyncio.Semaphore,
                    retries: int, policy: dict[str, Any]) -> dict[str, Any]:
     async with semaphore:
         for attempt in range(retries + 1):
@@ -70,10 +70,10 @@ async def _run_one(row: dict[str, Any], client: JevClient, semaphore: asyncio.Se
 
 async def run(split: str, max_samples: int, concurrency: int, retries: int) -> Path:
     settings = get_settings()
-    if settings.jev_mode != "live":
-        raise RuntimeError("JEV_MODE must be live")
-    if not settings.jev_api_key.get_secret_value():
-        raise RuntimeError("JEV_API_KEY is not configured")
+    if settings.ai_mode != "live":
+        raise RuntimeError("AI_MODE must be live")
+    if not settings.ai_api_key.get_secret_value():
+        raise RuntimeError("AI_API_KEY is not configured")
     manifest_path = ROOT / "eval/candidates/manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     split_info = manifest["splits"][split]
@@ -88,7 +88,7 @@ async def run(split: str, max_samples: int, concurrency: int, retries: int) -> P
                      if r.get("label_status") == "confirmed"}
         rows = [confirmed.get(r["id"], r) for r in rows]
     rows = rows[:max_samples]
-    client = JevClient(settings.jev_api_key.get_secret_value(), mode="live", max_retries=2)
+    client = AiClient(settings.ai_api_key.get_secret_value(), mode="live", max_retries=2)
     policy = {"max_evidence_units": 1, "max_evidence_chars": 2000,
               "evidence_noul_threshold": 0.6, "catalog_noul_threshold": 0.5,
               "auto_assign_enabled": True, "input_confirmed": True}

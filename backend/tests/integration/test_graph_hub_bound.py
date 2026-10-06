@@ -5,9 +5,9 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.graph import query
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.graph import query
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

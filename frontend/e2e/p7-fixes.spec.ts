@@ -1,8 +1,8 @@
 import { expect, request, test, type Page } from '@playwright/test';
 
-// P7 defects F2–F6 (artifacts/review/browser-retest/VERIFY-P7.md). Live scenarios against a real API + worker (JEV_MODE=live).
+// P7 defects F2–F6 (artifacts/review/browser-retest/VERIFY-P7.md). Live scenarios against a real API + worker (AI_MODE=live).
 const tenant = process.env.E2E_TENANT || 't-alpha';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 async function login(page: Page, role: string) {
   const response = await page.request.post('/api/auth/login', { data: { email: `${role}@${tenant}.dev`, password } });
   expect(response.ok(), `login ${role}: ${response.status()}`).toBeTruthy();
@@ -106,7 +106,7 @@ for (const sentence of f5Sentences) {
     await page.waitForTimeout(500);
     const { prov, final, uncertain } = await page.evaluate(() => { const w = window as unknown as { __prov: Record<string, number> | null; __final: Record<string, number> | null }; return { prov: w.__prov, final: w.__final, uncertain: document.querySelectorAll('.uncertain-result').length }; });
     console.log('UX7_F5', sentence.name, JSON.stringify({ prov, final, uncertain }));
-    if (process.env.JEV_MODE === 'mock') {
+    if (process.env.AI_MODE === 'mock') {
       expect(uncertain, `fixture must exercise the ${sentence.name} result layout`).toBe(sentence.name === 'uncertain' ? 1 : 0);
     }
     expect(prov, 'provisional layout captured').not.toBeNull(); expect(final, 'final layout captured').not.toBeNull();

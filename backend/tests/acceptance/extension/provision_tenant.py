@@ -1,16 +1,16 @@
 """Create a dedicated tenant (orgs, six role accounts, default policy) for the T38 extension scenario.
 
 Usage: .venv/bin/python tests/acceptance/extension/provision_tenant.py <tenant-id>
-Accounts: <role>@<tenant>.dev with the local development password (never the Jev key).
+Accounts: <role>@<tenant>.dev with the local development password (never the Decision AI key).
 """
 import asyncio
 import os
 import sys
 
-from jevtriage.auth.core import hash_password
-from jevtriage.db.driver import close_driver, get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import hash_password
+from ildongi.db.driver import close_driver, get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.policy.service import bootstrap_policy
 
 ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin")
 
@@ -38,7 +38,7 @@ async def provision(tenant: str, password: str) -> None:
 
 if __name__ == "__main__":
     try:
-        asyncio.run(provision(sys.argv[1], os.getenv("JEVTRIAGE_DEV_PASSWORD", "dev-only-change-me")))
+        asyncio.run(provision(sys.argv[1], os.getenv("ILDONGI_DEV_PASSWORD", "dev-only-change-me")))
         print("provisioned", sys.argv[1])
     finally:
         asyncio.run(close_driver())

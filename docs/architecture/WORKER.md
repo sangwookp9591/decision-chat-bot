@@ -4,7 +4,7 @@ T08 구현 메모, 2026-10-03.
 
 ## 실행
 
-`make up`으로 Neo4j를 켠 뒤 `make worker`를 실행한다. 직접 실행할 때는 저장소 루트에서 `cd backend && .venv/bin/python -m jevtriage.jobs.worker`를 사용한다. `--concurrency`, `--lease-seconds`, `--poll-seconds`, `--deadline-seconds`, `--max-attempts`로 처리 수·lease·폴링·실행 한도를 지정한다. 기본값은 각각 2, 15초, 0.5초, 120초, 3회다. SIGINT/SIGTERM을 받으면 새 Job을 받지 않고 진행 중 핸들러가 끝날 때까지 기다린다.
+`make up`으로 Neo4j를 켠 뒤 `make worker`를 실행한다. 직접 실행할 때는 저장소 루트에서 `cd backend && .venv/bin/python -m ildongi.jobs.worker`를 사용한다. `--concurrency`, `--lease-seconds`, `--poll-seconds`, `--deadline-seconds`, `--max-attempts`로 처리 수·lease·폴링·실행 한도를 지정한다. 기본값은 각각 2, 15초, 0.5초, 120초, 3회다. SIGINT/SIGTERM을 받으면 새 Job을 받지 않고 진행 중 핸들러가 끝날 때까지 기다린다.
 
 worker는 `pending` Job과 lease가 만료된 `running` Job을 단일 조건부 `claim_next` 쓰기 질의로 확보한다. 소유권 확인, 단계 기록, 실행 종료는 쓰기 트랜잭션에서 처리한다. heartbeat가 실패하면 핸들러 태스크에 취소 신호를 보내고 이후 정식 커밋을 막는다. 외부 호출은 중복될 수 있으므로 핸들러는 결과 저장 전에 `ctx.commit`을 사용해야 한다.
 
@@ -26,13 +26,13 @@ Run의 `versions_json`은 첫 시도에 고정된다. 기존 Run의 policy/confi
 Worker processes can be limited to selected tenants for isolated tests and E2E runs:
 
 ```sh
-python -m jevtriage.jobs.worker --tenant t-alpha --tenant t-beta
+python -m ildongi.jobs.worker --tenant t-alpha --tenant t-beta
 ```
 
 The repeatable `--tenant` option takes precedence over `WORKER_TENANTS`. Set the environment variable to a comma-separated list when the CLI is not convenient:
 
 ```sh
-WORKER_TENANTS=t-alpha,t-beta python -m jevtriage.jobs.worker
+WORKER_TENANTS=t-alpha,t-beta python -m ildongi.jobs.worker
 ```
 
 When neither is set, a worker retains the default cross-tenant discovery behavior. Give each parallel test/E2E worker a distinct tenant allowlist so it cannot lease another run's Jobs.

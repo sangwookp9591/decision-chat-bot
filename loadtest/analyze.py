@@ -10,9 +10,10 @@ from contextlib import closing
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from jevtriage.db.tx import read_tx
-from jevtriage.journal.collector import collect_once, connect
-from jevtriage.monitoring.aggregates import (
+from ildongi.config import get_settings
+from ildongi.db.tx import read_tx
+from ildongi.journal.collector import collect_once, connect
+from ildongi.monitoring.aggregates import (
     collection_status,
     percentile,
     summarize,
@@ -69,15 +70,15 @@ async def run(output: Path) -> None:
             entry = attempt.get("usage") or {}
             for key in ("attempts", "input_tokens", "output_tokens"):
                 usage[key] += int(entry.get(key) or 0)
-            if attempt.get("error_class") == "JevRateLimited":
+            if attempt.get("error_class") in {"AiRateLimited", "JevRateLimited"}:
                 usage["rate_limited_final_errors"] += 1
-            if str(attempt.get("error_class") or "").startswith(("TypeSafe", "Jev")):
+            if str(attempt.get("error_class") or "").startswith(("TypeSafe", "Ai", "Jev")):
                 usage["failed_external_attempts"] += 1
         if run["status"] in {"judgment_saved", "failed", "cancelled"}:
             trace_total += 1
             steps = [s for s in run["steps"] if s["name"]]
             versions = json.loads(run.get("versions") or "{}")
-            expected = {"입력 정리", "Jev 판단", "근거 연결", "업무 분해", "규칙 적용", "자동 배정 조건 검사", "결과 저장"}
+            expected = {"입력 정리", f"{get_settings().ai_name} 판단", "근거 연결", "업무 분해", "규칙 적용", "자동 배정 조건 검사", "결과 저장"}
             has_terminal = (run["status"] != "judgment_saved" or expected.issubset({s["name"] for s in steps}))
             if (steps and has_terminal and versions.get("model") and
                     all(s["kind"] and s["status"] in {"succeeded", "failed", "skipped", "waiting_human"}
@@ -124,9 +125,9 @@ async def run(output: Path) -> None:
               "warmup_estimate": json.loads((output / "warmup_estimate.json").read_text()) if (output / "warmup_estimate.json").exists() else None,
               "stop_reason": run_status.get("stop_reason")}
     (output / "results.json").write_text(json.dumps(result, ensure_ascii=False, indent=2, default=str))
-    manifest["measured_jev_calls_reported_by_successful_runs"] = usage["attempts"]
+    manifest["measured_ai_calls_reported_by_successful_runs"] = usage["attempts"]
     manifest["failed_external_attempts"] = usage["failed_external_attempts"]
-    manifest["jev_calls_inferred_from_run_attempts"] = usage["attempts"] + usage["failed_external_attempts"]
+    manifest["ai_calls_inferred_from_run_attempts"] = usage["attempts"] + usage["failed_external_attempts"]
     manifest["input_tokens_recorded"] = usage["input_tokens"]
     manifest["output_tokens_recorded"] = usage["output_tokens"]
     manifest["run_versions"] = sorted({run["versions"] for run in runs if run.get("versions")})
@@ -144,7 +145,7 @@ async def run(output: Path) -> None:
     lines.extend(["", "## 분모와 예산", "",
                   f"접수·조회 유효 호출 {availability['valid_calls']}건, 실패 {availability['failed_calls']}건, 미확정 {availability['unknown_validity']}건.",
                   f"최초 적격 요청 {judgment['eligible_requests']}건, 120초 내 저장 {judgment['within_120s']}건, 120초 실패 {judgment['failed_120s']}건.",
-                  f"Jev 호출 추정 {usage['attempts'] + usage['failed_external_attempts']}회(성공 실행 기록 {usage['attempts']}회 + 외부 오류 종료 {usage['failed_external_attempts']}회), 입력 {usage['input_tokens']}토큰, 출력 {usage['output_tokens']}토큰. 실패 호출의 usage와 복구된 429의 개별 상태는 제품 기록에서 확인할 수 없다.",
+                  f"Decision AI 호출 추정 {usage['attempts'] + usage['failed_external_attempts']}회(성공 실행 기록 {usage['attempts']}회 + 외부 오류 종료 {usage['failed_external_attempts']}회), 입력 {usage['input_tokens']}토큰, 출력 {usage['output_tokens']}토큰. 실패 호출의 usage와 복구된 429의 개별 상태는 제품 기록에서 확인할 수 없다.",
                   f"중단 사유: {result['stop_reason'] or '없음'}."])
     (output / "REPORT.md").write_text("\n".join(lines) + "\n")
 

@@ -2,7 +2,7 @@
 
 X38_RUN=1 X38_OUT=<artifacts/validation/<ts>/extension> .venv/bin/pytest tests/acceptance/extension -q
 Fails when any X01–X09 check in the ledger is a final failure (a failure replaced by a recorded retest does not count)
-or when a gate has no passing check. The scenario itself is driven by scenario.py (live Jev, real Neo4j, browser checks).
+or when a gate has no passing check. The scenario itself is driven by scenario.py (live Decision AI, real Neo4j, browser checks).
 """
 import json
 import os

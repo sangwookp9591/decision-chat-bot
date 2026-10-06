@@ -9,13 +9,13 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import get_request_meta
-from jevtriage.main import create_app
-from jevtriage.review.service import ReviewError, decide
-from jevtriage.tasks.service import TaskError, transition
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import get_request_meta
+from ildongi.main import create_app
+from ildongi.review.service import ReviewError, decide
+from ildongi.tasks.service import TaskError, transition
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -343,7 +343,7 @@ async def test_api_scope_and_detail(tenant):
 
 
 async def test_decision_api_requires_csrf_and_reviewer_session(tenant):
-    from jevtriage.auth.core import create_session, session_principal
+    from ildongi.auth.core import create_session, session_principal
     _principal, review_id, command = await sample(tenant)
     async def user(tx):
         await (await tx.run(
@@ -358,8 +358,8 @@ async def test_decision_api_requires_csrf_and_reviewer_session(tenant):
     app = create_app()
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),
                                 base_url="http://test") as client:
-        client.cookies.set("jev_session", token)
-        client.cookies.set("jev_csrf", csrf)
+        client.cookies.set("ildongi_session", token)
+        client.cookies.set("ildongi_csrf", csrf)
         route = f"/api/reviews/{review_id}/decision"
         denied = await client.post(route, headers={"Idempotency-Key":"csrf-check"}, json=command)
         assert denied.status_code == 403
@@ -373,7 +373,7 @@ async def test_decision_api_requires_csrf_and_reviewer_session(tenant):
 
 
 async def test_auto_path_rechecks_mandatory_review_and_infeasibility(tenant):
-    from jevtriage.review.service import assign_in_tx
+    from ildongi.review.service import assign_in_tx
     _principal, _review_id, command = await sample(tenant)
     async def attempt(tx):
         return await assign_in_tx(tx, tenant, command["request_id"], command["run_id"],
@@ -405,8 +405,8 @@ async def test_auto_path_rechecks_mandatory_review_and_infeasibility(tenant):
 
 
 async def test_auto_path_assigns_only_after_full_recheck(tenant):
-    from jevtriage.policy.service import DEFAULT_CONFIG
-    from jevtriage.review.service import assign_in_tx
+    from ildongi.policy.service import DEFAULT_CONFIG
+    from ildongi.review.service import assign_in_tx
     _principal, _review_id, command = await sample(tenant)
     async def eligible_nodes(tx):
         config = {**DEFAULT_CONFIG, "auto_assign":True}

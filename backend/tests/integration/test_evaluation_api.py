@@ -3,16 +3,16 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal, enforce_csrf, get_principal
-from jevtriage.db.driver import get_driver
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal, enforce_csrf, get_principal
+from ildongi.db.driver import get_driver
+from ildongi.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 FIELDS = {"ai_need": "필요", "feasibility": "가능", "urgency": "일반", "team_set": ["AI팀"], "risk_areas": []}
 
 
 async def test_label_edit_defer_resume_disagreement_and_consensus():
-    from jevtriage.evaluation.service import _rows
+    from ildongi.evaluation.service import _rows
     tenant = f"eval_{uuid4().hex}"
     sample = _rows("tuning")[0]["id"]
     app = create_app()
@@ -60,7 +60,7 @@ async def test_label_edit_defer_resume_disagreement_and_consensus():
 
 
 async def test_invalid_label_returns_field_specific_422():
-    from jevtriage.evaluation.service import _rows
+    from ildongi.evaluation.service import _rows
 
     tenant = f"eval_{uuid4().hex}"
     sample = _rows("tuning")[0]["id"]

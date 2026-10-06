@@ -7,16 +7,16 @@ import httpx
 import pytest
 import pytest_asyncio
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.learning.shadow import validate_rules
-from jevtriage.main import create_app
-from jevtriage.policy.service import DEFAULT_CONFIG, bootstrap_policy
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.service import execute_judgment
+from ildongi.learning.shadow import validate_rules
+from ildongi.main import create_app
+from ildongi.policy.service import DEFAULT_CONFIG, bootstrap_policy
 from tests.integration.test_review_assignment import sample
 
 pytestmark = pytest.mark.asyncio(loop_scope='session')
@@ -45,7 +45,7 @@ def samples():
             '4111 1111 1111 1111', '_'.join(('sk', 'test', 'QACanary'+'0123456789'*3))]
 
 
-class CaptureClient(JevClient):
+class CaptureClient(AiClient):
     def __init__(self):
         super().__init__('unused', mode='mock')
         self.payloads = []

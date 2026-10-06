@@ -1,4 +1,4 @@
-# Jev 기반 업무 분류 판단 플랫폼 개발 문서
+# Decision AI 기반 업무 분류 판단 플랫폼 개발 문서
 
 웹 채팅으로 접수한 업무 요청을 분석하고, AI 적용 필요성·개발 가능성·긴급도·담당 조직을 판단하여 업무를 나누고 추적하는 플랫폼의 개발 의뢰서다. 결과뿐 아니라 실제 처리 흐름과 사람의 개입, 성공과 실패를 눈으로 확인할 수 있어야 한다.
 
@@ -11,7 +11,7 @@
 | [00_AGENT_PROMPT.md](00_AGENT_PROMPT.md) | 개발 에이전트에게 처음 전달할 실행 프롬프트 |
 | [01_GOALS_REQUIREMENTS.md](01_GOALS_REQUIREMENTS.md) | 제품 목표, 핵심 판단, 범위 |
 | [02_USER_EXPERIENCE.md](02_USER_EXPERIENCE.md) | 접수부터 검토와 배정까지의 사용자 경험 |
-| [03_TECH_DIRECTION.md](03_TECH_DIRECTION.md) | FastAPI, Jev, Dynamic Config, Neo4j, SSE, WebMCP의 역할 |
+| [03_TECH_DIRECTION.md](03_TECH_DIRECTION.md) | FastAPI, Decision AI, Dynamic Config, Neo4j, SSE, WebMCP의 역할 |
 | [04_OBSERVATORY.md](04_OBSERVATORY.md) | Flow, Topology, Trace Playback, 성공과 실패 관찰 |
 | [05_SLO.md](05_SLO.md) | 측정 정의, 초기 목표, 부하 시험, 운영 판정 |
 | [06_ACCEPTANCE.md](06_ACCEPTANCE.md) | 최종 완료 조건과 필수 검증 시나리오 |

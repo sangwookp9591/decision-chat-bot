@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdir } from 'node:fs/promises';
 
 const tenant = `${process.env.E2E_TENANT || 't-rem-ui'}-rem-${process.pid}`;
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 let requestId: string;
 test.beforeAll(() => {
   const output = execFileSync('../backend/.venv/bin/python', ['e2e/rem-ui/seed.py', tenant], { encoding: 'utf8' });

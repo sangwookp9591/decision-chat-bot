@@ -33,7 +33,7 @@ const judgment: Judgment = {
 
 const judgmentFixture = () => judgment;
 describe('judgment result', () => {
-  it('shows uncertainty as a separate scale value and labels Jev signals distinctly', () => {
+  it('shows uncertainty as a separate scale value and labels Decision AI signals distinctly', () => {
     const { container } = render(<Result judgment={judgment} runs={null} onEvidence={() => undefined} />);
     expect(container.querySelector('.uncertain-result')?.textContent).toContain('정보 부족');
     expect(screen.getByText('판단 보류')).toBeTruthy();

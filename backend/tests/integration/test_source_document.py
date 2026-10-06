@@ -4,9 +4,9 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx
 from tests.integration.test_ingest_api import _http_client
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")

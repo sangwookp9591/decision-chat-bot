@@ -8,7 +8,7 @@ vi.mock('../api/policy', () => ({ policyApi: mocks }));
 let emit: (event: { type: string; payload?: Record<string, unknown> }) => void = () => undefined;
 vi.mock('../state/events', () => ({ useEventStream: (_f: unknown, _s: unknown, onEvent: typeof emit) => { emit = onEvent; return { status: 'connected', lastSeq: 0 }; }, EventConnectionStatus: () => <span>실시간 연결됨</span> }));
 const config = { schema_version: 'policy-schema-v1', auto_assign: false, choice_confidence_thresholds: {}, noul_probability_thresholds: {}, risk_clear_max: .2, reviewer_groups: {}, limits: {}, evidence_noul_threshold: .6, catalog_noul_threshold: .6, feature_flags: {}, rules: [] };
-beforeEach(() => { cleanup(); vi.clearAllMocks(); sessionStorage.setItem('jevtriage:roles', JSON.stringify(['policy_editor'])); mocks.active.mockResolvedValue({version: 2, config}); mocks.versions.mockResolvedValue({versions:[{version:2,status:'active',reason:'current',created_by:'editor',created_at:'now'}]}); });
+beforeEach(() => { cleanup(); vi.clearAllMocks(); sessionStorage.setItem('ildongi:roles', JSON.stringify(['policy_editor'])); mocks.active.mockResolvedValue({version: 2, config}); mocks.versions.mockResolvedValue({versions:[{version:2,status:'active',reason:'current',created_by:'editor',created_at:'now'}]}); });
 afterEach(cleanup);
 
 describe('Policy page', () => {

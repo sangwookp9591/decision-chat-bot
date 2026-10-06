@@ -14,10 +14,10 @@ while (($#)); do
   esac
 done
 if [[ -z "$BACKUP_DIR" || -z "$CONTAINER" || -z "$PROJECT" || -z "$PORT" || -z "$NEO4J_VOLUME" ]]; then
-  echo "Usage: backup.sh --backup-dir DIR --container NAME --project jevtriage-backup --port 7689 --neo4j-volume DIR [--data-dir DIR]" >&2; exit 2
+  echo "Usage: backup.sh --backup-dir DIR --container NAME --project ildongi-backup --port 7689 --neo4j-volume DIR [--data-dir DIR]" >&2; exit 2
 fi
-if [[ "$PROJECT" != jevtriage-backup || "$PORT" != 7689 || "$CONTAINER" == decision-chat-bot-neo4j-1 ]]; then
-  echo "Refusing non-dedicated backup target; require project jevtriage-backup, port 7689, and its own container." >&2; exit 2
+if [[ "$PROJECT" != ildongi-backup || "$PORT" != 7689 || "$CONTAINER" == decision-chat-bot-neo4j-1 ]]; then
+  echo "Refusing non-dedicated backup target; require project ildongi-backup, port 7689, and its own container." >&2; exit 2
 fi
 if ! docker inspect "$CONTAINER" >/dev/null 2>&1; then echo "Dedicated container not found: $CONTAINER" >&2; exit 2; fi
 actual_project="$(docker inspect --format '{{ index .Config.Labels "com.docker.compose.project" }}' "$CONTAINER")"

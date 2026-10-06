@@ -7,7 +7,7 @@ mkdir -p "$run_dir"
 export T25_NEO4J_DIR="$run_dir/neo4j"
 export NEO4J_URI="bolt://localhost:${T25_NEO4J_BOLT_PORT:-7690}"
 export DATA_DIR="$run_dir/data"
-export JEV_MODE=live
+export AI_MODE=live
 export PYTHONPATH="$repo_dir/backend"
 mkdir -p "$DATA_DIR"
 api_pid= worker_pid= collector_pid=
@@ -21,7 +21,7 @@ cleanup() {
   for pid in "$api_pid" "$worker_pid" "$collector_pid"; do
     if [[ -n "$pid" ]]; then wait "$pid" 2>/dev/null || true; fi
   done
-  docker compose -p "${T25_COMPOSE_PROJECT:-jevtriage-t25}" -f "$repo_dir/loadtest/compose.yml" down >/dev/null 2>&1 || true
+  docker compose -p "${T25_COMPOSE_PROJECT:-ildongi-t25}" -f "$repo_dir/loadtest/compose.yml" down >/dev/null 2>&1 || true
   # Raw journal, collector metrics, timings and Run snapshots are retained above.
   "$repo_dir/backend/.venv/bin/python" - <<'PY'
 import os
@@ -35,11 +35,11 @@ for target in (Path(os.environ["T25_NEO4J_DIR"]), Path(os.environ["DATA_DIR"]) /
 PY
 }
 trap cleanup EXIT INT TERM
-docker compose -p "${T25_COMPOSE_PROJECT:-jevtriage-t25}" -f "$repo_dir/loadtest/compose.yml" up -d --wait
+docker compose -p "${T25_COMPOSE_PROJECT:-ildongi-t25}" -f "$repo_dir/loadtest/compose.yml" up -d --wait
 (cd "$repo_dir" && backend/.venv/bin/python scripts/bootstrap_dev.py) >"$run_dir/bootstrap.log" 2>&1
 (cd "$repo_dir/backend" && .venv/bin/python "$repo_dir/loadtest/serve.py") >"$run_dir/api.log" 2>&1 & api_pid=$!
-(cd "$repo_dir/backend" && .venv/bin/python -m jevtriage.jobs.worker --tenant t-alpha --concurrency 10) >"$run_dir/worker.log" 2>&1 & worker_pid=$!
-(cd "$repo_dir/backend" && .venv/bin/python -m jevtriage.journal.collector) >"$run_dir/collector.log" 2>&1 & collector_pid=$!
+(cd "$repo_dir/backend" && .venv/bin/python -m ildongi.jobs.worker --tenant t-alpha --concurrency 10) >"$run_dir/worker.log" 2>&1 & worker_pid=$!
+(cd "$repo_dir/backend" && .venv/bin/python -m ildongi.journal.collector) >"$run_dir/collector.log" 2>&1 & collector_pid=$!
 for _ in $(seq 1 60); do
   if curl -fsS "http://127.0.0.1:${T25_API_PORT:-8125}/api/ready" >/dev/null 2>&1; then break; fi
   sleep 1

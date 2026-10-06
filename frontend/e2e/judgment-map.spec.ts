@@ -1,17 +1,17 @@
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 type Graph = { nodes: Array<{ id: string; kind: string; layer: number }>; edges: unknown[]; node_count: number; edge_count: number; layers: Array<{ layer: number; count: number }> };
 
 async function login(api: APIRequestContext, role: string) {
   const response = await api.post('/api/auth/login', { data: { email: `${role}@${process.env.E2E_TENANT || 't-alpha'}.dev`, password } });
   expect(response.ok(), `login ${role} failed: ${response.status()}`).toBeTruthy();
   const state = await api.storageState();
-  return state.cookies.find((cookie) => cookie.name === 'jev_csrf')?.value || '';
+  return state.cookies.find((cookie) => cookie.name === 'ildongi_csrf')?.value || '';
 }
 
-// One real judgment (live Jev) and one reviewer correction are created through the public API.
-// Live Jev decides whether a span is cited, so up to three requests are tried until one cites evidence.
+// One real judgment (live Decision AI) and one reviewer correction are created through the public API.
+// Live Decision AI decides whether a span is cited, so up to three requests are tried until one cites evidence.
 async function seedJudgmentWithCorrection(page: Page) {
   const api = page.request;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
@@ -53,7 +53,7 @@ async function seedJudgmentWithCorrection(page: Page) {
 
 test('real judgment and correction render as the stored graph, traceable from step to evidence', async ({ page }) => {
   test.setTimeout(720_000);
-  // E2E_REQUEST_ID reuses a request created by an earlier run (skips the live Jev call).
+  // E2E_REQUEST_ID reuses a request created by an earlier run (skips the live Decision AI call).
   const requestId = process.env.E2E_REQUEST_ID || await seedJudgmentWithCorrection(page);
   if (process.env.E2E_REQUEST_ID) await login(page.request, 'reviewer');
   const graph = await (await page.request.get(`/api/graph/judgment?request_id=${requestId}`)).json() as Graph;

@@ -5,11 +5,11 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.learning.rules import mark_validated
-from jevtriage.learning.shadow import rule_validations, validate_rules, validation_detail
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.learning.rules import mark_validated
+from ildongi.learning.shadow import rule_validations, validate_rules, validation_detail
+from ildongi.policy.service import bootstrap_policy
 
 pytestmark=pytest.mark.asyncio(loop_scope="session")
 
@@ -63,7 +63,7 @@ async def test_human_truth_and_validation_gate():
 
 
 async def test_context_call_limit_records_failure():
-    from jevtriage.judgment.jev_client import JevClient
+    from ildongi.judgment.ai_client import AiClient
     tenant=f"shadow_{uuid4().hex}"
     revision=f"rev_{uuid4().hex}"
     await apply_schema(); await bootstrap_policy(tenant)
@@ -75,13 +75,13 @@ async def test_context_call_limit_records_failure():
         await (await tx.run("CREATE (:InputRevision {tenant_id:$tenant,id:$revision,request_id:'req_1',text:'업무 요청'})",tenant=tenant,revision=revision)).consume()
     await write_tx(tenant,seed)
     start=datetime.now(UTC)-timedelta(minutes=1); end=datetime.now(UTC)+timedelta(minutes=1)
-    result=await validate_rules(tenant,"tester",rid,1,start,end,max_calls=1,client=JevClient(api_key="unused",mode="mock"))
+    result=await validate_rules(tenant,"tester",rid,1,start,end,max_calls=1,client=AiClient(api_key="unused",mode="mock"))
     assert result["calls"]==1 and result["max_calls"]==1 and result["status"]=="failed"
     assert result["failures"][0]["reason"]=="shadow_max_calls_exceeded"
-    from jevtriage.policy.service import PolicyError
+    from ildongi.policy.service import PolicyError
     with pytest.raises(PolicyError, match="부작용 0건인 완료 검증이 필요합니다"):
         await mark_validated(tenant,"tester",rid,1,result["id"],"실패 검증은 불가",f"key_{uuid4().hex}")
-    completed=await validate_rules(tenant,"tester",rid,1,start,end,max_calls=20,client=JevClient(api_key="unused",mode="mock"))
+    completed=await validate_rules(tenant,"tester",rid,1,start,end,max_calls=20,client=AiClient(api_key="unused",mode="mock"))
     assert completed["status"]=="completed" and completed["calls"]==6
     assert completed["usage"]=={"input_tokens":0,"output_tokens":0}
     async def cleanup(tx): await (await tx.run("MATCH (n {tenant_id:$tenant}) DETACH DELETE n",tenant=tenant)).consume()
@@ -89,8 +89,8 @@ async def test_context_call_limit_records_failure():
 
 
 async def test_protected_snapshot_detects_in_place_changes_and_blocks_validation():
-    from jevtriage.learning.shadow import _protected_snapshot
-    from jevtriage.policy.service import PolicyError
+    from ildongi.learning.shadow import _protected_snapshot
+    from ildongi.policy.service import PolicyError
     tenant=f"shadow_{uuid4().hex}"
     await apply_schema(); await bootstrap_policy(tenant)
     rid="R-AI_NEED-96"

@@ -1,7 +1,7 @@
-"""Raw JevClient is also a safe transport for future callers."""
+"""Raw AiClient is also a safe transport for future callers."""
 import json
 
-from jevtriage.judgment.jev_client import JevClient
+from ildongi.judgment.ai_client import AiClient
 
 
 def test_direct_transport_masks_state_and_question_text(monkeypatch):
@@ -9,7 +9,7 @@ def test_direct_transport_masks_state_and_question_text(monkeypatch):
               '4111 1111 1111 1111', '_'.join(('sk', 'test', 'QACanary'+'0123456789'*3))]
     text = '\n'.join(values)
     sent = []
-    client = JevClient('unused', mode='live')
+    client = AiClient('unused', mode='live')
     def invoke(state, questions, timeout):
         sent.append(json.dumps([state, questions]))
         return {'model': client.model, 'answers': {'q': {'type': 'noul', 'noul': 0.5}},
@@ -26,8 +26,8 @@ def test_direct_transport_masks_state_and_question_text(monkeypatch):
 def test_sdk_transport_is_confined_to_guarded_client():
     import ast
     from pathlib import Path
-    package = Path(__file__).resolve().parents[2] / 'jevtriage'
-    allowed = package / 'judgment' / 'jev_client.py'
+    package = Path(__file__).resolve().parents[2] / 'ildongi'
+    allowed = package / 'judgment' / 'ai_client.py'
     for path in package.rglob('*.py'):
         for node in ast.walk(ast.parse(path.read_text())):
             if isinstance(node, ast.ImportFrom) and (node.module or '').startswith('typesafe_sdk'):

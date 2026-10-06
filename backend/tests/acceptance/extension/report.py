@@ -67,7 +67,7 @@ def main() -> None:
     w("# T38-R 확장 연결 시나리오 재실행 — X01–X10 최종 판정\n")
     w("이전 실행: `artifacts/validation/20261003T093618Z/extension/scenario-evidence.md`(X01–X10 통과, 한계 F3–F9). 이 보고는 FIX-S/O/C/E/SSE/R 이후 최신 코드로 새 tenant에서 다시 실행한 결과다(이전 증거는 덮어쓰지 않음).\n")
     w(f"- 실행 tenant: `{os.environ.get('X38_TENANT', '')}` (전용, worker는 `--tenant` 제한), 결과 디렉터리: `{OUT}`")
-    w("- Jev: `JEV_MODE=live` (실제 모델 호출, 모든 판단 `mode=live`). 저장소: 공유 Neo4j(정지하지 않음). 데이터 디렉터리(journal/원본 파일)는 이 작업 전용 경로.")
+    w("- Decision AI: `AI_MODE=live` (실제 모델 호출, 모든 판단 `mode=live`). 저장소: 공유 Neo4j(정지하지 않음). 데이터 디렉터리(journal/원본 파일)는 이 작업 전용 경로.")
     w("- 이 보고는 **확장 게이트 X01–X10**만 판정한다. 기존 게이트(G01–G12)는 4절 'X10 회귀'의 '기존 게이트 별도 보고' 표에서 재실행 결과로만 다루며, G 판정 자체는 T27 소관이다.\n")
     w("## 1. 판정 요약\n")
     w("| 게이트 | 판정 | 근거 요약 |\n| --- | --- | --- |")
@@ -138,7 +138,7 @@ def main() -> None:
     w("\n## 5. 발견 사항\n")
     w(decisions.get("findings_markdown", ""))
     w("\n## 6. 재현 방법\n")
-    w("```sh\nmake up\ncd backend\n.venv/bin/python tests/acceptance/extension/provision_tenant.py <tenant>\nWORKER: .venv/bin/python -m jevtriage.jobs.worker --tenant <tenant>   # API: uvicorn jevtriage.main:app --port <port>\n"
+    w("```sh\nmake up\ncd backend\n.venv/bin/python tests/acceptance/extension/provision_tenant.py <tenant>\nWORKER: .venv/bin/python -m ildongi.jobs.worker --tenant <tenant>   # API: uvicorn ildongi.main:app --port <port>\n"
       "export X38_OUT=<artifacts/validation/<ts>/extension> X38_TENANT=<tenant> X38_API=http://127.0.0.1:<port>\n"
       ".venv/bin/python -m tests.acceptance.extension.scenario_r seed corrections rules apply invariants trace_detail insufficient chain_lead lead_retest chain_evidence evidence_layer graph f7 insufficient_ui_setup\n"
       "(export ui1/r1 → playwright ui1 + extension-r r1 → insufficient_ui_verify reject lifecycle inflight shadow_monitoring → export ui2 → ui2 → snapshot pre → API/worker/collector 재시작 → snapshot post → diff post_restart → snapshot post2 diff_new_traffic → export ui3 → ui3(X38_SNAP=post2)+r3 → f6 playback dbsummary)\n"

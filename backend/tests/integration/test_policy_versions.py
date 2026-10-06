@@ -4,8 +4,8 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.db.driver import get_driver
-from jevtriage.policy.service import (
+from ildongi.db.driver import get_driver
+from ildongi.policy.service import (
     PolicyError,
     bootstrap_policy,
     get_active_snapshot,
@@ -28,12 +28,12 @@ async def tenant():
 
 
 def config(**updates):
-    from jevtriage.policy.service import DEFAULT_CONFIG
+    from ildongi.policy.service import DEFAULT_CONFIG
     return {**DEFAULT_CONFIG, **updates}
 
 
 async def test_learning_config_defaults_and_bounds():
-    from jevtriage.policy.service import DEFAULT_CONFIG, validate_config
+    from ildongi.policy.service import DEFAULT_CONFIG, validate_config
     assert DEFAULT_CONFIG["learning"] == {
         "min_support": 3, "min_effect_sample": 20,
         "shadow_max_calls": 20, "effect_window_days": 7,
@@ -64,7 +64,7 @@ async def test_publish_diff_audit_snapshot_and_rollback(tenant):
     async def audit(tx):
         row = await (await tx.run("MATCH (a:Audit {tenant_id:$tenant, action:'policy.publish'}) RETURN count(a) AS n", tenant=tenant)).single(strict=True)
         return row["n"]
-    from jevtriage.db.tx import read_tx
+    from ildongi.db.tx import read_tx
     assert await read_tx(tenant, audit) == 2
 
 
@@ -75,8 +75,8 @@ async def test_reject_unsafe_publish_and_rollback(tenant):
     # Historical unsafe content is revalidated before rollback publication.
     import json
 
-    from jevtriage.db.tx import write_tx
-    from jevtriage.policy.service import DEFAULT_CONFIG
+    from ildongi.db.tx import write_tx
+    from ildongi.policy.service import DEFAULT_CONFIG
     unsafe = {**DEFAULT_CONFIG, "risk_clear_max": .8}
     async def seed(tx):
         await (await tx.run("CREATE (:ConfigVersion {id:$id, tenant_id:$tenant, version:8, status:'superseded', created_by:'old', reason:'legacy', config_json:$json, diff_json:'{}', created_at:datetime()})", id=f"bad_{tenant}", tenant=tenant, json=json.dumps(unsafe))).consume()
@@ -87,7 +87,7 @@ async def test_reject_unsafe_publish_and_rollback(tenant):
 
 
 async def test_safe_auto_assign_policy_can_be_published_and_reverted():
-    from jevtriage.db.tx import write_tx
+    from ildongi.db.tx import write_tx
     tenant = f"policy_auto_{uuid4().hex}"
     await bootstrap_policy(tenant)
     try:
@@ -115,8 +115,8 @@ async def test_concurrent_publish_expected_version_conflict(tenant):
 async def test_publish_without_policy_editor_is_forbidden():
     from fastapi.testclient import TestClient
 
-    from jevtriage.auth.core import Principal, enforce_csrf, get_principal
-    from jevtriage.main import create_app
+    from ildongi.auth.core import Principal, enforce_csrf, get_principal
+    from ildongi.main import create_app
     app = create_app()
     app.dependency_overrides[get_principal] = lambda: Principal("tenant", "reviewer", (), frozenset({"reviewer"}))
     app.dependency_overrides[enforce_csrf] = lambda: None

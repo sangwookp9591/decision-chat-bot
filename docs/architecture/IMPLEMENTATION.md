@@ -6,20 +6,20 @@
 
 | 영역 | 선택 |
 | --- | --- |
-| 백엔드 | Python 3.14(로컬 확인 버전) + FastAPI + Pydantic v2, `uvicorn`; 패키지 `jevtriage`, 프로젝트 `backend/pyproject.toml`, 가상환경 `backend/.venv` |
+| 백엔드 | Python 3.14(로컬 확인 버전) + FastAPI + Pydantic v2, `uvicorn`; 패키지 `ildongi`, 프로젝트 `backend/pyproject.toml`, 가상환경 `backend/.venv` |
 | 저장소 | Neo4j 5 (Docker Compose `neo4j` 서비스, bolt 7687, 데이터 `./.data/neo4j`), 공식 `neo4j` Python async 드라이버 |
 | 실시간 알림 | Redis 7.4.2 pub/sub(`tenant:{id}`, `jobs`); Neo4j Event/Job이 진실의 원천이며 Redis는 깨우기 전용 |
-| 작업 실행 | 별도 worker 프로세스(`python -m jevtriage.jobs.worker`), Neo4j의 Job 노드 lease/generation |
-| 관측 journal | `./.data/journal/*.jsonl` append+fsync, 수집기 `python -m jevtriage.journal.collector`, watchdog `python -m jevtriage.journal.watchdog` |
+| 작업 실행 | 별도 worker 프로세스(`python -m ildongi.jobs.worker`), Neo4j의 Job 노드 lease/generation |
+| 관측 journal | `./.data/journal/*.jsonl` append+fsync, 수집기 `python -m ildongi.journal.collector`, watchdog `python -m ildongi.journal.watchdog` |
 | 원본 파일 | `./.data/files/<tenant>/<sha256>` + Neo4j 메타데이터 |
 | 프런트엔드 | React 18 + TypeScript + Vite (`frontend/`), 디자인 토큰 `docs/design-handoff/tokens.css` 재사용, 라우팅 react-router |
 | 테스트 | `pytest`(+`pytest-asyncio`), 실제 Neo4j 대상 통합 시험(`tests/integration`), 프런트 `vitest`, E2E `playwright` |
-| Jev | `typesafe-sdk`(공식 SDK) 또는 공식 HTTP API, 서버 설정의 `JEV_API_KEY`를 명시 전달 |
+| Decision AI | `typesafe-sdk`(공식 SDK) 또는 공식 HTTP API, 서버 설정의 `AI_API_KEY`를 명시 전달 |
 
 ## 2. 디렉터리와 소유 모듈
 
 ```
-backend/jevtriage/
+backend/ildongi/
   main.py            앱 팩토리·라우터 등록 (공통; 라우터 추가만 허용)
   config.py          환경 설정 (공통)
   db/                드라이버·스키마 제약·트랜잭션 도우미 (T04)
@@ -28,7 +28,7 @@ backend/jevtriage/
   journal/           관측 journal·수집기·watchdog (T04/T18)
   ingest/            접수·revision·첨부 API, parsers/ (T06/T07)
   jobs/              Job lease·worker (T08)
-  judgment/          Jev 클라이언트·질문·근거·업무 초안·자동 배정 조건 (T02/T03/T09)
+  judgment/          Decision AI 클라이언트·질문·근거·업무 초안·자동 배정 조건 (T02/T03/T09)
   review/            검토·배정 트랜잭션 (T11), Correction 생성 (T30)
   tasks/             업무 조회·상태 (T12)
   policy/            Dynamic Config (T15)
@@ -84,7 +84,7 @@ artifacts/validation/<run-id>/   검증 증거 (비민감)
 - ID 형식: `req_`, `rev_`, `run_`, `step_`, `job_`, `rvw_`, `task_`, `cfg_`(Config 버전은 정수 `version`), `cor_`, `cand_`, `rdec_`, `rule_`(규칙 버전은 `rule_id@version`), `val_`, `att_`(attempt), `evt_` + ULID/uuid 기반.
 - 시각은 UTC ISO 8601, 비교는 DB 시각(`datetime()`) 기준.
 - 키·쿠키·원문 전체·모델 전송본을 로그와 journal에 쓰지 않는다.
-- 모의(mock) Jev는 `JEV_MODE=mock`일 때만 동작하고, 그 결과는 저장·화면·보고서에 `mock`으로 표시한다. 게이트 증거는 `JEV_MODE=live`만 인정한다.
+- 모의(mock) Decision AI는 `AI_MODE=mock`일 때만 동작하고, 그 결과는 저장·화면·보고서에 `mock`으로 표시한다. 게이트 증거는 `AI_MODE=live`만 인정한다.
 - 기본 실행: `make up`(neo4j) → `make api` → `make worker` → `make web`. `make test`는 단위+통합(실제 Neo4j) 시험.
 - 개발 계정은 `scripts/bootstrap_dev.py`가 만든다(요청자·검토자·팀 담당자·운영자·규칙 관리자, 두 tenant). 운영 인증과 구분한다.
 

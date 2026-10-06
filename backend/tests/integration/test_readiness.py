@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from jevtriage.main import create_app
+from ildongi.main import create_app
 
 
 def test_ready_with_running_neo4j() -> None:

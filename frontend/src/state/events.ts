@@ -24,7 +24,7 @@ const isTenantWide = (kind: string) => kind.startsWith('policy.') || kind.starts
 // Cursors are tenant-wide server sequence numbers, so the stored cursor is scoped to tenant + user.
 let cursorScope = '';
 export function setEventCursorScope(scope: string) { cursorScope = scope; }
-const seqKey = () => `jevtriage:last-event-seq:${cursorScope}`;
+const seqKey = () => `ildongi:last-event-seq:${cursorScope}`;
 export function lastEventSeq() { const value = Number(sessionStorage.getItem(seqKey()) || 0); return Number.isFinite(value) && value >= 0 ? value : 0; }
 export function acceptEventSeq(seq: number, previous: number) { return Number.isInteger(seq) && seq > previous; }
 export const streamUrl = (after: number) => `/api/events/stream?after=${after}`;

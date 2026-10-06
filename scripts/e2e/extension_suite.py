@@ -14,7 +14,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 TENANT = os.environ['E2E_TENANT'] + 'x'
 env = {**os.environ, 'X38_TENANT': TENANT, 'X38_OUT': str(OUT),
        'X38_API': os.environ['E2E_BASE_URL'], 'X38_SUFFIX': 'ui1'}
-assert env['JEV_MODE'] == 'mock'
+assert env['AI_MODE'] == 'mock'
 py = str(ROOT / 'backend/.venv/bin/python')
 worker = None
 restarted_api = None
@@ -56,7 +56,7 @@ try:
         os.kill(int(env['E2E_API_PID']), signal.SIGTERM)
         time.sleep(2)
         with open(OUT / 'api-restarted.log', 'w') as log:
-            restarted_api = subprocess.Popen([py, '-m', 'uvicorn', 'jevtriage.main:app', '--host', '127.0.0.1', '--port', '11091'], cwd=ROOT / 'backend', env=env, stdout=log, stderr=subprocess.STDOUT)
+            restarted_api = subprocess.Popen([py, '-m', 'uvicorn', 'ildongi.main:app', '--host', '127.0.0.1', '--port', '11091'], cwd=ROOT / 'backend', env=env, stdout=log, stderr=subprocess.STDOUT)
         for _ in range(100):
             if restarted_api.poll() is not None:
                 raise RuntimeError('Restarted API exited')

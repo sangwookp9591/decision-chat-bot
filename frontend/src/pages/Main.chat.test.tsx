@@ -1,3 +1,4 @@
+import { AI_NAME } from '../lib/brand';
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
@@ -116,8 +117,8 @@ describe('conversation state transitions', () => {
     await act(async () => finish());
     await screen.findByRole('group', { name: '분석 진행' });
     expect(screen.getByRole('group', { name: '분석 진행' }).querySelector('[data-mascot="thinking"]')).not.toBeNull();
-    act(() => emit({ type: 'run.step', request_id: 'req_1', step_name: 'Jev 판단', payload: { status: 'running' } }));
-    expect(document.querySelector('.stage-list .current')).toHaveTextContent('Jev 판단');
+    act(() => emit({ type: 'run.step', request_id: 'req_1', step_name: `${AI_NAME} 판단`, payload: { status: 'running' } }));
+    expect(document.querySelector('.stage-list .current')).toHaveTextContent(`${AI_NAME} 판단`);
     act(() => emit({ type: 'judgment.partial', request_id: 'req_1', payload: { classifications: classes } }));
     expect(screen.getByRole('group', { name: '일동이의 잠정 답변' })).toBeInTheDocument();
     expect(screen.getAllByText('잠정').length).toBeGreaterThanOrEqual(4);

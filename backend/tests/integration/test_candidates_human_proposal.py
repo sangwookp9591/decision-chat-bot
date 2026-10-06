@@ -6,11 +6,11 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.main import create_app
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.main import create_app
+from ildongi.policy.service import bootstrap_policy
 from tests.integration.test_candidates import seed_corrections
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")

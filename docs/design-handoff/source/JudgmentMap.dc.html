@@ -35,7 +35,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 <nav class="rail" aria-label="주 메뉴">
 <div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px">
 <div class="mono" style="width: 32px; height: 32px; border-radius: 8px; background: #F15921; color: #1B1712; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0">J</div>
-<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">Jev Triage</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; font-size: 15px; color: #1B1712; white-space: nowrap">일동이</span><span style="font-size: 11px; color: #6B6259; white-space: nowrap">업무 분류 판단</span></div>
 </div>
 <div class="nav">
 <a class="navlink" href="Main.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>요청 접수</a>
@@ -198,7 +198,7 @@ class Component extends DCLogic {
     const K = {
       doc: { t: '문서 근거', fill: '#FFFFFF', st: '#8C8378', fg: '#1B1712', dash: '' },
       input: { t: '입력 revision', fill: '#FFFFFF', st: '#8C8378', fg: '#1B1712', dash: '' },
-      model: { t: 'Jev 반환값', fill: '#E7F3F4', st: '#0E7C86', fg: '#0B5E66', dash: '' },
+      model: { t: 'Decision AI 반환값', fill: '#E7F3F4', st: '#0E7C86', fg: '#0B5E66', dash: '' },
       corr: { t: '사람 수정', fill: '#FDF3EE', st: '#F15921', fg: '#8A2F09', dash: '' },
       counter: { t: '반례 · 관찰', fill: '#FDF0EE', st: '#B42318', fg: '#8F1D14', dash: '' },
       hypAI: { t: 'AI 가설', fill: '#FFFFFF', st: '#0E7C86', fg: '#0B5E66', dash: '5 3' },
@@ -216,8 +216,8 @@ class Component extends DCLogic {
       { id: 'E1', L: 1, u: .1, v: .3, k: 'doc', label: '판매실적.pdf p.3 ¶2', tags: ['REQ-0142'], rows: [['출처', '판매실적_2026Q3.pdf · 3쪽 2문단'], ['내용', '“병원별 월 판매량은 2025년 7월부터 집계…”'], ['결정 주체', '— (관찰 사실)'], ['시각', '10-02 10:02 추출'], ['버전', '입력 rev-2 · 파서 v2.1'], ['상태', '보존']] },
       { id: 'E2', L: 1, u: .3, v: .3, k: 'doc', label: '요구사항.md 12–18행', tags: ['REQ-0142'], rows: [['출처', '요구사항_메모.md · 12–18행'], ['내용', '“목표 미달 병원은 담당자가 직접 확인…”'], ['시각', '10-02 10:02 추출'], ['버전', '입력 rev-2'], ['상태', '보존']] },
       { id: 'E3', L: 1, u: .5, v: .3, k: 'input', label: 'REQ-0142 입력 rev-2', tags: ['REQ-0142'], rows: [['출처', '채팅 + 첨부 3개'], ['내용', '추가 질문 답변 반영 (알림 기준 80%)'], ['시각', '10-02 10:03'], ['버전', 'rev-2 (rev-1 보존)'], ['상태', '보존']] },
-      { id: 'E4', L: 1, u: .7, v: .3, k: 'model', label: 'Jev · 담당 AI팀 0.72', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05d'], ['내용', 'Choice: 주관 AI팀, confidence 0.72'], ['결정 주체', 'Jev [모델 버전]'], ['시각', '10-02 10:03:00'], ['버전', '정책 v14 · 스키마 v3'], ['상태', '원안 보존']] },
-      { id: 'E5', L: 1, u: .9, v: .3, k: 'model', label: 'Jev · 가능성 0.67', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05b'], ['내용', 'Choice: 조건부 가능, confidence 0.67'], ['결정 주체', 'Jev [모델 버전]'], ['버전', '정책 v14'], ['상태', '원안 보존']] },
+      { id: 'E4', L: 1, u: .7, v: .3, k: 'model', label: 'Decision AI · 담당 AI팀 0.72', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05d'], ['내용', 'Choice: 주관 AI팀, confidence 0.72'], ['결정 주체', 'Decision AI [모델 버전]'], ['시각', '10-02 10:03:00'], ['버전', '정책 v14 · 스키마 v3'], ['상태', '원안 보존']] },
+      { id: 'E5', L: 1, u: .9, v: .3, k: 'model', label: 'Decision AI · 가능성 0.67', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_05b'], ['내용', 'Choice: 조건부 가능, confidence 0.67'], ['결정 주체', 'Decision AI [모델 버전]'], ['버전', '정책 v14'], ['상태', '원안 보존']] },
       { id: 'C1', L: 1, u: .1, v: .78, k: 'corr', label: '수정 · 0142 AI→IT', tags: ['REQ-0142', 'R-ROUTE-07'], rows: [['출처', 'REQ-2026-0142 검토'], ['내용', '주관 조직 AI팀 → IT팀. 사유: 알림 구현 범위가 큼'], ['결정 주체', '김○○ (검토자)'], ['시각', '10-02 12:31'], ['버전', '입력 rev-2 · run_7f3a2c · 정책 v14'], ['상태', '요청 한 건에만 적용']] },
       { id: 'C2', L: 1, u: .3, v: .78, k: 'corr', label: '수정 · 0127 AI→IT', tags: ['R-ROUTE-07'], rows: [['출처', 'REQ-2026-0127 검토'], ['내용', '주관 조직 AI팀 → IT팀. 사유: 메신저 연동이 핵심'], ['결정 주체', '박○○'], ['시각', '09-27 15:04'], ['버전', 'run_4c19aa · 정책 v13'], ['상태', '요청 한 건에만 적용']] },
       { id: 'C3', L: 1, u: .5, v: .78, k: 'corr', label: '수정 · 0119 AI→IT', tags: ['R-ROUTE-07'], rows: [['출처', 'REQ-2026-0119 검토'], ['내용', '주관 조직 AI팀 → IT팀'], ['결정 주체', '김○○'], ['시각', '09-24 11:20'], ['버전', 'run_0b72de · 정책 v13'], ['상태', '요청 한 건에만 적용']] },
@@ -231,8 +231,8 @@ class Component extends DCLogic {
       { id: 'A2', L: 4, u: .66, v: .5, k: 'appPub', label: 'Config v15 게시', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'Dynamic Config'], ['내용', 'R-ROUTE-07 v1 포함 · 범위: 영업기획·혼합·알림'], ['결정 주체', '최○○'], ['시각', '10-03 09:10 게시'], ['버전', 'v15'], ['상태', '운영 중 · 중단·되돌리기 가능']] },
       { id: 'S1', L: 5, u: .05, v: .5, k: 'step', label: '0142 · 검토 전환', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_08'], ['내용', '0.67 < 0.75 → 사람 검토'], ['결정 주체', '규칙 (정책 v14)'], ['시각', '10-02 10:03:13'], ['버전', '정책 v14'], ['상태', '성공']] },
       { id: 'S2', L: 5, u: .27, v: .5, k: 'step', label: '0142 · 업무 배정', tags: ['REQ-0142'], rows: [['출처', 'run_7f3a2c · step_10'], ['내용', '승인 후 업무 5건 생성 (1회)'], ['결정 주체', '일반 코드'], ['시각', '10-02 12:31'], ['버전', '정책 v14'], ['상태', '성공']] },
-      { id: 'S3', L: 5, u: .52, v: .5, k: 'stepRule', label: '0151 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_b21e90 · step_05d'], ['내용', 'R-ROUTE-07 v1 적용 → IT팀 주관'], ['결정 주체', 'Jev + 규칙'], ['시각', '10-03 09:41'], ['버전', 'Config v15 · R-ROUTE-07 v1'], ['상태', '규칙 사용 · 모델 변경 없음']] },
-      { id: 'S4', L: 5, u: .77, v: .5, k: 'stepSkip', label: '0153 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_c0a4f1 · step_05d'], ['내용', '재무팀 요청 → R-ROUTE-07 범위 밖'], ['결정 주체', 'Jev'], ['시각', '10-03 10:05'], ['버전', 'Config v15'], ['상태', '범위 밖 · 규칙 미사용 기록']] }
+      { id: 'S3', L: 5, u: .52, v: .5, k: 'stepRule', label: '0151 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_b21e90 · step_05d'], ['내용', 'R-ROUTE-07 v1 적용 → IT팀 주관'], ['결정 주체', 'Decision AI + 규칙'], ['시각', '10-03 09:41'], ['버전', 'Config v15 · R-ROUTE-07 v1'], ['상태', '규칙 사용 · 모델 변경 없음']] },
+      { id: 'S4', L: 5, u: .77, v: .5, k: 'stepSkip', label: '0153 · 담당 판단', tags: ['R-ROUTE-07', 'v15'], rows: [['출처', 'run_c0a4f1 · step_05d'], ['내용', '재무팀 요청 → R-ROUTE-07 범위 밖'], ['결정 주체', 'Decision AI'], ['시각', '10-03 10:05'], ['버전', 'Config v15'], ['상태', '범위 밖 · 규칙 미사용 기록']] }
     ];
     const EG = [
       ['C1', 'H1'], ['C2', 'H1'], ['C3', 'H1'], ['X1', 'H1', 'contra'], ['E5', 'H2'],

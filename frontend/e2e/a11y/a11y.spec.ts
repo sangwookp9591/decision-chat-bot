@@ -4,7 +4,7 @@ import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const tenant = process.env.E2E_TENANT || 't-t23';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 const screens = [
   ['요청 접수', '/'], ['검토', '/review'], ['업무', '/tasks'],
   ['실행 관찰', '/observatory'], ['판단 맵 입체 보기', '/judgment-map'],

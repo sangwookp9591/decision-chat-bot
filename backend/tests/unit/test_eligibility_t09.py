@@ -1,4 +1,4 @@
-from jevtriage.judgment.eligibility import evaluate_auto_assign
+from ildongi.judgment.eligibility import evaluate_auto_assign
 
 
 def base():
@@ -51,7 +51,7 @@ def test_missing_policy_disallows_auto_assignment():
 def test_policy_band_validation_and_lead_org_default():
     from pydantic import ValidationError
 
-    from jevtriage.policy.service import PolicyConfig
+    from ildongi.policy.service import PolicyConfig
     assert PolicyConfig().choice_confidence_thresholds["lead_org"] == .8
     for band in ([.5, .5], [-.01, .5], [.35, 1.01], [.5]):
         try:

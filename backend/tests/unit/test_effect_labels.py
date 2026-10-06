@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from jevtriage.learning.effects import _effect, _metrics
+from ildongi.learning.effects import _effect, _metrics
 
 
 def test_effect_requires_human_labels_even_with_many_runs():

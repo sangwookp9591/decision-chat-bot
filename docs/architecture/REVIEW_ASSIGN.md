@@ -2,7 +2,7 @@
 
 2026-10-03 기준. `review.api`는 검토 목록·상세·결정 API를 제공한다. POST 결정은 세션의 `Principal`, 전역 CSRF 미들웨어, `Idempotency-Key`를 요구한다. 검토 대상은 요청 ID, 입력 revision, 실행 ID, 초안 버전, 검토 버전의 결합이며 오래된 대상은 최신 대상 정보를 포함한 409를 반환한다. 조직별 검토 권한은 `can_review`와 검토 책임 조직을 함께 검사한다. 다른 tenant의 ID는 404로 처리한다.
 
-`decide`는 `Request → Review` 순서로 잠근 한 `write_tx`에서 최신 대상·권한·초안 필수 필드·tenant 조직·선행 순환을 재검증한다. `ReviewDecision`의 결정자·사유·시각·버전을 기록하고 수정 승인에서는 기존 Judgment/Draft를 그대로 두고 새 Draft 버전을 만든다. 분류와 초안 업무의 변경 항목별 `Correction`에는 원값·수정값·사유·근거 ID·수정자·시각·request/revision/run/Config 버전을 저장한다. 모델 반환값에 해당하는 분류 수정은 `CORRECTS`로 원 `ModelOutput`에 연결된다. 카탈로그가 작성한 초안 업무 필드는 대응하는 Jev `ModelOutput`이 없으므로 관계를 합성하지 않고 `RECORDED`와 원안·수정값을 보존한다. 단건 결정은 RuleCandidate·RuleVersion·ConfigVersion을 변경하지 않는다.
+`decide`는 `Request → Review` 순서로 잠근 한 `write_tx`에서 최신 대상·권한·초안 필수 필드·tenant 조직·선행 순환을 재검증한다. `ReviewDecision`의 결정자·사유·시각·버전을 기록하고 수정 승인에서는 기존 Judgment/Draft를 그대로 두고 새 Draft 버전을 만든다. 분류와 초안 업무의 변경 항목별 `Correction`에는 원값·수정값·사유·근거 ID·수정자·시각·request/revision/run/Config 버전을 저장한다. 모델 반환값에 해당하는 분류 수정은 `CORRECTS`로 원 `ModelOutput`에 연결된다. 카탈로그가 작성한 초안 업무 필드는 대응하는 Decision AI `ModelOutput`이 없으므로 관계를 합성하지 않고 `RECORDED`와 원안·수정값을 보존한다. 단건 결정은 RuleCandidate·RuleVersion·ConfigVersion을 변경하지 않는다.
 
 승인 시 같은 트랜잭션의 `assign_in_tx`가 요청당 Assignment 1개와 `(assignment_id,draft_task_id)`당 Task 1개를 생성한다. Request에서 Task로 `HAS_TASK`, Task에서 Org로 `ASSIGNED_TO {role}`를 만들고 실제 선행 작업에만 `PRECEDES`를 만든다. 개발 가능성 차단은 승인 결정의 `Correction` 수정값이 있으면 그 값을, 없으면 원 `Judgment.feasibility`를 사용한다. 선행 작업·초안 사유·미정 상태 또는 최종 분류의 미해결 개발 가능성이 있는 본업무는 `막힘`으로 시작한다. 명시적으로 연결된 선행 확인 업무와 모든 선행 업무가 완료되면 본업무 시작 전이에서 가능성 차단을 해제하고 감사 기록에 전후 차단 사유를 남긴다. 다른 초안 전제는 그대로 유지한다. 정보 요청은 `보완 필요`와 `needed_info` 목록을, 반려는 `반려` 상태를 저장한다. 결정·배정·감사·이벤트·멱등 결과는 함께 커밋한다.
 

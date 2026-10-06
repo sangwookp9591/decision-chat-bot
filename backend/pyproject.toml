@@ -1,5 +1,5 @@
 [project]
-name = "jevtriage"
+name = "ildongi"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
@@ -25,7 +25,7 @@ requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["jevtriage"]
+packages = ["ildongi"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
@@ -34,44 +34,44 @@ asyncio_mode = "auto"
 line-length = 100
 
 [tool.importlinter]
-root_package = "jevtriage"
+root_package = "ildongi"
 
 [[tool.importlinter.contracts]]
 name = "Feature API to service to store"
 type = "layers"
-containers = ["jevtriage.auth", "jevtriage.review", "jevtriage.judgment", "jevtriage.ingest", "jevtriage.tasks", "jevtriage.observe", "jevtriage.graph", "jevtriage.monitoring", "jevtriage.learning", "jevtriage.evaluation"]
+containers = ["ildongi.auth", "ildongi.review", "ildongi.judgment", "ildongi.ingest", "ildongi.tasks", "ildongi.observe", "ildongi.graph", "ildongi.monitoring", "ildongi.learning", "ildongi.evaluation"]
 layers = ["(api)", "(service)", "(store)"]
 
 [[tool.importlinter.contracts]]
 name = "Policy and persistence to domain"
 type = "layers"
-layers = ["jevtriage.policy", "jevtriage.db", "jevtriage.domain"]
+layers = ["ildongi.policy", "ildongi.db", "ildongi.domain"]
 ignore_imports = [
   # Legacy start_run_in_tx import is public to integration callers; migrate with API versioning.
-  "jevtriage.domain.runs -> jevtriage.db.runs",
+  "ildongi.domain.runs -> ildongi.db.runs",
 ]
 
 [[tool.importlinter.contracts]]
 name = "Graph and monitoring are independent"
 type = "independence"
-modules = ["jevtriage.graph", "jevtriage.monitoring"]
+modules = ["ildongi.graph", "ildongi.monitoring"]
 
 [[tool.importlinter.contracts]]
 name = "Judgment may call review but review is independent"
 type = "layers"
-layers = ["jevtriage.judgment", "jevtriage.review"]
+layers = ["ildongi.judgment", "ildongi.review"]
 
 [[tool.importlinter.contracts]]
 name = "Learning may use judgment and policy"
 type = "layers"
-layers = ["jevtriage.learning", "jevtriage.judgment", "jevtriage.policy"]
+layers = ["ildongi.learning", "ildongi.judgment", "ildongi.policy"]
 
 [[tool.importlinter.contracts]]
 name = "Top-level feature imports are acyclic"
 type = "acyclic_siblings"
-ancestors = ["jevtriage"]
+ancestors = ["ildongi"]
 depth = 10
 ignore_imports = [
   # Compatibility path for existing callers of domain.runs.start_run_in_tx.
-  "jevtriage.domain.runs -> jevtriage.db.runs",
+  "ildongi.domain.runs -> ildongi.db.runs",
 ]

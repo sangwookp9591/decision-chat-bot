@@ -3,7 +3,7 @@
 - 촬영·검증일: 2026-10-05 (Asia/Seoul)
 - 범위: `README.md`, `docs/readme/**`, `scripts/readme/**`만 수정. 제품 코드, 공용 감사 경로, 다른 작업자의 서버는 변경하지 않음. 커밋·push 없음.
 - 런타임: Python 3.14.6, Node 22.14.0, Docker Engine 29.4.0, Docker context `orbstack`.
-- 전용 API 10491·Vite 7791, 새 tenant, `JEV_MODE=live`, tenant allowlist Worker, 독립 절대 DATA_DIR.
+- 전용 API 10491·Vite 7791, 새 tenant, `AI_MODE=live`, tenant allowlist Worker, 독립 절대 DATA_DIR.
 - 새 tenant에 실제 LIVE 요청 3건을 시드하고 3건 수정 승인하여 업무·수정 이력·학습 후보·범위 제한 규칙 초안을 생성. UI 촬영과 해상도 재촬영에서 요청 5건이 추가되어 총 8건이며, 규칙은 운영 게시하지 않음.
 - 문서 화면은 모두 실제 제품 렌더링. 개인정보가 없는 가상 입력을 사용하고, 계정명·tenant·기술 ID만 캡처 DOM에서 가림/생략. 원본 응답·판단·업무·지표 변경이나 지연 주입 없음.
 
@@ -21,7 +21,7 @@
 기존 의존성·`.env`를 재사용해 설치 상태를 검증했다. clone·가상환경 재생성·기존 `.env` 덮어쓰기는 하지 않았다.
 
 - `docker --context orbstack info` 성공, `DOCKER_CONTEXT=orbstack make up` 성공(기존 Neo4j Running).
-- `(cd backend && .venv/bin/python -m jevtriage.db.schema)` 성공.
+- `(cd backend && .venv/bin/python -m ildongi.db.schema)` 성공.
 - `backend/.venv/bin/python scripts/bootstrap_dev.py` 성공.
 - `backend/.venv/bin/pip check`: No broken requirements found.
 - README와 동일한 uvicorn·Worker·Collector·Watchdog·Vite 진입점을 전용 포트와 절대 DATA_DIR로 기동. `/api/health` → `{"status":"ok"}`, `/api/ready` → `{"status":"ready"}`, Vite → HTTP 200.
@@ -33,7 +33,7 @@
 | 명령 | 결과 |
 | --- | --- |
 | `cd backend && .venv/bin/pytest -q` | **466 passed, 1 skipped**, 104.50초 |
-| `.venv/bin/ruff check jevtriage tests` | **All checks passed** |
+| `.venv/bin/ruff check ildongi tests` | **All checks passed** |
 | `.venv/bin/lint-imports` | **6 kept, 0 broken** |
 | `npm --prefix frontend run typecheck` | PASS |
 | `npm --prefix frontend run test` | 최종 **40 files / 358 tests passed**, 24.20초 |

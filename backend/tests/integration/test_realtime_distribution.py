@@ -11,21 +11,21 @@ import pytest
 from fastapi.testclient import TestClient
 from redis.exceptions import RedisError
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.events import append_event, list_events
-from jevtriage.db.tx import write_tx
-from jevtriage.main import create_app
-from jevtriage.realtime.notifier import ConnectionSlots, publish_job
-from jevtriage.realtime.subscriber import JobSubscriber, TenantSubscriber
+from ildongi.auth.core import Principal
+from ildongi.db.events import append_event, list_events
+from ildongi.db.tx import write_tx
+from ildongi.main import create_app
+from ildongi.realtime.notifier import ConnectionSlots, publish_job
+from ildongi.realtime.subscriber import JobSubscriber, TenantSubscriber
 
 _API_SCRIPT = """
 import os
 import sys
 import uvicorn
 from fastapi import Request
-from jevtriage.auth.core import Principal
-from jevtriage.db.events import append_event
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal
+from ildongi.db.events import append_event
+from ildongi.main import create_app
 
 app = create_app()
 
@@ -49,7 +49,7 @@ def _free_port():
 
 
 def test_progress_payload_rejects_unrecognized_nested_values():
-    from jevtriage.events.router import _safe_progress_fields
+    from ildongi.events.router import _safe_progress_fields
 
     assert _safe_progress_fields({
         "classifications": {"ai_need": "raw source text"},
@@ -159,7 +159,7 @@ async def test_committed_event_wakes_another_subscriber(redis_url):
         assert [event["seq"] for event in await list_events(tenant)] == [first["seq"]]
 
         async def abort(tx):
-            from jevtriage.db.events import append_event_in_tx
+            from ildongi.db.events import append_event_in_tx
             await append_event_in_tx(tx, tenant, "progress", {"status": "rolled_back"})
             raise RuntimeError("rollback")
 
@@ -174,8 +174,8 @@ async def test_committed_event_wakes_another_subscriber(redis_url):
 
 @pytest.mark.asyncio
 async def test_publish_failure_does_not_undo_committed_event(monkeypatch):
-    from jevtriage.db import tx as db_tx
-    from jevtriage.realtime import notifier
+    from ildongi.db import tx as db_tx
+    from ildongi.realtime import notifier
 
     tenant = f"realtime_{uuid4().hex}"
 
@@ -235,8 +235,8 @@ async def test_job_channel_and_global_connection_limit(redis_url):
 
 @pytest.mark.asyncio
 async def test_tenant_hub_replays_missed_notification(redis_url, monkeypatch):
-    from jevtriage.events.router import _TenantHub
-    from jevtriage.realtime import notifier
+    from ildongi.events.router import _TenantHub
+    from ildongi.realtime import notifier
 
     tenant = f"realtime_{uuid4().hex}"
     hub = _TenantHub(tenant, 0)
@@ -280,8 +280,8 @@ async def test_redis_outage_fallback_and_recovery(monkeypatch):
         pytest.skip("redis-server executable is unavailable")
     from redis.asyncio import Redis
 
-    from jevtriage.config import get_settings
-    from jevtriage.events.router import _TenantHub
+    from ildongi.config import get_settings
+    from ildongi.events.router import _TenantHub
 
     port = _free_port()
     url = f"redis://127.0.0.1:{port}/15"
@@ -351,7 +351,7 @@ async def test_redis_outage_fallback_and_recovery(monkeypatch):
 
 @pytest.fixture
 def redis_url(monkeypatch):
-    from jevtriage.config import get_settings
+    from ildongi.config import get_settings
 
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/15")
     get_settings.cache_clear()

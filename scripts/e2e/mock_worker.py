@@ -1,6 +1,6 @@
 """Deterministic E2E model boundary; real jobs, policy, graph and APIs remain in use.
 
-Only available with JEV_MODE=mock. This is UI fixture data, never model quality evidence.
+Only available with AI_MODE=mock. This is UI fixture data, never model quality evidence.
 """
 import json
 import os
@@ -10,8 +10,8 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'backend'))
-assert os.environ.get('JEV_MODE') == 'mock', 'E2E fixture worker requires mock mode'
-from jevtriage.judgment.jev_client import JevClient, validate_response
+assert os.environ.get('AI_MODE') == 'mock', 'E2E fixture worker requires mock mode'
+from ildongi.judgment.ai_client import AiClient, validate_response
 
 
 def ask(self, state, questions):
@@ -44,5 +44,5 @@ def ask(self, state, questions):
     return validate_response({'model': 'e2e-fixture', 'answers': answers, 'usage': {'input_tokens': 0, 'output_tokens': 0}}, questions, mode='mock')
 
 
-JevClient.ask = ask
-runpy.run_module('jevtriage.jobs.worker', run_name='__main__')
+AiClient.ask = ask
+runpy.run_module('ildongi.jobs.worker', run_name='__main__')

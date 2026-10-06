@@ -12,10 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "backend"))
 
-from jevtriage.auth.core import hash_password
-from jevtriage.db.driver import close_driver, get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.policy.service import bootstrap_policy
+from ildongi.auth.core import hash_password
+from ildongi.db.driver import close_driver, get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.policy.service import bootstrap_policy
 
 ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin")
 PASSWORD = "dev-only-change-me"

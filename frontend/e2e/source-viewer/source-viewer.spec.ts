@@ -5,11 +5,11 @@ import { join } from 'node:path';
 
 /**
  * UX-2: evidence → source viewer (PDF page / DOCX paragraph / MD line / chat sentence) and judgment-map expanded view + version tabs.
- * Runtime: e2e/source-viewer/env.sh (tenant t-ux2, live Jev worker limited to that tenant). Non-sensitive fixtures only.
+ * Runtime: e2e/source-viewer/env.sh (tenant t-ux2, live Decision AI worker limited to that tenant). Non-sensitive fixtures only.
  */
 const tenant = process.env.UX2_TENANT || 't-ux2';
 const rule = `${tenant}-R-UX-01`;
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 const fixtures = join(process.cwd(), 'e2e/source-viewer/fixtures');
 test.describe.configure({ mode: 'serial' });
 test.setTimeout(120_000);
@@ -53,10 +53,10 @@ test.beforeAll(async ({ browser }, info) => {
     await expect(page).toHaveURL(new RegExp(`request_id=${id}`));
     await expect(page.locator('.result-stack:not(.provisional-result)').getByRole('heading', { name: '판단 결과', exact: true })).toBeVisible({ timeout: 240_000 });
     expect(id).toBeTruthy();
-    // live Jev decides what it cites; retry with a new request when nothing was cited
+    // live Decision AI decides what it cites; retry with a new request when nothing was cited
     if (await page.getByRole('button', { name: /근거 열기/ }).count()) requestId = id;
   }
-  expect(requestId, 'live Jev cited no evidence in 3 requests').toBeTruthy();
+  expect(requestId, 'live Decision AI cited no evidence in 3 requests').toBeTruthy();
 });
 test.afterAll(async () => { await owner?.context.close(); });
 

@@ -1,4 +1,4 @@
-"""T38-R: additional stages for the re-run after FIX-S/O/C/E/SSE/R (live Jev, real Neo4j).
+"""T38-R: additional stages for the re-run after FIX-S/O/C/E/SSE/R (live Decision AI, real Neo4j).
 
 Run from backend/ (same X38_* env as scenario.py):
   .venv/bin/python -m tests.acceptance.extension.scenario_r <stage> [<stage> ...]
@@ -15,7 +15,7 @@ import time
 
 import httpx
 
-from jevtriage.db.driver import get_driver
+from ildongi.db.driver import get_driver
 from tests.acceptance.extension import scenario as S
 from tests.acceptance.extension.lib import (
     API,
@@ -45,7 +45,7 @@ class TClient(Client):
         self.http = httpx.Client(base_url=API, timeout=60)
         r = self.http.post("/api/auth/login", json={"email": f"{role}@{tenant}.dev", "password": PASSWORD})
         r.raise_for_status()
-        self.csrf = self.http.cookies.get("jev_csrf") or ""
+        self.csrf = self.http.cookies.get("ildongi_csrf") or ""
 
 
 async def _qt(tenant: str, cypher: str, **params):
@@ -375,12 +375,12 @@ def main() -> None:
 
 
 def stage_lead_retest() -> None:
-    """Retest of the lead_org X01 span check with the correct expectation (Jev cites no span for lead_org; the first check wrongly required spans)."""
+    """Retest of the lead_org X01 span check with the correct expectation (Decision AI cites no span for lead_org; the first check wrongly required spans)."""
     state = load_state()
     r = state["rule_lead"]
     cors = q("MATCH (c:Correction {tenant_id:$tenant,field:'lead_org'}) RETURN c.id AS id,c.request_id AS r,c.evidence_span_ids AS spans")
     cites = {c["id"]: [x["e"] for x in q("MATCH (c:Correction {tenant_id:$tenant,id:$id})-[:CORRECTS]->(:ModelOutput)-[:CITES]->(e:EvidenceSpan) RETURN e.id AS e", id=c["id"])] for c in cors}
-    check("X01", "(retest) lead_org corrections: Correction.evidence_span_ids == CITES targets of the corrected ModelOutput (both empty: Jev cites no span for lead_org)",
+    check("X01", "(retest) lead_org corrections: Correction.evidence_span_ids == CITES targets of the corrected ModelOutput (both empty: Decision AI cites no span for lead_org)",
           len(cors) == 3 and all(sorted(c["spans"] or []) == sorted(cites[c["id"]]) for c in cors) and sorted(c["id"] for c in cors) == sorted(r["corrections"]),
           {"corrections": {c["id"]: {"request": c["r"], "spans": list(c["spans"] or []), "cites": cites[c["id"]]} for c in cors}})
 

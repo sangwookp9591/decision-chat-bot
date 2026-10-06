@@ -4,14 +4,14 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import get_principal
-from jevtriage.auth.policy import can
-from jevtriage.auth.types import Principal
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request
-from jevtriage.main import create_app
+from ildongi.auth.core import get_principal
+from ildongi.auth.policy import can
+from ildongi.auth.types import Principal
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request
+from ildongi.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -129,7 +129,7 @@ async def test_request_preview_masking_and_owner_permissions(preview_tenant):
 
 
 async def test_legacy_preview_backfill_runs_once(preview_tenant, monkeypatch):
-    from jevtriage.ingest import store
+    from ildongi.ingest import store
 
     tenant = preview_tenant
     owner = Principal(tenant, "owner", (), frozenset({"requester"}), False)

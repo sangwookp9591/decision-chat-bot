@@ -1,6 +1,6 @@
 """A) Eight mandatory user scenarios (06_ACCEPTANCE) against the live API + stored state.
 
-Live Jev only (JEV_MODE=live); labels are never asserted as ground truth - the tests verify that
+Live Decision AI only (AI_MODE=live); labels are never asserted as ground truth - the tests verify that
 the required evidence/structure is provided and that stored state matches the API.
 Collected only by `make test-acceptance` (file prefix `acc_`).
 """
@@ -33,7 +33,7 @@ CLASS_KEYS = {"ai_need", "feasibility", "urgency", "lead_org"}
 
 
 def _assert_judgment_shape(j: dict) -> None:
-    assert j["mode"] == "live", "gate evidence must come from live Jev"
+    assert j["mode"] == "live", "gate evidence must come from live Decision AI"
     assert CLASS_KEYS <= set(j["classifications"]), j["classifications"]
     assert all(j["classifications"][k] for k in CLASS_KEYS)
     assert j["versions"]["model"] and j["versions"]["qset"] and j["versions"]["config_version"] >= 1
@@ -172,7 +172,7 @@ def test_s2_predecessor_relations_become_stored_precedes_edges(users):
         if any(t["predecessors"] for t in j["draft_tasks"]):
             chosen = (rid, j)
             break
-    assert chosen, "live Jev produced no dependent tasks in 4 attempts"
+    assert chosen, "live Decision AI produced no dependent tasks in 4 attempts"
     rid, j = chosen
     res = decide(rv, pending_review(rv, rid), "approve")
     assert res.status_code == 200, res.text
@@ -216,7 +216,7 @@ def test_s3_urgent_request_reason_review_and_priority(users):
         if j["classifications"]["urgency"] == "긴급":
             chosen = (rid, j)
             break
-    assert chosen, "live Jev never classified the urgent samples as 긴급 in 4 attempts"
+    assert chosen, "live Decision AI never classified the urgent samples as 긴급 in 4 attempts"
     rid, j = chosen
     urgency = next(o for o in j["outputs"] if o["question_id"] == "urgency")
     assert urgency["confidence"] is not None and urgency["probabilities"]  # uncertainty provided
@@ -317,7 +317,7 @@ def test_s5_documents_pdf_docx_md_with_one_damaged_file(users):
                   {k: len(v) for k, v in by_file.items()}, "excluded": ["broken.pdf"],
                   "files_cited_by_judgment": sorted(cited_files),
                   "review_reasons": j["review_reasons"]})
-    # Verify the input and citation structure; live Jev confidence/citation choices are variable.
+    # Verify the input and citation structure; live Decision AI confidence/citation choices are variable.
     assert [a["filename"] for a in excluded] == ["broken.pdf"]
     assert all(span_id in valid_span_ids for span_id in cited_span_ids)
     assert all(e.get("source") in {"chat", "attachment"}
@@ -541,8 +541,8 @@ def test_s8_flow_and_playback_have_no_side_effects(users):
 
 
 @pytest.mark.parametrize("n", [0])
-def test_s8_failed_run_from_live_jev_rejection(users, n):
-    """Real failed run: a worker with an invalid Jev key (tenant <base>f only) -> Jev rejects."""
+def test_s8_failed_run_from_live_ai_rejection(users, n):
+    """Real failed run: a worker with an invalid Decision AI key (tenant <base>f only) -> Decision AI rejects."""
     from tests.acceptance.harness import Client
     rq = Client("requester", TENANT_F)
     r = rq.submit("월별 판매 현황을 조회하는 화면이 필요합니다.")

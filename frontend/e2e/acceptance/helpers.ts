@@ -3,7 +3,7 @@ import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 export const tenant = process.env.E2E_TENANT || 't-acc21';
-export const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+export const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 export const outDir = process.env.ACC_UI_OUT || join(process.cwd(), 'test-results', 'acceptance-ui');
 mkdirSync(outDir, { recursive: true });
 
@@ -14,7 +14,7 @@ export async function actor(browser: Browser, baseURL: string, role: string, tnt
   const res = await ctx.request.post('/api/auth/login', { data: { email: `${role}@${tnt}.dev`, password } });
   expect(res.ok(), `login ${role}@${tnt}: ${res.status()}`).toBeTruthy();
   const page = await ctx.newPage();
-  const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'jev_csrf')?.value || '';
+  const csrf = async () => (await ctx.storageState()).cookies.find((c) => c.name === 'ildongi_csrf')?.value || '';
   return { ctx, page, api: ctx.request, csrf };
 }
 

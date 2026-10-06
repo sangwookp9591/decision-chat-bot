@@ -11,7 +11,7 @@ import { expect, test, type APIRequestContext, type Browser, type Page } from '@
 const OUT = process.env.X38_OUT as string;
 const tenant = process.env.X38_TENANT as string;
 const phase = process.env.X38_PHASE || 'r1';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 const hasFixture = Boolean(OUT && tenant && existsSync(`${OUT}/state.json`) && existsSync(`${OUT}/db_truth.${process.env.X38_TRUTH || phase}.json`));
 test.beforeAll(() => expect(hasFixture, 'X38 extension-R fixture 없음: X38_OUT/X38_TENANT를 설정하고 extension scenario의 state.json 및 db_truth export를 먼저 준비해야 함: scripts/e2e/run.py').toBe(true));
 const state = hasFixture ? JSON.parse(readFileSync(`${OUT}/state.json`, 'utf8')) : {};
@@ -105,7 +105,7 @@ test.describe(`[${phase}] T38-R fixes`, () => {
     const ctx = await as(browser, baseURL as string, 'rule_admin');
     const page = await ctx.newPage();
     const proposer = await as(browser, baseURL as string, 'reviewer');
-    const csrf = (await proposer.storageState()).cookies.find(c => c.name === 'jev_csrf')!.value;
+    const csrf = (await proposer.storageState()).cookies.find(c => c.name === 'ildongi_csrf')!.value;
     const created = await proposer.request.post('/api/learning/candidates', { headers: { 'X-CSRF-Token': csrf }, data: { field: 'ai_need', proposed_action: { set: '혼합' }, scope: { all: [{ field: 'lead_org', op: 'eq', value: '현업' }] }, rationale: '브라우저별 독립 자료 부족 승인 시험', supporting_correction_ids: [] } });
     expect(created.status()).toBe(201);
     const cid = (await created.json()).id as string;

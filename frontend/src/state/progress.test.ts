@@ -1,3 +1,4 @@
+import { AI_NAME } from '../lib/brand';
 import { describe, expect, it } from 'vitest';
 import { initialProgress, progressReducer, type ProgressAction, type ProgressState } from './progress';
 
@@ -58,7 +59,7 @@ describe('event order', () => {
 });
 
 describe('restore from the progress API (reload / reconnect)', () => {
-  const snapshot = { request_id: 'r1', run_id: 'run1', status: 'processing', steps: [{ name: 'Jev 판단', kind: 'ai', status: 'succeeded' }, { name: '근거 연결', kind: 'ai', status: 'running' }], preliminary: { classifications: { ai_need: '필요' }, confidences: {}, risk_flags: {} }, evidence_ready: false, tasks_ready: false, final: false, timings_ms: { received_to_preliminary: 900, received_to_final: 0 } };
+  const snapshot = { request_id: 'r1', run_id: 'run1', status: 'processing', steps: [{ name: `${AI_NAME} 판단`, kind: 'ai', status: 'succeeded' }, { name: '근거 연결', kind: 'ai', status: 'running' }], preliminary: { classifications: { ai_need: '필요' }, confidences: {}, risk_flags: {} }, evidence_ready: false, tasks_ready: false, final: false, timings_ms: { received_to_preliminary: 900, received_to_final: 0 } };
   it('rebuilds the steps and provisional card without any event', () => {
     const state = run([{ type: 'restore', progress: snapshot }]);
     expect(state).toMatchObject({ requestId: 'r1', phase: 'preliminary', currentStep: '근거 연결', evidenceReady: false });

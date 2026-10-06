@@ -1,12 +1,12 @@
 // Run via ego-browser nodejs < scripts/readme/capture.mjs (no separate browser).
 const fs = await import('node:fs/promises');
-const cfg = JSON.parse(await fs.readFile('/tmp/jev-readme-session.json','utf8'));
+const cfg = JSON.parse(await fs.readFile('/tmp/ai-readme-session.json','utf8'));
 const seed = JSON.parse(await fs.readFile(cfg.out+'/seed.json','utf8'));
 const task = await taskSpace(cfg.captureSpace || 'README 화면 촬영');
 console.log('README_SPACE='+task.spaceId);
 const p = task.page('p1'), base='http://127.0.0.1:7791';
 const stage=cfg.captureStage || 'all';
-cfg.captureSpace=task.spaceId; await fs.writeFile('/tmp/jev-readme-session.json',JSON.stringify(cfg));
+cfg.captureSpace=task.spaceId; await fs.writeFile('/tmp/ai-readme-session.json',JSON.stringify(cfg));
 async function size(mobile=false) {
   await p.cdp('Emulation.setDeviceMetricsOverride',{width:mobile?375:1440,height:900,deviceScaleFactor:2,mobile});
 }
@@ -54,7 +54,7 @@ if(stage==='all'||stage==='chat') {
     const body=typeof r.body==='string'?JSON.parse(r.body):r.body;
     cfg.requestId=(body.requests||body.items||body)[0].id;
   }
-  await fs.writeFile('/tmp/jev-readme-session.json',JSON.stringify(cfg));
+  await fs.writeFile('/tmp/ai-readme-session.json',JSON.stringify(cfg));
   console.log('CHAT READY');
 }
 if(stage==='all'||stage==='panels') {
@@ -76,4 +76,4 @@ if(stage==='all'||stage==='panels') {
   await login('requester'); await theme('dark'); await go('/?request_id='+cfg.requestId,'.result-brief'); await snap('dark');
   await theme('light'); await size(true); await snap('mobile-chat'); await size();
 }
-if(stage==='all' && !cfg.keepSpace) { await task.finish({keep:[]}); delete cfg.captureSpace; await fs.writeFile('/tmp/jev-readme-session.json',JSON.stringify(cfg)); }
+if(stage==='all' && !cfg.keepSpace) { await task.finish({keep:[]}); delete cfg.captureSpace; await fs.writeFile('/tmp/ai-readme-session.json',JSON.stringify(cfg)); }

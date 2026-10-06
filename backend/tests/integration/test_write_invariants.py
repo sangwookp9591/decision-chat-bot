@@ -6,21 +6,21 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.domain.runs import start_run_in_tx
-from jevtriage.ingest.store import create_request
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.policy.service import bootstrap_policy
-from jevtriage.review.store import get_review
-from jevtriage.tasks.service import TaskError, transition
+from ildongi.auth.core import Principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.domain.runs import start_run_in_tx
+from ildongi.ingest.store import create_request
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.service import execute_judgment
+from ildongi.policy.service import bootstrap_policy
+from ildongi.review.store import get_review
+from ildongi.tasks.service import TaskError, transition
 
 
 def test_product_run_writes_use_one_helper():
-    root = Path(__file__).resolve().parents[2] / "jevtriage"
+    root = Path(__file__).resolve().parents[2] / "ildongi"
     # Legacy shadow validation and DB primitives do not create active judgment runs.
     exempt = {"learning/shadow.py", "db/requests.py", "db/jobs.py"}
     for path in root.rglob("*.py"):
@@ -176,7 +176,7 @@ async def test_judgment_keeps_evaluated_eligibility():
             )).single(strict=True))["id"]
 
         async def handler(ctx):
-            await execute_judgment(ctx, JevClient("", mode="mock"))
+            await execute_judgment(ctx, AiClient("", mode="mock"))
 
         await Worker(handlers={"judgment": handler}).process_job(tenant, await read_tx(tenant, job))
 

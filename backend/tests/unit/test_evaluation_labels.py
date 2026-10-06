@@ -1,9 +1,9 @@
 import pytest
 from fastapi import HTTPException
 
-from jevtriage.auth.core import Principal
-from jevtriage.auth.policy import can
-from jevtriage.evaluation.service import (
+from ildongi.auth.core import Principal
+from ildongi.auth.policy import can
+from ildongi.evaluation.service import (
     LabelBody,
     _rows,
     _validate_labels,
@@ -93,7 +93,7 @@ def test_final_candidate_hides_all_prediction_fields():
 
 
 def test_progress_counts_unique_confirmed_samples_and_deferred_separately():
-    from jevtriage.evaluation.service import progress_summary
+    from ildongi.evaluation.service import progress_summary
     summary = progress_summary(4, [
         {"id": "a", "status": "confirmed"}, {"id": "a", "status": "confirmed"},
         {"id": "b", "status": "deferred"},
@@ -102,7 +102,7 @@ def test_progress_counts_unique_confirmed_samples_and_deferred_separately():
 
 
 def test_confirmed_export_row_includes_consensus_metadata():
-    from jevtriage.evaluation.export import confirmed_row
+    from ildongi.evaluation.export import confirmed_row
     row = confirmed_row({"id": "x", "text": "sample"}, [
         {"labels": '{"ai_need":"필요"}', "user_id": "one", "confidence": .8, "created_at": "t1"},
         {"labels": '{"ai_need":"필요"}', "user_id": "two", "confidence": .9, "created_at": "t2"},
@@ -112,7 +112,7 @@ def test_confirmed_export_row_includes_consensus_metadata():
 
 
 def test_export_ignores_prior_confirmation_after_latest_defer():
-    from jevtriage.evaluation.export import confirmed_row
+    from ildongi.evaluation.export import confirmed_row
     row = confirmed_row({"id": "x"}, [
         {"labels": '{"ai_need":"필요"}', "user_id": "one", "confidence": .8, "created_at": "t1", "status": "confirmed"},
         {"labels": '{"ai_need":"불필요"}', "user_id": "one", "confidence": .8, "created_at": "t2", "status": "deferred"},

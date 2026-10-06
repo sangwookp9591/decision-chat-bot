@@ -5,14 +5,14 @@ import {resolve} from 'node:path';
 const tenant=`t-review-repair-${process.pid}`;
 const python=resolve('../backend/.venv/bin/python');
 const backend=resolve('../backend');
-const runPython=(code:string)=>execFileSync(python,['-c',code],{cwd:backend,encoding:'utf8',env:{...process.env,JEVTRIAGE_STRICT_TENANT:'1'}});
+const runPython=(code:string)=>execFileSync(python,['-c',code],{cwd:backend,encoding:'utf8',env:{...process.env,ILDONGI_STRICT_TENANT:'1'}});
 let reviewId:string;
 test.beforeAll(()=>{
  const output=runPython(`import sys,asyncio,json
 sys.path[:0]=['tests/acceptance','tests/integration']
 from provision import provision
 from test_review_assignment import sample,make_undetermined
-from jevtriage.db.driver import close_driver
+from ildongi.db.driver import close_driver
 async def main():
  await provision(('${tenant}',))
  _,review,command=await sample('${tenant}')
@@ -23,8 +23,8 @@ asyncio.run(main())`);
  reviewId=JSON.parse(output.trim().split('\n').at(-1)!).review_id;
 });
 test.afterAll(()=>runPython(`import asyncio
-from jevtriage.db.tx import write_tx
-from jevtriage.db.driver import close_driver
+from ildongi.db.tx import write_tx
+from ildongi.db.driver import close_driver
 async def main():
  async def clear(tx):
   await (await tx.run('MATCH (n {tenant_id:$tenant}) DETACH DELETE n',tenant='${tenant}')).consume()

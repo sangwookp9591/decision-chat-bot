@@ -4,13 +4,13 @@ from uuid import uuid4
 import pytest
 import pytest_asyncio
 
-from jevtriage.db.events import append_event_in_tx, list_events
-from jevtriage.db.jobs import OwnershipLost, create_job, heartbeat
-from jevtriage.db.requests import StaleRun, add_input_revision, create_request, set_active_run
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.jobs.worker import Worker
-from jevtriage.observe.trace_store import get_trace
+from ildongi.db.events import append_event_in_tx, list_events
+from ildongi.db.jobs import OwnershipLost, create_job, heartbeat
+from ildongi.db.requests import StaleRun, add_input_revision, create_request, set_active_run
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.jobs.worker import Worker
+from ildongi.observe.trace_store import get_trace
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -179,7 +179,7 @@ async def test_restart_recovery_and_deadline_journal(tenant, tmp_path):
     assert trace["steps"][0]["status"] == "succeeded"
 
     _, _, expired_run, expired_job = await make_job(tenant, age_seconds=2)
-    from jevtriage.journal.writer import JournalWriter
+    from ildongi.journal.writer import JournalWriter
     c = Worker(deadline_seconds=1, handlers={"test.sleep": recovered},
                journal=JournalWriter(tmp_path))
     await c.process_job(tenant, expired_job)

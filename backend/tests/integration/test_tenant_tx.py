@@ -4,7 +4,7 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.tx import cross_tenant_tx, read_tx, write_tx
+from ildongi.db.tx import cross_tenant_tx, read_tx, write_tx
 
 
 @pytest.mark.asyncio

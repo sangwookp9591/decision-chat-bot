@@ -1,6 +1,6 @@
 <div align="center">
 
-# Jev Triage · 일동이
+# 일동이
 
 **업무 요청 한 문장에서, 근거 있는 판단과 실행 가능한 업무까지.**
 
@@ -19,7 +19,7 @@
 ## 무엇을 하나요
 
 - **말로 시작하는 업무 접수.** 일동이에게 요청을 적거나 PDF·DOCX·Markdown을 첨부하세요. 대화 목록에서 진행 중인 요청을 다시 찾을 수 있습니다.
-- **기다림을 줄이는 판단.** 잠정 결과부터 보여 주고, Jev의 판단·원문 근거·업무 분해를 최종 카드로 연결합니다. 정보가 부족하면 판단을 보류합니다.
+- **기다림을 줄이는 판단.** 잠정 결과부터 보여 주고, Decision AI의 판단·원문 근거·업무 분해를 최종 카드로 연결합니다. 정보가 부족하면 판단을 보류합니다.
 - **사람이 책임지는 실행.** 검토자가 원문과 AI 원안을 비교하고 승인·수정·보완·반려합니다. 확정된 업무는 담당 조직과 선행 관계에 따라 추적합니다.
 - **수정이 쌓이는 학습.** 검토 이력을 규칙 후보로 모으고, 범위 결정·섀도 검증·게시·효과 관찰로 이어 갑니다. 정책과 판단의 버전도 함께 남습니다.
 
@@ -70,7 +70,7 @@
 ```mermaid
 flowchart LR
     A["요청·문서 접수"] --> B["파싱·민감정보 마스킹"]
-    B --> C["Jev 판단"]
+    B --> C["Decision AI 판단"]
     C --> P["잠정 분류"]
     C --> E["원문 근거"]
     C --> D["업무 분해"]
@@ -96,7 +96,7 @@ flowchart TB
     API -->|"SSE 진행 이벤트"| UI
     API --> DB[("Neo4j 5.26")]
     W["Worker · tenant 제한"] --> DB
-    W --> JEV["Jev LIVE API"]
+    W --> AI["Decision AI LIVE API"]
     API <-->|"알림"| REDIS[("Redis · 선택")]
     W <-->|"작업 알림"| REDIS
     API --> J["Journal · 로컬 영속 파일"]
@@ -130,7 +130,7 @@ python3.14 -m venv backend/.venv
 npm --prefix frontend ci
 ```
 
-기존 작업 디렉터리라면 clone·가상환경 생성·`.env` 복사를 생략합니다. **기존 `.env`를 덮어쓰지 마세요.** `.env`에 `JEV_API_KEY`를 넣고 아래 설정을 확인하세요. 이 파일은 로컬 비밀 설정이며 커밋하지 않습니다.
+기존 작업 디렉터리라면 clone·가상환경 생성·`.env` 복사를 생략합니다. **기존 `.env`를 덮어쓰지 마세요.** `.env`에 `AI_API_KEY`를 넣고 아래 설정을 확인하세요. 이 파일은 로컬 비밀 설정이며 커밋하지 않습니다.
 
 ### 2. 데이터베이스와 개발 계정
 
@@ -139,26 +139,28 @@ make up
 # 선택: Redis 알림을 사용할 때만
 # docker compose up -d redis
 
-(cd backend && .venv/bin/python -m jevtriage.db.schema)
+(cd backend && .venv/bin/python -m ildongi.db.schema)
 backend/.venv/bin/python scripts/bootstrap_dev.py
 ```
 
-기본 계정은 `requester@t-alpha.dev`, 암호는 `dev-only-change-me`입니다. 검토·업무·운영·정책·학습·평가는 각각 `reviewer`, `team_member`, `operator`, `policy_editor`, `rule_admin`, `labeler`를 이메일 앞부분에 사용합니다. 외부에 노출된 개발 환경에서는 **계정 생성 전** `JEVTRIAGE_DEV_PASSWORD`를 설정하세요. bootstrap은 기존 계정 암호를 재설정하지 않습니다.
+기본 계정은 `requester@t-alpha.dev`, 암호는 `dev-only-change-me`입니다. 검토·업무·운영·정책·학습·평가는 각각 `reviewer`, `team_member`, `operator`, `policy_editor`, `rule_admin`, `labeler`를 이메일 앞부분에 사용합니다. 외부에 노출된 개발 환경에서는 **계정 생성 전** `ILDONGI_DEV_PASSWORD`를 설정하세요. bootstrap은 기존 계정 암호를 재설정하지 않습니다.
 
 ### 3. 설정
 
 | 키 | 목적 | 기본·주의 |
 | --- | --- | --- |
-| `JEV_API_KEY` | 서버의 Jev LIVE 호출 | 비밀. 비어 있으면 LIVE 판단 불가 |
+| `AI_API_KEY` | 서버의 AI LIVE 호출 | 비밀. 비어 있으면 LIVE 판단 불가 |
+| `AI_NAME` | 화면·로그에 표시할 공통 AI 이름 | 기본 `Decision AI`; 백엔드·프론트 공통 |
+| `AI_MODEL` | 제공자 모델 ID | 기본 `jev-1.13.0` |
 | `NEO4J_URI` | Neo4j Bolt 주소 | `bolt://localhost:7687` |
 | `NEO4J_USER` | Neo4j 사용자 | `neo4j` |
 | `NEO4J_PASSWORD` | Neo4j 암호 | 개발 기본 `development-only`; 운영에서는 교체 |
-| `JEV_MODE` | 모델 연결 | `live` 또는 명시적 로컬 시험용 `mock`; 결과에도 모드 보존 |
+| `AI_MODE` | 모델 연결 | `live` 또는 명시적 로컬 시험용 `mock`; 결과에도 모드 보존 |
 | `DATA_DIR` | 원본·journal·metrics·알림 | 기본 `.data`는 프로세스 작업 디렉터리 기준. 아래처럼 절대 경로 권장 |
 | `REDIS_URL` | 선택적 이벤트·작업 알림 | 기본 비어 있음. 로컬 Redis 사용 시 `redis://127.0.0.1:6379/0` |
 | `MONITORING_WEBHOOK_URL` | Watchdog 알림 수신 주소 | 선택값. 비밀 URL 취급, `.env.example`에 없는 코드 지원 설정 |
 
-전체 설정은 [설정 목록](docs/operations/CONFIG.md)을 참고하세요. `JEV_MODE=mock`은 장애 시험 등 명시적인 로컬 시험에서만 사용하며, mock 결과는 LIVE 연동·인수 증거가 아닙니다. LIVE·mock 모두 민감한 실데이터로 시연하지 않습니다.
+전체 설정은 [설정 목록](docs/operations/CONFIG.md)을 참고하세요. `AI_MODE=mock`은 장애 시험 등 명시적인 로컬 시험에서만 사용하며, mock 결과는 LIVE 연동·인수 증거가 아닙니다. LIVE·mock 모두 민감한 실데이터로 시연하지 않습니다.
 
 ### 4. 실행과 중지
 
@@ -176,7 +178,7 @@ make web        # 별도 터미널; http://localhost:5173
 시험·E2E용 worker는 아래처럼 전용 tenant로 제한합니다. 같은 개발 데이터베이스에 여러 worker를 띄울 때는 각자의 범위를 확인하세요.
 
 ```sh
-(cd backend && .venv/bin/python -m jevtriage.jobs.worker --tenant t-alpha)
+(cd backend && .venv/bin/python -m ildongi.jobs.worker --tenant t-alpha)
 # 또는 WORKER_TENANTS=t-alpha make worker
 curl --fail http://localhost:8000/api/health
 curl --fail http://localhost:8000/api/ready
@@ -207,8 +209,8 @@ Docker Desktop이 함께 켜져 있으면 7687 포트를 먼저 잡아 Neo4j가 
 `cp .env.example .env` 후 아래처럼 채웁니다. 키 값은 예시이며, 실제 키는 이 파일에만 두고 커밋·공유하지 않습니다.
 
 ```dotenv
-JEV_API_KEY=<발급받은 Jev API 키>
-JEV_MODE=live                     # 키 없이 화면만 볼 때는 mock (mock 결과는 실제 판단이 아님)
+AI_API_KEY=<발급받은 Decision AI API 키>
+AI_MODE=live                     # 키 없이 화면만 볼 때는 mock (mock 결과는 실제 판단이 아님)
 NEO4J_URI=bolt://localhost:7687
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=development-only   # 개발 전용. 외부에 노출되는 환경에서는 바꾸고 컨테이너를 다시 만듭니다
@@ -231,7 +233,7 @@ REDIS_URL=                        # 선택. 쓰려면 redis://127.0.0.1:6379/0
 
 ### 개발 계정과 역할
 
-`scripts/bootstrap_dev.py`는 tenant `t-alpha`, `t-beta`와 조직 `ai`·`it`·`business`, 그리고 역할별 계정을 만듭니다. 이메일은 `<역할>@<tenant>.dev`, 암호는 `JEVTRIAGE_DEV_PASSWORD`(기본 `dev-only-change-me`)입니다.
+`scripts/bootstrap_dev.py`는 tenant `t-alpha`, `t-beta`와 조직 `ai`·`it`·`business`, 그리고 역할별 계정을 만듭니다. 이메일은 `<역할>@<tenant>.dev`, 암호는 `ILDONGI_DEV_PASSWORD`(기본 `dev-only-change-me`)입니다.
 
 | 역할 | 예시 계정 | 주로 쓰는 화면 |
 | --- | --- | --- |
@@ -264,7 +266,7 @@ docker compose exec neo4j cypher-shell -u neo4j -p development-only \
 | `make up` 후 Neo4j가 계속 unhealthy | 7687을 다른 프로세스(대개 Docker Desktop)가 사용 중. `lsof -i :7687`로 확인 후 종료하고 `docker context use orbstack` |
 | API 시작 시 Neo4j 인증 실패 | `.env`의 `NEO4J_PASSWORD`가 컨테이너를 처음 만들 때 값과 다름. 값을 되돌리거나 `.data/neo4j`를 지우고 다시 `make up` |
 | 요청을 보냈는데 결과가 나오지 않음 | Worker가 꺼져 있거나 다른 tenant로 제한됨. `make worker`(또는 `--tenant t-alpha`) 실행 여부 확인 |
-| 상단 배지가 `live`인데 판단 실패 | `JEV_API_KEY`가 비어 있거나 잘못됨. 키를 넣은 뒤 API·Worker 재시작 |
+| 상단 배지가 `live`인데 판단 실패 | `AI_API_KEY`가 비어 있거나 잘못됨. 키를 넣은 뒤 API·Worker 재시작 |
 | 모니터링이 '관측 불완전' | Collector·Watchdog 미실행 또는 `DATA_DIR`가 프로세스마다 다름. 모두 같은 절대 경로로 다시 실행 |
 | 로그인이 계속 거절됨 | 15분 안에 10회 실패하면 잠깁니다. 15분 뒤 다시 시도하거나 개발 DB에서 계정을 다시 만듭니다 |
 | 화면이 옛 모습 그대로 | 브라우저 강력 새로고침, 또는 `npm --prefix frontend ci` 후 `make web` 재시작 |
@@ -276,7 +278,7 @@ docker compose exec neo4j cypher-shell -u neo4j -p development-only \
 | 목적 | 명령 |
 | --- | --- |
 | 백엔드 전체 시험 | `(cd backend && .venv/bin/pytest -q)` |
-| Ruff | `(cd backend && .venv/bin/ruff check jevtriage tests)` |
+| Ruff | `(cd backend && .venv/bin/ruff check ildongi tests)` |
 | 계층·순환 의존성 | `(cd backend && .venv/bin/lint-imports)` |
 | 전체 린트 | `make lint` |
 | Vitest | `npm --prefix frontend run test` |
@@ -298,10 +300,10 @@ docker compose exec neo4j cypher-shell -u neo4j -p development-only \
 
 ```sh
 make backup BACKUP_DIR=/secure/path/backup-id \
-  COMPOSE_PROJECT=jevtriage-backup NEO4J_CONTAINER=jevtriage-backup-neo4j-1 \
+  COMPOSE_PROJECT=ildongi-backup NEO4J_CONTAINER=ildongi-backup-neo4j-1 \
   NEO4J_BOLT_PORT=7689 NEO4J_DATA_DIR="$PWD/.data/neo4j" DATA_DIR="$PWD/.data"
-make restore BACKUP_DIR=/secure/path/backup-id RESTORE_DATA_DIR=/srv/jevtriage-restored \
-  COMPOSE_PROJECT=jevtriage-backup NEO4J_CONTAINER=jevtriage-backup-neo4j-1 NEO4J_BOLT_PORT=7689
+make restore BACKUP_DIR=/secure/path/backup-id RESTORE_DATA_DIR=/srv/ildongi-restored \
+  COMPOSE_PROJECT=ildongi-backup NEO4J_CONTAINER=ildongi-backup-neo4j-1 NEO4J_BOLT_PORT=7689
 ```
 
 </details>
@@ -331,7 +333,7 @@ artifacts/           시연·검증·감사 증거
 | 제품 목표·범위 | [요구사항](docs/spec/01_GOALS_REQUIREMENTS.md) · [사용자 경험](docs/spec/02_USER_EXPERIENCE.md) · [명세 색인](docs/spec/README.md) |
 | 품질과 인수 조건 | [SLO](docs/spec/05_SLO.md) · [인수 기준](docs/spec/06_ACCEPTANCE.md) |
 | 구조와 실행 | [전체 아키텍처](docs/architecture/ARCHITECTURE_OVERVIEW.html) · [구현 안내](docs/architecture/IMPLEMENTATION.md) · [실행 계약](docs/architecture/EXECUTION_CONTRACT.md) · [데이터 모델](docs/architecture/DATA_MODEL.md) |
-| 접수·판단·검토 | [접수 API](docs/architecture/INGEST_API.md) · [Jev 계약](docs/architecture/JEV_CONTRACT.md) · [판단 설계](docs/architecture/JUDGMENT_DESIGN.md) · [검토·배정](docs/architecture/REVIEW_ASSIGN.md) |
+| 접수·판단·검토 | [접수 API](docs/architecture/INGEST_API.md) · [Decision AI 계약](docs/architecture/AI_CONTRACT.md) · [판단 설계](docs/architecture/JUDGMENT_DESIGN.md) · [검토·배정](docs/architecture/REVIEW_ASSIGN.md) |
 | 실행 관찰·맵 | [관찰 API](docs/architecture/OBSERVE_API.md) · [판단 그래프](docs/architecture/JUDGMENT_GRAPH.md) · [이벤트 복구](docs/architecture/EVENTS.md) |
 | 학습·평가 | [학습 루프](docs/spec/08_LEARNING_LOOP.md) · [후보](docs/architecture/LEARNING_CANDIDATES.md) · [검증](docs/architecture/LEARNING_VALIDATION.md) · [규칙](docs/architecture/LEARNING_RULES.md) · [평가 라벨](docs/architecture/EVALUATION_LABELS.md) |
 | 정책·접근성 | [정책](docs/architecture/POLICY.md) · [인증](docs/architecture/AUTH.md) · [디자인 시스템](docs/architecture/DESIGN_SYSTEM.md) · [접근성](docs/architecture/A11Y.md) |

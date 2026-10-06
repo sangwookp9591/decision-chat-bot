@@ -7,7 +7,7 @@ test.use({ video: 'on' });
 
 test('submit → optimistic bubble → provisional cards → final result, with measured timings', async ({ page }, info) => {
   test.setTimeout(240_000);
-  const login = await page.request.post('/api/auth/login', { data: { email, password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } });
+  const login = await page.request.post('/api/auth/login', { data: { email, password: process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me' } });
   expect(login.ok(), `login failed: ${login.status()}`).toBeTruthy();
   await page.goto('/');
   await page.evaluate(() => {

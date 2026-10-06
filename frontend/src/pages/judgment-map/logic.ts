@@ -1,6 +1,7 @@
 import type { GraphEdge, GraphNode } from '../../api/graph';
 import { statusText } from '../../components/statusLabels';
 import { mapNodeTitleLabel } from '../../lib/labels';
+import { AI_NAME } from '../../lib/brand';
 
 export type Highlight = { selected: string | null; nodeIds: Set<string>; edgeIds: Set<string>; upstreamIds: Set<string>; downstreamIds: Set<string> };
 
@@ -109,7 +110,7 @@ export function pathRows(nodes: GraphNode[], edges: GraphEdge[], highlight: High
 }
 
 export const KIND_LABEL: Record<string, string> = {
-  EvidenceSpan: '문서 근거', ModelOutput: 'Jev 반환값', Correction: '사람 수정', RuleCandidate: '규칙 후보',
+  EvidenceSpan: '문서 근거', ModelOutput: `${AI_NAME} 반환값`, Correction: '사람 수정', RuleCandidate: '규칙 후보',
   RuleDecision: '규칙 결정', ReviewDecision: '요청 검토 결정', RuleVersion: '규칙 버전', ValidationRun: '비교 검증',
   ConfigVersion: 'Config 버전', RunStep: '실행 단계',
 };
@@ -125,11 +126,12 @@ export const SKEW_T = Math.tan((SCENE.skew * Math.PI) / 180);
 export type Box = { x: number; y: number; w: number; h: number };
 export type Plane = Box & { layer: number };
 
-/** Short tile title: the kind is shown as a chip, so a repeated kind label / "Jev ·" prefix is dropped (never to an empty title). */
+/** Short tile title: the kind is shown as a chip, so a repeated kind label / "Decision AI ·" prefix is dropped (never to an empty title). */
 export function tileTitle(kind: string, title: string): string {
   const full = mapNodeTitleLabel(title);
   const kindLabel = KIND_LABEL[kind] || '';
-  let text = full.replace(/^Jev\s*[·:]\s*/, '');
+  const aiPrefix = new RegExp(`^${AI_NAME.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*[·:]\\s*`);
+  let text = full.replace(aiPrefix, '');
   if (kindLabel && text.startsWith(kindLabel)) text = text.slice(kindLabel.length).replace(/^\s*[·:]?\s*/, '');
   return text.trim() || full;
 }

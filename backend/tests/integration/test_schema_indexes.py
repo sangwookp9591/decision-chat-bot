@@ -5,10 +5,10 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.driver import get_driver
-from jevtriage.db.jobs import create_job
-from jevtriage.db.schema import apply_schema
-from jevtriage.jobs.worker import Worker
+from ildongi.db.driver import get_driver
+from ildongi.db.jobs import create_job
+from ildongi.db.schema import apply_schema
+from ildongi.jobs.worker import Worker
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

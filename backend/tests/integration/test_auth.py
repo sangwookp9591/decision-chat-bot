@@ -3,10 +3,10 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import hash_password
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.main import create_app
+from ildongi.auth.core import hash_password
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.main import create_app
 
 
 @pytest.fixture
@@ -44,9 +44,9 @@ def test_login_me_csrf_logout_and_expiry(auth_graph):
         assert client.post("/api/auth/login", json={"email": f"{auth_graph}@test", "password": "correct horse"}).status_code == 200
         import asyncio
 
-        from jevtriage.auth.core import _token_hash
-        from jevtriage.db.driver import get_driver
-        token = client.cookies.get("jev_session")
+        from ildongi.auth.core import _token_hash
+        from ildongi.db.driver import get_driver
+        token = client.cookies.get("ildongi_session")
         async def expire():
             driver = await get_driver()
             async with driver.session() as session:
@@ -56,7 +56,7 @@ def test_login_me_csrf_logout_and_expiry(auth_graph):
 
 
 def test_scope_and_operator_source_policy(auth_graph):
-    from jevtriage.auth.core import Principal, can_view_request, scope_filter_cypher
+    from ildongi.auth.core import Principal, can_view_request, scope_filter_cypher
     requester = Principal(auth_graph, "u1", ("org-a",), frozenset({"requester"}), False)
     operator = Principal(auth_graph, "u2", (), frozenset({"operator"}), False)
     meta = {"tenant_id": auth_graph, "created_by": "u1", "org_ids": []}
@@ -69,7 +69,7 @@ def test_scope_and_operator_source_policy(auth_graph):
 def test_parallel_first_failed_logins_create_one_counter_and_count_every_attempt(auth_graph):
     from concurrent.futures import ThreadPoolExecutor
 
-    from jevtriage.db.driver import get_driver
+    from ildongi.db.driver import get_driver
 
     email = f"{auth_graph}@test"
     with TestClient(create_app()) as client, ThreadPoolExecutor(max_workers=20) as pool:

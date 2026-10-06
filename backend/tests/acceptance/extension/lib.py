@@ -1,6 +1,6 @@
 """Shared helpers for the T38 extension scenario: API client, DB queries, evidence ledger.
 
-Secrets (JEV_API_KEY) are never read or written here. Evidence holds IDs, counts and short values only.
+Secrets (AI_API_KEY) are never read or written here. Evidence holds IDs, counts and short values only.
 """
 from __future__ import annotations
 
@@ -13,11 +13,11 @@ from pathlib import Path
 
 import httpx
 
-from jevtriage.db.driver import get_driver
+from ildongi.db.driver import get_driver
 
 API = os.getenv("X38_API", "http://127.0.0.1:8138")
 TENANT = os.getenv("X38_TENANT", "")
-PASSWORD = os.getenv("JEVTRIAGE_DEV_PASSWORD", "dev-only-change-me")
+PASSWORD = os.getenv("ILDONGI_DEV_PASSWORD", "dev-only-change-me")
 OUT = Path(os.getenv("X38_OUT", "")) if os.getenv("X38_OUT") else None
 STATE = (OUT / "state.json") if OUT else None
 LEDGER = (OUT / "ledger.json") if OUT else None
@@ -52,7 +52,7 @@ class Client:
         self.http = httpx.Client(base_url=API, timeout=60)
         r = self.http.post("/api/auth/login", json={"email": f"{role}@{TENANT}.dev", "password": PASSWORD})
         r.raise_for_status()
-        self.csrf = self.http.cookies.get("jev_csrf") or ""
+        self.csrf = self.http.cookies.get("ildongi_csrf") or ""
 
     def get(self, path, **kw):
         return self.http.get(path, **kw)

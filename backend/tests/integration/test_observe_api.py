@@ -4,12 +4,12 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.requests import add_input_revision, create_request
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.observe.flow import get_flow
-from jevtriage.observe.playback import get_playback
-from jevtriage.observe.topology import get_topology
+from ildongi.db.requests import add_input_revision, create_request
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.observe.flow import get_flow
+from ildongi.observe.playback import get_playback
+from ildongi.observe.topology import get_topology
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

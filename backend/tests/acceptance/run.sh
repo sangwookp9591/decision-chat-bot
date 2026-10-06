@@ -2,7 +2,7 @@
 # `make test-acceptance`: start the acceptance runtime (shared Neo4j via `make up`, dedicated tenants,
 # tenant-limited workers, API on ACC_PORT), run backend acceptance tests and the Playwright UI scenarios,
 # write everything under artifacts/validation/t21/<timestamp>/, and always stop what it started.
-# Uses live Jev (JEV_MODE=live; JEV_API_KEY from .env). Set ACC_SKIP_UI=1 to skip the UI part.
+# Uses live Decision AI (AI_MODE=live; AI_API_KEY from .env). Set ACC_SKIP_UI=1 to skip the UI part.
 set -u
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"; cd "$ROOT"
 TS="$(printf '%s' "${ACC_RUN_ID:-$(date -u +%Y%m%dT%H%M%SZ)-$$}" | tr '[:upper:]' '[:lower:]')"

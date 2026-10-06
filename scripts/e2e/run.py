@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'artifacts/review/e2e-all' / time.strftime('%Y%m%dT%H%M%S')
 OUT.mkdir(parents=True)
 TENANT = 't-e2e-' + time.strftime('%m%d%H%M%S')
-env = dict(os.environ, JEV_MODE='mock', E2E_TENANT=TENANT, UX2_TENANT=TENANT,
+env = dict(os.environ, AI_MODE='mock', E2E_TENANT=TENANT, UX2_TENANT=TENANT,
            E2E_REQUESTER=f'requester@{TENANT}.dev', E2E_BASE_URL='http://127.0.0.1:8491',
            DATA_DIR=str(OUT / 'data'), REDIS_URL='', A11Y_SHOT_DIR=str(OUT / 'a11y'),
            CHAT_SHOT_DIR=str(OUT / 'chat'), POLISH_SHOT_DIR=str(OUT / 'polish'),
@@ -35,9 +35,9 @@ def start(name, args, cwd, extra=None):
 
 try:
     subprocess.run([py, str(ROOT / 'scripts/e2e/seed.py')], cwd=ROOT, env=env, check=True)
-    start('api', [py, '-m', 'uvicorn', 'jevtriage.main:app', '--host', '127.0.0.1', '--port', '11091'], ROOT / 'backend')
+    start('api', [py, '-m', 'uvicorn', 'ildongi.main:app', '--host', '127.0.0.1', '--port', '11091'], ROOT / 'backend')
     start('worker', [py, str(ROOT / 'scripts/e2e/mock_worker.py'), '--tenant', TENANT, '--tenant', TENANT+'g'], ROOT / 'backend')
-    start('fault-worker', [py, '-m', 'jevtriage.jobs.worker', '--tenant', TENANT+'f', '--max-attempts', '1'], ROOT / 'backend', {'JEV_MOCK_FAULT': 'schema'})
+    start('fault-worker', [py, '-m', 'ildongi.jobs.worker', '--tenant', TENANT+'f', '--max-attempts', '1'], ROOT / 'backend', {'AI_MOCK_FAULT': 'schema'})
     start('vite', ['node', 'node_modules/vite/bin/vite.js', '--config', 'e2e/vite.all.config.ts'], ROOT / 'frontend')
     for _ in range(100):
         if any(p.poll() is not None for p in processes):

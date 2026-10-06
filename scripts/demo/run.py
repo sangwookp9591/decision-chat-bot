@@ -6,7 +6,7 @@ STAMP = datetime.datetime.now(datetime.UTC).strftime('%Y%m%dT%H%M%SZ')
 OUT = ROOT / 'artifacts/demo' / STAMP
 OUT.mkdir(parents=True)
 (OUT/'raw').mkdir()
-env = dict(os.environ, DEMO_OUT=str(OUT), DEMO_TENANT='t-demo-'+STAMP.lower(), DATA_DIR=str(OUT/'raw/data'), JEV_MODE='live', REDIS_URL='redis://127.0.0.1:6379/0', MONITORING_WEBHOOK_URL='', PYTHONDONTWRITEBYTECODE='1')
+env = dict(os.environ, DEMO_OUT=str(OUT), DEMO_TENANT='t-demo-'+STAMP.lower(), DATA_DIR=str(OUT/'raw/data'), AI_MODE='live', REDIS_URL='redis://127.0.0.1:6379/0', MONITORING_WEBHOOK_URL='', PYTHONDONTWRITEBYTECODE='1')
 env['DEMO_COMMIT']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
 children=[]
 logs=[]
@@ -20,10 +20,10 @@ try:
         with socket.socket() as sock:
             if sock.connect_ex(('127.0.0.1',port))==0: raise RuntimeError(f'Port {port} already in use; refusing to replace process')
     subprocess.run([py,'scripts/demo/provision.py',env['DEMO_TENANT']],cwd=ROOT,env=env,check=True,stdout=subprocess.DEVNULL)
-    start('api',[py,'-m','uvicorn','jevtriage.main:app','--host','127.0.0.1','--port','10291'],ROOT/'backend')
-    start('worker',[py,'-m','jevtriage.jobs.worker','--tenant',env['DEMO_TENANT']],ROOT/'backend')
-    start('collector',[py,'-m','jevtriage.journal.collector'],ROOT/'backend')
-    start('watchdog',[py,'-m','jevtriage.journal.watchdog'],ROOT/'backend')
+    start('api',[py,'-m','uvicorn','ildongi.main:app','--host','127.0.0.1','--port','10291'],ROOT/'backend')
+    start('worker',[py,'-m','ildongi.jobs.worker','--tenant',env['DEMO_TENANT']],ROOT/'backend')
+    start('collector',[py,'-m','ildongi.journal.collector'],ROOT/'backend')
+    start('watchdog',[py,'-m','ildongi.journal.watchdog'],ROOT/'backend')
     start('vite',['node','scripts/demo/vite.mjs'])
     for url in ('http://127.0.0.1:10291/api/ready','http://127.0.0.1:7591'):
         for i in range(60):

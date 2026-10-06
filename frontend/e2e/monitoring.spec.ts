@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('operator monitoring screen matches a real API aggregate', async ({ page }) => {
-  const login = await page.request.post('/api/auth/login', { data: { email: `operator@${process.env.E2E_TENANT || 't-alpha'}.dev`, password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } });
+  const login = await page.request.post('/api/auth/login', { data: { email: `operator@${process.env.E2E_TENANT || 't-alpha'}.dev`, password: process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me' } });
   expect(login.ok(), `login failed: ${login.status()}`).toBeTruthy();
   const response = await page.request.get('/api/monitoring/summary');
   expect(response.ok(), `summary failed: ${response.status()}`).toBeTruthy();

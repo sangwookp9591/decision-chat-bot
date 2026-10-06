@@ -7,8 +7,8 @@ from docx import Document
 from pypdf import PdfWriter
 from reportlab.pdfgen import canvas
 
-from jevtriage.ingest import files
-from jevtriage.ingest.parsers import api, check_request_limits, parse_file
+from ildongi.ingest import files
+from ildongi.ingest.parsers import api, check_request_limits, parse_file
 
 
 def pdf(path, pages=1, text="Hello PDF", encrypted=False):

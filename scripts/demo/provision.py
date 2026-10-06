@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'backend/tests/acceptance'))
 sys.path.insert(0, str(ROOT / 'backend'))
 import provision
-from jevtriage.db.driver import close_driver, get_driver
+from ildongi.db.driver import close_driver, get_driver
 provision.ROLES = (*provision.ROLES, 'labeler')
 async def main():
     await provision.provision(tuple(sys.argv[1:]))

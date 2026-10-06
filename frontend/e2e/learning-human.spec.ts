@@ -11,8 +11,8 @@ const seed = `
 import asyncio, sys
 sys.path[:0] = ['../backend', '../backend/tests/acceptance']
 from provision import provision
-from jevtriage.db.tx import write_tx
-from jevtriage.db.driver import close_driver
+from ildongi.db.tx import write_tx
+from ildongi.db.driver import close_driver
 async def main():
     tenant = sys.argv[1]
     await provision((tenant,))
@@ -30,8 +30,8 @@ asyncio.run(main())
 const cleanup = `
 import asyncio,sys
 sys.path.insert(0,'../backend')
-from jevtriage.db.tx import write_tx
-from jevtriage.db.driver import close_driver
+from ildongi.db.tx import write_tx
+from ildongi.db.driver import close_driver
 async def main():
     async def op(tx):
         await (await tx.run('MATCH (n {tenant_id:$tenant}) DETACH DELETE n',tenant=sys.argv[1])).consume()

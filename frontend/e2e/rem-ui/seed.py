@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT / "backend"), str(ROOT / "backend/tests/acceptance"), str(ROOT / "backend/tests/integration")]
 from provision import provision  # noqa: E402
 from test_review_assignment import sample  # noqa: E402
-from jevtriage.db.driver import close_driver  # noqa: E402
-from jevtriage.db.tx import write_tx  # noqa: E402
+from ildongi.db.driver import close_driver  # noqa: E402
+from ildongi.db.tx import write_tx  # noqa: E402
 
 
 async def main(tenant: str, clear: bool = False) -> None:

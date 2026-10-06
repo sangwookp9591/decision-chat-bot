@@ -4,7 +4,7 @@
 
 `/evaluation`은 reviewer 또는 labeler 역할의 사용자가 표본을 검토하는 화면이다. 후보 API는 동결된 `tuning.jsonl`·`final.jsonl`에서 요청과 제안 라벨, 근거 메모를 읽는다. 라벨 수정·확정 또는 보류(사유 필수) 및 확신도는 Neo4j `EvalLabel`에 사용자·시각과 함께 저장하며 `AuditEvent`를 남긴다. 두 명 이상이 같은 표본을 라벨링하면 일치 여부를 합의 상태로 표시한다. final 분할에서는 편향 방지를 위해 API가 모델 예측 정보를 반환하지 않는다.
 
-화면에서 `1`–`4`는 라벨 선택, Enter는 확정, J/K는 표본 이동 단축키다. `python -m jevtriage.evaluation.export`는 최종 라벨을 `candidates/confirmed.jsonl`에 내보내고 manifest의 해시와 개수를 갱신한다. 러너는 해당 파일의 confirmed 라벨을 우선 사용하며, 아직 확정하지 않은 후보만 제안 라벨로 계산하므로 상태를 잠정으로 유지한다. tuning과 final의 분리 및 final 표본의 튜닝 재사용 금지 원칙은 그대로 적용한다.
+화면에서 `1`–`4`는 라벨 선택, Enter는 확정, J/K는 표본 이동 단축키다. `python -m ildongi.evaluation.export`는 최종 라벨을 `candidates/confirmed.jsonl`에 내보내고 manifest의 해시와 개수를 갱신한다. 러너는 해당 파일의 confirmed 라벨을 우선 사용하며, 아직 확정하지 않은 후보만 제안 라벨로 계산하므로 상태를 잠정으로 유지한다. tuning과 final의 분리 및 final 표본의 튜닝 재사용 금지 원칙은 그대로 적용한다.
 
 `candidates/requests.jsonl`에는 제약사 업무 맥락을 반영한 가상 한국어 요청 120건이 있다. 환자·임직원 개인정보, 실명, 실제 회사명은 사용하지 않았다. 제안 라벨은 구현자가 만든 평가 후보일 뿐이며 모든 행의 `label_status`는 `proposed`다. 따라서 현업이 정답을 검토·확정하기 전 산출 지표는 `잠정(현업 미확정)`으로만 해석한다.
 
@@ -16,7 +16,7 @@
 
 ## 실행
 
-저장소 루트에서 `backend/.venv/bin/python eval/runner.py --split tuning --max-samples 60 --concurrency 2 --retries 1`로 실행한다. 러너는 `JEV_MODE=live`와 기존 설정의 `JEV_API_KEY`를 확인하고 실제 `run_judgment`를 호출한다. `.env`를 수정하지 않으며 키, 요청 원문, 근거 발췌, SDK 예외 문자열을 터미널이나 결과 파일에 기록하지 않는다. 각 요청은 임베디드 judgment 호출 외에 최대 4개의 근거 확인과 업무 분해 호출도 수행하므로 60개 표본의 Jev 요청 비용은 최대 약 360회 호출 규모가 될 수 있다. 동시성은 기본 2이며 실패 시 행 ID와 예외 형식만 기록한다.
+저장소 루트에서 `backend/.venv/bin/python eval/runner.py --split tuning --max-samples 60 --concurrency 2 --retries 1`로 실행한다. 러너는 `AI_MODE=live`와 기존 설정의 `AI_API_KEY`를 확인하고 실제 `run_judgment`를 호출한다. `.env`를 수정하지 않으며 키, 요청 원문, 근거 발췌, SDK 예외 문자열을 터미널이나 결과 파일에 기록하지 않는다. 각 요청은 임베디드 judgment 호출 외에 최대 4개의 근거 확인과 업무 분해 호출도 수행하므로 60개 표본의 Decision AI 요청 비용은 최대 약 360회 호출 규모가 될 수 있다. 동시성은 기본 2이며 실패 시 행 ID와 예외 형식만 기록한다.
 
 산출물은 `artifacts/validation/eval/<UTC timestamp>/raw.json`과 `metrics.json`이다. `raw.json`은 표본 ID·제안 라벨·예측·confidence·검토/자동 처리 신호·사용량·버전 및 안전한 실패 유형만 보존한다. `metrics.json`은 분류별 macro-F1, 긴급 recall, 클래스별 표본 수와 confusion matrix, 요청별 담당 팀 집합 F1 평균, confidence 구간별 정확도, 검토 전환율, 자동 처리 비율을 기록한다. 실패 표본은 정확도 계산에서 제외하고 실패 수를 별도 공개한다.
 
@@ -28,7 +28,7 @@ SLO 목표는 최종 표본에서 AI 필요성·개발 가능성·긴급도 macr
 
 ## 결과: qset-v2 (Q1, tuning 60건, 잠정(현업 미확정))
 
-Jev live 재실행(`python eval/runner.py --split tuning`), 실패 0건. final split은 열지 않았다. 라벨(`proposed`)은 수정하지 않았다.
+Decision AI live 재실행(`python eval/runner.py --split tuning`), 실패 0건. final split은 열지 않았다. 라벨(`proposed`)은 수정하지 않았다.
 
 | 지표 | 목표 | qset-v1 (20261003T074120Z) | qset-v2 (20261003T074948Z) |
 | --- | --- | --- | --- |

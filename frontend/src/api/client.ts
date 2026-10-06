@@ -3,8 +3,8 @@ import { localizeError } from '../components/statusLabels';
 export type ApiError = { status: number; code: string; message: string; details?: unknown; raw?: string };
 
 export function csrfToken(): string | undefined {
-  const cookie = document.cookie.split('; ').find((part) => part.startsWith('jev_csrf='));
-  if (cookie) return decodeURIComponent(cookie.slice('jev_csrf='.length));
+  const cookie = document.cookie.split('; ').find((part) => part.startsWith('ildongi_csrf='));
+  if (cookie) return decodeURIComponent(cookie.slice('ildongi_csrf='.length));
   return document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content || undefined;
 }
 

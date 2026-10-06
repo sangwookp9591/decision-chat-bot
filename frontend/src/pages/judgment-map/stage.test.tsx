@@ -1,3 +1,4 @@
+import { AI_NAME } from '../../lib/brand';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
@@ -13,10 +14,10 @@ const node = (id: string, kind: GraphNode['kind'], layer: number, title = id, ex
 const layers = [1, 2, 3, 4, 5].map((layer) => ({ layer, name: `계층${layer}`, desc: `설명${layer}`, count: 0 }));
 
 describe('tile titles', () => {
-  it('drops the repeated kind label and Jev prefix but never returns an empty title', () => {
+  it('drops the repeated kind label and Decision AI prefix but never returns an empty title', () => {
     expect(tileTitle('EvidenceSpan', '문서 근거 회의실.md 3 3')).toBe('회의실.md 3 3');
-    expect(tileTitle('ModelOutput', 'Jev · lead_org')).toBe('담당 조직 · 주관');
-    expect(tileTitle('ModelOutput', 'Jev 반환값')).toBe('Jev 반환값');
+    expect(tileTitle('ModelOutput', `${AI_NAME} · lead_org`)).toBe('담당 조직 · 주관');
+    expect(tileTitle('ModelOutput', `${AI_NAME} 반환값`)).toBe(`${AI_NAME} 반환값`);
     expect(tileTitle('RunStep', '실행 단계')).toBe('실행 단계');
   });
 });
@@ -91,7 +92,7 @@ describe('stage rendering', () => {
 
 describe('detail panel formatting', () => {
   const step = node('step_0a1b2c3d4e5f60718293a4b5c6d7e8f9', 'RunStep', 5, '실행 단계', { status: 'completed', at: '2026-10-04T10:07:52.540000000+00:00', version: '{"config_version":1,"model":"jev-1.13.0","question_set_version":2}' });
-  const info = { ...step, upstream: [{ id: 'u1', kind: 'ModelOutput' as const, layer: 1, title: 'Jev · lead_org' }], downstream: [], edges: [], can_read_source: false, source_link: null };
+  const info = { ...step, upstream: [{ id: 'u1', kind: 'ModelOutput' as const, layer: 1, title: `${AI_NAME} · lead_org` }], downstream: [], edges: [], can_read_source: false, source_link: null };
   const show = () => render(<MemoryRouter><Detail node={step} detail={info} loading={false} onPick={() => undefined} layerName={() => '업무 단계'} /></MemoryRouter>);
   it('shows versions as chips, a short id with copy, a formatted time and a Korean status badge', () => {
     show();

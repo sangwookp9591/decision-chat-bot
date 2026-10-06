@@ -1,4 +1,4 @@
-"""T38 connected extension scenario driver (stage by stage, live Jev, real Neo4j).
+"""T38 connected extension scenario driver (stage by stage, live Decision AI, real Neo4j).
 
 Run from backend/: X38_OUT=<dir> X38_TENANT=<t> X38_API=<url> .venv/bin/python -m tests.acceptance.extension.scenario <stage>
 Each stage records gate evidence to <OUT>/ledger.json and IDs to <OUT>/state.json.
@@ -447,7 +447,7 @@ def stage_weaken() -> None:
     # Config-level weakening (policy_editor path is also closed; rule_admin config path is via create_version only).
     wk = [{"rule_id": "R-WEAKEN_TEST-02", "version": 1, "effect": "rule", "target": "feasibility", "scope": {"all": []},
            "action": {"set": "가능"}, "candidate_id": "c", "decision_id": "d"}]
-    from jevtriage.policy.service import validate_config
+    from ildongi.policy.service import validate_config
     active = admin.json("/api/policy/active")["config"]
     _, errs = validate_config({**active, "rules": active["rules"] + wk})
     after = snapshot(["RuleVersion", "ConfigVersion"])
@@ -663,7 +663,7 @@ def db_effects(rule_id: str) -> dict:
 
 
 async def _inv_applied(tenant: str) -> list[dict]:
-    from jevtriage.db.driver import get_driver
+    from ildongi.db.driver import get_driver
     driver = await get_driver()
     async with driver.session() as session:
         return await (await session.run("MATCH (s:RunStep {tenant_id:$tenant})-[a:APPLIED]->(rv:RuleVersion) RETURN s.id AS step,s.run_id AS run,rv.id AS rule,a.outcome AS outcome,a.before AS before,a.after AS after", tenant=tenant)).data()
@@ -998,7 +998,7 @@ def stage_playback() -> None:
             r = reviewer.get(path)
             out.append((path.split("/")[-1].split("?")[0], r.status_code))
     after = snapshot(labels)
-    check("X10", "observe playback/flow/topology of stored runs (with rule steps): no node created/changed (13 labels, count+property hash); observe module imports no Jev client (grep)",
+    check("X10", "observe playback/flow/topology of stored runs (with rule steps): no node created/changed (13 labels, count+property hash); observe module imports no Decision AI client (grep)",
           before == after and all(code == 200 for _, code in out), {"calls": out, "snapshot": after})
 
 
@@ -1016,7 +1016,7 @@ def stage_dbsummary() -> None:
         ("Audit by action", "MATCH (a:Audit {tenant_id:$tenant}) WHERE a.action STARTS WITH 'rule.' RETURN a.action,count(*) AS n ORDER BY a.action"),
         ("Events by kind (rule.*)", "MATCH (e:Event {tenant_id:$tenant}) WHERE e.kind STARTS WITH 'rule.' RETURN e.kind,count(*) AS n ORDER BY e.kind"),
         ("Graph relationships among learning nodes", "MATCH (a {tenant_id:$tenant})-[r]->(b {tenant_id:$tenant}) WHERE type(r) IN ['CITES','CORRECTS','RECORDED','SUPPORTED_BY','DECIDES','DERIVED_FROM','PUBLISHED_IN','VALIDATES','APPLIED','USED_OUTPUT'] RETURN type(r) AS type,count(*) AS n ORDER BY type"),
-        ("Judgments by mode (live Jev)", "MATCH (j:Judgment {tenant_id:$tenant}) RETURN j.mode AS mode,count(*) AS n"),
+        ("Judgments by mode (live Decision AI)", "MATCH (j:Judgment {tenant_id:$tenant}) RETURN j.mode AS mode,count(*) AS n"),
         ("Runs by kind", "MATCH (r:Run {tenant_id:$tenant}) RETURN coalesce(r.run_kind,r.kind) AS kind,count(*) AS n ORDER BY kind"),
     ]
     L = ["# DB 질의 결과 요약 (T38)\n", f"tenant `{TENANT}` — 읽기 전용 Cypher, 값은 질의 실행 시점의 Neo4j 저장 결과.\n"]

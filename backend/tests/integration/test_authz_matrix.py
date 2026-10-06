@@ -10,14 +10,14 @@ import pytest_asyncio
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal, can_review, hash_password
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.ingest import api as ingest_api
-from jevtriage.main import create_app
-from jevtriage.review.api import DecisionCommand, _allowed, review_decision
-from jevtriage.review.service import required_reviewer_org
+from ildongi.auth.core import Principal, can_review, hash_password
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.ingest import api as ingest_api
+from ildongi.main import create_app
+from ildongi.review.api import DecisionCommand, _allowed, review_decision
+from ildongi.review.service import required_reviewer_org
 from tests.integration.test_review_assignment import sample
 
 
@@ -102,7 +102,7 @@ async def test_request_detail_redacts_revision_text(monkeypatch):
     ("rule_admin", "tenant-it", False, 404),
 ])
 def test_request_access_matrix(role, org, source, expected):
-    from jevtriage.auth.policy import can
+    from ildongi.auth.policy import can
     principal = Principal("tenant", "other", (org,), frozenset({role}), source)
     meta = {"tenant_id": "tenant", "created_by": "owner", "org_ids": ["tenant-ai"]}
     assert (200 if can(principal, "view_request", meta) else 404) == expected
@@ -111,7 +111,7 @@ def test_request_access_matrix(role, org, source, expected):
 
 
 def test_source_redaction_nested_payload():
-    from jevtriage.auth.policy import redact_source
+    from ildongi.auth.policy import redact_source
     principal = Principal("tenant", "operator", (), frozenset({"operator"}), False)
     payload = {"revisions": [{"text": "SECRET", "text_hash": "hash"}],
                "outputs": [{"evidence": [{"source_text": "SECRET"}]}]}
@@ -143,7 +143,7 @@ def test_source_redaction_nested_payload():
     ("monitoring_read", "rule_admin", "ai", False, 403),
 ])
 def test_action_status_matrix(action, role, org, source, expected):
-    from jevtriage.auth.policy import can
+    from ildongi.auth.policy import can
     principal = Principal("tenant", "other", (f"tenant-{org}",), frozenset({role}), source)
     meta = {"tenant_id": "tenant", "created_by": "owner", "org_ids": ["tenant-ai"],
             "required_reviewer_org": "tenant-ai", "task_org_ids": ["tenant-ai"]}
@@ -187,7 +187,7 @@ ENDPOINT_CONTRACT = [
 @pytest.mark.parametrize("role_name", ROLE_CONTRACT)
 @pytest.mark.parametrize("same_tenant", [True, False], ids=["same-tenant", "other-tenant"])
 def test_endpoint_authorization_contract(endpoint, action, allowed, role_name, same_tenant):
-    from jevtriage.auth.policy import can
+    from ildongi.auth.policy import can
     role, org, source = ROLE_CONTRACT[role_name]
     principal = Principal("tenant", "actor", (f"tenant-{org}",), frozenset({role}), source)
     meta = {"tenant_id": "tenant" if same_tenant else "other", "created_by": "owner",
@@ -202,7 +202,7 @@ def test_endpoint_authorization_contract(endpoint, action, allowed, role_name, s
 
 @pytest.mark.parametrize("role", ["requester", "operator"])
 def test_list_cypher_matches_single_request_policy(role):
-    from jevtriage.auth.policy import can, scope_filter_cypher
+    from ildongi.auth.policy import can, scope_filter_cypher
     principal = Principal("tenant", "owner", ("tenant-ai",), frozenset({role}))
     metas = [
         {"id": "owner", "tenant_id": "tenant", "created_by": "owner", "org_ids": []},
@@ -290,7 +290,7 @@ def test_login_limit_blocks_correct_password_until_window_expires():
 
 @pytest.mark.asyncio
 async def test_sse_rechecks_revoked_session(monkeypatch):
-    from jevtriage.events import router as events
+    from ildongi.events import router as events
     principal = Principal("tenant", "user", ("tenant-ai",), frozenset({"requester"}))
     async def read_tx(_tenant, callback):
         return 0, None, None, None  # head, retained_from, oldest, cursor_created
@@ -303,7 +303,7 @@ async def test_sse_rechecks_revoked_session(monkeypatch):
     class Request:
         def __init__(self):
             self.headers = {}
-            self.cookies = {"jev_session": "revoked"}
+            self.cookies = {"ildongi_session": "revoked"}
         async def is_disconnected(self):
             return False
     monkeypatch.setattr(events, "read_tx", read_tx)
@@ -319,7 +319,7 @@ async def test_sse_rechecks_revoked_session(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_sse_reconnect_header_overrides_url_cursor_without_duplicates(monkeypatch):
-    from jevtriage.events import router as events
+    from ildongi.events import router as events
     principal = Principal("tenant", "owner", (), frozenset({"requester"}))
     now = datetime.now(UTC)
     batch = [{"seq": seq, "request_id": "req", "run_id": "run", "kind": "progress",

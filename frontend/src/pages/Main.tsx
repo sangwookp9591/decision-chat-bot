@@ -18,11 +18,12 @@ import { ArrowDownIcon, MenuIcon, PlusIcon } from './main/icons';
 import { Composer } from './main/Composer';
 import { MAX_FILES, MOOD_TEXT, composerMode, currentAttachments, judgmentMood, resultMood, userMessages, type PendingSend } from './main/conversation';
 import { initialProgress, progressReducer } from '../state/progress';
+import { AI_NAME } from '../lib/brand';
 import './main/main.css';
 
 export { Result } from './main/ResultCard';
 const LIST_EVENTS = ['request.received', 'judgment_saved', 'judgment_failed', 'judgment.cancelled', 'review_decided', 'assignment_created', 'auto_assignment_deferred', 'task.transitioned', 'reanalysis.compared'];
-const stageNames = ['내용 정리', 'Jev 판단', '근거 연결', '업무 나누기', '결과 저장'];
+const stageNames = ['내용 정리', `${AI_NAME} 판단`, '근거 연결', '업무 나누기', '결과 저장'];
 function errorMessage(error: unknown) { return (error as ApiError)?.message || '요청 처리 중 문제가 발생했습니다.'; }
 
 /** 요청 접수 = 일동이와의 대화. Everything the user sees is a message derived from server state, so a reload (?request_id=) restores it. */

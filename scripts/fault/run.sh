@@ -5,7 +5,7 @@ root="$(cd "$(dirname "$0")/../.." && pwd)"
 export DOCKER_CONTEXT=orbstack
 stamp="$(date -u +%Y%m%dT%H%M%SZ)"
 evidence="$root/artifacts/validation/t22/$stamp"
-container="jevtriage-fault-neo4j"
+container="ildongi-fault-neo4j"
 mkdir -p "$evidence" "$root/.data/neo4j-fault"
 
 cleanup() {
@@ -38,7 +38,7 @@ done
 export NEO4J_URI=bolt://localhost:7688
 export NEO4J_PASSWORD=development-only
 export NEO4J_WRITE_TIMEOUT_SECONDS=30
-export JEV_MODE=mock
+export AI_MODE=mock
 export T22_EVIDENCE_DIR="$evidence"
 export DATA_DIR="$evidence/data"
 export T22_FAULT_CONTAINER="$container"

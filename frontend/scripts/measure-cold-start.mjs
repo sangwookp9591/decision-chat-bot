@@ -22,7 +22,7 @@ async function once() {
     while (Date.now() - started < 30000) { try { if ((await fetch(`http://127.0.0.1:${port}/`)).ok) break; } catch { /* not up yet */ } await new Promise((r) => setTimeout(r, 50)); }
     const browser = await chromium.launch(); const page = await browser.newPage();
     if (!process.env.REAL_API) await page.route((u) => u.pathname.startsWith('/api/'), (r) => { const url = new URL(r.request().url()); r.fulfill(url.pathname.startsWith('/api/monitoring') ? { status: 403, contentType: 'application/json', body: '{"detail":"forbidden"}' } : json(mock(url))); });
-    if (process.env.REAL_API) { const login = await page.request.post(`http://127.0.0.1:${port}/api/auth/login`, { data: { email: 'operator@t-alpha.dev', password: process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me' } }); if (!login.ok()) throw new Error(`login ${login.status()}`); }
+    if (process.env.REAL_API) { const login = await page.request.post(`http://127.0.0.1:${port}/api/auth/login`, { data: { email: 'operator@t-alpha.dev', password: process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me' } }); if (!login.ok()) throw new Error(`login ${login.status()}`); }
     page.on('console', (m) => process.env.DEBUG_MEASURE && console.error('console:', m.text())); page.on('pageerror', (e) => console.error('pageerror:', e.message)); const t0 = Date.now();
     await page.goto(`http://127.0.0.1:${port}${route}`);
     try { await page.getByRole('heading', { name: heading }).first().waitFor({ timeout: 15000 }); } catch (error) { console.error(await page.locator('body').innerText()); throw error; }

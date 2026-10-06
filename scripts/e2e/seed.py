@@ -8,9 +8,9 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT / 'backend'), str(ROOT / 'backend/tests/acceptance')]
 from provision import provision
 
-from jevtriage.auth.core import hash_password
-from jevtriage.db.driver import close_driver
-from jevtriage.db.tx import write_tx
+from ildongi.auth.core import hash_password
+from ildongi.db.driver import close_driver
+from ildongi.db.tx import write_tx
 
 
 async def main():

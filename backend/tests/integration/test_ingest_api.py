@@ -6,12 +6,12 @@ import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal, create_session, get_principal, session_principal
-from jevtriage.db.driver import get_driver
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.store import create_request, get_request_meta, request_detail, resolve_files
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal, create_session, get_principal, session_principal
+from ildongi.db.driver import get_driver
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.store import create_request, get_request_meta, request_detail, resolve_files
+from ildongi.main import create_app
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -62,7 +62,7 @@ async def test_text_ingest_persists_revision_run_and_job(ingest_tenant):
 async def test_http_rejects_attachment_count_and_total_bytes(ingest_tenant, tmp_path, monkeypatch):
     from types import SimpleNamespace
 
-    import jevtriage.ingest.service as ingest_service
+    import ildongi.ingest.service as ingest_service
     monkeypatch.setattr(ingest_service, "get_settings", lambda: SimpleNamespace(data_dir=tmp_path))
     app = create_app()
     app.dependency_overrides[get_principal] = lambda: Principal(
@@ -184,8 +184,8 @@ async def _http_client(tenant: str, role: str, *, can_read_source: bool = False)
     app = create_app()
     transport = httpx.ASGITransport(app=app)
     client = httpx.AsyncClient(transport=transport, base_url="http://test")
-    client.cookies.set("jev_session", token)
-    client.cookies.set("jev_csrf", resolved[1])
+    client.cookies.set("ildongi_session", token)
+    client.cookies.set("ildongi_csrf", resolved[1])
     client.headers["X-CSRF-Token"] = resolved[1]
     return client, user_id
 
@@ -253,9 +253,9 @@ async def test_reanalyze_creates_idempotent_run_and_preserves_assignment_counts(
         created = await create_request(ingest_tenant, user_id, "다시 판단할 요청입니다.", [],
                                        str(uuid4()), str(uuid4()), datetime.now(UTC).isoformat())
         request_id = created["request_id"]
-        from jevtriage.jobs.worker import Worker
-        from jevtriage.judgment.jev_client import JevClient
-        from jevtriage.judgment.service import execute_judgment
+        from ildongi.jobs.worker import Worker
+        from ildongi.judgment.ai_client import AiClient
+        from ildongi.judgment.service import execute_judgment
         async def run_judgment(run_id):
             async def job(tx):
                 return (await (await tx.run(
@@ -263,7 +263,7 @@ async def test_reanalyze_creates_idempotent_run_and_preserves_assignment_counts(
                     tenant=ingest_tenant, run=run_id,
                 )).single(strict=True))["id"]
             async def handler(ctx):
-                await execute_judgment(ctx, JevClient("", mode="mock"))
+                await execute_judgment(ctx, AiClient("", mode="mock"))
             await Worker(handlers={"judgment": handler}).process_job(
                 ingest_tenant, await read_tx(ingest_tenant, job)
             )
@@ -397,12 +397,12 @@ async def test_http_multipart_file_decision_creates_supported_revision_and_job(i
 async def test_http_db_failure_returns_503_and_journals_attempt(ingest_tenant, monkeypatch, tmp_path):
     from neo4j.exceptions import ServiceUnavailable
 
-    from jevtriage.config import get_settings
-    from jevtriage.ingest import service
-    from jevtriage.journal import writer
+    from ildongi.config import get_settings
+    from ildongi.ingest import service
+    from ildongi.journal import writer
     client, _ = await _http_client(ingest_tenant, "requester")
     original = get_settings()
-    monkeypatch.setattr("jevtriage.config.get_settings", lambda: original.model_copy(update={"data_dir": tmp_path}))
+    monkeypatch.setattr("ildongi.config.get_settings", lambda: original.model_copy(update={"data_dir": tmp_path}))
     monkeypatch.setattr(writer, "get_settings", lambda: original.model_copy(update={"data_dir": tmp_path}))
     async def fail(*args, **kwargs):
         raise ServiceUnavailable("injected write failure")
@@ -423,7 +423,7 @@ async def test_http_db_failure_returns_503_and_journals_attempt(ingest_tenant, m
 async def test_slo_first_received_and_supported_revision_are_immutable_after_revision(ingest_tenant):
     first = await create_request(ingest_tenant, "user", "initial", [], "slo-1", "slo-1", "2026-01-01T00:00:00+00:00")
     before = await get_request_meta(ingest_tenant, first["request_id"])
-    from jevtriage.ingest.store import add_revision
+    from ildongi.ingest.store import add_revision
     await add_revision(ingest_tenant, first["request_id"], "user", 1, "supplement", [], "slo-2", "slo-2")
     after = await get_request_meta(ingest_tenant, first["request_id"])
     assert after["first_received_at"] == before["first_received_at"]

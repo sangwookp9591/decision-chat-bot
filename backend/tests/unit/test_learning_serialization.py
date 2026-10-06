@@ -2,8 +2,8 @@ from datetime import UTC, datetime
 
 from neo4j.time import DateTime, Duration
 
-from jevtriage.db.idempotency import payload_hash
-from jevtriage.domain.serialize import dumps, json_value, loads_or, to_native
+from ildongi.db.idempotency import payload_hash
+from ildongi.domain.serialize import dumps, json_value, loads_or, to_native
 
 
 def test_neo4j_temporal_values_are_iso8601_strings_in_nested_payloads():

@@ -1,6 +1,6 @@
 # 첨부 파서와 파일 저장 계약
 
-`jevtriage.ingest.parsers.parse_file(path, filename, declared_mime)`는 확장자·선언 MIME과 파일 시그니처가 일치하는 PDF, DOCX, MD만 처리한다. MIME은 신뢰 근거로 사용하지 않는다. 결과는 `ExtractionResult(status, reason, units, char_count, page_count, sha256, byte_count)`이며 실패 파일은 `status="rejected"`와 안정된 reason 코드를 반환한다. 지원 코드는 `too_large`, `too_many_pages`, `encrypted`, `corrupted`, `unsupported_type`, `scanned_no_text`, `archive_bomb`, `timeout`, `memory_limit`이다.
+`ildongi.ingest.parsers.parse_file(path, filename, declared_mime)`는 확장자·선언 MIME과 파일 시그니처가 일치하는 PDF, DOCX, MD만 처리한다. MIME은 신뢰 근거로 사용하지 않는다. 결과는 `ExtractionResult(status, reason, units, char_count, page_count, sha256, byte_count)`이며 실패 파일은 `status="rejected"`와 안정된 reason 코드를 반환한다. 지원 코드는 `too_large`, `too_many_pages`, `encrypted`, `corrupted`, `unsupported_type`, `scanned_no_text`, `archive_bomb`, `timeout`, `memory_limit`이다.
 
 PDF는 페이지별 텍스트, DOCX는 0부터 시작하는 문단 인덱스, MD는 1부터 시작하는 행 범위를 반환한다. 문자 위치는 추출된 유닛 텍스트를 이어 붙인 0 기반 반개구간이다. OCR은 지원하지 않으며 텍스트가 없는 PDF는 `scanned_no_text`로 거절한다. HTML과 스크립트가 MD 파일에 들어 있어도 실행하거나 해석하지 않고 UTF-8 텍스트로만 반환한다. DOCX ZIP은 총 해제 크기와 항목별 압축률을 제한하고, 매크로·외부 참조는 실행하지 않는다.
 

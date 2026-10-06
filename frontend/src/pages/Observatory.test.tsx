@@ -1,3 +1,4 @@
+import { AI_NAME } from '../lib/brand';
 import '@testing-library/jest-dom/vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -12,7 +13,7 @@ const node = (id: string, name: string, kind = 'code') => ({ id, name, kind, act
 beforeEach(() => {
   vi.mocked(observeApi.requests).mockResolvedValue({ items: [{ id: 'req_other', status: 'received' }] });
   vi.mocked(observeApi.runs).mockResolvedValue({ active_run_id: 'run_1', runs: [{ id: 'run_1', status: 'succeeded', versions: {} }] });
-  vi.mocked(observeApi.flow).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', live: false, nodes: [node('s1', '입력 정리'), node('s2', 'Jev 판단', 'ai'), { ...node('review:r', '사람 검토', 'human'), status: 'waiting_human' }], edges: [{ from: 's1', to: 's2', kind: 'sequence' }, { from: 's2', to: 'review:r', kind: 'review' }] });
+  vi.mocked(observeApi.flow).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', live: false, nodes: [node('s1', '입력 정리'), node('s2', `${AI_NAME} 판단`, 'ai'), { ...node('review:r', '사람 검토', 'human'), status: 'waiting_human' }], edges: [{ from: 's1', to: 's2', kind: 'sequence' }, { from: 's2', to: 'review:r', kind: 'review' }] });
   vi.mocked(observeApi.playback).mockResolvedValue({ request_id: 'req_1', run_id: 'run_1', live: false, events: [], reviews: [], final_result: 'succeeded' });
 });
 
@@ -27,24 +28,24 @@ describe('Observatory deep links and flow (P3-03/P3-04)', () => {
     render(<MemoryRouter initialEntries={['/observatory?request_id=req_1']}><Observatory /></MemoryRouter>);
     const list = await screen.findByRole('list', { name: '실행 순서' });
     const names = Array.from(list.querySelectorAll('li.obs-step strong')).map((el) => el.textContent);
-    expect(names).toEqual(['입력 정리', 'Jev 판단', '사람 검토']);
+    expect(names).toEqual(['입력 정리', `${AI_NAME} 판단`, '사람 검토']);
     expect(screen.getByText('선행 입력 정리')).toBeInTheDocument();
     const edges = screen.getByRole('list', { name: '실행 관계' });
-    expect(Array.from(edges.querySelectorAll('li')).map((li) => li.textContent)).toEqual(['입력 정리 → Jev 판단', 'Jev 판단 → 사람 검토']);
+    expect(Array.from(edges.querySelectorAll('li')).map((li) => li.textContent)).toEqual([`입력 정리 → ${AI_NAME} 판단`, `${AI_NAME} 판단 → 사람 검토`]);
   });
 });
 
 describe('Trace detail diagnostics (SPEC-F02)', () => {
   it('shows failed step error, duration, and execution versions', async () => {
     vi.mocked(observeApi.step).mockResolvedValue({
-      id: 's2', name: 'Jev 판단', kind: 'ai', status: 'failed', run_id: 'run_1',
-      duration_ms: 12345, error_class: 'JevTimeout', config_version: 7,
+      id: 's2', name: `${AI_NAME} 판단`, kind: 'ai', status: 'failed', run_id: 'run_1',
+      duration_ms: 12345, error_class: 'AiTimeout', config_version: 7,
       versions: { model: 'model-test', schema: 'schema-test' },
     });
     render(<MemoryRouter initialEntries={['/observatory?run_id=run_1']}><Observatory /></MemoryRouter>);
-    fireEvent.click((await screen.findAllByRole('button', { name: /Jev 판단/ }))[0]);
+    fireEvent.click((await screen.findAllByRole('button', { name: new RegExp(`${AI_NAME} 판단`) }))[0]);
     const drawer = await screen.findByRole('dialog', { name: 'Trace 상세' });
-    expect(drawer).toHaveTextContent('JevTimeout');
+    expect(drawer).toHaveTextContent('AiTimeout');
     expect(drawer).toHaveTextContent('12345 ms');
     expect(drawer).toHaveTextContent('model-test');
     expect(drawer).toHaveTextContent('schema-test');

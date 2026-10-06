@@ -12,19 +12,19 @@ from uuid import uuid4
 import pytest
 from fastapi.testclient import TestClient
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import write_tx
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.journal.collector import collect_once, connect
-from jevtriage.journal.reader import producer_heartbeat
-from jevtriage.journal.watchdog import check_once
-from jevtriage.journal.writer import JournalWriter, failure_count
-from jevtriage.main import create_app
-from jevtriage.monitoring import api as monitoring_api
-from jevtriage.monitoring.aggregates import collection_status, events_between, summarize
-from jevtriage.monitoring.api import reconcile_commits
-from jevtriage.monitoring.slo import error_budget
+from ildongi.auth.core import Principal, get_principal
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import write_tx
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.journal.collector import collect_once, connect
+from ildongi.journal.reader import producer_heartbeat
+from ildongi.journal.watchdog import check_once
+from ildongi.journal.writer import JournalWriter, failure_count
+from ildongi.main import create_app
+from ildongi.monitoring import api as monitoring_api
+from ildongi.monitoring.aggregates import collection_status, events_between, summarize
+from ildongi.monitoring.api import reconcile_commits
+from ildongi.monitoring.slo import error_budget
 
 
 @pytest.mark.asyncio
@@ -116,7 +116,7 @@ def _record(writer, when, event, attempt, kind, **fields):
 
 
 def test_summary_reports_supplement_answer_wait_separately_from_first_judgment():
-    from jevtriage.monitoring.aggregates import summarize
+    from ildongi.monitoring.aggregates import summarize
 
     start = datetime(2026, 1, 1, tzinfo=UTC)
     rows = [

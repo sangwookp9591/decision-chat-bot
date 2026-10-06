@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-from jevtriage.journal.writer import JournalWriter, failure_count
+from ildongi.journal.writer import JournalWriter, failure_count
 
 
 def record(index):
@@ -22,7 +22,7 @@ def lines(directory):
 
 def test_group_commit_batches_fsync_and_flushes(tmp_path):
     writer = JournalWriter(tmp_path, batch_size=100, flush_interval=10)
-    with patch("jevtriage.journal.group_commit.os.fsync", wraps=__import__("os").fsync) as sync:
+    with patch("ildongi.journal.group_commit.os.fsync", wraps=__import__("os").fsync) as sync:
         with ThreadPoolExecutor(max_workers=8) as pool:
             list(pool.map(writer.append, map(record, range(80))))
         writer.flush()
@@ -90,7 +90,7 @@ def test_business_outcome_waits_for_fsync(tmp_path):
         assert release.wait(2)
         real_fsync(fd)
 
-    with (patch("jevtriage.journal.group_commit.os.fsync", side_effect=slow_fsync),
+    with (patch("ildongi.journal.group_commit.os.fsync", side_effect=slow_fsync),
           ThreadPoolExecutor(max_workers=1) as pool):
         future = pool.submit(writer.append, {**record(4), "kind": "worker_run"})
         try:

@@ -1,16 +1,16 @@
 import pytest
 
-from jevtriage.judgment import decompose
-from jevtriage.judgment.eligibility import evaluate_auto_assign
-from jevtriage.judgment.evidence import link_evidence
-from jevtriage.judgment.exceptions import DependencyCycleError
-from jevtriage.judgment.jev_client import JevClient, JevInvalidResponse, validate_response
-from jevtriage.judgment.pipeline import run_judgment
-from jevtriage.judgment.questions import questions
+from ildongi.judgment import decompose
+from ildongi.judgment.ai_client import AiClient, AiInvalidResponse, validate_response
+from ildongi.judgment.eligibility import evaluate_auto_assign
+from ildongi.judgment.evidence import link_evidence
+from ildongi.judgment.exceptions import DependencyCycleError
+from ildongi.judgment.pipeline import run_judgment
+from ildongi.judgment.questions import questions
 
 
 def client():
-    return JevClient("", mode="mock")
+    return AiClient("", mode="mock")
 
 
 def test_mock_pipeline_marks_mock_and_no_evidence():
@@ -32,7 +32,7 @@ def test_unresolved_risk_forces_review():
 
 
 def test_schema_rejects_missing_answer():
-    with pytest.raises(JevInvalidResponse):
+    with pytest.raises(AiInvalidResponse):
         validate_response({"model":"m","answers":{},"usage":{"input_tokens":1,"output_tokens":1}}, questions())
 
 
@@ -50,8 +50,8 @@ def test_document_injection_is_state_data():
 
 
 def test_api_errors_are_typed_and_auth_not_retried():
-    c=JevClient("", mode="live")
-    for status, expected in [(401,"JevAuthError"),(422,"JevSchemaError"),(429,"JevRateLimited"),(529,"JevOverloaded")]:
+    c=AiClient("", mode="live")
+    for status, expected in [(401,"AiAuthError"),(422,"AiSchemaError"),(429,"AiRateLimited"),(529,"AiOverloaded")]:
         class Error(Exception): status_code=status
         c._invoke=lambda *_: (_ for _ in ()).throw(Error())
         with pytest.raises(Exception) as caught: c.ask("x", questions())
@@ -62,7 +62,7 @@ class FakeClient:
     """Deterministic client: Noul values by key, choices fixed; no model involved."""
     def __init__(self, noul): self.noul = noul
     def ask(self, state, question_map):
-        from jevtriage.judgment.jev_client import ModelOutput
+        from ildongi.judgment.ai_client import ModelOutput
         answers = {}
         for key, q in question_map.items():
             if q["type"] == "choice":
@@ -78,8 +78,8 @@ def test_qset_v2_choice_criteria_have_descriptions():
     for key in ("ai_need", "feasibility", "urgency", "lead_org"):
         criteria = q[key]["criteria"]
         assert all(isinstance(v, str) and len(v) > 20 for v in criteria.values()), key
-    from jevtriage.judgment.catalog import CATALOG_VERSION
-    from jevtriage.judgment.questions import QSET_VERSION
+    from ildongi.judgment.catalog import CATALOG_VERSION
+    from ildongi.judgment.questions import QSET_VERSION
     assert (QSET_VERSION, CATALOG_VERSION) == ("qset-v2", "catalog-v2")
 
 

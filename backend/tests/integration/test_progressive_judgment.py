@@ -1,4 +1,4 @@
-"""Progress is durable before independent downstream Jev calls finish."""
+"""Progress is durable before independent downstream Decision AI calls finish."""
 import asyncio
 import json
 import threading
@@ -9,17 +9,17 @@ import pytest
 import pytest_asyncio
 from fastapi import HTTPException
 
-from jevtriage.auth.core import Principal
-from jevtriage.db.events import list_events
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.ingest.service import submit
-from jevtriage.ingest.store import create_request, get_request_meta
-from jevtriage.jobs.worker import Worker
-from jevtriage.judgment.jev_client import JevClient
-from jevtriage.judgment.progress import get_progress, progress
-from jevtriage.judgment.service import execute_judgment
-from jevtriage.judgment.store import get_judgment
+from ildongi.auth.core import Principal
+from ildongi.db.events import list_events
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.ingest.service import submit
+from ildongi.ingest.store import create_request, get_request_meta
+from ildongi.jobs.worker import Worker
+from ildongi.judgment.ai_client import AiClient
+from ildongi.judgment.progress import get_progress, progress
+from ildongi.judgment.service import execute_judgment
+from ildongi.judgment.store import get_judgment
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 
@@ -49,7 +49,7 @@ async def test_partial_result_precedes_evidence_and_final_commit(tenant):
     tasks_started = threading.Event()
     release = threading.Event()
 
-    class SlowClient(JevClient):
+    class SlowClient(AiClient):
         def ask(self, state, questions):
             if "is_evidence" in questions:
                 evidence_started.set()
@@ -129,7 +129,7 @@ async def test_submit_emits_one_received_event_for_idempotent_request(tenant):
 
 
 async def test_worker_wakes_from_idle_backoff_without_redis(monkeypatch):
-    from jevtriage.config import get_settings
+    from ildongi.config import get_settings
     monkeypatch.setattr(get_settings(), "redis_url", None)
     worker = Worker(poll_seconds=1, max_poll_seconds=8)
     first = asyncio.Event()

@@ -5,10 +5,10 @@ from uuid import uuid4
 
 import pytest
 
-from jevtriage.db.schema import apply_schema
-from jevtriage.db.tx import read_tx, write_tx
-from jevtriage.learning.candidates import generate_candidates
-from jevtriage.policy.service import bootstrap_policy, get_active_snapshot
+from ildongi.db.schema import apply_schema
+from ildongi.db.tx import read_tx, write_tx
+from ildongi.learning.candidates import generate_candidates
+from ildongi.policy.service import bootstrap_policy, get_active_snapshot
 
 pytestmark = pytest.mark.asyncio(loop_scope="session")
 

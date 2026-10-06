@@ -24,7 +24,7 @@
 
 `EvidenceSpan.created_at`과 `created_by`는 근거가 속한 `InputRevision`의 실제 생성 시각과 주체다. 그래프 상세의 `at`과 `actor`에 이 저장값을 전달하며, 과거 데이터에서 값이 없으면 `null`로 남겨 화면에 기록 없음으로 표시한다. `first_received_at`이나 다른 시각에서 근거 노드의 과거 시각을 추정하지 않는다.
 
-모듈: `backend/jevtriage/graph/{model,query,api}.py`. 시험: `backend/tests/integration/test_judgment_graph.py`(실제 Neo4j에 시드한 관계와 노드·연결 ID 정확 일치, 없는 중간 관계 미생성, 양방향·깊이·limit, 권한/tenant).
+모듈: `backend/ildongi/graph/{model,query,api}.py`. 시험: `backend/tests/integration/test_judgment_graph.py`(실제 Neo4j에 시드한 관계와 노드·연결 ID 정확 일치, 없는 중간 관계 미생성, 양방향·깊이·limit, 권한/tenant).
 
 ## 화면 09 `/judgment-map`
 
@@ -48,7 +48,7 @@
 - 백엔드: `make up` 후 `cd backend && .venv/bin/pytest tests/integration/test_judgment_graph.py`.
 - 프런트: `cd frontend && npm run test`(경로 강조 계산, 묶음·키보드 이동, 목록 보기 렌더).
 - UX-2: `frontend/src/pages/judgment-map/versionTabs.test.tsx`(버전 탭 목록·필터·빈 상태, 크게 보기 토글·Esc·포커스), `Detail.test.tsx`. E2E는 `frontend/e2e/source-viewer/`(전용 API 8391·vite 5591, `bash e2e/source-viewer/env.sh start`, `npx playwright test -c playwright.source-viewer.config.ts`; `t-ux2` tenant에 규칙 R-UX-01 v1·v2·v3를 시드).
-- E2E(실데이터, live Jev 호출): API와 worker 기동 후 `cd frontend && E2E_PORT=5273 E2E_API=http://127.0.0.1:8000 npx playwright test -c playwright.judgment-map.config.ts`. 요청 접수→판단→검토자 수정 승인을 공개 API로 수행하고, 맵의 노드·연결 수와 ID가 `/api/graph/judgment`와 일치하는지, 업무 단계에서 `EvidenceSpan`까지 역추적되는지, 목록 보기 키보드 이동을 확인한다.
+- E2E(실데이터, live Decision AI 호출): API와 worker 기동 후 `cd frontend && E2E_PORT=5273 E2E_API=http://127.0.0.1:8000 npx playwright test -c playwright.judgment-map.config.ts`. 요청 접수→판단→검토자 수정 승인을 공개 API로 수행하고, 맵의 노드·연결 수와 ID가 `/api/graph/judgment`와 일치하는지, 업무 단계에서 `EvidenceSpan`까지 역추적되는지, 목록 보기 키보드 이동을 확인한다.
 
 ## 제한
 

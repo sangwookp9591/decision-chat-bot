@@ -1,12 +1,12 @@
 # 접수 API
 
-T06 API 초안 구현 계약. 모든 경로는 `/api` 아래이며 인증된 세션을 사용한다. 쓰기 요청은 `X-CSRF-Token` 및 `jev_csrf` double-submit 검증을 통과하고 `Idempotency-Key`를 제공해야 한다.
+T06 API 초안 구현 계약. 모든 경로는 `/api` 아래이며 인증된 세션을 사용한다. 쓰기 요청은 `X-CSRF-Token` 및 `ildongi_csrf` double-submit 검증을 통과하고 `Idempotency-Key`를 제공해야 한다.
 
 ## 경로
 
 | 메서드/경로 | 입력과 결과 |
 | --- | --- |
-| `GET /meta` | Jev mode, 접수 한도, API 버전 |
+| `GET /meta` | Decision AI mode, 접수 한도, API 버전 |
 | `POST /requests` | multipart `text`, 최대 5개 `files`, Idempotency-Key. request ID, revision 번호, 상태 반환 |
 | `GET /requests` | 본인·공유 조직·운영자 범위, 상태·기간·페이지 필터 |
 | `GET /requests/{id}` | 요청, revisions, 첨부 메타데이터 |
@@ -31,7 +31,7 @@ T06 API 초안 구현 계약. 모든 경로는 `/api` 아래이며 인증된 세
 
 파일 파싱·임시 저장은 `ingest.parsers.parse_file`과 `ingest.files.store_upload`가 담당한다. 거절 첨부가 남은 revision은 `needs_file_decision`이며 Job을 만들지 않는다. 접근 범위 밖 ID는 404로 응답한다.
 
-각 InputRevision에는 채팅 원문을 문장 단위 `EvidenceSpan`으로 저장한다. `source='chat'`, `location_json`의 revision/paragraph/sentence, revision 원문 기준 `char_start`/`char_end`, 문장 SHA-256, 정확한 `source_text`를 보존한다. 첨부 span은 기존처럼 `attachment_id`와 파일 위치를 가진다. 판단은 저장된 span ID를 Jev 근거 단위로 사용한다.
+각 InputRevision에는 채팅 원문을 문장 단위 `EvidenceSpan`으로 저장한다. `source='chat'`, `location_json`의 revision/paragraph/sentence, revision 원문 기준 `char_start`/`char_end`, 문장 SHA-256, 정확한 `source_text`를 보존한다. 첨부 span은 기존처럼 `attachment_id`와 파일 위치를 가진다. 판단은 저장된 span ID를 Decision AI 근거 단위로 사용한다.
 
 API 접수 journal은 DB 쓰기 전 `request_received`, 처리 종료 시 완료/실패 이벤트를 attempt ID로 남긴다. 허용 journal 필드 외의 원문, 파일명, 키, 쿠키를 쓰지 않는다. 상세 운영 SLO와 보완/retry 분모는 [05_SLO 보완·재실행 측정 규칙](../spec/05_SLO.md#보완재실행과-측정-단위)을 따른다.
 

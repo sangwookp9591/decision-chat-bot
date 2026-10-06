@@ -2,7 +2,7 @@ import { expect, test, type Browser, type Page } from '@playwright/test';
 
 /** P4-04: no page may scroll horizontally at 375 / 520 px, also with a selected result / review / task (long ids, tables, code). */
 const tenant = process.env.E2E_TENANT || 't-alpha';
-const password = process.env.JEVTRIAGE_DEV_PASSWORD || 'dev-only-change-me';
+const password = process.env.ILDONGI_DEV_PASSWORD || 'dev-only-change-me';
 const baseURL = process.env.E2E_BASE_URL || 'http://127.0.0.1:5173';
 const widths = [375, 520];
 

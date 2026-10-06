@@ -3,9 +3,9 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic import BaseModel, field_validator
 
-from jevtriage.auth.core import Principal, get_principal
-from jevtriage.config import get_settings
-from jevtriage.main import create_app
+from ildongi.auth.core import Principal, get_principal
+from ildongi.config import get_settings
+from ildongi.main import create_app
 
 SAMPLE = 'qa-canary@example.invalid'
 
@@ -17,7 +17,7 @@ def client(monkeypatch, tmp_path):
     async def session(_token):
         return Principal('qa_boundaries', 'reviewer', ('qa_boundaries-it',),
                          frozenset({'requester', 'reviewer', 'operator'})), 'csrf-ok'
-    monkeypatch.setattr('jevtriage.auth.core.session_principal', session)
+    monkeypatch.setattr('ildongi.auth.core.session_principal', session)
     app = create_app()
     app.dependency_overrides[get_principal] = lambda: Principal(
         'qa_boundaries', 'reviewer', ('qa_boundaries-it',),
@@ -25,8 +25,8 @@ def client(monkeypatch, tmp_path):
     # Int64 rejection must happen before any database call.
     async def forbidden(*args, **kwargs):
         raise AssertionError('invalid input reached storage')
-    monkeypatch.setattr('jevtriage.policy.router.get_version', forbidden)
-    monkeypatch.setattr('jevtriage.graph.api.query.collect', forbidden)
+    monkeypatch.setattr('ildongi.policy.router.get_version', forbidden)
+    monkeypatch.setattr('ildongi.graph.api.query.collect', forbidden)
     class ContextBody(BaseModel):
         value: str
 
@@ -39,8 +39,8 @@ def client(monkeypatch, tmp_path):
     def context(body: ContextBody):
         return body
     with TestClient(app, raise_server_exceptions=False) as result:
-        result.cookies.set('jev_session', 'qa-session')
-        result.cookies.set('jev_csrf', 'csrf-ok')
+        result.cookies.set('ildongi_session', 'qa-session')
+        result.cookies.set('ildongi_csrf', 'csrf-ok')
         result.headers['X-CSRF-Token'] = 'csrf-ok'
         yield result
     get_settings.cache_clear()
