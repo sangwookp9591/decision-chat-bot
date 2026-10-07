@@ -608,3 +608,82 @@ cd frontend && npm run build
 
 - 정책 화면에서 활성 규칙이 있으면 글쓰기 설정만 바꿔도 검증·게시가 거절되던 기존 문제를 수정했다. `validate_for_tenant`는 활성 rules 동일성을 검사하고, 게시 트랜잭션의 rules 변경 금지·활성 버전 잠금 검사를 유지한다. 코디네이터가 router 소유 확장을 승인했으며 동일 rules 게시 성공·변경 거절을 RED→GREEN으로 확인했다(assist·policy 통합 14건 통과).
 - 실제 키 없는 `LLM_MODE=fake` 브라우저: 제공자 3개 상태·키 없음 연결 실패, OpenAI/Gemini/Claude 기본 목록, Claude Sonnet 모델 선택, 기능 4개 변경, 기존 VPN 규칙을 유지한 Claude Opus 5.5 정책 v4 게시를 확인했다. 증거: `.data/screens/llm-published.png`, `llm-card.png`, `llm-options.png`; 서버의 저장 설정은 `.data/llm-browser-published.json`이다. 촬영 후 이전 정책 v2 내용으로 되돌려 새 버전 v5를 만들었다.
+
+## 19. ChatGPT 구독 연결 (2026-10-07)
+
+API 키 없이 OpenAI 공식 **Sign in with ChatGPT / ChatGPT plan usage** 경로를 사용한다. 이 구현은 오픈소스·로컬 설치용이며, 유료 또는 원격 호스팅 서비스의 제공 허가를 뜻하지 않는다. 연결은 **설치 전체에 하나**이고 모든 tenant의 글쓰기 보조에서 공유한다. 정책 화면에 연결한 policy_editor의 사용자 ID·tenant, 검증된 이메일, 요금제 사용 권한을 표시한다. 여러 계정·워크스페이스의 선택·동시 저장은 이번 단일 설치 범위에 포함하지 않는다.
+
+### 19.1 연결 흐름
+
+```mermaid
+sequenceDiagram
+    actor User as 정책 편집자
+    participant Web as 정책 화면 :5173
+    participant API as 루프백 API :8000
+    participant OAuth as auth.openai.com
+    participant File as DATA_DIR/secrets
+    User->>Web: Continue with ChatGPT
+    Web->>API: POST /api/assist/chatgpt/connect (세션·CSRF)
+    API->>File: 설치별 urn:uuid host ID 읽기/생성
+    API->>API: state·nonce·PKCE verifier·브라우저 바인딩 (10분)
+    API-->>Web: authorize_url + HttpOnly 시도 쿠키
+    Web->>OAuth: authorize (PKCE S256·identity/plan scopes)
+    User->>OAuth: 직접 로그인·요금제 사용 허용
+    OAuth->>API: GET /auth/callback (code·state·발급 client_id)
+    API->>API: 루프백 Host·peer·쿠키·1회용 state 검증
+    API->>OAuth: code 교환 (발급 client_id·PKCE·동일 redirect_uri)
+    OAuth-->>API: access/refresh/ID tokens·granted scope
+    API->>OAuth: JWKS 조회
+    API->>API: ID 토큰 서명·issuer·audience·exp·nonce·sub 검증
+    API->>File: 0600 자격 파일 원자적 저장
+    API->>API: chatgpt.connect 감사 기록 (비밀 제외)
+    API-->>Web: /policy?chatgpt=ok 또는 안전한 오류 코드
+```
+
+버튼은 공식 승인 문구 `Continue with ChatGPT`를 사용한다. OpenAI 인증·동의 화면에서는 앱의 실제 이름인 `일동이`가 표시된다. 문서에 ASCII 이름 제한은 없으며 `agent_name_hint`는 실제 앱 이름을 설치 간 일관되게 전달하도록 규정한다. 요금제 권한을 얻은 첫 연결은 안내 모달을 표시한다. 공식 사용량 관리 링크는 `https://chatgpt.com/settings/usage`다.
+
+- 최초 등록은 `client_id=dynamic_agent_client`; 토큰 교환에는 콜백에서 발급된 ID를 쓴다. 이후에는 저장된 등록 ID를 재사용하며 이름 힌트를 보내지 않는다. 코드의 `invalid_grant`에도 발급 ID는 보존해 새 로그인에 재사용한다.
+- `openid profile email offline_access resource.invoke chatgpt.tokens.use.direct`를 요청한다. **권한 판단은 토큰 응답 scope 기준**이다. ID 토큰이 유효해도 마지막 scope가 없으면 로그인만 유지하고 `plan_usage_granted=false`로 추론을 차단한다. 권한이 없는 연결에서 사용자가 버튼을 다시 누를 때만 `prompt=consent`로 재동의를 요청한다.
+- 상태: `GET /api/assist/chatgpt/status`는 policy_editor·operator만 읽는다. 토큰 값·PKCE verifier·코드는 응답에 포함하지 않는다. 만료 임박 갱신을 시도한 뒤 이메일·권한·만료 시각·등록 여부·연결 편집자만 반환한다.
+- 연결·해제: POST 두 경로는 policy_editor와 기존 CSRF 검증이 필수다. 콜백은 API의 `/auth/callback`이며 `/api` 프록시 밖에 있다.
+
+### 19.2 저장·갱신·보안
+
+`CHATGPT_AUTH_REDIRECT_PORT=8000`과 `CHATGPT_AUTH_RETURN_URL=http://127.0.0.1:5173/policy`가 기본값이다. callback URI는 `http://127.0.0.1:<API포트>/auth/callback` 고정이며 localhost나 다른 경로로 바꾸지 않는다. 웹 복귀 URL도 HTTP 127.0.0.1만 허용한다. API는 단일 프로세스로 실행한다. pending 시도는 메모리에 하나만 보관하며 새 연결·해제·서버 재시작은 이전 시도를 무효화한다.
+
+| 경로 (`DATA_DIR` 아래) | 내용 | 수명 |
+|---|---|---|
+| `secrets/chatgpt-credentials.json` | 발급 client ID, 검증된 identity·email, access/refresh/ID tokens, granted scopes, 만료 시각, 연결 편집자 | 연결 동안; 해제·확정된 terminal refresh 오류 시 삭제 |
+| `secrets/chatgpt-registration.json` | 발급 client ID와 검증된 계정 매핑 (토큰 없음) | 해제 후에도 재로그인을 위해 유지 |
+| `secrets/chatgpt-host.json` | 최초 생성한 `urn:uuid:<UUIDv4>` | 이 로컬 설치 수명 동안 유지 |
+| `secrets/chatgpt.lock` | API·worker 사이 갱신·연결·해제 파일 잠금 | 토큰 없음 |
+
+디렉터리는 0700, 자격·임시 파일은 0600이다. access/refresh/만료/scope는 한 JSON 레코드로 fsync 후 원자적으로 교체한다. 같은 설치의 refresh는 `flock`으로 직렬화한다. refresh 요청은 저장된 발급 client ID·refresh token·resource를 사용하며 scope와 client secret을 보내지 않는다. `earliest_refresh_at`이 주어지면 그 시각을 지킨다. 배포 OS는 Unix 파일 권한·flock을 지원해야 한다.
+
+콜백 state는 10분·1회용이며 추가 HttpOnly/SameSite=Lax 시도 쿠키에 바인딩한다. 루프백의 정확한 Host와 peer를 확인한다. JWKS RS256 서명과 issuer·audience·expiration·nonce·subject를 검증하기 위해 PyJWT를 사용한다. 자격 값은 정책·DB·프론트 저장소·감사·진단에 넣지 않으며 콜백 query는 Uvicorn access log에 도달하기 전에 제거한다. 재로그인 URL에는 retained ID token hint를 보내지 않는다. `.data/`는 Git에서 무시된다.
+
+해제는 OpenID discovery의 `revocation_endpoint`에 refresh token·token_type_hint·발급 client ID를 전송한다. 일시적 revocation 실패는 제한된 재시도를 한 뒤 로컬 토큰을 삭제하고 **원격 폐기 미확인**을 사용자에게 알린다. 사용자가 ChatGPT 설정에서도 앱을 해제할 수 있다. refresh의 `invalid_grant`·expired/invalidated/reused 오류는 토큰을 삭제해 재연결을 요구한다. 일시적 네트워크·인프라 실패에는 자격을 삭제하지 않는다.
+
+### 19.3 추론과 프리뷰 제한
+
+`PolicyConfig.llm.provider='chatgpt'`를 선택하고 계정에서 받은 모델을 지정한다. `GET https://api.openai.com/v1/models`의 `models[]` 중 `visibility=='list'`만 표시하며 `display_name`을 라벨, `slug`를 모델 값으로 쓴다. ChatGPT 모델의 임의 기본 목록·캐시는 사용하지 않는다.
+
+추론과 연결 테스트는 `POST https://api.openai.com/v1/responses`, OAuth access token Bearer, `store=false`, `stream=true`, 배열 형태 input으로 호출한다. 기존 마스킹·bounded 입력·`validate_output`·`apply_texts`·기능별 fallback 경로를 재사용한다. 문서에 SIWC structured-output 강제 설정이 명시되지 않아 JSON 스키마를 고정 instructions로 전달하고 Pydantic으로 로컬 검증한다. 토큰 한도 대신 기존 출력 길이 제한과 호출 시간 제한을 적용한다. `LLM_MODE=off`는 추론을 차단하며, ChatGPT 연결 테스트를 fake 성공으로 위장하지 않는다.
+
+성공은 `response.completed` 이후에만 인정한다. delta만 받은 종료·`response.incomplete`·거절·잘못된 JSON은 실패다. 스트림 안팎의 `subscription_sharing_usage_limit_exceeded`는 `CHATGPT_USAGE_LIMIT`, `subscription_sharing_usage_unavailable`은 `CHATGPT_USAGE_UNAVAILABLE`로 표시하며 API 키 과금 경로로 자동 전환하지 않는다. usage-limit 메시지 옆에는 ChatGPT 사용량 관리 링크가 있다. 나머지 오류는 HTTP 상태와 안전한 기존 오류 코드로 처리하며 공급자 본문을 사용자에게 노출하지 않는다.
+
+미지원 필드: `background`, `conversation`, `max_output_tokens`, `max_tool_calls`, `metadata`, `moderation`, `multi_agent`, `prompt`, `prompt_cache_retention`, `safety_identifier`, `temperature`, `top_logprobs`, `top_p`, `truncation`, `user`, HTTP의 `previous_response_id`. 명시적 system message를 input에 넣지 않는다. 이미지 생성·file search·Code Interpreter·native computer use·hosted MCP/connectors·Responses tool_search·오디오/비디오 입력·Files 업로드·전사 API는 이 경로의 지원 범위가 아니다.
+
+### 19.4 공식 출처와 검증 범위
+
+구현 전에 2026-10-07에 아래 공식 문서를 조회했다. 로그인 자체와 실제 Pro 요금제 추론은 이용자가 직접 연결을 완료한 뒤 검증해야 한다. 개발자가 확인한 브라우저 범위는 정책 편집자 로그인 → 버튼 클릭 → auth.openai.com 계정 선택 화면까지이며, OpenAI 자격 입력·계정 선택·동의는 수행하지 않았다.
+
+- [개요](https://developers.openai.com/siwc/token-sharing-open-source)
+- [등록·로그인](https://developers.openai.com/siwc/token-sharing-open-source/sign-in)
+- [계정·세션](https://developers.openai.com/siwc/token-sharing-open-source/profiles-and-sessions)
+- [토큰 참조](https://developers.openai.com/siwc/token-sharing-open-source/token-reference)
+- [모델·추론](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference)
+- [오류·복구](https://developers.openai.com/siwc/token-sharing-open-source/errors-and-recovery)
+- [프리뷰 제한](https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations)
+- [UI/UX 지침](https://developers.openai.com/siwc/ui-ux-guidelines)
+- [ID 토큰 검증 예제](https://developers.openai.com/siwc/website)

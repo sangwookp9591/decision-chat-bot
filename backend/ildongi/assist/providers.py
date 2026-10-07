@@ -5,7 +5,7 @@ from typing import Generic, Literal, Protocol, TypeVar
 
 from pydantic import BaseModel
 
-ProviderName = Literal["anthropic", "openai", "google"]
+ProviderName = Literal["anthropic", "openai", "google", "chatgpt"]
 Feature = Literal["summary", "task_description", "questions", "rule_explanation", "ping"]
 T = TypeVar("T", bound=BaseModel)
 KEY_FIELDS = {"anthropic": "anthropic_api_key", "openai": "openai_api_key", "google": "gemini_api_key"}
@@ -13,6 +13,7 @@ SDK_MODULES = {"anthropic": "anthropic", "openai": "openai", "google": "google.g
 # Official catalogs verified 2026-10-06: https://developers.openai.com/api/docs/models
 # https://ai.google.dev/gemini-api/docs/models and LLM_ASSIST.md §6.1.
 DEFAULT_MODELS = {
+    "chatgpt": [],
     "anthropic": [("claude-opus-5-5", "Claude Opus 5.5"), ("claude-sonnet-5-5", "Claude Sonnet 5.5"), ("claude-haiku-4-5-20251001", "Claude Haiku 4.5")],
     "openai": [("gpt-6-astra", "GPT-6 Astra"), ("gpt-6.1-sol", "GPT-6.1 Sol"), ("gpt-6-luna", "GPT-6 Luna")],
     "google": [("gemini-3.8-flash", "Gemini 3.8 Flash"), ("gemini-3.7-flash", "Gemini 3.7 Flash"), ("gemini-3.5-flash-lite", "Gemini 3.5 Flash-Lite")],
@@ -111,6 +112,8 @@ def sdk_available(name):
 def get_provider(name: ProviderName, settings, *, max_retries=1) -> LlmProvider:
     if settings.llm_mode == "off":
         raise LlmUnavailable("MODE_OFF")
+    if name == "chatgpt":
+        return import_module("ildongi.assist.adapters.chatgpt").Provider(settings)
     if settings.llm_mode == "fake":
         return import_module("ildongi.assist.fake").FakeProvider(name=name)
     key = getattr(settings, KEY_FIELDS[name]).get_secret_value()

@@ -3,9 +3,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import UTC, datetime
 from typing import Any
 
+from fastapi import HTTPException
+
 from ildongi.auth.core import Principal, can_review
+from ildongi.auth.policy import can
 from ildongi.db.audit import append_audit_in_tx
 from ildongi.db.events import append_event_in_tx
 from ildongi.db.idempotency import IdempotencyConflict, get_or_create_in_tx
@@ -16,6 +20,7 @@ from ildongi.domain.eligibility import evaluate_auto_assign
 from ildongi.domain.ids import new_id
 from ildongi.domain.questions import CLASS_KEYS, OPTIONS
 from ildongi.policy.service import DEFAULT_CONFIG
+from ildongi.review.store import decode, judgment_urgencies, list_reviews
 
 
 class ReviewError(Exception):
@@ -527,3 +532,46 @@ async def auto_assign_after_judgment_in_tx(tx, ctx, *, eligible: bool) -> dict |
     await append_event_in_tx(tx, ctx.tenant_id, "assignment_created", assigned,
                              request_id=ctx.request_id, run_id=ctx.run_id)
     return assigned
+
+
+def review_allowed(principal: Principal, review: dict, request: dict) -> bool:
+    required = required_reviewer_org(
+        principal.tenant_id, review.get("required_reviewer_org") or "", principal.org_ids)
+    return can_review(principal, {**dict(request), "required_reviewer_org": required})
+
+
+def _list_item(principal: Principal, v: dict, request: dict, urgencies: dict, now: datetime) -> dict:
+    """List entry: the stored masked title always; the masked preview only for source readers or the author."""
+    created = v.get("created_at")
+    item = {"id":v["id"], "request_id":v["request_id"],
+            "title":request.get("title") or "",
+            "run_id":v["run_id"], "revision_id":v["revision_id"],
+            "draft_version":v["draft_version"],
+            "review_version":v["review_version"], "status":v["status"],
+            "reasons":decode(v.get("reasons"), []),
+            "reasons_summary":", ".join(map(str, decode(v.get("reasons"), []))),
+            "urgency":v.get("urgency", urgencies.get(v["run_id"])),
+            "waiting_seconds":max(0, int((now - (created.to_native() if hasattr(created, "to_native") else created.replace(tzinfo=UTC))).total_seconds())) if created else None,
+            "required_reviewer_org":v.get("required_reviewer_org")}
+    if request.get("preview") and (principal.can_read_source or can(principal, "request:read", request)):
+        item["preview"] = request["preview"]
+    return item
+
+
+async def visible_reviews(principal: Principal, status="pending", limit=100, offset=0):
+    if status not in {"pending", "approved", "rejected", "info_requested"}:
+        raise HTTPException(422, "Invalid status")
+    if "reviewer" not in principal.roles:
+        return {"reviews": []}
+    legacy = [value for value in ("AI팀", "IT팀", "현업", "검토자")
+              if required_reviewer_org(principal.tenant_id, value, principal.org_ids)
+              in principal.org_ids]
+    rows = await list_reviews(principal.tenant_id, status,
+                              reviewer_orgs=[*principal.org_ids, *legacy],
+                              limit=limit, offset=offset)
+    run_ids = list({row["v"]["run_id"] for row in rows})
+    urgencies = await judgment_urgencies(principal.tenant_id, run_ids)
+    now = datetime.now(UTC)
+    return {"reviews":[_list_item(principal, v, dict(row["q"]), urgencies, now)
+                       for row in rows if (v := dict(row["v"])) and
+                       review_allowed(principal, v, dict(row["q"]))]}

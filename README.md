@@ -316,6 +316,7 @@ frontend/            React + TypeScript · Vite · Vitest · Playwright
 docs/spec/           요구사항 · 사용자 경험 · SLO · 인수 · 학습 루프
 docs/architecture/   실행 계약 · 데이터 모델 · API · 설계 문서
 docs/operations/     운영 · 설정 · 데이터 처리 · 백업·복원
+docs/mcp/            ChatGPT 플러그인(MCP) 연결 안내
 docs/readme/         README 전용 화면·GIF와 검증 기록
 scripts/demo/        연속 시연 영상 녹화
 scripts/readme/      격리 환경 시드 · 화면 촬영 · 압축 · 검증
@@ -336,6 +337,7 @@ artifacts/           시연·검증·감사 증거 (옛 이름 대응표: artifa
 | 접수·판단·검토 | [접수 API](docs/architecture/INGEST_API.md) · [Decision AI 계약](docs/architecture/AI_CONTRACT.md) · [판단 설계](docs/architecture/JUDGMENT_DESIGN.md) · [검토·배정](docs/architecture/REVIEW_ASSIGN.md) |
 | 실행 관찰·맵 | [관찰 API](docs/architecture/OBSERVE_API.md) · [판단 그래프](docs/architecture/JUDGMENT_GRAPH.md) · [이벤트 복구](docs/architecture/EVENTS.md) |
 | 학습·평가 | [학습 루프](docs/spec/08_LEARNING_LOOP.md) · [후보](docs/architecture/LEARNING_CANDIDATES.md) · [검증](docs/architecture/LEARNING_VALIDATION.md) · [규칙](docs/architecture/LEARNING_RULES.md) · [평가 라벨](docs/architecture/EVALUATION_LABELS.md) |
+| LLM·외부 연동 | [LLM 글쓰기 보조](docs/architecture/LLM_ASSIST.md) · [원문 키워드 규칙](docs/architecture/RULE_KEYWORD.md) · [ChatGPT 플러그인(MCP)](docs/mcp/CHATGPT_PLUGIN.md) |
 | 정책·접근성 | [정책](docs/architecture/POLICY.md) · [인증](docs/architecture/AUTH.md) · [디자인 시스템](docs/architecture/DESIGN_SYSTEM.md) · [접근성](docs/architecture/A11Y.md) |
 | 운영 | [Runbook](docs/operations/RUNBOOK.md) · [백업·복원](docs/operations/BACKUP_RESTORE.md) · [데이터 처리](docs/operations/DATA_HANDLING.md) · [배포 전 확인](docs/operations/DEPLOYMENT.md) · [설정](docs/operations/CONFIG.md) |
 

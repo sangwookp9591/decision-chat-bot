@@ -32,3 +32,17 @@ async def display_name(tenant_id: str, user_id: str) -> str | None:
         return record
     record = await read_tx(tenant_id, query)
     return record["display_name"] if record else None
+
+
+async def dev_user_record(email: str):
+    """Load actual membership for the explicitly enabled local MCP developer identity."""
+    async def query(tx):
+        return await (await tx.run(
+            "MATCH (u:User {email:$email}) WHERE u.disabled = false "
+            "MATCH (u)-[m:MEMBER_OF]->(o:Org {tenant_id:u.tenant_id}) "
+            "RETURN u.tenant_id AS tenant_id, u.id AS user_id, "
+            "collect(DISTINCT o.id) AS org_ids, collect(DISTINCT m.role) AS roles, "
+            "u.can_read_source AS can_read_source",
+            email=email.lower(),
+        )).single()
+    return await cross_tenant_tx("auth.mcp_dev_identity", query)
