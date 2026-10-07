@@ -2,18 +2,18 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
-from ildongi.auth.core import Principal, can_review, get_principal
-from ildongi.auth.policy import can, redact_source
+from ildongi.auth.core import Principal, get_principal
+from ildongi.auth.policy import redact_source
 from ildongi.domain.api_types import Int64
 from ildongi.domain.drafts import draft_created_by, draft_source
-from ildongi.review.service import ReviewError, decide, required_reviewer_org
-from ildongi.review.store import decode, get_review, judgment_urgencies, list_reviews
+from ildongi.review.service import ReviewError, decide, visible_reviews
+from ildongi.review.service import review_allowed as _allowed
+from ildongi.review.store import decode, get_review
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
 
@@ -57,30 +57,6 @@ class DecisionCommand(BaseModel):
     needed_info: list[str] | None = None
 
 
-def _allowed(principal: Principal, review: dict, request: dict) -> bool:
-    required = required_reviewer_org(
-        principal.tenant_id, review.get("required_reviewer_org") or "", principal.org_ids)
-    return can_review(principal, {**dict(request), "required_reviewer_org": required})
-
-
-def _list_item(principal: Principal, v: dict, request: dict, urgencies: dict, now: datetime) -> dict:
-    """List entry: the stored masked title always; the masked preview only for source readers or the author."""
-    created = v.get("created_at")
-    item = {"id":v["id"], "request_id":v["request_id"],
-            "title":request.get("title") or "",
-            "run_id":v["run_id"], "revision_id":v["revision_id"],
-            "draft_version":v["draft_version"],
-            "review_version":v["review_version"], "status":v["status"],
-            "reasons":decode(v.get("reasons"), []),
-            "reasons_summary":", ".join(map(str, decode(v.get("reasons"), []))),
-            "urgency":v.get("urgency", urgencies.get(v["run_id"])),
-            "waiting_seconds":max(0, int((now - (created.to_native() if hasattr(created, "to_native") else created.replace(tzinfo=UTC))).total_seconds())) if created else None,
-            "required_reviewer_org":v.get("required_reviewer_org")}
-    if request.get("preview") and (principal.can_read_source or can(principal, "request:read", request)):
-        item["preview"] = request["preview"]
-    return item
-
-
 def _output(row: dict, can_read_source: bool) -> dict:
     data = dict(row["o"])
     for name in ("probabilities", "legend"):
@@ -120,22 +96,7 @@ async def reviews(status: str = Query("pending"),
                   limit: Int64 = Query(100, ge=1, le=500),  # noqa: B008
                   offset: Int64 = Query(0, ge=0),  # noqa: B008
                   principal: Principal = Depends(get_principal)):  # noqa: B008
-    if status not in {"pending", "approved", "rejected", "info_requested"}:
-        raise HTTPException(422, "Invalid status")
-    if "reviewer" not in principal.roles:
-        return {"reviews": []}
-    legacy = [value for value in ("AI팀", "IT팀", "현업", "검토자")
-              if required_reviewer_org(principal.tenant_id, value, principal.org_ids)
-              in principal.org_ids]
-    rows = await list_reviews(principal.tenant_id, status,
-                              reviewer_orgs=[*principal.org_ids, *legacy],
-                              limit=limit, offset=offset)
-    run_ids = list({row["v"]["run_id"] for row in rows})
-    urgencies = await judgment_urgencies(principal.tenant_id, run_ids)
-    now = datetime.now(UTC)
-    return {"reviews":[_list_item(principal, v, dict(row["q"]), urgencies, now)
-                       for row in rows if (v := dict(row["v"])) and
-                       _allowed(principal, v, dict(row["q"]))]}
+    return await visible_reviews(principal, status, limit, offset)
 
 
 @router.get("/{review_id}")

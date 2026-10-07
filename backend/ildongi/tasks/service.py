@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 from ildongi.auth.core import Principal
+from ildongi.auth.policy import can
 from ildongi.db.audit import append_audit_in_tx
 from ildongi.db.events import append_event_in_tx
 from ildongi.db.tx import write_tx
-from ildongi.tasks.store import lock_task_in_tx, project_start_readiness
+from ildongi.tasks.store import list_tasks, lock_task_in_tx, project_start_readiness
 
 
 class TaskError(Exception):
@@ -53,3 +54,16 @@ async def transition(principal: Principal, task_id: str, target: str, expected: 
         await append_event_in_tx(tx,tenant,'task.transitioned',{'task_id':task_id,'from':expected,'to':target},request_id=task.get('request_id'))
         return {'id':task_id,'status':target}
     return await write_tx(tenant,op)
+
+
+def task_visible(p:Principal, task:dict)->bool:
+    request=task.get('request') or task
+    request.setdefault('tenant_id',p.tenant_id)
+    request['shared_org_ids']=request.get('shared_org_ids') or ()
+    request['org_ids']=request.get('org_ids') or ()
+    return can(p,"view_task",{**request,"task_org_ids":[item["org"] for item in task.get("orgs",[])]})
+
+
+async def visible_tasks(principal: Principal) -> list[dict]:
+    rows = await list_tasks(principal.tenant_id, {})
+    return [{**row, "kind": "assigned_task"} for row in rows if task_visible(principal, row)]

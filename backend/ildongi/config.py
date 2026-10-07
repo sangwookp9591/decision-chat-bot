@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr = SecretStr("")
     gemini_api_key: SecretStr = SecretStr("")
     llm_mode: Literal["live", "fake", "off"] = "live"
+    chatgpt_auth_redirect_port: int = 8000
+    chatgpt_auth_return_url: str = "http://127.0.0.1:5173/policy"
     ai_name: str = "Decision AI"
     ai_model: str = "jev-1.13.0"
     neo4j_uri: str = "bolt://localhost:7687"

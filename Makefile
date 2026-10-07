@@ -54,3 +54,7 @@ load:
 # Writes artifacts/validation/t21/<run-id>/. ACC_SKIP_UI=1 skips the Playwright part.
 test-acceptance:
 	bash backend/tests/acceptance/run.sh
+
+.PHONY: mcp
+mcp:
+	cd backend && .venv/bin/python -m ildongi.mcp_server

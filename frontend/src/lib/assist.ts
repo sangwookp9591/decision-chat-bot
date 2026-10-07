@@ -1,4 +1,4 @@
-export const providerLabel = { anthropic: 'Claude', openai: 'OpenAI', google: 'Gemini' };
+export const providerLabel = { anthropic: 'Claude', openai: 'OpenAI', google: 'Gemini', chatgpt: 'ChatGPT 구독' };
 export function authorLabel(author: string): string {
   if (!author.startsWith('llm:')) return author;
   const [provider, ...model] = author.slice(4).split('/');

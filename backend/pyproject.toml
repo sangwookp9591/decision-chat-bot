@@ -3,6 +3,7 @@ name = "ildongi"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
+  "mcp==1.30.0",
   "fastapi>=0.115,<1",
   "uvicorn[standard]>=0.30,<1",
   "pydantic>=2,<3",
@@ -10,6 +11,7 @@ dependencies = [
   "neo4j>=5.25,<7",
   "argon2-cffi>=23.1,<26",
   "httpx>=0.27,<1",
+  "PyJWT[crypto]>=2.15.1,<3",
   "python-multipart>=0.0.12,<1",
   "typesafe-sdk==0.7.2",
   "pypdf>=5,<7",
@@ -42,7 +44,7 @@ root_package = "ildongi"
 [[tool.importlinter.contracts]]
 name = "Feature API to service to store"
 type = "layers"
-containers = ["ildongi.auth", "ildongi.review", "ildongi.judgment", "ildongi.ingest", "ildongi.tasks", "ildongi.observe", "ildongi.graph", "ildongi.monitoring", "ildongi.learning", "ildongi.evaluation", "ildongi.assist"]
+containers = ["ildongi.auth", "ildongi.review", "ildongi.judgment", "ildongi.ingest", "ildongi.tasks", "ildongi.observe", "ildongi.graph", "ildongi.monitoring", "ildongi.learning", "ildongi.evaluation", "ildongi.assist", "ildongi.mcp_server"]
 layers = ["(api)", "(service)", "(store)"]
 
 [[tool.importlinter.contracts]]
@@ -84,3 +86,10 @@ name = "Assist cannot decide or publish policy"
 type = "forbidden"
 source_modules = ["ildongi.assist"]
 forbidden_modules = ["ildongi.judgment", "ildongi.learning", "ildongi.review", "ildongi.policy"]
+
+[[tool.importlinter.contracts]]
+name = "MCP uses public services and never persistence or HTTP feature handlers"
+type = "forbidden"
+source_modules = ["ildongi.mcp_server"]
+forbidden_modules = ["ildongi.db", "ildongi.ingest.store", "ildongi.judgment.store", "ildongi.judgment.progress_store", "ildongi.review.store", "ildongi.tasks.store", "ildongi.auth.store", "ildongi.ingest.api", "ildongi.judgment.api", "ildongi.review.api", "ildongi.tasks.api"]
+allow_indirect_imports = true

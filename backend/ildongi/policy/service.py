@@ -86,7 +86,7 @@ class LlmFeatures(BaseModel):
 
 class LlmConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    provider: Literal["anthropic", "openai", "google"] | None = None
+    provider: Literal["anthropic", "openai", "google", "chatgpt"] | None = None
     model: str | None = Field(default=None, pattern=r"^[A-Za-z0-9._:/-]{1,100}$")
     features: LlmFeatures = Field(default_factory=LlmFeatures)
     timeout_seconds: float = Field(default=15, ge=1, le=60)

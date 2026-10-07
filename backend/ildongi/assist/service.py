@@ -6,6 +6,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
+from ildongi.assist import chatgpt_auth
 from ildongi.assist.prompts import (
     INSTRUCTIONS,
     PROMPT_VERSION,
@@ -186,6 +187,12 @@ async def explain_rule(*, proposed_body, rationale, llm_config, policy, settings
 
 
 MESSAGES = {
+    'CHATGPT_DISCONNECTED': 'ChatGPT 계정을 연결하세요.',
+    'CHATGPT_RECONNECT_REQUIRED': 'ChatGPT 연결이 만료되었습니다. 다시 연결하세요.',
+    'PLAN_USAGE_NOT_GRANTED': 'ChatGPT 요금제 사용을 허용하고 다시 연결하세요.',
+    'CHATGPT_USAGE_LIMIT': 'ChatGPT 사용 한도에 도달했습니다. ChatGPT 설정 → 사용량에서 확인하세요.',
+    'CHATGPT_USAGE_UNAVAILABLE': 'ChatGPT 사용 가능 여부를 확인할 수 없습니다. 잠시 후 다시 시도하세요.',
+    'CHATGPT_NOT_ELIGIBLE': '이 계정이나 워크스페이스에서 ChatGPT 요금제 사용이 허용되지 않습니다.',
     'KEY_MISSING': 'API 키가 없습니다. 서버 .env의 {key}를 설정하세요.',
     'AUTH_FAILED': '인증에 실패했습니다. 서버 .env의 {key}를 확인하세요.',
     'MODE_OFF': '서버에서 글쓰기 보조가 꺼져 있습니다.',
@@ -201,6 +208,8 @@ MESSAGES = {
 def safe_response(value, settings):
     """Mask all API response strings, including exact secrets with nonstandard formats."""
     secrets = [getattr(settings, field).get_secret_value() for field in KEY_FIELDS.values()]
+    credentials = chatgpt_auth.load(settings)
+    secrets.extend(credentials.get(field, '') for field in ('access_token', 'refresh_token', 'id_token'))
     def clean(item):
         if isinstance(item, str):
             for secret in secrets:
@@ -220,7 +229,9 @@ async def test_connection(name, model, settings):
     error = None
     try:
         # A missing key stays a visible failure even in fake mode; no external request is made.
-        if not getattr(settings, KEY_FIELDS[name]).get_secret_value():
+        if name == 'chatgpt':
+            await chatgpt_auth.access_token(settings)
+        elif not getattr(settings, KEY_FIELDS[name]).get_secret_value():
             raise LlmUnavailable('KEY_MISSING')
         provider = get_provider(name, settings, max_retries=0)
         response = await asyncio.wait_for(provider.generate(
@@ -229,10 +240,13 @@ async def test_connection(name, model, settings):
             raise LlmInvalidOutput()
     except Exception as exc:  # noqa: BLE001 - optional text must fall back on every provider failure
         error = _error_code(exc)
+    message = ('ChatGPT 인증 또는 권한을 확인하세요. 필요하면 다시 연결하세요.'
+               if name == 'chatgpt' and error == 'AUTH_FAILED' else
+               MESSAGES.get(error, '제공자 호출에 실패했습니다.').format(
+                   key=KEY_FIELDS.get(name, 'ChatGPT').upper()) if error else '연결 확인에 성공했습니다.')
     return safe_response({'provider': name, 'model': model, 'ok': error is None,
                           'latency_ms': round((time.monotonic()-started)*1000), 'error_code': error,
-                          'message': MESSAGES.get(error, '제공자 호출에 실패했습니다.').format(
-                              key=KEY_FIELDS[name].upper()) if error else '연결 확인에 성공했습니다.',
+                          'message': message,
                           'tested_at': datetime.now(UTC).isoformat()}, settings)
 
 
@@ -240,13 +254,16 @@ _model_cache = {}
 
 
 async def list_models(name, settings):
-    cache_key = (name, settings.llm_mode, bool(getattr(settings, KEY_FIELDS[name]).get_secret_value()))
+    configured = bool(getattr(settings, KEY_FIELDS[name]).get_secret_value()) if name in KEY_FIELDS else False
+    cache_key = (name, settings.llm_mode, configured)
     cached = _model_cache.get(cache_key)
-    if cached and time.monotonic()-cached[0] < 600:
+    if name != 'chatgpt' and cached and time.monotonic()-cached[0] < 600:
         return deepcopy(cached[1])
     error = None
     try:
-        if not getattr(settings, KEY_FIELDS[name]).get_secret_value():
+        if name == 'chatgpt':
+            await chatgpt_auth.access_token(settings)
+        elif not getattr(settings, KEY_FIELDS[name]).get_secret_value():
             raise LlmUnavailable('KEY_MISSING')
         models = await asyncio.wait_for(get_provider(name, settings, max_retries=0).list_models(timeout=10), 10)
         if not models:
@@ -257,12 +274,17 @@ async def list_models(name, settings):
         values = [{'id': id, 'label': label} for id, label in DEFAULT_MODELS[name]]
     result = safe_response({'provider': name, 'source': 'default' if error else 'api',
                             'models': values, 'error_code': error}, settings)
-    _model_cache[cache_key] = (time.monotonic(), result)
+    if name != 'chatgpt':
+        _model_cache[cache_key] = (time.monotonic(), result)
     return deepcopy(result)
 
 
 def provider_status(settings):
-    return {'providers': [{'provider': name,
-                           'key_configured': bool(getattr(settings, KEY_FIELDS[name]).get_secret_value()),
-                           'sdk_available': sdk_available(name), 'default_model': models[0][0]}
-                          for name, models in DEFAULT_MODELS.items()]}
+    providers = [{'provider': name,
+                  'key_configured': bool(getattr(settings, KEY_FIELDS[name]).get_secret_value()),
+                  'sdk_available': sdk_available(name), 'default_model': models[0][0]}
+                 for name, models in DEFAULT_MODELS.items() if name != 'chatgpt']
+    providers.append({'provider': 'chatgpt', 'key_configured': False,
+                      'sdk_available': True, 'default_model': '',
+                      **chatgpt_auth.status(settings)})
+    return {'providers': providers}

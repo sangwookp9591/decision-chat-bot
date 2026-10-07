@@ -13,6 +13,7 @@ from neo4j.exceptions import ServiceUnavailable, SessionExpired
 
 from ildongi import api_encoding  # noqa: F401  (registers Neo4j temporal JSON encoders)
 from ildongi.assist.api import router as assist_router
+from ildongi.assist.chatgpt_api import router as chatgpt_router
 from ildongi.auth.core import enforce_csrf
 from ildongi.auth.router import router as auth_router
 from ildongi.config import get_settings
@@ -90,6 +91,7 @@ def create_app() -> FastAPI:
         return JSONResponse(status_code=422, content={"detail": detail})
 
     app.include_router(assist_router)
+    app.include_router(chatgpt_router)
     app.include_router(explain_router)
     app.include_router(auth_router)
     app.include_router(ingest_router)
@@ -180,6 +182,14 @@ def create_app() -> FastAPI:
                             "status_code": status, "error_class": error_class,
                             "duration_ms": round((time.monotonic() - started) * 1000),
                             "validity": "undetermined"})
+
+    @app.middleware("http")
+    async def redact_oauth_callback(request: Request, call_next):
+        if request.url.path == "/auth/callback":
+            request.state.chatgpt_callback_params = dict(request.query_params)
+            # Uvicorn access logs use this scope: authorization codes/state must not be logged.
+            request.scope["query_string"] = b""
+        return await call_next(request)
 
     @app.get("/api/health")
     async def health() -> dict[str, str]:
