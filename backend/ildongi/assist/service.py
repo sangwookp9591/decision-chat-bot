@@ -158,14 +158,19 @@ def apply_texts(result, outcome):
     return merged
 
 
-async def explain_rule(*, proposed_body, rationale, llm_config, policy, settings, provider=None, usage=None):
+async def explain_rule(*, proposed_body, rationale, llm_config, policy, settings, provider=None, usage=None,
+                       org_names=None):
     if not llm_config.get('features', {}).get('rule_explanation'):
         raise LlmUnavailable('LLM_DISABLED')
     if not llm_config.get('provider') or not llm_config.get('model'):
         raise LlmUnavailable('LLM_UNAVAILABLE')
     if not policy.get('masking', {}).get('enabled', True):
         raise LlmUnavailable('MASKING_DISABLED')
-    data = _masked({'rule': {key: proposed_body.get(key) for key in ('target', 'scope', 'action')},
+    rule = deepcopy({key: proposed_body.get(key) for key in ('target', 'scope', 'action')})
+    for clause in (rule.get('scope') or {}).get('all', []):
+        if 'requester_org' in clause:
+            clause['requester_org'] = (org_names or {}).get(clause['requester_org'], clause['requester_org'])
+    data = _masked({'rule': rule,
                     'rationale': rationale[:4000]}, {**policy, '_masking_session': MaskingSession()})
     selected = provider or get_provider(llm_config['provider'], settings)
     timeout = llm_config.get('timeout_seconds', 15)

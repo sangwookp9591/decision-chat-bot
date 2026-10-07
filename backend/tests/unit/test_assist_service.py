@@ -100,3 +100,42 @@ async def test_input_bound_and_shared_mask_session():
     assert session.calls >= 1
     import json
     assert len(json.loads(fake.requests[0].data)['units'][0]['text']) == 4000
+
+
+@pytest.mark.asyncio
+async def test_rule_explanation_sends_org_names_without_changing_saved_body(monkeypatch):
+    import json
+
+    from ildongi.learning import explain_api
+
+    body = {'target': 'lead_org', 'scope': {'all': [{'requester_org': 't-alpha-it'}]},
+            'action': {'set': 'IT팀'}}
+    original = json.dumps(body)
+    fake = FakeProvider()
+
+    async def candidate(tenant, candidate_id):
+        return {'body': original, 'rationale': '조직별 요청'}
+
+    async def orgs(tenant):
+        assert tenant == 't-alpha'
+        return [{'id': 't-alpha-it', 'name': 'IT팀'}]
+
+    async def policy(tenant):
+        return 1, {'llm': {**CONFIG, 'features': {'rule_explanation': True}}}
+
+    async def save(tenant, actor, candidate_id, **kwargs):
+        assert kwargs['body'] == original
+        return True
+
+    monkeypatch.setattr(explain_api, 'read_candidate', candidate)
+    monkeypatch.setattr(explain_api, 'list_orgs', orgs, raising=False)
+    monkeypatch.setattr(explain_api, 'get_active_snapshot', policy)
+    monkeypatch.setattr(explain_api, 'save_explanation', save)
+    monkeypatch.setattr(explain_api, 'get_settings', lambda: Settings(llm_mode='fake'))
+    monkeypatch.setattr('ildongi.assist.service.get_provider', lambda *args: fake)
+    from ildongi.auth.core import Principal
+    await explain_api.explanation('candidate', Principal('t-alpha', 'admin', (), frozenset({'rule_admin'}), True))
+    sent = json.loads(fake.requests[0].data)
+    assert sent['rule']['scope']['all'] == [{'requester_org': 'IT팀'}]
+    assert 't-alpha-it' not in fake.requests[0].data
+    assert body['scope']['all'][0]['requester_org'] == 't-alpha-it'
