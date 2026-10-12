@@ -172,6 +172,7 @@ main > section.chat-page {
 
 /* ── 내 요청 대화: chat-style sidebar ──────────────────────────────────────────── */
 .request-list { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.chat-page > .request-list { padding: var(--space-3); border-radius: var(--radius-card); background: var(--color-surface); box-shadow: var(--shadow-card); }
 .list-body { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: var(--space-2); }
 .list-head { display: grid; gap: var(--space-3); }
 .list-head h2 { margin: 0; padding: 0 var(--space-3); font: var(--t7); font-weight: 700; color: var(--color-caption); }
@@ -184,7 +185,7 @@ main > section.chat-page {
 .list-group h3 { margin: 0; padding: var(--space-2) var(--space-3); font: var(--t7); font-weight: 700; color: var(--color-caption); }
 .request-row { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-2); width: 100%; min-height: var(--hit-min); padding: 0 var(--space-3); border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-ink); text-align: left; cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out); }
 .request-row:hover { background: var(--color-fill); }
-.request-row[aria-current='true'] { background: var(--color-fill-strong); }
+.request-row[aria-current='true'] { background: var(--color-primary-tint); }
 .request-title { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--t6); }
 .request-title.ui-skeleton { width: 70%; height: 18px; }
 .request-id { font-size: 11px; color: var(--color-caption); opacity: 0; transition: opacity var(--dur-fast) var(--ease-out); }

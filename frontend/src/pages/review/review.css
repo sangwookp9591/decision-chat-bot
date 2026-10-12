@@ -8,9 +8,10 @@
 .review-layout nav h2{margin:0;font:var(--t5)}
 .review-count{color:var(--color-caption);font:var(--t7);font-weight:600}
 .review-layout nav .fld-empty{padding:20px 12px}
-.review-layout nav button{display:grid;gap:6px;width:100%;min-width:0;padding:14px var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;text-align:left;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
+.review-layout nav button{position:relative;display:grid;gap:6px;width:100%;min-width:0;padding:14px var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;text-align:left;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
 .review-layout nav button:active{transform:scale(0.99)}
 @media(hover:hover){.review-layout nav button:hover{background:var(--color-fill)}}
+.review-layout nav button[aria-current=true]{background:var(--color-primary-tint)}
 .review-row-sub{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-2);color:var(--color-caption);font:var(--t7)}
 .review-row-title{font:var(--t5);overflow-wrap:anywhere}
 .review-masked{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2);color:var(--color-ink-2)}
@@ -22,6 +23,7 @@
 .review-layout article h2{margin:0 0 var(--space-2);font:var(--t4)}
 .review-layout article h3{margin:0 0 var(--space-2);font:var(--t5)}
 .review-page section{margin:var(--space-5) 0}
+.review-layout article>section{padding-top:var(--space-5);border-top:1px solid var(--color-line)}
 .review-field{display:grid;gap:var(--space-2);margin:var(--space-3) 0;font:var(--t7);font-weight:600;color:var(--color-ink-2)}
 .review-field span{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center;font:var(--t6);font-weight:400;color:var(--color-ink)}
 .review-field input,.review-task input,.review-page textarea{width:100%;min-width:0;padding:10px var(--space-3);border:1px solid transparent;border-radius:var(--radius-control);background:var(--color-fill);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out)}

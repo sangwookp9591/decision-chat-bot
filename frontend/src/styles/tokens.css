@@ -85,7 +85,7 @@
   --section-gap: 28px;
 
   /* ── Elevation: faces over borders; shadows barely there ── */
-  --shadow-card: 0 2px 8px rgba(2, 32, 71, 0.04);
+  --shadow-card: 0 0 0 1px rgba(2, 32, 71, 0.05), 0 2px 10px rgba(2, 32, 71, 0.06); /* hairline ring keeps the card edge readable on the grey ground */
   --shadow-pop: 0 8px 28px rgba(2, 32, 71, 0.12);
   --shadow-toast: 0 8px 24px rgba(2, 32, 71, 0.2);
   --shadow-lift: 0 4px 16px rgba(2, 32, 71, 0.1);   /* sticky bars, hovered cards */
