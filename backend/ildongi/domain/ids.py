@@ -5,7 +5,7 @@ PREFIXES = {
     "job": "job_", "review": "rvw_", "task": "task_", "config": "cfg_",
     "correction": "cor_", "candidate": "cand_", "rule_decision": "rdec_",
     "rule": "rule_", "validation": "val_", "attempt": "att_", "event": "evt_",
-    "assignment": "asn_", "audit": "aud_", "idempotency": "idem_",
+    "assignment": "asn_", "audit": "aud_", "idempotency": "idem_", "case": "case_",
 }
 
 

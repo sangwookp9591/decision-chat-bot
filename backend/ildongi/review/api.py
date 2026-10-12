@@ -11,6 +11,7 @@ from ildongi.auth.core import Principal, get_principal
 from ildongi.auth.policy import redact_source
 from ildongi.domain.api_types import Int64
 from ildongi.domain.drafts import draft_created_by, draft_source
+from ildongi.review.cases import precedents
 from ildongi.review.service import ReviewError, decide, visible_reviews
 from ildongi.review.service import review_allowed as _allowed
 from ildongi.review.store import decode, get_review
@@ -55,6 +56,7 @@ class DecisionCommand(BaseModel):
     changes: ReviewChanges | None = None
     reason: str | None = None
     needed_info: list[str] | None = None
+    consulted_case_ids: list[str] | None = Field(default=None, max_length=20)
 
 
 def _output(row: dict, can_read_source: bool) -> dict:
@@ -151,7 +153,8 @@ async def review_detail(review_id: str,
     original_draft = drafts[0] if drafts else None
     current_draft = next((d for d in drafts if d["draft_version"] == v["draft_version"]),
                          drafts[-1] if drafts else None)
-    return redact_source(principal, {"review":v, "request":request, "judgment":judgment,
+    cases = await precedents(principal, v["request_id"], judgment, data.get("request_text"))
+    return redact_source(principal, {"review":v, "precedents":cases, "request":request, "judgment":judgment,
             "outputs":[_output(row, principal.can_read_source) for row in data["outputs"]],
             "drafts":drafts, "original_draft":original_draft, "current_draft":current_draft,
             "history":history,

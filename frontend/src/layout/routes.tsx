@@ -8,6 +8,7 @@ export const routeLoaders: Record<string, () => Promise<unknown>> = {
   '/observatory': () => import('../pages/Observatory'),
   '/judgment-map': () => import('../pages/JudgmentMap'),
   '/learning': () => import('../pages/Learning'),
+  '/cases': () => import('../pages/Cases'),
   '/monitoring': () => import('../pages/Monitoring'),
   '/policy': () => import('../pages/Policy'),
   '/evaluation': () => import('../pages/Evaluation'),
@@ -16,6 +17,7 @@ export const Review = lazy(() => import('../pages/Review').then((m) => ({ defaul
 export const Tasks = lazy(() => import('../pages/Tasks').then((m) => ({ default: m.Tasks })));
 export const Observatory = lazy(() => import('../pages/Observatory').then((m) => ({ default: m.Observatory })));
 export const JudgmentMap = lazy(() => import('../pages/JudgmentMap').then((m) => ({ default: m.JudgmentMap })));
+export const Cases = lazy(() => import('../pages/Cases').then((m) => ({ default: m.Cases })));
 export const Learning = lazy(() => import('../pages/Learning').then((m) => ({ default: m.Learning })));
 export const Monitoring = lazy(() => import('../pages/Monitoring').then((m) => ({ default: m.Monitoring })));
 export const Policy = lazy(() => import('../pages/Policy').then((m) => ({ default: m.Policy })));

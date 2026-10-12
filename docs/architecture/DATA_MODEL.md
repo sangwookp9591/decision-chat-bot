@@ -9,7 +9,7 @@ T04 구현 기준, 2026-10-03. Neo4j가 업무 상태의 기준 저장소이고 
 | 접수 | `Request`, `InputRevision`, `Attachment` | `Request.id`, `tenant_id`, `status`, `latest_revision_id`, `active_run_id`; `Request-[:HAS_REVISION]->InputRevision` |
 | 실행 | `Run`, `RunStep`, `Job` | Run의 `request_id`, `input_revision_id`, `kind`(`normal`/`shadow`), 고정 Config 버전; Job의 `owner_id`, `lease_generation`, `lease_expires_at`, `status` |
 | 검토·배정 | `Review`, `ReviewDecision`, `Assignment`, `Task`, `Team` | 검토 대상은 request/revision/run/draft/review 버전의 결합. Assignment는 요청당 하나, Task는 배정과 초안 업무 ID 쌍당 하나 |
-| 정책·학습 | `Policy`, `ConfigVersion`, `Correction`, `RuleCandidate`, `RuleDecision`, `RuleVersion`, `ValidationRun`, `RuleApplication` | 수정 원안은 보존. 규칙 버전은 `rule_id@version`, 실행은 시작 시 Config 버전을 고정 |
+| 정책·학습 | `Policy`, `ConfigVersion`, `Correction`, `DecisionCase`, `RuleCandidate`, `RuleDecision`, `RuleVersion`, `ValidationRun`, `RuleApplication` | 수정 원안은 보존. 규칙 버전은 `rule_id@version`, 실행은 시작 시 Config 버전을 고정 |
 | 판단 관계 | `EvidenceSpan`, `ModelOutput`, `RunStep` 및 위 학습 노드 | 08_LEARNING_LOOP 3절의 `CITES`, `CORRECTS`, `RECORDED`, `SUPPORTED_BY`, `DECIDES`, `DERIVED_FROM`, `PUBLISHED_IN`, `VALIDATES`, `APPLIED`, `USED_OUTPUT` 관계만 실제 생성 시 기록. T29가 관계 생성·경로 질의를 담당 |
 | 운영 | `Idempotency`, `EventCounter`, `Event`, `Audit` | Idempotency는 `(tenant_id, scope, key)`, EventCounter는 tenant별 seq, Event는 순서·payload JSON, Audit은 행위자·대상·전후 요약·사유 |
 
