@@ -52,7 +52,7 @@ describe('first screen', () => {
     expect(screen.getByText(/PDF · DOCX · MD, 최대 5개 · 파일당 10 MiB · 합계 25 MiB/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '요청 보내기' })).toBeDisabled();
   });
-  it('uses the still PNG instead of the wave video under reduced motion', () => {
+  it('uses the still PNG instead of the wave animation under reduced motion', () => {
     window.matchMedia = vi.fn().mockReturnValue({ matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }) as never;
     open();
     expect(document.querySelector('[data-mascot="wave"]')).toHaveAttribute('src', '/assets/mascot/mascot.png');
