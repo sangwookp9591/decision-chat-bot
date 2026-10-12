@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { Monitoring } from './Monitoring';
+import { Monitoring, duration } from './Monitoring';
 import { monitoringApi } from '../api/monitoring';
 
 vi.mock('../api/monitoring', () => ({ monitoringApi: { summary: vi.fn(), slo: vi.fn(), failures: vi.fn(), alerts: vi.fn() } }));
@@ -13,7 +13,7 @@ describe('Monitoring', () => {
   it('shows supplement answer wait separately from human review wait', async () => {
     render(<MemoryRouter><Monitoring /></MemoryRouter>);
     const panel = await screen.findByRole('region', { name: '보완 답변 대기' });
-    expect(panel.textContent).toContain('90.00초');
+    expect(panel.textContent).toContain('1분 30초');
     expect(panel.querySelectorAll('article')[2].textContent).toContain('2');
     expect(screen.getByRole('region', { name: '사람 검토 대기' })).toBeTruthy();
   });
@@ -109,5 +109,51 @@ describe('Monitoring KPI count-up (TOSS-SCREENS)', () => {
     const tile = [...container.querySelectorAll('.monitor-kpis article')].find((a) => a.textContent?.startsWith('자동 처리'))!;
     expect(tile.querySelector('.count-number')?.textContent).toBe('3');
     expect(container.querySelectorAll('.monitor-kpis .count-number').length).toBeGreaterThan(0);
+  });
+});
+
+describe('Monitoring layout (v2 spacing)', () => {
+  const sloBase = { window_start: '', window_end: '', verified: true, reason: '', collection: emptyCollection };
+  it('splits the eight KPIs into 처리량 and 이상 신호 groups', async () => {
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('요청 수');
+    const groups = within(screen.getByRole('region', { name: '핵심 지표' })).getAllByRole('group');
+    expect(groups.map((g) => g.getAttribute('aria-label'))).toEqual(['처리량', '이상 신호']);
+    expect([...groups[0].querySelectorAll('article > span')].map((s) => s.textContent)).toEqual(['요청 수', '자동 처리', '검토 대기', '검토 완료']);
+    expect([...groups[1].querySelectorAll('article > span')].map((s) => s.textContent)).toEqual(['실패', '시간초과', '취소', '섀도 실행']);
+  });
+  it('summarises a verified SLO miss at the top', async () => {
+    vi.mocked(monitoringApi.slo).mockResolvedValue({ ...sloBase, availability: { target: .999, total: 1000, failures: 0, remaining_failures: 1, burn_rate_1h: 0, verified: true }, first_judgment: { target: .99, total: 100, failures: 3, remaining_failures: 0, burn_rate_1h: 6, verified: true } });
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    const health = await screen.findByRole('status', { name: '지금 상태' });
+    expect(health.textContent).toContain('최초 판단 저장 신뢰성');
+    expect(health.textContent).toContain('97.00%');
+  });
+  it('shows no health summary when every verified SLO passes or SLOs are unverified', async () => {
+    vi.mocked(monitoringApi.slo).mockResolvedValue({ ...sloBase, availability: { target: .999, total: 1000, failures: 0, remaining_failures: 1, burn_rate_1h: 0, verified: true }, first_judgment: { target: .99, total: 0, failures: 0, remaining_failures: null, burn_rate_1h: null, verified: false } });
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('접수·조회 가용성');
+    expect(screen.queryByRole('status', { name: '지금 상태' })).toBeNull();
+  });
+});
+
+describe('Monitoring durations and KPI emphasis', () => {
+  it('reads long waits in minutes and hours instead of thousands of seconds', () => {
+    expect(duration(null)).toBe('미수집');
+    expect(duration(640)).toBe('640ms');
+    expect(duration(11800)).toBe('11.80초');
+    expect(duration(59990)).toBe('59.99초');
+    expect(duration(60000)).toBe('1분');
+    expect(duration(2640000)).toBe('44분');
+    expect(duration(90500)).toBe('1분 31초');
+    expect(duration(30240000)).toBe('8시간 24분');
+    expect(duration(3600000)).toBe('1시간');
+  });
+  it('colours only failures and timeouts as alerts, not cancellations or shadow runs', async () => {
+    vi.mocked(monitoringApi.summary).mockResolvedValue({ ...summary, cancellations: 4, shadow_runs: 7, availability: { ...summary.availability, failed_calls: 2 } });
+    const { container } = render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('요청 수');
+    const alerts = [...container.querySelectorAll('.monitor-kpis article.is-alert > span')].map((s) => s.textContent);
+    expect(alerts).toEqual(['실패']);
   });
 });

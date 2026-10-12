@@ -1,6 +1,6 @@
 # 디자인 시스템 — 토스(TDS) 기반, 브랜드 컬러 유지
 
-앱 전체의 회색 체계·배경·글꼴·타이포 위계·모서리·간격·버튼/입력/카드/리스트/토스트/스켈레톤·모션을 토스 디자인 시스템(TDS) 방식으로 맞춘 기반이다. **브랜드 컬러(주황 `#F15921`, 틸 `#0E7C86`)와 주황 위 글자색 `#1B1712` 규칙은 그대로**다. 기반 단계에서는 **토큰 이름은 유지한 채 값과 공용 스타일만** 바꿨고, 화면 단계(TOSS-SCREENS)에서 화면별 하드코딩을 토큰으로 바꿔 마감했다(아래 §화면 단계).
+앱 전체의 회색 체계·배경·글꼴·타이포 위계·모서리·간격·버튼/입력/카드/리스트/토스트/스켈레톤·모션을 토스 디자인 시스템(TDS) 방식으로 맞춘 기반이다. **브랜드 컬러(주황 `#F15921`, 틸 `#0E7C86`)는 그대로**다. v2 리디자인(2026-10)에서 주황 버튼의 검정 글자 규칙을 폐기하고, 버튼은 한 톤 진한 `--color-action`(`#CF4413`) 위 흰 글자로 바꿨다(아래 §v2 색 역할). 기반 단계에서는 **토큰 이름은 유지한 채 값과 공용 스타일만** 바꿨고, 화면 단계(TOSS-SCREENS)에서 화면별 하드코딩을 토큰으로 바꿔 마감했다(아래 §화면 단계).
 
 | 파일 | 역할 |
 |---|---|
@@ -39,7 +39,9 @@
 | `--color-surface` / `--color-surface-2` | `#fff` / grey50 | 카드 / 카드 안 조용한 영역 |
 | `--color-fill` / `--color-fill-strong` | grey100 / grey200 | 입력·칩·weak 버튼 채움 |
 | `--color-primary` | `#F15921` (유지) | 주요 행동·강조 |
-| `--color-on-primary` | `#1B1712` (유지, 5.26:1) | **주황 위 글자** — 흰색 금지 |
+| `--color-action` | `#CF4413` (흰 글자 4.68:1) | **주 버튼 채움** — 브랜드 주황을 한 톤 내려 흰 글자 AA 확보 |
+| `--color-action-hover` | `#B83C10` (흰 글자 5.6:1) | 주 버튼 hover |
+| `--color-on-action` | `#fff` | 주 버튼 위 글자. 주황 위 검정 글자(`#1B1712`)는 v2에서 폐기 |
 | `--color-primary-ink` | `#B33F0E` (유지) | 밝은 면 위 주황 글자·링크 |
 | `--color-primary-tint` / `--color-primary-weak` | `#FDF3EE` / 주황 12% | 선택·hover / weak 버튼 |
 | `--color-secondary` | `#0E7C86` (유지) | 보조(틸) |
@@ -82,7 +84,7 @@ JS 쪽 같은 값은 `MOTION`(`lib/motion.ts`). 두 곳을 같이 바꾼다.
 
 ## 구성요소
 
-- **Button**: `size`(small/medium/large/xlarge), `tone`(fill 기본·weak), `color`(primary/dark/danger/light), `loading`, `block`. 기존 `variant`는 호환: primary=fill 주황, secondary=fill 틸(흰 글자), plain=weak light. 기본 크기는 터치 영역 44px 유지(small 36px은 촘촘한 도구 줄에만). 주황 위 글자는 `--color-on-primary`.
+- **Button**: `size`(small/medium/large/xlarge), `tone`(fill 기본·weak), `color`(primary/dark/danger/light), `loading`, `block`. 기존 `variant`는 호환: primary=fill 주황, secondary=fill 틸(흰 글자), plain=weak light. 기본 크기는 터치 영역 44px 유지(small 36px은 촘촘한 도구 줄에만). 주 버튼은 `--color-action` 채움 + `--color-on-action`(흰 글자).
   ```tsx
   <Button size="large" block>요청 보내기</Button>
   <Button tone="weak" color="danger" size="small">삭제</Button>
@@ -118,12 +120,12 @@ TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바�
 - `index.html`의 `<meta name="color-scheme" content="light dark">`로 브라우저 기본 위젯(스크롤바·입력)도 따라간다.
 - 자동 추종을 켤 수 있었던 이유: 화면 CSS의 하드코딩 색을 모두 토큰으로 바꿨기 때문이다(아래 §화면 단계). `screens-tokens.test.ts`가 화면 CSS에 리터럴 색이 다시 들어오면 실패시킨다.
 - **예외: 판단 맵의 고정 다크 무대**(`pages/judgment-map/judgment-map-stage.css`)는 앱 테마와 무관하게 항상 어둡다. 리터럴 색은 이 파일에서만 허용한다.
-- 다크 값의 대비도 `tokens.test.ts`가 AA로 검사한다. 브랜드 틸은 바꾸지 않았으므로 다크 면 위 틸 **글자**는 `--color-secondary-ink`(`#5CC8D0`)를 쓴다. 주황 위 글자는 두 테마 모두 `#1B1712`.
+- 다크 값의 대비도 `tokens.test.ts`가 AA로 검사한다. 브랜드 틸은 바꾸지 않았으므로 다크 면 위 틸 **글자**는 `--color-secondary-ink`(`#5CC8D0`)를 쓴다. 주 버튼은 두 테마 모두 `#CF4413` 위 흰 글자.
 - 확인: `artifacts/review/toss-screens/<화면>-{1440,375}-{light,dark}.png`, axe `color-contrast`를 라이트·다크 × Chromium·WebKit × 전 화면으로 돌려 위반 0건.
 
 ## 접근성 대비 (시험으로 고정)
 
-`tokens.test.ts`가 라이트·다크의 글자 쌍을 AA 4.5:1로 검사한다: 제목·본문·보조 글자 × 카드·바탕·조용한 면·채움, 주황 글자 × 카드·바탕·tint, 상태 글자 × 배경, **`#1B1712` × `#F15921`**. 브랜드 색 고정값(`#F15921`, `#0E7C86`, `#1B1712`)과 TDS 회색(ground·line·ink)도 고정한다. 알려진 한계: 입력 채움(grey100)과 흰 카드의 경계는 WCAG 1.4.11(비텍스트 3:1)에 못 미친다 — TDS 방식을 따르되 포커스 링(2px)·오류 테두리로 상태를 드러낸다. 틸 `#0E7C86`는 회색 바탕 위 글자 4.49:1(틸을 글자로 쓰지 않는다, 배경 채움+흰 글자 4.95:1로만).
+`tokens.test.ts`가 라이트·다크의 글자 쌍을 AA 4.5:1로 검사한다: 제목·본문·보조 글자 × 카드·바탕·조용한 면·채움, 주황 글자 × 카드·바탕·tint, 상태 글자 × 배경, **흰 글자 × `#CF4413`·`#B83C10`**. 브랜드 색 고정값(`#F15921`, `#0E7C86`, `#CF4413`)과 TDS 회색(ground·line·ink)도 고정한다. 알려진 한계: 입력 채움(grey100)과 흰 카드의 경계는 WCAG 1.4.11(비텍스트 3:1)에 못 미친다 — TDS 방식을 따르되 포커스 링(2px)·오류 테두리로 상태를 드러낸다. 틸 `#0E7C86`는 회색 바탕 위 글자 4.49:1(틸을 글자로 쓰지 않는다, 배경 채움+흰 글자 4.95:1로만).
 
 ## 번들 크기 (전후)
 
@@ -206,3 +208,23 @@ TDS dark 값을 `tokens.css`에 정의했다(역할 토큰 전체: 회색·바�
 - 접근성: `npx playwright test --config=playwright.a11y.config.ts --workers=1`(`A11Y_SHOT_DIR`로 t23 PNG 보호), Chromium·WebKit 모두 통과.
 - 전후 화면: `artifacts/review/toss-design/{before,after}/<화면>-{1440,375}.png`(로그인·요청 접수·검토·업무·실행 관찰·판단 맵·규칙 학습·모니터링·정책). 전은 이 단계 파일만 HEAD 값으로 되돌린 사본(화면 코드는 동일)이다.
 - 화면 단계 검증: `npm run typecheck && npm run test && npm run build`, Chromium·WebKit e2e(검토·업무·정책·모니터링·실행 관찰·판단 맵·평가 라벨·screens-ui·responsive-overflow·a11y `--workers=1`), 라이트·다크 axe `color-contrast` 0건.
+
+
+## v2 색 역할과 여백 (2026-10 리디자인)
+
+디자인 시안: Claude 디자인 캔버스 "일동이 디자인" v2 페이지. 시안과 소스가 같은 규칙을 쓴다.
+
+| 색 | 역할 | 쓰지 않는 곳 |
+| --- | --- | --- |
+| 주황 `--color-primary` | 브랜드 표시, 현재 메뉴 글자, 포커스 링, 선택된 **목록 항목**의 옅은 배경(`--color-primary-tint`, 테두리 없음) | 상태 표시(진행 중 등), 칩 선택 |
+| 진한 주황 `--color-action` | 화면당 하나의 주 버튼(흰 글자) | 토글·탭 선택 |
+| 틸 `--color-secondary` | 진행 중 상태, 체크박스·슬라이더·필터 칩 같은 **조작 요소의 선택** | 주 버튼 |
+| 초록 `--status-success-*` | 완료·통과 | |
+| 보라 `--status-review-*` | 사람 검토가 필요한 것 | 일반 강조 |
+| 호박 `--status-warn-*` | 대기·주의·막힘 | |
+| 빨강 `--status-fail*` | 실패·시간초과만 (취소·섀도 실행은 중립색) | |
+
+- 세그먼트 토글(입체 맵/목록 보기)의 선택은 흰 면 + 그림자. 탭·큰 토글의 선택은 틸 tint.
+- 새로고침 같은 보조 동작은 `plain` 버튼으로 통일한다. 틸 채움(`secondary`)은 화면에서 두 번째 강한 버튼이 꼭 필요할 때만.
+- 여백: 페이지 섹션 사이 32px(`--space-8`), 카드 안쪽 24~32px, 섹션 제목은 카드 밖. 카드는 테두리 없이 흰 면 + `--shadow-card`.
+- 앱 틀: 메뉴는 업무·관찰·개선 3묶음 + 아이콘, 검토 대기 건수(검토자만, 99+). 사용자·로그아웃은 상단 계정 메뉴 하나, 연결 모드 배지는 상단 한 번.

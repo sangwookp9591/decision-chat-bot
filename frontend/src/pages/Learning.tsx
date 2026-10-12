@@ -182,8 +182,7 @@ export function Learning({ roles }: { roles: string[] }) {
   if (!perms.canView) return <section className="learning-page"><h1>규칙 학습</h1><ErrorState title="조회 권한이 없습니다">검토자·운영자·규칙 관리자만 볼 수 있습니다.</ErrorState></section>;
   const body = version?.body || detail?.proposed_body;
   return <section className="learning-page">
-    <header className="learning-head"><div><h1>규칙 학습</h1></div><button type="button" className="ui-button secondary" onClick={() => void load()}>새로고침</button></header>
-    {perms.canPropose && <button type="button" className="ui-button primary" onClick={() => setShowProposal(true)}>사람 후보 제안</button>}
+    <header className="learning-head"><div><p className="eyebrow">수정 기록에서 규칙으로</p><h1>규칙 학습</h1><p>사람이 고친 판단을 모아 규칙 후보로 만들고, 비교 검증과 승인을 거쳐 게시합니다.</p></div><div className="learning-head-actions"><button type="button" className="ui-button plain" onClick={() => void load()}>새로고침</button>{perms.canPropose && <button type="button" className="ui-button primary" onClick={() => setShowProposal(true)}>사람 후보 제안</button>}</div></header>
     {perms.canPropose && showProposal && <Proposal busy={busy} onClose={() => setShowProposal(false)} onSubmit={(body) => void run('사람 후보를 제안했습니다. 승인·검증·게시 전까지 실행되지 않습니다.', async () => { const created = await learningApi.propose(body); choose(created.id); setShowProposal(false); })} />}
     <CycleStrip />
     <ThreePanels corrections={corrections} candidates={candidates.length} rules={publishedRules} />

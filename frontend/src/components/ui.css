@@ -5,7 +5,8 @@
 .status-badge>span:first-child{font-size:13px}
 .status-success{color:var(--status-success-text);background:var(--status-success-bg)}
 .status-failure{color:var(--status-fail);background:var(--status-fail-bg)}
-.status-progress{color:var(--color-primary-ink);background:var(--status-active-bg)}
+.status-progress{color:var(--color-secondary-ink);background:var(--color-secondary-tint)}
+.status-blocked{color:var(--status-warn);background:var(--status-warn-bg)}
 .status-review{color:var(--status-review-text);background:var(--status-review-bg)}
 .status-pending,.status-skipped{color:var(--color-ink-2);background:var(--color-fill);box-shadow:inset 0 0 0 1px var(--status-pending-border)}
 
@@ -46,11 +47,11 @@
 
 /* ── Button — TDS: size small|medium|large|xlarge · variant fill|weak · color primary|dark|danger|light ──
  * Legacy `variant` maps: primary = fill primary, secondary = fill teal, plain = weak light. */
-.ui-button{--btn-bg:var(--color-primary);--btn-fg:var(--color-on-primary);position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:var(--radius-control);background:var(--btn-bg);color:var(--btn-fg);font:600 15px/1.2 var(--font-sans);white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ui-button{--btn-bg:var(--color-action);--btn-fg:var(--color-on-action);position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border:0;border-radius:var(--radius-control);background:var(--btn-bg);color:var(--btn-fg);font:600 15px/1.2 var(--font-sans);white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .ui-button.primary{font-weight:700}
 .ui-button.secondary{--btn-bg:var(--color-secondary);--btn-fg:var(--color-on-secondary)}
 .ui-button.plain{--btn-bg:var(--color-fill);--btn-fg:var(--color-ink)}
-.ui-button.c-primary{--btn-bg:var(--color-primary);--btn-fg:var(--color-on-primary)}
+.ui-button.c-primary{--btn-bg:var(--color-action);--btn-fg:var(--color-on-action)}
 .ui-button.c-dark{--btn-bg:var(--grey-900);--btn-fg:var(--color-surface)}
 .ui-button.c-danger{--btn-bg:var(--status-fail);--btn-fg:var(--color-on-danger)}
 .ui-button.c-light{--btn-bg:var(--color-fill-strong);--btn-fg:var(--color-ink-2)}
@@ -64,6 +65,7 @@
 .ui-button.size-xlarge{min-height:56px;padding:0 24px;border-radius:var(--radius-card);font-size:17px}
 .ui-button.block{display:flex;width:100%}
 .ui-button:disabled{opacity:.5;cursor:not-allowed}
+@media(hover:hover){.ui-button:not(.secondary):not(.plain):not(.t-weak):not(.c-dark):not(.c-danger):not(.c-light):hover:not(:disabled){--btn-bg:var(--color-action-hover)}}
 .ui-button[aria-busy=true]{cursor:progress}
 .ui-button .btn-spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
 

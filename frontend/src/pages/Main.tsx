@@ -241,7 +241,7 @@ export function Main() {
     <div className="chat-surface">
       <div className="main-heading"><button type="button" className="icon-button menu-button" aria-label="내 요청" aria-haspopup="dialog" aria-expanded={listOpen} onClick={() => setListOpen(true)}><MenuIcon /></button>
         <h1>일동이와 요청 접수</h1>
-        <div className="heading-actions">{judgment && <span className={`environment-badge mode-${judgment.mode}`}>{judgment.mode.toUpperCase()} 연결</span>}
+        <div className="heading-actions">
           <button type="button" className="icon-button new-button" aria-label="새 요청 시작" onClick={startNew}><PlusIcon /></button></div></div>
       <div className="main-primary chat-main" data-empty={empty || undefined}>
         <div className="chat-viewport"><div className="chat-scroll" ref={scrollRef} onScroll={onScrollLog}>

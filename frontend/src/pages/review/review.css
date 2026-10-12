@@ -27,6 +27,13 @@
 .review-field input,.review-task input,.review-page textarea{width:100%;min-width:0;padding:10px var(--space-3);border:1px solid transparent;border-radius:var(--radius-control);background:var(--color-fill);transition:border-color var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-out)}
 .review-field input:focus,.review-task input:focus,.review-page textarea:focus{border-color:var(--color-primary);background:var(--color-surface)}
 .review-page textarea{display:block;min-height:76px;resize:vertical}
+.review-decision{position:sticky;bottom:var(--space-4);z-index:5;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3);margin-top:var(--space-5);padding:var(--space-4) var(--space-5);border-radius:var(--radius-xl);background:var(--color-surface);box-shadow:var(--shadow-lift)}
+.review-decision>label{display:grid;width:100%;min-width:0;gap:6px;font:var(--t7);font-weight:700;color:var(--color-ink-2)}
+.review-decision textarea{width:100%;min-height:48px;max-height:160px}
+.review-decision .review-actions{justify-content:flex-end}
+.review-decision .review-why{order:-1;margin-right:auto;color:var(--color-caption);font:var(--t7)}
+.review-empty-note{color:var(--color-caption);font:var(--t7)}
+@media(max-width:900px){.review-decision{bottom:var(--space-2)}}
 .review-task{display:grid;gap:var(--space-2);padding:var(--space-3) var(--space-4);margin-bottom:var(--space-2);border-radius:var(--radius-md);background:var(--color-surface-2)}
 .review-page blockquote{margin:var(--space-2) 0;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2)}
 .review-page blockquote small{display:block;margin-top:var(--space-1);color:var(--color-caption)}
