@@ -69,7 +69,8 @@
 ### 모서리·간격·그림자
 
 - 반경: `--radius-xs` 6, `--radius-sm` 8, `--radius-md`·`--radius-control` 12, `--radius-card` 16, `--radius-xl` 20(큰 카드·시트), `--radius-pill`. 간격은 4px 격자 `--space-1…10`, 섹션 `--section-gap` 28px.
-- 카드는 **테두리 대신 면 대비**(회색 바탕 위 흰 카드) + `--shadow-card`(거의 없는 옅은 그림자). 팝업은 `--shadow-pop`, 토스트는 `--shadow-toast`, 떠 있는 동작 막대·호버 카드는 `--shadow-lift`, 실행 중 단계의 후광은 `--shadow-glow`.
+- 카드는 **테두리 대신 면 대비**(회색 바탕 위 흰 카드) + `--shadow-card`(1px 옅은 테두리 링 + 옅은 그림자, 회색 바탕에서도 카드 가장자리가 보이게).
+- **앱 틀 구분**: 사이드바는 흰 면 + 오른쪽 hairline, 상단바는 sticky 반투명(blur)이고 스크롤하면 그림자가 생긴다(scroll-driven animation, 미지원 브라우저는 그림자 없음). 선택된 메뉴·목록 행(요청 대화·검토 대기·판단 사례)은 브랜드 tint + 왼쪽 강조 막대(`m-bar-in`, 가운데서 자라남)로 같은 모양이다. 긴 상세 카드(검토·판단 사례)는 섹션 사이를 hairline으로 나눈다. 팝업은 `--shadow-pop`, 토스트는 `--shadow-toast`, 떠 있는 동작 막대·호버 카드는 `--shadow-lift`, 실행 중 단계의 후광은 `--shadow-glow`.
 
 ### 모션 토큰
 
