@@ -90,18 +90,18 @@ export function LlmSettings({ config, canEdit, onChange }: Props) {
     <Toast message={toast} onClose={closeToast} />
     <Modal open={welcome} title="ChatGPT 요금제를 사용합니다" onClose={() => setWelcome(false)}><p>일동이의 지원되는 AI 요청은 ChatGPT 요금제 사용량을 사용합니다. ChatGPT 설정 → 사용량에서 관리할 수 있습니다.</p><button type="button" className="ui-button" onClick={() => setWelcome(false)}>확인</button></Modal>
     {error && <p role="status">{error}</p>}
-    {providers.map((p) => { const result = results[p.provider]; return <div className="policy-group" key={p.provider}>
+    {providers.map((p) => { const result = results[p.provider]; return <div className="llm-provider" key={p.provider}>
       <strong>{providerLabel[p.provider]}</strong>{p.provider === 'chatgpt' ? <>
         <span> · {chatgpt ? chatgpt.connected ? '연결됨' : '연결 안 됨' : '상태 확인 중…'}</span>
         {chatgpt?.connected && <p>{chatgpt.email} · 요금제 사용 {chatgpt.plan_usage_granted ? '허용됨' : '허용 안 됨'} · 연결한 정책 편집자: {chatgpt.connected_by} ({chatgpt.connected_tenant})</p>}
         <p className="policy-hint">이 로컬 설치 전체가 하나의 ChatGPT 연결을 공유합니다. 지원되는 글쓰기 보조 요청에 ChatGPT 요금제를 사용합니다.</p>
         <a href="https://chatgpt.com/settings/usage" target="_blank" rel="noreferrer">ChatGPT 사용량 관리</a>
         {canEdit && <>
-          <button type="button" className="ui-button secondary" disabled={connecting || !chatgpt} onClick={() => void connectChatgpt()}>Continue with ChatGPT</button>
-          {chatgpt?.connected && <button type="button" className="ui-button secondary" disabled={connecting} onClick={() => void disconnectChatgpt()}>연결 해제</button>}
+          <button type="button" className="ui-button plain size-small" disabled={connecting || !chatgpt} onClick={() => void connectChatgpt()}>Continue with ChatGPT</button>
+          {chatgpt?.connected && <button type="button" className="ui-button plain size-small" disabled={connecting} onClick={() => void disconnectChatgpt()}>연결 해제</button>}
         </>}
       </> : <> · 키 {p.key_configured ? '설정됨' : '없음'} · SDK {p.sdk_available ? '사용 가능' : '없음'}</>}
-      {canEdit && <button type="button" className="ui-button secondary" disabled={testing[p.provider] || (p.provider === 'chatgpt' && (!chatgpt?.connected || !chatgpt?.plan_usage_granted || connecting))} onClick={() => void test(p)} aria-label={`${providerLabel[p.provider]} 연결 테스트`}>연결 테스트</button>}
+      {canEdit && <button type="button" className="ui-button plain size-small" disabled={testing[p.provider] || (p.provider === 'chatgpt' && (!chatgpt?.connected || !chatgpt?.plan_usage_granted || connecting))} onClick={() => void test(p)} aria-label={`${providerLabel[p.provider]} 연결 테스트`}>연결 테스트</button>}
       <p aria-live="polite">{testing[p.provider] ? '연결 확인 중…' : result ? `${result.ok ? '성공' : '실패'} · ${result.latency_ms}ms · ${new Date(result.tested_at).toLocaleTimeString('ko-KR')} · ${result.message}` : ''}</p>
     </div>; })}
     <Select label="사용할 제공자" disabled={!canEdit || !providers.length} value={value.provider || ''} onChange={(e) => select((e.target.value || null) as ProviderName | null)}>

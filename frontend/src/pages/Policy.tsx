@@ -110,7 +110,7 @@ export function Policy({ canEdit = false }: { canEdit?: boolean }) {
   }
   const columns = [
     { key: 'version' as const, label: '버전', render: (v: PolicyVersion) => <button type="button" className="policy-version-link" onClick={() => void chooseVersion(v)}>v{v.version}</button> },
-    { key: 'created_by' as const, label: '작성자' }, { key: 'reason' as const, label: '사유' }, { key: 'created_at' as const, label: '시각', render: (v: PolicyVersion) => formatTime(v.created_at) },
+    { key: 'created_by' as const, label: '작성자' }, { key: 'reason' as const, label: '사유' }, { key: 'created_at' as const, label: '시각', render: (v: PolicyVersion) => formatTime(v.created_at, { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) },
     { key: 'status' as const, label: '상태', render: (v: PolicyVersion) => <StatusBadge status={v.status === 'active' ? 'success' : 'pending'} label={v.status === 'active' ? '활성' : '이전 버전'} /> },
   ];
   const hasFormError = Object.keys(fieldErrors).length > 0;

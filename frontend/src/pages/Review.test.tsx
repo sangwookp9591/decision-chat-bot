@@ -140,6 +140,13 @@ describe('review list controls',()=>{
   expect(await screen.findByText('승인 상태의 검토가 없습니다')).toBeTruthy();
   expect(screen.getByRole('checkbox',{name:'긴급 우선 정렬'})).toBeTruthy();
  });
+ it('keeps the reason and every decision button together in one sticky decision bar',async()=>{
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
+  const bar=screen.getByRole('group',{name:'검토 결정'});
+  expect(bar.className).toContain('review-decision');
+  expect(bar.querySelector('textarea')).toBeTruthy();
+  expect([...bar.querySelectorAll('button')].map(b=>b.textContent)).toEqual(['승인','수정 승인','반려','정보 요청']);
+ });
  it('says why the reason-gated decisions are disabled',async()=>{
   renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));await screen.findByText('요청');
   expect(screen.getByRole('button',{name:'반려'})).toBeDisabled();

@@ -33,6 +33,14 @@ describe('Tasks block reasons (P4-01)', () => {
     emitTaskEvent({seq:1,type:'task.transitioned',request_id:'req_1',payload:{task_id:'task_1',to:'진행'}});
     await waitFor(()=>expect(screen.getByRole('button',{name:'완료로 변경'})).toBeInTheDocument());
   });
+  it('shows a blocked task as a 막힘 badge with its reason as a caption', async () => {
+    setup(task({ status: '막힘', block_reasons: ['feasibility_unresolved'], can_start: false, start_blockers: ['feasibility_unresolved'] }));
+    const row = await screen.findByRole('button', { name: /데이터 확보/ });
+    const badge = row.querySelector('.status-badge.status-blocked');
+    expect(badge).toHaveTextContent('막힘');
+    expect(badge?.querySelectorAll('[aria-hidden="true"]')).toHaveLength(1);
+    expect(row.querySelector('.task-block-why')?.textContent).toContain('개발 가능성');
+  });
   it('shows Korean block reasons in list and detail and disables the start button', async () => {
     setup(task({ status: '막힘', block_reasons: ['feasibility_unresolved'], can_start: false, start_blockers: ['feasibility_unresolved'] }));
     const row = await screen.findByRole('button', { name: /데이터 확보/ });

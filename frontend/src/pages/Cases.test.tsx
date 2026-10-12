@@ -25,4 +25,25 @@ describe('decision cases', () => {
     fireEvent.click(screen.getByRole('button', { name: '결과 유효' }));
     await waitFor(() => expect(caseApi.act).toHaveBeenCalledWith('case_1', 'outcome', { version: 1, outcome: 'held', note: '배포 후 정상' }));
   });
+  it('lists cases on the left and shows the selected case on the right', async () => {
+    const second = { ...item, id: 'case_2', field: 'urgency', ai_value: '일반', corrected_value: '긴급', reason: '마감 당일 영향', situation: '출하 지시 중단', status: 'verified', version: 3 };
+    vi.mocked(caseApi.list).mockResolvedValue({ cases: [item as any, second as any] });
+    render(<Cases />);
+    const list = await screen.findByRole('list', { name: '판단 사례 목록' });
+    const rows = list.querySelectorAll('button');
+    expect(rows).toHaveLength(2);
+    expect(rows[0]).toHaveAttribute('aria-current', 'true');
+    expect(screen.getByRole('region', { name: /판단 사례 ERP 연동/ })).toBeInTheDocument();
+    fireEvent.click(rows[1]);
+    expect(rows[1]).toHaveAttribute('aria-current', 'true');
+    expect(screen.getByRole('region', { name: /판단 사례 출하 지시 중단/ })).toHaveTextContent('마감 당일 영향');
+    expect(screen.queryByRole('region', { name: /판단 사례 ERP 연동/ })).toBeNull();
+  });
+  it('filters by status with a chip group', async () => {
+    render(<Cases />);
+    await screen.findByText(/사내 API로 가능/);
+    fireEvent.click(screen.getByRole('button', { name: '결과 검증됨' }));
+    await waitFor(() => expect(caseApi.list).toHaveBeenLastCalledWith('verified'));
+    expect(screen.getByRole('button', { name: '결과 검증됨' })).toHaveAttribute('aria-pressed', 'true');
+  });
 });

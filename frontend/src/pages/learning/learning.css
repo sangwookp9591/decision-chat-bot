@@ -1,7 +1,9 @@
 /* Rule learning — white cards on grey, tinted facts, pill filters. Teal = AI/hypothesis, violet = human, lines are hairlines only. */
-.learning-page{display:grid;gap:var(--space-4)}
+.learning-page{display:grid;gap:var(--space-5)}
 .learning-head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-4);margin-bottom:0}
-.learning-head h1{margin:0}
+.learning-head h1{margin:2px 0 0}
+.learning-head p:not(.eyebrow){margin:var(--space-2) 0 0;color:var(--color-ink-2)}
+.learning-head-actions{display:flex;gap:var(--space-2);flex:none}
 .learning-cycle{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);border-radius:var(--radius-card);background:var(--color-surface)}
 .learning-cycle ol{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none;font:var(--t7);color:var(--color-ink-2)}
 .learning-cycle strong{font:var(--t7);font-weight:700;color:var(--color-secondary-ink)}
@@ -24,7 +26,7 @@
 .learning-list li button{display:grid;gap:6px;width:100%;text-align:left;padding:var(--space-3);border:0;border-radius:var(--radius-md);background:transparent;cursor:pointer;font:var(--t7);color:var(--color-ink-2);transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
 .learning-list li button:active{transform:scale(0.99)}
 @media(hover:hover){.learning-list li button:hover{background:var(--color-fill)}}
-.learning-list li button[aria-current=true]{background:var(--color-primary-tint);box-shadow:inset 0 0 0 1.5px var(--color-primary)}
+.learning-list li button[aria-current=true]{background:var(--color-primary-tint)}
 .learning-list li b{font:var(--t7);font-weight:700;color:var(--status-review-text)}
 .learning-detail{display:grid;gap:var(--space-4);min-width:0}
 .learning-card{display:grid;gap:var(--space-3);padding:18px var(--space-5)}
@@ -69,7 +71,9 @@
 .learning-action small{color:var(--color-caption);font-size:11px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .learning-card table{min-width:640px}
-.learning-card td,.learning-card th{overflow-wrap:anywhere}
+.learning-card th,.learning-card td{white-space:nowrap}
+.learning-card td:nth-child(2){white-space:normal;min-width:12em}
+.learning-card th,.learning-card td{padding:var(--space-3) var(--space-2)}
 .learning-card .table-scroll{overflow-x:auto}
 @media(max-width:900px){.learning-grid{grid-template-columns:minmax(0,1fr)}.learning-grid>*,.learning-card{min-width:0;max-width:100%}.learning-card{overflow-wrap:anywhere}.learning-card .table-scroll{max-width:100%}}
 .learning-field-error{margin:0;color:var(--status-fail);font:var(--t7);flex-basis:100%}

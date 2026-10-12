@@ -23,6 +23,19 @@ for scene in scenes:
             expected = (750, 1800) if scene.startswith('mobile-') else (2880, 1800)
             if image.size != expected:
                 errors.append(f'wrong dimensions: {scene} {image.size}')
+# v2 design scenes: mock-API renders of the real frontend (scripts/readme/mock), labelled as not LIVE in README.
+for scene in ['main', 'judgment', 'review', 'tasks', 'monitoring', 'cases', 'learning']:
+    path = ROOT / 'docs/readme/v2' / f'{scene}.webp'
+    if not path.exists():
+        errors.append(f'missing v2 scene: {scene}')
+        continue
+    if path.stat().st_size > 400_000:
+        errors.append(f'oversized v2: {scene}')
+    with Image.open(path) as image:
+        if image.size != (2880, 1800):
+            errors.append(f'wrong dimensions: v2/{scene} {image.size}')
+if 'LIVE 아님' not in text:
+    errors.append('missing README contract: v2 images must be labelled as not LIVE')
 anim = ROOT / 'docs/readme/progressive.gif'
 if not anim.exists() or anim.stat().st_size > 1_000_000:
     errors.append('missing/oversized progressive.gif')
@@ -42,4 +55,4 @@ for needle in ['```mermaid', 'OrbStack', 'G10', 'G12', 'G13', '운영 배포 승
         errors.append(f'missing README contract: {needle}')
 if errors:
     raise SystemExit('\n'.join(errors))
-print(f'PASS: links, 12 scenes + animation; {sum(p.stat().st_size for p in images):,} bytes')
+print(f'PASS: links, 12 scenes + 7 v2 scenes + animation; {sum(p.stat().st_size for p in images):,} bytes')

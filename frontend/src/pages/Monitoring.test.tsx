@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { Monitoring } from './Monitoring';
+import { Monitoring, duration } from './Monitoring';
 import { monitoringApi } from '../api/monitoring';
 
 vi.mock('../api/monitoring', () => ({ monitoringApi: { summary: vi.fn(), slo: vi.fn(), failures: vi.fn(), alerts: vi.fn() } }));
@@ -13,7 +13,7 @@ describe('Monitoring', () => {
   it('shows supplement answer wait separately from human review wait', async () => {
     render(<MemoryRouter><Monitoring /></MemoryRouter>);
     const panel = await screen.findByRole('region', { name: '보완 답변 대기' });
-    expect(panel.textContent).toContain('90.00초');
+    expect(panel.textContent).toContain('1분 30초');
     expect(panel.querySelectorAll('article')[2].textContent).toContain('2');
     expect(screen.getByRole('region', { name: '사람 검토 대기' })).toBeTruthy();
   });
@@ -134,5 +134,26 @@ describe('Monitoring layout (v2 spacing)', () => {
     render(<MemoryRouter><Monitoring /></MemoryRouter>);
     await screen.findByText('접수·조회 가용성');
     expect(screen.queryByRole('status', { name: '지금 상태' })).toBeNull();
+  });
+});
+
+describe('Monitoring durations and KPI emphasis', () => {
+  it('reads long waits in minutes and hours instead of thousands of seconds', () => {
+    expect(duration(null)).toBe('미수집');
+    expect(duration(640)).toBe('640ms');
+    expect(duration(11800)).toBe('11.80초');
+    expect(duration(59990)).toBe('59.99초');
+    expect(duration(60000)).toBe('1분');
+    expect(duration(2640000)).toBe('44분');
+    expect(duration(90500)).toBe('1분 31초');
+    expect(duration(30240000)).toBe('8시간 24분');
+    expect(duration(3600000)).toBe('1시간');
+  });
+  it('colours only failures and timeouts as alerts, not cancellations or shadow runs', async () => {
+    vi.mocked(monitoringApi.summary).mockResolvedValue({ ...summary, cancellations: 4, shadow_runs: 7, availability: { ...summary.availability, failed_calls: 2 } });
+    const { container } = render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('요청 수');
+    const alerts = [...container.querySelectorAll('.monitor-kpis article.is-alert > span')].map((s) => s.textContent);
+    expect(alerts).toEqual(['실패']);
   });
 });

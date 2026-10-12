@@ -3,7 +3,7 @@
  * Rationale, sources and usage: docs/architecture/DESIGN_SYSTEM.md
  *
  * Rule: screens read tokens by NAME. Names from the previous palette (--color-ink, --color-line, …) are kept;
- * only their values moved to the TDS grey scale. Brand orange/teal and the #1B1712-on-orange text rule are unchanged.
+ * only their values moved to the TDS grey scale. Brand orange/teal are unchanged; buttons fill with --color-action (white text, AA).
  */
 :root {
   /* ── TDS grey scale (@toss/tds-colors 0.1.0, light) ── */
@@ -16,7 +16,9 @@
   --color-primary-ink: #B33F0E;      /* orange as TEXT/links on light surfaces (AA ≥ 5.2:1) */
   --color-primary-tint: #FDF3EE;     /* weak fill for selected/hover */
   --color-primary-weak: rgba(241, 89, 33, 0.12); /* TDS "weak" button fill */
-  --color-on-primary: #1B1712;       /* text ON orange — contrast rule (5.26:1), never white */
+  --color-action: #CF4413;           /* primary BUTTON fill: brand orange deepened so white text reaches AA (4.68:1) */
+  --color-action-hover: #B83C10;     /* pressed/hovered action fill (5.6:1 with white) */
+  --color-on-action: #ffffff;        /* text ON an action fill. Dark text on orange is retired. */
   --color-secondary: #0E7C86;        /* teal, supporting */
   --color-on-secondary: #ffffff;     /* text ON teal (4.95:1); also the switch thumb */
   --color-on-danger: #ffffff;        /* text ON a danger fill (--status-fail on light is 5.36:1; dark theme uses the lighter red, see dark block) */

@@ -16,7 +16,7 @@ export function Explanation({ candidate, enabled, canEdit }: { candidate: Candid
   }
   const text = result?.explanation || candidate.explanation;
   return <section aria-label="규칙 후보 설명"><h3>규칙 후보 설명</h3>
-    {enabled && canEdit && <button type="button" className="ui-button secondary" disabled={busy} onClick={() => void generate()}>설명 만들기</button>}
+    {enabled && canEdit && <button type="button" className="ui-button plain" disabled={busy} onClick={() => void generate()}>설명 만들기</button>}
     <div aria-live="polite">{busy && <p>설명 작성 중…</p>}{error && <p role="alert">{error}</p>}
       {text && <><p>{text}</p><small>{authorLabel(result?.author || candidate.explanation_author || '')}</small></>}</div>
   </section>;

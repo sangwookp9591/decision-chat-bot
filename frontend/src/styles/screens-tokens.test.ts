@@ -8,7 +8,7 @@ const strip = (s: string) => s.replace(/\/\*[\s\S]*?\*\//g, '');
 const css = (path: string) => strip(readFileSync(path, 'utf8'));
 const screenCss = [
   'src/style.css', 'src/components/EvidenceViewer.css', 'src/components/ui.css', 'src/components/fields.css',
-  ...['review', 'tasks', 'observatory', 'monitoring', 'policy', 'learning', 'evaluation', 'judgment-map'].map((d) => `src/pages/${d}/${d}.css`),
+  ...['review', 'tasks', 'observatory', 'monitoring', 'policy', 'learning', 'evaluation', 'judgment-map', 'cases'].map((d) => `src/pages/${d}/${d}.css`),
 ];
 const literalColor = /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(/g;
 

@@ -19,7 +19,7 @@ describe('design tokens — AA contrast (4.5:1 for text)', () => {
   const light = theme();
   const dark = theme(block(":root[data-theme='dark']"));
   const pairs: [string, string][] = [
-    ['--color-on-primary', '--color-primary'], ['--color-ink', '--color-surface'], ['--color-ink', '--color-ground'],
+    ['--color-on-action', '--color-action'], ['--color-on-action', '--color-action-hover'], ['--color-ink', '--color-surface'], ['--color-ink', '--color-ground'],
     ['--color-ink-2', '--color-surface'], ['--color-ink-2', '--color-ground'], ['--color-caption', '--color-surface'], ['--color-caption', '--color-ground'], ['--color-caption', '--color-surface-2'],
     ['--color-primary-ink', '--color-surface'], ['--color-primary-ink', '--color-ground'], ['--color-primary-ink', '--color-primary-tint'], ['--color-primary-ink', '--status-active-bg'],
     ['--status-success-text', '--status-success-bg'], ['--status-fail', '--status-fail-bg'], ['--status-fail', '--color-surface'], ['--status-warn', '--status-warn-bg'], ['--status-review-text', '--status-review-bg'],
@@ -27,9 +27,13 @@ describe('design tokens — AA contrast (4.5:1 for text)', () => {
     ['--color-on-secondary', '--color-secondary'], ['--color-on-danger', '--status-fail'], ['--color-secondary-ink', '--color-secondary-tint'], ['--color-secondary-ink', '--color-surface'], ['--color-secondary-ink', '--color-ground'],
   ];
   it.each(pairs)('light %s on %s', (fg, bg) => expect(ratio(light(fg), light(bg))).toBeGreaterThanOrEqual(4.5));
-  it.each(pairs.filter(([fg]) => fg !== '--color-on-primary'))('dark %s on %s', (fg, bg) => expect(ratio(dark(fg), dark(bg))).toBeGreaterThanOrEqual(4.5));
-  it('keeps the brand colors and the on-orange text rule', () => {
-    expect(light('--color-primary')).toBe('#F15921'); expect(light('--color-secondary')).toBe('#0E7C86'); expect(light('--color-on-primary')).toBe('#1B1712');
+  it.each(pairs)('dark %s on %s', (fg, bg) => expect(ratio(dark(fg), dark(bg))).toBeGreaterThanOrEqual(4.5));
+  it('keeps the brand colors; action buttons use white text on a deeper orange', () => {
+    expect(light('--color-primary')).toBe('#F15921'); expect(light('--color-secondary')).toBe('#0E7C86');
+    expect(light('--color-action')).toBe('#CF4413'); expect(light('--color-on-action')).toBe('#ffffff');
+  });
+  it('no screen paints dark text on the brand orange any more', () => {
+    expect(css).not.toMatch(/--color-on-primary\s*:/);
   });
   it('matches TDS light greys', () => { expect(light('--color-ground')).toBe('#f2f4f6'); expect(light('--color-line')).toBe('#e5e8eb'); expect(light('--color-ink')).toBe('#191f28'); });
 });
