@@ -24,13 +24,13 @@ describe('shared UI foundations', () => {
     expect(appRoot.inert).toBe(true);
     appRoot.remove();
   });
-  it('uses a still image for reduced motion and WebP only for Safari', () => { expect(selectMascotMedia('Mozilla/5.0 Safari/605.1.15', true)).toBe('png'); expect(selectMascotMedia('Mozilla/5.0 Safari/605.1.15', false)).toBe('webp'); expect(selectMascotMedia('Mozilla/5.0 Chrome/130 Safari/537', false)).toBe('webm'); });
+  it('uses a still image for reduced motion and animated WebP otherwise', () => { expect(selectMascotMedia(true)).toBe('png'); expect(selectMascotMedia(false)).toBe('webp'); });
   it('attaches the CSRF cookie to state-changing requests and includes credentials', async () => { Object.defineProperty(document, 'cookie', { configurable: true, value: 'ildongi_csrf=secret-token' }); const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200, headers: { 'Content-Type': 'application/json' } })); await apiFetch('/api/example', { method: 'POST', body: JSON.stringify({}) }); const [, init] = fetchSpy.mock.calls[0]; expect((init as RequestInit).credentials).toBe('include'); expect(new Headers((init as RequestInit).headers).get('X-CSRF-Token')).toBe('secret-token'); });
-  it('renders the mascot as a still image under reduced motion and a decorative video otherwise', () => {
+  it('renders the mascot as a still image under reduced motion and an animated WebP otherwise', () => {
     const matchMedia = (matches: boolean) => vi.fn().mockReturnValue({ matches, addEventListener: vi.fn(), removeEventListener: vi.fn() });
     window.matchMedia = matchMedia(true) as never; const still = render(<Mascot kind="wave" />);
     expect(still.container.querySelector('img')).toHaveAttribute('src', '/assets/mascot/mascot.png'); expect(still.container.querySelector('video')).toBeNull(); still.unmount();
     window.matchMedia = matchMedia(false) as never; const moving = render(<Mascot kind="wave" />);
-    expect(moving.container.querySelector('video')).toHaveAttribute('aria-hidden', 'true');
+    expect(moving.container.querySelector('img')).toHaveAttribute('src', '/assets/mascot/wave.webp');
   });
 });

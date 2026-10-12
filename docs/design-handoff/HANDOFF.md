@@ -9,8 +9,8 @@
 | `preview/*.html` | 브라우저에서 바로 열리는 정적 화면 6개 (Main, Review, Tasks, Monitoring, Policy, Foundations) |
 | `source/*.dc.html` | 8개 화면 원본. `{{ }}`, `<sc-if>`, `<sc-for>`, `class Component extends DCLogic`는 디자인 도구 전용 템플릿 문법이며 브라우저에서 바로 동작하지 않습니다. 구조·스타일·상태 로직 참고용입니다. |
 | `tokens.css`, `tokens.json` | 컬러·상태·타이포 토큰 |
-| `assets/mascot/` | 일동이 애니메이션 `idle.webm`·`wave.webm`(VP9 알파, 512px, 10초 반복), `idle.webp`·`wave.webp`(애니메이션 WebP 384px), `mascot.png`(정지 512px) |
-| `assets/icons/` | 표정 아이콘 6종 `hello, love, like, thinking, surprised, cheer` (256px WebP, 투명) |
+| `assets/mascot/` | 일동이 애니메이션 `wave.webp`(손인사)·`nod.webp`(끄덕임)·`shy.webp`(수줍음) — 투명 애니메이션 WebP 512px, 약 6초 반복, `mascot.png`(정지 512px) |
+| `assets/icons/` | 표정 아이콘 6종 `hello, love, like, thinking, surprised, cheer` (256px WebP, 투명 — 위 애니메이션의 정지 프레임) |
 
 ## 화면과 요구사항 연결
 
@@ -28,12 +28,12 @@
 ## 상호작용 명세 (source에만 있는 동작)
 
 ### ChatWidget
-- 상태: `closed`(일동이 idle 영상 + 말풍선 "무엇을 도와드릴까요?") → 클릭 → `open`.
+- 상태: `closed`(일동이 nod 애니메이션 + 말풍선 "무엇을 도와드릴까요?") → 클릭 → `open`.
 - 런처는 `<button aria-label="일동이와 채팅 열기">`, 영상은 `aria-hidden`.
 - 열림: 헤더(hello 아이콘, 이름, 연결 상태, 전체 화면, 닫기) / 첫 화면 wave 영상 + 인사 + 예시 요청 3개.
 - 예시 클릭 → `thinking`(thinking 아이콘 + 4단계: 내용 정리 → Decision AI 판단 → 업무 나누기 → 결과 저장) → `result`.
 - 결과 아이콘: 자동 처리 가능 = like, 확인 필요(검토) = surprised, **긴급 = 마스코트 없음(빨간 경고)**.
-- 매체 선택: 기본 webm, Safari = webp, `prefers-reduced-motion` = mascot.png.
+- 매체 선택: 기본 애니메이션 WebP, `prefers-reduced-motion` = mascot.png.
 - 520px 이하에서는 채팅창이 전체 화면이 됩니다.
 
 ### Observatory 재생

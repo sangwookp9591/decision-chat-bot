@@ -1,23 +1,86 @@
 {
-  "credits_used": 19,
-  "credits_budget": 30,
-  "image_jobs": [
-    "500e9771-d22a-49e6-b81c-e52ff2974c8d",
-    "90e135f9-1354-48bf-82a7-d485c0835d88"
-  ],
-  "video_jobs": {
-    "wave": "888a7c8f-57dc-4cb4-a243-7dbc9945b902",
-    "idle": "6ecb4abd-095f-4a10-931b-c39292238ac7"
-  },
-  "loop_seconds": 10,
-  "webm_size": [
-    512,
-    512
-  ],
-  "webp_size": [
-    384,
-    384
-  ],
-  "fps": 20,
-  "alpha_verified": true
+  "provider": "Higgsfield",
+  "image_model": "gpt_image_2_5",
+  "video_model": "kling3_0_turbo",
+  "image_job": "710c610b-e7c0-4adb-8a3a-7e5f0766a5b4",
+  "credits_budget": 15,
+  "credits_used": 15,
+  "credits_image": 1.5,
+  "credits_videos": 13.5,
+  "balance_before": 43.99,
+  "balance_after": 28.99,
+  "assets": {
+    "wave": {
+      "width": 512,
+      "height": 512,
+      "frames": 86,
+      "duration_ms": 5418,
+      "bytes": 2368358,
+      "alpha_verified": true,
+      "decoded_movement": 22.07497215270996,
+      "source": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {},
+          {
+            "width": 960,
+            "height": 960
+          }
+        ],
+        "format": {
+          "duration": "3.041995"
+        }
+      },
+      "job_id": "2b65df78-12c5-4277-ae24-2334317d4f49"
+    },
+    "nod": {
+      "width": 512,
+      "height": 512,
+      "frames": 96,
+      "duration_ms": 6048,
+      "bytes": 2458032,
+      "alpha_verified": true,
+      "decoded_movement": 7.694596290588379,
+      "source": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {},
+          {
+            "width": 960,
+            "height": 960
+          }
+        ],
+        "format": {
+          "duration": "3.041995"
+        }
+      },
+      "job_id": "df5576c5-85f7-49a8-a4e8-a1b30af0d037"
+    },
+    "shy": {
+      "width": 512,
+      "height": 512,
+      "frames": 96,
+      "duration_ms": 6048,
+      "bytes": 2350010,
+      "alpha_verified": true,
+      "decoded_movement": 19.328306198120117,
+      "source": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {},
+          {
+            "width": 960,
+            "height": 960
+          }
+        ],
+        "format": {
+          "duration": "3.041995"
+        }
+      },
+      "job_id": "0dc68f09-8162-44ef-874d-1430359fde79"
+    }
+  }
 }
