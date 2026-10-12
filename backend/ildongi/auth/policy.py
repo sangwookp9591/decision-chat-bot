@@ -5,6 +5,9 @@ from typing import Any
 
 from ildongi.auth.types import Principal
 
+# Every role a membership edge may carry. `admin` only manages accounts; it opens no business screen by itself.
+ROLES = ("requester", "reviewer", "team_member", "operator", "policy_editor", "rule_admin", "labeler", "admin")
+
 SOURCE_FIELDS = frozenset({"text", "source_text", "extracted_text", "raw_text", "preview",
                            "description", "questions", "questions_json"})
 
@@ -58,7 +61,7 @@ def can(principal: Principal, action: str, resource_meta: dict[str, Any]) -> boo
         return "rule_admin" in roles
     if action == "learn_propose":
         return bool(roles.intersection({"reviewer", "rule_admin"}))
-    tenant_roles = {"policy_edit": {"policy_editor"}, "monitoring_read": {"operator"}}
+    tenant_roles = {"policy_edit": {"policy_editor"}, "monitoring_read": {"operator"}, "user_admin": {"admin"}}
     if action == "eval_label":
         return bool(roles.intersection({"labeler", "reviewer"}))
     if action in tenant_roles:

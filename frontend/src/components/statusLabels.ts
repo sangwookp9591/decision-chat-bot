@@ -50,7 +50,7 @@ const labels: Record<string, { label: string; kind: StatusKind }> = {
   out_of_scope: { label: '범위 밖(미적용)', kind: 'skipped' },
 };
 
-export const roleLabels: Record<string, string> = { requester: '요청자', reviewer: '검토자', team_member: '팀 담당자', assignee: '팀 담당자', operator: '운영자', policy_editor: '정책 편집자', rule_admin: '규칙 관리자' };
+export const roleLabels: Record<string, string> = { requester: '요청자', reviewer: '검토자', team_member: '팀 담당자', assignee: '팀 담당자', operator: '운영자', policy_editor: '정책 편집자', rule_admin: '규칙 관리자', labeler: '평가 라벨러', admin: '관리자' };
 export const roleLabel = (role: string) => roleLabels[role] ?? role;
 
 export const reviewActionLabels: Record<string, string> = { approve: '승인', approve_with_changes: '수정 승인', reject: '반려', request_info: '정보 요청' };

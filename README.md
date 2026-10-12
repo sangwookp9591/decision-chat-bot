@@ -169,7 +169,7 @@ make up
 backend/.venv/bin/python scripts/bootstrap_dev.py
 ```
 
-기본 계정은 `requester@t-alpha.dev`, 암호는 `dev-only-change-me`입니다. 검토·업무·운영·정책·학습·평가는 각각 `reviewer`, `team_member`, `operator`, `policy_editor`, `rule_admin`, `labeler`를 이메일 앞부분에 사용합니다. 외부에 노출된 개발 환경에서는 **계정 생성 전** `ILDONGI_DEV_PASSWORD`를 설정하세요. bootstrap은 기존 계정 암호를 재설정하지 않습니다.
+기본 계정은 `requester@t-alpha.dev`, 암호는 `dev-only-change-me`입니다. 마스터 계정 `master@t-alpha.dev`(같은 암호)는 모든 역할과 관리자(`admin`) 역할을 가지며 **관리 › 권한 관리**에서 계정 발급(임시 암호 1회 표시), 역할·소속 조직·원문 열람·사용 중지를 바꿀 수 있습니다. 모든 변경은 사유와 함께 감사 기록에 남습니다. 검토·업무·운영·정책·학습·평가는 각각 `reviewer`, `team_member`, `operator`, `policy_editor`, `rule_admin`, `labeler`를 이메일 앞부분에 사용합니다. 외부에 노출된 개발 환경에서는 **계정 생성 전** `ILDONGI_DEV_PASSWORD`를 설정하세요. bootstrap은 기존 계정 암호를 재설정하지 않습니다.
 
 ### 3. 설정
 

@@ -8,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 from ildongi.auth.core import hash_password
+from ildongi.auth.policy import ROLES as ALL_ROLES
 from ildongi.db.driver import close_driver, get_driver
 from ildongi.db.schema import apply_schema
 from ildongi.policy.service import bootstrap_policy
@@ -38,6 +39,17 @@ async def bootstrap(password: str) -> None:
                         "ON CREATE SET u.email=$email, u.password_hash=$password_hash, u.disabled=false, u.can_read_source=false "
                         "MERGE (u)-[m:MEMBER_OF {role:$role}]->(o)",
                         org=org_id, tenant=tenant, user_id=user_id, email=email,
+                        password_hash=hash_password(password), role=role,
+                    )).consume()
+                # Master account: every role, including `admin` (account administration), in every org.
+                for role in ALL_ROLES:
+                    await (await session.run(
+                        "MATCH (o:Org {id:$org, tenant_id:$tenant}) "
+                        "MERGE (u:User {id:$user_id, tenant_id:$tenant}) "
+                        "ON CREATE SET u.email=$email, u.display_name='마스터', u.password_hash=$password_hash, "
+                        "u.disabled=false, u.can_read_source=true "
+                        "MERGE (u)-[m:MEMBER_OF {role:$role}]->(o)",
+                        org=org_id, tenant=tenant, user_id=f"usr_{tenant}_master", email=f"master@{tenant}.dev",
                         password_hash=hash_password(password), role=role,
                     )).consume()
 

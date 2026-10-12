@@ -16,6 +16,7 @@ from ildongi.assist.api import router as assist_router
 from ildongi.assist.chatgpt_api import router as chatgpt_router
 from ildongi.auth.core import enforce_csrf
 from ildongi.auth.router import router as auth_router
+from ildongi.auth.users_api import router as users_router
 from ildongi.config import get_settings
 from ildongi.db.driver import create_driver
 from ildongi.domain.ids import new_id
@@ -95,6 +96,7 @@ def create_app() -> FastAPI:
     app.include_router(chatgpt_router)
     app.include_router(explain_router)
     app.include_router(auth_router)
+    app.include_router(users_router)
     app.include_router(ingest_router)
     app.include_router(jobs_router)
     app.include_router(judgment_router)
