@@ -20,6 +20,7 @@ from ildongi.domain.eligibility import evaluate_auto_assign
 from ildongi.domain.ids import new_id
 from ildongi.domain.questions import CLASS_KEYS, OPTIONS
 from ildongi.policy.service import DEFAULT_CONFIG
+from ildongi.review.cases import create_cases_in_tx, record_consultations_in_tx
 from ildongi.review.store import decode, judgment_urgencies, list_reviews
 
 
@@ -406,7 +407,7 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
                 review_version=command["review_version"], draft_version=command["draft_version"],
                 status=status, new_version=new_version,
             )).consume()
-            correction_ids = []
+            correction_ids, case_sources, case_ids = [], [], []
             if changes:
                 old_tasks = {t["draft_task_id"]:t for t in await draft_tasks_in_tx(
                     tx, tenant, command["run_id"], command["draft_version"])}
@@ -458,6 +459,16 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
                             tenant=tenant, correction=correction_id, output=model_id,
                         )).consume()
                     correction_ids.append(correction_id)
+                    if task_id is None:
+                        case_sources.append((correction_id, field, old, new))
+                case_ids = await create_cases_in_tx(tx, tenant, dict(request), decision_id,
+                                                    case_sources, command["reason"],
+                                                    principal.user_id)
+            if action.startswith("approve") and command.get("consulted_case_ids"):
+                final = {key: judgment.get(key) for key in ("ai_need", "feasibility", "urgency", "lead_org")}
+                final.update(changes.get("classifications") or {})
+                await record_consultations_in_tx(tx, tenant, decision_id,
+                                                 command["consulted_case_ids"], final)
             assignment = None
             if action.startswith("approve"):
                 assignment = await assign_in_tx(tx, tenant, request_id, command["run_id"],
@@ -475,7 +486,8 @@ async def decide(principal: Principal, review_id: str, command: dict, key: str) 
             result = {"review_id":review_id,"decision_id":decision_id,"action":action,
                       "status":status,"review_version":command["review_version"]+1,
                       "draft_version":new_version,"assignment":assignment,
-                      "correction_ids":correction_ids,"needed_info":needed_info}
+                      "correction_ids":correction_ids,"case_ids":case_ids,
+                      "needed_info":needed_info}
             await append_audit_in_tx(tx, tenant, principal.user_id, f"review.{action}",
                                      "Review", review_id,
                                      {"status":"pending","review_version":command["review_version"]},

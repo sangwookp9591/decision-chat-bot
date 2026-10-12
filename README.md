@@ -21,6 +21,7 @@
 - **말로 시작하는 업무 접수.** 일동이에게 요청을 적거나 PDF·DOCX·Markdown을 첨부하세요. 대화 목록에서 진행 중인 요청을 다시 찾을 수 있습니다.
 - **기다림을 줄이는 판단.** 잠정 결과부터 보여 주고, Decision AI의 판단·원문 근거·업무 분해를 최종 카드로 연결합니다. 정보가 부족하면 판단을 보류합니다.
 - **사람이 책임지는 실행.** 검토자가 원문과 AI 원안을 비교하고 승인·수정·보완·반려합니다. 확정된 업무는 담당 조직과 선행 관계에 따라 추적합니다.
+- **판단 사례로 남는 경험.** 검토자의 수정 판단을 사유·출처·적용 조건·예외와 함께 사례로 남기고, 같은 상황의 새 검토에서 참고 선례로 보여 줍니다. 값은 검토자가 고를 때만 바뀝니다.
 - **수정이 쌓이는 학습.** 검토 이력을 규칙 후보로 모으고, 범위 결정·섀도 검증·게시·효과 관찰로 이어 갑니다. 정책과 판단의 버전도 함께 남습니다.
 
 ## 주요 기능
@@ -336,7 +337,7 @@ artifacts/           시연·검증·감사 증거 (옛 이름 대응표: artifa
 | 구조와 실행 | [전체 아키텍처](docs/architecture/ARCHITECTURE_OVERVIEW.html) · [구현 안내](docs/architecture/IMPLEMENTATION.md) · [실행 계약](docs/architecture/EXECUTION_CONTRACT.md) · [데이터 모델](docs/architecture/DATA_MODEL.md) |
 | 접수·판단·검토 | [접수 API](docs/architecture/INGEST_API.md) · [Decision AI 계약](docs/architecture/AI_CONTRACT.md) · [판단 설계](docs/architecture/JUDGMENT_DESIGN.md) · [검토·배정](docs/architecture/REVIEW_ASSIGN.md) |
 | 실행 관찰·맵 | [관찰 API](docs/architecture/OBSERVE_API.md) · [판단 그래프](docs/architecture/JUDGMENT_GRAPH.md) · [이벤트 복구](docs/architecture/EVENTS.md) |
-| 학습·평가 | [학습 루프](docs/spec/08_LEARNING_LOOP.md) · [후보](docs/architecture/LEARNING_CANDIDATES.md) · [검증](docs/architecture/LEARNING_VALIDATION.md) · [규칙](docs/architecture/LEARNING_RULES.md) · [평가 라벨](docs/architecture/EVALUATION_LABELS.md) |
+| 학습·평가 | [학습 루프](docs/spec/08_LEARNING_LOOP.md) · [판단 사례](docs/architecture/DECISION_CASES.md) · [후보](docs/architecture/LEARNING_CANDIDATES.md) · [검증](docs/architecture/LEARNING_VALIDATION.md) · [규칙](docs/architecture/LEARNING_RULES.md) · [평가 라벨](docs/architecture/EVALUATION_LABELS.md) |
 | LLM·외부 연동 | [LLM 글쓰기 보조](docs/architecture/LLM_ASSIST.md) · [원문 키워드 규칙](docs/architecture/RULE_KEYWORD.md) · [ChatGPT 플러그인(MCP)](docs/mcp/CHATGPT_PLUGIN.md) |
 | 정책·접근성 | [정책](docs/architecture/POLICY.md) · [인증](docs/architecture/AUTH.md) · [디자인 시스템](docs/architecture/DESIGN_SYSTEM.md) · [접근성](docs/architecture/A11Y.md) |
 | 운영 | [Runbook](docs/operations/RUNBOOK.md) · [백업·복원](docs/operations/BACKUP_RESTORE.md) · [데이터 처리](docs/operations/DATA_HANDLING.md) · [배포 전 확인](docs/operations/DEPLOYMENT.md) · [설정](docs/operations/CONFIG.md) |

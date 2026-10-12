@@ -39,6 +39,7 @@ from ildongi.monitoring.api import router as monitoring_router
 from ildongi.observe.api import router as observe_router
 from ildongi.policy.router import router as policy_router
 from ildongi.review.api import router as review_router
+from ildongi.review.cases_api import router as cases_router
 from ildongi.tasks.api import router as tasks_router
 
 
@@ -109,6 +110,7 @@ def create_app() -> FastAPI:
     app.include_router(review_router)
     app.include_router(observe_router)
     app.include_router(learning_router)
+    app.include_router(cases_router)
     app.include_router(request_learning_router)
     app.include_router(tasks_router)
     app.include_router(graph_router)

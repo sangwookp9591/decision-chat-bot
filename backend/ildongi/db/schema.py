@@ -11,7 +11,7 @@ LABELS = (
     "Idempotency", "Audit", "Attachment", "EvidenceSpan", "ModelOutput", "Correction",
     "RuleCandidate", "RuleDecision", "RuleVersion", "ValidationRun", "RuleApplication",
     "Session", "User", "Org", "Tenant", "Judgment", "Draft", "DraftTask", "RuleSeries",
-    "LoginAttempt",
+    "LoginAttempt", "DecisionCase",
 )
 TENANT_SCOPED_IDS = frozenset({
     "RuleCandidate", "RuleVersion", "Org", "Judgment", "Draft", "DraftTask",

@@ -26,6 +26,6 @@ describe('route prefetch', () => {
     expect(prefetch).toHaveBeenCalledWith('/monitoring');
   });
   it('every sidebar route except the landing page is a separate chunk', () => {
-    expect(Object.keys(routeLoaders).sort()).toEqual(['/evaluation', '/judgment-map', '/learning', '/monitoring', '/observatory', '/policy', '/review', '/tasks']);
+    expect(Object.keys(routeLoaders).sort()).toEqual(['/cases', '/evaluation', '/judgment-map', '/learning', '/monitoring', '/observatory', '/policy', '/review', '/tasks']);
   });
 });

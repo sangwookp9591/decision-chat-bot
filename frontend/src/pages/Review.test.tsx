@@ -208,3 +208,29 @@ it('shows classification rule badge and source citations with original text from
  await screen.findByText(/원문 ·|규칙 근거 · VPN · 근거 원문/);
  expect(requestApi.document).toHaveBeenCalledWith('req_1','rev_1','att_vpn');
 });
+describe('review precedents',()=>{
+ const precedent=(over:Record<string,unknown>={})=>({id:'case_1',field:'ai_need',ai_value:'정보 부족',corrected_value:'필요',reason:'문서 분류 자동화 선례',situation:'계약서 분류',request_id:'req_old',status:'confirmed',conditions:['계약서'],exceptions:['외부'],outcome:null,outcome_note:null,version:2,owner:'reviewer',consulted:3,followed:2,applicability:'applies',matched_keyword:'계약서',age_days:3,stale:false,...over});
+ it('shows precedents as reference, fills only on click, and reports consulted ids on approval',async()=>{
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),precedents:{ai_need:{items:[precedent(),precedent({id:'case_2',corrected_value:'불필요',applicability:'excepted',matched_keyword:'외부'})],conflict:false,hidden_unmet:0}}} as any);
+  vi.mocked(reviewApi.decide).mockResolvedValue({} as any);
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));
+  expect(await screen.findByText(/조건 일치 \(‘계약서’\)/)).toBeTruthy();
+  expect(screen.getByText(/예외 해당 · 적용 금지/)).toBeTruthy();
+  expect((screen.getByLabelText('AI 필요성 수정') as HTMLInputElement).value).toBe('정보 부족');
+  expect(screen.getAllByRole('button',{name:'이 값으로 채우기'})).toHaveLength(1);
+  fireEvent.click(screen.getByRole('button',{name:'이 값으로 채우기'}));
+  expect((screen.getByLabelText('AI 필요성 수정') as HTMLInputElement).value).toBe('필요');
+  fireEvent.change(screen.getByRole('textbox',{name:'결정 사유'}),{target:{value:'선례 참고'}});
+  fireEvent.click(screen.getByRole('button',{name:'수정 승인'}));
+  await waitFor(()=>expect(reviewApi.decide).toHaveBeenCalled());
+  const command=vi.mocked(reviewApi.decide).mock.calls[0][1];
+  expect(command.consulted_case_ids).toEqual(['case_1','case_2']);
+  expect(command.changes).toEqual({classifications:{ai_need:'필요'}});
+ });
+ it('flags conflicting precedents',async()=>{
+  vi.mocked(reviewApi.detail).mockResolvedValue({...detail(),precedents:{ai_need:{items:[precedent(),precedent({id:'case_3',corrected_value:'불필요',status:'recorded',applicability:'unconfirmed'})],conflict:true,hidden_unmet:1}}} as any);
+  renderAt();fireEvent.click(await screen.findByRole('button',{name:/req_1/}));
+  expect(await screen.findByText(/선례끼리 결론이 다릅니다/)).toBeTruthy();
+  expect(screen.getByText(/조건 미확인 · 참고만/)).toBeTruthy();
+ });
+});
