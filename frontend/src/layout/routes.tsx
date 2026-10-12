@@ -12,6 +12,7 @@ export const routeLoaders: Record<string, () => Promise<unknown>> = {
   '/monitoring': () => import('../pages/Monitoring'),
   '/policy': () => import('../pages/Policy'),
   '/evaluation': () => import('../pages/Evaluation'),
+  '/admin/users': () => import('../pages/Admin'),
 };
 export const Review = lazy(() => import('../pages/Review').then((m) => ({ default: m.Review })));
 export const Tasks = lazy(() => import('../pages/Tasks').then((m) => ({ default: m.Tasks })));
@@ -21,6 +22,7 @@ export const Cases = lazy(() => import('../pages/Cases').then((m) => ({ default:
 export const Learning = lazy(() => import('../pages/Learning').then((m) => ({ default: m.Learning })));
 export const Monitoring = lazy(() => import('../pages/Monitoring').then((m) => ({ default: m.Monitoring })));
 export const Policy = lazy(() => import('../pages/Policy').then((m) => ({ default: m.Policy })));
+export const Admin = lazy(() => import('../pages/Admin').then((m) => ({ default: m.Admin })));
 export const Evaluation = lazy(() => import('../pages/Evaluation').then((m) => ({ default: m.Evaluation }))); 
 
 /** Loads each route chunk at most once; a failed load (offline) is forgotten so a later hover retries. */

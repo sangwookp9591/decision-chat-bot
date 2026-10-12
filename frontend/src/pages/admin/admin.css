@@ -1,0 +1,59 @@
+/* Account administration — list on the left, the chosen account on the right (same frame as decision cases). Tokens only. */
+.admin-page>header{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-4)}
+.admin-search{width:100%}
+.admin-list li button{gap:4px}
+.admin-row-head{display:flex;align-items:center;gap:var(--space-2);min-width:0}
+.admin-row-head strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-avatar{display:inline-grid;place-items:center;flex:none;width:28px;height:28px;border-radius:var(--radius-pill);background:var(--status-active-bg);color:var(--color-primary-ink);font:var(--t7);font-weight:700}
+.admin-avatar.is-large{width:48px;height:48px;font:var(--t4)}
+.admin-self{margin-left:var(--space-2);padding:1px 8px;border-radius:var(--radius-pill);background:var(--color-secondary-tint);color:var(--color-secondary-ink);font:var(--t7);font-weight:700;vertical-align:middle}
+.admin-row-head .admin-self{margin-left:0}
+.admin-role-pills{display:flex;flex-wrap:wrap;gap:4px}
+.admin-role-pills span{padding:1px 8px;border-radius:var(--radius-pill);background:var(--color-fill);color:var(--color-ink-2);font:var(--t7)}
+.admin-role-pills .is-admin{background:var(--color-primary-weak);color:var(--color-primary-ink);font-weight:700}
+
+.admin-detail-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--space-4)}
+.admin-detail-head h2{display:flex;align-items:center;flex-wrap:wrap;margin:0}
+.admin-detail-head small{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px;color:var(--color-caption);font:var(--t7)}
+.admin-note{margin:0;color:var(--color-caption);font:var(--t7)}
+
+/* Role toggles: a card per role with what it opens; checked cards take the brand tint. */
+.admin-roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
+.admin-role{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--space-3);align-items:start;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2);box-shadow:inset 0 0 0 1px var(--color-line);cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-spring)}
+.admin-role:active{transform:scale(0.99)}
+@media(hover:hover){.admin-role:hover{box-shadow:inset 0 0 0 1px var(--color-line-strong)}}
+.admin-role.on{background:var(--color-primary-tint);box-shadow:inset 0 0 0 1.5px var(--color-primary)}
+.admin-role.locked{cursor:not-allowed}
+.admin-role input{position:absolute;opacity:0;width:1px;height:1px}
+.admin-role-check{width:22px;height:22px;margin-top:1px;border:2px solid var(--color-line-strong);border-radius:var(--radius-xs);background:var(--color-surface);display:grid;place-items:center;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.admin-role.on .admin-role-check{background:var(--color-action);border-color:var(--color-action)}
+.admin-role.on .admin-role-check::after{content:'';width:5px;height:10px;margin-top:-2px;border:solid var(--color-on-action);border-width:0 2px 2px 0;transform:rotate(45deg);animation:m-pop var(--dur-fast) var(--ease-spring)}
+.admin-role input:focus-visible~.admin-role-check{outline:2px solid var(--color-primary);outline-offset:2px}
+.admin-role-text{display:grid;gap:2px}
+.admin-role-text strong{font:var(--t6);font-weight:700}
+.admin-role-text small{color:var(--color-caption);font:var(--t7)}
+
+.admin-switches{display:grid;gap:var(--space-2)}
+.admin-history{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.admin-history li{display:grid;gap:2px;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-surface-2);font:var(--t7)}
+.admin-history span,.admin-history small{color:var(--color-caption)}
+.admin-history strong{font:var(--t6);font-weight:600}
+
+/* Save bar: pending changes are listed above the reason, and the bar gets a brand edge while something is unsaved. */
+.admin-decision{transition:box-shadow var(--dur-base) var(--ease-out)}
+.admin-decision.is-dirty{box-shadow:var(--shadow-lift),inset 0 0 0 1.5px var(--color-primary)}
+.admin-changes{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.admin-changes li{padding:3px 10px;border-radius:var(--radius-pill);background:var(--color-primary-weak);color:var(--color-primary-ink);font:var(--t7);font-weight:700;animation:m-pop var(--dur-fast) var(--ease-spring) backwards}
+@media(max-width:760px){.admin-roles{grid-template-columns:minmax(0,1fr)}.admin-detail-head{grid-template-columns:auto minmax(0,1fr)}.admin-detail-head>.status-badge{grid-column:1/-1;justify-self:start}}
+
+/* Issue dialog */
+.admin-head-actions{display:flex;flex-wrap:wrap;gap:var(--space-2);flex:none}
+.admin-issue-form{display:grid;gap:var(--space-3)}
+.admin-issue-form h3{margin:var(--space-2) 0 0;font:var(--t5)}
+.admin-issue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3)}
+.admin-issue-form .review-actions{justify-content:flex-end}
+.admin-issued{display:grid;gap:var(--space-4)}
+.admin-issued p{margin:0;color:var(--color-ink-2)}
+.admin-password{font-size:17px;font-weight:700;letter-spacing:0.04em;color:var(--color-ink);user-select:all}
+.admin-issued .review-actions{justify-content:flex-end}
+@media(max-width:760px){.admin-issue-grid,.admin-credentials{grid-template-columns:minmax(0,1fr)}}

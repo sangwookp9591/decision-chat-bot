@@ -40,6 +40,10 @@ async def login(body: LoginBody, request: Request, response: Response):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     await reset_login_attempt(account["tenant_id"], body.email)
     token = await create_session(account["tenant_id"], account["user_id"])
+    resolved = await session_principal(token)
+    if not resolved:
+        await revoke_session(token)
+        raise HTTPException(status_code=401, detail="Invalid email or password")
     response.set_cookie(
         "ildongi_session",
         token,
@@ -49,8 +53,6 @@ async def login(body: LoginBody, request: Request, response: Response):
         max_age=43200,
         path="/",
     )
-    csrf_token = getattr(request.state, "csrf_token", None)
-    resolved = (None, csrf_token) if csrf_token else await session_principal(token)
     response.set_cookie(
         "ildongi_csrf",
         resolved[1],

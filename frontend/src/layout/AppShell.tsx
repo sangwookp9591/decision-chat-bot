@@ -7,7 +7,7 @@ import { reviewApi } from '../api/reviews';
 import { roleLabel } from '../components/statusLabels';
 import { Main } from '../pages/Main';
 import { Skeleton } from '../pages/main/ProgressivePanel';
-import { Cases, Evaluation, JudgmentMap, Learning, Monitoring, Observatory, Policy, PrefetchNavLink, Review, Tasks, usePrefetchWhenIdle } from './routes';
+import { Admin, Cases, Evaluation, JudgmentMap, Learning, Monitoring, Observatory, Policy, PrefetchNavLink, Review, Tasks, usePrefetchWhenIdle } from './routes';
 
 /** 24px line icons, stroke follows the link colour. */
 const icon = (d: ReactNode) => <svg className="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
@@ -22,6 +22,7 @@ const icons = {
   learning: icon(<><path d="M20 12a8 8 0 1 1-2.3-5.7" /><path d="M20 4v4h-4" /></>),
   evaluation: icon(<><rect x="4" y="3" width="16" height="18" rx="2" /><path d="m8 12 3 3 5-6" /></>),
   policy: icon(<path d="M5 4v16M12 4v16M19 4v16M3 8h4M10 15h4M17 10h4" />),
+  admin: icon(<><circle cx="9" cy="8" r="3.5" /><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" /><path d="m16 11 2 2 4-4" /></>),
 };
 
 type NavItem = { to: string; label: string; icon: ReactNode };
@@ -31,7 +32,9 @@ export const navGroups: { label: string; items: NavItem[] }[] = [
   { label: '관찰', items: [{ to: '/observatory', label: '실행 관찰', icon: icons.observatory }, { to: '/judgment-map', label: '판단 맵', icon: icons.map }, { to: '/monitoring', label: '모니터링', icon: icons.monitoring }] },
   { label: '개선', items: [{ to: '/cases', label: '판단 사례', icon: icons.cases }, { to: '/learning', label: '규칙 학습', icon: icons.learning }, { to: '/evaluation', label: '평가 라벨', icon: icons.evaluation }, { to: '/policy', label: '정책', icon: icons.policy }] },
 ];
-const allItems = navGroups.flatMap((group) => group.items);
+/** Shown only to admins; the route itself still answers non-admins with a permission notice. */
+export const adminGroup = { label: '관리', items: [{ to: '/admin/users', label: '권한 관리', icon: icons.admin }] };
+const allItems = [...navGroups, adminGroup].flatMap((group) => group.items);
 const modeLabel = { live: '실서비스 연결', mock: 'mock 응답' } as const;
 const COUNT_CAP = 99;
 
@@ -81,10 +84,10 @@ function AccountMenu({ user }: { user: SessionUser | null }) {
   </div>;
 }
 
-function Sidebar({ pending }: { pending: number | null }) {
+function Sidebar({ pending, isAdmin }: { pending: number | null; isAdmin: boolean }) {
   return <aside className="app-sidebar">
     <div className="brand">{APP_NAME}</div>
-    <nav aria-label="주 메뉴">{navGroups.map((group) => <div key={group.label} role="group" aria-label={group.label} className="nav-group">
+    <nav aria-label="주 메뉴">{(isAdmin ? [...navGroups, adminGroup] : navGroups).map((group) => <div key={group.label} role="group" aria-label={group.label} className="nav-group">
       <span className="nav-caption" aria-hidden="true">{group.label}</span>
       {group.items.map((item) => {
         const count = item.to === '/review' && pending ? pending : 0;
@@ -105,10 +108,10 @@ export function AppShell() {
   usePrefetchWhenIdle(allItems.map((item) => item.to).filter((to) => to !== '/'));
   const pages: Record<string, ReactNode> = {
     '/': <Main />, '/review': <Review />, '/tasks': <Tasks />, '/observatory': <Observatory />, '/judgment-map': <JudgmentMap />, '/monitoring': <Monitoring />,
-    '/cases': <Cases />, '/learning': <Learning roles={roles} />, '/evaluation': <Evaluation />, '/policy': <Policy canEdit={roles.includes('policy_editor')} />,
+    '/cases': <Cases />, '/learning': <Learning roles={roles} />, '/evaluation': <Evaluation />, '/policy': <Policy canEdit={roles.includes('policy_editor')} />, '/admin/users': <Admin roles={roles} selfId={user?.id} />,
   };
   return <div className="layout">
-    <Sidebar pending={pending} />
+    <Sidebar pending={pending} isAdmin={roles.includes('admin')} />
     <div className="app-main">
       <header className="topbar">
         <span>의사결정 지원</span>
