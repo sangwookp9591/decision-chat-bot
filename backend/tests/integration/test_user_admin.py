@@ -5,11 +5,44 @@ import pytest
 from fastapi.testclient import TestClient
 
 from ildongi.auth.core import hash_password
+from ildongi.auth.types import Principal
+from ildongi.auth.users import UserAdminError, create_user, update_user, user_detail
 from ildongi.db.driver import get_driver
 from ildongi.db.schema import apply_schema
 from ildongi.main import create_app
 
 PASSWORD = "correct horse"
+
+
+@pytest.mark.parametrize("disabled", [False, True])
+def test_concurrent_admin_revocation_preserves_an_active_admin(admin_graph, disabled):
+    tenant, _ = admin_graph
+    admin_id, member_id = f"usr_{tenant}_admin", f"usr_{tenant}_member"
+    admin = Principal(tenant, admin_id, (f"{tenant}_a",), frozenset({"admin"}))
+    member = Principal(tenant, member_id, (f"{tenant}_a",), frozenset({"admin"}))
+    body = {"version": 0, "roles": ["admin"], "org_ids": [f"{tenant}_a"],
+            "disabled": False, "can_read_source": False, "reason": "관리자 배정"}
+
+    async def exercise():
+        await update_user(admin, member_id, body)
+        revoke = {**body, "roles": ["admin"] if disabled else ["requester"],
+                  "disabled": disabled, "reason": "권한 회수"}
+        results = await asyncio.gather(
+            update_user(admin, member_id, {**revoke, "version": 1}),
+            update_user(member, admin_id, revoke), return_exceptions=True)
+        assert sum(isinstance(result, dict) for result in results) == 1
+        errors = [result for result in results if isinstance(result, UserAdminError)]
+        assert len(errors) == 1 and errors[0].status_code == 403
+        revoked = member if isinstance(results[0], dict) else admin
+        survivor = admin if revoked == member else member
+        current = (await user_detail(survivor, survivor.user_id))["user"]
+        assert not current["disabled"] and "admin" in current["roles"]
+        with pytest.raises(UserAdminError) as error:
+            await create_user(revoked, {**body, "email": f"stale@{tenant}.test"})
+        assert error.value.status_code == 403
+        detail = await user_detail(survivor, revoked.user_id)
+        assert sum(h["reason"] == "권한 회수" for h in detail["history"]) == 1
+    asyncio.run(exercise())
 
 
 @pytest.fixture

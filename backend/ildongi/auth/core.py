@@ -120,6 +120,13 @@ async def create_session(tenant_id: str, user_id: str) -> str:
     token = secrets.token_urlsafe(32)
     expires = datetime.now(UTC) + timedelta(hours=SESSION_HOURS)
     async def query(tx):
+        # Serialize issuance with account suspension and its session deletion.
+        user = await (await tx.run(
+            "MATCH (u:User {id:$user_id, tenant_id:$tenant_id}) SET u._lock=randomUUID() "
+            "RETURN u.disabled AS disabled", user_id=user_id,
+        )).single()
+        if user is None or user["disabled"] is not False:
+            raise HTTPException(status_code=401, detail="Invalid email or password")
         await (await tx.run(
             "MATCH (u:User {id:$user_id, tenant_id:$tenant_id}) "
             "CREATE (s:Session {id:$id, tenant_id:$tenant_id, user_id:$user_id, "

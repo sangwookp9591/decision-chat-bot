@@ -49,7 +49,7 @@ export function Admin({ roles = [], selfId = '' }: { roles?: string[]; selfId?: 
   const [toast, setToast] = useState('');
   const [issuing, setIssuing] = useState(false);
   const isAdmin = roles.includes('admin');
-  async function refresh() { try { setData(await userApi.list()); setError(''); } catch (e) { setError((e as ApiError).message); } }
+  async function refresh() { try { setData(await userApi.list()); setError(''); return true; } catch (e) { setError((e as ApiError).message); return false; } }
   useEffect(() => { if (isAdmin) void refresh(); }, [isAdmin]);
   const shown = useMemo(() => (data?.users ?? []).filter((u) => (!roleFilter || u.roles.includes(roleFilter))
     && (!query.trim() || `${nameOf(u)} ${u.email ?? ''}`.toLowerCase().includes(query.trim().toLowerCase()))), [data, roleFilter, query]);
@@ -78,7 +78,12 @@ export function Admin({ roles = [], selfId = '' }: { roles?: string[]; selfId?: 
         </button></li>)}</ul>
       </aside>
       {selected && <UserCard key={`${selected.user_id}@${selected.version}`} user={selected} orgs={data.orgs} roles={data.roles} self={selected.user_id === selfId}
-        onSaved={async (message) => { setToast(message); await refresh(); }} />}
+        onSaved={async (message, saved) => {
+          setToast('');
+          if (saved) setData((current) => current && ({ ...current, users: current.users.map((u) => u.user_id === saved.user_id ? saved : u) }));
+          const refreshed = await refresh();
+          if (saved || refreshed) setToast(message);
+        }} />}
     </div>}
     {data && <IssueDialog open={issuing} orgs={data.orgs} roles={data.roles} onClose={() => setIssuing(false)}
       onIssued={async (user) => { await refresh(); setQuery(''); setRoleFilter(''); setSelectedId(user.user_id); }} />}
@@ -108,7 +113,7 @@ function IssueDialog({ open, orgs, roles, onClose, onIssued }: { open: boolean; 
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
-  const close = () => { setForm(blank); setIssued(null); setMessage(''); setCopied(false); onClose(); };
+  const close = () => { if (saving) return; setForm(blank); setIssued(null); setMessage(''); setCopied(false); onClose(); };
   const problem = !EMAIL.test(form.email.trim()) ? '올바른 이메일을 입력하세요.' : !form.roles.length ? '역할을 하나 이상 고르세요.' : !form.org_ids.length ? '소속 조직을 하나 이상 고르세요.' : !form.reason.trim() ? '발급 사유를 입력하세요.' : '';
   async function submit() {
     setSaving(true); setMessage('');
@@ -142,20 +147,21 @@ function IssueDialog({ open, orgs, roles, onClose, onIssued }: { open: boolean; 
   </Modal>;
 }
 
-function UserCard({ user, orgs, roles, self, onSaved }: { user: AdminUser; orgs: AdminOrg[]; roles: string[]; self: boolean; onSaved: (message: string) => Promise<void> }) {
+function UserCard({ user, orgs, roles, self, onSaved }: { user: AdminUser; orgs: AdminOrg[]; roles: string[]; self: boolean; onSaved: (message: string, saved?: AdminUser) => Promise<void> }) {
   const [draft, setDraft] = useState<UserState>(() => state(user));
   const [reason, setReason] = useState('');
   const [history, setHistory] = useState<UserHistory[] | null>(null);
+  const [historyError, setHistoryError] = useState('');
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
-  useEffect(() => { let live = true; userApi.detail(user.user_id).then((d) => { if (live) setHistory(d.history); }, () => { if (live) setHistory([]); }); return () => { live = false; }; }, [user.user_id, user.version]);
+  useEffect(() => { let live = true; userApi.detail(user.user_id).then((d) => { if (live) setHistory(d.history); }, (e) => { if (live) setHistoryError((e as ApiError).message || '변경 이력을 불러오지 못했습니다.'); }); return () => { live = false; }; }, [user.user_id, user.version]);
   const orgName = (id: string) => orgs.find((o) => o.id === id)?.name ?? id;
   const changes = describeChange(user, draft, orgName);
   const problem = !draft.roles.length ? '역할을 하나 이상 고르세요.' : !draft.org_ids.length ? '소속 조직을 하나 이상 고르세요.' : !reason.trim() ? '변경 사유를 입력하세요.' : '';
   async function save() {
     setSaving(true); setMessage('');
-    try { await userApi.update(user.user_id, { ...draft, version: user.version, reason: reason.trim() }); await onSaved(`${user.display_name || user.email} 계정을 변경했습니다.`); }
-    catch (e) { const err = e as ApiError; setMessage(err.message || '저장하지 못했습니다.'); if (err.status === 409 && !self) await onSaved('다른 관리자가 먼저 변경해 최신 상태를 다시 불러왔습니다.'); }
+    try { const saved = await userApi.update(user.user_id, { ...draft, version: user.version, reason: reason.trim() }); await onSaved(`${user.display_name || user.email} 계정을 변경했습니다.`, saved); }
+    catch (e) { const err = e as ApiError; setMessage(err.message || '저장하지 못했습니다.'); if (err.status === 409) await onSaved('다른 관리자가 먼저 변경해 최신 상태를 다시 불러왔습니다.'); }
     finally { setSaving(false); }
   }
   return <section className="cases-detail admin-detail" aria-label={`${nameOf(user)} 계정`}>
@@ -179,7 +185,7 @@ function UserCard({ user, orgs, roles, self, onSaved }: { user: AdminUser; orgs:
     </div>
 
     <h3>변경 이력</h3>
-    {history === null ? <p className="admin-note">불러오는 중…</p> : !history.length ? <p className="admin-note">아직 변경 이력이 없습니다.</p>
+    {historyError ? <p role="alert" className="review-error">{historyError}</p> : history === null ? <p className="admin-note">불러오는 중…</p> : !history.length ? <p className="admin-note">아직 변경 이력이 없습니다.</p>
       : <ol className="admin-history">{history.map((h) => <li key={h.id}>
         <span>{formatTime(h.at)} · {h.actor_id}</span>
         <strong>{h.action === 'user.create' ? `계정 발급 · ${(h.after?.roles ?? []).map(roleLabel).join(', ')}` : h.before && h.after ? describeChange(h.before, h.after, orgName).join(' · ') || '변경' : h.action}</strong>

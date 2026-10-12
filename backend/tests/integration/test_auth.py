@@ -88,3 +88,43 @@ def test_parallel_first_failed_logins_create_one_counter_and_count_every_attempt
             )).single(strict=True)
             return rows["nodes"], rows["attempts"]
     assert asyncio.run(inspect()) == (1, 20)
+
+
+@pytest.mark.parametrize("suspend_before_issue", [True, False])
+def test_suspension_during_login_rejects_without_leaving_session(auth_graph, monkeypatch, suspend_before_issue):
+    import asyncio
+
+    from ildongi.auth import router
+    from ildongi.db.tx import read_tx, write_tx
+
+    issue_session = router.create_session
+
+    async def suspend(tx):
+        await (await tx.run(
+            "MATCH (u:User {tenant_id:$tenant, id:$user}) SET u.disabled=true "
+            "WITH u OPTIONAL MATCH (s:Session {tenant_id:$tenant, user_id:$user}) DETACH DELETE s",
+            user=f"usr_{auth_graph}",
+        )).consume()
+
+    async def issue_with_suspension(tenant_id, user_id):
+        if suspend_before_issue:
+            await write_tx(auth_graph, suspend)
+        token = await issue_session(tenant_id, user_id)
+        if not suspend_before_issue:
+            await write_tx(auth_graph, suspend)
+        return token
+
+    monkeypatch.setattr(router, "create_session", issue_with_suspension)
+    with TestClient(create_app(), raise_server_exceptions=False) as client:
+        response = client.post("/api/auth/login", json={"email": f"{auth_graph}@test", "password": "correct horse"})
+        assert response.status_code == 401
+        assert "ildongi_session" not in response.cookies
+        assert client.get("/api/auth/me").status_code == 401
+
+    async def count_sessions(tx):
+        row = await (await tx.run(
+            "MATCH (s:Session {tenant_id:$tenant}) RETURN count(s) AS count",
+        )).single(strict=True)
+        return row["count"]
+
+    assert asyncio.run(read_tx(auth_graph, count_sessions)) == 0

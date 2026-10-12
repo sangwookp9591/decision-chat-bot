@@ -38,6 +38,20 @@ def _require_admin(principal: Principal) -> None:
         raise UserAdminError("계정 관리 권한이 없습니다", 403)
 
 
+async def _lock_admin_in_tx(tx, principal: Principal) -> None:
+    # Serialize account writes before rechecking the actor to prevent reciprocal admin revocation.
+    tenant = await (await tx.run(
+        "MATCH (t:Tenant {id:$tenant, tenant_id:$tenant}) SET t._lock=randomUUID() RETURN t.id")).single()
+    if tenant is None:
+        raise UserAdminError("계정 관리 권한이 없습니다", 403)
+    actor = await (await tx.run(
+        "MATCH (u:User {tenant_id:$tenant, id:$actor, disabled:false}) "
+        "MATCH (u)-[:MEMBER_OF {role:'admin'}]->(:Org {tenant_id:$tenant}) "
+        "RETURN u.id LIMIT 1", actor=principal.user_id)).single()
+    if actor is None:
+        raise UserAdminError("계정 관리 권한이 없습니다", 403)
+
+
 def _user(row: Any) -> dict:
     roles = [r for r in ROLES if r in set(row["roles"])]  # stable, documented order
     return {"user_id": row["user_id"], "email": row["email"], "display_name": row["display_name"],
@@ -112,6 +126,7 @@ async def update_user(principal: Principal, user_id: str, body: dict) -> dict:
         raise UserAdminError("내 계정의 관리자 역할을 빼거나 사용 중지할 수 없습니다", 409)
 
     async def op(tx):
+        await _lock_admin_in_tx(tx, principal)
         # Take the user's write lock before reading so two admins cannot both pass the version check.
         row = await (await tx.run(
             "MATCH (u:User {tenant_id:$tenant, id:$id}) SET u._lock=randomUUID() WITH u "
@@ -162,6 +177,7 @@ async def create_user(principal: Principal, body: dict) -> dict:
     user_id = f"usr_{uuid4().hex}"
 
     async def op(tx):
+        await _lock_admin_in_tx(tx, principal)
         await _check_orgs(tx, org_ids)
         await (await tx.run(
             "CREATE (u:User {id:$id, tenant_id:$tenant, email:$email, display_name:$name, password_hash:$hash, "
