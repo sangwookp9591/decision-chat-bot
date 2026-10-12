@@ -111,3 +111,28 @@ describe('Monitoring KPI count-up (TOSS-SCREENS)', () => {
     expect(container.querySelectorAll('.monitor-kpis .count-number').length).toBeGreaterThan(0);
   });
 });
+
+describe('Monitoring layout (v2 spacing)', () => {
+  const sloBase = { window_start: '', window_end: '', verified: true, reason: '', collection: emptyCollection };
+  it('splits the eight KPIs into 처리량 and 이상 신호 groups', async () => {
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('요청 수');
+    const groups = within(screen.getByRole('region', { name: '핵심 지표' })).getAllByRole('group');
+    expect(groups.map((g) => g.getAttribute('aria-label'))).toEqual(['처리량', '이상 신호']);
+    expect([...groups[0].querySelectorAll('article > span')].map((s) => s.textContent)).toEqual(['요청 수', '자동 처리', '검토 대기', '검토 완료']);
+    expect([...groups[1].querySelectorAll('article > span')].map((s) => s.textContent)).toEqual(['실패', '시간초과', '취소', '섀도 실행']);
+  });
+  it('summarises a verified SLO miss at the top', async () => {
+    vi.mocked(monitoringApi.slo).mockResolvedValue({ ...sloBase, availability: { target: .999, total: 1000, failures: 0, remaining_failures: 1, burn_rate_1h: 0, verified: true }, first_judgment: { target: .99, total: 100, failures: 3, remaining_failures: 0, burn_rate_1h: 6, verified: true } });
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    const health = await screen.findByRole('status', { name: '지금 상태' });
+    expect(health.textContent).toContain('최초 판단 저장 신뢰성');
+    expect(health.textContent).toContain('97.00%');
+  });
+  it('shows no health summary when every verified SLO passes or SLOs are unverified', async () => {
+    vi.mocked(monitoringApi.slo).mockResolvedValue({ ...sloBase, availability: { target: .999, total: 1000, failures: 0, remaining_failures: 1, burn_rate_1h: 0, verified: true }, first_judgment: { target: .99, total: 0, failures: 0, remaining_failures: null, burn_rate_1h: null, verified: false } });
+    render(<MemoryRouter><Monitoring /></MemoryRouter>);
+    await screen.findByText('접수·조회 가용성');
+    expect(screen.queryByRole('status', { name: '지금 상태' })).toBeNull();
+  });
+});
